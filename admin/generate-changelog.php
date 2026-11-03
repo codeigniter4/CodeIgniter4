@@ -2,14 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * Generates the CHANGELOG.md entry for a new release from GitHub's
- * auto-generated release notes and prepends it to CHANGELOG.md.
- *
- * Requires the authenticated GitHub CLI (`gh`).
- *
- * Usage: php admin/generate-changelog.php <version> [--dry-run]
- */
 chdir(__DIR__ . '/..');
 
 $args    = array_slice($argv, 1);
@@ -99,13 +91,13 @@ unset($sections[$othersTitle]);
 // Extracts the security fixes from the SECURITY section of the detailed
 // changelog, if any. These come from security advisories, not from PRs, so
 // they are not part of the generated release notes.
-$rstPath  = "./user_guide_src/source/changelogs/v{$version}.rst";
-$security = '';
+$detailedPath = "./docs/changelogs/v{$version}.md";
+$security     = '';
 
-if (is_file($rstPath)) {
-    $rst = file_get_contents($rstPath);
+if (is_file($detailedPath)) {
+    $detailed = file_get_contents($detailedPath);
 
-    if (preg_match('/^\*+\nSECURITY\n\*+\n(.*?)(?=^\*+$|\z)/msu', $rst, $matches) === 1) {
+    if (preg_match('/^## SECURITY\n(.*?)(?=^## |\z)/msu', $detailed, $matches) === 1) {
         $security = trim($matches[1], "\n");
         $security = preg_replace('/^- /mu', '* ', $security);
     }

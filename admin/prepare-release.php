@@ -39,16 +39,11 @@ replace_file_content(
     "public const CI_VERSION = '{$version}';",
 );
 
-// Updates version number in "conf.py".
+// Updates the minor version in the title of the changelog index.
 replace_file_content(
-    './user_guide_src/source/conf.py',
-    '/^version = \'.*?\'/mu',
-    "version = '{$minor}'",
-);
-replace_file_content(
-    './user_guide_src/source/conf.py',
-    '/^release = \'.*?\'/mu',
-    "release = '{$version}'",
+    './docs/changelogs/index.md',
+    '/^## Version .*/mu',
+    "## Version {$minor}",
 );
 
 // Updates version number in "phpdoc.dist.xml".
@@ -66,7 +61,7 @@ replace_file_content(
 // Updates release date in changelogs.
 $date = date('F j, Y');
 replace_file_content(
-    "./user_guide_src/source/changelogs/v{$version}.rst",
+    "./docs/changelogs/v{$version}.md",
     '/^Release Date: .*/mu',
     "Release Date: {$date}",
 );

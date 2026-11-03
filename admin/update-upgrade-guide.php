@@ -58,7 +58,7 @@ if (count($params) !== 1 || preg_match('/\A\d+\.\d+\.\d+\z/', $params[0]) !== 1)
 $version = $params[0];
 $dryRun  = in_array('--dry-run', $options, true);
 
-$upgradePath = sprintf('./user_guide_src/source/installation/upgrade_%s.rst', str_replace('.', '', $version));
+$upgradePath = sprintf('./docs/installation/upgrade_%s.md', str_replace('.', '', $version));
 
 if (! is_file($upgradePath)) {
     echo sprintf("%s is not found. Run \"php admin/create-new-changelog.php\" first.\n", $upgradePath);
@@ -83,11 +83,13 @@ $excludes = [
     ':!admin/',
     ':!changelogs/',
     ':!contributing/',
+    ':!docs/',
     ':!system/',
     ':!tests/',
     ':!user_guide_src/',
     ':!utils/',
     ':!.*',
+    ':!mkdocs.yml',
     ':!*.md',
     ':!*.json',
     ':!*.xml',
@@ -160,21 +162,21 @@ $allChangesContent = $allChanges === []
     : bullets($allChanges);
 
 if ($dryRun) {
-    echo "\nConfig\n------\n\n{$configContent}\n";
-    echo "\nAll Changes\n===========\n\n{$allChangesContent}\n";
+    echo "\n#### Config\n\n{$configContent}\n";
+    echo "\n### All Changes\n\n{$allChangesContent}\n";
 
     exit(0);
 }
 
-$rst = file_get_contents($upgradePath);
+$markdown = file_get_contents($upgradePath);
 
 // Fills the "Config" section, only if it still has the placeholder. Entries
 // may have been added ahead of time for changes that need discussion, and
 // those must not be overwritten.
-if (preg_match('/^Config\n------\n\n(.*?)(?=^[^\s-][^\n]*\n(?:-+|=+)$|\z)/msu', $rst, $matches) !== 1) {
+if (preg_match('/^#### Config\n\n(.*?)(?=^#{1,4} |\z)/msu', $markdown, $matches) !== 1) {
     echo "Could not find the \"Config\" section in {$upgradePath}. Update it manually.\n";
 } elseif (trim($matches[1]) === '- @TODO') {
-    $rst = str_replace("Config\n------\n\n{$matches[1]}", "Config\n------\n\n{$configContent}\n\n", $rst);
+    $markdown = str_replace("#### Config\n\n{$matches[1]}", "#### Config\n\n{$configContent}\n\n", $markdown);
 
     echo "The \"Config\" section was updated. Add notes to each entry as needed.\n";
 } else {
@@ -195,8 +197,8 @@ if (preg_match('/^Config\n------\n\n(.*?)(?=^[^\s-][^\n]*\n(?:-+|=+)$|\z)/msu', 
 }
 
 // Fills the "All Changes" section, replacing any previous list.
-$pattern = '/^(All Changes\n===========\n\n.*?:\n\n)(.*?)(?=^\*+$|\z)/msu';
-$updated = preg_replace($pattern, "\$1{$allChangesContent}\n", $rst, 1, $count);
+$pattern = '/^(### All Changes\n\n.*?:\n\n)(.*?)(?=^#{1,3} |\z)/msu';
+$updated = preg_replace($pattern, "\$1{$allChangesContent}\n", $markdown, 1, $count);
 
 if ($count !== 1) {
     echo "Could not find the \"All Changes\" section in {$upgradePath}. Update it manually.\n";

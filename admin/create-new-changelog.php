@@ -38,13 +38,13 @@ if (! in_array('--dry-run', $argv, true)) {
 }
 
 // Copy changelog
-$newChangelog   = "./user_guide_src/source/changelogs/v{$newVersion}.rst";
-$changelogIndex = './user_guide_src/source/changelogs/index.rst';
+$newChangelog   = "./docs/changelogs/v{$newVersion}.md";
+$changelogIndex = './docs/changelogs/index.md';
 
 if ($isMinorUpdate) {
-    copy('./admin/next-changelog-minor.rst', $newChangelog);
+    copy('./admin/next-changelog-minor.md', $newChangelog);
 } else {
-    copy('./admin/next-changelog-patch.rst', $newChangelog);
+    copy('./admin/next-changelog-patch.md', $newChangelog);
 }
 
 // Replace version in CodeIgniter.php to {version}-dev.
@@ -54,46 +54,42 @@ replace_file_content(
     "public const CI_VERSION = '{$newVersion}-dev';",
 );
 
-// Add changelog to index.rst.
+// Add changelog to the index, newest first.
 replace_file_content(
     $changelogIndex,
-    '/\.\. toctree::\n    :titlesonly:\n/u',
-    ".. toctree::\n    :titlesonly:\n\n    v{$newVersion}",
+    '/^(See all the changes\.\n\n)/mu',
+    "\$1- [Version {$newVersion}](v{$newVersion}.md)\n",
 );
 
 // Replace {version}
-$underline = str_repeat('#', mb_strlen("Version {$newVersion}"));
-replace_file_content(
-    $newChangelog,
-    '/#################\nVersion {version}\n#################/u',
-    "{$underline}\nVersion {$newVersion}\n{$underline}",
-);
 replace_file_content($newChangelog, '/{version}/u', $newVersion);
 
 // Copy upgrading
 $versionWithoutDots = str_replace('.', '', $newVersion);
-$newUpgrading       = "./user_guide_src/source/installation/upgrade_{$versionWithoutDots}.rst";
-$upgradingIndex     = './user_guide_src/source/installation/upgrading.rst';
-copy('./admin/next-upgrading-guide.rst', $newUpgrading);
+$newUpgrading       = "./docs/installation/upgrade_{$versionWithoutDots}.md";
+$upgradingIndex     = './docs/installation/upgrading.md';
+copy('./admin/next-upgrading-guide.md', $newUpgrading);
 
-// Add upgrading to upgrading.rst.
+// Add upgrading to the index, right after the backward compatibility notes.
 replace_file_content(
     $upgradingIndex,
-    '/    backward_compatibility_notes\n/u',
-    "    backward_compatibility_notes\n\n    upgrade_{$versionWithoutDots}",
+    '/^(- \[Backward Compatibility Notes\]\(backward_compatibility_notes\.md\)\n)/mu',
+    "\$1- [Upgrading from {$currentVersion} to {$newVersion}](upgrade_{$versionWithoutDots}.md)\n",
 );
 
 // Replace {version}
-$underline = str_repeat('#', mb_strlen("Upgrading from {$currentVersion} to {$newVersion}"));
 replace_file_content(
     $newUpgrading,
-    '/##############################\nUpgrading from {version} to {version}\n##############################/u',
-    "{$underline}\nUpgrading from {$currentVersion} to {$newVersion}\n{$underline}",
+    '/^# Upgrading from {version} to {version}$/mu',
+    "# Upgrading from {$currentVersion} to {$newVersion}",
 );
+
+// Add both pages to the nav.
+system('php ./admin/update-docs-nav.php');
 
 if (! in_array('--dry-run', $argv, true)) {
     system('git add ./system/CodeIgniter.php');
     system("git add {$newChangelog} {$changelogIndex}");
-    system("git add {$newUpgrading} {$upgradingIndex}");
+    system("git add {$newUpgrading} {$upgradingIndex} ./docs/.nav.yml");
     system("git commit -m \"docs: add changelog and upgrade for v{$newVersion}\"");
 }

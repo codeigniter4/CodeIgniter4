@@ -216,7 +216,7 @@ Lines that start with `D` are removed files. Make sure none of them is needed by
 
 Skip this step if the release has no security fixes.
 
-Merge any security advisory pull requests from the private forks. Each fix must also be documented in the `SECURITY` section of **user_guide_src/source/changelogs/v$VERSION.rst**, because step 7 copies that section into **CHANGELOG.md**.
+Merge any security advisory pull requests from the private forks. Each fix must also be documented in the `SECURITY` section of **docs/changelogs/v$VERSION.md**, because step 7 copies that section into **CHANGELOG.md**.
 
 ### 7. Generate `CHANGELOG.md`
 
@@ -244,12 +244,12 @@ Copy the result into **CHANGELOG.md** and match the format of the existing entri
 
 ### 8. Update the detailed changelog
 
-Edit **user_guide_src/source/changelogs/v$VERSION.rst**.
+Edit **docs/changelogs/v$VERSION.md**.
 Remove every section title that has no items under it.
 
 ### 9. Update the upgrade guide
 
-Edit the upgrade guide page for the version in **user_guide_src/source/installation/**. The file name is `upgrade_` followed by the version without dots, so `4.7.6` is **upgrade_476.rst**.
+Edit the upgrade guide page for the version in **docs/installation/**. The file name is `upgrade_` followed by the version without dots, so `4.7.6` is **upgrade_476.md**.
 
 Preview the generated content:
 
@@ -284,8 +284,8 @@ The script does the following:
 
 - Creates the branch `release-$VERSION` from `develop`, replacing any local branch of the same name.
 - Sets `CI_VERSION` in **system/CodeIgniter.php** to `$VERSION`.
-- Sets `version` (for example `4.7`) and `release` (for example `4.7.6`) in **user_guide_src/source/conf.py**.
-- Sets the release date in **user_guide_src/source/changelogs/v$VERSION.rst** (format `Release Date: January 31, 2021`).
+- Sets the minor version (for example `4.7`) in the title `## Version 4.7` of **docs/changelogs/index.md**.
+- Sets the release date in **docs/changelogs/v$VERSION.md** (format `Release Date: January 31, 2021`).
 - Updates the title and version in **phpdoc.dist.xml**.
 - Updates **admin/starter/builds**: `LATEST_RELEASE` becomes `^<minor>` and `NEXT_MINOR` becomes `^<next minor>-dev`.
 - Commits everything, including your uncommitted edits to tracked files, as `Prep for $VERSION release`.
@@ -490,8 +490,9 @@ php admin/create-new-changelog.php $VERSION $NEXT_VERSION
 
 The script does the following:
 
-- Creates **user_guide_src/source/changelogs/v$NEXT_VERSION.rst** from **admin/next-changelog-patch.rst** and adds it to **index.rst**.
-- Creates the upgrade guide stub from **admin/next-upgrading-guide.rst** and adds it to **upgrading.rst**.
+- Creates **docs/changelogs/v$NEXT_VERSION.md** from **admin/next-changelog-patch.md** and adds it to **index.md**.
+- Creates the upgrade guide stub from **admin/next-upgrading-guide.md** and adds it to **upgrading.md**.
+- Adds both pages to **docs/.nav.yml**.
 - Sets `CI_VERSION` to `$NEXT_VERSION-dev`.
 - Creates the branch `docs-changelog-$NEXT_VERSION` from `develop` and commits.
 
