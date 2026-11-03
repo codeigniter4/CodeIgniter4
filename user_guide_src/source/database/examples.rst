@@ -2,12 +2,11 @@
 Quick Start: Usage Examples
 ###########################
 
-The following page contains example code showing how the database class
-is used. For complete details please read the individual pages
-describing each function.
+The following page contains example code showing how the database class is used. For complete details please read the
+individual pages describing each function.
 
-.. note:: CodeIgniter doesn't support dots (``.``) in the table and column names.
-    Since v4.5.0, database names with dots are supported.
+.. note:: CodeIgniter doesn't support dots (``.``) in the table and column names. Since v4.5.0, database names with dots
+    are supported.
 
 .. contents::
     :local:
@@ -16,32 +15,28 @@ describing each function.
 Initializing the Database Class
 ===============================
 
-The following code loads and initializes the database class based on
-your :doc:`configuration <configuration>` settings:
+The following code loads and initializes the database class based on your :doc:`configuration <configuration>` settings:
 
 .. literalinclude:: examples/001.php
 
 Once loaded, the class is ready to be used as described below.
 
-.. note:: If all your controllers require database access, you can connect in
-    your base controller's ``initController()`` method. See
-    :doc:`Connecting to a Database <connecting>` for connection examples.
+.. note:: If all your controllers require database access, you can connect in your base controller's
+    ``initController()`` method. See :doc:`Connecting to a Database <connecting>` for connection examples.
 
 Standard Query With Multiple Results (Object Version)
 =====================================================
 
 .. literalinclude:: examples/002.php
 
-The above ``getResult()`` function returns an array of **objects**.
-Example: ``$row->title``
+The above ``getResult()`` function returns an array of **objects**. Example: ``$row->title``
 
 Standard Query With Multiple Results (Array Version)
 ====================================================
 
 .. literalinclude:: examples/003.php
 
-The above ``getResultArray()`` function returns an array of associative arrays.
-Example: ``$row['title']``
+The above ``getResultArray()`` function returns an array of associative arrays. Example: ``$row['title']``
 
 Standard Query With Single Result
 =================================
@@ -55,8 +50,7 @@ Standard Query With Single Result (Array version)
 
 .. literalinclude:: examples/005.php
 
-The above ``getRowArray()`` function returns an **array**. Example:
-``$row['name']``.
+The above ``getRowArray()`` function returns an **array**. Example: ``$row['name']``.
 
 Standard Insert
 ===============
@@ -66,14 +60,12 @@ Standard Insert
 Query Builder Query
 ===================
 
-The :doc:`Query Builder <query_builder>` gives you a simplified
-means of retrieving data:
+The :doc:`Query Builder <query_builder>` gives you a simplified means of retrieving data:
 
 .. literalinclude:: examples/007.php
 
-The above ``get()`` function retrieves all the results from the supplied
-table. The :doc:`Query Builder <query_builder>` class contains a full
-complement of functions for working with data.
+The above ``get()`` function retrieves all the results from the supplied table. The :doc:`Query Builder <query_builder>`
+class contains a full complement of functions for working with data.
 
 Query Builder Insert
 ====================

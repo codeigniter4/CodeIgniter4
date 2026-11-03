@@ -7,7 +7,8 @@ Getting Started with REST APIs
     :local:
     :depth: 2
 
-This tutorial walks you through building a simple RESTful API to manage books in CodeIgniter 4. You'll learn how to set up a project, configure a database, and create API endpoints, as well as what makes an API RESTful.
+This tutorial walks you through building a simple RESTful API to manage books in CodeIgniter 4. You'll learn how to set
+up a project, configure a database, and create API endpoints, as well as what makes an API RESTful.
 
 This tutorial will primarily focus on:
 
@@ -18,7 +19,8 @@ This tutorial will primarily focus on:
 
 .. tip::
 
-    While we cover the basics of CodeIgniter, it is assumed that you have at least progressed through the :doc:`First App tutorial <../first-app/index>`.
+    While we cover the basics of CodeIgniter, it is assumed that you have at least progressed through the
+    :doc:`First App tutorial <../first-app/index>`.
 
 .. toctree::
     :hidden:
@@ -45,7 +47,8 @@ Open your browser to ``http://localhost:8080`` and you should see the CodeIgnite
 
 .. note::
 
-    Keep the server running in one terminal. If you prefer, you can stop it anytime with :kbd:`Ctrl+C` and start again with ``php spark serve``.
+    Keep the server running in one terminal. If you prefer, you can stop it anytime with :kbd:`Ctrl+C` and start again
+    with ``php spark serve``.
 
 Setting Development Mode
 ========================
@@ -85,11 +88,13 @@ Open **.env** and **uncomment** the database section, then set:
     database.default.hostname =
     database.default.port     =
 
-CodeIgniter will automatically create the SQLite database file if it doesn't exist, but you need to ensure that the **writable/** directory is writable by the web server.
+CodeIgniter will automatically create the SQLite database file if it doesn't exist, but you need to ensure that the
+**writable/** directory is writable by the web server.
 
 .. warning::
 
-    On some systems you might need to adjust group/owner or use ``chmod 666`` temporarily during development. Never ship world-writable permissions to production.
+    On some systems you might need to adjust group/owner or use ``chmod 666`` temporarily during development. Never ship
+    world-writable permissions to production.
 
 
 At this point, you have a working CodeIgniter4 project with SQLite configured.
@@ -101,4 +106,5 @@ At this point, you have a working CodeIgniter4 project with SQLite configured.
 What's Next
 ===========
 
-In the next section, we'll enable auto-routing and create a simple JSON endpoint (``/api/ping``) to see how HTTP verbs map to controller methods in CodeIgniter.
+In the next section, we'll enable auto-routing and create a simple JSON endpoint (``/api/ping``) to see how HTTP verbs
+map to controller methods in CodeIgniter.

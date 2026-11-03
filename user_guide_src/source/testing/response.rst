@@ -2,10 +2,9 @@
 Testing Responses
 #################
 
-The ``TestResponse`` class provides a number of helpful functions for parsing and testing responses
-from your test cases. Usually a ``TestResponse`` will be provided for you as a result of your
-:doc:`Controller Tests <controllers>` or :doc:`HTTP Feature Tests <feature>`, but you can always
-create your own directly using any ``ResponseInterface``:
+The ``TestResponse`` class provides a number of helpful functions for parsing and testing responses from your test
+cases. Usually a ``TestResponse`` will be provided for you as a result of your :doc:`Controller Tests <controllers>` or
+:doc:`HTTP Feature Tests <feature>`, but you can always create your own directly using any ``ResponseInterface``:
 
 .. literalinclude:: response/001.php
    :lines: 2-
@@ -17,8 +16,8 @@ create your own directly using any ``ResponseInterface``:
 Testing the Response
 ********************
 
-Whether you have received a ``TestResponse`` as a result of your tests or created one yourself,
-there are a number of new assertions that you can use in your tests.
+Whether you have received a ``TestResponse`` as a result of your tests or created one yourself, there are a number of
+new assertions that you can use in your tests.
 
 Accessing Request/Response
 ==========================
@@ -45,8 +44,8 @@ Checking Response Status
 isOK()
 ------
 
-Returns a boolean true/false based on whether the response is perceived to be "ok". This is primarily determined by
-a response status code in the 200s or 300s. An empty body is not considered valid, unless in redirects.
+Returns a boolean true/false based on whether the response is perceived to be "ok". This is primarily determined by a
+response status code in the 200s or 300s. An empty body is not considered valid, unless in redirects.
 
 .. literalinclude:: response/004.php
    :lines: 2-
@@ -78,8 +77,7 @@ Asserts that the Response is an instance of RedirectResponse. ``assertNotRedirec
 assertRedirectTo()
 ------------------
 
-Asserts that the Response is an instance of RedirectResponse and the destination
-matches the URI given.
+Asserts that the Response is an instance of RedirectResponse and the destination matches the URI given.
 
 .. literalinclude:: response/008.php
    :lines: 2-
@@ -108,8 +106,8 @@ Session Assertions
 assertSessionHas(string $key, $value = null)
 --------------------------------------------
 
-Asserts that a value exists in the resulting session. If ``$value`` is passed, it will also assert that the variable's value
-matches what was specified.
+Asserts that a value exists in the resulting session. If ``$value`` is passed, it will also assert that the variable's
+value matches what was specified.
 
 .. literalinclude:: response/011.php
    :lines: 2-
@@ -128,8 +126,8 @@ Header Assertions
 assertHeader(string $key, $value = null)
 ----------------------------------------
 
-Asserts that a header named ``$key`` exists in the response. If ``$value`` is not empty, it will also assert that
-the values match.
+Asserts that a header named ``$key`` exists in the response. If ``$value`` is not empty, it will also assert that the
+values match.
 
 .. literalinclude:: response/013.php
    :lines: 2-
@@ -148,8 +146,8 @@ Cookie Assertions
 assertCookie(string $key, $value = null, string $prefix = '')
 -------------------------------------------------------------
 
-Asserts that a cookie named ``$key`` exists in the response. If ``$value`` is not empty, it will also assert that
-the values match. You can set the cookie prefix, if needed, by passing it in as the third parameter.
+Asserts that a cookie named ``$key`` exists in the response. If ``$value`` is not empty, it will also assert that the
+values match. You can set the cookie prefix, if needed, by passing it in as the third parameter.
 
 .. literalinclude:: response/015.php
    :lines: 2-
@@ -165,8 +163,8 @@ Asserts that a cookie named ``$key`` does not exist in the response.
 assertCookieExpired(string $key, string $prefix = '')
 -----------------------------------------------------
 
-Asserts that a cookie named ``$key`` exists, but has expired. You can set the cookie prefix, if needed, by passing it
-in as the second parameter.
+Asserts that a cookie named ``$key`` exists, but has expired. You can set the cookie prefix, if needed, by passing it in
+as the second parameter.
 
 .. literalinclude:: response/017.php
    :lines: 2-
@@ -174,14 +172,13 @@ in as the second parameter.
 DOM Helpers
 ===========
 
-The response you get back contains a number of helper methods to inspect the HTML output within the response. These
-are useful for use within assertions in your tests.
+The response you get back contains a number of helper methods to inspect the HTML output within the response. These are
+useful for use within assertions in your tests.
 
 see()
 -----
 
-Returns a boolean true/false based on whether the text on the page exists either
-by itself, or more specifically within
+Returns a boolean true/false based on whether the text on the page exists either by itself, or more specifically within
 a tag, as specified by type, class, or id:
 
 .. literalinclude:: response/018.php
@@ -230,9 +227,8 @@ seeXPath()
 
 .. versionadded:: 4.5.0
 
-You can use ``seeXPath()`` to take advantage of the full power that XPath gives you.
-This method is aimed at more advanced users who want to write more complex expressions
-using the DOMXPath object directly:
+You can use ``seeXPath()`` to take advantage of the full power that XPath gives you. This method is aimed at more
+advanced users who want to write more complex expressions using the DOMXPath object directly:
 
 .. literalinclude:: response/033.php
    :lines: 2-
@@ -251,8 +247,8 @@ assertions.
 assertSee(string $search = null, string $element = null)
 --------------------------------------------------------
 
-Asserts that text/HTML is on the page, either by itself or, more specifically, within
-a tag, as specified by type, class, or id:
+Asserts that text/HTML is on the page, either by itself or, more specifically, within a tag, as specified by type,
+class, or id:
 
 .. literalinclude:: response/024.php
    :lines: 2-
@@ -276,8 +272,7 @@ Similar to ``assertSee()``, but this only checks for an existing element. It doe
 assertDontSeeElement(string $search)
 ------------------------------------
 
-Similar to ``assertSee()``, but this only checks for a missing element. It does not check for
-specific text:
+Similar to ``assertSee()``, but this only checks for a missing element. It does not check for specific text:
 
 .. literalinclude:: response/027.php
    :lines: 2-
@@ -301,8 +296,8 @@ Asserts that an input tag exists with the name and value:
 Working with JSON
 =================
 
-Responses will frequently contain JSON, especially when working with API methods. The following methods
-can help to test the responses.
+Responses will frequently contain JSON, especially when working with API methods. The following methods can help to test
+the responses.
 
 getJSON()
 ---------

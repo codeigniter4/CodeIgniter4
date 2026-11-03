@@ -14,58 +14,50 @@ Auto Routing (Improved)
 What is Auto Routing (Improved)?
 ********************************
 
-By default, all routes must be :ref:`defined <defined-route-routing>` in the
-configuration file.
+By default, all routes must be :ref:`defined <defined-route-routing>` in the configuration file.
 
-However, with **Auto Routing (Improved)**, you can define the controller name and
-its method name according to the convention and it will be automatically routed.
-In other words, there is no need to define routes manually.
+However, with **Auto Routing (Improved)**, you can define the controller name and its method name according to the
+convention and it will be automatically routed. In other words, there is no need to define routes manually.
 
-If you enable Auto Routing (Improved), when no defined route is found that matches
-the URI, the system will attempt to match that URI against the controllers and
-methods.
+If you enable Auto Routing (Improved), when no defined route is found that matches the URI, the system will attempt to
+match that URI against the controllers and methods.
 
-.. important:: For security reasons, if a controller is used in the defined routes,
-    Auto Routing (Improved) does not route to the controller.
+.. important:: For security reasons, if a controller is used in the defined routes, Auto Routing (Improved) does not
+    route to the controller.
 
-.. note:: Auto Routing (Improved) is disabled by default. To use it, see
-    :ref:`enabled-auto-routing-improved`.
+.. note:: Auto Routing (Improved) is disabled by default. To use it, see :ref:`enabled-auto-routing-improved`.
 
 **************************************
 Differences from Auto Routing (Legacy)
 **************************************
 
-:ref:`auto-routing-legacy` is a routing system from CodeIgniter 3. If you are not
-familiar with it, go to the next section.
+:ref:`auto-routing-legacy` is a routing system from CodeIgniter 3. If you are not familiar with it, go to the next
+section.
 
 If you know it well, these are some changes in **Auto Routing (Improved)**:
 
 - A controller method needs an HTTP verb prefix like ``getIndex()``, ``postCreate()``.
 
-  - Since developers always know the HTTP method, a request with an unexpected
-    HTTP method will never execute the controller.
+  - Since developers always know the HTTP method, a request with an unexpected HTTP method will never execute the
+    controller.
 
 - The Default Controller (``Home`` by default) and the Default Method (``index`` by default) must be omitted in the URI.
 
   - It restricts one-to-one correspondence between controller methods and URIs.
-  - For example, by default, you can access ``/``, but ``/home`` and ``/home/index``
-    will be 404 Not Found.
+  - For example, by default, you can access ``/``, but ``/home`` and ``/home/index`` will be 404 Not Found.
 
 - It checks the method parameter count.
 
-  - If there are more parameters in the URI than the method parameters, it results
-    in 404 Not Found.
+  - If there are more parameters in the URI than the method parameters, it results in 404 Not Found.
 
 - It does not support the ``_remap()`` method.
 
   - It restricts one-to-one correspondence between controller methods and URIs.
-  - But it has the :ref:`auto-routing-improved-default-method-fallback` feature
-    instead.
+  - But it has the :ref:`auto-routing-improved-default-method-fallback` feature instead.
 
 - It cannot access controllers in Defined Routes.
 
-  - It completely separates controllers accessible via **Auto Routing** from
-    those accessible via **Defined Routes**.
+  - It completely separates controllers accessible via **Auto Routing** from those accessible via **Defined Routes**.
 
 .. _enabled-auto-routing-improved:
 
@@ -73,28 +65,23 @@ If you know it well, these are some changes in **Auto Routing (Improved)**:
 Enable Auto Routing (Improved)
 ******************************
 
-To use it, you need to set the ``$autoRoute`` option to ``true`` in
-**app/Config/Routing.php**::
+To use it, you need to set the ``$autoRoute`` option to ``true`` in **app/Config/Routing.php**::
 
     public bool $autoRoute = true;
 
-And you need to change the property ``$autoRoutesImproved`` to ``true`` in
-**app/Config/Feature.php**::
+And you need to change the property ``$autoRoutesImproved`` to ``true`` in **app/Config/Feature.php**::
 
     public bool $autoRoutesImproved = true;
 
-.. important:: When you use Auto Routing (Improved), you must remove the line
-    ``$routes->get('/', 'Home::index');`` in **app/Config/Routes.php**, because
-    defined routes take precedence over Auto Routing, and controllers defined in
-    the defined routes are denied access by Auto Routing (Improved) for security
-    reasons.
+.. important:: When you use Auto Routing (Improved), you must remove the line ``$routes->get('/', 'Home::index');`` in
+    **app/Config/Routes.php**, because defined routes take precedence over Auto Routing, and controllers defined in the
+    defined routes are denied access by Auto Routing (Improved) for security reasons.
 
 ************
 URI Segments
 ************
 
-The segments in the URL, following the Model-View-Controller approach,
-usually represent::
+The segments in the URL, following the Model-View-Controller approach, usually represent::
 
     http://example.com/{class}/{method}/{param1}
 
@@ -106,17 +93,14 @@ Consider this URI::
 
     http://example.com/hello-world/hello/1
 
-In the above example, when you send an HTTP request with the **GET** method,
-Auto Routing (Improved) would attempt to find a controller named
-``App\Controllers\HelloWorld`` and execute the ``getHello()`` method, passing
-``'1'`` as the first parameter.
+In the above example, when you send an HTTP request with the **GET** method, Auto Routing (Improved) would attempt to
+find a controller named ``App\Controllers\HelloWorld`` and execute the ``getHello()`` method, passing ``'1'`` as the
+first parameter.
 
-.. note:: A controller method that will be executed by Auto Routing (Improved)
-    needs an HTTP verb (``get``, ``post``, ``put``, etc.) prefix like ``getIndex()``,
-    ``postCreate()``.
+.. note:: A controller method that will be executed by Auto Routing (Improved) needs an HTTP verb (``get``, ``post``,
+    ``put``, etc.) prefix like ``getIndex()``, ``postCreate()``.
 
-.. note:: When a controller's short name matches the first segment of a URI, it
-    will be loaded.
+.. note:: When a controller's short name matches the first segment of a URI, it will be loaded.
 
 **************************
 Let's try it: Hello World!
@@ -127,25 +111,22 @@ Let's create a simple controller so you can see it in action.
 Create a Controller
 ===================
 
-Using your text editor, create a file called **HelloWorld.php** in your
-**app/Controllers** directory, and put the following code in it.
+Using your text editor, create a file called **HelloWorld.php** in your **app/Controllers** directory, and put the
+following code in it.
 
 .. literalinclude:: auto_routing_improved/020.php
 
-.. important:: The file must be called **HelloWorld.php**. When you use Auto
-    Routing (Improved), controller class names MUST be CamelCase.
+.. important:: The file must be called **HelloWorld.php**. When you use Auto Routing (Improved), controller class names
+    MUST be CamelCase.
 
-You will notice that the ``HelloWorld`` Controller is extending the ``BaseController``.
-You can also extend the ``CodeIgniter\Controller`` if you do not need the functionality
-of the BaseController.
+You will notice that the ``HelloWorld`` Controller is extending the ``BaseController``. You can also extend the
+``CodeIgniter\Controller`` if you do not need the functionality of the BaseController.
 
-The BaseController provides a convenient place for loading components and performing
-functions that are needed by all your controllers. You can extend this class in
-any new controller.
+The BaseController provides a convenient place for loading components and performing functions that are needed by all
+your controllers. You can extend this class in any new controller.
 
-.. important:: A controller method that will be executed by Auto Routing (Improved)
-    needs an HTTP verb (``get``, ``post``, ``put``, etc.) prefix like ``getIndex()``,
-    ``postCreate()``.
+.. important:: A controller method that will be executed by Auto Routing (Improved) needs an HTTP verb (``get``,
+    ``post``, ``put``, etc.) prefix like ``getIndex()``, ``postCreate()``.
 
 Check the Routes
 ================
@@ -175,8 +156,7 @@ Now visit your site using a URL similar to this::
 
     http://example.com/hello-world
 
-The system automatically translates a URI with dashes (``-``) to CamelCase in the
-controller and method URI segments.
+The system automatically translates a URI with dashes (``-``) to CamelCase in the controller and method URI segments.
 
 For example, the URI ``sub-dir/hello-controller/some-method`` will execute the
 ``SubDir\HelloController::getSomeMethod()`` method.
@@ -189,8 +169,7 @@ If you did it right, you should see::
 Examples of Controller Names
 ****************************
 
-The following is a valid controller name, because ``App\Controllers\HelloWorld``
-is CamelCase.
+The following is a valid controller name, because ``App\Controllers\HelloWorld`` is CamelCase.
 
 .. literalinclude:: auto_routing_improved/009.php
 
@@ -209,18 +188,15 @@ Controller Methods
 Method Visibility
 =================
 
-When you define a method that is executable via HTTP request, the method must be
-declared as ``public``.
+When you define a method that is executable via HTTP request, the method must be declared as ``public``.
 
-.. warning:: For security reasons, be sure to declare any new utility methods as
-    ``protected`` or ``private``.
+.. warning:: For security reasons, be sure to declare any new utility methods as ``protected`` or ``private``.
 
 Default Method
 ==============
 
-In the above example, the method name is ``getIndex()``. The method
-(HTTP verb + ``Index()``) is called the **Default Method**, and is loaded if the
-**second segment** of the URI is empty.
+In the above example, the method name is ``getIndex()``. The method (HTTP verb + ``Index()``) is called the
+**Default Method**, and is loaded if the **second segment** of the URI is empty.
 
 Normal Methods
 ==============
@@ -241,8 +217,7 @@ You should see your new message.
 Passing URI Segments to Your Methods
 ************************************
 
-If your URI contains more than two segments, they will be passed to your
-method as parameters.
+If your URI contains more than two segments, they will be passed to your method as parameters.
 
 For example, let's say you have a URI like this::
 
@@ -252,26 +227,22 @@ Your method will be passed URI segments 3 and 4 (``'sandals'`` and ``'123'``):
 
 .. literalinclude:: auto_routing_improved/022.php
 
-.. note:: If there are more parameters in the URI than the method parameters,
-    Auto Routing (Improved) does not execute the method, and it results in 404
-    Not Found.
+.. note:: If there are more parameters in the URI than the method parameters, Auto Routing (Improved) does not execute
+    the method, and it results in 404 Not Found.
 
 ******************
 Default Controller
 ******************
 
-The **Default Controller** is a special controller that is used when a URI ends
-with a directory name or when a URI is not present, as will be the case when only
-your site root URL is requested.
+The **Default Controller** is a special controller that is used when a URI ends with a directory name or when a URI is
+not present, as will be the case when only your site root URL is requested.
 
 By default, the Default Controller is ``Home``.
 
-.. note:: Define only the default method (``getIndex()`` for GET requests)
-    in the default controller. If you define any other public method, that method
-    will not be executed.
+.. note:: Define only the default method (``getIndex()`` for GET requests) in the default controller. If you define any
+    other public method, that method will not be executed.
 
-For more information, please refer to the
-:ref:`routing-auto-routing-improved-configuration-options`.
+For more information, please refer to the :ref:`routing-auto-routing-improved-configuration-options`.
 
 .. _auto-routing-improved-default-method-fallback:
 
@@ -281,9 +252,8 @@ Default Method Fallback
 
 .. versionadded:: 4.4.0
 
-If the controller method corresponding to the URI segment of the method name
-does not exist, and if the default method is defined, the remaining URI segments
-are passed to the default method for execution.
+If the controller method corresponding to the URI segment of the method name does not exist, and if the default method
+is defined, the remaining URI segments are passed to the default method for execution.
 
 .. literalinclude:: controllers/024.php
 
@@ -293,20 +263,17 @@ Load the following URL::
 
 The method will be passed URI segments 2 and 3 (``'15'`` and ``'edit'``).
 
-.. important:: If there are more parameters in the URI than the method parameters,
-    Auto Routing (Improved) does not execute the method, and it results in 404
-    Not Found.
+.. important:: If there are more parameters in the URI than the method parameters, Auto Routing (Improved) does not
+    execute the method, and it results in 404 Not Found.
 
 Fallback to Default Controller
 ==============================
 
-If the controller corresponding to the URI segment of the controller name
-does not exist, and if the default controller (``Home`` by default) exists in
-the directory, the remaining URI segments are passed to the default controller's
-default method.
+If the controller corresponding to the URI segment of the controller name does not exist, and if the default controller
+(``Home`` by default) exists in the directory, the remaining URI segments are passed to the default controller's default
+method.
 
-For example, when you have the following default controller ``Home`` in the
-**app/Controllers/News** directory:
+For example, when you have the following default controller ``Home`` in the **app/Controllers/News** directory:
 
 .. literalinclude:: controllers/025.php
 
@@ -314,32 +281,28 @@ Load the following URL::
 
     http://example.com/news/101
 
-The ``News\Home`` controller and the default ``getIndex()`` method will be found.
-So the default method will get the second URI segment (``'101'``).
+The ``News\Home`` controller and the default ``getIndex()`` method will be found. So the default method will get the
+second URI segment (``'101'``).
 
-.. note:: If there is an ``App\Controllers\News`` controller, it takes precedence.
-    The URI segments are searched sequentially and the first controller found
-    is used.
+.. note:: If there is an ``App\Controllers\News`` controller, it takes precedence. The URI segments are searched
+    sequentially and the first controller found is used.
 
-.. note:: If there are more parameters in the URI than the method parameters,
-    Auto Routing (Improved) does not execute the method, and it results in 404
-    Not Found.
+.. note:: If there are more parameters in the URI than the method parameters, Auto Routing (Improved) does not execute
+    the method, and it results in 404 Not Found.
 
 ************************************************
 Organizing Your Controllers into Sub-directories
 ************************************************
 
-If you are building a large application, you might want to hierarchically
-organize or structure your controllers into sub-directories. CodeIgniter
-permits you to do this.
+If you are building a large application, you might want to hierarchically organize or structure your controllers into
+sub-directories. CodeIgniter permits you to do this.
 
-Simply create sub-directories under the main **app/Controllers**,
-and place your controller classes within them.
+Simply create sub-directories under the main **app/Controllers**, and place your controller classes within them.
 
 .. important:: Directory names MUST start with an uppercase letter and be CamelCase.
 
-When using this feature, the first segment of your URI must
-specify the directory. For example, let's say you have a controller located here::
+When using this feature, the first segment of your URI must specify the directory. For example, let's say you have a
+controller located here::
 
     app/Controllers/Products/Shoes.php
 
@@ -347,22 +310,19 @@ To call the above controller, your URI will look something like this::
 
     http://example.com/products/shoes/show/123
 
-.. note:: You cannot have directories with the same name in **app/Controllers**
-    and **public**.
-    This is because if there is a directory, the web server will search for it and
-    it will not be routed to CodeIgniter.
+.. note:: You cannot have directories with the same name in **app/Controllers** and **public**. This is because if there
+    is a directory, the web server will search for it and it will not be routed to CodeIgniter.
 
-Each of your sub-directories may contain a default controller which will be
-called if the URL contains *only* the sub-directory. Simply put a controller
-in there that matches the name of your default controller as specified in
-your **app/Config/Routing.php** file.
+Each of your sub-directories may contain a default controller which will be called if the URL contains *only* the
+sub-directory. Simply put a controller in there that matches the name of your default controller as specified in your
+**app/Config/Routing.php** file.
 
 ***************************************
 Examples of Controller/Methods and URIs
 ***************************************
 
-In the case of a **GET** request with the default configuration, the mapping
-between controller/methods and URIs is as follows:
+In the case of a **GET** request with the default configuration, the mapping between controller/methods and URIs is as
+follows:
 
 ============================ ============================ =============================================
 Controller/Method            URI                          Description
@@ -387,12 +347,11 @@ Controller/Method            URI                          Description
 Applying Filters
 ****************
 
-Applying controller filters allows you to add processing before and after the
-controller method execution. This is especially handy during authentication or
-API logging.
+Applying controller filters allows you to add processing before and after the controller method execution. This is
+especially handy during authentication or API logging.
 
-If you use Auto Routing, set the filters to be applied in **app/Config/Filters.php**.
-See :doc:`Controller Filters <filters>` for more information on setting up filters.
+If you use Auto Routing, set the filters to be applied in **app/Config/Filters.php**. See
+:doc:`Controller Filters <filters>` for more information on setting up filters.
 
 .. _routing-auto-routing-improved-configuration-options:
 
@@ -408,45 +367,39 @@ Default Controller
 For Site Root URI
 -----------------
 
-When a user visits the root of your site (i.e., **http://example.com**), the controller
-to use is determined by the value set to the ``$defaultController`` property,
-unless a route exists for it explicitly.
+When a user visits the root of your site (i.e., **http://example.com**), the controller to use is determined by the
+value set to the ``$defaultController`` property, unless a route exists for it explicitly.
 
-The default value for this is ``Home``, which matches the controller at
-**app/Controllers/Home.php**::
+The default value for this is ``Home``, which matches the controller at **app/Controllers/Home.php**::
 
     public string $defaultController = 'Home';
 
 For Directory URI
 -----------------
 
-The default controller is also used when no matching route has been found, and
-the URI would point to a directory in the controllers directory. For example, if
-the user visits **http://example.com/admin**, and a controller was found at
+The default controller is also used when no matching route has been found, and the URI would point to a directory in the
+controllers directory. For example, if the user visits **http://example.com/admin**, and a controller was found at
 **app/Controllers/Admin/Home.php**, it would be used.
 
-.. important:: You cannot access the default controller with the URI of the
-    controller name. When the default controller is ``Home``, you can access
-    **http://example.com/**, but if you access **http://example.com/home**, it
-    will not be found.
+.. important:: You cannot access the default controller with the URI of the controller name. When the default controller
+    is ``Home``, you can access **http://example.com/**, but if you access **http://example.com/home**, it will not be
+    found.
 
 .. _routing-auto-routing-improved-default-method:
 
 Default Method
 ==============
 
-This works similarly to the default controller setting, but is used to determine
-the default method that is used when a controller is found that matches the URI,
-but no segment exists for the method. The default value is ``index``.
+This works similarly to the default controller setting, but is used to determine the default method that is used when a
+controller is found that matches the URI, but no segment exists for the method. The default value is ``index``.
 
-In this example, if the user were to visit **example.com/products**, and a ``Products``
-controller existed, the ``Products::getListAll()`` method would be executed::
+In this example, if the user were to visit **example.com/products**, and a ``Products`` controller existed, the
+``Products::getListAll()`` method would be executed::
 
     public string $defaultMethod = 'listAll';
 
-.. important:: You cannot access the controller with the URI of the default method
-    name. In the example above, you can access **example.com/products**, but if
-    you access **example.com/products/listall**, it will not be found.
+.. important:: You cannot access the controller with the URI of the default method name. In the example above, you can
+    access **example.com/products**, but if you access **example.com/products/listall**, it will not be found.
 
 .. _translate-uri-to-camelcase:
 
@@ -455,29 +408,26 @@ Translate URI To CamelCase
 
 .. versionadded:: 4.5.0
 
-.. note:: Since v4.6.0, the ``$translateUriToCamelCase`` option is enabled by
-    default.
+.. note:: Since v4.6.0, the ``$translateUriToCamelCase`` option is enabled by default.
 
-Since v4.5.0, the ``$translateUriToCamelCase`` option has been implemented,
-which works well with CodeIgniter's current coding standards.
+Since v4.5.0, the ``$translateUriToCamelCase`` option has been implemented, which works well with CodeIgniter's current
+coding standards.
 
-This option enables you to automatically translate a URI with dashes (``-``) to
-CamelCase in the controller and method URI segments.
+This option enables you to automatically translate a URI with dashes (``-``) to CamelCase in the controller and method
+URI segments.
 
 For example, the URI ``sub-dir/hello-controller/some-method`` will execute the
 ``SubDir\HelloController::getSomeMethod()`` method.
 
-.. note:: When this option is enabled, the ``$translateURIDashes`` option is
-    ignored.
+.. note:: When this option is enabled, the ``$translateURIDashes`` option is ignored.
 
 Disable Translate URI To CamelCase
 ----------------------------------
 
-.. note:: The option to disable "Translate URI To CamelCase" exists only for
-    backward compatibility. We don't recommend disabling it.
+.. note:: The option to disable "Translate URI To CamelCase" exists only for backward compatibility. We don't recommend
+    disabling it.
 
-To disable it, you need to set the ``$translateUriToCamelCase`` option
-to ``false`` in **app/Config/Routing.php**::
+To disable it, you need to set the ``$translateUriToCamelCase`` option to ``false`` in **app/Config/Routing.php**::
 
     public bool $translateUriToCamelCase = false;
 
@@ -489,21 +439,17 @@ Module Routing
 
 .. versionadded:: 4.4.0
 
-You can use auto routing even if you use :doc:`../general/modules` and place
-the controllers in a different namespace.
+You can use auto routing even if you use :doc:`../general/modules` and place the controllers in a different namespace.
 
-To route to a module, the ``$moduleRoutes`` property in **app/Config/Routing.php**
-must be set::
+To route to a module, the ``$moduleRoutes`` property in **app/Config/Routing.php** must be set::
 
     public array $moduleRoutes = [
         'blog' => 'Acme\Blog\Controllers',
     ];
 
-The key is the first URI segment for the module, and the value is the controller
-namespace. In the above configuration, **http://localhost:8080/blog/foo/bar**
-will be routed to ``Acme\Blog\Controllers\Foo::getBar()``.
+The key is the first URI segment for the module, and the value is the controller namespace. In the above configuration,
+**http://localhost:8080/blog/foo/bar** will be routed to ``Acme\Blog\Controllers\Foo::getBar()``.
 
-.. note:: If you define ``$moduleRoutes``, the routing for the module takes
-    precedence. In the above example, even if you have the ``App\Controllers\Blog``
-    controller, **http://localhost:8080/blog** will be routed to the default
+.. note:: If you define ``$moduleRoutes``, the routing for the module takes precedence. In the above example, even if
+    you have the ``App\Controllers\Blog`` controller, **http://localhost:8080/blog** will be routed to the default
     controller ``Acme\Blog\Controllers\Home``.

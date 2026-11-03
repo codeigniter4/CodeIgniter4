@@ -2,7 +2,9 @@
 AJAX Requests
 #############
 
-The ``IncomingRequest::isAJAX()`` method uses the ``X-Requested-With`` header to determine whether the request is XHR or normal. However, modern JavaScript APIs such as ``fetch`` no longer send this header by default, so ``IncomingRequest::isAJAX()`` becomes less reliable without additional configuration.
+The ``IncomingRequest::isAJAX()`` method uses the ``X-Requested-With`` header to determine whether the request is XHR or
+normal. However, modern JavaScript APIs such as ``fetch`` no longer send this header by default, so
+``IncomingRequest::isAJAX()`` becomes less reliable without additional configuration.
 
 To work around this problem, manually define the request header so the server can identify the request as XHR.
 
@@ -28,8 +30,7 @@ Fetch API
 Axios
 =====
 
-Axios does not include the ``X-Requested-With`` header by default.
-You can add it globally as follows:
+Axios does not include the ``X-Requested-With`` header by default. You can add it globally as follows:
 
 .. code-block:: javascript
 
@@ -50,12 +51,14 @@ If you prefer to avoid global defaults, create an Axios instance instead:
 Vue.js
 ------
 
-Vue does not require a specific HTTP client. If your Vue app uses Axios, configure Axios once during application bootstrap or in a shared API module, and reuse that configuration throughout the app.
+Vue does not require a specific HTTP client. If your Vue app uses Axios, configure Axios once during application
+bootstrap or in a shared API module, and reuse that configuration throughout the app.
 
 React
 -----
 
-React also does not provide a built-in HTTP client. If your React app uses Axios, reuse the shared Axios configuration above, or set the header for an individual request when needed:
+React also does not provide a built-in HTTP client. If your React app uses Axios, reuse the shared Axios configuration
+above, or set the header for an individual request when needed:
 
 .. code-block:: javascript
 
@@ -68,7 +71,9 @@ React also does not provide a built-in HTTP client. If your React app uses Axios
 jQuery
 ======
 
-For libraries like jQuery, it is not necessary to send this header explicitly because, according to the `official documentation <https://api.jquery.com/jquery.ajax/>`_, it is a standard header for all ``$.ajax()`` requests. But if you still want to send it explicitly to be safe, do it as follows:
+For libraries like jQuery, it is not necessary to send this header explicitly because, according to the
+`official documentation <https://api.jquery.com/jquery.ajax/>`_, it is a standard header for all ``$.ajax()`` requests.
+But if you still want to send it explicitly to be safe, do it as follows:
 
 .. code-block:: javascript
 
@@ -80,7 +85,8 @@ For libraries like jQuery, it is not necessary to send this header explicitly be
 htmx
 ====
 
-You can use the `ajax-header <https://github.com/bigskysoftware/htmx-extensions/blob/main/src/ajax-header/README.md>`_ extension.
+You can use the `ajax-header <https://github.com/bigskysoftware/htmx-extensions/blob/main/src/ajax-header/README.md>`_
+extension.
 
 .. code-block:: html
 

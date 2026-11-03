@@ -19,8 +19,8 @@ Mandatory File Changes
 URI Security
 ============
 
-A feature to check that URIs do not contain disallowed strings has been added.
-This check is equivalent to the URI Security found in CodeIgniter 3.
+A feature to check that URIs do not contain disallowed strings has been added. This check is equivalent to the URI
+Security found in CodeIgniter 3.
 
 We recommend you enable this feature. Add the following to **app/Config/App.php**::
 
@@ -49,8 +49,8 @@ A bug where URI paths processed by :doc:`../incoming/filters` were not URL-decod
 
 .. note:: :doc:`Router <../incoming/routing>` processes URL-decoded URI paths.
 
-``Config\Filters`` has some places to specify the URI paths. If the paths have
-different values when URL-decoded, change them to the URL-decoded values.
+``Config\Filters`` has some places to specify the URI paths. If the paths have different values when URL-decoded, change
+them to the URL-decoded values.
 
 For example:
 
@@ -77,47 +77,43 @@ For example:
 Time::difference() and DST
 ==========================
 
-In previous versions, when comparing dates with ``Time::difference()``, unexpected
-results were returned if the date included a day different from 24 hours due to
-Daylight Saving Time (DST). See :ref:`Note in Times and Dates <time-viewing-differences>`
-for details.
+In previous versions, when comparing dates with ``Time::difference()``, unexpected results were returned if the date
+included a day different from 24 hours due to Daylight Saving Time (DST). See
+:ref:`Note in Times and Dates <time-viewing-differences>` for details.
 
-This bug has been fixed, so date comparisons will now be shifted by one day in
-such cases.
+This bug has been fixed, so date comparisons will now be shifted by one day in such cases.
 
-In the unlikely event that you wish to maintain the behavior of the previous
-versions, change the time zone of both dates being compared to UTC before passing
-them to ``Time::difference()``.
+In the unlikely event that you wish to maintain the behavior of the previous versions, change the time zone of both
+dates being compared to UTC before passing them to ``Time::difference()``.
 
 *************
 Project Files
 *************
 
-Some files in the **project space** (root, app, public, writable) received updates. Due to
-these files being outside of the **system** scope, they will not be changed without your intervention.
+Some files in the **project space** (root, app, public, writable) received updates. Due to these files being outside of
+the **system** scope, they will not be changed without your intervention.
 
-There are some third-party CodeIgniter modules available to assist with merging changes to
-the project space: `Explore on Packagist <https://packagist.org/explore/?query=codeigniter4%20updates>`_.
+There are some third-party CodeIgniter modules available to assist with merging changes to the project space:
+`Explore on Packagist <https://packagist.org/explore/?query=codeigniter4%20updates>`_.
 
 Content Changes
 ===============
 
-The following files received significant changes (including deprecations or visual adjustments)
-and it is recommended that you merge the updated versions with your application:
+The following files received significant changes (including deprecations or visual adjustments) and it is recommended
+that you merge the updated versions with your application:
 
 Config
 ------
 
 - **app/Config/App.php**
 
-  - The property ``$permittedURIChars`` was added. See :ref:`urls-uri-security`
-    for details.
+  - The property ``$permittedURIChars`` was added. See :ref:`urls-uri-security` for details.
 
 All Changes
 ===========
 
-This is a list of all files in the **project space** that received changes;
-many will be simple comments or formatting that have no effect on the runtime:
+This is a list of all files in the **project space** that received changes; many will be simple comments or formatting
+that have no effect on the runtime:
 
 - **app/Config/App.php**
 - **app/Config/Cache.php**

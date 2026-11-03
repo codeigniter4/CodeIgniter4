@@ -11,7 +11,9 @@ The HTML Helper file contains functions that assist in working with HTML.
 Configuration
 =============
 
-Since ``v4.3.0``, void HTML elements (e.g. ``<img>``) in ``html_helper`` functions have been changed to be HTML5-compatible by default. If you need to be compatible with XHTML, you must set the ``$html5`` property in **app/Config/DocTypes.php** to ``false``.
+Since ``v4.3.0``, void HTML elements (e.g. ``<img>``) in ``html_helper`` functions have been changed to be
+HTML5-compatible by default. If you need to be compatible with XHTML, you must set the ``$html5`` property in
+**app/Config/DocTypes.php** to ``false``.
 
 Loading this Helper
 ===================
@@ -33,20 +35,18 @@ The following functions are available:
     :returns:   An HTML image element
     :rtype: string
 
-    Lets you create HTML ``<img>`` elements. The first parameter contains the
-    image source. Example:
+    Lets you create HTML ``<img>`` elements. The first parameter contains the image source. Example:
 
     .. literalinclude:: html_helper/002.php
 
-    There is an optional second parameter, a true/false value, that
-    specifies if the *src* should have ``Config\App::$indexPage`` added to the address it creates.
-    Presumably, this would be if you were using a media controller:
+    There is an optional second parameter, a true/false value, that specifies if the *src* should have
+    ``Config\App::$indexPage`` added to the address it creates. Presumably, this would be if you were using a media
+    controller:
 
     .. literalinclude:: html_helper/003.php
 
-    Additionally, an associative array can be passed as the first parameter,
-    for complete control over all attributes and values. If an *alt* attribute
-    is not provided, CodeIgniter will generate one with an empty string.
+    Additionally, an associative array can be passed as the first parameter, for complete control over all attributes
+    and values. If an *alt* attribute is not provided, CodeIgniter will generate one with an empty string.
 
     Example:
 
@@ -59,19 +59,18 @@ The following functions are available:
     :returns: base64-encoded binary image string
     :rtype: string
 
-    Generates a src-ready string from an image using the "data:" protocol.
-    Example:
+    Generates a src-ready string from an image using the "data:" protocol. Example:
 
     .. literalinclude:: html_helper/005.php
 
-    There is an optional second parameter to specify the MIME type. Otherwise, the
-    function will use your Mimes config to guess:
+    There is an optional second parameter to specify the MIME type. Otherwise, the function will use your Mimes config
+    to guess:
 
     .. literalinclude:: html_helper/006.php
 
-    Note that ``$path`` must exist and be a readable image format supported by the ``data:`` protocol.
-    This function is not recommended for very large files, but it provides a convenient way
-    of serving images from your app that are not web-accessible (e.g., in **writable/**).
+    Note that ``$path`` must exist and be a readable image format supported by the ``data:`` protocol. This function is
+    not recommended for very large files, but it provides a convenient way of serving images from your app that are not
+    web-accessible (e.g., in **writable/**).
 
 .. php:function:: link_tag([$href = ''[, $rel = 'stylesheet'[, $type = 'text/css'[, $title = ''[, $media = ''[, $indexPage = false[, $hreflang = '']]]]]]])
 
@@ -85,12 +84,11 @@ The following functions are available:
     :returns:   An HTML link element
     :rtype: string
 
-    Lets you create HTML ``<link>`` elements. This is useful for stylesheet links,
-    as well as other links. The parameters are *href*, with optional *rel*,
-    *type*, *title*, *media*, *indexPage* and *hreflang*.
+    Lets you create HTML ``<link>`` elements. This is useful for stylesheet links, as well as other links. The
+    parameters are *href*, with optional *rel*, *type*, *title*, *media*, *indexPage* and *hreflang*.
 
-    *indexPage* is a boolean value that specifies if the *href* should have
-    the page specified by ``Config\App::$indexPage`` added to the address it creates.
+    *indexPage* is a boolean value that specifies if the *href* should have the page specified by
+    ``Config\App::$indexPage`` added to the address it creates.
 
     Example:
 
@@ -100,8 +98,8 @@ The following functions are available:
 
     .. literalinclude:: html_helper/008.php
 
-    Alternatively, an associative array can be passed to the ``link_tag()`` function
-    for complete control over all attributes and values:
+    Alternatively, an associative array can be passed to the ``link_tag()`` function for complete control over all
+    attributes and values:
 
     .. literalinclude:: html_helper/009.php
 
@@ -114,15 +112,15 @@ The following functions are available:
 
     Lets you create HTML ``<script>`` elements. The parameters are *src* and optional *indexPage*.
 
-    *indexPage* is a boolean value that specifies if the *src* should have
-    the page specified by ``Config\App::$indexPage`` added to the address it creates.
+    *indexPage* is a boolean value that specifies if the *src* should have the page specified by
+    ``Config\App::$indexPage`` added to the address it creates.
 
     Example:
 
     .. literalinclude:: html_helper/010.php
 
-    Alternatively, an associative array can be passed to the ``script_tag()`` function
-    for complete control over all attributes and values:
+    Alternatively, an associative array can be passed to the ``script_tag()`` function for complete control over all
+    attributes and values:
 
     .. literalinclude:: html_helper/011.php
 
@@ -133,8 +131,7 @@ The following functions are available:
     :returns:   An HTML unordered list element
     :rtype: string
 
-    Permits you to generate an unordered HTML list from a simple or
-    multi-dimensional array. Example:
+    Permits you to generate an unordered HTML list from a simple or multi-dimensional array. Example:
 
     .. literalinclude:: html_helper/012.php
 
@@ -206,8 +203,7 @@ The following functions are available:
     :returns:   An HTML ordered list element
     :rtype: string
 
-    Identical to :php:func:`ul()`, except that it produces an ``<ol>`` element for
-    ordered lists instead of ``<ul>``.
+    Identical to :php:func:`ul()`, except that it produces an ``<ol>`` element for ordered lists instead of ``<ul>``.
 
 .. php:function:: video($src[, $unsupportedMessage = ''[, $attributes = ''[, $tracks = [][, $indexPage = false]]]])
 
@@ -219,8 +215,7 @@ The following functions are available:
     :returns:                            An HTML video element
     :rtype: string
 
-    Permits you to generate an HTML video element from a source string or an array of sources.
-    Example:
+    Permits you to generate an HTML video element from a source string or an array of sources. Example:
 
     .. literalinclude:: html_helper/014.php
 
@@ -269,8 +264,7 @@ The following functions are available:
     :returns:   An HTML source element
     :rtype: string
 
-    Lets you create HTML ``<source>`` elements. The first parameter contains the path of the resource.
-    Example:
+    Lets you create HTML ``<source>`` elements. The first parameter contains the path of the resource. Example:
 
     .. literalinclude:: html_helper/015.php
 
@@ -283,8 +277,7 @@ The following functions are available:
     :returns:   An HTML embed element
     :rtype: string
 
-    Lets you create HTML ``<embed>`` elements. The first parameter contains the
-    embed source. Example:
+    Lets you create HTML ``<embed>`` elements. The first parameter contains the embed source. Example:
 
     .. literalinclude:: html_helper/016.php
 
@@ -298,8 +291,7 @@ The following functions are available:
     :returns:   An HTML object element
     :rtype: string
 
-    Lets you create HTML ``<object>`` elements. The first parameter contains the
-    object data. Example:
+    Lets you create HTML ``<object>`` elements. The first parameter contains the object data. Example:
 
     .. literalinclude:: html_helper/017.php
 
@@ -323,8 +315,7 @@ The following functions are available:
     :returns:   An HTML param element
     :rtype: string
 
-    Lets you create HTML ``<param>`` elements. The first parameter contains the
-    param source. Example:
+    Lets you create HTML ``<param>`` elements. The first parameter contains the param source. Example:
 
     .. literalinclude:: html_helper/018.php
 
@@ -337,8 +328,7 @@ The following functions are available:
     :returns:   An HTML track element
     :rtype: string
 
-    Generates a track element to specify timed tracks. The tracks are
-    formatted in WebVTT format. Example:
+    Generates a track element to specify timed tracks. The tracks are formatted in WebVTT format. Example:
 
     .. literalinclude:: html_helper/019.php
 
@@ -348,15 +338,14 @@ The following functions are available:
     :returns:   An HTML DocType declaration
     :rtype: string
 
-    Helps you generate document type declarations (DTDs). HTML 5
-    is used by default, but many doctypes are available.
+    Helps you generate document type declarations (DTDs). HTML 5 is used by default, but many doctypes are available.
 
     Example:
 
     .. literalinclude:: html_helper/020.php
 
-    The following is a list of the pre-defined doctypes. These are
-    pulled from **app/Config/DocTypes.php**, or they could be overridden in your **.env** configuration.
+    The following is a list of the pre-defined doctypes. These are pulled from **app/Config/DocTypes.php**, or they
+    could be overridden in your **.env** configuration.
 
     =============================== =================== ==================================================================================================================================================
     Document type                   $type parameter     Result

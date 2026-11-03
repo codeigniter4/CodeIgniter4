@@ -22,9 +22,11 @@ Upgrade Guide
    .. literalinclude:: upgrade_localization/001.php
 
 2. Now move your language files to **app/Language/<locale>**.
-3. After that you have to change the syntax within the language files. Below in the Code Example you will see how the language array within the file should look.
+3. After that you have to change the syntax within the language files. Below in the Code Example you will see how the
+   language array within the file should look.
 4. Remove from every file the language loader ``$this->lang->load($file, $lang);``.
-5. Replace the method to load the language line ``$this->lang->line('error_email_missing')`` with ``echo lang('Errors.errorEmailMissing');``.
+5. Replace the method to load the language line ``$this->lang->line('error_email_missing')`` with
+   ``echo lang('Errors.errorEmailMissing');``.
 
 Code Example
 ============

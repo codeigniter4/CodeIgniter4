@@ -12,8 +12,8 @@ Please refer to the upgrade instructions corresponding to your installation meth
     :local:
     :depth: 2
 
-This release focuses on code style. All changes (except those noted below) are cosmetic to bring the code in line with the new
-`CodeIgniter Coding Standard <https://github.com/CodeIgniter/coding-standard>`_ (based on PSR-12).
+This release focuses on code style. All changes (except those noted below) are cosmetic to bring the code in line with
+the new `CodeIgniter Coding Standard <https://github.com/CodeIgniter/coding-standard>`_ (based on PSR-12).
 
 Breaking Changes
 ****************
@@ -21,8 +21,8 @@ Breaking Changes
 Method Scope
 ============
 
-The following methods were changed from ``public`` to ``protected`` to match their parent class methods and better align with their uses.
-If you relied on any of these methods being public (highly unlikely), adjust your code accordingly:
+The following methods were changed from ``public`` to ``protected`` to match their parent class methods and better align
+with their uses. If you relied on any of these methods being public (highly unlikely), adjust your code accordingly:
 
 * ``CodeIgniter\Database\MySQLi\Connection::execute()``
 * ``CodeIgniter\Database\MySQLi\Connection::_fieldData()``
@@ -51,6 +51,6 @@ If you relied on any of these methods being public (highly unlikely), adjust you
 Project Files
 *************
 
-All files in the project space were reformatted with the new coding style. This will not affect
-existing code but you may want to apply the updated coding style to your own projects to keep
-them in line with the framework's version of these files.
+All files in the project space were reformatted with the new coding style. This will not affect existing code but you
+may want to apply the updated coding style to your own projects to keep them in line with the framework's version of
+these files.

@@ -2,8 +2,7 @@
 Filesystem Helper
 #################
 
-The Filesystem Helper file contains functions that assist in working with
-files and directories.
+The Filesystem Helper file contains functions that assist in working with files and directories.
 
 .. contents::
     :local:
@@ -35,20 +34,18 @@ The following functions are available:
 
     .. note:: Paths are almost always relative to your main **index.php** file.
 
-    Sub-folders contained within the directory will be mapped as well. If
-    you wish to control the recursion depth, you can do so using the second
-    parameter (integer). A depth of ``1`` will only map the top-level directory:
+    Sub-folders contained within the directory will be mapped as well. If you wish to control the recursion depth, you
+    can do so using the second parameter (integer). A depth of ``1`` will only map the top-level directory:
 
     .. literalinclude:: filesystem_helper/003.php
 
-    By default, hidden files will not be included in the returned array and
-    hidden directories will be skipped. To override this behavior, you may
-    set the third parameter to ``true`` (boolean):
+    By default, hidden files will not be included in the returned array and hidden directories will be skipped. To
+    override this behavior, you may set the third parameter to ``true`` (boolean):
 
     .. literalinclude:: filesystem_helper/004.php
 
-    Each folder name will be an array index, while its contained files will
-    be numerically indexed. Here is an example of a typical array::
+    Each folder name will be an array index, while its contained files will be numerically indexed. Here is an example
+    of a typical array::
 
         Array (
             [libraries] => Array
@@ -85,8 +82,8 @@ The following functions are available:
     :param    string    $target: Target destination directory
     :param    bool    $overwrite: Whether individual files overwrite on collision
 
-    Recursively copies the files and directories of the origin directory
-    into the target directory, i.e., "mirrors" its contents.
+    Recursively copies the files and directories of the origin directory into the target directory, i.e., "mirrors" its
+    contents.
 
     Example:
 
@@ -102,8 +99,7 @@ The following functions are available:
     :returns:    ``true`` if the write was successful, ``false`` in case of an error
     :rtype:    bool
 
-    Writes data to the file specified in the path. If the file does not exist, then the
-    function will create it.
+    Writes data to the file specified in the path. If the file does not exist, then the function will create it.
 
     Example:
 
@@ -113,16 +109,14 @@ The following functions are available:
 
     .. literalinclude:: filesystem_helper/007.php
 
-    The default mode is ``'wb'``. Please see `fopen() <https://www.php.net/manual/en/function.fopen.php>`_ in the PHP manual
-    for mode options.
+    The default mode is ``'wb'``. Please see `fopen() <https://www.php.net/manual/en/function.fopen.php>`_ in the PHP
+    manual for mode options.
 
-    .. note:: In order for this function to write data to a file, its permissions must
-        be set such that it is writable. If the file does not already exist,
-        then the directory containing it must be writable.
+    .. note:: In order for this function to write data to a file, its permissions must be set such that it is writable.
+        If the file does not already exist, then the directory containing it must be writable.
 
-    .. note:: The path is relative to your main site **index.php** file, NOT your
-        controller or view files. CodeIgniter uses a front controller, so paths
-        are always relative to the main site index.
+    .. note:: The path is relative to your main site **index.php** file, NOT your controller or view files. CodeIgniter
+        uses a front controller, so paths are always relative to the main site index.
 
     .. note:: This function acquires an exclusive lock on the file while writing to it.
 
@@ -141,8 +135,8 @@ The following functions are available:
 
     .. literalinclude:: filesystem_helper/008.php
 
-    If the second parameter is set to ``true``, any directories contained within the supplied
-    root path will be deleted as well.
+    If the second parameter is set to ``true``, any directories contained within the supplied root path will be deleted
+    as well.
 
     Example:
 
@@ -159,10 +153,9 @@ The following functions are available:
     :returns:    An array of file names
     :rtype:    array
 
-    Takes a server path as input and returns an array containing the names of all files
-    contained within it. The file path can optionally be added to the file names by setting
-    the second parameter to ``null`` for relative paths or ``true`` for
-    a full file path.
+    Takes a server path as input and returns an array containing the names of all files contained within it. The file
+    path can optionally be added to the file names by setting the second parameter to ``null`` for relative paths or
+    ``true`` for a full file path.
 
     .. note:: Prior to v4.4.4, due to a bug, this function did not follow symlink folders.
 
@@ -177,10 +170,9 @@ The following functions are available:
     :returns:    An array containing info on the supplied directory's contents
     :rtype:    array
 
-    Reads the specified directory and builds an array containing the filenames, filesize,
-    dates, and permissions. Sub-folders contained within the specified path are only read
-    if forced by setting the second parameter to false, as this can be an intensive
-    operation.
+    Reads the specified directory and builds an array containing the filenames, filesize, dates, and permissions.
+    Sub-folders contained within the specified path are only read if forced by setting the second parameter to false, as
+    this can be an intensive operation.
 
     Example:
 
@@ -193,9 +185,8 @@ The following functions are available:
     :returns:    An array containing info on the specified file, or null if it is not a file
     :rtype:    array|null
 
-    Given a file and path, returns (optionally) the *name*, *path*, *size* and *date modified*
-    information attributes for a file. The second parameter allows you to explicitly declare what
-    information you want returned.
+    Given a file and path, returns (optionally) the *name*, *path*, *size* and *date modified* information attributes
+    for a file. The second parameter allows you to explicitly declare what information you want returned.
 
     Valid ``$returnedValues`` options are: ``name``, ``server_path``, ``size``, ``date``, ``readable``, ``writable``,
     ``executable`` and ``fileperms``.
@@ -206,8 +197,9 @@ The following functions are available:
     :returns:    Symbolic permissions string
     :rtype:    string
 
-    Takes numeric permissions (such as is returned by `fileperms() <https://www.php.net/manual/en/function.fileperms.php>`_) and returns
-    standard symbolic notation of file permissions.
+    Takes numeric permissions (such as is returned by
+    `fileperms() <https://www.php.net/manual/en/function.fileperms.php>`_) and returns standard symbolic notation of
+    file permissions.
 
     .. literalinclude:: filesystem_helper/012.php
 
@@ -217,8 +209,9 @@ The following functions are available:
     :returns:    Octal permissions string
     :rtype:    string
 
-    Takes numeric permissions (such as is returned by `fileperms() <https://www.php.net/manual/en/function.fileperms.php>`_) and returns
-    a three-character octal notation of file permissions.
+    Takes numeric permissions (such as is returned by
+    `fileperms() <https://www.php.net/manual/en/function.fileperms.php>`_) and returns a three-character octal notation
+    of file permissions.
 
     .. literalinclude:: filesystem_helper/013.php
 
@@ -240,9 +233,8 @@ The following functions are available:
     :returns:    An absolute path
     :rtype:    string
 
-    This function will return a server path without symbolic links or
-    relative directory structures. An optional second argument will
-    cause an error to be triggered if the path cannot be resolved.
+    This function will return a server path without symbolic links or relative directory structures. An optional second
+    argument will cause an error to be triggered if the path cannot be resolved.
 
     Examples:
 

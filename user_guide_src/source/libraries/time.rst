@@ -2,18 +2,18 @@
 Times and Dates
 ###############
 
-CodeIgniter provides a fully localized, immutable date/time class that is built on PHP's DateTimeImmutable class, but uses the Intl
-extension's features to convert times across timezones and display the output correctly for different locales. This class
-is the ``Time`` class and lives in the ``CodeIgniter\I18n`` namespace.
+CodeIgniter provides a fully localized, immutable date/time class that is built on PHP's DateTimeImmutable class, but
+uses the Intl extension's features to convert times across timezones and display the output correctly for different
+locales. This class is the ``Time`` class and lives in the ``CodeIgniter\I18n`` namespace.
 
-.. note:: Since the Time class extends ``DateTimeImmutable``, if there are features that you need that this class doesn't provide,
-    you can likely find them within the `DateTimeImmutable`_ class itself.
+.. note:: Since the Time class extends ``DateTimeImmutable``, if there are features that you need that this class
+    doesn't provide, you can likely find them within the `DateTimeImmutable`_ class itself.
 
 .. _DateTimeImmutable: https://www.php.net/manual/en/class.datetimeimmutable.php
 
-.. note:: Prior to v4.3.0, the Time class extended ``DateTime`` and some inherited methods changed
-    the current object state. The bug was fixed in v4.3.0. If you need the old Time class for backward
-    compatibility, you can use the deprecated ``TimeLegacy`` class for the time being.
+.. note:: Prior to v4.3.0, the Time class extended ``DateTime`` and some inherited methods changed the current object
+    state. The bug was fixed in v4.3.0. If you need the old Time class for backward compatibility, you can use the
+    deprecated ``TimeLegacy`` class for the time being.
 
 .. contents::
     :local:
@@ -23,30 +23,29 @@ is the ``Time`` class and lives in the ``CodeIgniter\I18n`` namespace.
 Instantiating
 *************
 
-There are several ways that a new Time instance can be created. The first is simply to create a new instance
-like any other class.
+There are several ways that a new Time instance can be created. The first is simply to create a new instance like any
+other class.
 
-When you do it this way, you can pass in a string representing the desired time.
-This can be any string that PHP's `DateTimeImmutable`_ constructor can parse. See
-`Supported Date and Time Formats`_ for details.
+When you do it this way, you can pass in a string representing the desired time. This can be any string that PHP's
+`DateTimeImmutable`_ constructor can parse. See `Supported Date and Time Formats`_ for details.
 
 .. _Supported Date and Time Formats: https://www.php.net/manual/en/datetime.formats.php
 
 .. literalinclude:: time/001.php
 
-You can pass in strings representing the timezone and the locale in the second and the third parameters, respectively. The timezone
-can be any one supported by PHP's `DateTimeZone <https://www.php.net/manual/en/timezones.php>`__ class. The locale can be
-any one supported by PHP's `Locale <https://www.php.net/manual/en/class.locale.php>`__ class. If no locale or timezone is
-provided, the application defaults will be used.
+You can pass in strings representing the timezone and the locale in the second and the third parameters, respectively.
+The timezone can be any one supported by PHP's `DateTimeZone <https://www.php.net/manual/en/timezones.php>`__ class. The
+locale can be any one supported by PHP's `Locale <https://www.php.net/manual/en/class.locale.php>`__ class. If no locale
+or timezone is provided, the application defaults will be used.
 
 .. literalinclude:: time/002.php
 
 now()
 =====
 
-The Time class has several helper methods to instantiate the class. The first of these is the ``now()`` method
-that returns a new instance set to the current time. You can pass in strings representing the timezone and locale
-in the first and second parameters, respectively. If no locale or timezone is provided, the application defaults will be used.
+The Time class has several helper methods to instantiate the class. The first of these is the ``now()`` method that
+returns a new instance set to the current time. You can pass in strings representing the timezone and locale in the
+first and second parameters, respectively. If no locale or timezone is provided, the application defaults will be used.
 
 .. literalinclude:: time/003.php
 
@@ -61,24 +60,24 @@ constructor as the first parameter, a timezone as the second parameter, and the 
 today()
 =======
 
-Returns a new instance with the date set to the current date, and the time set to midnight. It accepts strings
-for the timezone and locale in the first and second parameters:
+Returns a new instance with the date set to the current date, and the time set to midnight. It accepts strings for the
+timezone and locale in the first and second parameters:
 
 .. literalinclude:: time/005.php
 
 yesterday()
 ===========
 
-Returns a new instance with the date set to yesterday's date and the time set to midnight. It accepts strings
-for the timezone and locale in the first and second parameters:
+Returns a new instance with the date set to yesterday's date and the time set to midnight. It accepts strings for the
+timezone and locale in the first and second parameters:
 
 .. literalinclude:: time/006.php
 
 tomorrow()
 ==========
 
-Returns a new instance with the date set to tomorrow's date and the time set to midnight. It accepts strings
-for the timezone and locale in the first and second parameters:
+Returns a new instance with the date set to tomorrow's date and the time set to midnight. It accepts strings for the
+timezone and locale in the first and second parameters:
 
 .. literalinclude:: time/007.php
 
@@ -86,8 +85,8 @@ createFromDate()
 ================
 
 Given separate inputs for **year**, **month**, and **day**, it will return a new instance. If any of these parameters
-are not provided, it will use the current year, month and day. Accepts strings for the timezone and locale in the
-fourth and fifth parameters:
+are not provided, it will use the current year, month and day. Accepts strings for the timezone and locale in the fourth
+and fifth parameters:
 
 .. literalinclude:: time/008.php
 
@@ -95,16 +94,16 @@ createFromTime()
 ================
 
 Like ``createFromDate()``, except it is only concerned with the **hours**, **minutes**, and **seconds**. Uses the
-current day for the date portion of the Time instance. Accepts strings for the timezone and locale in the
-fourth and fifth parameters:
+current day for the date portion of the Time instance. Accepts strings for the timezone and locale in the fourth and
+fifth parameters:
 
 .. literalinclude:: time/009.php
 
 create()
 ========
 
-A combination of the previous two methods, this takes **year**, **month**, **day**, **hour**, **minutes**, and **seconds**
-as separate parameters. Any value not provided will use the current date and time. Accepts strings for the
+A combination of the previous two methods, this takes **year**, **month**, **day**, **hour**, **minutes**, and
+**seconds** as separate parameters. Any value not provided will use the current date and time. Accepts strings for the
 timezone and locale in the seventh and eighth parameters:
 
 .. literalinclude:: time/010.php
@@ -112,8 +111,8 @@ timezone and locale in the seventh and eighth parameters:
 createFromFormat()
 ==================
 
-This is a replacement for DateTimeImmutable's method of the same name. This allows the timezone to be set at the same time,
-and returns a ``Time`` instance, instead of DateTimeImmutable:
+This is a replacement for DateTimeImmutable's method of the same name. This allows the timezone to be set at the same
+time, and returns a ``Time`` instance, instead of DateTimeImmutable:
 
 .. literalinclude:: time/011.php
 
@@ -122,34 +121,33 @@ and returns a ``Time`` instance, instead of DateTimeImmutable:
 createFromTimestamp()
 =====================
 
-This method takes a UNIX timestamp and, optionally, the timezone and locale, to
-create a new Time instance:
+This method takes a UNIX timestamp and, optionally, the timezone and locale, to create a new Time instance:
 
 .. literalinclude:: time/012.php
 
 If you do not explicitly pass a timezone, it returns a Time instance with **UTC**.
 
-.. note:: We recommend always calling ``createFromTimestamp()`` with 2 parameters
-    (i.e. explicitly pass a timezone) unless using UTC as the default timezone.
+.. note:: We recommend always calling ``createFromTimestamp()`` with 2 parameters (i.e. explicitly pass a timezone)
+    unless using UTC as the default timezone.
 
-.. note:: From v4.4.6 up to, but not including, v4.6.0, this method returned a Time instance
-    with the default timezone when no timezone was specified.
+.. note:: From v4.4.6 up to, but not including, v4.6.0, this method returned a Time instance with the default timezone
+    when no timezone was specified.
 
 createFromInstance()
 ====================
 
-When working with other libraries that provide a DateTime instance, you can use this method to convert that
-to a Time instance, optionally setting the locale. The timezone will be automatically determined from the DateTime
-instance passed in:
+When working with other libraries that provide a DateTime instance, you can use this method to convert that to a Time
+instance, optionally setting the locale. The timezone will be automatically determined from the DateTime instance passed
+in:
 
 .. literalinclude:: time/013.php
 
 toDateTime()
 ============
 
-While not an instantiator, this method is the opposite of the ``createFromInstance()`` method, allowing you to convert a Time
-instance into a DateTime instance. This preserves the timezone setting, but loses the locale, since DateTime is
-not aware of locales:
+While not an instantiator, this method is the opposite of the ``createFromInstance()`` method, allowing you to convert a
+Time instance into a DateTime instance. This preserves the timezone setting, but loses the locale, since DateTime is not
+aware of locales:
 
 .. literalinclude:: time/014.php
 
@@ -158,16 +156,17 @@ not aware of locales:
 Displaying the Value
 ********************
 
-Since the Time class extends DateTimeImmutable, you get all of the output methods that it provides, including the ``format()`` method.
-However, the DateTimeImmutable methods do not provide a localized result. The Time class does provide a number of helper methods
-to display localized versions of the value, though.
+Since the Time class extends DateTimeImmutable, you get all of the output methods that it provides, including the
+``format()`` method. However, the DateTimeImmutable methods do not provide a localized result. The Time class does
+provide a number of helper methods to display localized versions of the value, though.
 
 toLocalizedString()
 ===================
 
-This is the localized version of DateTimeImmutable's ``format()`` method. Instead of using the values you might be familiar with, though,
-you must use values acceptable to the `IntlDateFormatter <https://www.php.net/manual/en/class.intldateformatter.php>`__ class.
-A full listing of values can be found `here <https://unicode-org.github.io/icu-docs/apidoc/released/icu4c/classSimpleDateFormat.html#details>`__.
+This is the localized version of DateTimeImmutable's ``format()`` method. Instead of using the values you might be
+familiar with, though, you must use values acceptable to the
+`IntlDateFormatter <https://www.php.net/manual/en/class.intldateformatter.php>`__ class. A full listing of values can be
+found `here <https://unicode-org.github.io/icu-docs/apidoc/released/icu4c/classSimpleDateFormat.html#details>`__.
 
 .. literalinclude:: time/015.php
 
@@ -176,8 +175,9 @@ A full listing of values can be found `here <https://unicode-org.github.io/icu-d
 toDateTimeString()
 ==================
 
-This is the first of three helper methods to work with the `IntlDateFormatter <https://www.php.net/manual/en/class.intldateformatter.php>`_ without having to remember their values.
-This will return a localized version of a string formatted as ``Y-m-d H:i:s``:
+This is the first of three helper methods to work with the
+`IntlDateFormatter <https://www.php.net/manual/en/class.intldateformatter.php>`_ without having to remember their
+values. This will return a localized version of a string formatted as ``Y-m-d H:i:s``:
 
 .. literalinclude:: time/016.php
 
@@ -199,8 +199,8 @@ humanize()
 ==========
 
 This method returns a string that displays the difference between the current date/time and the instance in a
-human-readable format that is geared towards being easily understood. It can create strings like '3 hours ago',
-'in 1 month', etc.:
+human-readable format that is geared towards being easily understood. It can create strings like '3 hours ago', 'in 1
+month', etc.:
 
 .. literalinclude:: time/019.php
 
@@ -219,16 +219,16 @@ now < $time < 1 hour             in 35 minutes / 35 minutes ago
 $time == now                     Now
 =============================== =================================
 
-The result strings come from the language file, **system/Language/en/Time.php**.
-If you want to overwrite them, create **app/Language/{locale}/Time.php**.
+The result strings come from the language file, **system/Language/en/Time.php**. If you want to overwrite them, create
+**app/Language/{locale}/Time.php**.
 
 ******************************
 Working with Individual Values
 ******************************
 
-The Time object provides a number of methods that allow you to get and set individual items, like the year, month, hour, etc.,
-of an existing instance. All of the values retrieved through the following methods will be fully localized and respect
-the locale that the Time instance was created with.
+The Time object provides a number of methods that allow you to get and set individual items, like the year, month, hour,
+etc., of an existing instance. All of the values retrieved through the following methods will be fully localized and
+respect the locale that the Time instance was created with.
 
 All of the following ``getX()`` and ``setX()`` methods can also be used as if they were class properties. So, methods
 like ``getYear()`` can also be accessed through ``$time->year``, and so on.
@@ -247,8 +247,8 @@ In addition to these, a number of methods exist to provide additional informatio
 getAge()
 --------
 
-Returns the age, in years, between the Time instance and the current time. Perfect for checking
-the age of someone based on their birthday:
+Returns the age, in years, between the Time instance and the current time. Perfect for checking the age of someone based
+on their birthday:
 
 .. literalinclude:: time/022.php
 
@@ -276,8 +276,8 @@ Returns boolean true if the Time instance is in UTC time:
 getTimezone()
 -------------
 
-Returns a new `DateTimeZone <https://www.php.net/manual/en/class.datetimezone.php>`__ object set to the timezone of the Time
-instance:
+Returns a new `DateTimeZone <https://www.php.net/manual/en/class.datetimezone.php>`__ object set to the timezone of the
+Time instance:
 
 .. literalinclude:: time/026.php
 
@@ -314,23 +314,23 @@ Returns a new instance with the date set to the new timestamp:
 
 .. literalinclude:: time/030.php
 
-.. note:: Prior to v4.6.0, due to a bug, this method might return an incorrect
-    date/time. See :ref:`Upgrading Guide <upgrade-460-time-set-timestamp>` for details.
+.. note:: Prior to v4.6.0, due to a bug, this method might return an incorrect date/time. See
+    :ref:`Upgrading Guide <upgrade-460-time-set-timestamp>` for details.
 
 Modifying the Value
 ===================
 
-The following methods allow you to modify the date by adding values to or subtracting values from the current Time. This will not
-modify the existing Time instance, but will return a new instance.
+The following methods allow you to modify the date by adding values to or subtracting values from the current Time. This
+will not modify the existing Time instance, but will return a new instance.
 
 .. literalinclude:: time/031.php
 
 addCalendarMonths() / subCalendarMonths()
 -----------------------------------------
 
-Modifies the current Time by adding or subtracting whole calendar months. These methods can be useful if you
-require that no calendar months be skipped in recurring dates. Refer to the table below for a comparison between
-``addMonths()`` and ``addCalendarMonths()`` for an initial date of ``2025-01-31``.
+Modifies the current Time by adding or subtracting whole calendar months. These methods can be useful if you require
+that no calendar months be skipped in recurring dates. Refer to the table below for a comparison between ``addMonths()``
+and ``addCalendarMonths()`` for an initial date of ``2025-01-31``.
 
 ======= =========== ===================
 $months addMonths() addCalendarMonths()
@@ -358,31 +358,31 @@ that way:
 
 .. literalinclude:: time/032.php
 
-The value being tested against can be a Time instance, a DateTime instance, or a string with the full date time in
-a manner that a new DateTime instance can understand. When passing a string as the first parameter, you can pass
-a timezone string in as the second parameter. If no timezone is given, the system default will be used:
+The value being tested against can be a Time instance, a DateTime instance, or a string with the full date time in a
+manner that a new DateTime instance can understand. When passing a string as the first parameter, you can pass a
+timezone string in as the second parameter. If no timezone is given, the system default will be used:
 
 .. literalinclude:: time/033.php
 
 sameAs()
 --------
 
-This is identical to the ``equals()`` method, except that it only returns true when the date, time, AND timezone are
-all identical:
+This is identical to the ``equals()`` method, except that it only returns true when the date, time, AND timezone are all
+identical:
 
 .. literalinclude:: time/034.php
 
 isBefore()
 ----------
 
-Checks if the current instance is before the passed-in time. The comparison is done against the UTC versions of
-both times:
+Checks if the current instance is before the passed-in time. The comparison is done against the UTC versions of both
+times:
 
 .. literalinclude:: time/035.php
 
-The value being tested against can be a Time instance, a DateTime instance, or a string with the full date time in
-a manner that a new DateTime instance can understand. When passing a string as the first parameter, you can pass
-a timezone string in as the second parameter. If no timezone is given, the system default will be used:
+The value being tested against can be a Time instance, a DateTime instance, or a string with the full date time in a
+manner that a new DateTime instance can understand. When passing a string as the first parameter, you can pass a
+timezone string in as the second parameter. If no timezone is given, the system default will be used:
 
 .. literalinclude:: time/036.php
 
@@ -400,8 +400,7 @@ isPast()
 
 .. versionadded:: 4.7.0
 
-Determines if the current instance's time is in the past, relative to "now".
-It returns a boolean true/false:
+Determines if the current instance's time is in the past, relative to "now". It returns a boolean true/false:
 
 .. literalinclude:: time/043.php
 
@@ -412,8 +411,7 @@ isFuture()
 
 .. versionadded:: 4.7.0
 
-Determines if the current instance's time is in the future, relative to "now".
-It returns a boolean true/false:
+Determines if the current instance's time is in the future, relative to "now". It returns a boolean true/false:
 
 .. literalinclude:: time/044.php
 
@@ -422,26 +420,25 @@ It returns a boolean true/false:
 Viewing Differences
 ===================
 
-To compare two Times directly, you would use the ``difference()`` method, which returns a ``CodeIgniter\I18n\TimeDifference``
-instance.
+To compare two Times directly, you would use the ``difference()`` method, which returns a
+``CodeIgniter\I18n\TimeDifference`` instance.
 
-The first parameter is either a Time instance, a DateTime instance, or a string with the date/time. If
-a string is passed in the first parameter, the second parameter can be a timezone string:
+The first parameter is either a Time instance, a DateTime instance, or a string with the date/time. If a string is
+passed in the first parameter, the second parameter can be a timezone string:
 
 .. literalinclude:: time/038.php
 
 Once you have the TimeDifference instance, you have several methods you can use to find information about the difference
-between the two times. The value returned will be negative if it was in the past, or positive if in the future from
-the original time:
+between the two times. The value returned will be negative if it was in the past, or positive if in the future from the
+original time:
 
 .. literalinclude:: time/039.php
 
-.. note:: Prior to v4.4.7, Time always converted the time zones to UTC before
-    comparison. This could lead to unexpected results when the compared period contained a day
-    that differed from 24 hours due to Daylight Saving Time (DST).
+.. note:: Prior to v4.4.7, Time always converted the time zones to UTC before comparison. This could lead to unexpected
+    results when the compared period contained a day that differed from 24 hours due to Daylight Saving Time (DST).
 
-    Starting with v4.4.7, when comparing date/times that are in the same
-    time zone, the comparison is performed as is, without conversion to UTC.
+    Starting with v4.4.7, when comparing date/times that are in the same time zone, the comparison is performed as is,
+    without conversion to UTC.
 
     .. literalinclude:: time/042.php
 
@@ -453,8 +450,8 @@ humanize()
 ----------
 
 Much like Time's ``humanize()`` method, this returns a string that displays the difference between the times in a
-human-readable format that is geared towards being easily understood. It can create strings like '3 hours ago',
-'in 1 month', etc. The biggest difference is in how very recent dates are handled:
+human-readable format that is geared towards being easily understood. It can create strings like '3 hours ago', 'in 1
+month', etc. The biggest difference is in how very recent dates are handled:
 
 .. literalinclude:: time/041.php
 
@@ -472,5 +469,5 @@ today < $time < 7 days           in 4 days / 4 days ago
 $time < 1 minute                 Now
 =============================== =================================
 
-The result strings come from the language file, **system/Language/en/Time.php**.
-If you want to overwrite them, create **app/Language/{locale}/Time.php**.
+The result strings come from the language file, **system/Language/en/Time.php**. If you want to overwrite them, create
+**app/Language/{locale}/Time.php**.

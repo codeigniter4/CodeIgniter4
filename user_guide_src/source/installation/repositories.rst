@@ -8,8 +8,7 @@ CodeIgniter Repositories
 codeigniter4 organization
 =========================
 
-The CodeIgniter 4 open source project has its own
-`GitHub organization <https://github.com/codeigniter4>`_.
+The CodeIgniter 4 open source project has its own `GitHub organization <https://github.com/codeigniter4>`_.
 
 There are several development repositories of interest to potential contributors:
 
@@ -45,9 +44,8 @@ There are several development repositories of interest to potential contributors
 .. _cache: https://github.com/codeigniter4/cache
 .. _queue: https://github.com/codeigniter4/queue
 
-There are also several deployment repositories, referenced in the installation directions.
-The deployment repositories are built automatically when a new version is released, and they
-are not directly contributed to.
+There are also several deployment repositories, referenced in the installation directions. The deployment repositories
+are built automatically when a new version is released, and they are not directly contributed to.
 
 +------------------+--------------+-----------------------------------------------------------------+
 | Repository       | Audience     | Description                                                     |
@@ -64,10 +62,9 @@ are not directly contributed to.
 .. _appstarter: https://github.com/codeigniter4/appstarter
 .. _userguide: https://github.com/codeigniter4/userguide
 
-In all the above, the latest version of a repository can be downloaded
-from the **Releases** section of its GitHub repository page. The current
-development version of each can be cloned or downloaded using the **Code**
-dropdown on the repository homepage.
+In all the above, the latest version of a repository can be downloaded from the **Releases** section of its GitHub
+repository page. The current development version of each can be cloned or downloaded using the **Code** dropdown on the
+repository homepage.
 
 Composer Packages
 =================
@@ -89,9 +86,8 @@ See the :doc:`Installation </installation/index>` page for more information.
 CodeIgniter 4 Projects
 ======================
 
-We maintain a `codeigniter4projects <https://github.com/codeigniter4projects>`_ organization
-on GitHub as well, with projects that are not part of the framework,
-but which showcase it or make it easier to work with!
+We maintain a `codeigniter4projects <https://github.com/codeigniter4projects>`_ organization on GitHub as well, with
+projects that are not part of the framework, but which showcase it or make it easier to work with!
 
 +------------------+--------------+-----------------------------------------------------------------+
 | Repository       | Audience     | Description                                                     |

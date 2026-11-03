@@ -18,8 +18,11 @@ What has been changed
 Upgrade Guide
 =============
 1. Within your class, change ``$this->load->library('table');`` to ``$table = new \CodeIgniter\View\Table();``.
-2. From then on, you have to change ``$this->table`` to ``$table`` in every line starting with it. For example: ``echo $this->table->generate($query);`` will become ``echo $table->generate($query);``
-3. The methods in the HTML Table class could be named slightly differently. The most important change in the naming is the switch from underscored method names to camelCase. The method ``set_heading()`` from version 3 is now named ``setHeading()`` and so on.
+2. From then on, you have to change ``$this->table`` to ``$table`` in every line starting with it. For example:
+   ``echo $this->table->generate($query);`` will become ``echo $table->generate($query);``
+3. The methods in the HTML Table class could be named slightly differently. The most important change in the naming is
+   the switch from underscored method names to camelCase. The method ``set_heading()`` from version 3 is now named
+   ``setHeading()`` and so on.
 
 Code Example
 ============

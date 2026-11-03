@@ -2,8 +2,7 @@
 XML Helper
 ##########
 
-The XML Helper file contains functions that assist in working with XML
-data.
+The XML Helper file contains functions that assist in working with XML data.
 
 .. contents::
     :local:
@@ -28,16 +27,14 @@ The following functions are available:
     :returns: XML-converted string
     :rtype:    string
 
-    Takes a string as input and converts the following reserved XML
-    characters to entities:
+    Takes a string as input and converts the following reserved XML characters to entities:
 
     - Ampersands: &
     - Less than and greater than characters: < >
     - Single and double quotes: ' "
     - Dashes: -
 
-    This function ignores ampersands if they are part of existing numbered
-    character entities, e.g., &#123;. Example:
+    This function ignores ampersands if they are part of existing numbered character entities, e.g., &#123;. Example:
 
     .. literalinclude:: xml_helper/002.php
 

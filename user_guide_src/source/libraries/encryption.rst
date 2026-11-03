@@ -2,33 +2,28 @@
 Encryption Service
 ##################
 
-.. important:: DO NOT use this or any other *encryption* library for
-    password storage! Passwords must be *hashed* instead, and you
-    should do that through PHP's `Password Hashing extension
-    <https://www.php.net/password>`_.
+.. important:: DO NOT use this or any other *encryption* library for password storage! Passwords must be *hashed*
+    instead, and you should do that through PHP's `Password Hashing extension <https://www.php.net/password>`_.
 
-The Encryption Service provides two-way symmetric (secret key) data encryption.
-The service will instantiate and/or initialize an
-encryption **handler** to suit your parameters as explained below.
+The Encryption Service provides two-way symmetric (secret key) data encryption. The service will instantiate and/or
+initialize an encryption **handler** to suit your parameters as explained below.
 
-Encryption Service handlers must implement CodeIgniter's simple ``EncrypterInterface``.
-Using an appropriate PHP cryptographic extension or third-party library may require
-additional software to be installed on your server and/or might need to be explicitly
-enabled in your instance of PHP.
+Encryption Service handlers must implement CodeIgniter's simple ``EncrypterInterface``. Using an appropriate PHP
+cryptographic extension or third-party library may require additional software to be installed on your server and/or
+might need to be explicitly enabled in your instance of PHP.
 
 The following PHP extensions are currently supported:
 
 - `OpenSSL <https://www.php.net/openssl>`_
 - `Sodium <https://www.php.net/manual/en/book.sodium>`_
 
-This is not a full cryptographic solution. If you need more capabilities, for example,
-public-key encryption, we suggest you consider direct use of OpenSSL or
-one of the other `Cryptography Extensions <https://www.php.net/manual/en/refs.crypto.php>`_.
-A more comprehensive package like `Halite <https://github.com/paragonie/halite>`_
-(an O-O package built on libsodium) is another possibility.
+This is not a full cryptographic solution. If you need more capabilities, for example, public-key encryption, we suggest
+you consider direct use of OpenSSL or one of the other
+`Cryptography Extensions <https://www.php.net/manual/en/refs.crypto.php>`_. A more comprehensive package like
+`Halite <https://github.com/paragonie/halite>`_ (an O-O package built on libsodium) is another possibility.
 
-.. note:: Support for the ``MCrypt`` extension has been dropped. PHP deprecated
-    it in 7.1 and removed it from the core in 7.2.
+.. note:: Support for the ``MCrypt`` extension has been dropped. PHP deprecated it in 7.1 and removed it from the core
+    in 7.2.
 
 .. contents::
     :local:
@@ -44,15 +39,13 @@ Like all services in CodeIgniter, it can be loaded via ``Config\Services``:
 
 .. literalinclude:: encryption/001.php
 
-Assuming you have set your starting key (see :ref:`configuration`),
-encrypting and decrypting data is simple - pass the appropriate string to the ``encrypt()``
-and/or ``decrypt()`` methods:
+Assuming you have set your starting key (see :ref:`configuration`), encrypting and decrypting data is simple - pass the
+appropriate string to the ``encrypt()`` and/or ``decrypt()`` methods:
 
 .. literalinclude:: encryption/002.php
 
-And that's it! The Encryption library will do everything necessary
-for the whole process to be cryptographically secure out of the box.
-You don't need to worry about it.
+And that's it! The Encryption library will do everything necessary for the whole process to be cryptographically secure
+out of the box. You don't need to worry about it.
 
 .. _configuration:
 
@@ -74,9 +67,8 @@ authKeyInfo    [**OpenSSLHandler** only] Authentication key info (``''``)
 rawData        [**OpenSSLHandler** only] Whether the cipher-text should be raw (``true``)
 ============== ==========================================================================
 
-You can replace the config file's settings by passing a configuration
-object of your own to the ``Services`` call. The ``$config`` variable must be
-an instance of the ``Config\Encryption`` class.
+You can replace the config file's settings by passing a configuration object of your own to the ``Services`` call. The
+``$config`` variable must be an instance of the ``Config\Encryption`` class.
 
 .. literalinclude:: encryption/003.php
 
@@ -87,16 +79,15 @@ Configuration to Maintain Compatibility with CI3
 
 .. versionadded:: 4.3.0
 
-Since v4.3.0, you can decrypt data encrypted with CI3's Encryption.
-If you need to decrypt such data, use the following settings to maintain compatibility.
+Since v4.3.0, you can decrypt data encrypted with CI3's Encryption. If you need to decrypt such data, use the following
+settings to maintain compatibility.
 
 .. literalinclude:: encryption/013.php
 
 Supported HMAC Authentication Algorithms
 ----------------------------------------
 
-For HMAC message authentication, the Encryption library supports
-usage of the SHA-2 family of algorithms:
+For HMAC message authentication, the Encryption library supports usage of the SHA-2 family of algorithms:
 
 =========== ==================== ============================
 Algorithm   Raw length (bytes)   Hex-encoded length (bytes)
@@ -107,69 +98,59 @@ SHA256      32                   64
 SHA224      28                   56
 =========== ==================== ============================
 
-The reason for not including other popular algorithms, such as
-MD5 or SHA1, is that they are no longer considered secure enough
-and as such, we don't want to encourage their usage.
-If you absolutely need to use them, it is easy to do so via PHP's
-native `hash_hmac() <http://php.net/manual/en/function.hash-hmac.php>`_ function.
+The reason for not including other popular algorithms, such as MD5 or SHA1, is that they are no longer considered secure
+enough and as such, we don't want to encourage their usage. If you absolutely need to use them, it is easy to do so via
+PHP's native `hash_hmac() <http://php.net/manual/en/function.hash-hmac.php>`_ function.
 
-Stronger algorithms will, of course, be added in the future as they
-appear and become widely available.
+Stronger algorithms will, of course, be added in the future as they appear and become widely available.
 
 Default Behavior
 ================
 
-By default, the Encryption Library uses the OpenSSL handler. That handler encrypts using
-the AES-256-CTR algorithm, your configured *key*, and SHA512 HMAC authentication.
+By default, the Encryption Library uses the OpenSSL handler. That handler encrypts using the AES-256-CTR algorithm, your
+configured *key*, and SHA512 HMAC authentication.
 
 Setting Your Encryption Key
 ===========================
 
-Your encryption key **must** be as long as the encryption algorithm in use allows.
-For AES-256, that's 256 bits or 32 bytes (characters) long.
+Your encryption key **must** be as long as the encryption algorithm in use allows. For AES-256, that's 256 bits or 32
+bytes (characters) long.
 
-The key should be as random as possible, and it **must not** be a regular text string,
-nor the output of a hashing function, etc. To create a proper key,
-you can use the Encryption library's ``createKey()`` method.
+The key should be as random as possible, and it **must not** be a regular text string, nor the output of a hashing
+function, etc. To create a proper key, you can use the Encryption library's ``createKey()`` method.
 
 .. literalinclude:: encryption/004.php
 
-The key can be stored in **app/Config/Encryption.php**, or you can design
-a storage mechanism of your own and pass the key dynamically when encrypting/decrypting.
+The key can be stored in **app/Config/Encryption.php**, or you can design a storage mechanism of your own and pass the
+key dynamically when encrypting/decrypting.
 
-To save your key to your **app/Config/Encryption.php**, open the file
-and set:
+To save your key to your **app/Config/Encryption.php**, open the file and set:
 
 .. literalinclude:: encryption/005.php
 
 Encoding Keys or Results
 ------------------------
 
-You'll notice that the ``createKey()`` method outputs binary data, which
-is hard to deal with (i.e., a copy-paste may damage it), so you may use
-``bin2hex()`` or ``base64_encode`` to work with the key in
-a more friendly manner. For example:
+You'll notice that the ``createKey()`` method outputs binary data, which is hard to deal with (i.e., a copy-paste may
+damage it), so you may use ``bin2hex()`` or ``base64_encode`` to work with the key in a more friendly manner. For
+example:
 
 .. literalinclude:: encryption/006.php
 
-You might find the same technique useful for the results
-of encryption:
+You might find the same technique useful for the results of encryption:
 
 .. literalinclude:: encryption/007.php
 
 Using Prefixes in Storing Keys
 ------------------------------
 
-You may take advantage of two special prefixes when storing your
-encryption keys: ``hex2bin:`` and ``base64:``. When these prefixes
-immediately precede the value of your key, ``Encryption`` will
-intelligently parse the key and still pass a binary string to
-the library.
+You may take advantage of two special prefixes when storing your encryption keys: ``hex2bin:`` and ``base64:``. When
+these prefixes immediately precede the value of your key, ``Encryption`` will intelligently parse the key and still pass
+a binary string to the library.
 
 .. literalinclude:: encryption/008.php
 
-Similarly, you can use these prefixes in your **.env** file, too!
-::
+Similarly, you can use these prefixes in your **.env** file, too! ::
 
     // For hex2bin
     encryption.key = hex2bin:<your-hex-encoded-key>
@@ -182,9 +163,9 @@ Encryption Key Rotation
 
 .. versionadded:: 4.7.0
 
-When you need to rotate your encryption key (for security best practices or compliance requirements),
-you can use the ``previousKeys`` configuration option to maintain the ability to decrypt data encrypted
-with old keys while using a new key for all new encryption operations.
+When you need to rotate your encryption key (for security best practices or compliance requirements), you can use the
+``previousKeys`` configuration option to maintain the ability to decrypt data encrypted with old keys while using a new
+key for all new encryption operations.
 
 How It Works
 ------------
@@ -222,30 +203,28 @@ Key Rotation Workflow
 4. **Re-encrypt data** (optional): Decrypt and re-encrypt existing data with the new key
 5. **Complete rotation**: Once all data is re-encrypted, remove old keys from ``previousKeys``
 
-.. important:: The ``previousKeys`` feature is for **decryption fallback only**. All new encryption
-    operations always use the current ``key``. If you pass an explicit key via the ``$params``
-    argument to ``encrypt()`` or ``decrypt()``, the previousKeys fallback will not be used.
+.. important:: The ``previousKeys`` feature is for **decryption fallback only**. All new encryption operations always
+    use the current ``key``. If you pass an explicit key via the ``$params`` argument to ``encrypt()`` or ``decrypt()``,
+    the previousKeys fallback will not be used.
 
 Padding
 =======
 
-Sometimes, the length of a message may provide a lot of information about its nature. If
-a message is one of "yes", "no" and "maybe", encrypting the message doesn't help: knowing
-the length is enough to know what the message is.
+Sometimes, the length of a message may provide a lot of information about its nature. If a message is one of "yes", "no"
+and "maybe", encrypting the message doesn't help: knowing the length is enough to know what the message is.
 
 Padding is a technique to mitigate this, by making the length a multiple of a given block size.
 
-Padding is implemented in ``SodiumHandler`` using libsodium's native ``sodium_pad`` and ``sodium_unpad``
-functions. This requires the use of a padding length (in bytes) that is added to the plaintext
-message prior to encryption, and removed after decryption. Padding is configurable via the
-``$blockSize`` property of ``Config\Encryption``. This value should be greater than zero.
+Padding is implemented in ``SodiumHandler`` using libsodium's native ``sodium_pad`` and ``sodium_unpad`` functions. This
+requires the use of a padding length (in bytes) that is added to the plaintext message prior to encryption, and removed
+after decryption. Padding is configurable via the ``$blockSize`` property of ``Config\Encryption``. This value should be
+greater than zero.
 
-.. important:: You are advised not to devise your own padding implementation. You must always use
-    the more secure implementation of a library. Also, passwords should not be padded. Usage of
-    padding in order to hide the length of a password is not recommended. A client willing to send
-    a password to a server should hash it instead (even with a single iteration of the hash function).
-    This ensures that the length of the transmitted data is constant, and that the server doesn't
-    effortlessly get a copy of the password.
+.. important:: You are advised not to devise your own padding implementation. You must always use the more secure
+    implementation of a library. Also, passwords should not be padded. Usage of padding in order to hide the length of a
+    password is not recommended. A client willing to send a password to a server should hash it instead (even with a
+    single iteration of the hash function). This ensures that the length of the transmitted data is constant, and that
+    the server doesn't effortlessly get a copy of the password.
 
 Encryption Handler Notes
 ========================
@@ -257,38 +236,35 @@ The `OpenSSL <https://www.php.net/openssl>`_ extension has been a standard part 
 
 CodeIgniter's OpenSSL handler uses the AES-256-CTR cipher.
 
-The *key* your configuration provides is used to derive two other keys, one for
-encryption and one for authentication. This is achieved by way of a technique known
-as an `HMAC-based Key Derivation Function <https://en.wikipedia.org/wiki/HKDF>`_ (HKDF).
+The *key* your configuration provides is used to derive two other keys, one for encryption and one for authentication.
+This is achieved by way of a technique known as an
+`HMAC-based Key Derivation Function <https://en.wikipedia.org/wiki/HKDF>`_ (HKDF).
 
 Sodium Notes
 ------------
 
-The `Sodium <https://www.php.net/manual/en/book.sodium>`_ extension is bundled by default in PHP as
-of PHP 7.2.0.
+The `Sodium <https://www.php.net/manual/en/book.sodium>`_ extension is bundled by default in PHP as of PHP 7.2.0.
 
-CodeIgniter's Sodium handler uses ``sodium_crypto_secretbox()`` for shared-key
-authenticated encryption. It uses XSalsa20 for encryption and Poly1305 for authentication.
-This handler does not perform public-key key exchange.
+CodeIgniter's Sodium handler uses ``sodium_crypto_secretbox()`` for shared-key authenticated encryption. It uses
+XSalsa20 for encryption and Poly1305 for authentication. This handler does not perform public-key key exchange.
 
 Message Length
 ==============
 
 An encrypted string is usually longer than the original, plain-text string (depending on the cipher).
 
-This is influenced by the cipher algorithm itself, the initialization vector (IV)
-prepended to the cipher-text, and the HMAC authentication message that is also prepended.
-Furthermore, the encrypted message is also Base64-encoded so that it is safe
-for storage and transmission regardless of the character set in use.
+This is influenced by the cipher algorithm itself, the initialization vector (IV) prepended to the cipher-text, and the
+HMAC authentication message that is also prepended. Furthermore, the encrypted message is also Base64-encoded so that it
+is safe for storage and transmission regardless of the character set in use.
 
-Keep this information in mind when selecting your data storage mechanism.
-Cookies, for example, can only hold 4K of information.
+Keep this information in mind when selecting your data storage mechanism. Cookies, for example, can only hold 4K of
+information.
 
 Using the Encryption Service Directly
 =====================================
 
-Instead of (or in addition to) using ``Services`` as described in :ref:`usage`,
-you can create an "Encrypter" directly, or change the settings of an existing instance.
+Instead of (or in addition to) using ``Services`` as described in :ref:`usage`, you can create an "Encrypter" directly,
+or change the settings of an existing instance.
 
 .. literalinclude:: encryption/009.php
 
@@ -308,8 +284,8 @@ Class Reference
         :returns: A pseudo-random cryptographic key with the specified length, or ``false`` on failure
         :rtype:    string
 
-        Creates a cryptographic key by fetching random data from
-        the operating system's sources (*i.e.* ``/dev/urandom``).
+        Creates a cryptographic key by fetching random data from the operating system's sources (*i.e.*
+        ``/dev/urandom``).
 
     .. php:method:: initialize([Encryption $config = null])
 
@@ -338,12 +314,11 @@ Class Reference
 
         Encrypts the input data and returns its ciphertext.
 
-        If you pass parameters as the second argument, the ``key`` element
-        will be used as the starting key for this operation if ``$params``
-        is an array. Alternatively, the starting key may be passed as a string.
+        If you pass parameters as the second argument, the ``key`` element will be used as the starting key for this
+        operation if ``$params`` is an array. Alternatively, the starting key may be passed as a string.
 
-        If you are using the SodiumHandler and want to pass a different ``blockSize``
-        at runtime, pass the ``blockSize`` key in the ``$params`` array.
+        If you are using the SodiumHandler and want to pass a different ``blockSize`` at runtime, pass the ``blockSize``
+        key in the ``$params`` array.
 
         Examples:
 
@@ -359,12 +334,11 @@ Class Reference
 
         Decrypts the input data and returns it in plain text.
 
-        If you pass parameters as the second argument, the ``key`` element
-        will be used as the starting key for this operation if ``$params``
-        is an array. Alternatively, the starting key may be passed as a string.
+        If you pass parameters as the second argument, the ``key`` element will be used as the starting key for this
+        operation if ``$params`` is an array. Alternatively, the starting key may be passed as a string.
 
-        If you are using the SodiumHandler and want to pass a different ``blockSize``
-        at runtime, pass the ``blockSize`` key in the ``$params`` array.
+        If you are using the SodiumHandler and want to pass a different ``blockSize`` at runtime, pass the ``blockSize``
+        key in the ``$params`` array.
 
         Examples:
 

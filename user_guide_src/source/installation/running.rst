@@ -6,18 +6,16 @@ Running Your App
     :local:
     :depth: 3
 
-A CodeIgniter 4 app can be run in a number of different ways: hosted on a web server,
-using virtualization, or using CodeIgniter's command line tool for testing.
-This section addresses how to use each technique, and explains some of the pros and cons of them.
+A CodeIgniter 4 app can be run in a number of different ways: hosted on a web server, using virtualization, or using
+CodeIgniter's command line tool for testing. This section addresses how to use each technique, and explains some of the
+pros and cons of them.
 
-.. important:: You should always be careful about the case of filenames. Many
-    developers develop on case-insensitive file systems on Windows or macOS.
-    However, most server environments use case-sensitive file systems. If the
-    file name case is incorrect, code that works locally will not work on the
-    server.
+.. important:: You should always be careful about the case of filenames. Many developers develop on case-insensitive
+    file systems on Windows or macOS. However, most server environments use case-sensitive file systems. If the file
+    name case is incorrect, code that works locally will not work on the server.
 
-If you're new to CodeIgniter, please read the :doc:`Getting Started </intro/index>`
-section of the User Guide to begin learning how to build dynamic PHP applications. Enjoy!
+If you're new to CodeIgniter, please read the :doc:`Getting Started </intro/index>` section of the User Guide to begin
+learning how to build dynamic PHP applications. Enjoy!
 
 .. _initial-configuration:
 
@@ -35,44 +33,38 @@ Open the **app/Config/App.php** file with a text editor.
     be set within the :ref:`.env <dotenv-file>` file as ``app.baseURL = 'http://example.com/'``.
     **Always use a trailing slash on your base URL!**
 
-    .. note:: If you don't set the ``$baseURL`` correctly, in development mode,
-        the debug toolbar may not load properly and web pages may take considerably
-        longer to display.
+    .. note:: If you don't set the ``$baseURL`` correctly, in development mode, the debug toolbar may not load properly
+        and web pages may take considerably longer to display.
 
 #. ``$indexPage``
     If you don't want to include **index.php** in your site URIs, set ``$indexPage`` to ``''``.
     The setting will be used when the framework generates your site URIs.
 
-    .. note:: You may need to configure your web server to access your site with a URL
-        that does not contain **index.php**. See :ref:`CodeIgniter URLs <urls-remove-index-php>`.
+    .. note:: You may need to configure your web server to access your site with a URL that does not contain
+        **index.php**. See :ref:`CodeIgniter URLs <urls-remove-index-php>`.
 
 Configure Database Connection Settings
 ======================================
 
-If you intend to use a database, open the **app/Config/Database.php** file with
-a text editor and set your database settings. Alternatively, these could be set in
-your **.env** file. See :ref:`Database Configuration <database-config-explanation-of-values>`
-for details.
+If you intend to use a database, open the **app/Config/Database.php** file with a text editor and set your database
+settings. Alternatively, these could be set in your **.env** file. See
+:ref:`Database Configuration <database-config-explanation-of-values>` for details.
 
 Set to Development Mode
 =======================
 
-If the site is not on the production server, set ``CI_ENVIRONMENT`` to ``development``
-in the **.env** file to take advantage of the debugging tools provided. See
-:ref:`setting-development-mode` for details.
+If the site is not on the production server, set ``CI_ENVIRONMENT`` to ``development`` in the **.env** file to take
+advantage of the debugging tools provided. See :ref:`setting-development-mode` for details.
 
-.. important:: In production environments, you should disable error display and
-    any other development-only functionality. In CodeIgniter, this can be done
-    by setting the environment to "production". By default, the application will
-    run using the "production" environment. See also :ref:`environment-constant`.
+.. important:: In production environments, you should disable error display and any other development-only
+    functionality. In CodeIgniter, this can be done by setting the environment to "production". By default, the
+    application will run using the "production" environment. See also :ref:`environment-constant`.
 
 Set Writable Folder Permission
 ==============================
 
-If you will be running your site using a web server (e.g., Apache or nginx),
-you will need to modify the permissions for the **writable** folder inside
-your project, so that it is writable by the user or account used by your
-web server.
+If you will be running your site using a web server (e.g., Apache or nginx), you will need to modify the permissions for
+the **writable** folder inside your project, so that it is writable by the user or account used by your web server.
 
 .. _spark-phpini-check:
 
@@ -81,8 +73,7 @@ Checking PHP ini Settings
 
 .. versionadded:: 4.5.0
 
-`PHP ini settings`_ change the behavior of PHP. CodeIgniter provides a command to
-check important PHP settings.
+`PHP ini settings`_ change the behavior of PHP. CodeIgniter provides a command to check important PHP settings.
 
 .. _PHP ini settings: https://www.php.net/manual/en/ini.list.php
 
@@ -90,12 +81,11 @@ check important PHP settings.
 
     php spark phpini:check
 
-The *Recommended* column shows the recommended values for production environments.
-They may differ in development environments.
+The *Recommended* column shows the recommended values for production environments. They may differ in development
+environments.
 
 .. note::
-    If you cannot use the spark command, you can use ``CheckPhpIni::run(false)``
-    in your controller.
+    If you cannot use the spark command, you can use ``CheckPhpIni::run(false)`` in your controller.
 
     E.g.,
 
@@ -119,9 +109,8 @@ They may differ in development environments.
 Local Development Server
 ************************
 
-CodeIgniter 4 comes with a local development server, leveraging PHP's built-in web server
-with CodeIgniter routing. You can launch it with the following command
-in the main directory:
+CodeIgniter 4 comes with a local development server, leveraging PHP's built-in web server with CodeIgniter routing. You
+can launch it with the following command in the main directory:
 
 .. code-block:: console
 
@@ -129,12 +118,12 @@ in the main directory:
 
 This will launch the server and you can now view your application in your browser at http://localhost:8080.
 
-.. note:: The built-in development server should only be used on local development machines. It should NEVER
-    be used on a production server.
+.. note:: The built-in development server should only be used on local development machines. It should NEVER be used on
+    a production server.
 
-If you need to run the site on a host other than simply localhost, you'll first need to add the host
-to your **hosts** file. The exact location of the file varies in each of the main operating systems, though
-all unix-type systems (including macOS) will typically keep the file at **/etc/hosts**.
+If you need to run the site on a host other than simply localhost, you'll first need to add the host to your **hosts**
+file. The exact location of the file varies in each of the main operating systems, though all unix-type systems
+(including macOS) will typically keep the file at **/etc/hosts**.
 
 The local development server can be customized with three command line options:
 
@@ -144,15 +133,15 @@ The local development server can be customized with three command line options:
 
       php spark serve --host example.dev
 
-- By default, the server runs on port 8080 but you might have more than one site running, or already have
-  another application using that port. You can use the ``--port`` CLI option to specify a different one:
+- By default, the server runs on port 8080 but you might have more than one site running, or already have another
+  application using that port. You can use the ``--port`` CLI option to specify a different one:
 
   .. code-block:: console
 
       php spark serve --port 8081
 
-- You can also choose a specific version of PHP to use, with the ``--php`` CLI option, with its value
-  set to the path of the PHP executable you want to use:
+- You can also choose a specific version of PHP to use, with the ``--php`` CLI option, with its value set to the path of
+  the PHP executable you want to use:
 
   .. code-block:: console
 
@@ -164,12 +153,11 @@ Worker Mode with FrankenPHP
 
 .. versionadded:: 4.7.0
 
-.. important:: Worker Mode is currently **experimental**. The only officially supported
-    worker implementation is **FrankenPHP**, which is backed by the PHP Foundation.
+.. important:: Worker Mode is currently **experimental**. The only officially supported worker implementation is
+    **FrankenPHP**, which is backed by the PHP Foundation.
 
-FrankenPHP is a modern PHP application server that supports Worker Mode, allowing
-your application to handle multiple requests within the same PHP process for
-improved performance.
+FrankenPHP is a modern PHP application server that supports Worker Mode, allowing your application to handle multiple
+requests within the same PHP process for improved performance.
 
 Quick Start
 ===========
@@ -188,18 +176,18 @@ Quick Start
 
        frankenphp run
 
-For detailed configuration, performance tuning, and important considerations
-about state management, see :doc:`worker_mode`.
+For detailed configuration, performance tuning, and important considerations about state management, see
+:doc:`worker_mode`.
 
 *******************
 Hosting with Apache
 *******************
 
-A CodeIgniter4 webapp is normally hosted on a web server.
-Apache HTTP Server is the "standard" platform, and is assumed in much of our documentation.
+A CodeIgniter4 webapp is normally hosted on a web server. Apache HTTP Server is the "standard" platform, and is assumed
+in much of our documentation.
 
-Apache is bundled with many platforms, but can also be downloaded in a bundle
-with a database engine and PHP from `Bitnami <https://bitnami.com/stack/lamp>`_.
+Apache is bundled with many platforms, but can also be downloaded in a bundle with a database engine and PHP from
+`Bitnami <https://bitnami.com/stack/lamp>`_.
 
 Configure Main Config File
 ==========================
@@ -207,11 +195,10 @@ Configure Main Config File
 Enabling mod_rewrite
 --------------------
 
-The "mod_rewrite" module enables URLs without "**index.php**" in them, and is assumed
-in our user guide.
+The "mod_rewrite" module enables URLs without "**index.php**" in them, and is assumed in our user guide.
 
-Make sure that the rewrite module is enabled (uncommented) in the main
-configuration file, e.g., **apache2/conf/httpd.conf**:
+Make sure that the rewrite module is enabled (uncommented) in the main configuration file, e.g.,
+**apache2/conf/httpd.conf**:
 
 .. code-block:: apache
 
@@ -220,8 +207,8 @@ configuration file, e.g., **apache2/conf/httpd.conf**:
 Setting Document Root
 ---------------------
 
-Also make sure that the default document root's ``<Directory>`` element enables this too,
-in the ``AllowOverride`` setting:
+Also make sure that the default document root's ``<Directory>`` element enables this too, in the ``AllowOverride``
+setting:
 
 .. code-block:: apache
 
@@ -234,14 +221,14 @@ in the ``AllowOverride`` setting:
 Hosting with VirtualHost
 ========================
 
-We recommend using "virtual hosting" to run your apps.
-You can set up different aliases for each of the apps you work on.
+We recommend using "virtual hosting" to run your apps. You can set up different aliases for each of the apps you work
+on.
 
 Enabling vhost_alias_module
 ---------------------------
 
-Make sure that the virtual hosting module is enabled (uncommented) in the main
-configuration file, e.g., **apache2/conf/httpd.conf**:
+Make sure that the virtual hosting module is enabled (uncommented) in the main configuration file, e.g.,
+**apache2/conf/httpd.conf**:
 
 .. code-block:: apache
 
@@ -250,19 +237,18 @@ configuration file, e.g., **apache2/conf/httpd.conf**:
 Adding Host Alias
 -----------------
 
-Add a host alias in your "hosts" file, typically **/etc/hosts** on unix-type platforms,
-or **c:\\Windows\\System32\\drivers\\etc\\hosts** on Windows.
+Add a host alias in your "hosts" file, typically **/etc/hosts** on unix-type platforms, or
+**c:\\Windows\\System32\\drivers\\etc\\hosts** on Windows.
 
-Add a line to the file.
-This could be ``myproject.local`` or ``myproject.test``, for instance::
+Add a line to the file. This could be ``myproject.local`` or ``myproject.test``, for instance::
 
     127.0.0.1 myproject.local
 
 Setting VirtualHost
 -------------------
 
-Add a ``<VirtualHost>`` element for your webapp inside the virtual hosting configuration,
-e.g., **apache2/conf/extra/httpd-vhost.conf**:
+Add a ``<VirtualHost>`` element for your webapp inside the virtual hosting configuration, e.g.,
+**apache2/conf/extra/httpd-vhost.conf**:
 
 .. code-block:: apache
 
@@ -299,8 +285,7 @@ Apache needs to be restarted whenever you change its configuration.
 Hosting with Subfolder
 ======================
 
-If you want a baseURL like **http://localhost/myproject/** with a subfolder,
-there are three ways.
+If you want a baseURL like **http://localhost/myproject/** with a subfolder, there are three ways.
 
 Making Symlink
 --------------
@@ -344,11 +329,10 @@ Adding .htaccess
 
 The last resort is to add **.htaccess** to the project root.
 
-It is not recommended that you place the project folder in the document root.
-However, if you have no other choice, like on a shared server, you can use this.
+It is not recommended that you place the project folder in the document root. However, if you have no other choice, like
+on a shared server, you can use this.
 
-Place your project folder as follows, where **htdocs** is the Apache document root,
-and create the **.htaccess** file::
+Place your project folder as follows, where **htdocs** is the Apache document root, and create the **.htaccess** file::
 
     └── htdocs/
         └── myproject/ (project folder)
@@ -396,25 +380,33 @@ And remove the redirect settings in **public/.htaccess**:
 Hosting with mod_userdir (Shared Hosts)
 =======================================
 
-A common practice in shared hosting environments is to use the Apache module "mod_userdir" to enable per-user Virtual Hosts automatically. Additional configuration is required to allow CodeIgniter4 to be run from these per-user directories.
+A common practice in shared hosting environments is to use the Apache module "mod_userdir" to enable per-user Virtual
+Hosts automatically. Additional configuration is required to allow CodeIgniter4 to be run from these per-user
+directories.
 
-The following assumes that the server is already configured for mod_userdir. A guide to enabling this module is available `in the Apache documentation <https://httpd.apache.org/docs/2.4/howto/public_html.html>`_.
+The following assumes that the server is already configured for mod_userdir. A guide to enabling this module is
+available `in the Apache documentation <https://httpd.apache.org/docs/2.4/howto/public_html.html>`_.
 
-Because CodeIgniter4 expects the server to find the framework front controller at **public/index.php** by default, you must specify this location as an alternative to search for the request (even if CodeIgniter4 is installed within the per-user web directory).
+Because CodeIgniter4 expects the server to find the framework front controller at **public/index.php** by default, you
+must specify this location as an alternative to search for the request (even if CodeIgniter4 is installed within the
+per-user web directory).
 
-The default user web directory **~/public_html** is specified by the ``UserDir`` directive, typically in **apache2/mods-available/userdir.conf** or **apache2/conf/extra/httpd-userdir.conf**:
+The default user web directory **~/public_html** is specified by the ``UserDir`` directive, typically in
+**apache2/mods-available/userdir.conf** or **apache2/conf/extra/httpd-userdir.conf**:
 
 .. code-block:: apache
 
     UserDir public_html
 
-So you will need to configure Apache to look for CodeIgniter's public directory first before trying to serve the default:
+So you will need to configure Apache to look for CodeIgniter's public directory first before trying to serve the
+default:
 
 .. code-block:: apache
 
     UserDir "public_html/public" "public_html"
 
-Be sure to specify options and permissions for the CodeIgniter public directory as well. A **userdir.conf** might look like:
+Be sure to specify options and permissions for the CodeIgniter public directory as well. A **userdir.conf** might look
+like:
 
 .. code-block:: apache
 
@@ -479,13 +471,14 @@ See :ref:`Handling Multiple Environments <environment-apache>`.
 Hosting with nginx
 ******************
 
-nginx is the second most widely used HTTP server for web hosting.
-Here you can find an example configuration using PHP 8.2 FPM (unix sockets) under Ubuntu Server.
+nginx is the second most widely used HTTP server for web hosting. Here you can find an example configuration using PHP
+8.2 FPM (unix sockets) under Ubuntu Server.
 
 default.conf
 ============
 
-This configuration enables URLs without "**index.php**" in them and uses CodeIgniter's "404 - File Not Found" for URLs ending with ".php".
+This configuration enables URLs without "**index.php**" in them and uses CodeIgniter's "404 - File Not Found" for URLs
+ending with ".php".
 
 .. code-block:: nginx
 
@@ -534,16 +527,15 @@ See :ref:`Deployment <deployment-to-shared-hosting-services>`.
 Bootstrapping the App
 *********************
 
-In some scenarios, you will want to load the framework without actually running the whole
-application. This is particularly useful for unit testing your project, but may also be
-handy for using third-party tools to analyze and modify your code. The framework comes
-with two separate bootstrap scripts specifically for these scenarios:
+In some scenarios, you will want to load the framework without actually running the whole application. This is
+particularly useful for unit testing your project, but may also be handy for using third-party tools to analyze and
+modify your code. The framework comes with two separate bootstrap scripts specifically for these scenarios:
 
 - **system/Test/bootstrap.php**: This script is used primarily for unit testing.
-- **system/util_bootstrap.php**: This script is used for other scripts that need access to the
-  framework. It is recommended for use in scripts that are not part of testing, as this will NOT
-  fail gracefully if an exception is thrown.
+- **system/util_bootstrap.php**: This script is used for other scripts that need access to the framework. It is
+  recommended for use in scripts that are not part of testing, as this will NOT fail gracefully if an exception is
+  thrown.
 
-Most of the paths to your project are defined during the bootstrap process. You may use
-pre-defined constants to override these, but when using the defaults be sure that your
-paths align with the expected directory structure for your installation method.
+Most of the paths to your project are defined during the bootstrap process. You may use pre-defined constants to
+override these, but when using the defaults be sure that your paths align with the expected directory structure for your
+installation method.

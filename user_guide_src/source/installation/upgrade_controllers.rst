@@ -17,11 +17,11 @@ What has been changed
 - Since namespaces have been added to CodeIgniter 4, the controllers must be changed to support namespaces.
 - The constructor of CI4 Controller does not automatically load core classes into the properties.
 - CI4's Controller has a special constructor :ref:`initController() <controller-constructor>`.
-- CI4 provides :doc:`Request </incoming/incomingrequest>` and :doc:`Responses </outgoing/response>`
-  objects for you to work with - more powerful than the CI3 way.
+- CI4 provides :doc:`Request </incoming/incomingrequest>` and :doc:`Responses </outgoing/response>` objects for you to
+  work with - more powerful than the CI3 way.
 - If you want a base controller (``MY_Controller`` in CI3), use **app/Controllers/BaseController.php**.
-- Calling ``echo`` within Controllers, as in CI3, is still supported, but
-  it is recommended that a string or Response object be returned from Controllers.
+- Calling ``echo`` within Controllers, as in CI3, is still supported, but it is recommended that a string or Response
+  object be returned from Controllers.
 
 Upgrade Guide
 =============
@@ -33,13 +33,12 @@ Upgrade Guide
 
 If you use sub-directories in your controller structure, you have to change the namespace accordingly.
 
-For example, if you have a version 3 controller located in **application/controllers/users/auth/Register.php**,
-the namespace has to be ``namespace App\Controllers\Users\Auth;`` and the controller path in version 4
-should look like this: **app/Controllers/Users/Auth/Register.php**. Make sure to capitalize the first letters of
-the sub-directories.
+For example, if you have a version 3 controller located in **application/controllers/users/auth/Register.php**, the
+namespace has to be ``namespace App\Controllers\Users\Auth;`` and the controller path in version 4 should look like
+this: **app/Controllers/Users/Auth/Register.php**. Make sure to capitalize the first letters of the sub-directories.
 
-After that, you have to insert a ``use`` statement below the namespace definition in order to extend the ``BaseController``:
-``use App\Controllers\BaseController;``
+After that, you have to insert a ``use`` statement below the namespace definition in order to extend the
+``BaseController``: ``use App\Controllers\BaseController;``
 
 Code Example
 ============

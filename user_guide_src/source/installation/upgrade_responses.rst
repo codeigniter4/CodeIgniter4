@@ -17,8 +17,11 @@ What has been changed
 
 Upgrade Guide
 =============
-1. The methods in the HTTP Response class are named slightly differently. The most important change in the naming is the switch from underscored method names to camelCase. The method ``set_content_type()`` from version 3 is now named ``setContentType()`` and so on.
-2. In most cases, you have to change ``$this->output`` to ``$this->response`` followed by the method. You can find all methods in :doc:`../outgoing/response`.
+1. The methods in the HTTP Response class are named slightly differently. The most important change in the naming is the
+   switch from underscored method names to camelCase. The method ``set_content_type()`` from version 3 is now named
+   ``setContentType()`` and so on.
+2. In most cases, you have to change ``$this->output`` to ``$this->response`` followed by the method. You can find all
+   methods in :doc:`../outgoing/response`.
 
 Code Example
 ============

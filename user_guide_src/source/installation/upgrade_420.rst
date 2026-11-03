@@ -18,14 +18,13 @@ Mandatory File Changes
 index.php and spark
 ===================
 
-The following files received significant changes and
-**you must merge the updated versions** with your application:
+The following files received significant changes and **you must merge the updated versions** with your application:
 
 * ``public/index.php``
 * ``spark``
 
-.. important:: If you don't update the above two files, CodeIgniter will not work at all
-    after running ``composer update``.
+.. important:: If you don't update the above two files, CodeIgniter will not work at all after running
+    ``composer update``.
 
     The upgrade procedure, for example, is as follows:
 
@@ -38,16 +37,19 @@ The following files received significant changes and
 Config/Constants.php
 ====================
 
-The constants ``EVENT_PRIORITY_LOW``, ``EVENT_PRIORITY_NORMAL`` and ``EVENT_PRIORITY_HIGH`` are deprecated, and the definitions are moved to ``app/Config/Constants.php``. If you use these constants, define them in ``app/Config/Constants.php``. Or use the new class constants ``CodeIgniter\Events\Events::PRIORITY_LOW``, ``CodeIgniter\Events\Events::PRIORITY_NORMAL`` and ``CodeIgniter\Events\Events::PRIORITY_HIGH``.
+The constants ``EVENT_PRIORITY_LOW``, ``EVENT_PRIORITY_NORMAL`` and ``EVENT_PRIORITY_HIGH`` are deprecated, and the
+definitions are moved to ``app/Config/Constants.php``. If you use these constants, define them in
+``app/Config/Constants.php``. Or use the new class constants ``CodeIgniter\Events\Events::PRIORITY_LOW``,
+``CodeIgniter\Events\Events::PRIORITY_NORMAL`` and ``CodeIgniter\Events\Events::PRIORITY_HIGH``.
 
 composer.json
 =============
 
 .. note:: This procedure is not required in v4.5.0 or later.
 
-If you use Composer, installed CodeIgniter v4.1.9 or earlier, and
-there are ``App\\`` and ``Config\\`` namespaces in your ``/composer.json``'s ``autoload.psr-4``
-like the following, you need to remove these lines, and run ``composer dump-autoload``.
+If you use Composer, installed CodeIgniter v4.1.9 or earlier, and there are ``App\\`` and ``Config\\`` namespaces in
+your ``/composer.json``'s ``autoload.psr-4`` like the following, you need to remove these lines, and run
+``composer dump-autoload``.
 
 .. code-block:: text
 
@@ -65,31 +67,37 @@ like the following, you need to remove these lines, and run ``composer dump-auto
 Breaking Changes
 ****************
 
-- The ``system/bootstrap.php`` file no longer returns a ``CodeIgniter`` instance, and does not load the ``.env`` file (now handled in ``index.php`` and ``spark``). If you have code that expects these behaviors, it will no longer work and must be modified. This has been changed to make `Preloading <https://www.php.net/manual/en/opcache.preloading.php>`_ easier to implement.
+- The ``system/bootstrap.php`` file no longer returns a ``CodeIgniter`` instance, and does not load the ``.env`` file
+  (now handled in ``index.php`` and ``spark``). If you have code that expects these behaviors, it will no longer work
+  and must be modified. This has been changed to make
+  `Preloading <https://www.php.net/manual/en/opcache.preloading.php>`_ easier to implement.
 
 Breaking Enhancements
 *********************
 
-- The method signature of ``Validation::setRule()`` has been changed. The ``string`` typehint on the ``$rules`` parameter was removed. Extending classes should likewise remove the typehint so as not to break LSP.
-- The method signatures of ``CodeIgniter\Database\BaseBuilder::join()`` and ``CodeIgniter\Database\*\Builder::join()`` have been changed. The ``string`` typehint on the ``$cond`` parameter was removed. Extending classes should likewise remove the typehint so as not to break LSP.
+- The method signature of ``Validation::setRule()`` has been changed. The ``string`` typehint on the ``$rules``
+  parameter was removed. Extending classes should likewise remove the typehint so as not to break LSP.
+- The method signatures of ``CodeIgniter\Database\BaseBuilder::join()`` and ``CodeIgniter\Database\*\Builder::join()``
+  have been changed. The ``string`` typehint on the ``$cond`` parameter was removed. Extending classes should likewise
+  remove the typehint so as not to break LSP.
 
 Project Files
 *************
 
-Numerous files in the **project space** (root, app, public, writable) received updates. Due to
-these files being outside of the **system** scope, they will not be changed without your intervention.
-There are some third-party CodeIgniter modules available to assist with merging changes to
-the project space: `Explore on Packagist <https://packagist.org/explore/?query=codeigniter4%20updates>`_.
+Numerous files in the **project space** (root, app, public, writable) received updates. Due to these files being outside
+of the **system** scope, they will not be changed without your intervention. There are some third-party CodeIgniter
+modules available to assist with merging changes to the project space:
+`Explore on Packagist <https://packagist.org/explore/?query=codeigniter4%20updates>`_.
 
-.. note:: Except in very rare cases for bug fixes, no changes made to files for the project space
-    will break your application. All changes noted here are optional until the next major version,
-    and any mandatory changes will be covered in the sections above.
+.. note:: Except in very rare cases for bug fixes, no changes made to files for the project space will break your
+    application. All changes noted here are optional until the next major version, and any mandatory changes will be
+    covered in the sections above.
 
 Content Changes
 ===============
 
-The following files received significant changes (including deprecations or visual adjustments)
-and it is recommended that you merge the updated versions with your application:
+The following files received significant changes (including deprecations or visual adjustments) and it is recommended
+that you merge the updated versions with your application:
 
 * ``app/Config/Routes.php``
 
@@ -98,8 +106,8 @@ and it is recommended that you merge the updated versions with your application:
 All Changes
 ===========
 
-This is a list of all files in the **project space** that received changes;
-many will be simple comments or formatting that have no effect on the runtime:
+This is a list of all files in the **project space** that received changes; many will be simple comments or formatting
+that have no effect on the runtime:
 
 * **app/Config/App.php**
 * **app/Config/Constants.php**

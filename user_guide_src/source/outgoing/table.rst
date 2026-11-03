@@ -2,8 +2,7 @@
 HTML Table Class
 ################
 
-The Table Class provides methods that enable you to auto-generate HTML
-tables from arrays or database result sets.
+The Table Class provides methods that enable you to auto-generate HTML tables from arrays or database result sets.
 
 .. contents::
     :local:
@@ -16,58 +15,50 @@ Using the Table Class
 Initializing the Class
 ======================
 
-The Table class is not provided as a service, and should be instantiated
-"normally", for instance:
+The Table class is not provided as a service, and should be instantiated "normally", for instance:
 
 .. literalinclude:: table/001.php
 
 Examples
 ========
 
-Here is an example showing how you can create a table from a
-multi-dimensional array. Note that the first array index will become the
-table heading (or you can set your own headings using the ``setHeading()``
-method described in the function reference below).
+Here is an example showing how you can create a table from a multi-dimensional array. Note that the first array index
+will become the table heading (or you can set your own headings using the ``setHeading()`` method described in the
+function reference below).
 
 .. literalinclude:: table/002.php
 
-Here is an example of a table created from a database query result. The
-table class will automatically generate the headings based on the field
-names (or you can set your own headings using the ``setHeading()``
-method described in the class reference below).
+Here is an example of a table created from a database query result. The table class will automatically generate the
+headings based on the field names (or you can set your own headings using the ``setHeading()`` method described in the
+class reference below).
 
 .. literalinclude:: table/003.php
 
-Here is an example showing how you might create a table using discrete
-parameters:
+Here is an example showing how you might create a table using discrete parameters:
 
 .. literalinclude:: table/004.php
 
-Here is the same example, except instead of individual parameters,
-arrays are used:
+Here is the same example, except instead of individual parameters, arrays are used:
 
 .. literalinclude:: table/005.php
 
 Changing the Look of Your Table
 ===============================
 
-The Table Class permits you to set a table template with which you can
-specify the design of your layout. Here is the template prototype:
+The Table Class permits you to set a table template with which you can specify the design of your layout. Here is the
+template prototype:
 
 .. literalinclude:: table/006.php
 
-.. note:: You'll notice there are two sets of "row" blocks in the
-    template. These permit you to create alternating row colors or design
-    elements that alternate with each iteration of the row data.
+.. note:: You'll notice there are two sets of "row" blocks in the template. These permit you to create alternating row
+    colors or design elements that alternate with each iteration of the row data.
 
-You are NOT required to submit a complete template. If you only need to
-change parts of the layout, you can simply submit those elements. In this
-example, only the table opening tag is being changed:
+You are NOT required to submit a complete template. If you only need to change parts of the layout, you can simply
+submit those elements. In this example, only the table opening tag is being changed:
 
 .. literalinclude:: table/007.php
 
-You can also set defaults for these by passing an array of template settings
-to the Table constructor:
+You can also set defaults for these by passing an array of template settings to the Table constructor:
 
 .. literalinclude:: table/008.php
 
@@ -78,21 +69,17 @@ Synchronizing Rows with Headings
 
 .. versionadded:: 4.4.0
 
-The ``setSyncRowsWithHeading(true)`` method ensures that each data value
-is placed in the same column as defined in ``setHeading()`` if an
-associative array was used as a parameter. This is especially useful
-when dealing with data loaded via REST API where the order is not to
-your liking, or if the API returned too much data.
+The ``setSyncRowsWithHeading(true)`` method ensures that each data value is placed in the same column as defined in
+``setHeading()`` if an associative array was used as a parameter. This is especially useful when dealing with data
+loaded via REST API where the order is not to your liking, or if the API returned too much data.
 
-If a data row contains a key that is not present in the heading, its value is
-filtered out. Conversely, if a data row does not have a key listed in the heading,
-an empty cell will be placed in its place.
+If a data row contains a key that is not present in the heading, its value is filtered out. Conversely, if a data row
+does not have a key listed in the heading, an empty cell will be placed in its place.
 
 .. literalinclude:: table/019.php
 
-.. important:: You must call ``setSyncRowsWithHeading(true)`` and
-    ``setHeading([...])`` before adding any rows via ``addRow([...])`` where
-    the rearrangement of columns takes place.
+.. important:: You must call ``setSyncRowsWithHeading(true)`` and ``setHeading([...])`` before adding any rows via
+    ``addRow([...])`` where the rearrangement of columns takes place.
 
 Using an array as input to ``generate()`` produces the same result:
 
@@ -113,7 +100,8 @@ Class Reference
 
         .. literalinclude:: table/009.php
 
-        In the above example, all cell data would be run through PHP's :php:func:`htmlspecialchars()` function, resulting in::
+        In the above example, all cell data would be run through PHP's :php:func:`htmlspecialchars()` function,
+        resulting in::
 
             <td>Fred</td><td>&lt;strong&gt;Blue&lt;/strong&gt;</td><td>Small</td>
 
@@ -123,7 +111,8 @@ Class Reference
         :returns:    HTML table
         :rtype:    string
 
-        Returns a string containing the generated table. Accepts an optional parameter which can be an array or a database result object.
+        Returns a string containing the generated table. Accepts an optional parameter which can be an array or a
+        database result object.
 
     .. php:method:: setCaption($caption)
 
@@ -166,7 +155,8 @@ Class Reference
         .. literalinclude:: table/013.php
 
         If you would like to set an individual cell's tag attributes, you can use an associative array for that cell.
-        The associative key **data** defines the cell's data. Any other key => val pairs are added as key='val' attributes to the tag:
+        The associative key **data** defines the cell's data. Any other key => val pairs are added as key='val'
+        attributes to the tag:
 
         .. literalinclude:: table/014.php
 
@@ -177,8 +167,9 @@ Class Reference
         :returns:    An array of HTML table columns
         :rtype:    array
 
-        This method takes a one-dimensional array as input and creates a multi-dimensional array with a depth equal to the number of columns desired.
-        This allows a single array with many elements to be displayed in a table that has a fixed column count. Consider this example:
+        This method takes a one-dimensional array as input and creates a multi-dimensional array with a depth equal to
+        the number of columns desired. This allows a single array with many elements to be displayed in a table that has
+        a fixed column count. Consider this example:
 
         .. literalinclude:: table/015.php
 
@@ -198,8 +189,8 @@ Class Reference
         :returns:    Table instance (method chaining)
         :rtype:    Table
 
-        Lets you set a default value for use in any table cells that are empty.
-        You might, for example, set a non-breaking space:
+        Lets you set a default value for use in any table cells that are empty. You might, for example, set a
+        non-breaking space:
 
         .. literalinclude:: table/017.php
 
@@ -208,10 +199,8 @@ Class Reference
         :returns:    Table instance (method chaining)
         :rtype:    Table
 
-        Lets you clear the table heading, row data and caption. If
-        you need to show multiple tables with different data you
-        should call this method after each table has been
-        generated to clear the previous table information.
+        Lets you clear the table heading, row data and caption. If you need to show multiple tables with different data
+        you should call this method after each table has been generated to clear the previous table information.
 
         Example:
 
@@ -222,6 +211,5 @@ Class Reference
         :returns:   Table instance (method chaining)
         :rtype:     Table
 
-        Enables each row data key to be ordered by heading keys. This gives
-        more control over data being displayed in the correct column. Make
-        sure to set this value before calling the first ``addRow()`` method.
+        Enables each row data key to be ordered by heading keys. This gives more control over data being displayed in
+        the correct column. Make sure to set this value before calling the first ``addRow()`` method.

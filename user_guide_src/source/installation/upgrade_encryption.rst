@@ -19,9 +19,13 @@ What has been changed
 Upgrade Guide
 *************
 
-1. Within your configs, ``$config['encryption_key'] = 'abc123';`` moved from **application/config/config.php** to ``public $key = 'abc123';`` in **app/Config/Encryption.php**.
-2. If you need to decrypt data encrypted with CI3's Encryption, configure settings to maintain compatibility. See :ref:`encryption-compatible-with-ci3`.
-3. Wherever you have used the encryption library, you have to replace ``$this->load->library('encryption');`` with ``$encrypter = service('encrypter');`` and change the methods for encrypting and decrypting like in the following code example.
+1. Within your configs, ``$config['encryption_key'] = 'abc123';`` moved from **application/config/config.php** to
+   ``public $key = 'abc123';`` in **app/Config/Encryption.php**.
+2. If you need to decrypt data encrypted with CI3's Encryption, configure settings to maintain compatibility. See
+   :ref:`encryption-compatible-with-ci3`.
+3. Wherever you have used the encryption library, you have to replace ``$this->load->library('encryption');`` with
+   ``$encrypter = service('encrypter');`` and change the methods for encrypting and decrypting like in the following
+   code example.
 
 Code Example
 ************

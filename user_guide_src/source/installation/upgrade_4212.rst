@@ -20,8 +20,8 @@ Version 4.2.12 did not alter any executable code in project files.
 All Changes
 ===========
 
-This is a list of all files in the **project space** that received changes;
-many will be simple comments or formatting that have no effect on the runtime:
+This is a list of all files in the **project space** that received changes; many will be simple comments or formatting
+that have no effect on the runtime:
 
 * **app/Config/Cache.php**
 * **app/Config/Migrations.php**

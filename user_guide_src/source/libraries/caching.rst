@@ -2,10 +2,8 @@
 Caching Driver
 ##############
 
-CodeIgniter features wrappers around some of the most popular forms of
-fast and dynamic caching. All but file-based caching have specific
-server requirements, and a Fatal Exception will be thrown if server
-requirements are not met.
+CodeIgniter features wrappers around some of the most popular forms of fast and dynamic caching. All but file-based
+caching have specific server requirements, and a Fatal Exception will be thrown if server requirements are not met.
 
 .. contents::
     :local:
@@ -29,35 +27,35 @@ You can grab an instance of the cache engine directly through the global functio
 Configuring the Cache
 *********************
 
-All configuration for the cache engine is done in **app/Config/Cache.php**. In that file,
-the following items are available.
+All configuration for the cache engine is done in **app/Config/Cache.php**. In that file, the following items are
+available.
 
 $handler
 ========
 
-This is the name of the handler that should be used as the primary handler when starting up the engine.
-Available names are: apcu, dummy, file, memcached, redis, predis, wincache.
+This is the name of the handler that should be used as the primary handler when starting up the engine. Available names
+are: apcu, dummy, file, memcached, redis, predis, wincache.
 
 $backupHandler
 ==============
 
-In the case that the first choice ``$handler`` is not available, this is the next cache handler to load.
-This is commonly the ``File`` handler since the file system is always available, but may not fit
-more complex, multi-server setups.
+In the case that the first choice ``$handler`` is not available, this is the next cache handler to load. This is
+commonly the ``File`` handler since the file system is always available, but may not fit more complex, multi-server
+setups.
 
 $prefix
 =======
 
-If you have more than one application using the same cache storage, you can add a custom prefix
-string here that is prepended to all key names.
+If you have more than one application using the same cache storage, you can add a custom prefix string here that is
+prepended to all key names.
 
 $ttl
 ====
 
 The default number of seconds to save items when none is specified.
 
-WARNING: This is not used by framework handlers where 60 seconds is hard-coded, but may be useful
-to projects and modules. This will replace the hard-coded value in a future release.
+WARNING: This is not used by framework handlers where 60 seconds is hard-coded, but may be useful to projects and
+modules. This will replace the hard-coded value in a future release.
 
 $file
 =====
@@ -78,9 +76,8 @@ The settings for the Redis server that you wish to use when using the **Redis** 
 Command-Line Tools
 ******************
 
-CodeIgniter ships with several :doc:`commands </cli/spark_commands>` that are available
-from the command line to help you work with Cache.
-These tools are not required to use the Cache driver, but might help you.
+CodeIgniter ships with several :doc:`commands </cli/spark_commands>` that are available from the command line to help
+you work with Cache. These tools are not required to use the Cache driver, but might help you.
 
 cache:clear
 ===========
@@ -121,8 +118,8 @@ Class Reference
         :returns: Item value or ``null`` if not found
         :rtype: mixed
 
-        This method will attempt to fetch an item from the cache store. If the
-        item does not exist, the method will return null.
+        This method will attempt to fetch an item from the cache store. If the item does not exist, the method will
+        return null.
 
         Example:
 
@@ -136,8 +133,8 @@ Class Reference
         :returns: The value of the cache item
         :rtype: mixed
 
-        Gets an item from the cache. If ``null`` was returned, this will invoke the callback
-        and save the result. Either way, this will return the value.
+        Gets an item from the cache. If ``null`` was returned, this will invoke the callback and save the result. Either
+        way, this will return the value.
 
     .. php:method:: save(string $key, $data[, int $ttl = 60])
 
@@ -147,8 +144,7 @@ Class Reference
         :returns: ``true`` on success, ``false`` on failure
         :rtype: bool
 
-        This method will save an item to the cache store. If saving fails, the
-        method will return ``false``.
+        This method will save an item to the cache store. If saving fails, the method will return ``false``.
 
         Example:
 
@@ -160,8 +156,8 @@ Class Reference
         :returns: ``true`` on success, ``false`` on failure
         :rtype: bool
 
-        This method will delete a specific item from the cache store. If item
-        deletion fails, the method will return false.
+        This method will delete a specific item from the cache store. If item deletion fails, the method will return
+        false.
 
         Example:
 
@@ -173,15 +169,14 @@ Class Reference
         :returns: number of deleted items
         :rtype: integer
 
-        This method will delete multiple items from the cache store at once by
-        matching their keys against a glob-style pattern. It will return the total number of deleted items.
+        This method will delete multiple items from the cache store at once by matching their keys against a glob-style
+        pattern. It will return the total number of deleted items.
 
-        .. important:: This method is only implemented for the File, Redis and Predis handlers.
-            Due to limitations, it couldn't be implemented for the Memcached and Wincache handlers.
+        .. important:: This method is only implemented for the File, Redis and Predis handlers. Due to limitations, it
+            couldn't be implemented for the Memcached and Wincache handlers.
 
-        .. note:: With the File handler, the pattern is matched against cache
-            file names only and cannot match files in subdirectories. A pattern
-            containing a forward slash (``/``) therefore never matches.
+        .. note:: With the File handler, the pattern is matched against cache file names only and cannot match files in
+            subdirectories. A pattern containing a forward slash (``/``) therefore never matches.
 
         Example:
 
@@ -216,18 +211,17 @@ Class Reference
 
         .. literalinclude:: caching/008.php
 
-        .. important:: Memcached counters are unsigned and saturate at ``0`` instead of
-            going negative. Decrementing a key that does not yet exist initializes it
-            to ``0`` (rather than ``-$offset``, as the File, Redis, and Predis handlers
-            do), and decrementing an existing counter below ``0`` clamps it at ``0``.
+        .. important:: Memcached counters are unsigned and saturate at ``0`` instead of going negative. Decrementing a
+            key that does not yet exist initializes it to ``0`` (rather than ``-$offset``, as the File, Redis, and
+            Predis handlers do), and decrementing an existing counter below ``0`` clamps it at ``0``.
 
     .. php:method:: clean()
 
         :returns: ``true`` on success, ``false`` on failure
         :rtype: bool
 
-        This method will 'clean' the entire cache. If the deletion of the
-        cache files fails, the method will return false.
+        This method will 'clean' the entire cache. If the deletion of the cache files fails, the method will return
+        false.
 
         Example:
 
@@ -244,8 +238,7 @@ Class Reference
 
         .. literalinclude:: caching/010.php
 
-        .. note:: The information returned and the structure of the data are dependent
-            on which adapter is being used.
+        .. note:: The information returned and the structure of the data are dependent on which adapter is being used.
 
     .. php:method:: getMetadata(string $key)
 
@@ -253,16 +246,14 @@ Class Reference
         :returns: Metadata for the cached item. ``null`` for missing items, or an array with at least the "expire" key for absolute epoch expiry (``null`` for never expires).
         :rtype: array|null
 
-        This method will return detailed information on a specific item in the
-        cache.
+        This method will return detailed information on a specific item in the cache.
 
         Example:
 
         .. literalinclude:: caching/011.php
 
-        .. note:: The information returned and the structure of the data are dependent
-            on which adapter is being used. Some adapters (File, Memcached, Wincache)
-            still return ``false`` for missing items.
+        .. note:: The information returned and the structure of the data are dependent on which adapter is being used.
+            Some adapters (File, Memcached, Wincache) still return ``false`` for missing items.
 
     .. php:staticmethod:: validateKey(string $key, string $prefix)
 
@@ -271,8 +262,8 @@ Class Reference
         :returns: The verified and prefixed key. If the key exceeds the driver's max key length it will be hashed.
         :rtype: string
 
-        This method is used by handler methods to check that keys are valid. It will throw
-        an ``InvalidArgumentException`` for non-strings, invalid characters, and empty lengths.
+        This method is used by handler methods to check that keys are valid. It will throw an
+        ``InvalidArgumentException`` for non-strings, invalid characters, and empty lengths.
 
         Example:
 
@@ -294,8 +285,8 @@ File-based Caching
 
 This requires a cache directory to be writable by the application.
 
-Use this with care, and make sure to benchmark your application, as a point can
-come where disk I/O will negate positive gains from caching.
+Use this with care, and make sure to benchmark your application, as a point can come where disk I/O will negate positive
+gains from caching.
 
 Memcached Caching
 =================
@@ -304,46 +295,41 @@ Memcached servers can be specified in the cache configuration file. Available op
 
 .. literalinclude:: caching/013.php
 
-For more information on Memcached, please see
-`https://www.php.net/memcached <https://www.php.net/memcached>`_.
+For more information on Memcached, please see `https://www.php.net/memcached <https://www.php.net/memcached>`_.
 
 WinCache Caching
 ================
 
 Under Windows, you can also utilize the WinCache driver.
 
-For more information on WinCache, please see
-`https://www.php.net/wincache <https://www.php.net/wincache>`_.
+For more information on WinCache, please see `https://www.php.net/wincache <https://www.php.net/wincache>`_.
 
 Redis Caching
 =============
 
-Redis is an in-memory key-value store which can operate in LRU cache mode.
-To use it, you need the `Redis server and phpredis PHP extension <https://github.com/phpredis/phpredis>`_.
+Redis is an in-memory key-value store which can operate in LRU cache mode. To use it, you need the
+`Redis server and phpredis PHP extension <https://github.com/phpredis/phpredis>`_.
 
 Config options to connect to the Redis server are stored in the cache configuration file. Available options are:
 
 .. literalinclude:: caching/014.php
 
-For more information on Redis, please see
-`https://redis.io <https://redis.io>`_.
+For more information on Redis, please see `https://redis.io <https://redis.io>`_.
 
 Predis Caching
 ==============
 
-Predis is a flexible and feature-complete PHP client library for the Redis key-value store.
-To use it, run the following from the command line inside your project root:
+Predis is a flexible and feature-complete PHP client library for the Redis key-value store. To use it, run the following
+from the command line inside your project root:
 
 .. code-block:: console
 
     composer require predis/predis
 
-For more information on Predis, please see
-`https://github.com/nrk/predis <https://github.com/nrk/predis>`_.
+For more information on Predis, please see `https://github.com/nrk/predis <https://github.com/nrk/predis>`_.
 
 Dummy Cache
 ===========
 
-This is a caching backend that will always 'miss.' It stores no data,
-but lets you keep your caching code in place in environments that don't
-support your chosen cache.
+This is a caching backend that will always 'miss.' It stores no data, but lets you keep your caching code in place in
+environments that don't support your chosen cache.

@@ -2,9 +2,9 @@
 HTTP Messages
 #############
 
-The Message class provides an interface to the portions of an HTTP message that are common to both
-requests and responses, including the message body, protocol version, utilities for working with
-the headers, and methods for handling content negotiation.
+The Message class provides an interface to the portions of an HTTP message that are common to both requests and
+responses, including the message body, protocol version, utilities for working with the headers, and methods for
+handling content negotiation.
 
 This class is the parent class that both the :doc:`Request Class <../incoming/request>` and the
 :doc:`Response Class <../outgoing/response>` extend from, and it is not used directly.
@@ -46,14 +46,12 @@ Class Reference
 
         :returns: void
 
-        Scans and parses the headers found in the SERVER data and stores them for later access.
-        This is used by the :doc:`IncomingRequest Class <../incoming/incomingrequest>` to make
-        the current request's headers available.
+        Scans and parses the headers found in the SERVER data and stores them for later access. This is used by the
+        :doc:`IncomingRequest Class <../incoming/incomingrequest>` to make the current request's headers available.
 
-        The headers are any SERVER data that starts with ``HTTP_``, like ``HTTP_HOST``. Each message
-        is converted from its standard uppercase and underscore format to a ucwords and dash format.
-        The preceding ``HTTP_`` is removed from the string. So ``HTTP_ACCEPT_LANGUAGE`` becomes
-        ``Accept-Language``.
+        The headers are any SERVER data that starts with ``HTTP_``, like ``HTTP_HOST``. Each message is converted from
+        its standard uppercase and underscore format to a ucwords and dash format. The preceding ``HTTP_`` is removed
+        from the string. So ``HTTP_ACCEPT_LANGUAGE`` becomes ``Accept-Language``.
 
     .. php:method:: headers()
 
@@ -68,13 +66,14 @@ Class Reference
         :returns: Returns a single header object. If multiple headers with the same name exist, it will return an array of header objects.
         :rtype: \CodeIgniter\\HTTP\\Header|array
 
-        Allows you to retrieve the current value of a single message header. ``$name`` is the case-insensitive header name.
-        While the header is converted internally as described above, you can access the header with any type of case:
+        Allows you to retrieve the current value of a single message header. ``$name`` is the case-insensitive header
+        name. While the header is converted internally as described above, you can access the header with any type of
+        case:
 
         .. literalinclude:: message/002.php
 
-        If the header has multiple values, ``getValue()`` will return an array of values. You can use the ``getValueLine()``
-        method to retrieve the values as a string:
+        If the header has multiple values, ``getValue()`` will return an array of values. You can use the
+        ``getValueLine()`` method to retrieve the values as a string:
 
         .. literalinclude:: message/003.php
 
@@ -94,8 +93,8 @@ Class Reference
         :returns: A string representing the header value.
         :rtype: string
 
-        Returns the value(s) of the header as a string. This method allows you to easily get a string representation
-        of the header values when the header has multiple values. The values are appropriately joined:
+        Returns the value(s) of the header as a string. This method allows you to easily get a string representation of
+        the header values when the header has multiple values. The values are appropriately joined:
 
         .. literalinclude:: message/005.php
 
@@ -106,9 +105,9 @@ Class Reference
         :returns: The current Message|Response instance
         :rtype: CodeIgniter\\HTTP\\Message|CodeIgniter\\HTTP\\Response
 
-        Sets the value of a single header. ``$name`` is the case-insensitive name of the header. If the header
-        doesn't already exist in the collection, it will be created. The ``$value`` can be either a string
-        or an array of strings:
+        Sets the value of a single header. ``$name`` is the case-insensitive name of the header. If the header doesn't
+        already exist in the collection, it will be created. The ``$value`` can be either a string or an array of
+        strings:
 
         .. literalinclude:: message/006.php
 
@@ -129,8 +128,8 @@ Class Reference
         :returns: The current message instance
         :rtype: CodeIgniter\\HTTP\\Message
 
-        Adds a value to an existing header. The header must already be an array of values instead of a single string.
-        If it is a string then a LogicException will be thrown.
+        Adds a value to an existing header. The header must already be an array of values instead of a single string. If
+        it is a string then a LogicException will be thrown.
 
         .. literalinclude:: message/008.php
 
@@ -141,8 +140,8 @@ Class Reference
         :returns: The current message instance
         :rtype: CodeIgniter\\HTTP\\Message
 
-        Prepends a value to an existing header. The header must already be an array of values instead of a single string.
-        If it is a string then a LogicException will be thrown.
+        Prepends a value to an existing header. The header must already be an array of values instead of a single
+        string. If it is a string then a LogicException will be thrown.
 
         .. literalinclude:: message/009.php
 
@@ -155,8 +154,8 @@ Class Reference
         :returns: The current message instance
         :rtype: CodeIgniter\\HTTP\\Message
 
-        Adds a header (not a header value) with the same name.
-        Use this only when you set multiple headers with the same name:
+        Adds a header (not a header value) with the same name. Use this only when you set multiple headers with the same
+        name:
 
         .. literalinclude:: message/011.php
 
@@ -165,8 +164,7 @@ Class Reference
         :returns: The current HTTP protocol version
         :rtype: string
 
-        Returns the message's current HTTP protocol. If none has been set, it will
-        return ``1.1``.
+        Returns the message's current HTTP protocol. If none has been set, it will return ``1.1``.
 
     .. php:method:: setProtocolVersion($version)
 
@@ -174,7 +172,6 @@ Class Reference
         :returns: The current message instance
         :rtype: CodeIgniter\\HTTP\\Message
 
-        Sets the HTTP protocol version this Message uses. Valid values are
-        ``1.0``, ``1.1``, ``2.0`` and ``3.0``:
+        Sets the HTTP protocol version this Message uses. Valid values are ``1.0``, ``1.1``, ``2.0`` and ``3.0``:
 
         .. literalinclude:: message/010.php

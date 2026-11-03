@@ -15,14 +15,14 @@ Please refer to the upgrade instructions corresponding to your installation meth
 Breaking Changes
 ****************
 
-- ``AutoRouterInterface::getRoute()`` has a new second parameter ``string $httpVerb``.
-  If you implement it, add the parameter.
+- ``AutoRouterInterface::getRoute()`` has a new second parameter ``string $httpVerb``. If you implement it, add the
+  parameter.
 
 Breaking Enhancements
 *********************
 
-- The method signatures of ``ValidationInterface::check()`` and ``Validation::check()``
-  have been changed. If you implement or extend them, update the signatures.
+- The method signatures of ``ValidationInterface::check()`` and ``Validation::check()`` have been changed. If you
+  implement or extend them, update the signatures.
 
 Project Files
 *************
@@ -32,7 +32,7 @@ Version 4.3.6 did not alter any executable code in project files.
 All Changes
 ===========
 
-This is a list of all files in the **project space** that received changes;
-many will be simple comments or formatting that have no effect on the runtime:
+This is a list of all files in the **project space** that received changes; many will be simple comments or formatting
+that have no effect on the runtime:
 
 - **composer.json**

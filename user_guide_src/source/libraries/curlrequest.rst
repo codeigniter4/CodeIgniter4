@@ -2,22 +2,22 @@
 CURLRequest Class
 #################
 
-The ``CURLRequest`` class is a lightweight HTTP client based on CURL that allows you to talk to other
-websites and servers. It can be used to get the contents of a Google search, retrieve a web page or image,
-or communicate with an API, among many other things.
+The ``CURLRequest`` class is a lightweight HTTP client based on CURL that allows you to talk to other websites and
+servers. It can be used to get the contents of a Google search, retrieve a web page or image, or communicate with an
+API, among many other things.
 
 .. contents::
     :local:
     :depth: 2
 
-This class is modeled after the `Guzzle HTTP Client <http://docs.guzzlephp.org/en/latest/>`_ library since
-it is one of the more widely used libraries. Where possible, the syntax has been kept the same so that if
-your application needs something a little more powerful than what this library provides, you will have
-to change very little to move over to use Guzzle.
+This class is modeled after the `Guzzle HTTP Client <http://docs.guzzlephp.org/en/latest/>`_ library since it is one of
+the more widely used libraries. Where possible, the syntax has been kept the same so that if your application needs
+something a little more powerful than what this library provides, you will have to change very little to move over to
+use Guzzle.
 
-.. note:: This class requires the `cURL Library <https://www.php.net/manual/en/book.curl.php>`_ to be installed
-    in your version of PHP. This is a very common library that is typically available, but not all hosts
-    will provide it, so please check with your host to verify if you run into problems.
+.. note:: This class requires the `cURL Library <https://www.php.net/manual/en/book.curl.php>`_ to be installed in your
+    version of PHP. This is a very common library that is typically available, but not all hosts will provide it, so
+    please check with your host to verify if you run into problems.
 
 **********************
 Config for CURLRequest
@@ -32,7 +32,9 @@ Sharing Connection
 
 By default, this option is enabled with the constants ``CURL_LOCK_DATA_CONNECT`` and ``CURL_LOCK_DATA_DNS``.
 
-If you want to share connections between requests, set ``$shareConnectionOptions`` to an array of `CURL_LOCK_DATA_* <https://www.php.net/manual/en/curl.constants.php#constant.curl-lock-data-connect>`_ constants in **app/Config/CURLRequest.php**:
+If you want to share connections between requests, set ``$shareConnectionOptions`` to an array of
+`CURL_LOCK_DATA_* <https://www.php.net/manual/en/curl.constants.php#constant.curl-lock-data-connect>`_ constants in
+**app/Config/CURLRequest.php**:
 
 .. literalinclude:: curlrequest/039.php
 
@@ -45,19 +47,18 @@ Or, when you want to disable it, just change it to an empty array:
 Sharing Options
 ===============
 
-.. important:: This setting exists only for backward compatibility. Do not use it
-    in new projects. Even if you are already using it, we recommend that you disable
-    it.
+.. important:: This setting exists only for backward compatibility. Do not use it in new projects. Even if you are
+    already using it, we recommend that you disable it.
 
 .. note:: Since v4.4.0, the default value has been changed to ``false``.
 
-If you want to share all the options between requests, set ``$shareOptions`` to
-``true`` in **app/Config/CURLRequest.php**:
+If you want to share all the options between requests, set ``$shareOptions`` to ``true`` in
+**app/Config/CURLRequest.php**:
 
 .. literalinclude:: curlrequest/001.php
 
-If you send more than one request with an instance of the class, this behavior
-may result in an erroneous request with unnecessary headers and body.
+If you send more than one request with an instance of the class, this behavior may result in an erroneous request with
+unnecessary headers and body.
 
 .. note:: Before v4.2.0, the request body was not reset even if ``$shareOptions`` was false, due to a bug.
 
@@ -71,16 +72,17 @@ To load it with the Services class, call the ``curlrequest()`` method or the glo
 
 .. literalinclude:: curlrequest/002.php
 
-You can pass in an array of default options as the first parameter to modify how cURL will handle the request.
-The options are described later in this document:
+You can pass in an array of default options as the first parameter to modify how cURL will handle the request. The
+options are described later in this document:
 
 .. literalinclude:: curlrequest/003.php
 
-.. note:: When ``$shareOptions`` is false, the default options passed to the class constructor will be used for all requests. Other options will be reset after sending a request.
+.. note:: When ``$shareOptions`` is false, the default options passed to the class constructor will be used for all
+    requests. Other options will be reset after sending a request.
 
-When creating the class manually, you need to pass a few dependencies in. The first parameter is an
-instance of the ``Config\App`` class. The second parameter is a URI instance. The third
-parameter is a Response object. The fourth parameter is the optional default ``$options`` array:
+When creating the class manually, you need to pass a few dependencies in. The first parameter is an instance of the
+``Config\App`` class. The second parameter is a URI instance. The third parameter is a Response object. The fourth
+parameter is the optional default ``$options`` array:
 
 .. literalinclude:: curlrequest/004.php
 
@@ -89,51 +91,47 @@ Working with the Library
 ************************
 
 Working with CURL requests is simply a matter of creating the Request and getting a
-:doc:`Response object </outgoing/response>` back. It is meant to handle the communications. After that,
-you have complete control over how the information is handled.
+:doc:`Response object </outgoing/response>` back. It is meant to handle the communications. After that, you have
+complete control over how the information is handled.
 
 Making Requests
 ===============
 
-Most communication is done through the ``request()`` method, which fires off the request, and then returns
-a Response instance to you. This takes the HTTP method, the URL, and an array of options as the parameters.
+Most communication is done through the ``request()`` method, which fires off the request, and then returns a Response
+instance to you. This takes the HTTP method, the URL, and an array of options as the parameters.
 
 .. literalinclude:: curlrequest/005.php
 
-.. important:: By default, CURLRequest will throw ``HTTPException`` if the HTTP
-    code returned is greater than or equal to 400. If you want to get the response,
-    see the `http_errors`_ option.
+.. important:: By default, CURLRequest will throw ``HTTPException`` if the HTTP code returned is greater than or equal
+    to 400. If you want to get the response, see the `http_errors`_ option.
 
-.. note:: When ``$shareOptions`` is false, the options passed to the method will be used for the request.
-    After the request succeeds or throws an exception, they will be cleared, including
-    per-request ``baseURI`` and ``delay`` values. The constructor defaults will be restored.
-    To retry a failed request, pass its options again and reapply any settings made with
-    ``setAuth()``, ``setBody()``, ``setForm()``, or ``setJSON()``. If you want to use the
-    options for all requests, pass the options in the constructor.
+.. note:: When ``$shareOptions`` is false, the options passed to the method will be used for the request. After the
+    request succeeds or throws an exception, they will be cleared, including per-request ``baseURI`` and ``delay``
+    values. The constructor defaults will be restored. To retry a failed request, pass its options again and reapply any
+    settings made with ``setAuth()``, ``setBody()``, ``setForm()``, or ``setJSON()``. If you want to use the options for
+    all requests, pass the options in the constructor.
 
-Since the response is an instance of ``CodeIgniter\HTTP\Response``, you have all of the normal information
-available to you:
+Since the response is an instance of ``CodeIgniter\HTTP\Response``, you have all of the normal information available to
+you:
 
 .. literalinclude:: curlrequest/006.php
 
-While the ``request()`` method is the most flexible, you can also use the following shortcut methods. They
-each take the URL as the first parameter and an array of options as the second:
+While the ``request()`` method is the most flexible, you can also use the following shortcut methods. They each take the
+URL as the first parameter and an array of options as the second:
 
 .. literalinclude:: curlrequest/007.php
 
 Base URI
 --------
 
-A ``baseURI`` can be set as one of the options during the instantiation of the class. This allows you to
-set a base URI, and then make all requests with that client using relative URLs. This is especially handy
-when working with APIs:
+A ``baseURI`` can be set as one of the options during the instantiation of the class. This allows you to set a base URI,
+and then make all requests with that client using relative URLs. This is especially handy when working with APIs:
 
 .. literalinclude:: curlrequest/008.php
 
-When a relative URI is provided to the ``request()`` method or any of the shortcut methods, it will be combined
-with the baseURI according to the rules described by
-`RFC 3986, section 5.2 <https://tools.ietf.org/html/rfc3986#section-5.2>`_. To save you some time, here are some
-examples of how the combinations are resolved.
+When a relative URI is provided to the ``request()`` method or any of the shortcut methods, it will be combined with the
+baseURI according to the rules described by `RFC 3986, section 5.2 <https://tools.ietf.org/html/rfc3986#section-5.2>`_.
+To save you some time, here are some examples of how the combinations are resolved.
 
     =====================   ================   ========================
     baseURI                 URI                Result
@@ -149,8 +147,8 @@ examples of how the combinations are resolved.
 Using Responses
 ===============
 
-Each ``request()`` call returns a Response object that contains a lot of useful information and some helpful
-methods. The most commonly used methods let you determine the response itself.
+Each ``request()`` call returns a Response object that contains a lot of useful information and some helpful methods.
+The most commonly used methods let you determine the response itself.
 
 You can get the status code and reason phrase of the response:
 
@@ -164,8 +162,8 @@ The body can be retrieved using the ``getBody()`` method:
 
 .. literalinclude:: curlrequest/011.php
 
-The body is the raw body provided by the remote server. If the content type requires formatting, you will need
-to ensure that your script handles that:
+The body is the raw body provided by the remote server. If the content type requires formatting, you will need to ensure
+that your script handles that:
 
 .. literalinclude:: curlrequest/012.php
 
@@ -173,27 +171,28 @@ to ensure that your script handles that:
 Request Options
 ***************
 
-This section describes all of the available options you may pass into the constructor, the ``request()`` method,
-or any of the shortcut methods.
+This section describes all of the available options you may pass into the constructor, the ``request()`` method, or any
+of the shortcut methods.
 
 allow_redirects
 ===============
 
-By default, cURL will not follow any "Location:" headers the remote servers send
-back. The ``allow_redirects`` option allows you to modify how that works.
+By default, cURL will not follow any "Location:" headers the remote servers send back. The ``allow_redirects`` option
+allows you to modify how that works.
 
 If you set the value to ``true``, then it will follow redirects:
 
 .. literalinclude:: curlrequest/014.php
 
-.. warning:: Please note that enabling redirects may redirect to a URL that you
-    do not expect and may enable SSRF attacks.
+.. warning:: Please note that enabling redirects may redirect to a URL that you do not expect and may enable SSRF
+    attacks.
 
 Setting it to ``false`` will apply the default settings to the request:
 
 .. literalinclude:: curlrequest/013.php
 
-You can pass in an array as the value of the ``allow_redirects`` option to specify new settings in place of the defaults:
+You can pass in an array as the value of the ``allow_redirects`` option to specify new settings in place of the
+defaults:
 
 .. literalinclude:: curlrequest/015.php
 
@@ -203,62 +202,61 @@ auth
 ====
 
 Allows you to provide Authentication details for `HTTP Basic <https://www.ietf.org/rfc/rfc2069.txt>`_ and
-`Digest <https://www.ietf.org/rfc/rfc2069.txt>`_ authentication. Your script may have to do extra work to support
-Digest authentication - this simply passes the username and password along for you. The value must be an
-array where the first element is the username, and the second is the password. The third parameter should be
-the type of authentication to use, either ``basic`` or ``digest``:
+`Digest <https://www.ietf.org/rfc/rfc2069.txt>`_ authentication. Your script may have to do extra work to support Digest
+authentication - this simply passes the username and password along for you. The value must be an array where the first
+element is the username, and the second is the password. The third parameter should be the type of authentication to
+use, either ``basic`` or ``digest``:
 
 .. literalinclude:: curlrequest/016.php
 
 body
 ====
 
-There are two ways to set the body of the request for request types that support it, like PUT or POST.
-The first way is to use the ``setBody()`` method:
+There are two ways to set the body of the request for request types that support it, like PUT or POST. The first way is
+to use the ``setBody()`` method:
 
 .. literalinclude:: curlrequest/017.php
 
-The second method is by passing a ``body`` option in. This is provided to maintain Guzzle API compatibility,
-and functions the exact same way as the previous example. The value must be a string:
+The second method is by passing a ``body`` option in. This is provided to maintain Guzzle API compatibility, and
+functions the exact same way as the previous example. The value must be a string:
 
 .. literalinclude:: curlrequest/018.php
 
 cert
 ====
 
-To specify the location of a PEM-formatted client-side certificate, pass a string with the full path to the
-file as the ``cert`` option. If a password is required, set the value to an array with the first element
-as the path to the certificate, and the second as the password:
+To specify the location of a PEM-formatted client-side certificate, pass a string with the full path to the file as the
+``cert`` option. If a password is required, set the value to an array with the first element as the path to the
+certificate, and the second as the password:
 
 .. literalinclude:: curlrequest/019.php
 
 connect_timeout
 ===============
 
-By default, CodeIgniter does not impose a limit for cURL to attempt to connect to a website. If you need to
-modify this value, you can do so by passing the amount of time in seconds with the ``connect_timeout`` option.
-You can pass 0 to wait indefinitely:
+By default, CodeIgniter does not impose a limit for cURL to attempt to connect to a website. If you need to modify this
+value, you can do so by passing the amount of time in seconds with the ``connect_timeout`` option. You can pass 0 to
+wait indefinitely:
 
 .. literalinclude:: curlrequest/020.php
 
 cookie
 ======
 
-This specifies the filename that CURL should use to read cookie values from, and
-to save cookie values to. This is done using the ``CURLOPT_COOKIEJAR`` and ``CURLOPT_COOKIEFILE`` options.
-An example:
+This specifies the filename that CURL should use to read cookie values from, and to save cookie values to. This is done
+using the ``CURLOPT_COOKIEJAR`` and ``CURLOPT_COOKIEFILE`` options. An example:
 
 .. literalinclude:: curlrequest/021.php
 
 debug
 =====
 
-When ``debug`` is passed and set to ``true``, this will enable additional debugging to echo to STDERR during the
-script execution.
+When ``debug`` is passed and set to ``true``, this will enable additional debugging to echo to STDERR during the script
+execution.
 
-This is done by passing ``CURLOPT_VERBOSE`` and echoing the output. So, when you're running a built-in
-server via ``spark serve``, you will see the output in the console. Otherwise, the output will be written to
-the server's error log.
+This is done by passing ``CURLOPT_VERBOSE`` and echoing the output. So, when you're running a built-in server via
+``spark serve``, you will see the output in the console. Otherwise, the output will be written to the server's error
+log.
 
 .. literalinclude:: curlrequest/034.php
 
@@ -278,24 +276,25 @@ dns_cache_timeout
 
 .. versionadded:: 4.7.0
 
-By default, CodeIgniter does not change the DNS Cache Timeout value (``120`` seconds). If you need to
-modify this value, you can do so by passing an amount of time in seconds with the ``dns_cache_timeout`` option.
+By default, CodeIgniter does not change the DNS Cache Timeout value (``120`` seconds). If you need to modify this value,
+you can do so by passing an amount of time in seconds with the ``dns_cache_timeout`` option.
 
 .. literalinclude:: curlrequest/037.php
 
-.. note:: Based on the `libcurl <https://curl.se/libcurl/c/CURLOPT_DNS_CACHE_TIMEOUT.html>`__ documentation, you can set it to zero (``0``) to completely disable caching, or set to ``-1`` to make the cached entries remain forever.
+.. note:: Based on the `libcurl <https://curl.se/libcurl/c/CURLOPT_DNS_CACHE_TIMEOUT.html>`__ documentation, you can set
+    it to zero (``0``) to completely disable caching, or set to ``-1`` to make the cached entries remain forever.
 
 form_params
 ===========
 
-You can send form data in an application/x-www-form-urlencoded POST request by passing an associative array in
-the ``form_params`` option. This will set the ``Content-Type`` header to ``application/x-www-form-urlencoded``
-if it's not already set:
+You can send form data in an application/x-www-form-urlencoded POST request by passing an associative array in the
+``form_params`` option. This will set the ``Content-Type`` header to ``application/x-www-form-urlencoded`` if it's not
+already set:
 
 .. literalinclude:: curlrequest/024.php
 
-.. note:: ``form_params`` cannot be used with the `multipart`_ option. You will need to use one or the other.
-    Use ``form_params`` for ``application/x-www-form-urlencoded`` requests, and ``multipart`` for ``multipart/form-data``
+.. note:: ``form_params`` cannot be used with the `multipart`_ option. You will need to use one or the other. Use
+    ``form_params`` for ``application/x-www-form-urlencoded`` requests, and ``multipart`` for ``multipart/form-data``
     requests.
 
 fresh_connect
@@ -303,7 +302,8 @@ fresh_connect
 
 .. versionadded:: 4.7.0
 
-By default, the request is sent using a fresh connection. You can disable this behavior using the ``fresh_connect`` option:
+By default, the request is sent using a fresh connection. You can disable this behavior using the ``fresh_connect``
+option:
 
 .. literalinclude:: curlrequest/038.php
 
@@ -324,20 +324,18 @@ further headers arrays or calls to ``setHeader()``.
 http_errors
 ===========
 
-By default, CURLRequest will throw ``HTTPException`` if the HTTP code returned is
-greater than or equal to 400.
+By default, CURLRequest will throw ``HTTPException`` if the HTTP code returned is greater than or equal to 400.
 
-If you want to see the response body, you can set ``http_errors`` to ``false`` to
-return the content instead:
+If you want to see the response body, you can set ``http_errors`` to ``false`` to return the content instead:
 
 .. literalinclude:: curlrequest/026.php
 
 json
 ====
 
-The ``json`` option is used to easily upload JSON-encoded data as the body of a request. A Content-Type header
-of ``application/json`` is added, overwriting any Content-Type that might already be set. The data provided to
-this option can be any value that ``json_encode()`` accepts:
+The ``json`` option is used to easily upload JSON-encoded data as the body of a request. A Content-Type header of
+``application/json`` is added, overwriting any Content-Type that might already be set. The data provided to this option
+can be any value that ``json_encode()`` accepts:
 
 .. literalinclude:: curlrequest/027.php
 
@@ -348,12 +346,12 @@ this option can be any value that ``json_encode()`` accepts:
 multipart
 =========
 
-When you need to send files and other data via a POST request, you can use the ``multipart`` option, along with
-the `CURLFile Class <https://www.php.net/manual/en/class.curlfile.php>`_.
+When you need to send files and other data via a POST request, you can use the ``multipart`` option, along with the
+`CURLFile Class <https://www.php.net/manual/en/class.curlfile.php>`_.
 
-The values should be an associative array
-of POST data to send. For safer usage, the legacy method of uploading files by prefixing their name with an ``@``
-has been disabled. Any files that you want to send must be passed as instances of CURLFile:
+The values should be an associative array of POST data to send. For safer usage, the legacy method of uploading files by
+prefixing their name with an ``@`` has been disabled. Any files that you want to send must be passed as instances of
+CURLFile:
 
 .. literalinclude:: curlrequest/028.php
 
@@ -382,8 +380,9 @@ You can pass along data to send as query string variables by passing an associat
 timeout
 =======
 
-By default, cURL functions are allowed to run as long as they take, with no time limit. You can modify this with the ``timeout``
-option. The value should be the number of seconds you want the functions to execute for. Use 0 to wait indefinitely:
+By default, cURL functions are allowed to run as long as they take, with no time limit. You can modify this with the
+``timeout`` option. The value should be the number of seconds you want the functions to execute for. Use 0 to wait
+indefinitely:
 
 .. literalinclude:: curlrequest/030.php
 
@@ -399,9 +398,9 @@ verify
 
 This option describes the SSL certificate verification behavior. If the ``verify`` option is ``true``, it enables the
 SSL certificate verification and uses the default CA bundle provided by the operating system. If set to ``false``, it
-will disable the certificate verification (this is insecure, and allows man-in-the-middle attacks!). You can set it
-to a string that contains the path to a CA bundle to enable verification with a custom certificate. The default value
-is true:
+will disable the certificate verification (this is insecure, and allows man-in-the-middle attacks!). You can set it to a
+string that contains the path to a CA bundle to enable verification with a custom certificate. The default value is
+true:
 
 .. literalinclude:: curlrequest/032.php
 
@@ -419,7 +418,7 @@ To set the HTTP handlers to use only the IPv4 protocol (``v4``) or the IPv6 prot
 version
 =======
 
-To set the HTTP protocol to use, you can pass a string or float with the version number (typically either ``1.0``
-or ``1.1``, with ``2.0`` supported since v4.3.0):
+To set the HTTP protocol to use, you can pass a string or float with the version number (typically either ``1.0`` or
+``1.1``, with ``2.0`` supported since v4.3.0):
 
 .. literalinclude:: curlrequest/033.php

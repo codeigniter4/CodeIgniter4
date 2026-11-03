@@ -4,16 +4,13 @@ Cross-Origin Resource Sharing (CORS)
 
 .. versionadded:: 4.5.0
 
-Cross-Origin Resource Sharing (CORS) is an HTTP-header based security mechanism
-that allows a server to indicate any origins (domain, scheme, or port) other than
-its own from which a browser should permit loading resources.
+Cross-Origin Resource Sharing (CORS) is an HTTP-header based security mechanism that allows a server to indicate any
+origins (domain, scheme, or port) other than its own from which a browser should permit loading resources.
 
-CORS works by adding headers to HTTP requests and responses to indicate whether
-the requested resource can be shared across different origins, helping to prevent
-malicious attacks like cross-site request forgery (CSRF) and data theft.
+CORS works by adding headers to HTTP requests and responses to indicate whether the requested resource can be shared
+across different origins, helping to prevent malicious attacks like cross-site request forgery (CSRF) and data theft.
 
-If you are not familiar with CORS and CORS headers, please read the
-`MDN documentation on CORS`_.
+If you are not familiar with CORS and CORS headers, please read the `MDN documentation on CORS`_.
 
 .. _MDN documentation on CORS: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#the_http_response_headers
 
@@ -38,11 +35,10 @@ At a minimum, the following items in the ``$default`` property must be set:
 - ``allowedHeaders``: List explicitly the HTTP headers you want to allow.
 - ``allowedMethods``: List explicitly the HTTP methods you want to allow.
 
-.. warning:: Based on the principle of least privilege, only the minimum necessary
-    Origin, Methods, and Headers should be allowed.
+.. warning:: Based on the principle of least privilege, only the minimum necessary Origin, Methods, and Headers should
+    be allowed.
 
-If you send credentials (e.g., cookies) with a cross-origin request, set
-``supportsCredentials`` to ``true``.
+If you send credentials (e.g., cookies) with a cross-origin request, set ``supportsCredentials`` to ``true``.
 
 Enabling CORS
 =============
@@ -61,11 +57,11 @@ E.g.,
 
 .. literalinclude:: cors/001.php
 
-Don't forget to add OPTIONS routes for Preflight Requests, because Controller
-Filters (except for Required Filters) do not work if the route does not exist.
+Don't forget to add OPTIONS routes for Preflight Requests, because Controller Filters (except for Required Filters) do
+not work if the route does not exist.
 
-The CORS filter handles all Preflight Requests, so the closure controllers
-for the OPTIONS routes are not normally called.
+The CORS filter handles all Preflight Requests, so the closure controllers for the OPTIONS routes are not normally
+called.
 
 Set in Config\\Filters
 ----------------------
@@ -76,27 +72,24 @@ E.g.,
 
 .. literalinclude:: cors/002.php
 
-Don't forget to add OPTIONS routes for Preflight Requests, because Controller
-Filters (except for Required Filters) do not work if the route does not exist.
+Don't forget to add OPTIONS routes for Preflight Requests, because Controller Filters (except for Required Filters) do
+not work if the route does not exist.
 
 E.g.,
 
 .. literalinclude:: cors/003.php
 
-The CORS filter handles all Preflight Requests, so the closure controller
-for the OPTIONS routes is not normally called.
+The CORS filter handles all Preflight Requests, so the closure controller for the OPTIONS routes is not normally called.
 
 Checking Routes and Filters
 ===========================
 
-After configuration, you can check the routes and filters with the :ref:`routing-spark-routes`
-command.
+After configuration, you can check the routes and filters with the :ref:`routing-spark-routes` command.
 
 Setting Another Config
 ======================
 
-If you want to use a different configuration than the default configuration, add
-a property to **app/Config/Cors.php**.
+If you want to use a different configuration than the default configuration, add a property to **app/Config/Cors.php**.
 
 For example, add the ``$api`` property.
 

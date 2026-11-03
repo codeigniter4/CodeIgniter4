@@ -27,11 +27,11 @@ The following functions are available:
     :returns:    A random string
     :rtype:    string
 
-    Generates a random string based on the type and length you specify.
-    Useful for creating passwords or generating random hashes.
+    Generates a random string based on the type and length you specify. Useful for creating passwords or generating
+    random hashes.
 
-    The first parameter specifies the type of string, and the second parameter
-    specifies the length. The following choices are available:
+    The first parameter specifies the type of string, and the second parameter specifies the length. The following
+    choices are available:
 
     - **alpha**: A string with lower and uppercase letters only.
     - **alnum**: Alphanumeric string with lower and uppercase characters.
@@ -39,13 +39,11 @@ The following functions are available:
     - **nozero**: Numeric string with no zeros.
     - **crypto**: A random string based on ``random_bytes()``.
 
-    .. note:: When you use **crypto**, you must pass an even number as the second parameter.
-        Since v4.2.2, if you set an odd number, ``InvalidArgumentException`` will be thrown.
+    .. note:: When you use **crypto**, you must pass an even number as the second parameter. Since v4.2.2, if you set an
+        odd number, ``InvalidArgumentException`` will be thrown.
 
-    .. note:: Since v4.3.3, **alpha**, **alnum** and **nozero** use ``random_bytes()``,
-        and **numeric** uses ``random_int()``.
-        In previous versions, they used ``str_shuffle()``, which is not
-        cryptographically secure.
+    .. note:: Since v4.3.3, **alpha**, **alnum** and **nozero** use ``random_bytes()``, and **numeric** uses
+        ``random_int()``. In previous versions, they used ``str_shuffle()``, which is not cryptographically secure.
 
     Usage example:
 
@@ -59,9 +57,8 @@ The following functions are available:
     :returns:    An incremented string
     :rtype:    string
 
-    Increments a string by appending a number to it or increasing the
-    number. Useful for creating "copies" of a file or duplicating database
-    content which has unique titles or slugs.
+    Increments a string by appending a number to it or increasing the number. Useful for creating "copies" of a file or
+    duplicating database content which has unique titles or slugs.
 
     Usage example:
 
@@ -73,18 +70,16 @@ The following functions are available:
     :returns:    Alternated string(s)
     :rtype:    mixed
 
-    Allows two or more items to be alternated between, when cycling through
-    a loop. Example:
+    Allows two or more items to be alternated between, when cycling through a loop. Example:
 
     .. literalinclude:: text_helper/004.php
 
-    You can add as many parameters as you want, and with each iteration of
-    your loop the next item will be returned.
+    You can add as many parameters as you want, and with each iteration of your loop the next item will be returned.
 
     .. literalinclude:: text_helper/005.php
 
-    .. note:: To use multiple separate calls to this function, simply call the
-        function with no arguments to re-initialize.
+    .. note:: To use multiple separate calls to this function, simply call the function with no arguments to
+        re-initialize.
 
 .. php:function:: reduce_double_slashes($str)
 
@@ -92,8 +87,8 @@ The following functions are available:
     :returns:    A string with normalized slashes
     :rtype:    string
 
-    Converts double slashes in a string to a single slash, except those
-    found in URL protocol prefixes (e.g., ``http://``).
+    Converts double slashes in a string to a single slash, except those found in URL protocol prefixes (e.g.,
+    ``http://``).
 
     Example:
 
@@ -115,9 +110,8 @@ The following functions are available:
 
     .. literalinclude:: text_helper/008.php
 
-    .. note:: For historical reasons, this function will also accept
-        and handle string inputs. However, this makes it just an
-        alias for ``stripslashes()``.
+    .. note:: For historical reasons, this function will also accept and handle string inputs. However, this makes it
+        just an alias for ``stripslashes()``.
 
 .. php:function:: reduce_multiples($str[, $character = ','[, $trim = false]])
 
@@ -127,13 +121,12 @@ The following functions are available:
     :returns:    Reduced string
     :rtype:    string
 
-    Reduces multiple instances of a particular character occurring directly
-    after each other. Example:
+    Reduces multiple instances of a particular character occurring directly after each other. Example:
 
     .. literalinclude:: text_helper/009.php
 
-    If the third parameter is set to ``true``, it will remove occurrences of the
-    character at the beginning and the end of the string. Example:
+    If the third parameter is set to ``true``, it will remove occurrences of the character at the beginning and the end
+    of the string. Example:
 
     .. literalinclude:: text_helper/010.php
 
@@ -143,8 +136,7 @@ The following functions are available:
     :returns:    String with quotes converted to HTML entities
     :rtype:    string
 
-    Converts single and double quotes in a string to the corresponding HTML
-    entities. Example:
+    Converts single and double quotes in a string to the corresponding HTML entities. Example:
 
     .. literalinclude:: text_helper/011.php
 
@@ -170,8 +162,7 @@ The following functions are available:
 
     .. literalinclude:: text_helper/013.php
 
-    The third parameter is an optional suffix added to the string. By
-    default, it adds an ellipsis.
+    The third parameter is an optional suffix added to the string. By default, it adds an ellipsis.
 
 .. php:function:: character_limiter($string[, $limit = 500[, $endChar = '&#8230;']])
 
@@ -181,19 +172,17 @@ The following functions are available:
     :returns:    Character-limited string
     :rtype:    string
 
-    Truncates a string to the number of *characters* specified. It
-    maintains the integrity of words, so the character count may be slightly
-    more or less than what you specify.
+    Truncates a string to the number of *characters* specified. It maintains the integrity of words, so the character
+    count may be slightly more or less than what you specify.
 
     Example:
 
     .. literalinclude:: text_helper/014.php
 
-    The third parameter is an optional suffix added to the string. If
-    undeclared, this helper uses an ellipsis.
+    The third parameter is an optional suffix added to the string. If undeclared, this helper uses an ellipsis.
 
-    .. note:: If you need to truncate to an exact number of characters, please
-        see the :php:func:`ellipsize()` function below.
+    .. note:: If you need to truncate to an exact number of characters, please see the :php:func:`ellipsize()` function
+        below.
 
 .. php:function:: ascii_to_entities($str)
 
@@ -201,13 +190,11 @@ The following functions are available:
     :returns:    A string with ASCII values converted to entities
     :rtype:    string
 
-    Converts ASCII values to character entities, including high ASCII and MS
-    Word characters that can cause problems when used in a web page, so that
-    they can be shown consistently regardless of browser settings or stored
-    reliably in a database. There is some dependence on your server's
-    supported character sets, so it may not be 100% reliable in all cases,
-    but for the most part, it should correctly identify characters outside
-    the normal range (like accented characters).
+    Converts ASCII values to character entities, including high ASCII and MS Word characters that can cause problems
+    when used in a web page, so that they can be shown consistently regardless of browser settings or stored reliably in
+    a database. There is some dependence on your server's supported character sets, so it may not be 100% reliable in
+    all cases, but for the most part, it should correctly identify characters outside the normal range (like accented
+    characters).
 
     Example:
 
@@ -220,8 +207,7 @@ The following functions are available:
     :returns:    A string with HTML entities converted to ASCII characters
     :rtype:    string
 
-    This function does the opposite of :php:func:`ascii_to_entities()`.
-    It turns character entities back into ASCII.
+    This function does the opposite of :php:func:`ascii_to_entities()`. It turns character entities back into ASCII.
 
 .. php:function:: convert_accented_characters($str)
 
@@ -229,17 +215,15 @@ The following functions are available:
     :returns:    A string with accented characters converted
     :rtype:    string
 
-    Transliterates high ASCII characters to low ASCII equivalents. Useful
-    when non-English characters need to be used where only standard ASCII
-    characters are safely used, for instance, in URLs.
+    Transliterates high ASCII characters to low ASCII equivalents. Useful when non-English characters need to be used
+    where only standard ASCII characters are safely used, for instance, in URLs.
 
     Example:
 
     .. literalinclude:: text_helper/016.php
 
-    .. note:: This function uses a companion config file
-        **app/Config/ForeignCharacters.php** to define the to and
-        from array for transliteration.
+    .. note:: This function uses a companion config file **app/Config/ForeignCharacters.php** to define the to and from
+        array for transliteration.
 
 .. php:function:: word_censor($str, $censored[, $replacement = ''])
 
@@ -249,11 +233,9 @@ The following functions are available:
     :returns:    Censored string
     :rtype:    string
 
-    Enables you to censor words within a text string. The first parameter
-    will contain the original string. The second will contain an array of
-    words which you disallow. The third (optional) parameter can contain
-    a replacement value for the words. If not specified, they are replaced
-    with pound signs: ####.
+    Enables you to censor words within a text string. The first parameter will contain the original string. The second
+    will contain an array of words which you disallow. The third (optional) parameter can contain a replacement value
+    for the words. If not specified, they are replaced with pound signs: ####.
 
     Example:
 
@@ -269,8 +251,8 @@ The following functions are available:
 
     .. literalinclude:: text_helper/018.php
 
-    The function uses PHP's ``highlight_string()`` function, so the
-    colors used are the ones specified in your **php.ini** file.
+    The function uses PHP's ``highlight_string()`` function, so the colors used are the ones specified in your
+    **php.ini** file.
 
 .. php:function:: highlight_phrase($str, $phrase[, $tag_open = '<mark>'[, $tag_close = '</mark>']])
 
@@ -281,10 +263,9 @@ The following functions are available:
     :returns:    String with a phrase highlighted via HTML
     :rtype:    string
 
-    Will highlight a phrase within a text string. The first parameter will
-    contain the original string, and the second will contain the phrase you wish
-    to highlight. The third and fourth parameters will contain the
-    opening/closing HTML tags you would like the phrase wrapped in.
+    Will highlight a phrase within a text string. The first parameter will contain the original string, and the second
+    will contain the phrase you wish to highlight. The third and fourth parameters will contain the opening/closing HTML
+    tags you would like the phrase wrapped in.
 
     Example:
 
@@ -311,8 +292,7 @@ The following functions are available:
     :returns:    Word-wrapped string
     :rtype:    string
 
-    Wraps text at the specified *character* count while maintaining
-    complete words.
+    Wraps text at the specified *character* count while maintaining complete words.
 
     Example:
 
@@ -327,17 +307,13 @@ The following functions are available:
     :returns:    Ellipsized string
     :rtype:    string
 
-    This function will strip tags from a string, split it at a defined
-    maximum length, and insert an ellipsis.
+    This function will strip tags from a string, split it at a defined maximum length, and insert an ellipsis.
 
-    The first parameter is the string to ellipsize, and the second is the number
-    of characters in the final string. The third parameter is where in the
-    string the ellipsis should appear from 0 - 1, left to right. For
-    example, a value of 1 will place the ellipsis at the right of the
-    string, .5 in the middle, and 0 at the left.
+    The first parameter is the string to ellipsize, and the second is the number of characters in the final string. The
+    third parameter is where in the string the ellipsis should appear from 0 - 1, left to right. For example, a value of
+    1 will place the ellipsis at the right of the string, .5 in the middle, and 0 at the left.
 
-    An optional fourth parameter is the kind of ellipsis. By default,
-    ``&hellip;`` will be inserted.
+    An optional fourth parameter is the kind of ellipsis. By default, ``&hellip;`` will be inserted.
 
     Example:
 
@@ -356,14 +332,12 @@ The following functions are available:
     :returns:    Excerpt.
     :rtype:        string
 
-    This function will extract ``$radius`` number of characters before and after the
-    central ``$phrase`` with an ellipsis before and after.
+    This function will extract ``$radius`` number of characters before and after the central ``$phrase`` with an
+    ellipsis before and after.
 
-    The first parameter is the text to extract an excerpt from, and the second is the
-    central word or phrase to count before and after. The third parameter is the
-    number of characters to count before and after the central phrase. If no phrase is
-    passed, the excerpt will include the first ``$radius`` characters with the ellipsis
-    at the end.
+    The first parameter is the text to extract an excerpt from, and the second is the central word or phrase to count
+    before and after. The third parameter is the number of characters to count before and after the central phrase. If
+    no phrase is passed, the excerpt will include the first ``$radius`` characters with the ellipsis at the end.
 
     Example:
 

@@ -105,8 +105,8 @@ The following functions are available:
     :rtype: array
     :returns: The flattened array
 
-    This function flattens a multidimensional array to a single key-value array by using dots
-    as separators for the keys.
+    This function flattens a multidimensional array to a single key-value array by using dots as separators for the
+    keys.
 
     .. literalinclude:: array_helper/009.php
         :lines: 2-
@@ -116,9 +116,8 @@ The following functions are available:
     .. literalinclude:: array_helper/010.php
         :lines: 2-
 
-    Users may use the ``$id`` parameter on their own, but are not required to do so.
-    The function uses this parameter internally to track the flattened keys. If users
-    supply an initial ``$id``, it will be prepended to all keys.
+    Users may use the ``$id`` parameter on their own, but are not required to do so. The function uses this parameter
+    internally to track the flattened keys. If users supply an initial ``$id``, it will be prepended to all keys.
 
     .. literalinclude:: array_helper/011.php
         :lines: 2-
@@ -131,16 +130,16 @@ The following functions are available:
     :rtype: array
     :returns: An array grouped by index values
 
-    This function allows you to group data rows together by index values.
-    The depth of the returned array equals the number of indexes passed as a parameter.
+    This function allows you to group data rows together by index values. The depth of the returned array equals the
+    number of indexes passed as a parameter.
 
     The example shows some data (e.g., loaded from an API) with nested arrays.
 
     .. literalinclude:: array_helper/012.php
         :lines: 2-
 
-    We want to group them first by ``gender``, then by ``hr.department`` (max depth = 2).
-    First, here is the result when excluding empty values:
+    We want to group them first by ``gender``, then by ``hr.department`` (max depth = 2). First, here is the result when
+    excluding empty values:
 
     .. literalinclude:: array_helper/013.php
         :lines: 2-

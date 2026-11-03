@@ -2,15 +2,12 @@
 Web Page Caching
 ################
 
-CodeIgniter lets you cache your pages in order to achieve maximum
-performance.
+CodeIgniter lets you cache your pages in order to achieve maximum performance.
 
-Although CodeIgniter is quite fast, the amount of dynamic information
-you display in your pages will correlate directly to the server
-resources, memory, and processing cycles utilized, which affect your
-page load speeds. By caching your pages, since they are saved in their
-fully rendered state, you can achieve performance much closer to that of
-static web pages.
+Although CodeIgniter is quite fast, the amount of dynamic information you display in your pages will correlate directly
+to the server resources, memory, and processing cycles utilized, which affect your page load speeds. By caching your
+pages, since they are saved in their fully rendered state, you can achieve performance much closer to that of static web
+pages.
 
 .. contents::
     :local:
@@ -19,28 +16,22 @@ static web pages.
 How Does Caching Work?
 ======================
 
-Caching can be enabled on a per-page basis, and you can set the length
-of time that a page should remain cached before being refreshed.
+Caching can be enabled on a per-page basis, and you can set the length of time that a page should remain cached before
+being refreshed.
 
-.. note:: Per-page means per URI. Since v4.5.0, the HTTP method of the
-    request is also taken into account. This means that the same URI will be
-    cached separately if the HTTP method is different.
+.. note:: Per-page means per URI. Since v4.5.0, the HTTP method of the request is also taken into account. This means
+    that the same URI will be cached separately if the HTTP method is different.
 
-.. warning:: Web Page Caching is shared between requests with the same HTTP
-    method and URI. Its cache key does not vary by authenticated user, cookies,
-    authorization headers, ``Cache-Control``, or ``Vary``. Do not use it for
-    protected or personalized responses, as cached responses may be returned
-    before authentication and authorization filters run.
+.. warning:: Web Page Caching is shared between requests with the same HTTP method and URI. Its cache key does not vary
+    by authenticated user, cookies, authorization headers, ``Cache-Control``, or ``Vary``. Do not use it for protected
+    or personalized responses, as cached responses may be returned before authentication and authorization filters run.
 
-When a page is loaded for the first time, the page will be cached using the
-currently configured cache engine. On subsequent page loads, the cache
-will be retrieved and sent to the requesting user's browser.
+When a page is loaded for the first time, the page will be cached using the currently configured cache engine. On
+subsequent page loads, the cache will be retrieved and sent to the requesting user's browser.
 
-If it has expired, it will be deleted and refreshed before being sent to the
-browser.
+If it has expired, it will be deleted and refreshed before being sent to the browser.
 
-.. note:: The Benchmark tag is not cached so you can still view your page
-    load speed when caching is enabled.
+.. note:: The Benchmark tag is not cached so you can still view your page load speed when caching is enabled.
 
 Configuring Caching
 ===================
@@ -48,26 +39,22 @@ Configuring Caching
 Setting Cache Engine
 --------------------
 
-Before using Web Page Caching, you must set the cache engine up by editing
-**app/Config/Cache.php**. See :ref:`libraries-caching-configuring-the-cache`
-for details.
+Before using Web Page Caching, you must set the cache engine up by editing **app/Config/Cache.php**. See
+:ref:`libraries-caching-configuring-the-cache` for details.
 
 Setting $cacheQueryString
 -------------------------
 
-You can set whether or not to include the query string when generating the cache
-with ``Config\Cache::$cacheQueryString``.
+You can set whether or not to include the query string when generating the cache with
+``Config\Cache::$cacheQueryString``.
 
 Valid options are:
 
-- ``false``: (default) Disabled. The query string is not taken into account; the
-  same cache is returned for requests with the same URI path but different query
-  strings.
-- ``true``: Enabled, take all query parameters into account. Be aware that this
-  may result in numerous caches generated for the same page over and over
-  again.
-- **array**: Enabled, but only take into account the specified list of query
-  parameters. E.g., ``['q', 'page']``.
+- ``false``: (default) Disabled. The query string is not taken into account; the same cache is returned for requests
+  with the same URI path but different query strings.
+- ``true``: Enabled, take all query parameters into account. Be aware that this may result in numerous caches generated
+  for the same page over and over again.
+- **array**: Enabled, but only take into account the specified list of query parameters. E.g., ``['q', 'page']``.
 
 .. _web_page_caching_cache_status_codes:
 
@@ -76,52 +63,46 @@ Setting $cacheStatusCodes
 
 .. versionadded:: 4.7.0
 
-You can control which HTTP response status codes are allowed to be cached
-with ``Config\Cache::$cacheStatusCodes``.
+You can control which HTTP response status codes are allowed to be cached with ``Config\Cache::$cacheStatusCodes``.
 
 Valid options are:
 
-- ``[]``: (default) Cache all HTTP status codes. This maintains backward
-  compatibility but may cache temporary error pages.
-- ``[200]``: (Recommended) Only cache successful responses. This prevents
-  caching of error pages (404, 500, etc.) that should be temporary.
+- ``[]``: (default) Cache all HTTP status codes. This maintains backward compatibility but may cache temporary error
+  pages.
+- ``[200]``: (Recommended) Only cache successful responses. This prevents caching of error pages (404, 500, etc.) that
+  should be temporary.
 - array of status codes: Cache only specific status codes. For example:
 
   - ``[200, 404]``: Cache successful responses and not found pages.
   - ``[200, 404, 410]``: Cache successful responses and specific error codes.
   - ``[200, 201, 202, 203, 204]``: All 2xx successful responses.
 
-.. warning:: Using an empty array ``[]`` may cache temporary error pages (404, 500, etc.).
-    For production applications, consider restricting this to ``[200]`` to avoid
-    caching errors that should be temporary. For example, a cached 404 page would
-    remain cached even after the resource is created, until the cache expires.
+.. warning:: Using an empty array ``[]`` may cache temporary error pages (404, 500, etc.). For production applications,
+    consider restricting this to ``[200]`` to avoid caching errors that should be temporary. For example, a cached 404
+    page would remain cached even after the resource is created, until the cache expires.
 
-.. note:: Regardless of this setting, ``DownloadResponse`` and ``RedirectResponse``
-    instances are never cached by the ``PageCache`` filter.
+.. note:: Regardless of this setting, ``DownloadResponse`` and ``RedirectResponse`` instances are never cached by the
+    ``PageCache`` filter.
 
 Enabling Caching
 ================
 
-To enable caching, put the following tag in any of your controller
-methods:
+To enable caching, put the following tag in any of your controller methods:
 
 .. literalinclude:: caching/001.php
 
-Where ``$n`` is the number of **seconds** you wish the page to remain
-cached between refreshes.
+Where ``$n`` is the number of **seconds** you wish the page to remain cached between refreshes.
 
-The above tag can go anywhere within a method. It is not affected by
-the order in which it appears, so place it wherever it seems most logical to
-you. Once the tag is in place, your pages will begin being cached.
+The above tag can go anywhere within a method. It is not affected by the order in which it appears, so place it wherever
+it seems most logical to you. Once the tag is in place, your pages will begin being cached.
 
-.. important:: If you change configuration options that might affect
-    your output, you have to manually delete your cache.
+.. important:: If you change configuration options that might affect your output, you have to manually delete your
+    cache.
 
 Deleting Caches
 ===============
 
-If you no longer wish to cache a page, you can remove the caching tag and
-it will no longer be refreshed when it expires.
+If you no longer wish to cache a page, you can remove the caching tag and it will no longer be refreshed when it
+expires.
 
-.. note:: Removing the tag will not delete the cache immediately. It will
-    have to expire normally.
+.. note:: Removing the tag will not delete the cache immediately. It will have to expire normally.

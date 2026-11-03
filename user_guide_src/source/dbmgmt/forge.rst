@@ -2,8 +2,7 @@
 Database Forge Class
 ####################
 
-The Database Forge Class contains methods that help you manage your
-database.
+The Database Forge Class contains methods that help you manage your database.
 
 .. contents::
     :local:
@@ -13,20 +12,19 @@ database.
 Initializing the Forge Class
 ****************************
 
-.. important:: In order to initialize the Forge class, your database
-    driver must already be running, since the Forge class relies on it.
+.. important:: In order to initialize the Forge class, your database driver must already be running, since the Forge
+    class relies on it.
 
 Load the Forge Class as follows:
 
 .. literalinclude:: forge/001.php
 
-You can also pass another database group name to the DB Forge loader, in case
-the database you want to manage isn't the default one:
+You can also pass another database group name to the DB Forge loader, in case the database you want to manage isn't the
+default one:
 
 .. literalinclude:: forge/002.php
 
-In the above example, we're passing the name of a different database group
-to connect to as the first parameter.
+In the above example, we're passing the name of a different database group to connect to as the first parameter.
 
 *******************************
 Creating and Dropping Databases
@@ -35,30 +33,28 @@ Creating and Dropping Databases
 $forge->createDatabase('db_name')
 =================================
 
-Permits you to create the database specified in the first parameter.
-Returns true/false based on success or failure:
+Permits you to create the database specified in the first parameter. Returns true/false based on success or failure:
 
 .. literalinclude:: forge/003.php
 
-An optional second parameter set to true will add an ``IF NOT EXISTS`` statement
-or will check if a database exists before creating it (depending on DBMS).
+An optional second parameter set to true will add an ``IF NOT EXISTS`` statement or will check if a database exists
+before creating it (depending on DBMS).
 
 .. literalinclude:: forge/004.php
 
 $forge->dropDatabase('db_name')
 ===============================
 
-Permits you to drop the database specified in the first parameter.
-Returns true/false based on success or failure:
+Permits you to drop the database specified in the first parameter. Returns true/false based on success or failure:
 
 .. literalinclude:: forge/005.php
 
 Creating Databases in the Command Line
 ======================================
 
-CodeIgniter supports creating databases straight from your favorite terminal using the dedicated ``db:create``
-command. When using this command, it is assumed that the database does not yet exist. Otherwise, CodeIgniter
-will complain that the database creation has failed.
+CodeIgniter supports creating databases straight from your favorite terminal using the dedicated ``db:create`` command.
+When using this command, it is assumed that the database does not yet exist. Otherwise, CodeIgniter will complain that
+the database creation has failed.
 
 To start, just type the command and the name of the database (e.g., ``foo``):
 
@@ -68,9 +64,9 @@ To start, just type the command and the name of the database (e.g., ``foo``):
 
 If everything went fine, you should expect the ``Database "foo" successfully created.`` message to be displayed.
 
-If you are in a testing environment or you are using the SQLite3 driver, you may pass in the file extension
-for the file where the database will be created using the ``--ext`` option. Valid values are ``db`` and
-``sqlite``, and the default is ``db``. Remember that these should not be preceded by a period:
+If you are in a testing environment or you are using the SQLite3 driver, you may pass in the file extension for the file
+where the database will be created using the ``--ext`` option. Valid values are ``db`` and ``sqlite``, and the default
+is ``db``. Remember that these should not be preceded by a period:
 
 .. code-block:: console
 
@@ -78,17 +74,15 @@ for the file where the database will be created using the ``--ext`` option. Vali
 
 The above command will create the db file in **WRITEPATH/foo.sqlite**.
 
-.. note:: When using the special SQLite3 database name ``:memory:``, expect that the command will still
-    produce a success message but no database file is created. This is because SQLite3 will just use
-    an in-memory database.
+.. note:: When using the special SQLite3 database name ``:memory:``, expect that the command will still produce a
+    success message but no database file is created. This is because SQLite3 will just use an in-memory database.
 
 ***************
 Creating Tables
 ***************
 
-There are several things you may wish to do when creating tables: add
-fields, add keys to the table, and alter columns. CodeIgniter provides a
-mechanism for this.
+There are several things you may wish to do when creating tables: add fields, add keys to the table, and alter columns.
+CodeIgniter provides a mechanism for this.
 
 .. _adding-fields:
 
@@ -98,11 +92,11 @@ Adding Fields
 $forge->addField()
 ------------------
 
-Fields are normally created via an associative array. Within the array, you must
-include a ``type`` key that relates to the datatype of the field.
+Fields are normally created via an associative array. Within the array, you must include a ``type`` key that relates to
+the datatype of the field.
 
-For example, ``INT``, ``VARCHAR``, ``TEXT``, etc.
-Many datatypes (for example ``VARCHAR``) also require a ``constraint`` key.
+For example, ``INT``, ``VARCHAR``, ``TEXT``, etc. Many datatypes (for example ``VARCHAR``) also require a ``constraint``
+key.
 
 .. literalinclude:: forge/006.php
 
@@ -110,17 +104,14 @@ Additionally, the following key/values can be used:
 
 -  ``unsigned``/true : to generate ``UNSIGNED`` in the field definition.
 -  ``default``/value : to generate a ``DEFAULT`` constraint in the field definition.
--  ``null``/true : to generate ``NULL`` in the field definition. Without this,
-   the field will default to ``NOT NULL``.
--  ``auto_increment``/true : to generate an auto_increment flag on the
-   field. Note that the field type must be a type that supports this,
-   such as ``INTEGER``.
+-  ``null``/true : to generate ``NULL`` in the field definition. Without this, the field will default to ``NOT NULL``.
+-  ``auto_increment``/true : to generate an auto_increment flag on the field. Note that the field type must be a type
+   that supports this, such as ``INTEGER``.
 -  ``unique``/true : to generate a unique key for the field definition.
 
 .. literalinclude:: forge/007.php
 
-After the fields have been defined, they can be added using
-``$forge->addField($fields)`` followed by a call to the
+After the fields have been defined, they can be added using ``$forge->addField($fields)`` followed by a call to the
 :ref:`createTable() <creating-a-table>` method.
 
 Notes on Data Types
@@ -129,8 +120,8 @@ Notes on Data Types
 Floating-Point Types
 ^^^^^^^^^^^^^^^^^^^^
 
-Floating-point types such as ``FLOAT`` and ``DOUBLE`` represent approximate values.
-Therefore, they should not be used when exact values are needed.
+Floating-point types such as ``FLOAT`` and ``DOUBLE`` represent approximate values. Therefore, they should not be used
+when exact values are needed.
 
 ::
 
@@ -148,22 +139,22 @@ Therefore, they should not be used when exact values are needed.
     +------+------+
     1 row in set (0.01 sec)
 
-When it is important to preserve exact precision, for example with monetary data,
-``DECIMAL`` or ``NUMERIC`` should be used.
+When it is important to preserve exact precision, for example with monetary data, ``DECIMAL`` or ``NUMERIC`` should be
+used.
 
 TEXT
 ^^^^
 
-``TEXT`` should not be used on SQLSRV. It is deprecated.
-See `ntext, text, and image (Transact-SQL) - SQL Server | Microsoft Learn <https://learn.microsoft.com/en-us/sql/t-sql/data-types/ntext-text-and-image-transact-sql?view=sql-server-ver16>`_.
+``TEXT`` should not be used on SQLSRV. It is deprecated. See
+`ntext, text, and image (Transact-SQL) - SQL Server | Microsoft Learn <https://learn.microsoft.com/en-us/sql/t-sql/data-types/ntext-text-and-image-transact-sql?view=sql-server-ver16>`_.
 
 ENUM
 ^^^^
 
 Not all databases support ``ENUM``.
 
-Starting with v4.5.0, ``SQLSRV`` Forge converts ``ENUM`` data types to ``VARCHAR(n)``.
-Previous versions converted to ``TEXT``.
+Starting with v4.5.0, ``SQLSRV`` Forge converts ``ENUM`` data types to ``VARCHAR(n)``. Previous versions converted to
+``TEXT``.
 
 .. _forge-addfield-default-value-rawsql:
 
@@ -172,17 +163,19 @@ Raw Sql Strings as Default Values
 
 .. versionadded:: 4.2.0
 
-Since v4.2.0, ``$forge->addField()`` accepts a ``CodeIgniter\Database\RawSql`` instance, which expresses raw SQL strings.
+Since v4.2.0, ``$forge->addField()`` accepts a ``CodeIgniter\Database\RawSql`` instance, which expresses raw SQL
+strings.
 
 .. literalinclude:: forge/027.php
 
-.. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
+.. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL
+    injections.
 
 Passing Strings as Fields
 -------------------------
 
-If you know exactly how you want a field to be created, you can pass the
-string into the field definitions with ``addField()``:
+If you know exactly how you want a field to be created, you can pass the string into the field definitions with
+``addField()``:
 
 .. literalinclude:: forge/008.php
 
@@ -193,9 +186,8 @@ string into the field definitions with ``addField()``:
 Creating an id Field
 --------------------
 
-There is a special exception for creating id fields. A field with type
-id will automatically be assigned as an INT(9) auto_incrementing
-Primary Key.
+There is a special exception for creating id fields. A field with type id will automatically be assigned as an INT(9)
+auto_incrementing Primary Key.
 
 .. literalinclude:: forge/009.php
 
@@ -207,16 +199,12 @@ Adding Keys
 $forge->addKey()
 ----------------
 
-Generally speaking, you'll want your table to have Keys. This is
-accomplished with ``$forge->addKey('field')``. The optional second
-parameter set to true will make it a primary key and the third
-parameter set to true will make it a unique key. You may specify a name
-with the fourth parameter. Note that ``addKey()`` must be followed by a
-call to ``createTable()`` or ``processIndexes()`` when the table already
-exists.
+Generally speaking, you'll want your table to have Keys. This is accomplished with ``$forge->addKey('field')``. The
+optional second parameter set to true will make it a primary key and the third parameter set to true will make it a
+unique key. You may specify a name with the fourth parameter. Note that ``addKey()`` must be followed by a call to
+``createTable()`` or ``processIndexes()`` when the table already exists.
 
-Multi-column non-primary keys must be sent as an array. Sample output
-below is for MySQL.
+Multi-column non-primary keys must be sent as an array. Sample output below is for MySQL.
 
 .. literalinclude:: forge/010.php
 
@@ -228,8 +216,7 @@ Adds a primary key. See `Adding Keys`_ for usage.
 $forge->addUniqueKey()
 ----------------------
 
-To make the code easier to read, it is also possible to add primary
-and unique keys with specific methods:
+To make the code easier to read, it is also possible to add primary and unique keys with specific methods:
 
 .. literalinclude:: forge/011.php
 
@@ -240,8 +227,8 @@ and unique keys with specific methods:
 Adding Foreign Keys
 ===================
 
-Foreign Keys help to enforce relationships and actions across your tables. For tables that support Foreign Keys,
-you may add them directly in forge:
+Foreign Keys help to enforce relationships and actions across your tables. For tables that support Foreign Keys, you may
+add them directly in forge:
 
 .. literalinclude:: forge/012.php
 
@@ -249,15 +236,15 @@ You can specify the desired action for the "on update" and "on delete" propertie
 
 .. literalinclude:: forge/013.php
 
-.. note:: SQLite3 does not support the naming of foreign keys. CodeIgniter will refer to them by ``prefix_table_column_foreign``.
+.. note:: SQLite3 does not support the naming of foreign keys. CodeIgniter will refer to them by
+    ``prefix_table_column_foreign``.
 
 .. _creating-a-table:
 
 Creating a Table
 ================
 
-After fields and keys have been declared, you can create a new table
-with:
+After fields and keys have been declared, you can create a new table with:
 
 .. literalinclude:: forge/014.php
 
@@ -269,9 +256,8 @@ You could also pass optional table attributes, such as MySQL's ``ENGINE``:
 
 .. literalinclude:: forge/016.php
 
-.. note:: Unless you specify the ``CHARACTER SET`` and/or ``COLLATE`` attributes,
-    ``createTable()`` will always add them with your configured *charset*
-    and *DBCollat* values, as long as they are not empty (MySQL only).
+.. note:: Unless you specify the ``CHARACTER SET`` and/or ``COLLATE`` attributes, ``createTable()`` will always add them
+    with your configured *charset* and *DBCollat* values, as long as they are not empty (MySQL only).
 
 ***************
 Dropping Tables
@@ -284,8 +270,8 @@ Execute a ``DROP TABLE`` statement and optionally add an ``IF EXISTS`` clause.
 
 .. literalinclude:: forge/017.php
 
-A third parameter can be passed to add a ``CASCADE`` option, which might be required for some
-drivers to handle removal of tables with foreign keys.
+A third parameter can be passed to add a ``CASCADE`` option, which might be required for some drivers to handle removal
+of tables with foreign keys.
 
 .. literalinclude:: forge/018.php
 
@@ -299,17 +285,15 @@ Adding a Field to a Table
 $forge->addColumn()
 -------------------
 
-The ``addColumn()`` method is used to modify an existing table. It
-accepts the same field array as :ref:`Creating Tables <adding-fields>`, and can
-be used to add additional fields.
+The ``addColumn()`` method is used to modify an existing table. It accepts the same field array as
+:ref:`Creating Tables <adding-fields>`, and can be used to add additional fields.
 
-.. note:: Unlike when creating a table, if ``null`` is not specified, the column
-    will be ``NULL``, not ``NOT NULL``.
+.. note:: Unlike when creating a table, if ``null`` is not specified, the column will be ``NULL``, not ``NOT NULL``.
 
 .. literalinclude:: forge/022.php
 
-If you are using MySQL or CUBRID, then you can take advantage of their
-``AFTER`` and ``FIRST`` clauses to position the new column.
+If you are using MySQL or CUBRID, then you can take advantage of their ``AFTER`` and ``FIRST`` clauses to position the
+new column.
 
 Examples:
 
@@ -339,22 +323,18 @@ Modifying a Field in a Table
 $forge->modifyColumn()
 ----------------------
 
-The usage of this method is identical to ``addColumn()``, except it
-alters an existing column rather than adding a new one. In order to
-change the name, you can add a "name" key into the field defining array.
+The usage of this method is identical to ``addColumn()``, except it alters an existing column rather than adding a new
+one. In order to change the name, you can add a "name" key into the field defining array.
 
 .. literalinclude:: forge/026.php
 
-.. note:: The ``modifyColumn()`` method may unexpectedly change ``NULL``/``NOT NULL``.
-    So it is recommended to always specify the value for the ``null`` key. Unlike when creating
-    a table, if ``null`` is not specified, the column will be ``NULL``, not
-    ``NOT NULL``.
+.. note:: The ``modifyColumn()`` method may unexpectedly change ``NULL``/``NOT NULL``. So it is recommended to always
+    specify the value for the ``null`` key. Unlike when creating a table, if ``null`` is not specified, the column will
+    be ``NULL``, not ``NOT NULL``.
 
-.. note:: Due to a bug, prior to v4.3.4, SQLite3 may not set ``NOT NULL`` even if you
-    specify ``'null' => false``.
+.. note:: Due to a bug, prior to v4.3.4, SQLite3 may not set ``NOT NULL`` even if you specify ``'null' => false``.
 
-.. note:: Due to a bug, prior to v4.3.4, Postgres and SQLSRV set ``NOT NULL`` even
-    if you specify ``'null' => true``.
+.. note:: Due to a bug, prior to v4.3.4, Postgres and SQLSRV set ``NOT NULL`` even if you specify ``'null' => true``.
 
 .. _db-forge-adding-keys-to-a-table:
 
@@ -363,8 +343,8 @@ Adding Keys to a Table
 
 .. versionadded:: 4.3.0
 
-You may add keys to an existing table by using ``addKey()``, ``addPrimaryKey()``,
-``addUniqueKey()`` or ``addForeignKey()`` and ``processIndexes()``:
+You may add keys to an existing table by using ``addKey()``, ``addPrimaryKey()``, ``addUniqueKey()`` or
+``addForeignKey()`` and ``processIndexes()``:
 
 .. literalinclude:: forge/029.php
 
@@ -552,9 +532,8 @@ Class Reference
         :returns:    true on success, false on failure
         :rtype:    bool
 
-        Used following ``addKey()``, ``addPrimaryKey()``, ``addUniqueKey()``,
-        and ``addForeignKey()`` to add indexes to an existing table.
-        See `Adding Keys to a Table`_.
+        Used following ``addKey()``, ``addPrimaryKey()``, ``addUniqueKey()``, and ``addForeignKey()`` to add indexes to
+        an existing table. See `Adding Keys to a Table`_.
 
     .. php:method:: modifyColumn($table, $field)
 

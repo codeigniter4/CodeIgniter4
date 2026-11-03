@@ -2,10 +2,10 @@
 Database Seeding
 ################
 
-Database seeding is a simple way to add data into your database. It is especially useful during development where
-you need to populate the database with sample data that you can develop against, but it is not limited to that.
-Seeders can contain static data that you don't want to include in a migration, like countries, or geo-coding tables,
-event or setting information, and more.
+Database seeding is a simple way to add data into your database. It is especially useful during development where you
+need to populate the database with sample data that you can develop against, but it is not limited to that. Seeders can
+contain static data that you don't want to include in a migration, like countries, or geo-coding tables, event or
+setting information, and more.
 
 .. contents::
     :local:
@@ -17,8 +17,8 @@ Database Seeders
 
 Database seeders are simple classes that must have a ``run()`` method, and extend ``CodeIgniter\Database\Seeder``.
 Within the ``run()`` method, the class can create any form of data that it needs to. It has access to the database
-connection and the forge through ``$this->db`` and ``$this->forge``, respectively. Seed files must be
-stored within the **app/Database/Seeds** directory. The name of the file must match the name of the class.
+connection and the forge through ``$this->db`` and ``$this->forge``, respectively. Seed files must be stored within the
+**app/Database/Seeds** directory. The name of the file must match the name of the class.
 
 .. literalinclude:: seeds/001.php
 
@@ -26,13 +26,13 @@ stored within the **app/Database/Seeds** directory. The name of the file must ma
 Nesting Seeders
 ***************
 
-Seeders can call other seeders with the ``call()`` method. This allows you to easily use a central seeder,
-but organize the tasks into separate seeder files:
+Seeders can call other seeders with the ``call()`` method. This allows you to easily use a central seeder, but organize
+the tasks into separate seeder files:
 
 .. literalinclude:: seeds/002.php
 
-You can also use a fully-qualified class name in the ``call()`` method, allowing you to keep your seeders
-anywhere the autoloader can find them. This is great for more modular code bases:
+You can also use a fully-qualified class name in the ``call()`` method, allowing you to keep your seeders anywhere the
+autoloader can find them. This is great for more modular code bases:
 
 .. literalinclude:: seeds/003.php
 
@@ -47,17 +47,17 @@ You can grab a copy of the main seeder through the database config class:
 Using a Different Database Group
 ================================
 
-You can specify a different database group when obtaining a seeder instance by passing the group name
-as the first parameter:
+You can specify a different database group when obtaining a seeder instance by passing the group name as the first
+parameter:
 
 .. literalinclude:: seeds/005.php
 
-When using ``call()`` to run child seeders, the database connection is automatically passed to them.
-This means child seeders will use the same connection as the parent seeder, unless they explicitly
-specify their own ``$DBGroup`` property.
+When using ``call()`` to run child seeders, the database connection is automatically passed to them. This means child
+seeders will use the same connection as the parent seeder, unless they explicitly specify their own ``$DBGroup``
+property.
 
-If a seeder needs to always use a specific database group regardless of the parent seeder's connection,
-you can set the ``$DBGroup`` property in the seeder class:
+If a seeder needs to always use a specific database group regardless of the parent seeder's connection, you can set the
+``$DBGroup`` property in the seeder class:
 
 .. literalinclude:: seeds/006.php
 
@@ -70,8 +70,8 @@ The connection priority is:
 Command Line Seeding
 ====================
 
-You can also seed data from the command line, as part of the Migrations CLI tools, if you don't want to create
-a dedicated controller:
+You can also seed data from the command line, as part of the Migrations CLI tools, if you don't want to create a
+dedicated controller:
 
 .. code-block:: console
 
@@ -103,6 +103,7 @@ For Windows:
 
     php spark make:seeder MySeeder --namespace Acme\Blog
 
-If ``Acme\Blog`` is mapped to the **app/Blog** directory, then this command will generate **MySeeder.php** in the **app/Blog/Database/Seeds** directory.
+If ``Acme\Blog`` is mapped to the **app/Blog** directory, then this command will generate **MySeeder.php** in the
+**app/Blog/Database/Seeds** directory.
 
 Supplying the ``--force`` option will overwrite existing files in the destination.

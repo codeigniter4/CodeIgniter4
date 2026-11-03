@@ -2,8 +2,8 @@
 Testing
 #######
 
-CodeIgniter ships with a number of tools to help you test and debug your application thoroughly.
-The following sections should get you quickly testing your applications.
+CodeIgniter ships with a number of tools to help you test and debug your application thoroughly. The following sections
+should get you quickly testing your applications.
 
 .. toctree::
     :titlesonly:

@@ -4,7 +4,10 @@
 Controller Attributes
 #####################
 
-PHP Attributes can be used to define filters and other metadata on controller classes and methods. This keeps the configuration close to the code it affects, and can make it easier to see at a glance what filters are applied to a given controller or method. This works across all routing methods, including auto-routing, which allows for near feature parity between the more robust route declarations and auto-routing.
+PHP Attributes can be used to define filters and other metadata on controller classes and methods. This keeps the
+configuration close to the code it affects, and can make it easier to see at a glance what filters are applied to a
+given controller or method. This works across all routing methods, including auto-routing, which allows for near feature
+parity between the more robust route declarations and auto-routing.
 
 .. contents::
     :local:
@@ -13,22 +16,26 @@ PHP Attributes can be used to define filters and other metadata on controller cl
 Getting Started
 ***************
 
-Controller Attributes can be applied to either the entire class or a specific method. The following example shows how to apply the ``Filter`` attribute to a controller class:
+Controller Attributes can be applied to either the entire class or a specific method. The following example shows how to
+apply the ``Filter`` attribute to a controller class:
 
 .. literalinclude:: controller_attributes/001.php
 
 In this example, the ``Auth`` filter will be applied to all methods in ``AdminController``.
 
-You can also apply the ``Filter`` attribute to a specific method within a controller. This allows you to apply filters only to certain methods, while leaving others unaffected. Here's an example:
+You can also apply the ``Filter`` attribute to a specific method within a controller. This allows you to apply filters
+only to certain methods, while leaving others unaffected. Here's an example:
 
 .. literalinclude:: controller_attributes/002.php
 
-Class-level and method-level attributes can work together to provide a flexible way to manage your routes at the controller level.
+Class-level and method-level attributes can work together to provide a flexible way to manage your routes at the
+controller level.
 
 Disabling Attributes
 --------------------
 
-If you know that you will not be using attributes in your application, you can disable the feature by setting the ``$useControllerAttributes`` property in your ``app/Config/Routing.php`` file to ``false``.
+If you know that you will not be using attributes in your application, you can disable the feature by setting the
+``$useControllerAttributes`` property in your ``app/Config/Routing.php`` file to ``false``.
 
 Provided Attributes
 *******************
@@ -36,17 +43,20 @@ Provided Attributes
 Filter
 ------
 
-The repeatable ``Filter`` attribute applies a filter to a controller class or method. You can also provide arguments to the filter. Repeat the attribute to apply multiple filters:
+The repeatable ``Filter`` attribute applies a filter to a controller class or method. You can also provide arguments to
+the filter. Repeat the attribute to apply multiple filters:
 
 .. literalinclude:: controller_attributes/003.php
 
 .. note::
 
-    When filters are applied both by an attribute and in the filter configuration file, they will both be applied, but that could lead to unexpected results.
+    When filters are applied both by an attribute and in the filter configuration file, they will both be applied, but
+    that could lead to unexpected results.
 
 .. note::
 
-    Please remember that every parameter applied to the filter will be converted to a string. This behavior affects only filters.
+    Please remember that every parameter applied to the filter will be converted to a string. This behavior affects only
+    filters.
 
 Restrict
 --------
@@ -59,14 +69,17 @@ the environment the application is running in. Here's an example of how to use t
 Cache
 -----
 
-The ``Cache`` attribute allows the output of the controller method to be cached for a specified amount of time. You can specify a duration in seconds, and optionally a cache key. Here's an example of how to use the ``Cache`` attribute:
+The ``Cache`` attribute allows the output of the controller method to be cached for a specified amount of time. You can
+specify a duration in seconds, and optionally a cache key. Here's an example of how to use the ``Cache`` attribute:
 
 .. literalinclude:: controller_attributes/005.php
 
 Custom Attributes
 *****************
 
-You can also create your own custom attributes to add metadata or behavior to your controllers and methods. Custom attributes must implement the ``CodeIgniter\Router\Attributes\RouteAttributeInterface`` interface. Here's an example of a custom attribute that adds a custom header to the response:
+You can also create your own custom attributes to add metadata or behavior to your controllers and methods. Custom
+attributes must implement the ``CodeIgniter\Router\Attributes\RouteAttributeInterface`` interface. Here's an example of
+a custom attribute that adds a custom header to the response:
 
 .. literalinclude:: controller_attributes/006.php
 
