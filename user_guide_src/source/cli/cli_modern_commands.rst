@@ -473,6 +473,9 @@ expressed through an attribute and explicit definitions rather than class proper
 ``$this->showError($e)``
     Becomes ``$this->renderThrowable($e)``.
 
+``CLI::write()``, ``CLI::error()``, and the other writers
+    Use the same methods on ``$this->getOutput()``. See :ref:`modern-commands-writing-output`.
+
 ``showHelp()`` override
     Gone. The built-in ``help`` command builds the help output itself from the declared arguments, options, and usages.
 
