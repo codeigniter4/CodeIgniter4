@@ -31,7 +31,7 @@ Redirect Status Code
   HTTP/1.1 or later.
 - The default code for HEAD and OPTIONS requests has been corrected from 303 to
   307 when using HTTP/1.1 or later.
-- In ``$routes->addRedirect()``, 302 is specified by default. Therefor 302 will
+- In ``$routes->addRedirect()``, 302 is specified by default. Therefore 302 will
   always be used when you don't specify a status code. In previous versions,
   302 might be changed.
 
@@ -40,20 +40,20 @@ Redirect Status Code
 Forge::modifyColumn()
 ---------------------
 
-- The :ref:`$forge->modifyColumn() <db-forge-modifyColumn>` has been fixed. Due
+- :ref:`$forge->modifyColumn() <db-forge-modifyColumn>` has been fixed. Due
   to a bug, in previous versions, SQLite3/Postgres/SQLSRV might change
   ``NULL``/``NOT NULL`` unpredictably.
 - In previous versions, the OCI8 driver did not change ``NULL``/``NOT NULL``
-  when you don't specify the ``null`` key.
+  when you didn't specify the ``null`` key.
 - Now in all database drivers ``$forge->modifyColumn()`` always sets ``NULL``
   when you don't specify the ``null`` key.
-- The ``NULL``/``NOT NULL`` change may still be unexpectedly, it is recommended
+- The ``NULL``/``NOT NULL`` change may still be unexpected, so it is recommended
   to always specify the ``null`` key.
 
 Deprecations
 ************
 
-- **Text Helper:** :php:func:`random_string()`'s type ``basic``, ``md5``, and
+- **Text Helper:** :php:func:`random_string()`'s types ``basic``, ``md5``, and
   ``sha1`` are deprecated. They are not cryptographically secure.
 
 Bugs Fixed

@@ -104,6 +104,68 @@ if ($fullChangelog === null) {
     exit(1);
 }
 
+$output = [];
+exec(sprintf(
+    'gh api --paginate repos/%s/compare/%s...master --jq %s 2>&1',
+    $repo,
+    escapeshellarg($previousTag),
+    escapeshellarg('.commits[] | {sha: .sha, login: .author.login, coAuthored: (.commit.message | contains("Co-authored-by:"))}'),
+), $output, $exitCode);
+
+if ($exitCode !== 0) {
+    echo "Failed to fetch the commits from GitHub:\n";
+    echo implode("\n", $output) . "\n";
+
+    exit(1);
+}
+
+[$owner, $name] = explode('/', $repo);
+
+$aiAssistant = '/\A(claude|copilot|cursor|codex)( agent| app| code| cli)? <|@(anthropic|cursor|openai)\.com>|\+copilot@users\.noreply\.github\.com>/i';
+
+$coAuthoredShas = [];
+
+foreach ($output as $line) {
+    $commit = json_decode($line, true);
+
+    if (is_string($commit['login'])) {
+        $contributors[$commit['login']] = true;
+    }
+
+    if ($commit['coAuthored']) {
+        $coAuthoredShas[] = $commit['sha'];
+    }
+}
+
+foreach (array_chunk($coAuthoredShas, 50) as $shas) {
+    $objects = array_map(
+        static fn (int $index, string $sha): string => sprintf('c%d: object(oid: "%s") { ... on Commit { authors(first: 10) { nodes { name email user { login } } } } }', $index, $sha),
+        array_keys($shas),
+        $shas,
+    );
+
+    $output = [];
+    exec(sprintf(
+        'gh api graphql -f query=%s 2>&1',
+        escapeshellarg(sprintf('query { repository(owner: "%s", name: "%s") { %s } }', $owner, $name, implode(' ', $objects))),
+    ), $output, $exitCode);
+
+    if ($exitCode !== 0) {
+        echo "Failed to fetch the commit authors from GitHub:\n";
+        echo implode("\n", $output) . "\n";
+
+        exit(1);
+    }
+
+    foreach (json_decode(implode("\n", $output), true)['data']['repository'] ?? [] as $object) {
+        foreach ($object['authors']['nodes'] ?? [] as $author) {
+            if (is_string($author['user']['login'] ?? null) && preg_match($aiAssistant, sprintf('%s <%s>', $author['name'], $author['email'])) !== 1) {
+                $contributors[$author['user']['login']] = true;
+            }
+        }
+    }
+}
+
 $contributors = array_filter(
     array_keys($contributors),
     static fn (string $login): bool => ! str_ends_with($login, '[bot]'),

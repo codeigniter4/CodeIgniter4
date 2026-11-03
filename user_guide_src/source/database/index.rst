@@ -2,9 +2,8 @@
 Working with Databases
 ######################
 
-CodeIgniter comes with a full-featured and very fast abstracted database
-class that supports both traditional structures and Query Builder
-patterns. The database functions offer clear, simple syntax.
+CodeIgniter comes with a full-featured and very fast abstracted database class that supports both traditional structures
+and Query Builder patterns. The database functions offer clear, simple syntax.
 
 .. toctree::
     :titlesonly:

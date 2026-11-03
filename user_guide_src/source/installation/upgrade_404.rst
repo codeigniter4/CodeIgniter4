@@ -12,8 +12,8 @@ Please refer to the upgrade instructions corresponding to your installation meth
     :local:
     :depth: 2
 
-CodeIgniter 4.0.4 fixes a bug in the implementation of :doc:`Controller Filters </incoming/filters>`, breaking
-code implementing the ``FilterInterface``.
+CodeIgniter 4.0.4 fixes a bug in the implementation of :doc:`Controller Filters </incoming/filters>`, breaking code
+implementing the ``FilterInterface``.
 
 Breaking Changes
 ****************

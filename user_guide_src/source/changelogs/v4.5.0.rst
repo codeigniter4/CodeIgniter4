@@ -14,11 +14,11 @@ Release Date: April 7, 2024
 Highlights
 **********
 
-- Update minimal PHP requirement to 8.1.
-- Update minimal PHPUnit requirement to 10.5.
-- **CORS filter** (*contributed by* `kenjis <https://github.com/kenjis>`_)
+- Update minimum PHP requirement to 8.1.
+- Update minimum PHPUnit requirement to 10.5.
+- **CORS filter** (*contributed by* `kenjis <https://github.com/kenjis>`_).
   See :doc:`../libraries/cors`.
-- The **spark optimize** command for performance improvement on production
+- The **spark optimize** command for performance improvement in the production
   environment (*contributed by* `kenjis <https://github.com/kenjis>`_).
   See :ref:`spark_optimize`.
 
@@ -33,9 +33,9 @@ Required Filters
 
 New :ref:`Required Filters <filters-required>` have been introduced. They are
 special filters that are applied before and after other kinds of filters, and
-always applied even if a route does not exist.
+are always applied even if a route does not exist.
 
-The following existing functionalities have been reimplemented as Required Filters.
+The following existing functionalities have been reimplemented as Required Filters:
 
 - :ref:`Force Global Secure Requests <forcehttps>`
 - :doc:`../general/caching`
@@ -49,13 +49,14 @@ The benchmark points have been changed:
 
 - Before
 
-   - ``bootstrap``: Creating Request and Response objects, Event ``pre_system``, Instantiating RouteCollection object, Loading Routes files, Instantiating Router object,
-   - ``routing``: Routing,
+  - ``bootstrap``: Creating Request and Response objects, Event ``pre_system``, Instantiating RouteCollection object, Loading Routes files, Instantiating Router object,
+  - ``routing``: Routing,
+
 - After
 
-   - ``bootstrap``: Creating Request and Response objects, Event ``pre_system``.
-   - ``required_before_filters``: Instantiating Filters object, Running *Required Before Filters*.
-   - ``routing``: Instantiating RouteCollection object, Loading Routes files, Instantiating Router object, Routing,
+  - ``bootstrap``: Creating Request and Response objects, Event ``pre_system``.
+  - ``required_before_filters``: Instantiating Filters object, Running *Required Before Filters*.
+  - ``routing``: Instantiating RouteCollection object, Loading Routes files, Instantiating Router object, Routing,
 
 Routing
 =======
@@ -64,14 +65,15 @@ Routing
   that allows using CamelCase controller and method names. See
   :ref:`translate-uri-to-camelcase`.
 - **Others:**
-    - Added option ``$multipleSegmentsOneParam``. When this option is
-      enabled, a placeholder that matches multiple segments, such as ``(:any)``, will
-      be passed directly as it is to one parameter, even if it contains multiple segments.
-      See :ref:`multiple-uri-segments-as-one-parameter` for details.
-    - Now the 404 controller's method that you set in ``$override404`` also receive
-      a ``PageNotFoundException`` message as the first parameter.
-    - Now you can use the ``__invoke()`` method as the default method. See
-      :ref:`routing-default-method`.
+
+  - Added option ``$multipleSegmentsOneParam``. When this option is
+    enabled, a placeholder that matches multiple segments, such as ``(:any)``, will
+    be passed directly as it is to one parameter, even if it contains multiple segments.
+    See :ref:`multiple-uri-segments-as-one-parameter` for details.
+  - Now the 404 controller's method that you set in ``$override404`` also receives
+    a ``PageNotFoundException`` message as the first parameter.
+  - Now you can use the ``__invoke()`` method as the default method. See
+    :ref:`routing-default-method`.
 
 Commands
 ========
@@ -84,15 +86,15 @@ Commands
   :ref:`confirming-config-values` for the details.
 - Added ``spark phpini:check`` command to check important PHP ini settings. See
   :ref:`spark-phpini-check` for the details.
-- Added ``spark lang:find`` command to update translations keys. See :ref:`generating-translation-files-via-command` for the details.
+- Added ``spark lang:find`` command to update translation keys. See :ref:`generating-translation-files-via-command` for the details.
 - The ``--dbgroup`` option has been added to the ``spark db:table`` command.
   See :ref:`Database Commands <db-command-specify-the-dbgroup>`.
 
 Testing
 =======
 
-- **DomParser:** The new methods were added ``seeXPath()`` and ``dontSeeXPath()``
-  which allows users to work directly with DOMXPath object, using complex expressions.
+- **DomParser:** The new methods ``seeXPath()`` and ``dontSeeXPath()`` were added,
+  which allow users to work directly with a DOMXPath object, using complex expressions.
 - **CLI:** The new ``InputOutput`` class was added and now you can write tests
   for commands more easily if you use ``MockInputOutput``.
   See :ref:`using-mock-input-output`.
@@ -150,10 +152,10 @@ findAll(0) Behavior
 $updateOnlyChanged
 ------------------
 
-Added a property ``$updateOnlyChanged`` whether to update
-:doc:`Entity <../models/entities>`'s only changed fields. If you set this property
+Added a property ``$updateOnlyChanged`` that controls whether to update only the
+changed fields of an :doc:`Entity <../models/entities>`. If you set this property
 to ``false``, when you are updating an Entity, ``DataException``
-"There is no data to update" will not raise even if the values in the Entity have
+"There is no data to update" will not be raised even if the values in the Entity have
 not changed.
 
 See :ref:`Using CodeIgniter’s Model <model-update-only-changed>` for details.
@@ -169,18 +171,22 @@ Libraries
 
 - **CORS:** Added :doc:`../libraries/cors` filter and class.
 - **Validation:**
-    - Added the new rule ``field_exists`` that checks the filed exists in the
-      data to be validated.
-    - The ``$dbGroup`` parameter of ``Validation::run()`` now accepts not only
-      a database group name, but also a database connection instance or an array
-      of database settings.
+
+  - Added the new rule ``field_exists`` that checks that the field exists in the
+    data to be validated.
+  - The ``$dbGroup`` parameter of ``Validation::run()`` now accepts not only
+    a database group name, but also a database connection instance or an array
+    of database settings.
+
 - **Session:**
-    - ``RedisHandler`` now can configure the interval time for acquiring locks
-      (``$lockRetryInterval``) and the number of retries (``$lockMaxRetries``).
-    - Now you can use Redis ACL (username and password) with ``RedisHandler``.
-      See :ref:`sessions-redishandler-driver` for details.
+
+  - ``RedisHandler`` can now configure the interval time for acquiring locks
+    (``$lockRetryInterval``) and the number of retries (``$lockMaxRetries``).
+  - Now you can use Redis ACL (username and password) with ``RedisHandler``.
+    See :ref:`sessions-redishandler-driver` for details.
+
 - **Security:** ``Config\Security::$redirect`` is now, by default, environment-specific.
-  For production environment, changed to ``true`` but is still ``false`` for other
+  For the production environment, it has changed to ``true``, but is still ``false`` for other
   environments.
 
 Others
@@ -189,11 +195,13 @@ Others
 - **Bootstrap:** The ``CodeIgniter\Boot`` class has been introduced, replacing
   **system/bootstrap.php**.
 - **Autoloader:**
-    - Autoloading performance when using Composer has been improved.
-      Adding the ``App`` namespace in the ``autoload.psr4`` setting in **composer.json**
-      may also improve the performance of your app. See :ref:`autoloader-application-namespace`.
-    - FileLocator Caching implemented. See :ref:`file-locator-caching` for details.
-    - ``FileLocatorInterface`` has been added.
+
+  - Autoloading performance when using Composer has been improved.
+    Adding the ``App`` namespace in the ``autoload.psr-4`` setting in **composer.json**
+    may also improve the performance of your app. See :ref:`autoloader-application-namespace`.
+  - FileLocator Caching implemented. See :ref:`file-locator-caching` for details.
+  - ``FileLocatorInterface`` has been added.
+
 - **CodeIgniter:** Added a pseudo-variable ``{memory_usage}`` to show your memory
   usage in your view files, which was supported by CodeIgniter 3.
 - **Events:** Added event points ``pre_command`` and ``post_command`` for Spark
@@ -247,7 +255,7 @@ API\\ResponseTrait
 ------------------
 
 Now when a response format is JSON, if you pass string data, the framework returns
-a JSON response. In previous versions, it returned a HTML response.
+a JSON response. In previous versions, it returned an HTML response.
 See :ref:`Upgrading Guide <upgrade-450-api-response-trait>` for details.
 
 Factories class
@@ -280,7 +288,7 @@ Interface Changes
     and require no intervention.
 
 - **ResponseInterface:** The default value of the third parameter ``$expire`` of
-  the ``ResponseInterface::setCookie()`` has been fixed from ``''`` to ``0``.
+  ``ResponseInterface::setCookie()`` has been fixed from ``''`` to ``0``.
 - **Logger:** The `psr/log <https://packagist.org/packages/psr/log>`_ package has
   been upgraded to v3.0.0.
 - **Validation:** The method signature of ``ValidationInterface::run()`` has been
@@ -298,7 +306,7 @@ The third parameter ``$expire`` in :php:func:`set_cookie()` and
 :php:meth:`CodeIgniter\\HTTP\\Response::setCookie()` has been fixed.
 
 The type has been changed from ``string`` to ``int``, and the default value has
-been changed from ``''`` to  ``0``.
+been changed from ``''`` to ``0``.
 
 FileLocatorInterface
 --------------------
@@ -318,9 +326,9 @@ Traditional Validation Rules
 ----------------------------
 
 To add ``declare(strict_types=1)`` to the framework codebase, the method parameter
-type ``?string`` for a value to validate in the all Traditional Validation rule
+type ``?string`` for a value to validate in all Traditional Validation rule
 classes ``CodeIgniter\Validation\FormatRules`` and ``CodeIgniter\Validation\Rules``
-are removed.
+has been removed.
 
 For example, the method signature changed as follows::
 
@@ -331,7 +339,7 @@ Others
 ------
 
 - **Logger:** The method signatures of the methods in ``CodeIgniter\Log\Logger``
-  that implements the PSR-3 interface have been fixed. The ``bool`` return
+  that implement the PSR-3 interface have been fixed. The ``bool`` return
   types are changed to ``void``. The ``$message`` parameters now have
   ``string|Stringable`` types.
 - **Validation:** The method signature of ``Validation::run()`` has been
@@ -360,10 +368,10 @@ Filters
 
 - The following deprecated items have been removed, because now :ref:`multiple-filters` are always enabled.
 
-    - ``Filters::enableFilter()``
-    - ``RouteCollection::getFilterForRoute()``
-    - ``Router::$filterInfo``
-    - ``Router::getFilter()``
+  - ``Filters::enableFilter()``
+  - ``RouteCollection::getFilterForRoute()``
+  - ``Router::$filterInfo``
+  - ``Router::getFilter()``
 
 Database
 --------
@@ -385,14 +393,14 @@ Response
   changed to protected.
 - The following deprecated properties have been removed.
 
-    - ``ResponseTrait::$CSPEnabled``
-    - ``ResponseTrait::$cookiePrefix``
-    - ``ResponseTrait::$cookieDomain``
-    - ``ResponseTrait::$cookiePath``
-    - ``ResponseTrait::$cookieSecure``
-    - ``ResponseTrait::$cookieHTTPOnly``
-    - ``ResponseTrait::$cookieSameSite``
-    - ``ResponseTrait::$cookies``
+  - ``ResponseTrait::$CSPEnabled``
+  - ``ResponseTrait::$cookiePrefix``
+  - ``ResponseTrait::$cookieDomain``
+  - ``ResponseTrait::$cookiePath``
+  - ``ResponseTrait::$cookieSecure``
+  - ``ResponseTrait::$cookieHTTPOnly``
+  - ``ResponseTrait::$cookieSameSite``
+  - ``ResponseTrait::$cookies``
 
 Security
 --------
@@ -434,9 +442,11 @@ Others
 
 - **Cache:** The deprecated ``CodeIgniter\Cache\Exceptions\ExceptionInterface`` has been removed.
 - **Config:**
-    - The deprecated ``CodeIgniter\Config\Config`` class has been removed.
-    - The deprecated ``CodeIgniter\Config\BaseService::discoverServices()`` method
-      has been removed.
+
+  - The deprecated ``CodeIgniter\Config\Config`` class has been removed.
+  - The deprecated ``CodeIgniter\Config\BaseService::discoverServices()`` method
+    has been removed.
+
 - **Controller:** The deprecated ``Controller::loadHelpers()`` method has been removed.
 - **Exceptions:** The deprecated ``CodeIgniter\Exceptions\CastException`` class has been removed.
 - **Entity:** The deprecated ``CodeIgniter\Entity`` class has been removed. Use
@@ -455,21 +465,23 @@ Changes
 *******
 
 - **Bootstrap:** The loading of **.env** and defining ``ENVIRONMENT`` have been
-  moved before loading of **bootstrap.php**.
+  moved before the loading of **bootstrap.php**.
 - **Config:**
-    - ``Config\Feature::$multipleFilters`` has been removed, because now
-      :ref:`multiple-filters` are always enabled.
-    - The default error level in the production environment
-      (**app/Config/Boot/production.php**) has been changed to ``E_ALL & ~E_DEPRECATED``
-      to match the default **php.ini** for production.
+
+  - ``Config\Feature::$multipleFilters`` has been removed, because now
+    :ref:`multiple-filters` are always enabled.
+  - The default error level in the production environment
+    (**app/Config/Boot/production.php**) has been changed to ``E_ALL & ~E_DEPRECATED``
+    to match the default **php.ini** for production.
+
 - **RouteCollection:** The HTTP method keys in the protected property ``$routes``
-  has been fixed from lowercase to uppercase.
+  have been fixed from lowercase to uppercase.
 - **Exceptions:** Unused ``CodeIgniter\Exceptions\AlertError`` and
   ``CodeIgniter\Exceptions\EmergencyError`` were removed.
 - **Forge:** ``SQLSRV`` Forge now converts ``ENUM`` data types to ``VARCHAR(n)``
-  when you add table columns. In previous version, it converted to ``TEXT`` that
+  when you add table columns. In previous versions, it converted to ``TEXT``, which
   is deprecated in SQL Server.
-- ``declare(strict_types=1)`` has been added to most framework codebase.
+- ``declare(strict_types=1)`` has been added to most of the framework codebase.
 
 ************
 Deprecations
@@ -478,27 +490,31 @@ Deprecations
 - **Services:** The ``BaseService::$services`` property has been deprecated. No
   longer used.
 - **CodeIgniter:**
-    - The ``determinePath()`` method has been deprecated. No longer used.
-    - The ``resolvePlatformExtensions()`` method has been deprecated. No longer
-      used. It has been moved to the ``CodeIgniter\Boot::checkMissingExtensions()``
-      method.
-    - The ``bootstrapEnvironment()`` method has been deprecated. No longer used.
-      It has been moved to the ``CodeIgniter\Boot::loadEnvironmentBootstrap()``
-      method.
-    - The ``initializeKint()`` method has been deprecated. No longer used. It has
-      been moved to the ``Autoloader``.
-    - The ``autoloadKint()`` method has been deprecated. No longer used. It has
-      been moved to the ``Autoloader``.
-    - The ``configureKint()`` method has been deprecated. No longer used. It has
-      been moved to the ``Autoloader``.
+
+  - The ``determinePath()`` method has been deprecated. No longer used.
+  - The ``resolvePlatformExtensions()`` method has been deprecated. No longer
+    used. It has been moved to the ``CodeIgniter\Boot::checkMissingExtensions()``
+    method.
+  - The ``bootstrapEnvironment()`` method has been deprecated. No longer used.
+    It has been moved to the ``CodeIgniter\Boot::loadEnvironmentBootstrap()``
+    method.
+  - The ``initializeKint()`` method has been deprecated. No longer used. It has
+    been moved to the ``Autoloader``.
+  - The ``autoloadKint()`` method has been deprecated. No longer used. It has
+    been moved to the ``Autoloader``.
+  - The ``configureKint()`` method has been deprecated. No longer used. It has
+    been moved to the ``Autoloader``.
+
 - **Response:** The constructor parameter ``$config`` has been deprecated. No
   longer used.
 - **Filters:**
-    - The feature that ``Filters`` accept the lowercase HTTP method keys
-      of ``Config\Filters::$methods`` has been deprecated. Use correct uppercase
-      HTTP method keys instead.
-    - The feature that the ``spark filter:check`` command accepts the lowercase
-      HTTP method has been deprecated. Use correct uppercase HTTP method instead.
+
+  - The feature that ``Filters`` accepts the lowercase HTTP method keys
+    of ``Config\Filters::$methods`` has been deprecated. Use correct uppercase
+    HTTP method keys instead.
+  - The feature that the ``spark filter:check`` command accepts the lowercase
+    HTTP method has been deprecated. Use the correct uppercase HTTP method instead.
+
 - **RouteCollection:** The feature that the ``match()`` and ``setHTTPVerb()``
   methods accept the lowercase HTTP methods has been deprecated. Use correct
   uppercase HTTP methods instead.

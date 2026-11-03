@@ -12,22 +12,22 @@ Release Date: January 9, 2022
 BREAKING
 ********
 
-- Because ``FILTER_SANITIZE_STRING`` is deprecated since PHP 8.1, ``get_cookie()`` that uses it when ``$xssClean`` is true changed the output. Now it uses ``FILTER_SANITIZE_FULL_SPECIAL_CHARS``. Note that using XSS filtering is a bad practice. It does not prevent XSS attacks perfectly. Using ``esc()`` with the correct ``$context`` in the views is recommended.
+- Because ``FILTER_SANITIZE_STRING`` has been deprecated since PHP 8.1, the output of ``get_cookie()``, which uses it when ``$xssClean`` is true, has changed. Now it uses ``FILTER_SANITIZE_FULL_SPECIAL_CHARS``. Note that using XSS filtering is a bad practice. It does not prevent XSS attacks perfectly. Using ``esc()`` with the correct ``$context`` in the views is recommended.
 
 Enhancements
 ************
 
-none.
+None.
 
 Changes
 *******
 
-none.
+None.
 
 Deprecations
 ************
 
-none.
+None.
 
 Bugs Fixed
 **********

@@ -14,7 +14,7 @@ Release Date: October 30, 2022
 Bugs Fixed
 **********
 
-- Fixed a bug that causes `PHP Fatal error:  Trait "Nexus\PHPUnit\Extension\Expeditable" not found` when running PHPUnit.
+- Fixed a bug that caused ``PHP Fatal error:  Trait "Nexus\PHPUnit\Extension\Expeditable" not found`` when running PHPUnit.
 
 See the repo's
 `CHANGELOG_4.2.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/changelogs/CHANGELOG_4.2.md>`_

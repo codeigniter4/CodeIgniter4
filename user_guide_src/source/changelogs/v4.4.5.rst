@@ -14,7 +14,7 @@ Release Date: January 27, 2024
 Bugs Fixed
 **********
 
-- **QueryBuilder:** Fixed a bug that the ``updateBatch()`` method does not work
+- **QueryBuilder:** Fixed a bug where the ``updateBatch()`` method did not work
   due to type errors on PostgreSQL.
 
 See the repo's

@@ -13,6 +13,7 @@ See all the changes.
     :titlesonly:
 
     v4.8.0
+    v4.7.7
     v4.7.6
     v4.7.5
     v4.7.4

@@ -2,9 +2,8 @@
 CLIRequest Class
 ****************
 
-If a request comes from a command line invocation, the request object is actually a
-``CLIRequest``. It behaves the same as a :doc:`conventional request </incoming/request>`
-but adds some accessor methods for convenience.
+If a request comes from a command line invocation, the request object is actually a ``CLIRequest``. It behaves the same
+as a :doc:`conventional request </incoming/request>` but adds some accessor methods for convenience.
 
 ====================
 Additional Accessors
@@ -32,7 +31,7 @@ Returns an array of the command line arguments deemed to be options:
 .. literalinclude:: cli_request/003.php
 
 getOption($key)
------------------
+---------------
 
 Returns the value of a specific command line argument deemed to be an option:
 

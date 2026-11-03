@@ -3,7 +3,7 @@
 namespace App\Controllers\Api;
 
 use App\Controllers\BaseController;
-use CodeIgniter\Api\ResponseTrait;
+use CodeIgniter\API\ResponseTrait;
 
 class Books extends BaseController
 {

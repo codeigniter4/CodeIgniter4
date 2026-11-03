@@ -2,7 +2,7 @@
 Security Helper
 ###############
 
-The Security Helper file contains security related functions.
+The Security Helper file contains security-related functions.
 
 .. contents::
     :local:
@@ -29,15 +29,13 @@ The following functions are available:
 
     Provides protection against directory traversal.
 
-    Backslashes are always removed. If ``$relativePath`` is ``true``, forward slashes are
-    preserved to allow relative paths such as ``path/to/file.txt``, while parent-directory
-    sequences (``../``) are removed.
+    Backslashes are always removed. If ``$relativePath`` is ``true``, forward slashes are preserved to allow relative
+    paths such as ``path/to/file.txt``, while parent-directory sequences (``../``) are removed.
 
-    .. note:: When passing relative paths to this helper, use forward slashes (``/``) as
-        directory separators, including on Windows.
+    .. note:: When passing relative paths to this helper, use forward slashes (``/``) as directory separators, including
+        on Windows.
 
-    For more info, please see the :doc:`Security Library <../libraries/security>`
-    documentation.
+    For more info, please see the :doc:`Security Library <../libraries/security>` documentation.
 
 .. php:function:: strip_image_tags($str)
 
@@ -45,8 +43,7 @@ The following functions are available:
     :returns:    The input string with no image tags
     :rtype:    string
 
-    This is a security function that will strip image tags from a string.
-    It leaves the image URL as plain text.
+    This is a security function that will strip image tags from a string. It leaves the image URL as plain text.
 
     Example:
 

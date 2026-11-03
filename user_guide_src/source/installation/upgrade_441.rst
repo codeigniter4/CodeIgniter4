@@ -15,11 +15,11 @@ Please refer to the upgrade instructions corresponding to your installation meth
 Project Files
 *************
 
-Some files in the **project space** (root, app, public, writable) received updates. Due to
-these files being outside of the **system** scope they will not be changed without your intervention.
+Some files in the **project space** (root, app, public, writable) received updates. Due to these files being outside of
+the **system** scope, they will not be changed without your intervention.
 
-There are some third-party CodeIgniter modules available to assist with merging changes to
-the project space: `Explore on Packagist <https://packagist.org/explore/?query=codeigniter4%20updates>`_.
+There are some third-party CodeIgniter modules available to assist with merging changes to the project space:
+`Explore on Packagist <https://packagist.org/explore/?query=codeigniter4%20updates>`_.
 
 Content Changes
 ===============
@@ -29,13 +29,13 @@ Version 4.4.1 did not alter any executable code in project files.
 All Changes
 ===========
 
-This is a list of all files in the **project space** that received changes;
-many will be simple comments or formatting that have no effect on the runtime:
+This is a list of all files in the **project space** that received changes; many will be simple comments or formatting
+that have no effect on the runtime:
 
-- app/Config/Autoload.php
-- app/Config/DocTypes.php
-- app/Config/Email.php
-- app/Config/ForeignCharacters.php
-- app/Config/Mimes.php
-- app/Config/Modules.php
-- composer.json
+- **app/Config/Autoload.php**
+- **app/Config/DocTypes.php**
+- **app/Config/Email.php**
+- **app/Config/ForeignCharacters.php**
+- **app/Config/Mimes.php**
+- **app/Config/Modules.php**
+- **composer.json**

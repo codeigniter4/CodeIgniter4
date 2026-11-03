@@ -12,7 +12,7 @@ Release Date: January 31, 2021
 BREAKING
 ********
 
-- ``Autoloader::loadLegacy()`` method was previously used for migration of non-namespaced classes in transition to CodeIgniter v4. Since v4.1.0, this support was removed.
+- The ``Autoloader::loadLegacy()`` method was previously used for migration of non-namespaced classes in transition to CodeIgniter v4. Since v4.1.0, this support was removed.
 
 Changes
 *******
@@ -22,7 +22,7 @@ Changes
 Deprecations
 ************
 
-- Deprecated ``Model::fillPlaceholders()`` method, use ``Validation::fillPlaceholders()`` instead.
+- Deprecated ``Model::fillPlaceholders()`` method. Use ``Validation::fillPlaceholders()`` instead.
 
 Bugs Fixed
 **********

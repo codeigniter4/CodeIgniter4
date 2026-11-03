@@ -18,9 +18,9 @@ Breaking Changes
 Changes for set() method in BaseBuilder and Model class
 -------------------------------------------------------
 
-The casting for the ``$value`` parameter has been removed to fix a bug where passing parameters as array and string
-to the ``set()`` method were handled differently. If you extended the ``BaseBuilder`` class or ``Model`` class yourself
-and modified the ``set()`` method, then you need to change its definition from
+The casting for the ``$value`` parameter has been removed to fix a bug where passing parameters as an array and as a
+string to the ``set()`` method was handled differently. If you extended the ``BaseBuilder`` class or ``Model`` class
+yourself and modified the ``set()`` method, then you need to change its definition from
 ``public function set($key, ?string $value = '', ?bool $escape = null)`` to
 ``public function set($key, $value = '', ?bool $escape = null)``.
 
@@ -30,51 +30,57 @@ Session DatabaseHandler's Database Table Change
 The types of the following columns in the session table have been changed for optimization.
 
 - MySQL
-    - ``timestamp``
+
+  - ``timestamp``
+
 - PostgreSQL
-    - ``ip_address``
-    - ``timestamp``
-    - ``data``
+
+  - ``ip_address``
+  - ``timestamp``
+  - ``data``
 
 Update the definition of the session table. See the :doc:`/libraries/sessions` for the new definition.
 
-The change was introduced in v4.1.2. But due to `a bug <https://github.com/codeigniter4/CodeIgniter4/issues/4807>`_,
-the DatabaseHandler Driver did not work properly.
+The change was introduced in v4.1.2. But due to `a bug <https://github.com/codeigniter4/CodeIgniter4/issues/4807>`_, the
+DatabaseHandler Driver did not work properly.
 
 CSRF Protection
 ---------------
 
-Because of a bug fix,
-now CSRF protection works on not only **POST** but also **PUT/PATCH/DELETE** requests when CSRF filter is applied.
+Because of a bug fix, CSRF protection now works on not only **POST** but also **PUT/PATCH/DELETE** requests when the
+CSRF filter is applied.
 
-When you use **PUT/PATCH/DELETE** requests, you need to send CSRF token. Or remove the CSRF filter
-for such requests if you don't need CSRF protection for them.
+When you use **PUT/PATCH/DELETE** requests, you need to send the CSRF token. Or remove the CSRF filter for such requests
+if you don't need CSRF protection for them.
 
-If you want the same behavior as the previous version, set the CSRF filter like the following in **app/Config/Filters.php**:
+If you want the same behavior as the previous version, set the CSRF filter like the following in
+**app/Config/Filters.php**:
 
 .. literalinclude:: upgrade_415/001.php
 
-Protecting **GET** method needs only when you use ``form_open()`` auto-generation of CSRF field.
+Protecting the **GET** method is needed only when you use ``form_open()`` auto-generation of the CSRF field.
 
-.. Warning:: In general, if you use ``$methods`` filters, you should :ref:`disable Auto Routing (Legacy) <use-defined-routes-only>`
-    because :ref:`auto-routing-legacy` permits any HTTP method to access a controller.
-    Accessing the controller with a method you don't expect could bypass the filter.
+.. warning:: In general, if you use ``$methods`` filters, you should
+    :ref:`disable Auto Routing (Legacy) <use-defined-routes-only>` because :ref:`auto-routing-legacy` permits any HTTP
+    method to access a controller. Accessing the controller with a method you don't expect could bypass the filter.
 
 CURLRequest Header Change
 -------------------------
 
-In the previous version, if you didn't provide your own headers, ``CURLRequest`` would send the request-headers from the browser.
-The bug was fixed. If your requests depend on the headers, your requests might fail after upgrading.
-In this case, add the necessary headers manually.
-See :ref:`CURLRequest Class <curlrequest-request-options-headers>` for how to add.
+In the previous version, if you didn't provide your own headers, ``CURLRequest`` would send the request-headers from the
+browser. The bug was fixed. If your requests depend on the headers, your requests might fail after upgrading. In this
+case, add the necessary headers manually. See :ref:`CURLRequest Class <curlrequest-request-options-headers>` for how to
+add them.
 
 Query Builder Changes
 ---------------------
 
 For optimization and a bug fix, the following behaviors, mostly used in testing, have been changed.
 
-- When you use ``insertBatch()`` and ``updateBatch()``, the return value of ``$query->getOriginalQuery()`` has changed. It no longer returns the query with the binded parameters, but the actual query that was run.
-- If ``testMode`` is ``true``, ``insertBatch()`` will return an SQL string array instead of the number of affected rows. This change was made so that the returned data type is the same as the ``updateBatch()`` method.
+- When you use ``insertBatch()`` and ``updateBatch()``, the return value of ``$query->getOriginalQuery()`` has changed.
+  It no longer returns the query with the bound parameters, but the actual query that was run.
+- If ``testMode`` is ``true``, ``insertBatch()`` will return an SQL string array instead of the number of affected rows.
+  This change was made so that the returned data type is the same as the ``updateBatch()`` method.
 
 Breaking Enhancements
 =====================
@@ -84,20 +90,25 @@ Breaking Enhancements
 Multiple Filters for a Route
 ----------------------------
 
-A new feature to set multiple filters for a route.
+A new feature has been added to set multiple filters for a route.
 
-.. important:: This feature is disabled by default. Because it breaks backward compatibility.
+.. important:: This feature is disabled by default because it breaks backward compatibility.
 
-If you want to use this, you need to set the property ``$multipleFilters`` ``true`` in ``app/Config/Feature.php``.
-If you enable it:
+If you want to use this, you need to set the property ``$multipleFilters`` to ``true`` in ``app/Config/Feature.php``. If
+you enable it:
 
 - ``CodeIgniter\CodeIgniter::handleRequest()`` uses
-    - ``CodeIgniter\Filters\Filters::enableFilters()``, instead of ``enableFilter()``
+
+  - ``CodeIgniter\Filters\Filters::enableFilters()``, instead of ``enableFilter()``
+
 - ``CodeIgniter\CodeIgniter::tryToRouteIt()`` uses
-    - ``CodeIgniter\Router\Router::getFilters()``, instead of ``getFilter()``
+
+  - ``CodeIgniter\Router\Router::getFilters()``, instead of ``getFilter()``
+
 - ``CodeIgniter\Router\Router::handle()`` uses
-    - the property ``$filtersInfo``, instead of ``$filterInfo``
-    - ``CodeIgniter\Router\RouteCollection::getFiltersForRoute()``, instead of ``getFilterForRoute()``
+
+  - the property ``$filtersInfo``, instead of ``$filterInfo``
+  - ``CodeIgniter\Router\RouteCollection::getFiltersForRoute()``, instead of ``getFilterForRoute()``
 
 If you extended the above classes, then you need to change them.
 
@@ -113,20 +124,20 @@ See :ref:`applying-filters` for the functionality.
 Project Files
 =============
 
-Numerous files in the project space (root, app, public, writable) received updates. Due to
-these files being outside of the system scope they will not be changed without your intervention.
-There are some third-party CodeIgniter modules available to assist with merging changes to
-the project space: `Explore on Packagist <https://packagist.org/explore/?query=codeigniter4%20updates>`_.
+Numerous files in the project space (root, app, public, writable) received updates. Due to these files being outside of
+the system scope, they will not be changed without your intervention. There are some third-party CodeIgniter modules
+available to assist with merging changes to the project space:
+`Explore on Packagist <https://packagist.org/explore/?query=codeigniter4%20updates>`_.
 
-.. note:: Except in very rare cases for bug fixes, no changes made to files for the project space
-    will break your application. All changes noted here are optional until the next major version,
-    and any mandatory changes will be covered in the sections above.
+.. note:: Except in very rare cases for bug fixes, no changes made to files for the project space will break your
+    application. All changes noted here are optional until the next major version, and any mandatory changes will be
+    covered in the sections above.
 
 Content Changes
 ---------------
 
-The following files received significant changes (including deprecations or visual adjustments)
-and it is recommended that you merge the updated versions with your application:
+The following files received significant changes (including deprecations or visual adjustments) and it is recommended
+that you merge the updated versions with your application:
 
 * ``app/Config/CURLRequest.php``
 * ``app/Config/Cache.php``
@@ -139,8 +150,8 @@ and it is recommended that you merge the updated versions with your application:
 All Changes
 -----------
 
-This is a list of all files in the project space that received changes;
-many will be simple comments or formatting that have no effect on the runtime:
+This is a list of all files in the project space that received changes; many will be simple comments or formatting that
+have no effect on the runtime:
 
 * ``app/Config/CURLRequest.php``
 * ``app/Config/Cache.php``

@@ -12,10 +12,11 @@ Release Date: September 5, 2023
 Bugs Fixed
 **********
 
-- **AutoRouting Legacy:** Fixed a bug that Auto Routing Legacy does not work.
+- **AutoRouting Legacy:** Fixed a bug where Auto Routing Legacy did not work.
 - **FeatureTest:**
-    - Fixed a bug that FeatureTest may cause risky tests.
-    - Fixed a bug that FeatureTest fails when forceGlobalSecureRequests is true.
+
+  - Fixed a bug where FeatureTest could cause risky tests.
+  - Fixed a bug where FeatureTest failed when forceGlobalSecureRequests was true.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_

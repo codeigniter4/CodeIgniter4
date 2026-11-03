@@ -2,8 +2,8 @@
 CLI Generators
 ##############
 
-CodeIgniter4 now comes equipped with generators to ease the creation of stock controllers, models, entities,
-etc. You can also scaffold a complete set of files with just one command.
+CodeIgniter4 now comes equipped with generators to ease the creation of stock controllers, models, entities, etc. You
+can also scaffold a complete set of files with just one command.
 
 .. contents::
     :local:
@@ -13,8 +13,8 @@ etc. You can also scaffold a complete set of files with just one command.
 Introduction
 ************
 
-All built-in generators reside under the ``Generators`` group when listed using ``php spark list``.
-To view the full description and usage information on a particular generator, use the command:
+All built-in generators reside under the ``Generators`` group when listed using ``php spark list``. To view the full
+description and usage information on a particular generator, use the command:
 
 .. code-block:: console
 
@@ -25,19 +25,18 @@ where ``<generator_command>`` will be replaced with the command to check.
 
 .. note:: The single-letter option shortcuts listed below (``-n``, ``-s``, ``-f``) are available since v4.8.0.
 
-.. note:: Do you need to have the generated code in a subfolder? Let's say if you want to create a controller
-    class to reside in the ``Admin`` subfolder of the main ``Controllers`` folder, you will just need
-    to prepend the subfolder to the class name, like this: ``php spark make:controller admin/login``. This
-    command will create the ``Login`` controller in the ``Controllers/Admin`` subfolder with
-    a namespace of ``App\Controllers\Admin``.
+.. note:: Do you need to have the generated code in a subfolder? If you want to create a controller class to reside in
+    the ``Admin`` subfolder of the main ``Controllers`` folder, you will just need to prepend the subfolder to the class
+    name, like this: ``php spark make:controller admin/login``. This command will create the ``Login`` controller in the
+    ``Controllers/Admin`` subfolder with a namespace of ``App\Controllers\Admin``.
 
-.. note:: Working on modules? Code generation will set the root namespace to a default of ``APP_NAMESPACE``.
-    Should you need to have the generated code elsewhere in your module namespace, make sure to set
-    the ``--namespace`` option in your command, e.g., ``php spark make:model blog --namespace Acme\\Blog``.
+.. note:: Working on modules? Code generation will set the root namespace to a default of ``APP_NAMESPACE``. Should you
+    need to have the generated code elsewhere in your module namespace, make sure to set the ``--namespace`` option in
+    your command, e.g., ``php spark make:model blog --namespace Acme\\Blog``.
 
-.. warning:: Make sure when setting the ``--namespace`` option that the supplied namespace is a valid
-    namespace defined in your ``$psr4`` array in ``Config\Autoload`` or defined in your composer autoload
-    file. Otherwise, code generation will be interrupted.
+.. warning:: Make sure when setting the ``--namespace`` option that the supplied namespace is a valid namespace defined
+    in your ``$psr4`` array in ``Config\Autoload`` or defined in your composer autoload file. Otherwise, code generation
+    will be interrupted.
 
 *******************
 Built-in Generators
@@ -64,7 +63,7 @@ Argument:
 
 Options:
 ========
-* ``--namespace`` (``-n``): Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
+* ``--namespace`` (``-n``): Set the root namespace. Defaults to the value of ``APP_NAMESPACE``.
 * ``--force`` (``-f``): Set this flag to overwrite existing files on destination.
 
 make:command
@@ -89,7 +88,7 @@ Options:
   ``basic``.
 * ``--group`` (``-g``): The group of the command. Defaults to ``App`` for basic commands, and ``Generators`` for
   generator commands.
-* ``--namespace`` (``-n``): Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
+* ``--namespace`` (``-n``): Set the root namespace. Defaults to the value of ``APP_NAMESPACE``.
 * ``--suffix`` (``-s``): Append the component suffix to the generated class name.
 * ``--force`` (``-f``): Set this flag to overwrite existing files on destination.
 
@@ -114,7 +113,7 @@ Argument:
 
 Options:
 ========
-* ``--namespace`` (``-n``): Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
+* ``--namespace`` (``-n``): Set the root namespace. Defaults to the value of ``APP_NAMESPACE``.
 * ``--suffix`` (``-s``): Append the component suffix to the generated class name.
 * ``--force`` (``-f``): Set this flag to overwrite existing files on destination.
 
@@ -138,16 +137,14 @@ Options:
 * ``--bare`` (``-b``): Extends from ``CodeIgniter\Controller`` instead of ``BaseController``.
 * ``--restful`` (``-r``): Extends from a RESTful resource. Choices are ``controller`` and ``presenter``. Defaults to
   ``controller``.
-* ``--namespace`` (``-n``): Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
+* ``--namespace`` (``-n``): Set the root namespace. Defaults to the value of ``APP_NAMESPACE``.
 * ``--suffix`` (``-s``): Append the component suffix to the generated class name.
 * ``--force`` (``-f``): Set this flag to overwrite existing files on destination.
 
-.. note:: If you use ``--suffix``, the generated controller name will be like
-    ``ProductController``. That violates the Controller naming convention
-    when using :ref:`Auto Routing <controller-auto-routing-improved>`
-    (Controller class names MUST start with an uppercase letter and
-    ONLY the first character can be uppercase). So ``--suffix`` can be used
-    when you use :ref:`Defined Routes <defined-route-routing>`.
+.. note:: If you use ``--suffix``, the generated controller name will be like ``ProductController``. That violates the
+    Controller naming convention when using :ref:`Auto Routing <controller-auto-routing-improved>` (Controller class
+    names MUST start with an uppercase letter and ONLY the first character can be uppercase). So ``--suffix`` can be
+    used when you use :ref:`Defined Routes <defined-route-routing>`.
 
 make:entity
 -----------
@@ -166,7 +163,7 @@ Argument:
 
 Options:
 ========
-* ``--namespace`` (``-n``): Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
+* ``--namespace`` (``-n``): Set the root namespace. Defaults to the value of ``APP_NAMESPACE``.
 * ``--suffix`` (``-s``): Append the component suffix to the generated class name.
 * ``--force`` (``-f``): Set this flag to overwrite existing files on destination.
 
@@ -187,7 +184,7 @@ Argument:
 
 Options:
 ========
-* ``--namespace`` (``-n``): Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
+* ``--namespace`` (``-n``): Set the root namespace. Defaults to the value of ``APP_NAMESPACE``.
 * ``--suffix`` (``-s``): Append the component suffix to the generated class name.
 * ``--force`` (``-f``): Set this flag to overwrite existing files on destination.
 
@@ -211,7 +208,7 @@ Options:
 * ``--table`` (``-t``): Supply a different table name. Defaults to the pluralized class name.
 * ``--dbgroup`` (``-g``): Database group to use. Defaults to ``default``.
 * ``--return`` (``-r``): Set the return type from ``array``, ``object``, or ``entity``. Defaults to ``array``.
-* ``--namespace`` (``-n``): Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
+* ``--namespace`` (``-n``): Set the root namespace. Defaults to the value of ``APP_NAMESPACE``.
 * ``--suffix`` (``-s``): Append the component suffix to the generated class name.
 * ``--force`` (``-f``): Set this flag to overwrite existing files on destination.
 
@@ -232,7 +229,7 @@ Argument:
 
 Options:
 ========
-* ``--namespace`` (``-n``): Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
+* ``--namespace`` (``-n``): Set the root namespace. Defaults to the value of ``APP_NAMESPACE``.
 * ``--suffix`` (``-s``): Append the component suffix to the generated class name.
 * ``--force`` (``-f``): Set this flag to overwrite existing files on destination.
 
@@ -253,7 +250,7 @@ Argument:
 
 Options:
 ========
-* ``--namespace`` (``-n``): Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
+* ``--namespace`` (``-n``): Set the root namespace. Defaults to the value of ``APP_NAMESPACE``.
 * ``--suffix`` (``-s``): Append the component suffix to the generated class name.
 * ``--force`` (``-f``): Set this flag to overwrite existing files on destination.
 
@@ -261,7 +258,7 @@ Options:
 .. _cli-generators-make-test:
 
 make:test
------------
+---------
 
 .. versionadded:: 4.5.0
 
@@ -279,7 +276,7 @@ Argument:
 
 Options:
 ========
-* ``--namespace`` (``-n``): Set the root namespace. Defaults to value of ``Tests``.
+* ``--namespace`` (``-n``): Set the root namespace. Defaults to ``Tests``.
 * ``--force`` (``-f``): Set this flag to overwrite existing files on destination.
 
 make:transformer
@@ -299,7 +296,7 @@ Argument:
 
 Options:
 ========
-* ``--namespace`` (``-n``): Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
+* ``--namespace`` (``-n``): Set the root namespace. Defaults to the value of ``APP_NAMESPACE``.
 * ``--suffix`` (``-s``): Append the component suffix to the generated class name.
 * ``--force`` (``-f``): Set this flag to overwrite existing files on destination.
 
@@ -323,7 +320,7 @@ Options:
 * ``--session``: Generate a migration file for database sessions. The ``name`` argument is ignored.
 * ``--table`` (``-t``): Set the table name to use for database sessions. Defaults to ``ci_sessions``.
 * ``--dbgroup`` (``-g``): Set the database group for database sessions. Defaults to ``default`` group.
-* ``--namespace`` (``-n``): Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
+* ``--namespace`` (``-n``): Set the root namespace. Defaults to the value of ``APP_NAMESPACE``.
 * ``--suffix`` (``-s``): Append the component suffix to the generated class name.
 
 .. note:: ``make:migration`` has no ``--force`` option, since the timestamped file name only collides with an existing
@@ -346,7 +343,7 @@ Argument:
 
 Options:
 ========
-* ``--namespace`` (``-n``): Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
+* ``--namespace`` (``-n``): Set the root namespace. Defaults to the value of ``APP_NAMESPACE``.
 * ``--suffix`` (``-s``): Append the component suffix to the generated class name.
 * ``--force`` (``-f``): Set this flag to overwrite existing files on destination.
 
@@ -354,15 +351,14 @@ Options:
 Scaffolding a Complete Set of Stock Code
 ****************************************
 
-Sometimes in our development phase we are creating functionalities by groups, such as creating an *Admin* group.
-This group will contain its own controller, model, migration files, or even entities. You may be tempted to type
-each generator command one-by-one in the terminal and wishfully thinking it would be great to have a single generator
-command to rule them all.
+Sometimes in our development phase we create functionality in groups, such as an *Admin* group. This group will contain
+its own controller, model, migration files, or even entities. You may be tempted to type each generator command one by
+one in the terminal and wishfully think it would be great to have a single generator command to rule them all.
 
-Fret no more! CodeIgniter4 is also shipped with a dedicated ``make:scaffold`` command that is basically a
-wrapper to the controller, model, entity, migration, and seeder generator commands. All you need is the class
-name that will be used to name all the generated classes. Also, **individual options** supported by each
-generator command are recognized by the scaffold command.
+Fret no more! CodeIgniter4 is also shipped with a dedicated ``make:scaffold`` command that is basically a wrapper around
+the controller, model, entity, migration, and seeder generator commands. All you need is the class name that will be
+used to name all the generated classes. Also, **individual options** supported by each generator command are recognized
+by the scaffold command.
 
 Running this in your terminal:
 
@@ -377,8 +373,8 @@ will create the following files:
 (3) **app/Database/Migrations/<some date here>_User.php** and
 (4) **app/Database/Seeds/User.php**
 
-To include an ``Entity`` class in the scaffolded files, just include the ``--return entity`` to the command
-and it will be passed to the model generator.
+To include an ``Entity`` class in the scaffolded files, just add ``--return entity`` to the command and it will be
+passed to the model generator.
 
 .. note:: Since v4.8.0, ``make:scaffold`` accepts the ``-b``, ``-t``, ``-g``, ``-n``, ``-s``, and ``-f`` shortcuts.
     ``--restful`` and ``--return`` have no shortcut here, since both use ``-r`` in their own commands. When the class
@@ -393,18 +389,18 @@ GeneratorTrait
     ``GeneratorTrait`` is the legacy way of building generator commands, tied to the deprecated ``BaseCommand``. New
     generator commands should extend ``AbstractGeneratorCommand`` instead. See :doc:`cli_modern_generators`.
 
-Legacy generator commands use the ``GeneratorTrait`` to fully utilize its methods that are used in code
-generation.
+Legacy generator commands use the ``GeneratorTrait`` to fully utilize its methods that are used in code generation.
 
 *************************************************************
 Declaring the Location of a Custom Generator Command Template
 *************************************************************
 
-The default order of lookup for generator templates is (1) the template defined in the **app/Config/Generators.php** file,
-and (2) if not found, the template found at the ``CodeIgniter\Commands\Generators\Views`` namespace.
+The default order of lookup for generator templates is (1) the template defined in the **app/Config/Generators.php**
+file, and (2) if not found, the template found at the ``CodeIgniter\Commands\Generators\Views`` namespace.
 
-To declare the template location for your custom generator command, you will need to add it to the **app/Config/Generators.php**
-file. For example, if you have a command ``make:awesome-command`` and your generator template is located within your *app*
-directory **app/Commands/Generators/Views/awesomecommand.tpl.php**, you would update the config file like so:
+To declare the template location for your custom generator command, you will need to add it to the
+**app/Config/Generators.php** file. For example, if you have a command ``make:awesome-command`` and your generator
+template is located within your *app* directory **app/Commands/Generators/Views/awesomecommand.tpl.php**, you would
+update the config file like so:
 
 .. literalinclude:: cli_generators/001.php

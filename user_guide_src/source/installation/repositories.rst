@@ -8,10 +8,9 @@ CodeIgniter Repositories
 codeigniter4 organization
 =========================
 
-The CodeIgniter 4 open source project has its own
-`GitHub organization <https://github.com/codeigniter4>`_.
+The CodeIgniter 4 open source project has its own `GitHub organization <https://github.com/codeigniter4>`_.
 
-There are several development repositories, of interest to potential contributors:
+There are several development repositories of interest to potential contributors:
 
 +------------------+--------------+-----------------------------------------------------------------+
 | Repository       | Audience     | Description                                                     |
@@ -45,9 +44,8 @@ There are several development repositories, of interest to potential contributor
 .. _cache: https://github.com/codeigniter4/cache
 .. _queue: https://github.com/codeigniter4/queue
 
-There are also several deployment repositories, referenced in the installation directions.
-The deployment repositories are built automatically when a new version is released, and they
-are not directly contributed to.
+There are also several deployment repositories, referenced in the installation directions. The deployment repositories
+are built automatically when a new version is released, and they are not directly contributed to.
 
 +------------------+--------------+-----------------------------------------------------------------+
 | Repository       | Audience     | Description                                                     |
@@ -64,11 +62,9 @@ are not directly contributed to.
 .. _appstarter: https://github.com/codeigniter4/appstarter
 .. _userguide: https://github.com/codeigniter4/userguide
 
-In all the above, the latest version of a repository can be downloaded
-by selecting the "releases" link in the secondary navbar inside
-the "Code" tab of its GitHub repository page. The current (in development) version of each can
-be cloned or downloaded by selecting the "Clone or download" dropdown
-button on the right-hand side if the repository homepage.
+In all the above, the latest version of a repository can be downloaded from the **Releases** section of its GitHub
+repository page. The current development version of each can be cloned or downloaded using the **Code** dropdown on the
+repository homepage.
 
 Composer Packages
 =================
@@ -79,7 +75,7 @@ These correspond to the repositories mentioned above:
 - `codeigniter4/framework <https://packagist.org/packages/codeigniter4/framework>`_
 - `codeigniter4/appstarter <https://packagist.org/packages/codeigniter4/appstarter>`_
 - `codeigniter4/translations <https://packagist.org/packages/codeigniter4/translations>`_
-- `codeigniter/coding-standard  <https://packagist.org/packages/codeigniter/coding-standard>`_
+- `codeigniter/coding-standard <https://packagist.org/packages/codeigniter/coding-standard>`_
 - `codeigniter4/devkit <https://packagist.org/packages/codeigniter4/devkit>`_
 - `codeigniter4/settings <https://packagist.org/packages/codeigniter4/settings>`_
 - `codeigniter4/shield <https://packagist.org/packages/codeigniter4/shield>`_
@@ -90,9 +86,8 @@ See the :doc:`Installation </installation/index>` page for more information.
 CodeIgniter 4 Projects
 ======================
 
-We maintain a `codeigniter4projects <https://github.com/codeigniter4projects>`_ organization
-on GitHub as well, with projects that are not part of the framework,
-but which showcase it or make it easier to work with!
+We maintain a `codeigniter4projects <https://github.com/codeigniter4projects>`_ organization on GitHub as well, with
+projects that are not part of the framework, but which showcase it or make it easier to work with!
 
 +------------------+--------------+-----------------------------------------------------------------+
 | Repository       | Audience     | Description                                                     |
