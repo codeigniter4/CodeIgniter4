@@ -305,17 +305,17 @@
 </nav>
 <section id="what-are-view-decorators">
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">What are View Decorators?</a><a class="headerlink" href="#what-are-view-decorators" title="Link to this heading"></a></h2>
-<p>View Decorators allow your application to modify the HTML output during the rendering process. This happens just
-prior to being cached, and allows you to apply custom functionality to your views.</p>
+<p>View Decorators allow your application to modify the HTML output during the rendering process. This happens just before
+the output is cached, and allows you to apply custom functionality to your views.</p>
 <p>You can use View Decorators with <a class="reference internal" href="view_renderer.html"><span class="doc">View Renderer</span></a> or <a class="reference internal" href="view_parser.html"><span class="doc">View Parser</span></a>.</p>
 </section>
 <section id="creating-decorators">
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">Creating Decorators</a><a class="headerlink" href="#creating-decorators" title="Link to this heading"></a></h2>
 <section id="creating-decorator-class">
 <h3><a class="toc-backref" href="#id3" role="doc-backlink">Creating Decorator Class</a><a class="headerlink" href="#creating-decorator-class" title="Link to this heading"></a></h3>
-<p>Creating your own view decorators requires creating a new class that implements <code class="docutils literal notranslate"><span class="pre">CodeIgniter\View\ViewDecoratorInterface</span></code>.
-This requires a single method that takes the generated HTML string, performs any modifications on it, and returns
-the resulting HTML.</p>
+<p>Creating your own view decorators requires creating a new class that implements
+<code class="docutils literal notranslate"><span class="pre">CodeIgniter\View\ViewDecoratorInterface</span></code>. This requires a single method that takes the generated HTML string,
+performs any modifications on it, and returns the resulting HTML.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Views\Decorators</span><span class="p">;</span>
@@ -353,8 +353,8 @@ the resulting HTML.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Now that it’s registered the decorator will be called for every view that is rendered or parsed.
-Decorators are called in the order specified in this configuration setting.</p>
+<p>Now that it’s registered, the decorator will be called for every view that is rendered or parsed. Decorators are called
+in the order specified in this configuration setting.</p>
 </section>
 </section>
 </section>
@@ -371,7 +371,7 @@ Decorators are called in the order specified in this configuration setting.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

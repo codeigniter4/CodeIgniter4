@@ -295,10 +295,10 @@
 <p>CodeIgniter’s CLI library makes creating interactive command-line scripts simple, including:</p>
 <ul class="simple">
 <li><p>Prompting the user for more information</p></li>
-<li><p>Writing multi-colored text the terminal</p></li>
+<li><p>Writing multi-colored text to the terminal</p></li>
 <li><p>Beeping (be nice!)</p></li>
 <li><p>Showing progress bars during long tasks</p></li>
-<li><p>Wrapping long text lines to fit the window.</p></li>
+<li><p>Wrapping long text lines to fit the window</p></li>
 </ul>
 <nav class="contents local" id="contents">
 <ul class="simple">
@@ -328,8 +328,8 @@
 </nav>
 <section id="initializing-the-class">
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Initializing the Class</a><a class="headerlink" href="#initializing-the-class" title="Link to this heading"></a></h2>
-<p>You do not need to create an instance of the CLI library, since all of it’s methods are static. Instead, you simply
-need to ensure your controller can locate it via a <code class="docutils literal notranslate"><span class="pre">use</span></code> statement above your class:</p>
+<p>You do not need to create an instance of the CLI library, since all of its methods are static. Instead, you simply need
+to ensure your controller can locate it via a <code class="docutils literal notranslate"><span class="pre">use</span></code> statement above your class:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Commands</span><span class="p">;</span>
@@ -352,13 +352,12 @@ need to ensure your controller can locate it via a <code class="docutils literal
 </section>
 <section id="getting-input-from-the-user">
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">Getting Input from the User</a><a class="headerlink" href="#getting-input-from-the-user" title="Link to this heading"></a></h2>
-<p>Sometimes you need to ask the user for more information. They might not have provided optional command-line
-arguments, or the script may have encountered an existing file and needs confirmation before overwriting. This is
-handled with the <code class="docutils literal notranslate"><span class="pre">prompt()</span></code> or <code class="docutils literal notranslate"><span class="pre">promptByKey()</span></code> method.</p>
+<p>Sometimes you need to ask the user for more information. They might not have provided optional command-line arguments,
+or the script may have encountered an existing file and needs confirmation before overwriting. This is handled with the
+<code class="docutils literal notranslate"><span class="pre">prompt()</span></code> or <code class="docutils literal notranslate"><span class="pre">promptByKey()</span></code> method.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Since v4.3.0, you can write tests for these methods with <code class="docutils literal notranslate"><span class="pre">PhpStreamWrapper</span></code>.
-See <a class="reference internal" href="../testing/cli.html#testing-cli-input"><span class="std std-ref">Testing CLI Input</span></a>.</p>
+<p>Since v4.3.0, you can write tests for these methods with <code class="docutils literal notranslate"><span class="pre">PhpStreamWrapper</span></code>. See <a class="reference internal" href="../testing/cli.html#testing-cli-input"><span class="std std-ref">Testing CLI Input</span></a>.</p>
 </div>
 <section id="prompt">
 <h3><a class="toc-backref" href="#id3" role="doc-backlink">prompt()</a><a class="headerlink" href="#prompt" title="Link to this heading"></a></h3>
@@ -370,8 +369,8 @@ See <a class="reference internal" href="../testing/cli.html#testing-cli-input"><
 <span class="nv">$color</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">prompt</span><span class="p">(</span><span class="s1">'What is your favorite color?'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>You can provide a default answer that will be used if the user just hits enter by passing the default in the
-second parameter:</p>
+<p>You can provide a default answer that will be used if the user just hits enter by passing the default in the second
+parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
@@ -443,14 +442,15 @@ second parameter:</p>
 <span class="cm"> */</span>
 </pre></div>
 </div>
-<p>Finally, you can pass <a class="reference internal" href="../libraries/validation.html#validation"><span class="std std-ref">validation</span></a> rules to the answer input as the third parameter, the acceptable answers are automatically restricted to the passed options.</p>
+<p>Finally, you can pass <a class="reference internal" href="../libraries/validation.html#validation"><span class="std std-ref">validation</span></a> rules to the answer input as the third parameter. The acceptable
+answers are automatically restricted to the passed options.</p>
 </section>
 <section id="promptbymultiplekeys">
 <span id="prompt-by-multiple-keys"></span><h3><a class="toc-backref" href="#id5" role="doc-backlink">promptByMultipleKeys()</a><a class="headerlink" href="#promptbymultiplekeys" title="Link to this heading"></a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 4.3.0.</span></p>
 </div>
-<p>This method is the same as <code class="docutils literal notranslate"><span class="pre">promptByKey()</span></code>, but it supports multiple value.</p>
+<p>This method is the same as <code class="docutils literal notranslate"><span class="pre">promptByKey()</span></code>, but it supports multiple values.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
@@ -475,7 +475,8 @@ second parameter:</p>
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>The method <code class="docutils literal notranslate"><span class="pre">promptByMultipleKeys()</span></code>, unlike <code class="docutils literal notranslate"><span class="pre">promptByKey()</span></code>, does not support named keys or validation.</p>
+<p>The method <code class="docutils literal notranslate"><span class="pre">promptByMultipleKeys()</span></code>, unlike <code class="docutils literal notranslate"><span class="pre">promptByKey()</span></code>, does not support named keys or
+validation.</p>
 </div>
 </section>
 </section>
@@ -483,9 +484,9 @@ second parameter:</p>
 <h2><a class="toc-backref" href="#id6" role="doc-backlink">Providing Feedback</a><a class="headerlink" href="#providing-feedback" title="Link to this heading"></a></h2>
 <section id="write">
 <h3><a class="toc-backref" href="#id7" role="doc-backlink">write()</a><a class="headerlink" href="#write" title="Link to this heading"></a></h3>
-<p>Several methods are provided for you to provide feedback to your users. This can be as simple as a single status update
-or a complex table of information that wraps to the user’s terminal window. At the core of this is the <code class="docutils literal notranslate"><span class="pre">write()</span></code>
-method which takes the string to output as the first parameter:</p>
+<p>Several methods are available for providing feedback to your users. This can be as simple as a single status update or a
+complex table of information that wraps to the user’s terminal window. At the core of this is the <code class="docutils literal notranslate"><span class="pre">write()</span></code> method,
+which takes the string to output as the first parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
@@ -501,8 +502,8 @@ method which takes the string to output as the first parameter:</p>
 <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">'File created.'</span><span class="p">,</span> <span class="s1">'green'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>This could be used to differentiate messages by status, or create ‘headers’ by using a different color. You can
-even set background colors by passing the color name in as the third parameter:</p>
+<p>This could be used to differentiate messages by status, or create ‘headers’ by using a different color. You can even set
+background colors by passing the color name in as the third parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
@@ -545,9 +546,9 @@ even set background colors by passing the color name in as the third parameter:<
 <section id="print">
 <h3><a class="toc-backref" href="#id8" role="doc-backlink">print()</a><a class="headerlink" href="#print" title="Link to this heading"></a></h3>
 <p>Print functions identically to the <code class="docutils literal notranslate"><span class="pre">write()</span></code> method, except that it does not force a newline either before or after.
-Instead it prints it to the screen wherever the cursor is currently. This allows you to print multiple items all on
-the same line, from different calls. This is especially helpful when you want to show a status, do something, then
-print “Done” on the same line:</p>
+Instead, it prints to the screen wherever the cursor currently is. This allows you to print multiple items all on the
+same line, from different calls. This is especially helpful when you want to show a status, do something, then print
+“Done” on the same line:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
@@ -560,10 +561,10 @@ print “Done” on the same line:</p>
 </section>
 <section id="color">
 <span id="cli-library-color"></span><h3><a class="toc-backref" href="#id9" role="doc-backlink">color()</a><a class="headerlink" href="#color" title="Link to this heading"></a></h3>
-<p>While the <code class="docutils literal notranslate"><span class="pre">write()</span></code> command will write a single line to the terminal, ending it with a EOL character, you can
-use the <code class="docutils literal notranslate"><span class="pre">color()</span></code> method to make a string fragment that can be used in the same way, except that it will not force
-an EOL after printing. This allows you to create multiple outputs on the same row. Or, more commonly, you can use
-it inside of a <code class="docutils literal notranslate"><span class="pre">write()</span></code> method to create a string of a different color inside:</p>
+<p>While the <code class="docutils literal notranslate"><span class="pre">write()</span></code> command will write a single line to the terminal, ending it with an EOL character, you can use the
+<code class="docutils literal notranslate"><span class="pre">color()</span></code> method to make a string fragment that can be used in the same way, except that it will not force an EOL
+after printing. This allows you to create multiple outputs on the same row. Or, more commonly, you can use it inside of
+a <code class="docutils literal notranslate"><span class="pre">write()</span></code> method to create a string of a different color inside:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
@@ -576,10 +577,10 @@ it inside of a <code class="docutils literal notranslate"><span class="pre">writ
 </section>
 <section id="error">
 <h3><a class="toc-backref" href="#id10" role="doc-backlink">error()</a><a class="headerlink" href="#error" title="Link to this heading"></a></h3>
-<p>If you need to output errors, you should use the appropriately named <code class="docutils literal notranslate"><span class="pre">error()</span></code> method. This writes light-red text
-to STDERR, instead of STDOUT, like <code class="docutils literal notranslate"><span class="pre">write()</span></code> and <code class="docutils literal notranslate"><span class="pre">color()</span></code> do. This can be useful if you have scripts watching
-for errors so they don’t have to sift through all of the information, only the actual error messages. You use it
-exactly as you would the <code class="docutils literal notranslate"><span class="pre">write()</span></code> method:</p>
+<p>If you need to output errors, you should use the appropriately named <code class="docutils literal notranslate"><span class="pre">error()</span></code> method. This writes light-red text to
+STDERR, instead of STDOUT, like <code class="docutils literal notranslate"><span class="pre">write()</span></code> and <code class="docutils literal notranslate"><span class="pre">color()</span></code> do. This can be useful if you have scripts watching for
+errors so they don’t have to sift through all of the information, only the actual error messages. You use it exactly as
+you would the <code class="docutils literal notranslate"><span class="pre">write()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
@@ -590,9 +591,9 @@ exactly as you would the <code class="docutils literal notranslate"><span class=
 </section>
 <section id="wrap">
 <h3><a class="toc-backref" href="#id11" role="doc-backlink">wrap()</a><a class="headerlink" href="#wrap" title="Link to this heading"></a></h3>
-<p>This command will take a string, start printing it on the current line, and wrap it to a set length on new lines.
-This might be useful when displaying a list of options with descriptions that you want to wrap in the current
-window and not go off screen:</p>
+<p>This command will take a string, start printing it on the current line, and wrap it to a set length on new lines. This
+might be useful when displaying a list of options with descriptions that you want to wrap in the current window and not
+go off screen:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
@@ -601,10 +602,10 @@ window and not go off screen:</p>
 <span class="nx">CLI</span><span class="o">::</span><span class="na">wrap</span><span class="p">(</span><span class="s1">'Some long description goes here that might be longer than the current window.'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>By default, the string will wrap at the terminal width. Windows currently doesn’t provide a way to determine
-the window size, so we default to 80 characters. If you want to restrict the width to something shorter that
-you can be pretty sure fits within the window, pass the maximum line-length as the second parameter. This
-will break the string at the nearest word barrier so that words are not broken.</p>
+<p>By default, the string will wrap at the terminal width. Windows currently doesn’t provide a way to determine the window
+size, so we default to 80 characters. If you want to restrict the width to something shorter that you can be pretty sure
+fits within the window, pass the maximum line length as the second parameter. This will break the string at the nearest
+word barrier so that words are not broken.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
@@ -613,10 +614,10 @@ will break the string at the nearest word barrier so that words are not broken.<
 <span class="nx">CLI</span><span class="o">::</span><span class="na">wrap</span><span class="p">(</span><span class="nv">$description</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>You may find that you want a column on the left of titles, files, or tasks, while you want a column of text
-on the right with their descriptions. By default, this will wrap back to the left edge of the window, which
-doesn’t allow things to line up in columns. In cases like this, you can pass in a number of spaces to pad
-every line after the first line, so that you will have a crisp column edge on the left:</p>
+<p>You may find that you want a column on the left of titles, files, or tasks, while you want a column of text on the right
+with their descriptions. By default, this will wrap back to the left edge of the window, which doesn’t allow things to
+line up in columns. In cases like this, you can pass in a number of spaces to pad every line after the first line, so
+that you will have a crisp column edge on the left:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
@@ -650,7 +651,7 @@ every line after the first line, so that you will have a crisp column edge on th
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Would create something like this:</p>
+<p>This would create something like this:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>task1a     Lorem Ipsum is simply dummy
            text of the printing and
            typesetting industry.
@@ -673,9 +674,8 @@ task1abc   Lorem Ipsum has been the
 </section>
 <section id="clearscreen">
 <h3><a class="toc-backref" href="#id13" role="doc-backlink">clearScreen()</a><a class="headerlink" href="#clearscreen" title="Link to this heading"></a></h3>
-<p>You can clear the current terminal window with the <code class="docutils literal notranslate"><span class="pre">clearScreen()</span></code> method. In most versions of Windows, this will
-simply insert 40 blank lines since Windows doesn’t support this feature. Windows 10 bash integration should change
-this:</p>
+<p>You can clear the current terminal window with the <code class="docutils literal notranslate"><span class="pre">clearScreen()</span></code> method. On Windows terminals without virtual
+terminal support, this inserts 40 blank lines instead:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
@@ -686,15 +686,15 @@ this:</p>
 </section>
 <section id="showprogress">
 <h3><a class="toc-backref" href="#id14" role="doc-backlink">showProgress()</a><a class="headerlink" href="#showprogress" title="Link to this heading"></a></h3>
-<p>If you have a long-running task that you would like to keep the user updated with the progress, you can use the
-<code class="docutils literal notranslate"><span class="pre">showProgress()</span></code> method which displays something like the following:</p>
+<p>If you have a long-running task and would like to keep the user updated on its progress, you can use the
+<code class="docutils literal notranslate"><span class="pre">showProgress()</span></code> method, which displays something like the following:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[####......] 40% Complete
 </pre></div>
 </div>
 <p>This block is animated in place for a very nice effect.</p>
-<p>To use it, pass in the current step as the first parameter, and the total number of steps as the second parameter.
-The percent complete and the length of the display will be determined based on that number. When you are done,
-pass <code class="docutils literal notranslate"><span class="pre">false</span></code> as the first parameter and the progress bar will be removed.</p>
+<p>To use it, pass in the current step as the first parameter, and the total number of steps as the second parameter. The
+percent complete and the length of the display will be determined based on those numbers. When you are done, pass
+<code class="docutils literal notranslate"><span class="pre">false</span></code> as the first parameter and the progress bar will be removed.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
@@ -738,8 +738,7 @@ pass <code class="docutils literal notranslate"><span class="pre">false</span></
 </section>
 <section id="wait">
 <h3><a class="toc-backref" href="#id16" role="doc-backlink">wait()</a><a class="headerlink" href="#wait" title="Link to this heading"></a></h3>
-<p>Waits a certain number of seconds, optionally showing a wait message and
-waiting for a key press.</p>
+<p>Waits a certain number of seconds, optionally showing a wait message and waiting for a key press.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
@@ -770,7 +769,7 @@ waiting for a key press.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

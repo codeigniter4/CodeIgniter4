@@ -299,406 +299,167 @@
 <ul class="simple">
 <li><p><a class="reference internal" href="#enhancements" id="id1">Enhancements</a></p></li>
 <li><p><a class="reference internal" href="#app-changes" id="id2">App Changes</a></p></li>
-<li><p><a class="reference internal" href="#message-changes" id="id3">Message Changes</a></p></li>
-<li><p><a class="reference internal" href="#changed-files" id="id4">Changed Files</a></p></li>
-<li><p><a class="reference internal" href="#prs-merged" id="id5">PRs merged</a></p></li>
+<li><p><a class="reference internal" href="#changed-files" id="id3">Changed Files</a></p></li>
+<li><p><a class="reference internal" href="#prs-merged" id="id4">PRs merged</a></p></li>
 </ul>
 </nav>
 <section id="enhancements">
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Enhancements</a><a class="headerlink" href="#enhancements" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><dl class="simple">
-<dt>query builder testability simplified with new property, but dropped</dt><dd><p>method parameters (breaking change)</p>
-</dd>
-</dl>
-</li>
-<li><p>database, migrations and sessions beefed up</p></li>
-<li><p>numerous smaller bugs corrected</p></li>
+<li><p>Query builder testability simplified with new property, but dropped
+method parameters (breaking change)</p></li>
+<li><p>Database, migrations and sessions beefed up</p></li>
+<li><p>Numerous smaller bugs corrected</p></li>
 </ul>
 </section>
 <section id="app-changes">
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">App Changes</a><a class="headerlink" href="#app-changes" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p>Config/Constants, Paths &amp; some config settings have had changes</p></li>
-</ul>
-</section>
-<section id="message-changes">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Message Changes</a><a class="headerlink" href="#message-changes" title="Link to this heading"></a></h2>
-<ul class="simple">
-<li><p>N/A</p></li>
+<li><p><strong>app/Config/Constants.php</strong>, <strong>app/Config/Paths.php</strong> &amp; some config settings have had changes</p></li>
 </ul>
 </section>
 <section id="changed-files">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">Changed Files</a><a class="headerlink" href="#changed-files" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Changed Files</a><a class="headerlink" href="#changed-files" title="Link to this heading"></a></h2>
 <p>The list of changed files follows, with PR numbers shown.</p>
-<ul class="simple">
-<li><p>admin/</p></li>
-<li><dl class="simple">
-<dt>app/</dt><dd><ul>
-<li><dl class="simple">
-<dt>Config/</dt><dd><ul>
-<li><p>Boot/* #2241</p></li>
-<li><p>Constants #2183</p></li>
-<li><p>Paths #2181</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>public/</p></li>
-<li><dl class="simple">
-<dt>system/</dt><dd><ul>
-<li><dl class="simple">
-<dt>CLI/</dt><dd><ul>
-<li><p>BaseCommand #2231</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Database/</dt><dd><ul>
-<li><p>MySQLi/Connection #2201, 2229</p></li>
-<li><dl class="simple">
-<dt>Postgre/</dt><dd><ul>
-<li><p>BaseBuilder #2269</p></li>
-<li><p>Connection #2201</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>SQLite3/Connection #2201, 2228, 2230</p></li>
-<li><p>BaseBuilder #2257, 2232, 2269, 2270</p></li>
-<li><p>BaseConnection #2208, 2213, 2231</p></li>
-<li><p>Config #2224</p></li>
-<li><p>Forge #2205</p></li>
-<li><p>MigrationRunner #2191</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Debug/</dt><dd><ul>
-<li><p>Exceptions #2262</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Encryption/</dt><dd><ul>
-<li><p>Encryption #2231</p></li>
-<li><p>Handlers/BaseHandler #2231</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Files/</dt><dd><ul>
-<li><p>FileCollection #2265</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>HTTP/</dt><dd><ul>
-<li><p>CURLRequest #2168</p></li>
-<li><p>IncomingRequest #2265</p></li>
-<li><p>Request #2253</p></li>
-<li><p>Response #2253</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>I18n/</dt><dd><ul>
-<li><p>Time #2231</p></li>
-<li><p>TimeDifference #2231</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Images/</dt><dd><ul>
-<li><p>Handlers/BaseHandler #2246</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>RESTful/</dt><dd><ul>
-<li><p>ResourcePresenter #2271</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Security/</dt><dd><ul>
-<li><p>Security #2240</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Session/</dt><dd><ul>
-<li><p>Session #2197, 2231</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Test/</dt><dd><ul>
-<li><p>CIDatabaseTestCase #2205</p></li>
-<li><p>CIDatabaseUnitTestCase #2184</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Validation/</dt><dd><ul>
-<li><p>FileRules #2265</p></li>
-<li><p>Validation #2268</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>View/</dt><dd><ul>
-<li><p>Parser #2264</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>Common #2200, 2209, 2261</p></li>
-<li><p>Model #2231</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>tests/_support/</p></li>
-<li><dl class="simple">
-<dt>tests/system/</dt><dd><ul>
-<li><dl class="simple">
-<dt>Commands/</dt><dd><ul>
-<li><p>CommandClassTest #2231</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Database/</dt><dd><ul>
-<li><dl class="simple">
-<dt>Builder/</dt><dd><ul>
-<li><dl class="simple">
-<dt>GetTest #2232</dt><dd><ul>
-<li><p>CountTest #2269</p></li>
-<li><p>DeleteTest #2269</p></li>
-<li><p>EmptyTest #2269</p></li>
-<li><p>GetTest #2269</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>GroupTest #2257</dt><dd><ul>
-<li><p>InsertTest #2269</p></li>
-<li><p>ReplaceTest #2269</p></li>
-<li><p>TruncateTest #2269</p></li>
-<li><p>UpdateTest #2269</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Live/</dt><dd><ul>
-<li><p>EscapeTest #2229</p></li>
-<li><p>ForgeTest #2201, 2211</p></li>
-<li><p>GroupTest #2257</p></li>
-<li><p>MetadataTest #2211</p></li>
-<li><p>ModelTest #2231</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>BaseConnectionTest #2229, 2231</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Encryption/</dt><dd><ul>
-<li><p>EncryptionTest #2231</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Helpers/</dt><dd><ul>
-<li><p>URLHelperTest #2259</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>HTTP/</dt><dd><ul>
-<li><p>CURLRequestTest #2168</p></li>
-<li><p>FileCOllectionTest #2265</p></li>
-<li><p>URITest #2259</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>I18n/</dt><dd><ul>
-<li><p>TimeDifferenceTest #2231</p></li>
-<li><p>TimeTest #2231</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Pager/</dt><dd><ul>
-<li><p>pagerTest #2259</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>RESTful/</dt><dd><ul>
-<li><p>ResourcePresenterTest #2271</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Session/</dt><dd><ul>
-<li><p>SessionTest #2231</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>View/</dt><dd><ul>
-<li><p>ParserTest #2264</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>user_guide_src/</dt><dd><ul>
-<li><dl class="simple">
-<dt>concepts/</dt><dd><ul>
-<li><p>structure #2221</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>database/</dt><dd><ul>
-<li><p>metadata #2199, 2201, 2208</p></li>
-<li><p>queries #2208</p></li>
-<li><p>query_builder #2257, 2232, 2269</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>dbmgmt/</dt><dd><ul>
-<li><p>migration #2190, 2191</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>extending/</dt><dd><ul>
-<li><p>contributing #2221</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>general/</dt><dd><ul>
-<li><p>errors #2221</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>helpera/</dt><dd><ul>
-<li><p>url_helper #2259</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>incoming/</dt><dd><ul>
-<li><p>restful #2189</p></li>
-<li><p>routing #2221</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>installation/</dt><dd><ul>
-<li><p>troubleshooting #2260</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>libraries/</dt><dd><ul>
-<li><p>encryption #2221</p></li>
-<li><p>pagination #2216</p></li>
-<li><p>time #2221</p></li>
-<li><p>uti #2216</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>outgoing/</dt><dd><ul>
-<li><p>api_responses #2245</p></li>
-<li><p>view_layouts #2218</p></li>
-<li><p>view_parser #2218, 2264</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>testing/</dt><dd><ul>
-<li><p>controllers #2221</p></li>
-<li><p>debugging #2221, 2209</p></li>
-<li><p>feature #2218, 2221</p></li>
-<li><p>overview #2221</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>tutorial/</dt><dd><ul>
-<li><p>news_section #2221</p></li>
-<li><p>static_pages #2221</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>.
+├── admin/
+├── app/
+│   └── Config/
+│       ├── Boot/* #2241
+│       ├── Constants #2183
+│       └── Paths #2181
+├── public/
+├── system/
+│   ├── CLI/
+│   │   └── BaseCommand #2231
+│   ├── Database/
+│   │   ├── MySQLi/Connection #2201, 2229
+│   │   ├── Postgre/
+│   │   │   ├── BaseBuilder #2269
+│   │   │   └── Connection #2201
+│   │   ├── SQLite3/Connection #2201, 2228, 2230
+│   │   ├── BaseBuilder #2257, 2232, 2269, 2270
+│   │   ├── BaseConnection #2208, 2213, 2231
+│   │   ├── Config #2224
+│   │   ├── Forge #2205
+│   │   └── MigrationRunner #2191
+│   ├── Debug/
+│   │   └── Exceptions #2262
+│   ├── Encryption/
+│   │   ├── Encryption #2231
+│   │   └── Handlers/BaseHandler #2231
+│   ├── Files/
+│   │   └── FileCollection #2265
+│   ├── HTTP/
+│   │   ├── CURLRequest #2168
+│   │   ├── IncomingRequest #2265
+│   │   ├── Request #2253
+│   │   └── Response #2253
+│   ├── I18n/
+│   │   ├── Time #2231
+│   │   └── TimeDifference #2231
+│   ├── Images/
+│   │   └── Handlers/BaseHandler #2246
+│   ├── RESTful/
+│   │   └── ResourcePresenter #2271
+│   ├── Security/
+│   │   └── Security #2240
+│   ├── Session/
+│   │   └── Session #2197, 2231
+│   ├── Test/
+│   │   ├── CIDatabaseTestCase #2205
+│   │   └── CIDatabaseUnitTestCase #2184
+│   ├── Validation/
+│   │   ├── FileRules #2265
+│   │   └── Validation #2268
+│   ├── View/
+│   │   └── Parser #2264
+│   ├── Common #2200, 2209, 2261
+│   └── Model #2231
+├── tests/_support/
+├── tests/system/
+│   ├── Commands/
+│   │   └── CommandClassTest #2231
+│   ├── Database/
+│   │   ├── Builder/
+│   │   │   ├── GetTest #2232
+│   │   │   ├── CountTest #2269
+│   │   │   ├── DeleteTest #2269
+│   │   │   ├── EmptyTest #2269
+│   │   │   ├── GetTest #2269
+│   │   │   ├── GroupTest #2257
+│   │   │   ├── InsertTest #2269
+│   │   │   ├── ReplaceTest #2269
+│   │   │   ├── TruncateTest #2269
+│   │   │   └── UpdateTest #2269
+│   │   ├── Live/
+│   │   │   ├── EscapeTest #2229
+│   │   │   ├── ForgeTest #2201, 2211
+│   │   │   ├── GroupTest #2257
+│   │   │   ├── MetadataTest #2211
+│   │   │   └── ModelTest #2231
+│   │   └── BaseConnectionTest #2229, 2231
+│   ├── Encryption/
+│   │   └── EncryptionTest #2231
+│   ├── Helpers/
+│   │   └── URLHelperTest #2259
+│   ├── HTTP/
+│   │   ├── CURLRequestTest #2168
+│   │   ├── FileCollectionTest #2265
+│   │   └── URITest #2259
+│   ├── I18n/
+│   │   ├── TimeDifferenceTest #2231
+│   │   └── TimeTest #2231
+│   ├── Pager/
+│   │   └── pagerTest #2259
+│   ├── RESTful/
+│   │   └── ResourcePresenterTest #2271
+│   ├── Session/
+│   │   └── SessionTest #2231
+│   └── View/
+│       └── ParserTest #2264
+└── user_guide_src/
+    ├── concepts/
+    │   └── structure #2221
+    ├── database/
+    │   ├── metadata #2199, 2201, 2208
+    │   ├── queries #2208
+    │   └── query_builder #2257, 2232, 2269
+    ├── dbmgmt/
+    │   └── migration #2190, 2191
+    ├── extending/
+    │   └── contributing #2221
+    ├── general/
+    │   └── errors #2221
+    ├── helpera/
+    │   └── url_helper #2259
+    ├── incoming/
+    │   ├── restful #2189
+    │   └── routing #2221
+    ├── installation/
+    │   └── troubleshooting #2260
+    ├── libraries/
+    │   ├── encryption #2221
+    │   ├── pagination #2216
+    │   ├── time #2221
+    │   └── uti #2216
+    ├── outgoing/
+    │   ├── api_responses #2245
+    │   ├── view_layouts #2218
+    │   └── view_parser #2218, 2264
+    ├── testing/
+    │   ├── controllers #2221
+    │   ├── debugging #2221, 2209
+    │   ├── feature #2218, 2221
+    │   └── overview #2221
+    └── tutorial/
+        ├── news_section #2221
+        └── static_pages #2221
+</pre></div>
+</div>
 </section>
 <section id="prs-merged">
-<h2><a class="toc-backref" href="#id5" role="doc-backlink">PRs merged</a><a class="headerlink" href="#prs-merged" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">PRs merged</a><a class="headerlink" href="#prs-merged" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p>#2271 fix ResourcePresenter::setModel()</p></li>
 <li><p>#2270 groupStart() refactorization</p></li>
@@ -721,7 +482,7 @@
 <li><p>#2231 Add magic __isset to classes with __get</p></li>
 <li><p>#2230 Add escape to SQLite _listTables()</p></li>
 <li><p>#2229 MySQLi escapeLikeStringDirect()</p></li>
-<li><p>#2228 Exclude <cite>sqlite_%</cite> from listTables()</p></li>
+<li><p>#2228 Exclude <code class="docutils literal notranslate"><span class="pre">sqlite_%</span></code> from listTables()</p></li>
 <li><p>#2224 change new ConfigDatabase() to config(‘Database’)</p></li>
 <li><p>#2221 Documentation fixes</p></li>
 <li><p>#2218 Typo corrected</p></li>
@@ -739,7 +500,7 @@
 <li><p>#2190 Fix name of ForeignKeyChecks</p></li>
 <li><p>#2189 missing return</p></li>
 <li><p>#2184 Fix case on “Seeds/” directory</p></li>
-<li><p>#2183 Check <cite>defined</cite> for constants</p></li>
+<li><p>#2183 Check <code class="docutils literal notranslate"><span class="pre">defined</span></code> for constants</p></li>
 <li><p>#2181 Remove copy-paste extraneous text</p></li>
 <li><p>#2168 Fix for CURL for ‘debug’ option</p></li>
 </ul>
@@ -758,7 +519,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

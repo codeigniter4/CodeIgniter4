@@ -311,13 +311,13 @@
 <h3><a class="toc-backref" href="#id2" role="doc-backlink">List the Tables in Your Database</a><a class="headerlink" href="#list-the-tables-in-your-database" title="Link to this heading"></a></h3>
 <section id="db-table-show">
 <h4>db:table –show<a class="headerlink" href="#db-table-show" title="Link to this heading"></a></h4>
-<p>To list all the tables in your database straight from your favorite terminal,
-you can use the <code class="docutils literal notranslate"><span class="pre">db:table</span> <span class="pre">--show</span></code> command:</p>
+<p>To list all the tables in your database straight from your favorite terminal, you can use the <code class="docutils literal notranslate"><span class="pre">db:table</span> <span class="pre">--show</span></code>
+command:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark db:table --show</span>
 </pre></div>
 </div>
-<p>When using this command it is assumed that a table exists.
-Otherwise, CodeIgniter will complain that the database has no tables.</p>
+<p>When using this command, it is assumed that a table exists. Otherwise, CodeIgniter will complain that the database has
+no tables.</p>
 </section>
 </section>
 <section id="specify-the-database-group">
@@ -337,7 +337,7 @@ Otherwise, CodeIgniter will complain that the database has no tables.</p>
 <h3><a class="toc-backref" href="#id4" role="doc-backlink">Retrieve Some Records</a><a class="headerlink" href="#retrieve-some-records" title="Link to this heading"></a></h3>
 <section id="db-table">
 <h4>db:table<a class="headerlink" href="#db-table" title="Link to this heading"></a></h4>
-<p>When you have a table named <code class="docutils literal notranslate"><span class="pre">my_table</span></code>, you can see the field names and the records of a table:</p>
+<p>When you have a table named <code class="docutils literal notranslate"><span class="pre">my_table</span></code>, you can see the field names and the records of the table:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark db:table my_table</span>
 </pre></div>
 </div>
@@ -346,13 +346,14 @@ Otherwise, CodeIgniter will complain that the database has no tables.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark db:table</span>
 </pre></div>
 </div>
-<p>In this case, the table name will be asked.</p>
+<p>In this case, you will be asked for the table name.</p>
 <p>You can also pass a few options:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark db:table my_table --limit-rows 50 --limit-field-value 20 --desc</span>
 </pre></div>
 </div>
-<p>The option <code class="docutils literal notranslate"><span class="pre">--limit-rows</span> <span class="pre">50</span></code> limits the number of rows to 50 rows.</p>
-<p>The option  <code class="docutils literal notranslate"><span class="pre">--limit-field-value</span> <span class="pre">20</span></code> limits the length of the field values to 20 characters, to prevent confusion of the table output in the terminal.</p>
+<p>The option <code class="docutils literal notranslate"><span class="pre">--limit-rows</span> <span class="pre">50</span></code> limits the number of rows to 50.</p>
+<p>The option <code class="docutils literal notranslate"><span class="pre">--limit-field-value</span> <span class="pre">20</span></code> limits the length of the field values to 20 characters, to prevent confusion of
+the table output in the terminal.</p>
 <p>The option <code class="docutils literal notranslate"><span class="pre">--desc</span></code> sets the sort direction to “DESC”.</p>
 </section>
 </section>
@@ -360,12 +361,12 @@ Otherwise, CodeIgniter will complain that the database has no tables.</p>
 <h3><a class="toc-backref" href="#id5" role="doc-backlink">Retrieve Field Metadata</a><a class="headerlink" href="#retrieve-field-metadata" title="Link to this heading"></a></h3>
 <section id="db-table-metadata">
 <h4>db:table –metadata<a class="headerlink" href="#db-table-metadata" title="Link to this heading"></a></h4>
-<p>When you have a table named <code class="docutils literal notranslate"><span class="pre">my_table</span></code>, you can see metadata like the column type, max length of the table with the <code class="docutils literal notranslate"><span class="pre">--metadata</span></code> option:</p>
+<p>When you have a table named <code class="docutils literal notranslate"><span class="pre">my_table</span></code>, you can see metadata such as the column type and max length of the table with
+the <code class="docutils literal notranslate"><span class="pre">--metadata</span></code> option:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark db:table my_table --metadata</span>
 </pre></div>
 </div>
-<p>When using this command it is assumed that the table exists.
-Otherwise, CodeIgniter will show a table list to select.
+<p>When using this command, it is assumed that the table exists. Otherwise, CodeIgniter will show a table list to select.
 Also, you can use this command as <code class="docutils literal notranslate"><span class="pre">db:table</span> <span class="pre">--metadata</span></code>.</p>
 </section>
 </section>
@@ -384,7 +385,7 @@ Also, you can use this command as <code class="docutils literal notranslate"><sp
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

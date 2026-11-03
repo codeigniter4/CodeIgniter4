@@ -313,324 +313,133 @@
 <section id="new-messages">
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">New Messages</a><a class="headerlink" href="#new-messages" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p>Database.FieldNotExists</p></li>
-<li><p>Validation.equals, not_equals</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Database.fieldNotExists</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Validation.equals</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Validation.not_equals</span></code></p></li>
 </ul>
 </section>
 <section id="app-changes">
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">App Changes</a><a class="headerlink" href="#app-changes" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p>Removed $salt config item in app/Config/App</p></li>
-<li><p>Enabled migrations by default in app/Config/Migrations</p></li>
-<li><p>Simplified public/.htaccess</p></li>
+<li><p>Removed <code class="docutils literal notranslate"><span class="pre">$salt</span></code> config item in <strong>app/Config/App</strong></p></li>
+<li><p>Enabled migrations by default in <strong>app/Config/Migrations</strong></p></li>
+<li><p>Simplified <strong>public/.htaccess</strong></p></li>
 </ul>
 </section>
 <section id="changed-files">
 <h2><a class="toc-backref" href="#id4" role="doc-backlink">Changed Files</a><a class="headerlink" href="#changed-files" title="Link to this heading"></a></h2>
 <p>The list of changed files follows, with PR numbers shown.</p>
-<ul class="simple">
-<li><dl class="simple">
-<dt>admin/</dt><dd><ul>
-<li><p>framework/composer.json #1935</p></li>
-<li><p>starter/composer.json #1935</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>app/</dt><dd><ul>
-<li><dl class="simple">
-<dt>Config/</dt><dd><ul>
-<li><p>App #1973</p></li>
-<li><p>Migrations #1973</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>public/</dt><dd><ul>
-<li><p>.htaccess #1973</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>system/</dt><dd><ul>
-<li><dl class="simple">
-<dt>API/</dt><dd><ul>
-<li><p>ResponseTrait #1962</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Commands/</dt><dd><ul>
-<li><p>Server/rewrite #1925</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Config/</dt><dd><ul>
-<li><p>AutoloadConfig #1974</p></li>
-<li><p>BaseConfig #1947</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Database/ #1938</dt><dd><ul>
-<li><p>BaseBuilder #1923, #1933, #1950</p></li>
-<li><p>BaseConnection #1950</p></li>
-<li><p>BaseResult #1917</p></li>
-<li><p>BaseUtils #1917</p></li>
-<li><p>Forge #1917</p></li>
-<li><dl class="simple">
-<dt>SQLite3/</dt><dd><ul>
-<li><p>Connection #1917</p></li>
-<li><p>Result #1917</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Debug/</dt><dd><ul>
-<li><p>Toolbar #1916</p></li>
-<li><dl class="simple">
-<dt>Toolbar/Collectors/</dt><dd><ul>
-<li><p>BaseCollector #1972</p></li>
-<li><p>Config #1973</p></li>
-<li><p>History #1945</p></li>
-<li><p>Routes #1949</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Toolbar/Views/</dt><dd><ul>
-<li><p>_config.tpl.php #1973</p></li>
-<li><p>toolbar.tpl.php #1972</p></li>
-<li><p>toolbarloader.js #1931, #1961</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Exceptions/</dt><dd><ul>
-<li><p>EntityException #1927</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Filters/</dt><dd><p>Filters #1970, #1985</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Format/</dt><dd><ul>
-<li><p>FormatterInterface #1918</p></li>
-<li><p>JSONFormatter #1918</p></li>
-<li><p>XMLFormatter #1918</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>HTTP/</dt><dd><ul>
-<li><p>CLIRequest #1956</p></li>
-<li><p>CURLRequest #1915</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Images/Handlers/</dt><dd><ul>
-<li><p>BaseHandler #1956</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Language/en/</dt><dd><ul>
-<li><p>Database #1917</p></li>
-<li><p>Validation #1952</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Router/</dt><dd><ul>
-<li><p>Router #1968</p></li>
-<li><p>RouteCollection #1977</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Session/Handlers/</dt><dd><ul>
-<li><p>RedisHandler #1980</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Test/</dt><dd><ul>
-<li><p>FeatureResponse #1977</p></li>
-<li><p>FeatureTestCase #1977</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Validation/</dt><dd><ul>
-<li><p>FormatRules #1957</p></li>
-<li><p>Rules #1952</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>View/</dt><dd><ul>
-<li><p>Table #1984</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>Entity #1911, #1927, #1943, #1950, #1955</p></li>
-<li><p>Model #1930, #1943, #1963, #1981</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>tests/system/</dt><dd><ul>
-<li><dl class="simple">
-<dt>Config/</dt><dd><ul>
-<li><p>BaseConfigTest #1947</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Database/</dt><dd><ul>
-<li><p>BaseQueryTest #1917</p></li>
-<li><dl class="simple">
-<dt>Live/</dt><dd><ul>
-<li><p>DbUtilsTest #1917, #1943</p></li>
-<li><p>ForgeTest #1917</p></li>
-<li><p>GetTest #1917, #1943</p></li>
-<li><p>ModelTest #1930, #1943, #1981</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Migrations/</dt><dd><ul>
-<li><p>MigrationRunnerTest #1917</p></li>
-<li><p>MigrationTest #1943</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Filters/</dt><dd><ul>
-<li><p>FilterTest #1985</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Test/</dt><dd><ul>
-<li><p>FeatureTestCaseTest #1977</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Validation/</dt><dd><ul>
-<li><p>FormatRulesTest #1957</p></li>
-<li><p>RulesTest #1952, #cbe4b1d</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>View/</dt><dd><ul>
-<li><p>TableTest #1978, #1984</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>EntityTest #1911</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>user_guide_src/</dt><dd><ul>
-<li><dl class="simple">
-<dt>dbmgmt/</dt><dd><ul>
-<li><p>migrations #1973</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>installation/</dt><dd><ul>
-<li><p>installing_composer #1926</p></li>
-<li><p>running #1935</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>libraries/</dt><dd><ul>
-<li><p>validation #1952, #1954, #1957</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>outgoing/</dt><dd><ul>
-<li><p>index #1978</p></li>
-<li><p>table #1978, #1984</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>testing/</dt><dd><ul>
-<li><p>feature #1977</p></li>
-<li><p>overview #1936</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>.htaccess #1939</p></li>
-<li><p>composer.json #1935</p></li>
-<li><p>phpdoc.dist.xml #1987</p></li>
-</ul>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>.
+├── admin/
+│   ├── framework/composer.json #1935
+│   └── starter/composer.json #1935
+├── app/
+│   └── Config/
+│       ├── App #1973
+│       └── Migrations #1973
+├── public/
+│   └── .htaccess #1973
+├── system/
+│   ├── API/
+│   │   └── ResponseTrait #1962
+│   ├── Commands/
+│   │   └── Server/rewrite #1925
+│   ├── Config/
+│   │   ├── AutoloadConfig #1974
+│   │   └── BaseConfig #1947
+│   ├── Database/ #1938
+│   │   ├── BaseBuilder #1923, #1933, #1950
+│   │   ├── BaseConnection #1950
+│   │   ├── BaseResult #1917
+│   │   ├── BaseUtils #1917
+│   │   ├── Forge #1917
+│   │   └── SQLite3/
+│   │       ├── Connection #1917
+│   │       └── Result #1917
+│   ├── Debug/
+│   │   ├── Toolbar #1916
+│   │   ├── Toolbar/Collectors/
+│   │   │   ├── BaseCollector #1972
+│   │   │   ├── Config #1973
+│   │   │   ├── History #1945
+│   │   │   └── Routes #1949
+│   │   └── Toolbar/Views/
+│   │       ├── _config.tpl.php #1973
+│   │       ├── toolbar.tpl.php #1972
+│   │       └── toolbarloader.js #1931, #1961
+│   ├── Exceptions/
+│   │   └── EntityException #1927
+│   ├── Filters/
+│   │   └── Filters #1970, #1985
+│   ├── Format/
+│   │   ├── FormatterInterface #1918
+│   │   ├── JSONFormatter #1918
+│   │   └── XMLFormatter #1918
+│   ├── HTTP/
+│   │   ├── CLIRequest #1956
+│   │   └── CURLRequest #1915
+│   ├── Images/Handlers/
+│   │   └── BaseHandler #1956
+│   ├── Language/en/
+│   │   ├── Database #1917
+│   │   └── Validation #1952
+│   ├── Router/
+│   │   ├── Router #1968
+│   │   └── RouteCollection #1977
+│   ├── Session/Handlers/
+│   │   └── RedisHandler #1980
+│   ├── Test/
+│   │   ├── FeatureResponse #1977
+│   │   └── FeatureTestCase #1977
+│   ├── Validation/
+│   │   ├── FormatRules #1957
+│   │   └── Rules #1952
+│   ├── View/
+│   │   └── Table #1984
+│   ├── Entity #1911, #1927, #1943, #1950, #1955
+│   └── Model #1930, #1943, #1963, #1981
+├── tests/system/
+│   ├── Config/
+│   │   └── BaseConfigTest #1947
+│   ├── Database/
+│   │   ├── BaseQueryTest #1917
+│   │   ├── Live/
+│   │   │   ├── DbUtilsTest #1917, #1943
+│   │   │   ├── ForgeTest #1917
+│   │   │   ├── GetTest #1917, #1943
+│   │   │   └── ModelTest #1930, #1943, #1981
+│   │   └── Migrations/
+│   │       ├── MigrationRunnerTest #1917
+│   │       └── MigrationTest #1943
+│   ├── Filters/
+│   │   └── FilterTest #1985
+│   ├── Test/
+│   │   └── FeatureTestCaseTest #1977
+│   ├── Validation/
+│   │   ├── FormatRulesTest #1957
+│   │   └── RulesTest #1952, #cbe4b1d
+│   ├── View/
+│   │   └── TableTest #1978, #1984
+│   └── EntityTest #1911
+├── user_guide_src/
+│   ├── dbmgmt/
+│   │   └── migrations #1973
+│   ├── installation/
+│   │   ├── installing_composer #1926
+│   │   └── running #1935
+│   ├── libraries/
+│   │   └── validation #1952, #1954, #1957
+│   ├── outgoing/
+│   │   ├── index #1978
+│   │   └── table #1978, #1984
+│   └── testing/
+│       ├── feature #1977
+│       └── overview #1936
+├── .htaccess #1939
+├── composer.json #1935
+└── phpdoc.dist.xml #1987
+</pre></div>
+</div>
 </section>
 <section id="prs-merged">
 <h2><a class="toc-backref" href="#id5" role="doc-backlink">PRs merged</a><a class="headerlink" href="#prs-merged" title="Link to this heading"></a></h2>
@@ -656,10 +465,10 @@
 <li><p>#1956 Use Null Coalesce Operator</p></li>
 <li><p>#1955 Travis-CI build failed fix</p></li>
 <li><p>#1954 Fix validation table format</p></li>
-<li><p>#1952 Add Validations for <cite>equals()</cite> and <cite>not_equals()</cite></p></li>
+<li><p>#1952 Add Validations for <code class="docutils literal notranslate"><span class="pre">equals()</span></code> and <code class="docutils literal notranslate"><span class="pre">not_equals()</span></code></p></li>
 <li><p>#1951 System typos changes &amp; code cleanup</p></li>
-<li><p>#1950 Fix some side issue</p></li>
-<li><p>#1949 Toobar/Routes correction</p></li>
+<li><p>#1950 Fix some side issues</p></li>
+<li><p>#1949 Toolbar/Routes correction</p></li>
 <li><p>#1947 Fix BaseConfig didn’t load Registrar files properly</p></li>
 <li><p>#1945 Fix datetime extraction from debugbar file</p></li>
 <li><p>#1943 Model, Entity, Exception &amp; Migration test cases</p></li>
@@ -670,13 +479,13 @@
 <li><p>#1933 having (Is NULL deletion)</p></li>
 <li><p>#1931 Toolbar IE11 fix</p></li>
 <li><p>#1930 Model Changes w.r.t. #1773</p></li>
-<li><p>#1927 Entity exception for non existed props</p></li>
+<li><p>#1927 Entity exception for nonexistent props</p></li>
 <li><p>#1926 Docs: update installation guide</p></li>
 <li><p>#1925 removed $_SERVER[‘CI_ENVIRONMENT’]</p></li>
 <li><p>#1923 missing return</p></li>
 <li><p>#1918 JSONFormatter</p></li>
 <li><p>#1917 Database Test Cases</p></li>
-<li><p>#1916 Check if the value is string</p></li>
+<li><p>#1916 Check if the value is a string</p></li>
 <li><p>#1915 Fix for POST + JSON (Content-Length added)</p></li>
 <li><p>#1911 JSON Cast exception test cases</p></li>
 </ul>
@@ -695,7 +504,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

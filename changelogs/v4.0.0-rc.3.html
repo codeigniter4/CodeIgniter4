@@ -299,9 +299,8 @@
 <ul class="simple">
 <li><p><a class="reference internal" href="#enhancements" id="id1">Enhancements</a></p></li>
 <li><p><a class="reference internal" href="#app-changes" id="id2">App Changes</a></p></li>
-<li><p><a class="reference internal" href="#message-changes" id="id3">Message Changes</a></p></li>
-<li><p><a class="reference internal" href="#changed-files" id="id4">Changed Files</a></p></li>
-<li><p><a class="reference internal" href="#prs-merged" id="id5">PRs merged</a></p></li>
+<li><p><a class="reference internal" href="#changed-files" id="id3">Changed Files</a></p></li>
+<li><p><a class="reference internal" href="#prs-merged" id="id4">PRs merged</a></p></li>
 </ul>
 </nav>
 <section id="enhancements">
@@ -314,292 +313,115 @@
 <section id="app-changes">
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">App Changes</a><a class="headerlink" href="#app-changes" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p>New $CSRFHeaderName property in App/Config/App</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">$CSRFHeaderName</span></code> property in <strong>app/Config/App.php</strong></p></li>
 </ul>
-</section>
-<section id="message-changes">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Message Changes</a><a class="headerlink" href="#message-changes" title="Link to this heading"></a></h2>
 </section>
 <section id="changed-files">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">Changed Files</a><a class="headerlink" href="#changed-files" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Changed Files</a><a class="headerlink" href="#changed-files" title="Link to this heading"></a></h2>
 <p>The list of changed files follows, with PR numbers shown.</p>
-<ul class="simple">
-<li><p>admin/</p></li>
-<li><dl class="simple">
-<dt>app/</dt><dd><ul>
-<li><dl class="simple">
-<dt>Config/</dt><dd><ul>
-<li><p>App #2272</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>public/</p></li>
-<li><dl class="simple">
-<dt>system/</dt><dd><ul>
-<li><dl class="simple">
-<dt>Autoloader/</dt><dd><ul>
-<li><p>FileLocator #2336</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Database/</dt><dd><ul>
-<li><p>MySQLi/Forge #2100</p></li>
-<li><p>Postgre/Forge #2100</p></li>
-<li><p>SQLite3/Forge #2100</p></li>
-<li><p>BaseBuilder #2252, 2312</p></li>
-<li><p>Forge $2100</p></li>
-<li><p>Migration #2303</p></li>
-<li><p>MigrationRunner #2303</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Debug/</dt><dd><ul>
-<li><p>Exceptions #2288</p></li>
-<li><dl class="simple">
-<dt>Toolbar/Collectors/</dt><dd><ul>
-<li><p>Route #2300</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>Toolbar #2315</p></li>
-<li><p>Views/ #2283</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Helpers/</dt><dd><ul>
-<li><p>inflector_helper #2296</p></li>
-<li><p>url_helper #2325</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>HTTP/</dt><dd><ul>
-<li><p>CURLRequest #2285, 2305</p></li>
-<li><p>Files/UploadedFile #2123</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Language/en/</dt><dd><ul>
-<li><p>Encryption #2311</p></li>
-<li><p>RESTful #2311</p></li>
-<li><p>Session #2311</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Router/</dt><dd><ul>
-<li><p>Exceptions/RedirectException #2338</p></li>
-<li><p>Router #2308, 2338</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Security/</dt><dd><ul>
-<li><p>Security #2272, 2279</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Session/</dt><dd><ul>
-<li><dl class="simple">
-<dt>Handlers/</dt><dd><ul>
-<li><p>DatabaseHandler #2298</p></li>
-<li><p>FileHandler #2298, 2307</p></li>
-<li><p>MemcachedHandler #2298</p></li>
-<li><p>RedisHandler #2298</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>Session #2339</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Validation/</dt><dd><ul>
-<li><p>Validation #2284, 2341</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>View/</dt><dd><ul>
-<li><p>View #2324</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>CodeIgniter #2338</p></li>
-<li><p>Common #2279</p></li>
-<li><p>Model #2289, 2332</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>tests/README.md #2345</p></li>
-<li><dl class="simple">
-<dt>tests/_support/</dt><dd><ul>
-<li><dl class="simple">
-<dt>Config/</dt><dd><ul>
-<li><p>MockAppConfig #2272</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>tests/system/</dt><dd><ul>
-<li><dl class="simple">
-<dt>Database/</dt><dd><ul>
-<li><dl class="simple">
-<dt>Builder/</dt><dd><ul>
-<li><p>UpdateTest #2295</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Live/</dt><dd><ul>
-<li><p>ForgeTest #2100</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Helpers/</dt><dd><ul>
-<li><p>InflectorHelperTest #2296</p></li>
-<li><p>URLHelperTest #2325</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>HTTP/</dt><dd><ul>
-<li><p>CURLRequestTest #2285</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Log/</dt><dd><ul>
-<li><p>FileHandlerTest #2346</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Security/</dt><dd><ul>
-<li><p>SecurityTest #2279</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Session/</dt><dd><ul>
-<li><p>SessionTest #2339</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>CommonFunctionsTest #2279</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>user_guide_src/</dt><dd><ul>
-<li><dl class="simple">
-<dt>dbmgmt/</dt><dd><ul>
-<li><p>forge #2100</p></li>
-<li><p>migration #2337</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>general/</dt><dd><ul>
-<li><p>common_functions #2279</p></li>
-<li><p>errors #2338</p></li>
-<li><p>modules #2290</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>helpers/</dt><dd><ul>
-<li><p>inflector_helper #2296</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>incoming/</dt><dd><ul>
-<li><p>message #2282</p></li>
-<li><p>restful #2313, 2321, 2333</p></li>
-<li><p>routing #2327</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>libraries/</dt><dd><ul>
-<li><p>curlrequest #2305</p></li>
-<li><p>security #2279</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>models/</dt><dd><ul>
-<li><p>model #2316, 2332</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>outgoing/</dt><dd><ul>
-<li><p>table #2337</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>.
+├── admin/
+├── app/
+│   └── Config/
+│       └── App #2272
+├── public/
+├── system/
+│   ├── Autoloader/
+│   │   └── FileLocator #2336
+│   ├── Database/
+│   │   ├── MySQLi/Forge #2100
+│   │   ├── Postgre/Forge #2100
+│   │   ├── SQLite3/Forge #2100
+│   │   ├── BaseBuilder #2252, 2312
+│   │   ├── Forge $2100
+│   │   ├── Migration #2303
+│   │   └── MigrationRunner #2303
+│   ├── Debug/
+│   │   ├── Exceptions #2288
+│   │   ├── Toolbar/Collectors/
+│   │   │   └── Route #2300
+│   │   ├── Toolbar #2315
+│   │   └── Views/ #2283
+│   ├── Helpers/
+│   │   ├── inflector_helper #2296
+│   │   └── url_helper #2325
+│   ├── HTTP/
+│   │   ├── CURLRequest #2285, 2305
+│   │   └── Files/UploadedFile #2123
+│   ├── Language/en/
+│   │   ├── Encryption #2311
+│   │   ├── RESTful #2311
+│   │   └── Session #2311
+│   ├── Router/
+│   │   ├── Exceptions/RedirectException #2338
+│   │   └── Router #2308, 2338
+│   ├── Security/
+│   │   └── Security #2272, 2279
+│   ├── Session/
+│   │   ├── Handlers/
+│   │   │   ├── DatabaseHandler #2298
+│   │   │   ├── FileHandler #2298, 2307
+│   │   │   ├── MemcachedHandler #2298
+│   │   │   └── RedisHandler #2298
+│   │   └── Session #2339
+│   ├── Validation/
+│   │   └── Validation #2284, 2341
+│   ├── View/
+│   │   └── View #2324
+│   ├── CodeIgniter #2338
+│   ├── Common #2279
+│   └── Model #2289, 2332
+├── tests/README.md #2345
+├── tests/_support/
+│   └── Config/
+│       └── MockAppConfig #2272
+├── tests/system/
+│   ├── Database/
+│   │   ├── Builder/
+│   │   │   └── UpdateTest #2295
+│   │   └── Live/
+│   │       └── ForgeTest #2100
+│   ├── Helpers/
+│   │   ├── InflectorHelperTest #2296
+│   │   └── URLHelperTest #2325
+│   ├── HTTP/
+│   │   └── CURLRequestTest #2285
+│   ├── Log/
+│   │   └── FileHandlerTest #2346
+│   ├── Security/
+│   │   └── SecurityTest #2279
+│   ├── Session/
+│   │   └── SessionTest #2339
+│   └── CommonFunctionsTest #2279
+└── user_guide_src/
+    ├── dbmgmt/
+    │   ├── forge #2100
+    │   └── migration #2337
+    ├── general/
+    │   ├── common_functions #2279
+    │   ├── errors #2338
+    │   └── modules #2290
+    ├── helpers/
+    │   └── inflector_helper #2296
+    ├── incoming/
+    │   ├── message #2282
+    │   ├── restful #2313, 2321, 2333
+    │   └── routing #2327
+    ├── libraries/
+    │   ├── curlrequest #2305
+    │   └── security #2279
+    ├── models/
+    │   └── model #2316, 2332
+    └── outgoing/
+        └── table #2337
+</pre></div>
+</div>
 </section>
 <section id="prs-merged">
-<h2><a class="toc-backref" href="#id5" role="doc-backlink">PRs merged</a><a class="headerlink" href="#prs-merged" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">PRs merged</a><a class="headerlink" href="#prs-merged" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p>#2348 CodeIgniter Foundation gets copyright</p></li>
-<li><p>#2346 Fix FilerHandlerTest.php wierdness</p></li>
+<li><p>#2346 Fix FilerHandlerTest.php weirdness</p></li>
 <li><p>#2345 Tests readme polish</p></li>
 <li><p>#2344 Setup vs Set Up</p></li>
 <li><p>#2343 User guide minor fixes. Fix class names and code area</p></li>
@@ -611,7 +433,7 @@
 <li><p>#2333 Guide: RESTful table formatting</p></li>
 <li><p>#2332 Change after methods to use actual data</p></li>
 <li><p>#2328 Update Application structure</p></li>
-<li><p>#2327 Correct the tourint UG page</p></li>
+<li><p>#2327 Correct the routing UG page</p></li>
 <li><p>#2325 Fix bug in url_title() function with diacritics</p></li>
 <li><p>#2324 Renderer Toolbar Debug Toggle</p></li>
 <li><p>#2321 Update RESTful User Guide</p></li>
@@ -639,7 +461,7 @@
 <li><p>#2272 Handle X-CSRF-TOKEN - CSRF</p></li>
 <li><p>#2252 Batch Update Where Reset</p></li>
 <li><p>#2123 WIP fix store() default value bug</p></li>
-<li><p>#2100 Added validation on exists database before created for MySQLi</p></li>
+<li><p>#2100 Added validation to check whether a database exists before creating it for MySQLi</p></li>
 </ul>
 </section>
 </section>
@@ -656,7 +478,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

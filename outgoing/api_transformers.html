@@ -292,10 +292,10 @@
              
   <section id="api-resources">
 <span id="api-transformers"></span><h1>API Resources<a class="headerlink" href="#api-resources" title="Link to this heading"></a></h1>
-<p>When building APIs, you often need to transform your data models into a consistent format before sending
-them to the client. API Resources, implemented through transformers, provide a clean way to convert your
-entities, arrays, or objects into structured API responses. They help separate your internal data structure
-from what you expose through your API, making it easier to maintain and evolve your API over time.</p>
+<p>When building APIs, you often need to transform your data models into a consistent format before sending them to the
+client. API Resources, implemented through transformers, provide a clean way to convert your entities, arrays, or
+objects into structured API responses. They help separate your internal data structure from what you expose through your
+API, making it easier to maintain and evolve your API over time.</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#quick-example" id="id1">Quick Example</a></p></li>
@@ -360,15 +360,14 @@ from what you expose through your API, making it easier to maintain and evolve y
 <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respond</span><span class="p">(</span><span class="nv">$transformer</span><span class="o">-&gt;</span><span class="na">transform</span><span class="p">(</span><span class="nv">$user</span><span class="p">));</span>
 </pre></div>
 </div>
-<p>In this example, the <code class="docutils literal notranslate"><span class="pre">UserTransformer</span></code> defines which fields from a user entity should be included in the
-API response. The <code class="docutils literal notranslate"><span class="pre">transform()</span></code> method converts a single resource, while <code class="docutils literal notranslate"><span class="pre">transformMany()</span></code> handles
-collections of resources.</p>
+<p>In this example, the <code class="docutils literal notranslate"><span class="pre">UserTransformer</span></code> defines which fields from a user entity should be included in the API response.
+The <code class="docutils literal notranslate"><span class="pre">transform()</span></code> method converts a single resource, while <code class="docutils literal notranslate"><span class="pre">transformMany()</span></code> handles collections of resources.</p>
 </section>
 <section id="creating-a-transformer">
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">Creating a Transformer</a><a class="headerlink" href="#creating-a-transformer" title="Link to this heading"></a></h2>
-<p>To create a transformer, extend the <code class="docutils literal notranslate"><span class="pre">BaseTransformer</span></code> class and implement the <code class="docutils literal notranslate"><span class="pre">toArray()</span></code> method to
-define your API resource structure. The <code class="docutils literal notranslate"><span class="pre">toArray()</span></code> method receives the resource being transformed as
-a parameter, allowing you to access and transform its data.</p>
+<p>To create a transformer, extend the <code class="docutils literal notranslate"><span class="pre">BaseTransformer</span></code> class and implement the <code class="docutils literal notranslate"><span class="pre">toArray()</span></code> method to define your API
+resource structure. The <code class="docutils literal notranslate"><span class="pre">toArray()</span></code> method receives the resource being transformed as a parameter, allowing you to
+access and transform its data.</p>
 <section id="basic-transformer">
 <h3><a class="toc-backref" href="#id3" role="doc-backlink">Basic Transformer</a><a class="headerlink" href="#basic-transformer" title="Link to this heading"></a></h3>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -391,9 +390,9 @@ a parameter, allowing you to access and transform its data.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">toArray()</span></code> method receives the resource (entity, array, or object) as its parameter and defines
-the structure of your API response. You can include any fields you want from the resource, and you can
-also rename or transform values as needed.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">toArray()</span></code> method receives the resource (entity, array, or object) as its parameter and defines the structure of
+your API response. You can include any fields you want from the resource, and you can also rename or transform values as
+needed.</p>
 </section>
 <section id="generating-transformer-files">
 <h3><a class="toc-backref" href="#id4" role="doc-backlink">Generating Transformer Files</a><a class="headerlink" href="#generating-transformer-files" title="Link to this heading"></a></h3>
@@ -435,8 +434,8 @@ also rename or transform values as needed.</p>
 </section>
 <section id="using-transformers-in-controllers">
 <h3><a class="toc-backref" href="#id5" role="doc-backlink">Using Transformers in Controllers</a><a class="headerlink" href="#using-transformers-in-controllers" title="Link to this heading"></a></h3>
-<p>Once you’ve created a transformer, you can use it in your controllers to transform data before returning
-it to the client.</p>
+<p>Once you’ve created a transformer, you can use it in your controllers to transform data before returning it to the
+client.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
@@ -476,8 +475,8 @@ it to the client.</p>
 </section>
 <section id="field-filtering">
 <h2><a class="toc-backref" href="#id6" role="doc-backlink">Field Filtering</a><a class="headerlink" href="#field-filtering" title="Link to this heading"></a></h2>
-<p>The transformer automatically supports field filtering through the <code class="docutils literal notranslate"><span class="pre">fields</span></code> query parameter of the current URL.
-This allows API clients to request only specific fields they need, reducing bandwidth and improving performance.</p>
+<p>The transformer automatically supports field filtering through the <code class="docutils literal notranslate"><span class="pre">fields</span></code> query parameter of the current URL. This
+allows API clients to request only the specific fields they need, reducing bandwidth and improving performance.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Transformers</span><span class="p">;</span>
@@ -511,8 +510,8 @@ This allows API clients to request only specific fields they need, reducing band
 </div>
 <section id="restricting-available-fields">
 <h3><a class="toc-backref" href="#id7" role="doc-backlink">Restricting Available Fields</a><a class="headerlink" href="#restricting-available-fields" title="Link to this heading"></a></h3>
-<p>By default, clients can request any field defined in your <code class="docutils literal notranslate"><span class="pre">toArray()</span></code> method. You can restrict which
-fields are allowed by overriding the <code class="docutils literal notranslate"><span class="pre">getAllowedFields()</span></code> method:</p>
+<p>By default, clients can request any field defined in your <code class="docutils literal notranslate"><span class="pre">toArray()</span></code> method. You can restrict which fields are
+allowed by overriding the <code class="docutils literal notranslate"><span class="pre">getAllowedFields()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Transformers</span><span class="p">;</span>
@@ -540,21 +539,19 @@ fields are allowed by overriding the <code class="docutils literal notranslate">
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Now, even if a client requests <code class="docutils literal notranslate"><span class="pre">/users/1?fields=email</span></code>, an <code class="docutils literal notranslate"><span class="pre">ApiException</span></code> will be thrown because
-<code class="docutils literal notranslate"><span class="pre">email</span></code> is not in the allowed fields list.</p>
+<p>Now, even if a client requests <code class="docutils literal notranslate"><span class="pre">/users/1?fields=email</span></code>, an <code class="docutils literal notranslate"><span class="pre">ApiException</span></code> will be thrown because <code class="docutils literal notranslate"><span class="pre">email</span></code> is not in
+the allowed fields list.</p>
 </section>
 </section>
 <section id="including-related-resources">
 <h2><a class="toc-backref" href="#id8" role="doc-backlink">Including Related Resources</a><a class="headerlink" href="#including-related-resources" title="Link to this heading"></a></h2>
-<p>Transformers support loading of related resources through the <code class="docutils literal notranslate"><span class="pre">include</span></code> query parameter. This
-follows a common API pattern where clients can specify which relationships they want included.
-While relationships are the most frequent use case, you can include any additional data
-you want by defining custom include methods.</p>
+<p>Transformers support loading related resources through the <code class="docutils literal notranslate"><span class="pre">include</span></code> query parameter. This follows a common API
+pattern where clients can specify which relationships they want included. While relationships are the most frequent use
+case, you can include any additional data you want by defining custom include methods.</p>
 <section id="defining-include-methods">
 <h3><a class="toc-backref" href="#id9" role="doc-backlink">Defining Include Methods</a><a class="headerlink" href="#defining-include-methods" title="Link to this heading"></a></h3>
-<p>To support including related resources, create methods prefixed with <code class="docutils literal notranslate"><span class="pre">include</span></code> followed by the
-resource name. Inside these methods, you can access the current resource being transformed via
-<code class="docutils literal notranslate"><span class="pre">$this-&gt;resource</span></code>:</p>
+<p>To support including related resources, create methods prefixed with <code class="docutils literal notranslate"><span class="pre">include</span></code> followed by the resource name. Inside
+these methods, you can access the current resource being transformed via <code class="docutils literal notranslate"><span class="pre">$this-&gt;resource</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Transformers</span><span class="p">;</span>
@@ -589,8 +586,8 @@ resource name. Inside these methods, you can access the current resource being t
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Note how the include methods use <code class="docutils literal notranslate"><span class="pre">$this-&gt;resource['id']</span></code> to access the ID of the user being transformed.
-The <code class="docutils literal notranslate"><span class="pre">$this-&gt;resource</span></code> property is automatically set by the transformer when <code class="docutils literal notranslate"><span class="pre">transform()</span></code> is called.</p>
+<p>Note how the include methods use <code class="docutils literal notranslate"><span class="pre">$this-&gt;resource['id']</span></code> to access the ID of the user being transformed. The
+<code class="docutils literal notranslate"><span class="pre">$this-&gt;resource</span></code> property is automatically set by the transformer when <code class="docutils literal notranslate"><span class="pre">transform()</span></code> is called.</p>
 <p>Clients can now request: <code class="docutils literal notranslate"><span class="pre">/users/1?include=posts,comments</span></code></p>
 <p>The response would include:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -614,13 +611,12 @@ The <code class="docutils literal notranslate"><span class="pre">$this-&gt;resou
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">fields</span></code> and <code class="docutils literal notranslate"><span class="pre">include</span></code> query parameters describe the <strong>root</strong> resource only.
-Transformers instantiated inside an <code class="docutils literal notranslate"><span class="pre">include*()</span></code> method (such as <code class="docutils literal notranslate"><span class="pre">PostTransformer</span></code> above)
-are treated as nested resources: when created <strong>without an explicit request</strong> they do <strong>not</strong>
-inherit the root request’s <code class="docutils literal notranslate"><span class="pre">fields</span></code>/<code class="docutils literal notranslate"><span class="pre">include</span></code> state. This prevents the parent’s query
-parameters from leaking into related resources, which could otherwise cause incorrect field
-filtering or unexpected/recursive includes. If you deliberately pass a request to a nested
-transformer, that request’s scope is honored.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">fields</span></code> and <code class="docutils literal notranslate"><span class="pre">include</span></code> query parameters describe the <strong>root</strong> resource only. Transformers instantiated
+inside an <code class="docutils literal notranslate"><span class="pre">include*()</span></code> method (such as <code class="docutils literal notranslate"><span class="pre">PostTransformer</span></code> above) are treated as nested resources: when created
+<strong>without an explicit request</strong> they do <strong>not</strong> inherit the root request’s <code class="docutils literal notranslate"><span class="pre">fields</span></code>/<code class="docutils literal notranslate"><span class="pre">include</span></code> state. This
+prevents the parent’s query parameters from leaking into related resources, which could otherwise cause incorrect
+field filtering or unexpected/recursive includes. If you deliberately pass a request to a nested transformer, that
+request’s scope is honored.</p>
 </div>
 </section>
 <section id="restricting-available-includes">
@@ -706,15 +702,14 @@ transformer, that request’s scope is honored.</p>
 </section>
 <section id="include-validation">
 <h3><a class="toc-backref" href="#id11" role="doc-backlink">Include Validation</a><a class="headerlink" href="#include-validation" title="Link to this heading"></a></h3>
-<p>The transformer automatically validates that any requested includes have corresponding <code class="docutils literal notranslate"><span class="pre">include*()</span></code> methods
-defined in your transformer class. If a client requests an include that doesn’t exist, an <code class="docutils literal notranslate"><span class="pre">ApiException</span></code>
-will be thrown.</p>
+<p>The transformer automatically validates that any requested includes have corresponding <code class="docutils literal notranslate"><span class="pre">include*()</span></code> methods defined in
+your transformer class. If a client requests an include that doesn’t exist, an <code class="docutils literal notranslate"><span class="pre">ApiException</span></code> will be thrown.</p>
 <p>For example, if a client requests:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">GET</span> <span class="o">/</span><span class="nx">api</span><span class="o">/</span><span class="nx">users</span><span class="o">?</span><span class="k">include</span><span class="o">=</span><span class="nx">invalid</span>
 </pre></div>
 </div>
-<p>And your transformer doesn’t have an <code class="docutils literal notranslate"><span class="pre">includeInvalid()</span></code> method, an exception will be thrown with the message:
-“Missing include method for: invalid”.</p>
+<p>And your transformer doesn’t have an <code class="docutils literal notranslate"><span class="pre">includeInvalid()</span></code> method, an exception will be thrown with the message: “Missing
+include method for: invalid”.</p>
 <p>This helps catch typos and prevents unexpected behavior.</p>
 </section>
 </section>
@@ -744,16 +739,16 @@ will be thrown.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">transformMany()</span></code> method applies the same transformation logic to each item in the collection,
-including any field filtering or includes specified in the request.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">transformMany()</span></code> method applies the same transformation logic to each item in the collection, including any field
+filtering or includes specified in the request.</p>
 </section>
 <section id="working-with-different-data-types">
 <h2><a class="toc-backref" href="#id13" role="doc-backlink">Working with Different Data Types</a><a class="headerlink" href="#working-with-different-data-types" title="Link to this heading"></a></h2>
 <p>Transformers can handle various data types, not just entities.</p>
 <section id="transforming-entities">
 <h3><a class="toc-backref" href="#id14" role="doc-backlink">Transforming Entities</a><a class="headerlink" href="#transforming-entities" title="Link to this heading"></a></h3>
-<p>When you pass an <code class="docutils literal notranslate"><span class="pre">Entity</span></code> instance to <code class="docutils literal notranslate"><span class="pre">transform()</span></code>, it automatically calls the entity’s <code class="docutils literal notranslate"><span class="pre">toArray()</span></code>
-method to get the data:</p>
+<p>When you pass an <code class="docutils literal notranslate"><span class="pre">Entity</span></code> instance to <code class="docutils literal notranslate"><span class="pre">transform()</span></code>, it automatically calls the entity’s <code class="docutils literal notranslate"><span class="pre">toArray()</span></code> method to get
+the data:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">App\Entities\User</span><span class="p">;</span>
@@ -851,12 +846,11 @@ method to get the data:</p>
 <p>Initializes the transformer and extracts the <code class="docutils literal notranslate"><span class="pre">fields</span></code> and <code class="docutils literal notranslate"><span class="pre">include</span></code> query parameters from the request.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>When no request is explicitly passed, the global request’s <code class="docutils literal notranslate"><span class="pre">fields</span></code> and <code class="docutils literal notranslate"><span class="pre">include</span></code>
-are read <strong>only for the root transformer</strong>. A transformer constructed during a nested
-transformation (i.e. inside an <code class="docutils literal notranslate"><span class="pre">include*()</span></code> method) without an explicit request still uses
-the global request object, but does not read <code class="docutils literal notranslate"><span class="pre">fields</span></code>/<code class="docutils literal notranslate"><span class="pre">include</span></code> from it, to avoid leaking
-the root’s scope. Passing an explicit request always applies that request’s scope, regardless
-of nesting.</p>
+<p>When no request is explicitly passed, the global request’s <code class="docutils literal notranslate"><span class="pre">fields</span></code> and <code class="docutils literal notranslate"><span class="pre">include</span></code> are read
+<strong>only for the root transformer</strong>. A transformer constructed during a nested transformation (i.e. inside an
+<code class="docutils literal notranslate"><span class="pre">include*()</span></code> method) without an explicit request still uses the global request object, but does not read
+<code class="docutils literal notranslate"><span class="pre">fields</span></code>/<code class="docutils literal notranslate"><span class="pre">include</span></code> from it, to avoid leaking the root’s scope. Passing an explicit request always
+applies that request’s scope, regardless of nesting.</p>
 </div>
 </dd></dl>
 
@@ -876,9 +870,9 @@ of nesting.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span></p>
 </dd>
 </dl>
-<p>This abstract method must be implemented by child classes to define the structure of the API resource.
-The resource parameter contains the data being transformed. Return an array with the fields you want
-to include in the API response, accessing data from the <code class="docutils literal notranslate"><span class="pre">$resource</span></code> parameter.</p>
+<p>This abstract method must be implemented by child classes to define the structure of the API resource. The
+resource parameter contains the data being transformed. Return an array with the fields you want to include in
+the API response, accessing data from the <code class="docutils literal notranslate"><span class="pre">$resource</span></code> parameter.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Transformers</span><span class="p">;</span>
@@ -918,9 +912,9 @@ to include in the API response, accessing data from the <code class="docutils li
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span></p>
 </dd>
 </dl>
-<p>Transforms the given resource into an array by calling <code class="docutils literal notranslate"><span class="pre">toArray()</span></code> with the resource data.
-If <code class="docutils literal notranslate"><span class="pre">$resource</span></code> is <code class="docutils literal notranslate"><span class="pre">null</span></code>, passes <code class="docutils literal notranslate"><span class="pre">null</span></code> to <code class="docutils literal notranslate"><span class="pre">toArray()</span></code>.
-If it’s an Entity, extracts its array representation first. Otherwise, casts it to an array.</p>
+<p>Transforms the given resource into an array by calling <code class="docutils literal notranslate"><span class="pre">toArray()</span></code> with the resource data. If <code class="docutils literal notranslate"><span class="pre">$resource</span></code> is
+<code class="docutils literal notranslate"><span class="pre">null</span></code>, passes <code class="docutils literal notranslate"><span class="pre">null</span></code> to <code class="docutils literal notranslate"><span class="pre">toArray()</span></code>. If it’s an Entity, extracts its array representation first.
+Otherwise, casts it to an array.</p>
 <p>The resource is also stored in <code class="docutils literal notranslate"><span class="pre">$this-&gt;resource</span></code> so include methods can access it.</p>
 <p>The method automatically applies field filtering and includes based on query parameters.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -960,8 +954,8 @@ If it’s an Entity, extracts its array representation first. Otherwise, casts i
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span></p>
 </dd>
 </dl>
-<p>Transforms a collection of resources by calling <code class="docutils literal notranslate"><span class="pre">transform()</span></code> on each item. Field filtering and
-includes are applied consistently to all items.</p>
+<p>Transforms a collection of resources by calling <code class="docutils literal notranslate"><span class="pre">transform()</span></code> on each item. Field filtering and includes are
+applied consistently to all items.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">App\Transformers\UserTransformer</span><span class="p">;</span>
@@ -990,9 +984,9 @@ includes are applied consistently to all items.</p>
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|null</span></code></span></p>
 </dd>
 </dl>
-<p>Override this method to restrict which fields can be requested via the <code class="docutils literal notranslate"><span class="pre">fields</span></code> query parameter.
-Return <code class="docutils literal notranslate"><span class="pre">null</span></code> (the default) to allow all fields from <code class="docutils literal notranslate"><span class="pre">toArray()</span></code>. Return an array of field names
-to create a whitelist of allowed fields.</p>
+<p>Override this method to restrict which fields can be requested via the <code class="docutils literal notranslate"><span class="pre">fields</span></code> query parameter. Return
+<code class="docutils literal notranslate"><span class="pre">null</span></code> (the default) to allow all fields from <code class="docutils literal notranslate"><span class="pre">toArray()</span></code>. Return an array of field names to create a
+whitelist of allowed fields.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Transformers</span><span class="p">;</span>
@@ -1033,9 +1027,9 @@ to create a whitelist of allowed fields.</p>
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|null</span></code></span></p>
 </dd>
 </dl>
-<p>Override this method to restrict which related resources can be included via the <code class="docutils literal notranslate"><span class="pre">include</span></code> query
-parameter. Return <code class="docutils literal notranslate"><span class="pre">null</span></code> (the default) to allow all includes that have corresponding methods.
-Return an array of include names to create a whitelist. Return an empty array to disable all includes.</p>
+<p>Override this method to restrict which related resources can be included via the <code class="docutils literal notranslate"><span class="pre">include</span></code> query parameter.
+Return <code class="docutils literal notranslate"><span class="pre">null</span></code> (the default) to allow all includes that have corresponding methods. Return an array of include
+names to create a whitelist. Return an empty array to disable all includes.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Transformers</span><span class="p">;</span>
@@ -1103,8 +1097,7 @@ Return an array of include names to create a whitelist. Return an empty array to
 <dd class="field-odd"><p><span><a class="reference internal" href="#CodeIgniter\API\ApiException" title="CodeIgniter\API\ApiException"><code class="xref php php-obj docutils literal notranslate"><span class="pre">ApiException</span></code></a></span></p>
 </dd>
 </dl>
-<p>Thrown when a client requests a field via the <code class="docutils literal notranslate"><span class="pre">fields</span></code> query parameter that is not in the allowed
-fields list.</p>
+<p>Thrown when a client requests a field via the <code class="docutils literal notranslate"><span class="pre">fields</span></code> query parameter that is not in the allowed fields list.</p>
 </dd></dl>
 
 <dl class="php staticmethod">
@@ -1123,8 +1116,8 @@ fields list.</p>
 <dd class="field-odd"><p><span><a class="reference internal" href="#CodeIgniter\API\ApiException" title="CodeIgniter\API\ApiException"><code class="xref php php-obj docutils literal notranslate"><span class="pre">ApiException</span></code></a></span></p>
 </dd>
 </dl>
-<p>Thrown when a client requests an include via the <code class="docutils literal notranslate"><span class="pre">include</span></code> query parameter that is not in the
-allowed includes list.</p>
+<p>Thrown when a client requests an include via the <code class="docutils literal notranslate"><span class="pre">include</span></code> query parameter that is not in the allowed includes
+list.</p>
 </dd></dl>
 
 <dl class="php staticmethod">
@@ -1144,8 +1137,8 @@ allowed includes list.</p>
 </dd>
 </dl>
 <p>Thrown when a client requests an include via the <code class="docutils literal notranslate"><span class="pre">include</span></code> query parameter, but the corresponding
-<code class="docutils literal notranslate"><span class="pre">include*()</span></code> method does not exist in the transformer class. This validation ensures that all
-requested includes have proper handler methods defined.</p>
+<code class="docutils literal notranslate"><span class="pre">include*()</span></code> method does not exist in the transformer class. This validation ensures that all requested
+includes have proper handler methods defined.</p>
 </dd></dl>
 
 </dd></dl>
@@ -1165,7 +1158,7 @@ requested includes have proper handler methods defined.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

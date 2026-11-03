@@ -292,14 +292,11 @@
              
   <section id="transactions">
 <h1>Transactions<a class="headerlink" href="#transactions" title="Link to this heading"></a></h1>
-<p>CodeIgniter’s database abstraction allows you to use transactions with
-databases that support transaction-safe table types. In MySQL, you’ll
-need to be running InnoDB or BDB table types rather than the more common
-MyISAM. Most other database platforms support transactions natively.</p>
-<p>If you are not familiar with transactions we recommend you find a good
-online resource to learn about them for your particular database. The
-information below assumes you have a basic understanding of
-transactions.</p>
+<p>CodeIgniter’s database abstraction allows you to use transactions with databases that support transaction-safe table
+types. In MySQL, you’ll need to be running InnoDB or BDB table types rather than the more common MyISAM. Most other
+database platforms support transactions natively.</p>
+<p>If you are not familiar with transactions, we recommend you find a good online resource to learn about them for your
+particular database. The information below assumes you have a basic understanding of transactions.</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#codeigniter-s-approach-to-transactions" id="id1">CodeIgniter’s Approach to Transactions</a></p></li>
@@ -320,28 +317,23 @@ transactions.</p>
 </nav>
 <section id="codeigniter-s-approach-to-transactions">
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">CodeIgniter’s Approach to Transactions</a><a class="headerlink" href="#codeigniter-s-approach-to-transactions" title="Link to this heading"></a></h2>
-<p>CodeIgniter utilizes an approach to transactions that is very similar to
-the process used by the popular database class ADODB. We’ve chosen that
-approach because it greatly simplifies the process of running
-transactions. In most cases, all that is required is two lines of code.</p>
-<p>Traditionally, transactions have required a fair amount of work to
-implement since they demand that you keep track of your queries and
-determine whether to commit or rollback based on the success or failure
-of your queries. This is particularly cumbersome with nested queries. In
-contrast, we’ve implemented a smart transaction system that does all
-this for you automatically (you can also manage your transactions
-manually if you choose to, but there’s really no benefit).</p>
+<p>CodeIgniter utilizes an approach to transactions that is very similar to the process used by the popular database class
+ADODB. We’ve chosen that approach because it greatly simplifies the process of running transactions. In most cases, all
+that is required is two lines of code.</p>
+<p>Traditionally, transactions have required a fair amount of work to implement since they demand that you keep track of
+your queries and determine whether to commit or roll back based on the success or failure of your queries. This is
+particularly cumbersome with nested queries. In contrast, we’ve implemented a smart transaction system that does all
+this for you automatically (you can also manage your transactions manually if you choose to, but there’s really no
+benefit).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Since v4.3.0, during transactions, exceptions are not thrown by default
-even if <code class="docutils literal notranslate"><span class="pre">DBDebug</span></code> is true.</p>
+<p>Since v4.3.0, during transactions, exceptions are not thrown by default even if <code class="docutils literal notranslate"><span class="pre">DBDebug</span></code> is true.</p>
 </div>
 </section>
 <section id="running-transactions">
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">Running Transactions</a><a class="headerlink" href="#running-transactions" title="Link to this heading"></a></h2>
-<p>To run your queries using transactions you will use the
-<code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transStart()</span></code> and <code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transComplete()</span></code> methods as
-follows:</p>
+<p>To run your queries using transactions, you will use the <code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transStart()</span></code> and <code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transComplete()</span></code>
+methods as follows:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transStart</span><span class="p">();</span>
@@ -351,17 +343,16 @@ follows:</p>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transComplete</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>You can run as many queries as you want between the <code class="docutils literal notranslate"><span class="pre">transStart()</span></code>/<code class="docutils literal notranslate"><span class="pre">transComplete()</span></code>
-methods and they will all be committed or rolled back based on the success
-or failure of any given query.</p>
+<p>You can run as many queries as you want between the <code class="docutils literal notranslate"><span class="pre">transStart()</span></code>/<code class="docutils literal notranslate"><span class="pre">transComplete()</span></code> methods, and they will all be
+committed or rolled back based on the success or failure of any given query.</p>
 </section>
 <section id="strict-mode">
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">Strict Mode</a><a class="headerlink" href="#strict-mode" title="Link to this heading"></a></h2>
 <p>By default, CodeIgniter runs all transactions in Strict Mode.</p>
-<p>When strict mode is enabled, if you are running multiple groups of transactions,
-if one group fails all subsequent groups will be rolled back.</p>
-<p>If strict mode is disabled, each group is treated independently, meaning a failure
-of one group will not affect any others.</p>
+<p>When strict mode is enabled and you are running multiple groups of transactions, if one group fails, all subsequent
+groups will be rolled back.</p>
+<p>If strict mode is disabled, each group is treated independently, meaning a failure of one group will not affect any
+others.</p>
 <p>Strict Mode can be disabled as follows:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -373,10 +364,8 @@ of one group will not affect any others.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 4.6.0.</span></p>
 </div>
-<p>When strict mode is enabled, if one transaction fails, all subsequent transactions
-will be rolled back.</p>
-<p>If you wan to restart transactions after a failure, you can reset the transaction
-status:</p>
+<p>When strict mode is enabled, if one transaction fails, all subsequent transactions will be rolled back.</p>
+<p>If you want to restart transactions after a failure, you can reset the transaction status:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">resetTransStatus</span><span class="p">();</span>
@@ -388,8 +377,7 @@ status:</p>
 <span id="transactions-managing-errors"></span><h2><a class="toc-backref" href="#id5" role="doc-backlink">Managing Errors</a><a class="headerlink" href="#managing-errors" title="Link to this heading"></a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Since v4.3.0, during transactions, exceptions are not thrown by default
-even if <code class="docutils literal notranslate"><span class="pre">DBDebug</span></code> is true.</p>
+<p>Since v4.3.0, during transactions, exceptions are not thrown by default even if <code class="docutils literal notranslate"><span class="pre">DBDebug</span></code> is true.</p>
 </div>
 <p>You can manage your own errors like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -412,11 +400,9 @@ even if <code class="docutils literal notranslate"><span class="pre">DBDebug</sp
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Since v4.3.0, during transactions, exceptions are not thrown by default
-even if <code class="docutils literal notranslate"><span class="pre">DBDebug</span></code> is true.</p>
+<p>Since v4.3.0, during transactions, exceptions are not thrown by default even if <code class="docutils literal notranslate"><span class="pre">DBDebug</span></code> is true.</p>
 </div>
-<p>If you want an exception to be thrown when a query error occurs, you can use
-<code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transException(true)</span></code>:</p>
+<p>If you want an exception to be thrown when a query error occurs, you can use <code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transException(true)</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// When DBDebug in the Database Config must be true.</span>
@@ -434,13 +420,12 @@ even if <code class="docutils literal notranslate"><span class="pre">DBDebug</sp
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>If a query error occurs, all the queries will be rolled backed, and a
-<code class="docutils literal notranslate"><span class="pre">DatabaseException</span></code> will be thrown.</p>
+<p>If a query error occurs, all the queries will be rolled back, and a <code class="docutils literal notranslate"><span class="pre">DatabaseException</span></code> will be thrown.</p>
 </section>
 <section id="disabling-transactions">
 <h2><a class="toc-backref" href="#id7" role="doc-backlink">Disabling Transactions</a><a class="headerlink" href="#disabling-transactions" title="Link to this heading"></a></h2>
-<p>Transactions are enabled by default. If you would like to disable transactions you
-can do so using <code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transOff()</span></code>:</p>
+<p>Transactions are enabled by default. If you would like to disable transactions, you can do so using
+<code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transOff()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transOff</span><span class="p">();</span>
@@ -449,15 +434,14 @@ can do so using <code class="docutils literal notranslate"><span class="pre">$th
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transComplete</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>When transactions are disabled, your queries will be auto-committed, just
-as they are when running queries without transactions.</p>
+<p>When transactions are disabled, your queries will be auto-committed, just as they are when running queries without
+transactions.</p>
 </section>
 <section id="test-mode">
 <h2><a class="toc-backref" href="#id8" role="doc-backlink">Test Mode</a><a class="headerlink" href="#test-mode" title="Link to this heading"></a></h2>
-<p>You can optionally put the transaction system into “test mode”, which
-will cause your queries to be rolled back – even if the queries produce
-a valid result. To use test mode simply set the first parameter in the
-<code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transStart()</span></code> method to true:</p>
+<p>You can optionally put the transaction system into “test mode”, which will cause your queries to be rolled back, even if
+the queries produce a valid result. To use test mode, simply set the first parameter in the <code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transStart()</span></code>
+method to true:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transStart</span><span class="p">(</span><span class="k">true</span><span class="p">);</span> <span class="c1">// Query will be rolled back</span>
@@ -468,8 +452,8 @@ a valid result. To use test mode simply set the first parameter in the
 </section>
 <section id="running-transactions-manually">
 <span id="transactions-manual-transactions"></span><h2><a class="toc-backref" href="#id9" role="doc-backlink">Running Transactions Manually</a><a class="headerlink" href="#running-transactions-manually" title="Link to this heading"></a></h2>
-<p>When you have <code class="docutils literal notranslate"><span class="pre">DBDebug</span></code> false in your <strong>app/Config/Database.php</strong> file, and
-if you would like to run transactions manually you can do so as follows:</p>
+<p>When <code class="docutils literal notranslate"><span class="pre">DBDebug</span></code> is false in your <strong>app/Config/Database.php</strong> file, and you would like to run transactions manually, you
+can do so as follows:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transBegin</span><span class="p">();</span>
@@ -487,35 +471,28 @@ if you would like to run transactions manually you can do so as follows:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Make sure to use <code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transBegin()</span></code> when running manual
-transactions, <strong>NOT</strong> <code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transStart()</span></code>.</p>
+<p>Make sure to use <code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transBegin()</span></code> when running manual transactions, <strong>NOT</strong>
+<code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transStart()</span></code>.</p>
 </div>
 </section>
 <section id="mysql-deadlocks">
 <h2><a class="toc-backref" href="#id10" role="doc-backlink">MySQL Deadlocks</a><a class="headerlink" href="#mysql-deadlocks" title="Link to this heading"></a></h2>
-<p>InnoDB error 1213 rolls the victim transaction back. CodeIgniter keeps that
-transaction open. The next statement run through <code class="docutils literal notranslate"><span class="pre">query()</span></code>, <code class="docutils literal notranslate"><span class="pre">simpleQuery()</span></code>
-or the Query Builder on the same connection starts a new server transaction,
-so the write does not autocommit. The rollback happens when the outermost
-transaction finishes: <code class="docutils literal notranslate"><span class="pre">transCommit()</span></code> rolls that server transaction back and
-returns false, so the transaction has ended when it returns, and
-<code class="docutils literal notranslate"><span class="pre">transComplete()</span></code> also rolls it back. At a nested depth, <code class="docutils literal notranslate"><span class="pre">transCommit()</span></code>
-still returns true and only decrements the depth.</p>
-<p>Prepared queries are not covered. A deadlock raised by a prepared query is not
-detected, and a prepared query run after a deadlock does not start a new server
-transaction.</p>
-<p>Error 1205 is not handled this way. <code class="docutils literal notranslate"><span class="pre">innodb_rollback_on_timeout</span></code> decides
-whether InnoDB rolled that transaction back, and the message is the same
-either way.</p>
+<p>InnoDB error 1213 rolls the victim transaction back. CodeIgniter keeps that transaction open. The next statement run
+through <code class="docutils literal notranslate"><span class="pre">query()</span></code>, <code class="docutils literal notranslate"><span class="pre">simpleQuery()</span></code> or the Query Builder on the same connection starts a new server transaction, so
+the write does not autocommit. The rollback happens when the outermost transaction finishes: <code class="docutils literal notranslate"><span class="pre">transCommit()</span></code> rolls
+that server transaction back and returns false, so the transaction has ended when it returns, and <code class="docutils literal notranslate"><span class="pre">transComplete()</span></code>
+also rolls it back. At a nested depth, <code class="docutils literal notranslate"><span class="pre">transCommit()</span></code> still returns true and only decrements the depth.</p>
+<p>Prepared queries are not covered. A deadlock raised by a prepared query is not detected, and a prepared query run after
+a deadlock does not start a new server transaction.</p>
+<p>Error 1205 is not handled this way. <code class="docutils literal notranslate"><span class="pre">innodb_rollback_on_timeout</span></code> decides whether InnoDB rolled that transaction back,
+and the message is the same either way.</p>
 </section>
 <section id="nested-transactions">
 <h2><a class="toc-backref" href="#id11" role="doc-backlink">Nested Transactions</a><a class="headerlink" href="#nested-transactions" title="Link to this heading"></a></h2>
-<p>In CodeIgniter, transactions can be nested in a way such that only the
-outmost or top-level transaction commands are executed. You can include as
-many pairs of <code class="docutils literal notranslate"><span class="pre">transStart()</span></code>/<code class="docutils literal notranslate"><span class="pre">transComplete()</span></code> or <code class="docutils literal notranslate"><span class="pre">transBegin()</span></code>/<code class="docutils literal notranslate"><span class="pre">transCommit()</span></code>/<code class="docutils literal notranslate"><span class="pre">transRollback()</span></code>
-as you want inside a transaction block and so on. CodeIgniter will keep
-track of the transaction “depth” and only take action at the outermost layer
-(zero depth).</p>
+<p>In CodeIgniter, transactions can be nested in such a way that only the outermost or top-level transaction commands are
+executed. You can include as many pairs of <code class="docutils literal notranslate"><span class="pre">transStart()</span></code>/<code class="docutils literal notranslate"><span class="pre">transComplete()</span></code> or
+<code class="docutils literal notranslate"><span class="pre">transBegin()</span></code>/<code class="docutils literal notranslate"><span class="pre">transCommit()</span></code>/<code class="docutils literal notranslate"><span class="pre">transRollback()</span></code> as you want inside a transaction block and so on. CodeIgniter
+will keep track of the transaction “depth” and only take action at the outermost layer (zero depth).</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transStart</span><span class="p">();</span> <span class="c1">// actually starts a transaction</span>
@@ -529,9 +506,8 @@ track of the transaction “depth” and only take action at the outermost layer
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In case the structure is far more complex, it’s your responsibility
-to ensure that the inner transactions can reach the outermost layer again
-in order to be fully executed by the database, thus prevents unintended
+<p>In case the structure is far more complex, it’s your responsibility to ensure that the inner transactions can
+reach the outermost layer again in order to be fully executed by the database, thus preventing unintended
 commits/rollbacks.</p>
 </div>
 </section>
@@ -549,7 +525,7 @@ commits/rollbacks.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

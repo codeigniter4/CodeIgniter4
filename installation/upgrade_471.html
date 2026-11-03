@@ -323,8 +323,8 @@
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Mandatory File Changes</a><a class="headerlink" href="#mandatory-file-changes" title="Link to this heading"></a></h2>
 <section id="worker-mode">
 <h3><a class="toc-backref" href="#id2" role="doc-backlink">Worker Mode</a><a class="headerlink" href="#worker-mode" title="Link to this heading"></a></h3>
-<p>If you are using Worker Mode, you must update <strong>public/frankenphp-worker.php</strong> after
-upgrading. The easiest way is to re-run the install command:</p>
+<p>If you are using Worker Mode, you must update <strong>public/frankenphp-worker.php</strong> after upgrading. The easiest way is to
+re-run the install command:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark worker:install --force</span>
 </pre></div>
 </div>
@@ -334,50 +334,44 @@ upgrading. The easiest way is to re-run the install command:</p>
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Link to this heading"></a></h2>
 <section id="database-connection-property-casting">
 <h3><a class="toc-backref" href="#id4" role="doc-backlink">Database Connection Property Casting</a><a class="headerlink" href="#database-connection-property-casting" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">BaseConnection</span></code> now casts string values coming from <code class="docutils literal notranslate"><span class="pre">.env</span></code> overrides to match
-the declared type of each connection property. This affects properties that are
-<code class="docutils literal notranslate"><span class="pre">null</span></code> in the config array and then set via <code class="docutils literal notranslate"><span class="pre">.env</span></code> - such as SQLite3’s
-<code class="docutils literal notranslate"><span class="pre">synchronous</span></code> or <code class="docutils literal notranslate"><span class="pre">busyTimeout</span></code> - which previously arrived as strings and were
-stored without conversion.</p>
-<p>If you extended the SQLite3 handler, review your custom typed properties and update
-them if needed.</p>
+<p><code class="docutils literal notranslate"><span class="pre">BaseConnection</span></code> now casts string values coming from <code class="docutils literal notranslate"><span class="pre">.env</span></code> overrides to match the declared type of each connection
+property. This affects properties that are <code class="docutils literal notranslate"><span class="pre">null</span></code> in the config array and then set via <code class="docutils literal notranslate"><span class="pre">.env</span></code> - such as SQLite3’s
+<code class="docutils literal notranslate"><span class="pre">synchronous</span></code> or <code class="docutils literal notranslate"><span class="pre">busyTimeout</span></code> - which previously arrived as strings and were stored without conversion.</p>
+<p>If you extended the SQLite3 handler, review your custom typed properties and update them if needed.</p>
 </section>
 </section>
 <section id="project-files">
 <h2><a class="toc-backref" href="#id5" role="doc-backlink">Project Files</a><a class="headerlink" href="#project-files" title="Link to this heading"></a></h2>
-<p>Some files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to
-these files being outside of the <strong>system</strong> scope they will not be changed without your intervention.</p>
+<p>Some files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to these files being outside of
+the <strong>system</strong> scope, they will not be changed without your intervention.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>There are some third-party CodeIgniter modules available to assist
-with merging changes to the project space:
+<p>There are some third-party CodeIgniter modules available to assist with merging changes to the project space:
 <a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
 </div>
 <section id="content-changes">
 <h3><a class="toc-backref" href="#id6" role="doc-backlink">Content Changes</a><a class="headerlink" href="#content-changes" title="Link to this heading"></a></h3>
-<p>The following files received significant changes (including deprecations or visual adjustments)
-and it is recommended that you merge the updated versions with your application:</p>
+<p>The following files received significant changes (including deprecations or visual adjustments) and it is recommended
+that you merge the updated versions with your application:</p>
 <section id="config">
 <h4>Config<a class="headerlink" href="#config" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><dl class="simple">
-<dt>app/Config/WorkerMode.php</dt><dd><ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">Config\WorkerMode::$resetEventListeners</span></code> has been added, with a default
-value set to <code class="docutils literal notranslate"><span class="pre">[]</span></code>. See <a class="reference internal" href="worker_mode.html#worker-mode-reset-event-listeners"><span class="std std-ref">Reset Event Listeners</span></a> for details.</p></li>
+<li><p><strong>app/Config/WorkerMode.php</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Config\WorkerMode::$resetEventListeners</span></code> has been added, with a default value set to <code class="docutils literal notranslate"><span class="pre">[]</span></code>. See
+<a class="reference internal" href="worker_mode.html#worker-mode-reset-event-listeners"><span class="std std-ref">Reset Event Listeners</span></a> for details.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
 </ul>
 </section>
 </section>
 <section id="all-changes">
 <h3><a class="toc-backref" href="#id7" role="doc-backlink">All Changes</a><a class="headerlink" href="#all-changes" title="Link to this heading"></a></h3>
-<p>This is a list of all files in the <strong>project space</strong> that received changes;
-many will be simple comments or formatting that have no effect on the runtime:</p>
+<p>This is a list of all files in the <strong>project space</strong> that received changes; many will be simple comments or formatting
+that have no effect on the runtime:</p>
 <ul class="simple">
-<li><p>app/Config/Database.php</p></li>
-<li><p>app/Config/WorkerMode.php</p></li>
+<li><p><strong>app/Config/Database.php</strong></p></li>
+<li><p><strong>app/Config/WorkerMode.php</strong></p></li>
 </ul>
 </section>
 </section>
@@ -395,7 +389,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

@@ -313,10 +313,9 @@
 <li><p><a class="reference internal" href="#congratulations" id="id10">Congratulations</a></p></li>
 </ul>
 </nav>
-<p>You now know how you can read data from a database using CodeIgniter, but
-you haven’t written any information to the database yet. In this section,
-you’ll expand your news controller and model created earlier to include
-this functionality.</p>
+<p>You now know how you can read data from a database using CodeIgniter, but you haven’t written any information to the
+database yet. In this section, you’ll expand your news controller and model created earlier to include this
+functionality.</p>
 <section id="enable-csrf-filter">
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Enable CSRF Filter</a><a class="headerlink" href="#enable-csrf-filter" title="Link to this heading"></a></h2>
 <p>Before creating a form, let’s enable the CSRF protection.</p>
@@ -339,20 +338,19 @@ this functionality.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>It configures the CSRF filter to be enabled for all <strong>POST</strong> requests.
-You can read more about the CSRF protection in <a class="reference internal" href="../../libraries/security.html"><span class="doc">Security</span></a> library.</p>
+<p>It configures the CSRF filter to be enabled for all <strong>POST</strong> requests. You can read more about the CSRF protection in
+the <a class="reference internal" href="../../libraries/security.html"><span class="doc">Security</span></a> library.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>In general, if you use <code class="docutils literal notranslate"><span class="pre">$methods</span></code> filters, you should <a class="reference internal" href="../../incoming/routing.html#use-defined-routes-only"><span class="std std-ref">disable Auto Routing (Legacy)</span></a>
-because <a class="reference internal" href="../../incoming/routing.html#auto-routing-legacy"><span class="std std-ref">Auto Routing (Legacy)</span></a> permits any HTTP method to access a controller.
-Accessing the controller with a method you don’t expect could bypass the filter.</p>
+because <a class="reference internal" href="../../incoming/routing.html#auto-routing-legacy"><span class="std std-ref">Auto Routing (Legacy)</span></a> permits any HTTP method to access a controller. Accessing the controller with a
+method you don’t expect could bypass the filter.</p>
 </div>
 </section>
 <section id="adding-routing-rules">
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">Adding Routing Rules</a><a class="headerlink" href="#adding-routing-rules" title="Link to this heading"></a></h2>
-<p>Before you can start adding news items into your CodeIgniter application
-you have to add an extra rule to <strong>app/Config/Routes.php</strong> file. Make sure your
-file contains the following:</p>
+<p>Before you can start adding news items into your CodeIgniter application, you have to add an extra rule to the
+<strong>app/Config/Routes.php</strong> file. Make sure your file contains the following:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// ...</span>
@@ -369,20 +367,19 @@ file contains the following:</p>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'(:segment)'</span><span class="p">,</span> <span class="p">[</span><span class="nx">Pages</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="s1">'view'</span><span class="p">]);</span>
 </pre></div>
 </div>
-<p>The route directive for <code class="docutils literal notranslate"><span class="pre">'news/new'</span></code> is placed before the directive for <code class="docutils literal notranslate"><span class="pre">'news/(:segment)'</span></code> to ensure that the form to create a news item is displayed.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">$routes-&gt;post()</span></code> line defines the router for a POST request. It matches
-only a POST request to the URI path <strong>/news</strong>, and it maps to the <code class="docutils literal notranslate"><span class="pre">create()</span></code> method of
-the <code class="docutils literal notranslate"><span class="pre">News</span></code> class.</p>
+<p>The route directive for <code class="docutils literal notranslate"><span class="pre">'news/new'</span></code> is placed before the directive for <code class="docutils literal notranslate"><span class="pre">'news/(:segment)'</span></code> to ensure that the form
+to create a news item is displayed.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">$routes-&gt;post()</span></code> line defines the route for a POST request. It matches only a POST request to the URI path
+<strong>/news</strong>, and it maps to the <code class="docutils literal notranslate"><span class="pre">create()</span></code> method of the <code class="docutils literal notranslate"><span class="pre">News</span></code> class.</p>
 <p>You can read more about different routing types in <a class="reference internal" href="../../incoming/routing.html#defined-route-routing"><span class="std std-ref">Setting Routing Rules</span></a>.</p>
 </section>
 <section id="create-a-form">
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">Create a Form</a><a class="headerlink" href="#create-a-form" title="Link to this heading"></a></h2>
 <section id="create-news-create-view-file">
 <h3><a class="toc-backref" href="#id4" role="doc-backlink">Create news/create View File</a><a class="headerlink" href="#create-news-create-view-file" title="Link to this heading"></a></h3>
-<p>To input data into the database, you need to create a form where you can
-input the information to be stored. This means you’ll be needing a form
-with two fields, one for the title and one for the text. You’ll derive
-the slug from our title in the model.</p>
+<p>To input data into the database, you need to create a form where you can input the information to be stored. This means
+you’ll be needing a form with two fields, one for the title and one for the text. You’ll derive the slug from our title
+in the model.</p>
 <p>Create a new view at <strong>app/Views/news/create.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;&lt;?=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$title</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
 
@@ -405,15 +402,15 @@ the slug from our title in the model.</p>
 </pre></div>
 </div>
 <p>There are probably only four things here that look unfamiliar.</p>
-<p>The <a class="reference internal" href="../../general/common_functions.html#session" title="session"><code class="xref php php-func docutils literal notranslate"><span class="pre">session()</span></code></a> function is used to get the Session object,
-and <code class="docutils literal notranslate"><span class="pre">session()-&gt;getFlashdata('error')</span></code> is used to display the error related to CSRF protection
-to the user. However, by default, if a CSRF validation check fails, an exception will be thrown,
-so it does not work yet. See <a class="reference internal" href="../../libraries/security.html#csrf-redirection-on-failure"><span class="std std-ref">Redirection on Failure</span></a> for more information.</p>
-<p>The <a class="reference internal" href="../../helpers/form_helper.html#validation_list_errors" title="validation_list_errors"><code class="xref php php-func docutils literal notranslate"><span class="pre">validation_list_errors()</span></code></a> function provided by the <a class="reference internal" href="../../helpers/form_helper.html"><span class="doc">Form Helper</span></a>
-is used to report errors related to form validation.</p>
-<p>The <a class="reference internal" href="../../general/common_functions.html#csrf_field" title="csrf_field"><code class="xref php php-func docutils literal notranslate"><span class="pre">csrf_field()</span></code></a> function creates a hidden input with a CSRF token that helps protect against some common attacks.</p>
-<p>The <a class="reference internal" href="../../helpers/form_helper.html#set_value" title="set_value"><code class="xref php php-func docutils literal notranslate"><span class="pre">set_value()</span></code></a> function provided by the <a class="reference internal" href="../../helpers/form_helper.html"><span class="doc">Form Helper</span></a> is used to show
-old input data when errors occur.</p>
+<p>The <a class="reference internal" href="../../general/common_functions.html#session" title="session"><code class="xref php php-func docutils literal notranslate"><span class="pre">session()</span></code></a> function is used to get the Session object, and <code class="docutils literal notranslate"><span class="pre">session()-&gt;getFlashdata('error')</span></code> is used
+to display the error related to CSRF protection to the user. However, by default, if a CSRF validation check fails, an
+exception will be thrown, so it does not work yet. See <a class="reference internal" href="../../libraries/security.html#csrf-redirection-on-failure"><span class="std std-ref">Redirection on Failure</span></a> for more information.</p>
+<p>The <a class="reference internal" href="../../helpers/form_helper.html#validation_list_errors" title="validation_list_errors"><code class="xref php php-func docutils literal notranslate"><span class="pre">validation_list_errors()</span></code></a> function provided by the <a class="reference internal" href="../../helpers/form_helper.html"><span class="doc">Form Helper</span></a> is used to report
+errors related to form validation.</p>
+<p>The <a class="reference internal" href="../../general/common_functions.html#csrf_field" title="csrf_field"><code class="xref php php-func docutils literal notranslate"><span class="pre">csrf_field()</span></code></a> function creates a hidden input with a CSRF token that helps protect against some common
+attacks.</p>
+<p>The <a class="reference internal" href="../../helpers/form_helper.html#set_value" title="set_value"><code class="xref php php-func docutils literal notranslate"><span class="pre">set_value()</span></code></a> function provided by the <a class="reference internal" href="../../helpers/form_helper.html"><span class="doc">Form Helper</span></a> is used to show old input data
+when errors occur.</p>
 </section>
 <section id="news-controller">
 <h3><a class="toc-backref" href="#id5" role="doc-backlink">News Controller</a><a class="headerlink" href="#news-controller" title="Link to this heading"></a></h3>
@@ -443,9 +440,8 @@ old input data when errors occur.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>We load the <a class="reference internal" href="../../helpers/form_helper.html"><span class="doc">Form helper</span></a> with the
-<a class="reference internal" href="../../general/common_functions.html#helper" title="helper"><code class="xref php php-func docutils literal notranslate"><span class="pre">helper()</span></code></a> function. Most helper functions require the helper to be
-loaded before use.</p>
+<p>We load the <a class="reference internal" href="../../helpers/form_helper.html"><span class="doc">Form helper</span></a> with the <a class="reference internal" href="../../general/common_functions.html#helper" title="helper"><code class="xref php php-func docutils literal notranslate"><span class="pre">helper()</span></code></a> function. Most helper functions
+require the helper to be loaded before use.</p>
 <p>Then it returns the created form view.</p>
 </section>
 <section id="add-news-create-to-create-a-news-item">
@@ -453,9 +449,9 @@ loaded before use.</p>
 <p>Next, create a method to create a news item from the submitted data.</p>
 <p>You’re going to do three things here:</p>
 <ol class="arabic simple">
-<li><p>checks whether the submitted data passed the validation rules.</p></li>
-<li><p>saves the news item to the database.</p></li>
-<li><p>returns a success page.</p></li>
+<li><p>Check whether the submitted data passed the validation rules.</p></li>
+<li><p>Save the news item to the database.</p></li>
+<li><p>Return a success page.</p></li>
 </ol>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -504,40 +500,34 @@ loaded before use.</p>
 <p>The code above adds a lot of functionality.</p>
 <section id="retrieve-the-data">
 <h5>Retrieve the Data<a class="headerlink" href="#retrieve-the-data" title="Link to this heading"></a></h5>
-<p>First, we use the <a class="reference internal" href="../../incoming/incomingrequest.html"><span class="doc">IncomingRequest</span></a>
-object <code class="docutils literal notranslate"><span class="pre">$this-&gt;request</span></code>, which is set in the controller by the framework.</p>
-<p>We get the necessary items from the <strong>POST</strong> data by the user and set them in the
-<code class="docutils literal notranslate"><span class="pre">$data</span></code> variable.</p>
+<p>First, we use the <a class="reference internal" href="../../incoming/incomingrequest.html"><span class="doc">IncomingRequest</span></a> object <code class="docutils literal notranslate"><span class="pre">$this-&gt;request</span></code>, which is set in the
+controller by the framework.</p>
+<p>We get the necessary items from the <strong>POST</strong> data sent by the user and set them in the <code class="docutils literal notranslate"><span class="pre">$data</span></code> variable.</p>
 </section>
 <section id="validate-the-data">
 <h5>Validate the Data<a class="headerlink" href="#validate-the-data" title="Link to this heading"></a></h5>
-<p>Next, you’ll use the Controller-provided helper function
-<a class="reference internal" href="../../incoming/controllers.html#controller-validatedata"><span class="std std-ref">validateData()</span></a> to validate the submitted data.
-In this case, the title and body fields are required and in the specific length.</p>
-<p>CodeIgniter has a powerful validation library as demonstrated
-above. You can read more about the <a class="reference internal" href="../../libraries/validation.html"><span class="doc">Validation library</span></a>.</p>
-<p>If the validation fails, we call the <code class="docutils literal notranslate"><span class="pre">new()</span></code> method you just created and return
-the HTML form.</p>
+<p>Next, you’ll use the Controller-provided helper function <a class="reference internal" href="../../incoming/controllers.html#controller-validatedata"><span class="std std-ref">validateData()</span></a> to validate the
+submitted data. In this case, the title and body fields are required and have length limits.</p>
+<p>CodeIgniter has a powerful validation library as demonstrated above. You can read more about the
+<a class="reference internal" href="../../libraries/validation.html"><span class="doc">Validation library</span></a>.</p>
+<p>If the validation fails, we call the <code class="docutils literal notranslate"><span class="pre">new()</span></code> method you just created and return the HTML form.</p>
 </section>
 <section id="save-the-news-item">
 <h5>Save the News Item<a class="headerlink" href="#save-the-news-item" title="Link to this heading"></a></h5>
 <p>If the validation passed all the rules, we get the validated data by
-<a class="reference internal" href="../../libraries/validation.html#validation-getting-validated-data"><span class="std std-ref">$this-&gt;validator-&gt;getValidated()</span></a> and
-set them in the <code class="docutils literal notranslate"><span class="pre">$post</span></code> variable.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">NewsModel</span></code> is loaded and called. This takes care of passing the news item
-into the model. The <a class="reference internal" href="../../models/model.html#model-save"><span class="std std-ref">save()</span></a> method handles inserting or updating the
-record automatically, based on whether it finds an array key matching the primary
-key.</p>
-<p>This contains a new function <a class="reference internal" href="../../helpers/url_helper.html#url_title" title="url_title"><code class="xref php php-func docutils literal notranslate"><span class="pre">url_title()</span></code></a>. This function -
-provided by the <a class="reference internal" href="../../helpers/url_helper.html"><span class="doc">URL helper</span></a> - strips down
-the string you pass it, replacing all spaces by dashes (<code class="docutils literal notranslate"><span class="pre">-</span></code>) and makes
-sure everything is in lowercase characters. This leaves you with a nice
-slug, perfect for creating URIs.</p>
+<a class="reference internal" href="../../libraries/validation.html#validation-getting-validated-data"><span class="std std-ref">$this-&gt;validator-&gt;getValidated()</span></a> and set them in the <code class="docutils literal notranslate"><span class="pre">$post</span></code> variable.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">NewsModel</span></code> is loaded and called. This takes care of passing the news item into the model. The <a class="reference internal" href="../../models/model.html#model-save"><span class="std std-ref">save()</span></a>
+method handles inserting or updating the record automatically, based on whether it finds an array key matching the
+primary key.</p>
+<p>This contains a new function <a class="reference internal" href="../../helpers/url_helper.html#url_title" title="url_title"><code class="xref php php-func docutils literal notranslate"><span class="pre">url_title()</span></code></a>. This function - provided by the
+<a class="reference internal" href="../../helpers/url_helper.html"><span class="doc">URL helper</span></a> - strips down the string you pass it, replacing all spaces with dashes
+(<code class="docutils literal notranslate"><span class="pre">-</span></code>) and making sure everything is in lowercase characters. This leaves you with a nice slug, perfect for creating
+URIs.</p>
 </section>
 <section id="return-success-page">
 <h5>Return Success Page<a class="headerlink" href="#return-success-page" title="Link to this heading"></a></h5>
-<p>After this, view files are loaded and returned to display a success message.
-Create a view at <strong>app/Views/news/success.php</strong> and write a success message.</p>
+<p>After this, view files are loaded and returned to display a success message. Create a view at
+<strong>app/Views/news/success.php</strong> and write a success message.</p>
 <p>This could be as simple as:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">News</span> <span class="nx">item</span> <span class="nx">created</span> <span class="nx">successfully</span><span class="o">.&lt;/</span><span class="nx">p</span><span class="o">&gt;</span>
 </pre></div>
@@ -548,16 +538,13 @@ Create a view at <strong>app/Views/news/success.php</strong> and write a success
 </section>
 <section id="newsmodel-updating">
 <h2><a class="toc-backref" href="#id8" role="doc-backlink">NewsModel Updating</a><a class="headerlink" href="#newsmodel-updating" title="Link to this heading"></a></h2>
-<p>The only thing that remains is ensuring that your model is set up
-to allow data to be saved properly. The <code class="docutils literal notranslate"><span class="pre">save()</span></code> method that was
-used will determine whether the information should be inserted
-or if the row already exists and should be updated, based on the presence
-of a primary key. In this case, there is no <code class="docutils literal notranslate"><span class="pre">id</span></code> field passed to it,
-so it will insert a new row into it’s table, <code class="docutils literal notranslate"><span class="pre">news</span></code>.</p>
-<p>However, by default the insert and update methods in the Model will
-not actually save any data because it doesn’t know what fields are
-safe to be updated. Edit the <code class="docutils literal notranslate"><span class="pre">NewsModel</span></code> to provide it a list of updatable
-fields in the <code class="docutils literal notranslate"><span class="pre">$allowedFields</span></code> property.</p>
+<p>The only thing that remains is ensuring that your model is set up to allow data to be saved properly. The <code class="docutils literal notranslate"><span class="pre">save()</span></code>
+method that was used will determine whether the information should be inserted or if the row already exists and should
+be updated, based on the presence of a primary key. In this case, there is no <code class="docutils literal notranslate"><span class="pre">id</span></code> field passed to it, so it will
+insert a new row into its table, <code class="docutils literal notranslate"><span class="pre">news</span></code>.</p>
+<p>However, by default the insert and update methods in the Model will not actually save any data because it doesn’t know
+what fields are safe to be updated. Edit the <code class="docutils literal notranslate"><span class="pre">NewsModel</span></code> to provide it a list of updatable fields in the
+<code class="docutils literal notranslate"><span class="pre">$allowedFields</span></code> property.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
@@ -572,17 +559,15 @@ fields in the <code class="docutils literal notranslate"><span class="pre">$allo
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>This new property now contains the fields that we allow to be saved to the
-database. Notice that we leave out the <code class="docutils literal notranslate"><span class="pre">id</span></code>? That’s because you will almost
-never need to do that, since it is an auto-incrementing field in the database.
-This helps protect against Mass Assignment Vulnerabilities. If your model is
-handling your timestamps, you would also leave those out.</p>
+<p>This new property now contains the fields that we allow to be saved to the database. Notice that we leave out the
+<code class="docutils literal notranslate"><span class="pre">id</span></code>? That’s because you will almost never need to do that, since it is an auto-incrementing field in the database.
+This helps protect against Mass Assignment Vulnerabilities. If your model is handling your timestamps, you would also
+leave those out.</p>
 </section>
 <section id="create-a-news-item">
 <h2><a class="toc-backref" href="#id9" role="doc-backlink">Create a News Item</a><a class="headerlink" href="#create-a-news-item" title="Link to this heading"></a></h2>
-<p>Now point your browser to your local development environment where you
-installed CodeIgniter and add <strong>/news/new</strong> to the URL.
-Add some news and check out the different pages you made.</p>
+<p>Now point your browser to your local development environment where you installed CodeIgniter and add <strong>/news/new</strong> to
+the URL. Add some news and check out the different pages you made.</p>
 <a class="reference internal image-reference" href="../../_images/tutorial3.png"><img alt="../../_images/tutorial3.png" class="align-center" src="../../_images/tutorial3.png" style="width: 45%; height: 415px;" />
 </a>
 <a class="reference internal image-reference" href="../../_images/tutorial4.png"><img alt="../../_images/tutorial4.png" class="align-center" src="../../_images/tutorial4.png" style="width: 45%; height: 415px;" />
@@ -591,8 +576,7 @@ Add some news and check out the different pages you made.</p>
 <section id="congratulations">
 <h2><a class="toc-backref" href="#id10" role="doc-backlink">Congratulations</a><a class="headerlink" href="#congratulations" title="Link to this heading"></a></h2>
 <p>You just completed your first CodeIgniter4 application!</p>
-<p>The diagram underneath shows your project’s <strong>app</strong> folder, with all of the
-files that you created or modified.</p>
+<p>The diagram underneath shows your project’s <strong>app</strong> folder, with all of the files that you created or modified.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>app/
 ├── Config
 │   ├── Filters.php (Modified)
@@ -631,7 +615,7 @@ files that you created or modified.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

@@ -292,8 +292,7 @@
              
   <section id="xml-helper">
 <h1>XML Helper<a class="headerlink" href="#xml-helper" title="Link to this heading"></a></h1>
-<p>The XML Helper file contains functions that assist in working with XML
-data.</p>
+<p>The XML Helper file contains functions that assist in working with XML data.</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#loading-this-helper" id="id1">Loading this Helper</a></p></li>
@@ -302,7 +301,7 @@ data.</p>
 </nav>
 <section id="loading-this-helper">
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Loading this Helper</a><a class="headerlink" href="#loading-this-helper" title="Link to this heading"></a></h2>
-<p>This helper is loaded using the following code</p>
+<p>This helper is loaded using the following code:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nx">helper</span><span class="p">(</span><span class="s1">'xml'</span><span class="p">);</span>
@@ -318,7 +317,7 @@ data.</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$str</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – the text string to convert</p></li>
+<li><p><strong>$str</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The text string to convert</p></li>
 <li><p><strong>$protect_all</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether to protect all content that looks like a potential entity instead of just numbered entities, e.g., &amp;foo;</p></li>
 </ul>
 </dd>
@@ -329,18 +328,14 @@ data.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Takes a string as input and converts the following reserved XML
-characters to entities:</p>
-<blockquote>
-<div><ul class="simple">
+<p>Takes a string as input and converts the following reserved XML characters to entities:</p>
+<ul class="simple">
 <li><p>Ampersands: &amp;</p></li>
 <li><p>Less than and greater than characters: &lt; &gt;</p></li>
 <li><p>Single and double quotes: ‘ “</p></li>
 <li><p>Dashes: -</p></li>
 </ul>
-</div></blockquote>
-<p>This function ignores ampersands if they are part of existing numbered
-character entities, e.g., &amp;#123;. Example:</p>
+<p>This function ignores ampersands if they are part of existing numbered character entities, e.g., &amp;#123;. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$string</span> <span class="o">=</span> <span class="s1">'&lt;p&gt;Here is a paragraph &amp; an entity (&amp;#123;).&lt;/p&gt;'</span><span class="p">;</span>
@@ -348,7 +343,7 @@ character entities, e.g., &amp;#123;. Example:</p>
 <span class="k">echo</span> <span class="nv">$string</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>outputs:</p>
+<p>Outputs:</p>
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="ni">&amp;lt;</span>p<span class="ni">&amp;gt;</span>Here is a paragraph <span class="ni">&amp;amp;</span> an entity (<span class="ni">&amp;#123;</span>).<span class="ni">&amp;lt;</span>/p<span class="ni">&amp;gt;</span>
 </pre></div>
 </div>
@@ -369,7 +364,7 @@ character entities, e.g., &amp;#123;. Example:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

@@ -318,34 +318,32 @@
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Link to this heading"></a></h2>
 <section id="config-app-proxyips">
 <span id="upgrade-4211-proxyips"></span><h3><a class="toc-backref" href="#id2" role="doc-backlink">Config\App::$proxyIPs</a><a class="headerlink" href="#config-app-proxyips" title="Link to this heading"></a></h3>
-<p>The config value format has been changed. Now you must set your proxy IP address and the HTTP header name for the client IP address pair as an array:</p>
+<p>The config value format has been changed. Now you must set your proxy IP address and the HTTP header name for the client
+IP address pair as an array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$proxyIPs</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">'10.0.1.200'</span>     <span class="o">=&gt;</span> <span class="s1">'X-Forwarded-For'</span><span class="p">,</span>
         <span class="s1">'192.168.5.0/24'</span> <span class="o">=&gt;</span> <span class="s1">'X-Forwarded-For'</span><span class="p">,</span>
 <span class="p">];</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">ConfigException</span></code> will be thrown for old format config value.</p>
+<p><code class="docutils literal notranslate"><span class="pre">ConfigException</span></code> will be thrown for a config value in the old format.</p>
 </section>
 <section id="session-handler-key-changes">
 <span id="upgrade-4211-session-key"></span><h3><a class="toc-backref" href="#id3" role="doc-backlink">Session Handler Key Changes</a><a class="headerlink" href="#session-handler-key-changes" title="Link to this heading"></a></h3>
-<p>The key of the session data record for <a class="reference internal" href="../libraries/sessions.html#sessions-databasehandler-driver"><span class="std std-ref">DatabaseHandler Driver</span></a>,
-<a class="reference internal" href="../libraries/sessions.html#sessions-memcachedhandler-driver"><span class="std std-ref">MemcachedHandler Driver</span></a> and <a class="reference internal" href="../libraries/sessions.html#sessions-redishandler-driver"><span class="std std-ref">RedisHandler Driver</span></a>
-has changed. Therefore, any existing session data will be invalidated after
-the upgrade if you are using these session handlers.</p>
+<p>The key of the session data record for <a class="reference internal" href="../libraries/sessions.html#sessions-databasehandler-driver"><span class="std std-ref">DatabaseHandler Driver</span></a>, <a class="reference internal" href="../libraries/sessions.html#sessions-memcachedhandler-driver"><span class="std std-ref">MemcachedHandler Driver</span></a>
+and <a class="reference internal" href="../libraries/sessions.html#sessions-redishandler-driver"><span class="std std-ref">RedisHandler Driver</span></a> has changed. Therefore, any existing session data will be invalidated after the
+upgrade if you are using these session handlers.</p>
 <ul class="simple">
-<li><p>When using <code class="docutils literal notranslate"><span class="pre">DatabaseHandler</span></code>, the <code class="docutils literal notranslate"><span class="pre">id</span></code> column value in the session table
-now contains the session cookie name (<code class="docutils literal notranslate"><span class="pre">Config\App::$sessionCookieName</span></code>).</p></li>
-<li><p>When using <code class="docutils literal notranslate"><span class="pre">MemcachedHandler</span></code> or <code class="docutils literal notranslate"><span class="pre">RedisHandler</span></code>, the key value contains
-the session cookie name (<code class="docutils literal notranslate"><span class="pre">Config\App::$sessionCookieName</span></code>).</p></li>
+<li><p>When using <code class="docutils literal notranslate"><span class="pre">DatabaseHandler</span></code>, the <code class="docutils literal notranslate"><span class="pre">id</span></code> column value in the session table now contains the session cookie name
+(<code class="docutils literal notranslate"><span class="pre">Config\App::$sessionCookieName</span></code>).</p></li>
+<li><p>When using <code class="docutils literal notranslate"><span class="pre">MemcachedHandler</span></code> or <code class="docutils literal notranslate"><span class="pre">RedisHandler</span></code>, the key value contains the session cookie name
+(<code class="docutils literal notranslate"><span class="pre">Config\App::$sessionCookieName</span></code>).</p></li>
 </ul>
-<p>There is maximum length for the <code class="docutils literal notranslate"><span class="pre">id</span></code> column and Memcached key (250 bytes).
-If the following values exceed those maximum length, the session will not work properly.</p>
+<p>There is a maximum length for the <code class="docutils literal notranslate"><span class="pre">id</span></code> column and Memcached key (250 bytes). If the following values exceed those
+maximum lengths, the session will not work properly.</p>
 <ul class="simple">
-<li><p>the session cookie name, delimiter, and session id (32 characters by default)
-when using <code class="docutils literal notranslate"><span class="pre">DatabaseHandler</span></code></p></li>
-<li><p>the prefix (<code class="docutils literal notranslate"><span class="pre">ci_session</span></code>), session cookie name, delimiters, and session id
-when using  <code class="docutils literal notranslate"><span class="pre">MemcachedHandler</span></code></p></li>
+<li><p>the session cookie name, delimiter, and session id (32 characters by default) when using <code class="docutils literal notranslate"><span class="pre">DatabaseHandler</span></code></p></li>
+<li><p>the prefix (<code class="docutils literal notranslate"><span class="pre">ci_session</span></code>), session cookie name, delimiters, and session id when using <code class="docutils literal notranslate"><span class="pre">MemcachedHandler</span></code></p></li>
 </ul>
 </section>
 </section>
@@ -354,16 +352,16 @@ when using  <code class="docutils literal notranslate"><span class="pre">Memcach
 <p>Version 4.2.11 did not alter any executable code in project files.</p>
 <section id="all-changes">
 <h3><a class="toc-backref" href="#id5" role="doc-backlink">All Changes</a><a class="headerlink" href="#all-changes" title="Link to this heading"></a></h3>
-<p>This is a list of all files in the <strong>project space</strong> that received changes;
-many will be simple comments or formatting that have no effect on the runtime:</p>
+<p>This is a list of all files in the <strong>project space</strong> that received changes; many will be simple comments or formatting
+that have no effect on the runtime:</p>
 <ul class="simple">
-<li><p>app/Config/App.php</p></li>
-<li><p>app/Config/Autoload.php</p></li>
-<li><p>app/Config/Logger.php</p></li>
-<li><p>app/Config/Toolbar.php</p></li>
-<li><p>app/Views/welcome_message.php</p></li>
-<li><p>composer.json</p></li>
-<li><p>phpunit.xml.dist</p></li>
+<li><p><strong>app/Config/App.php</strong></p></li>
+<li><p><strong>app/Config/Autoload.php</strong></p></li>
+<li><p><strong>app/Config/Logger.php</strong></p></li>
+<li><p><strong>app/Config/Toolbar.php</strong></p></li>
+<li><p><strong>app/Views/welcome_message.php</strong></p></li>
+<li><p><strong>composer.json</strong></p></li>
+<li><p><strong>phpunit.xml.dist</strong></p></li>
 </ul>
 </section>
 </section>
@@ -381,7 +379,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

@@ -330,9 +330,8 @@ These do not require loading any additional libraries or helpers.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
-<p>If no $key is provided, will return the Cache engine instance. If a $key
-is provided, will return the value of $key as stored in the cache currently,
-or null if no value is found.</p>
+<p>If no <code class="docutils literal notranslate"><span class="pre">$key</span></code> is provided, will return the Cache engine instance. If a <code class="docutils literal notranslate"><span class="pre">$key</span></code> is provided, will return the value
+of <code class="docutils literal notranslate"><span class="pre">$key</span></code> as stored in the cache currently, or null if no value is found.</p>
 <p>Examples:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -353,17 +352,16 @@ or null if no value is found.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The config instances.</p>
+<dd class="field-even"><p>The config instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">object|null</span></code></span></p>
 </dd>
 </dl>
-<p>More simple way of getting config instances from Factories.</p>
-<p>See <a class="reference internal" href="configuration.html#configuration-config"><span class="std std-ref">Configuration</span></a> and
-<a class="reference internal" href="../concepts/factories.html#factories-config"><span class="std std-ref">Factories</span></a> for details.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">config()</span></code> uses <code class="docutils literal notranslate"><span class="pre">Factories::config()</span></code> internally.
-See <a class="reference internal" href="../concepts/factories.html#factories-loading-class"><span class="std std-ref">Loading Classes</span></a> for details on the first parameter <code class="docutils literal notranslate"><span class="pre">$name</span></code>.</p>
+<p>A simpler way of getting config instances from Factories.</p>
+<p>See <a class="reference internal" href="configuration.html#configuration-config"><span class="std std-ref">Configuration</span></a> and <a class="reference internal" href="../concepts/factories.html#factories-config"><span class="std std-ref">Factories</span></a> for details.</p>
+<p><code class="docutils literal notranslate"><span class="pre">config()</span></code> uses <code class="docutils literal notranslate"><span class="pre">Factories::config()</span></code> internally. See <a class="reference internal" href="../concepts/factories.html#factories-loading-class"><span class="std std-ref">Loading Classes</span></a> for details on the first
+parameter <code class="docutils literal notranslate"><span class="pre">$name</span></code>.</p>
 </dd></dl>
 
 <dl class="php function">
@@ -427,12 +425,10 @@ See <a class="reference internal" href="../concepts/factories.html#factories-loa
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
-<p>Used to retrieve values that have previously been set to the environment,
-or return a default value if it is not found. Will format boolean values
-to actual booleans instead of string representations.</p>
-<p>Especially useful when used in conjunction with <strong>.env</strong> files for setting
-values that are specific to the environment itself, like database
-settings, API keys, etc.</p>
+<p>Used to retrieve values that have previously been set to the environment, or return a default value if it is not
+found. Will format boolean values to actual booleans instead of string representations.</p>
+<p>Especially useful when used in conjunction with <strong>.env</strong> files for setting values that are specific to the
+environment itself, like database settings, API keys, etc.</p>
 </dd></dl>
 
 <dl class="php function">
@@ -453,10 +449,10 @@ settings, API keys, etc.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
-<p>Escapes data for inclusion in web pages, to help prevent XSS attacks.
-This uses the Laminas Escaper library to handle the actual filtering of the data.</p>
-<p>If $data is a string, then it simply escapes and returns it.
-If $data is an array, then it loops over it, escaping each ‘value’ of the key/value pairs.</p>
+<p>Escapes data for inclusion in web pages, to help prevent XSS attacks. This uses the Laminas Escaper library to
+handle the actual filtering of the data.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">$data</span></code> is a string, then it simply escapes and returns it. If <code class="docutils literal notranslate"><span class="pre">$data</span></code> is an array, then it loops over it,
+escaping each ‘value’ of the key/value pairs.</p>
 <p>Valid context values: <code class="docutils literal notranslate"><span class="pre">html</span></code>, <code class="docutils literal notranslate"><span class="pre">js</span></code>, <code class="docutils literal notranslate"><span class="pre">css</span></code>, <code class="docutils literal notranslate"><span class="pre">url</span></code>, <code class="docutils literal notranslate"><span class="pre">attr</span></code>, <code class="docutils literal notranslate"><span class="pre">raw</span></code></p>
 </dd></dl>
 
@@ -493,7 +489,7 @@ If $data is an array, then it loops over it, escaping each ‘value’ of the ke
 </dd>
 </dl>
 <p>Retrieves text from the language files.</p>
-<p>For more information, see the <a class="reference internal" href="../outgoing/localization.html#language-localization"><span class="std std-ref">Language Localization</span></a>.</p>
+<p>For more information, see <a class="reference internal" href="../outgoing/localization.html#language-localization"><span class="std std-ref">Language Localization</span></a>.</p>
 </dd></dl>
 
 <dl class="php function">
@@ -508,16 +504,16 @@ If $data is an array, then it loops over it, escaping each ‘value’ of the ke
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The model instances</p>
+<dd class="field-even"><p>The model instance</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><a class="reference internal" href="../helpers/html_helper.html#object" title="object"><code class="xref php php-obj docutils literal notranslate"><span class="pre">object</span></code></a></span></p>
 </dd>
 </dl>
-<p>More simple way of getting model instances.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">model()</span></code> uses <code class="docutils literal notranslate"><span class="pre">Factories::models()</span></code> internally.
-See <a class="reference internal" href="../concepts/factories.html#factories-loading-class"><span class="std std-ref">Loading Classes</span></a> for details on the first parameter <code class="docutils literal notranslate"><span class="pre">$name</span></code>.</p>
-<p>See also the <a class="reference internal" href="../models/model.html#accessing-models"><span class="std std-ref">Using CodeIgniter’s Model</span></a>.</p>
+<p>A simpler way of getting model instances.</p>
+<p><code class="docutils literal notranslate"><span class="pre">model()</span></code> uses <code class="docutils literal notranslate"><span class="pre">Factories::models()</span></code> internally. See <a class="reference internal" href="../concepts/factories.html#factories-loading-class"><span class="std std-ref">Loading Classes</span></a> for details on the first
+parameter <code class="docutils literal notranslate"><span class="pre">$name</span></code>.</p>
+<p>See also <a class="reference internal" href="../models/model.html#accessing-models"><span class="std std-ref">Using CodeIgniter’s Model</span></a>.</p>
 </dd></dl>
 
 <dl class="php function">
@@ -527,7 +523,7 @@ See <a class="reference internal" href="../concepts/factories.html#factories-loa
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$key</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The name of the old form data to check for.</p></li>
-<li><p><strong>$default</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string|null</span></code></span>) – The default value to return if $key doesn’t exist.</p></li>
+<li><p><strong>$default</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string|null</span></code></span>) – The default value to return if <code class="docutils literal notranslate"><span class="pre">$key</span></code> doesn’t exist.</p></li>
 <li><p><strong>$escape</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">false|string</span></code></span>) – An <a class="reference internal" href="#esc" title="esc"><code class="xref php php-func docutils literal notranslate"><span class="pre">esc()</span></code></a> context or false to disable it.</p></li>
 </ul>
 </dd>
@@ -557,15 +553,14 @@ See <a class="reference internal" href="../concepts/factories.html#factories-loa
 <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"email"</span> <span class="na">name</span><span class="o">=</span><span class="s">"user[email]"</span> <span class="na">value</span><span class="o">=</span><span class="s">"</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">old</span><span class="p">(</span><span class="s1">'user.email'</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">"</span><span class="p">&gt;</span>
 </pre></div>
 </div>
-</dd></dl>
-
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you are using the <a class="reference internal" href="../helpers/form_helper.html#set_value" title="set_value"><code class="xref php php-func docutils literal notranslate"><span class="pre">set_value()</span></code></a>, <a class="reference internal" href="../helpers/form_helper.html#set_select" title="set_select"><code class="xref php php-func docutils literal notranslate"><span class="pre">set_select()</span></code></a>,
-<a class="reference internal" href="../helpers/form_helper.html#set_checkbox" title="set_checkbox"><code class="xref php php-func docutils literal notranslate"><span class="pre">set_checkbox()</span></code></a>, and <a class="reference internal" href="../helpers/form_helper.html#set_radio" title="set_radio"><code class="xref php php-func docutils literal notranslate"><span class="pre">set_radio()</span></code></a> functions in
-<a class="reference internal" href="../helpers/form_helper.html"><span class="doc">form helper</span></a>, this feature is built-in. You only
-need to use this function when not using the form helper.</p>
+<p>If you are using the <a class="reference internal" href="../helpers/form_helper.html#set_value" title="set_value"><code class="xref php php-func docutils literal notranslate"><span class="pre">set_value()</span></code></a>, <a class="reference internal" href="../helpers/form_helper.html#set_select" title="set_select"><code class="xref php php-func docutils literal notranslate"><span class="pre">set_select()</span></code></a>, <a class="reference internal" href="../helpers/form_helper.html#set_checkbox" title="set_checkbox"><code class="xref php php-func docutils literal notranslate"><span class="pre">set_checkbox()</span></code></a>, and
+<a class="reference internal" href="../helpers/form_helper.html#set_radio" title="set_radio"><code class="xref php php-func docutils literal notranslate"><span class="pre">set_radio()</span></code></a> functions in the <a class="reference internal" href="../helpers/form_helper.html"><span class="doc">form helper</span></a>, this feature is built-in.
+You only need to use this function when not using the form helper.</p>
 </div>
+</dd></dl>
+
 <dl class="php function">
 <dt class="sig sig-object php" id="session">
 <span class="sig-name descname"><span class="pre">session</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$key</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#session" title="Link to this definition"></a></dt>
@@ -576,14 +571,14 @@ need to use this function when not using the form helper.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of the Session object if no $key, the value found in the session for $key, or null.</p>
+<dd class="field-even"><p>An instance of the Session object if no <code class="docutils literal notranslate"><span class="pre">$key</span></code>, the value found in the session for <code class="docutils literal notranslate"><span class="pre">$key</span></code>, or null.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
-<p>Provides a convenient way to access the session class and to retrieve a
-stored value. For more information, see the <a class="reference internal" href="../libraries/sessions.html"><span class="doc">Sessions</span></a> page.</p>
+<p>Provides a convenient way to access the session class and to retrieve a stored value. For more information, see the
+<a class="reference internal" href="../libraries/sessions.html"><span class="doc">Sessions</span></a> page.</p>
 </dd></dl>
 
 <dl class="php function">
@@ -602,9 +597,9 @@ stored value. For more information, see the <a class="reference internal" href="
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniterDebugTimer</span></code></span></p>
 </dd>
 </dl>
-<p>A convenience method that provides quick access to the Timer class. You can pass in the name
-of a benchmark point as the only parameter. This will start timing from this point, or stop
-timing if a timer with this name is already running.</p>
+<p>A convenience method that provides quick access to the Timer class. You can pass in the name of a benchmark point as
+the only parameter. This will start timing from this point, or stop timing if a timer with this name is already
+running.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -637,19 +632,17 @@ timing if a timer with this name is already running.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Grabs the current RendererInterface-compatible class
-(<a class="reference internal" href="../outgoing/view_renderer.html"><span class="doc">View</span></a> class by default)
-and tells it to render the specified view. Simply provides
-a convenience method that can be used in Controllers,
+<p>Grabs the current RendererInterface-compatible class (<a class="reference internal" href="../outgoing/view_renderer.html"><span class="doc">View</span></a> class by default) and
+tells it to render the specified view. Simply provides a convenience method that can be used in Controllers,
 libraries, and routed closures.</p>
 <p>Currently, these options are available for use within the <code class="docutils literal notranslate"><span class="pre">$options</span></code> array:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">saveData</span></code> specifies that data will persistent between multiple calls to <code class="docutils literal notranslate"><span class="pre">view()</span></code> within the same request. If you do not want the data to be persisted, specify false.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">cache</span></code> specifies the number of seconds to cache the view for. See <a class="reference internal" href="../outgoing/views.html#caching-views"><span class="std std-ref">Caching Views</span></a> for the details.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">saveData</span></code> specifies that data will persist between multiple calls to <code class="docutils literal notranslate"><span class="pre">view()</span></code> within the same request. If you
+do not want the data to be persisted, specify false.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cache</span></code> specifies the number of seconds to cache the view for. See <a class="reference internal" href="../outgoing/views.html#caching-views"><span class="std std-ref">Caching Views</span></a> for details.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">debug</span></code> can be set to false to disable the addition of debug code for <a class="reference internal" href="../testing/debugging.html#the-debug-toolbar"><span class="std std-ref">Debug Toolbar</span></a>.</p></li>
 </ul>
-<p>The <code class="docutils literal notranslate"><span class="pre">$option</span></code> array is provided primarily to facilitate third-party integrations with
-libraries like Twig.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">$options</span></code> array is provided primarily to facilitate third-party integrations with libraries like Twig.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -658,8 +651,7 @@ libraries like Twig.</p>
 <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'user_profile'</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>For more details, see the <a class="reference internal" href="../outgoing/views.html"><span class="doc">Views</span></a> and
-<a class="reference internal" href="../outgoing/view_renderer.html"><span class="doc">View Renderer</span></a> page.</p>
+<p>For more details, see the <a class="reference internal" href="../outgoing/views.html"><span class="doc">Views</span></a> and <a class="reference internal" href="../outgoing/view_renderer.html"><span class="doc">View Renderer</span></a> pages.</p>
 </dd></dl>
 
 <dl class="php function">
@@ -675,7 +667,7 @@ libraries like Twig.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>View cells are used within views to insert HTML chunks that are managed by other classes.</p>
+<dd class="field-even"><p>The rendered HTML for the view cell.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
@@ -706,14 +698,14 @@ libraries like Twig.</p>
 <span class="sig-name descname"><span class="pre">csp_script_nonce</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csp_script_nonce" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The CSP nonce attribute for script tag.</p>
+<dd class="field-odd"><p>The CSP nonce attribute for a script tag.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Returns the nonce attribute for a script tag. For example: <code class="docutils literal notranslate"><span class="pre">nonce=&quot;Eskdikejidojdk978Ad8jf&quot;</span></code>.
-See <a class="reference internal" href="../outgoing/csp.html#csp-using-functions"><span class="std std-ref">Content Security Policy</span></a>.</p>
+<p>Returns the nonce attribute for a script tag. For example: <code class="docutils literal notranslate"><span class="pre">nonce=&quot;Eskdikejidojdk978Ad8jf&quot;</span></code>. See
+<a class="reference internal" href="../outgoing/csp.html#csp-using-functions"><span class="std std-ref">Content Security Policy</span></a>.</p>
 </dd></dl>
 
 <dl class="php function">
@@ -721,14 +713,14 @@ See <a class="reference internal" href="../outgoing/csp.html#csp-using-functions
 <span class="sig-name descname"><span class="pre">csp_style_nonce</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csp_style_nonce" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The CSP nonce attribute for style tag.</p>
+<dd class="field-odd"><p>The CSP nonce attribute for a style tag.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Returns the nonce attribute for a style tag. For example: <code class="docutils literal notranslate"><span class="pre">nonce=&quot;Eskdikejidojdk978Ad8jf&quot;</span></code>.
-See <a class="reference internal" href="../outgoing/csp.html#csp-using-functions"><span class="std std-ref">Content Security Policy</span></a>.</p>
+<p>Returns the nonce attribute for a style tag. For example: <code class="docutils literal notranslate"><span class="pre">nonce=&quot;Eskdikejidojdk978Ad8jf&quot;</span></code>. See
+<a class="reference internal" href="../outgoing/csp.html#csp-using-functions"><span class="std std-ref">Content Security Policy</span></a>.</p>
 </dd></dl>
 
 <dl class="php function">
@@ -750,13 +742,13 @@ See <a class="reference internal" href="../outgoing/csp.html#csp-using-functions
 <span class="sig-name descname"><span class="pre">csrf_header</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csrf_header" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The name of the header for current CSRF token.</p>
+<dd class="field-odd"><p>The name of the header for the current CSRF token.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>The name of the header for current CSRF token.</p>
+<p>Returns the name of the header for the current CSRF token.</p>
 </dd></dl>
 
 <dl class="php function">
@@ -778,7 +770,7 @@ See <a class="reference internal" href="../outgoing/csp.html#csp-using-functions
 <span class="sig-name descname"><span class="pre">csrf_field</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csrf_field" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A string with the HTML for hidden input with all required CSRF information.</p>
+<dd class="field-odd"><p>A string with the HTML for a hidden input with all required CSRF information.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
@@ -795,7 +787,7 @@ See <a class="reference internal" href="../outgoing/csp.html#csp-using-functions
 <span class="sig-name descname"><span class="pre">csrf_meta</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csrf_meta" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A string with the HTML for meta tag with all required CSRF information.</p>
+<dd class="field-odd"><p>A string with the HTML for a meta tag with all required CSRF information.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
@@ -819,14 +811,13 @@ See <a class="reference internal" href="../outgoing/csp.html#csp-using-functions
 </ul>
 </dd>
 </dl>
-<p>Checks to see if the page is currently being accessed via HTTPS. If it is, then
-nothing happens. If it is not, then the user is redirected back to the current URI
-but through HTTPS. Will set the HTTP Strict Transport Security (HTST) header, which instructs
-modern browsers to automatically modify any HTTP requests to HTTPS requests for the <code class="docutils literal notranslate"><span class="pre">$duration</span></code>.</p>
+<p>Checks to see if the page is currently being accessed via HTTPS. If it is, then nothing happens. If it is not, then
+the user is redirected back to the current URI but through HTTPS. Will set the HTTP Strict Transport Security (HSTS)
+header, which instructs modern browsers to automatically modify any HTTP requests to HTTPS requests for the
+<code class="docutils literal notranslate"><span class="pre">$duration</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This function is also used when you set
-<code class="docutils literal notranslate"><span class="pre">Config\App:$forceGlobalSecureRequests</span></code> to true.</p>
+<p>This function is also used when you set <code class="docutils literal notranslate"><span class="pre">Config\App::$forceGlobalSecureRequests</span></code> to true.</p>
 </div>
 </dd></dl>
 
@@ -885,19 +876,18 @@ modern browsers to automatically modify any HTTP requests to HTTPS requests for 
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$mock</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool|null</span></code></span>) – If given and is a boolean then it will be used as the return value.</p></li>
+<li><p><strong>$mock</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool|null</span></code></span>) – If given and a boolean, it will be used as the return value.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
-<p>Detect if platform is running in Windows.</p>
+<p>Detects if the platform is running on Windows.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The boolean value provided to $mock will persist in subsequent calls. To reset this
-mock value, the user must pass an explicit <code class="docutils literal notranslate"><span class="pre">null</span></code> to the function call. This will
-refresh the function to use auto-detection.</p>
+<p>The boolean value provided to <code class="docutils literal notranslate"><span class="pre">$mock</span></code> will persist in subsequent calls. To reset this mock value, the
+user must pass an explicit <code class="docutils literal notranslate"><span class="pre">null</span></code> to the function call. This will refresh the function to use auto-detection.</p>
 </div>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -922,21 +912,20 @@ refresh the function to use auto-detection.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$level</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The level of severity</p></li>
 <li><p><strong>$message</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The message that is to be logged.</p></li>
-<li><p><strong>$context</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – An associative array of tags and their values that should be replaced in $message</p></li>
+<li><p><strong>$context</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – An associative array of tags and their values that should be replaced in <code class="docutils literal notranslate"><span class="pre">$message</span></code></p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>void</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">void</span></code></span></p>
 </dd>
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Since v4.5.0, the return value is fixed to be compatible with PSR
-Log. In previous versions, it returned <code class="docutils literal notranslate"><span class="pre">true</span></code> if was logged successfully
-or <code class="docutils literal notranslate"><span class="pre">false</span></code> if there was a problem logging it.</p>
+<p>Since v4.5.0, the return value is fixed to be compatible with PSR Log. In previous versions, it returned
+<code class="docutils literal notranslate"><span class="pre">true</span></code> if it was logged successfully or <code class="docutils literal notranslate"><span class="pre">false</span></code> if there was a problem logging it.</p>
 </div>
 <p>Logs a message using the Log Handlers defined in <strong>app/Config/Logger.php</strong>.</p>
 <p>Level can be one of the following values: <code class="docutils literal notranslate"><span class="pre">emergency</span></code>, <code class="docutils literal notranslate"><span class="pre">alert</span></code>, <code class="docutils literal notranslate"><span class="pre">critical</span></code>, <code class="docutils literal notranslate"><span class="pre">error</span></code>, <code class="docutils literal notranslate"><span class="pre">warning</span></code>,
@@ -951,15 +940,15 @@ or <code class="docutils literal notranslate"><span class="pre">false</span></co
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$route</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The route name or Controller::method to redirect the user to.</p></li>
+<li><p><strong>$route</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The route name or <code class="docutils literal notranslate"><span class="pre">Controller::method</span></code> to redirect the user to.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">RedirectResponse</span></code></span></p>
 </dd>
 </dl>
-<p>Returns a RedirectResponse instance allowing you to easily create redirects.
-See <a class="reference internal" href="../outgoing/response.html#response-redirect"><span class="std std-ref">Redirect</span></a> for details.</p>
+<p>Returns a RedirectResponse instance allowing you to easily create redirects. See <a class="reference internal" href="../outgoing/response.html#response-redirect"><span class="std std-ref">Redirect</span></a> for
+details.</p>
 </dd></dl>
 
 <dl class="php function">
@@ -979,8 +968,7 @@ See <a class="reference internal" href="../outgoing/response.html#response-redir
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>This function prevents inserting null characters between ASCII
-characters, like Java\0script.</p>
+<p>This function prevents inserting null characters between ASCII characters, like Java\0script.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1030,12 +1018,12 @@ characters, like Java\0script.</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$method</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Route name or Controller::method</p></li>
+<li><p><strong>$method</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Route name or <code class="docutils literal notranslate"><span class="pre">Controller::method</span></code></p></li>
 <li><p><strong>...$params</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int|string</span></code></span>) – One or more parameters to be passed to the route. The last parameter allows you to set the locale.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>a route path (URI path relative to baseURL)</p>
+<dd class="field-even"><p>A route path (URI path relative to baseURL)</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
@@ -1047,12 +1035,11 @@ characters, like Java\0script.</p>
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p><code class="docutils literal notranslate"><span class="pre">route_to()</span></code> returns a <em>route</em> path, not a full URI path for your site.
-If your <strong>baseURL</strong> contains sub folders, the return value is not the same
-as the URI to link. In that case, just use <a class="reference internal" href="../helpers/url_helper.html#url_to" title="url_to"><code class="xref php php-func docutils literal notranslate"><span class="pre">url_to()</span></code></a> instead.
-See also <a class="reference internal" href="urls.html#urls-url-structure"><span class="std std-ref">URL Structure</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">route_to()</span></code> returns a <em>route</em> path, not a full URI path for your site. If your <strong>baseURL</strong>
+contains sub folders, the return value is not the same as the URI to link. In that case, just use
+<a class="reference internal" href="../helpers/url_helper.html#url_to" title="url_to"><code class="xref php php-func docutils literal notranslate"><span class="pre">url_to()</span></code></a> instead. See also <a class="reference internal" href="urls.html#urls-url-structure"><span class="std std-ref">URL Structure</span></a>.</p>
 </div>
-<p>Generates a route for you based on a controller::method combination. Will take parameters into effect, if provided.</p>
+<p>Generates a route for you based on a controller::method combination. Takes parameters into account, if provided.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// The route is defined as:</span>
@@ -1082,7 +1069,8 @@ See also <a class="reference internal" href="urls.html#urls-url-structure"><span
 <span class="c1">// Result: '/users/15/gallery/12'</span>
 </pre></div>
 </div>
-<p>Since v4.3.0, when you use <code class="docutils literal notranslate"><span class="pre">{locale}</span></code> in your route, you can optionally specify the locale value as the last parameter.</p>
+<p>Since v4.3.0, when you use <code class="docutils literal notranslate"><span class="pre">{locale}</span></code> in your route, you can optionally specify the locale value as the last
+parameter.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// The route is defined as:</span>
@@ -1120,9 +1108,9 @@ See also <a class="reference internal" href="urls.html#urls-url-structure"><span
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
-<p>Provides easy access to any of the <a class="reference internal" href="../concepts/services.html"><span class="doc">Services</span></a> defined in the system.
-This will always return a shared instance of the class, so no matter how many times this is called
-during a single request, only one class instance will be created.</p>
+<p>Provides easy access to any of the <a class="reference internal" href="../concepts/services.html"><span class="doc">Services</span></a> defined in the system. Without additional
+parameters, this returns a shared instance. When parameters are passed, it calls the service method directly, so the
+method’s <code class="docutils literal notranslate"><span class="pre">$getShared</span></code> argument and default determine whether the instance is shared.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1149,9 +1137,8 @@ during a single request, only one class instance will be created.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
-<p>Identical to the <strong>service()</strong> function described above, except that all calls to this
-function will return a new instance of the class, where <strong>service</strong> returns the same
-instance every time.</p>
+<p>Similar to the <strong>service()</strong> function described above, but explicitly requests a new instance by passing <code class="docutils literal notranslate"><span class="pre">false</span></code>
+as the service method’s <code class="docutils literal notranslate"><span class="pre">$getShared</span></code> argument.</p>
 </dd></dl>
 
 <dl class="php function">
@@ -1170,7 +1157,7 @@ instance every time.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string|null</span></code></span></p>
 </dd>
 </dl>
-<p>Fetch a config file item with slash appended (if not empty)</p>
+<p>Fetches a config file item with a slash appended (if not empty).</p>
 </dd></dl>
 
 <dl class="php function">
@@ -1180,7 +1167,7 @@ instance every time.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$attributes</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – string, array of key value pairs, or object</p></li>
-<li><p><strong>$js</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">boolean</span></code></span>) – true if values do not need quotes (Javascript-style)</p></li>
+<li><p><strong>$js</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">boolean</span></code></span>) – true if values do not need quotes (JavaScript-style)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1297,7 +1284,7 @@ instance every time.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

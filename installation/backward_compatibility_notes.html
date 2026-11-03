@@ -294,17 +294,22 @@
   <section id="backward-compatibility-notes">
 <h1>Backward Compatibility Notes<a class="headerlink" href="#backward-compatibility-notes" title="Link to this heading"></a></h1>
 <p>We try to develop our products to be as backward compatible (BC) as possible.</p>
-<p>Only major releases (such as 4.0, 5.0 etc.) are allowed to break backward compatibility.
-Minor releases (such as 4.2, 4.3 etc.) may introduce new features, but must do so without breaking the existing API.</p>
-<p>However, the code is not mature and bug fixes may break compatibility in minor releases, or even in patch releases (such as 4.2.5). In that case, all the breaking changes are described in the <a class="reference internal" href="../changelogs/index.html"><span class="doc">Change Logs</span></a>.</p>
+<p>Only major releases (such as 4.0, 5.0 etc.) are allowed to break backward compatibility. Minor releases (such as 4.2,
+4.3 etc.) may introduce new features, but must do so without breaking the existing API.</p>
+<p>However, the code is not mature and bug fixes may break compatibility in minor releases, or even in patch releases (such
+as 4.2.5). In that case, all the breaking changes are described in the <a class="reference internal" href="../changelogs/index.html"><span class="doc">Change Logs</span></a>.</p>
 <section id="what-are-not-breaking-changes">
 <h2>What are not Breaking Changes<a class="headerlink" href="#what-are-not-breaking-changes" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p>The deprecated items are not covered by backwards compatibility (BC) promise. It may be removed in the next next
-<strong>minor</strong> version or later. For example, if an item has been deprecated since 4.3.x,
-it may be removed in 4.5.0.</p></li>
-<li><p>System messages defined in <strong>system/Language/en/</strong> are strictly for internal framework use and are not covered by backwards compatibility (BC) promise. If developers are relying on language string output they should be checking it against the function call (<code class="docutils literal notranslate"><span class="pre">lang('...')</span></code>), not the content.</p></li>
-<li><p><a class="reference external" href="https://www.php.net/manual/en/functions.arguments.php#functions.named-arguments">Named arguments</a> are not covered by backwards compatibility (BC) promise. We may choose to rename method/function parameter names when necessary in order to improve the  codebase.</p></li>
+<li><p>Deprecated items are not covered by the backward compatibility (BC) promise. They may be removed in the second
+subsequent <strong>minor</strong> version or later. For example, if an item has been deprecated since 4.3.x, it may be removed in
+4.5.0.</p></li>
+<li><p>System messages defined in <strong>system/Language/en/</strong> are strictly for internal framework use and are not covered by the
+backward compatibility (BC) promise. If developers are relying on language string output, they should be checking it
+against the function call (<code class="docutils literal notranslate"><span class="pre">lang('...')</span></code>), not the content.</p></li>
+<li><p><a class="reference external" href="https://www.php.net/manual/en/functions.arguments.php#functions.named-arguments">Named arguments</a> are not covered
+by the backward compatibility (BC) promise. We may choose to rename method/function parameter names when necessary in
+order to improve the codebase.</p></li>
 </ul>
 </section>
 </section>
@@ -321,7 +326,7 @@ it may be removed in 4.5.0.</p></li>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

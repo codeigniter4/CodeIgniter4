@@ -292,11 +292,11 @@
              
   <section id="working-with-http-requests">
 <h1>Working with HTTP Requests<a class="headerlink" href="#working-with-http-requests" title="Link to this heading"></a></h1>
-<p>In order to get the most out of CodeIgniter, you need to have a basic understanding of how HTTP requests
-and responses work. Since this is what you work with while developing web applications, understanding the
-concepts behind HTTP is a <strong>must</strong> for all developers that want to be successful.</p>
-<p>The first part of this chapter gives an overview. After the concepts are out of the way, we will discuss
-how to work with the requests and responses within CodeIgniter.</p>
+<p>In order to get the most out of CodeIgniter, you need to have a basic understanding of how HTTP requests and responses
+work. Since this is what you work with while developing web applications, understanding the concepts behind HTTP is a
+<strong>must</strong> for all developers who want to be successful.</p>
+<p>The first part of this chapter gives an overview. After the concepts are out of the way, we will discuss how to work
+with the requests and responses within CodeIgniter.</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#what-is-http" id="id1">What is HTTP?</a></p>
@@ -310,35 +310,36 @@ how to work with the requests and responses within CodeIgniter.</p>
 </nav>
 <section id="what-is-http">
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">What is HTTP?</a><a class="headerlink" href="#what-is-http" title="Link to this heading"></a></h2>
-<p>HTTP is simply a text-based convention that allows two machines to talk to each other. When a browser
-requests a page, it asks the server if it can get the page. The server then prepares the page and sends
-a response back to the browser that asked for it. That’s pretty much it. Obviously, there are some complexities
-that you can use, but the basics are really pretty simple.</p>
+<p>HTTP is simply a text-based convention that allows two machines to talk to each other. When a browser requests a page,
+it asks the server if it can get the page. The server then prepares the page and sends a response back to the browser
+that asked for it. That’s pretty much it. Obviously, there are some complexities that you can use, but the basics are
+really pretty simple.</p>
 <p>HTTP is the term used to describe that exchange convention. It stands for HyperText Transfer Protocol. Your goal when
-you develop web applications is to always understand what the browser is requesting, and be able to
-respond appropriately.</p>
+you develop web applications is to always understand what the browser is requesting, and be able to respond
+appropriately.</p>
 <section id="the-request">
 <h3><a class="toc-backref" href="#id2" role="doc-backlink">The Request</a><a class="headerlink" href="#the-request" title="Link to this heading"></a></h3>
-<p>Whenever a client (a web browser, smartphone app, etc) makes a request, it sends a small text message
-to the server and waits for a response.</p>
+<p>Whenever a client (a web browser, smartphone app, etc.) makes a request, it sends a small text message to the server and
+waits for a response.</p>
 <p>The request would look something like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">GET</span> <span class="o">/</span> <span class="nx">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
-<span class="nx">Host</span> <span class="nx">codeigniter</span><span class="o">.</span><span class="nx">com</span>
+<span class="nx">Host</span><span class="o">:</span> <span class="nx">codeigniter</span><span class="o">.</span><span class="nx">com</span>
 <span class="nx">Accept</span><span class="o">:</span> <span class="nx">text</span><span class="o">/</span><span class="nx">html</span>
 <span class="nx">User</span><span class="o">-</span><span class="nx">Agent</span><span class="o">:</span> <span class="nx">Chrome</span><span class="o">/</span><span class="mf">46.0</span><span class="o">.</span><span class="mf">2490.80</span>
 </pre></div>
 </div>
-<p>This message displays all of the information necessary to know what the client is requesting. It tells the
-method for the request (GET, POST, DELETE, etc), and the version of HTTP it supports.</p>
-<p>The request also includes a number of optional request headers that can contain a wide variety of
-information such as what languages the client wants the content displayed as, the types of formats the
-client accepts, and much more. Wikipedia has an article that lists <a class="reference external" href="https://en.wikipedia.org/wiki/List_of_HTTP_header_fields">all header fields</a> if you want to look it over.</p>
+<p>This message displays all of the information necessary to know what the client is requesting. It gives the method for
+the request (GET, POST, DELETE, etc.), and the version of HTTP it supports.</p>
+<p>The request also includes a number of optional request headers that can contain a wide variety of information such as
+what languages the client wants the content displayed in, the types of formats the client accepts, and much more.
+Wikipedia has an article that lists <a class="reference external" href="https://en.wikipedia.org/wiki/List_of_HTTP_header_fields">all header fields</a> if
+you want to look it over.</p>
 </section>
 <section id="the-response">
 <h3><a class="toc-backref" href="#id3" role="doc-backlink">The Response</a><a class="headerlink" href="#the-response" title="Link to this heading"></a></h3>
-<p>Once the server receives the request, your application will take that information and generate some output.
-The server will bundle your output as part of its response to the client. This is also represented as
-a simple text message that looks something like this:</p>
+<p>Once the server receives the request, your application will take that information and generate some output. The server
+will bundle your output as part of its response to the client. This is also represented as a simple text message that
+looks something like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">HTTP</span><span class="o">/</span><span class="mf">1.1</span> <span class="mi">200</span> <span class="nx">OK</span>
 <span class="nx">Server</span><span class="o">:</span> <span class="nx">nginx</span><span class="o">/</span><span class="mf">1.8</span><span class="o">.</span><span class="mi">0</span>
 <span class="nx">Date</span><span class="o">:</span> <span class="nx">Thu</span><span class="p">,</span> <span class="mo">05</span> <span class="nx">Nov</span> <span class="mi">2015</span> <span class="mo">05</span><span class="o">:</span><span class="mi">33</span><span class="o">:</span><span class="mi">22</span> <span class="nx">GMT</span>
@@ -349,17 +350,19 @@ a simple text message that looks something like this:</p>
 <span class="o">&lt;/</span><span class="nx">html</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>The response tells the client what version of the HTTP specification that it’s using and, probably most
-importantly, the status code (200). The status code is one of a number of codes that have been standardized
-to have a very specific meaning to the client. This can tell them that it was successful (200), or that the page
-wasn’t found (404). Head over to IANA for a <a class="reference external" href="https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml">full list of HTTP status codes</a>.</p>
+<p>The response tells the client what version of the HTTP specification it’s using and, probably most importantly, the
+status code (200). The status code is one of a number of codes that have been standardized to have a very specific
+meaning to the client. This can tell it that the request was successful (200), or that the page wasn’t found (404). Head
+over to IANA for a
+<a class="reference external" href="https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml">full list of HTTP status codes</a>.</p>
 </section>
 </section>
 <section id="working-with-requests-and-responses">
 <h2><a class="toc-backref" href="#id4" role="doc-backlink">Working with Requests and Responses</a><a class="headerlink" href="#working-with-requests-and-responses" title="Link to this heading"></a></h2>
-<p>While PHP provides ways to interact with the request and response headers, CodeIgniter, like most frameworks,
-abstracts them so that you have a consistent, simple interface to them. The <a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">IncomingRequest class</span></a>
-is an object-oriented representation of the HTTP request. It provides everything you need:</p>
+<p>While PHP provides ways to interact with the request and response headers, CodeIgniter, like most frameworks, abstracts
+them so that you have a consistent, simple interface to them. The
+<a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">IncomingRequest class</span></a> is an object-oriented representation of the HTTP request. It
+provides everything you need:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\HTTP\IncomingRequest</span><span class="p">;</span>
@@ -392,14 +395,16 @@ is an object-oriented representation of the HTTP request. It provides everything
 <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">'post'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The request class does a lot of work in the background for you, that you never need to worry about.
-The <code class="docutils literal notranslate"><span class="pre">isAJAX()</span></code> and <code class="docutils literal notranslate"><span class="pre">isSecure()</span></code> methods check several different methods to determine the correct answer.</p>
+<p>The request class does a lot of work in the background that you never need to worry about. The <code class="docutils literal notranslate"><span class="pre">isAJAX()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">isSecure()</span></code> methods check several different methods to determine the correct answer.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">isAJAX()</span></code> method depends on the <code class="docutils literal notranslate"><span class="pre">X-Requested-With</span></code> header, which in some cases is not sent by default in XHR requests via JavaScript (i.e., fetch). See the <a class="reference internal" href="../general/ajax.html"><span class="doc">AJAX Requests</span></a> section on how to avoid this problem.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">isAJAX()</span></code> method depends on the <code class="docutils literal notranslate"><span class="pre">X-Requested-With</span></code> header, which in some cases is not sent by default
+in XHR requests via JavaScript (i.e., fetch). See the <a class="reference internal" href="../general/ajax.html"><span class="doc">AJAX Requests</span></a> section for how to avoid
+this problem.</p>
 </div>
-<p>CodeIgniter also provides a <a class="reference internal" href="../outgoing/response.html"><span class="doc">Response class</span></a> that is an object-oriented representation
-of the HTTP response. This gives you an easy and powerful way to construct your response to the client:</p>
+<p>CodeIgniter also provides a <a class="reference internal" href="../outgoing/response.html"><span class="doc">Response class</span></a> that is an object-oriented representation of the
+HTTP response. This gives you an easy and powerful way to construct your response to the client:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Response</span><span class="p">;</span>
@@ -416,7 +421,7 @@ of the HTTP response. This gives you an easy and powerful way to construct your 
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>In addition, the Response class allows you to work the HTTP cache layer for the best performance.</p>
+<p>In addition, the Response class allows you to work with the HTTP cache layer for the best performance.</p>
 </section>
 </section>
 
@@ -432,7 +437,7 @@ of the HTTP response. This gives you an easy and powerful way to construct your 
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

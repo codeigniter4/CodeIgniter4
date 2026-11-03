@@ -292,10 +292,8 @@
              
   <section id="session-library">
 <h1>Session Library<a class="headerlink" href="#session-library" title="Link to this heading"></a></h1>
-<p>The Session class permits you to maintain a user’s “state” and track their
-activity while they browse your site.</p>
-<p>CodeIgniter comes with a few session storage drivers, that you can see
-in the last section of the table of contents:</p>
+<p>The Session class permits you to maintain a user’s “state” and track their activity while they browse your site.</p>
+<p>CodeIgniter comes with a few session storage drivers, which you can see in the last section of the table of contents:</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#using-the-session-class" id="id3">Using the Session Class</a></p>
@@ -330,21 +328,18 @@ in the last section of the table of contents:</p>
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">Using the Session Class</a><a class="headerlink" href="#using-the-session-class" title="Link to this heading"></a></h2>
 <section id="initializing-a-session">
 <h3><a class="toc-backref" href="#id4" role="doc-backlink">Initializing a Session</a><a class="headerlink" href="#initializing-a-session" title="Link to this heading"></a></h3>
-<p>Sessions will typically run globally with each page load, so the Session
-class should be magically initialized.</p>
+<p>Sessions will typically run globally with each page load, so the Session class should be magically initialized.</p>
 <p>To access and initialize the session:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$session</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'session'</span><span class="p">,</span> <span class="nv">$config</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">$config</span></code> parameter is optional - your application configuration.
-If not provided, the services register will instantiate your default
-one.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">$config</span></code> parameter is your application configuration, and is optional. If not provided, the services register
+will instantiate your default one.</p>
 <p>Once loaded, the Sessions library object will be available using <code class="docutils literal notranslate"><span class="pre">$session</span></code>.</p>
-<p>Alternatively, you can use the helper function that will use the default
-configuration options. This version is a little friendlier to read,
-but does not take any configuration options.</p>
+<p>Alternatively, you can use the helper function that will use the default configuration options. This version is a little
+friendlier to read, but does not take any configuration options.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$session</span> <span class="o">=</span> <span class="nx">session</span><span class="p">();</span>
@@ -353,45 +348,34 @@ but does not take any configuration options.</p>
 </section>
 <section id="how-do-sessions-work">
 <h3><a class="toc-backref" href="#id5" role="doc-backlink">How Do Sessions Work?</a><a class="headerlink" href="#how-do-sessions-work" title="Link to this heading"></a></h3>
-<p>When a page is loaded, the session class will check to see if a valid
-session cookie is sent by the user’s browser. If a session cookie does
-<strong>not</strong> exist (or if it doesn’t match one stored on the server or has
-expired) a new session will be created and saved.</p>
-<p>If a valid session does exist, its information will be updated. With each
-update, the session ID may be regenerated if configured to do so.</p>
-<p>It’s important for you to understand that once initialized, the Session
-class runs automatically. There is nothing you need to do to cause the
-above behavior to happen. You can, as you’ll see below, work with session
-data, but the process of reading, writing, and updating a session is
-automatic.</p>
+<p>When a page is loaded, the session class will check to see if a valid session cookie is sent by the user’s browser. If a
+session cookie does <strong>not</strong> exist (or if it doesn’t match one stored on the server or has expired), a new session will
+be created and saved.</p>
+<p>If a valid session does exist, its information will be updated. With each update, the session ID may be regenerated if
+configured to do so.</p>
+<p>It’s important for you to understand that once initialized, the Session class runs automatically. There is nothing you
+need to do to cause the above behavior to happen. You can, as you’ll see below, work with session data, but the process
+of reading, writing, and updating a session is automatic.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Under CLI, the Session library will automatically halt itself,
-as this is a concept based entirely on the HTTP protocol.</p>
+<p>Under CLI, the Session library will automatically halt itself, as this is a concept based entirely on the HTTP
+protocol.</p>
 </div>
 <section id="a-note-about-concurrency">
 <h4>A Note about Concurrency<a class="headerlink" href="#a-note-about-concurrency" title="Link to this heading"></a></h4>
-<p>Unless you’re developing a website with heavy AJAX usage, you can skip this
-section. If you are, however, and if you’re experiencing performance
-issues, then this note is exactly what you’re looking for.</p>
-<p>Sessions in CodeIgniter v2.x didn’t implement locking,
-which meant that two HTTP requests using the same session could run exactly
-at the same time. To use a more appropriate technical term - requests were
-non-blocking.</p>
-<p>However, non-blocking requests in the context of sessions also means
-unsafe, because, modifications to session data (or session ID regeneration)
-in one request can interfere with the execution of a second, concurrent
-request. This detail was at the root of many issues and the main reason why
-CodeIgniter 3 has a completely re-written Session library.</p>
-<p>Why are we telling you this? Because it is likely that after trying to
-find the reason for your performance issues, you may conclude that locking
-is the issue and therefore look into how to remove the locks …</p>
-<p>DO NOT DO THAT! Removing locks would be <strong>wrong</strong> and it will cause you
-more problems!</p>
-<p>Locking is not the issue, it is a solution. Your issue is that you still
-have the session open, while you’ve already processed it and therefore no
-longer need it. So, what you need is to close the session for the
-current request after you no longer need it.</p>
+<p>Unless you’re developing a website with heavy AJAX usage, you can skip this section. If you are, however, and if you’re
+experiencing performance issues, then this note is exactly what you’re looking for.</p>
+<p>Sessions in CodeIgniter v2.x didn’t implement locking, which meant that two HTTP requests using the same session could
+run exactly at the same time. To use a more appropriate technical term: requests were non-blocking.</p>
+<p>However, non-blocking requests in the context of sessions are also unsafe, because modifications to session data (or
+session ID regeneration) in one request can interfere with the execution of a second, concurrent request. This detail
+was at the root of many issues and the main reason why CodeIgniter 3 has a completely rewritten Session library.</p>
+<p>Why are we telling you this? Because it is likely that after trying to find the reason for your performance issues, you
+may conclude that locking is the issue and therefore look into how to remove the locks …</p>
+<p>DO NOT DO THAT! Removing locks would be <strong>wrong</strong> and it will cause you more problems!</p>
+<p>Locking is not the issue. It is a solution. Your issue is that you still have the session open, while you’ve already
+processed it and therefore no longer need it. So, what you need is to close the session for the current request after
+you no longer need it.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">close</span><span class="p">();</span>
@@ -401,22 +385,19 @@ current request after you no longer need it.</p>
 </section>
 <section id="what-is-session-data">
 <h3><a class="toc-backref" href="#id6" role="doc-backlink">What is Session Data?</a><a class="headerlink" href="#what-is-session-data" title="Link to this heading"></a></h3>
-<p>Session data is simply an array associated with a particular session ID
-(cookie).</p>
+<p>Session data is simply an array associated with a particular session ID (cookie).</p>
 <p>If you’ve used sessions in PHP before, you should be familiar with PHP’s
-<a class="reference external" href="https://www.php.net/manual/en/reserved.variables.session.php">$_SESSION superglobal</a>
-(if not, please read the content on that link).</p>
-<p>CodeIgniter gives access to its session data through the same means, as it
-uses the session handlers’ mechanism provided by PHP. Using session data is
-as simple as manipulating (read, set and unset values) the <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code>
-array.</p>
+<a class="reference external" href="https://www.php.net/manual/en/reserved.variables.session.php">$_SESSION superglobal</a> (if not, please read the content
+on that link).</p>
+<p>CodeIgniter gives access to its session data through the same means, as it uses the session handlers’ mechanism provided
+by PHP. Using session data is as simple as manipulating (read, set and unset values) the <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> array.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In general, it is bad practice to use global variables.
-So using the superglobal <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> directly is not recommended.</p>
+<p>In general, it is bad practice to use global variables. So using the superglobal <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> directly is not
+recommended.</p>
 </div>
-<p>In addition, CodeIgniter also provides 2 special types of session data
-that are further explained below: <a class="reference internal" href="#flashdata">Flashdata</a> and <a class="reference internal" href="#tempdata">Tempdata</a>.</p>
+<p>In addition, CodeIgniter provides 2 special types of session data that are further explained below: <a class="reference internal" href="#flashdata">Flashdata</a> and
+<a class="reference internal" href="#tempdata">Tempdata</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>For historical reasons, we refer to session data excluding Flashdata and Tempdata as “userdata”.</p>
@@ -424,9 +405,8 @@ that are further explained below: <a class="reference internal" href="#flashdata
 </section>
 <section id="retrieving-session-data">
 <h3><a class="toc-backref" href="#id7" role="doc-backlink">Retrieving Session Data</a><a class="headerlink" href="#retrieving-session-data" title="Link to this heading"></a></h3>
-<p>Any piece of information from the session array is available through the
-<code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> superglobal. For example, to assign a previously stored <code class="docutils literal notranslate"><span class="pre">name</span></code> item to the <code class="docutils literal notranslate"><span class="pre">$name</span></code>
-variable, you will do this:</p>
+<p>Any piece of information from the session array is available through the <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> superglobal. For example, to
+assign a previously stored <code class="docutils literal notranslate"><span class="pre">name</span></code> item to the <code class="docutils literal notranslate"><span class="pre">$name</span></code> variable, you will do this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$name</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">'name'</span><span class="p">];</span>
@@ -452,11 +432,10 @@ variable, you will do this:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">get()</span></code> method returns null if the item you are trying
-to access does not exist.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">get()</span></code> method returns null if the item you are trying to access does not exist.</p>
 </div>
-<p>If you want to retrieve all of the existing session data, you can simply
-omit the item key (magic getter only works for single property values):</p>
+<p>If you want to retrieve all of the existing session data, you can simply omit the item key (the magic getter only works
+for single property values):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$userData</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">;</span>
@@ -466,28 +445,22 @@ omit the item key (magic getter only works for single property values):</p>
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">get()</span></code> method WILL return flashdata or tempdata items when
-retrieving a single item by key. It will not return flashdata or tempdata when
-grabbing all data from the session, however.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">get()</span></code> method WILL return flashdata or tempdata items when retrieving a single item by key. It
+will not return flashdata or tempdata when grabbing all data from the session, however.</p>
 </div>
 </section>
 <section id="adding-session-data">
 <h3><a class="toc-backref" href="#id8" role="doc-backlink">Adding Session Data</a><a class="headerlink" href="#adding-session-data" title="Link to this heading"></a></h3>
-<p>Let’s say a particular user logs into your site. Once authenticated, you
-could add their username and e-mail address to the session, making that
-data globally available to you without having to run a database query when
-you need it.</p>
-<p>You can simply assign data to the <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> array, as with any other
-variable. Or as a property of <code class="docutils literal notranslate"><span class="pre">$session</span></code>.</p>
-<p>You can pass an array containing your new session data to the
-<code class="docutils literal notranslate"><span class="pre">set()</span></code> method:</p>
+<p>Let’s say a particular user logs into your site. Once authenticated, you could add their username and e-mail address to
+the session, making that data globally available to you without having to run a database query when you need it.</p>
+<p>You can simply assign data to the <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> array, as with any other variable, or as a property of <code class="docutils literal notranslate"><span class="pre">$session</span></code>.</p>
+<p>You can pass an array containing your new session data to the <code class="docutils literal notranslate"><span class="pre">set()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Where <code class="docutils literal notranslate"><span class="pre">$array</span></code> is an associative array containing your new data. Here’s
-an example:</p>
+<p>Here, <code class="docutils literal notranslate"><span class="pre">$array</span></code> is an associative array containing your new data. Here’s an example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$newdata</span> <span class="o">=</span> <span class="p">[</span>
@@ -499,15 +472,13 @@ an example:</p>
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="nv">$newdata</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>If you want to add session data one value at a time, <code class="docutils literal notranslate"><span class="pre">set()</span></code> also
-supports this syntax:</p>
+<p>If you want to add session data one value at a time, <code class="docutils literal notranslate"><span class="pre">set()</span></code> also supports this syntax:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">'some_name'</span><span class="p">,</span> <span class="s1">'some_value'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>If you want to verify that a session value exists, simply check with
-<code class="docutils literal notranslate"><span class="pre">isset()</span></code>:</p>
+<p>If you want to verify that a session value exists, simply check with <code class="docutils literal notranslate"><span class="pre">isset()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// returns false if the 'some_name' item doesn't exist or is null,</span>
@@ -526,8 +497,9 @@ supports this syntax:</p>
 </section>
 <section id="pushing-new-value-to-session-data">
 <h3><a class="toc-backref" href="#id9" role="doc-backlink">Pushing New Value to Session Data</a><a class="headerlink" href="#pushing-new-value-to-session-data" title="Link to this heading"></a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">push()</span></code> method is used to push a new value onto a session value that is an array.
-For instance, if the <code class="docutils literal notranslate"><span class="pre">hobbies</span></code> key contains an array of hobbies, you can add a new value or replace the previous value onto the array like so:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">push()</span></code> method is used to push a new value onto a session value that is an array. For instance, if the
+<code class="docutils literal notranslate"><span class="pre">hobbies</span></code> key contains an array of hobbies, you can add a new value or replace the previous value in the array like
+so:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="sd">/**</span>
@@ -559,8 +531,7 @@ For instance, if the <code class="docutils literal notranslate"><span class="pre
 </section>
 <section id="removing-session-data">
 <h3><a class="toc-backref" href="#id10" role="doc-backlink">Removing Session Data</a><a class="headerlink" href="#removing-session-data" title="Link to this heading"></a></h3>
-<p>Just as with any other variable, unsetting a value in <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> can be
-done through <code class="docutils literal notranslate"><span class="pre">unset()</span></code>:</p>
+<p>Just as with any other variable, unsetting a value in <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> can be done through <code class="docutils literal notranslate"><span class="pre">unset()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nb">unset</span><span class="p">(</span><span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">'some_name'</span><span class="p">]);</span>
@@ -571,10 +542,8 @@ done through <code class="docutils literal notranslate"><span class="pre">unset(
 <span class="p">);</span>
 </pre></div>
 </div>
-<p>Also, just as <code class="docutils literal notranslate"><span class="pre">set()</span></code> can be used to add information to a
-session, <code class="docutils literal notranslate"><span class="pre">remove()</span></code> can be used to remove it, by passing the
-session key. For example, if you wanted to remove <code class="docutils literal notranslate"><span class="pre">some_name</span></code> from your
-session data array:</p>
+<p>Also, just as <code class="docutils literal notranslate"><span class="pre">set()</span></code> can be used to add information to a session, <code class="docutils literal notranslate"><span class="pre">remove()</span></code> can be used to remove it, by passing
+the session key. For example, if you wanted to remove <code class="docutils literal notranslate"><span class="pre">some_name</span></code> from your session data array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">remove</span><span class="p">(</span><span class="s1">'some_name'</span><span class="p">);</span>
@@ -590,20 +559,19 @@ session data array:</p>
 </section>
 <section id="flashdata">
 <span id="sessions-flashdata"></span><h3><a class="toc-backref" href="#id11" role="doc-backlink">Flashdata</a><a class="headerlink" href="#flashdata" title="Link to this heading"></a></h3>
-<p>CodeIgniter supports “flashdata”, or session data that will only be
-available for the next request, and is then automatically cleared.</p>
-<p>This can be very useful, especially for one-time informational, error or
-status messages (for example: “Record 2 deleted”).</p>
-<p>It should be noted that flashdata variables are regular session variables,
-managed inside the CodeIgniter session handler.</p>
+<p>CodeIgniter supports “flashdata”, or session data that will only be available for the next request, and is then
+automatically cleared.</p>
+<p>This can be very useful, especially for one-time informational, error or status messages (for example: “Record 2
+deleted”).</p>
+<p>It should be noted that flashdata variables are regular session variables, managed inside the CodeIgniter session
+handler.</p>
 <p>To mark an existing item as “flashdata”:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsFlashdata</span><span class="p">(</span><span class="s1">'item'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>If you want to mark multiple items as flashdata, simply pass the keys as an
-array:</p>
+<p>If you want to mark multiple items as flashdata, simply pass the keys as an array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsFlashdata</span><span class="p">([</span><span class="s1">'item'</span><span class="p">,</span> <span class="s1">'item2'</span><span class="p">]);</span>
@@ -622,10 +590,8 @@ array:</p>
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">setFlashdata</span><span class="p">(</span><span class="s1">'item'</span><span class="p">,</span> <span class="s1">'value'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>You can also pass an array to <code class="docutils literal notranslate"><span class="pre">setFlashdata()</span></code>, in the same manner as
-<code class="docutils literal notranslate"><span class="pre">set()</span></code>.</p>
-<p>Reading flashdata variables is the same as reading regular session data
-through <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code>:</p>
+<p>You can also pass an array to <code class="docutils literal notranslate"><span class="pre">setFlashdata()</span></code>, in the same manner as <code class="docutils literal notranslate"><span class="pre">set()</span></code>.</p>
+<p>Reading flashdata variables is the same as reading regular session data through <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$item</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">'item'</span><span class="p">];</span>
@@ -633,12 +599,11 @@ through <code class="docutils literal notranslate"><span class="pre">$_SESSION</
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">get()</span></code> method WILL return flashdata items when
-retrieving a single item by key. It will not return flashdata when
-grabbing all data from the session, however.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">get()</span></code> method WILL return flashdata items when retrieving a single item by key. It will not return
+flashdata when grabbing all data from the session, however.</p>
 </div>
-<p>However, if you want to be sure that you’re reading “flashdata” (and not
-any other kind), you can also use the <code class="docutils literal notranslate"><span class="pre">getFlashdata()</span></code> method:</p>
+<p>However, if you want to be sure that you’re reading “flashdata” (and not any other kind), you can also use the
+<code class="docutils literal notranslate"><span class="pre">getFlashdata()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">getFlashdata</span><span class="p">(</span><span class="s1">'item'</span><span class="p">);</span>
@@ -646,8 +611,7 @@ any other kind), you can also use the <code class="docutils literal notranslate"
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">getFlashdata()</span></code> method returns null if the item cannot be
-found.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">getFlashdata()</span></code> method returns null if the item cannot be found.</p>
 </div>
 <p>Or to get an array with all flashdata, simply omit the key parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -655,9 +619,8 @@ found.</p>
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">getFlashdata</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>If you find that you need to preserve a flashdata variable through an
-additional request, you can do so using the <code class="docutils literal notranslate"><span class="pre">keepFlashdata()</span></code> method.
-You can either pass a single item or an array of flashdata items to keep.</p>
+<p>If you find that you need to preserve a flashdata variable through an additional request, you can do so using the
+<code class="docutils literal notranslate"><span class="pre">keepFlashdata()</span></code> method. You can either pass a single item or an array of flashdata items to keep.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">keepFlashdata</span><span class="p">(</span><span class="s1">'item'</span><span class="p">);</span>
@@ -667,21 +630,19 @@ You can either pass a single item or an array of flashdata items to keep.</p>
 </section>
 <section id="tempdata">
 <h3><a class="toc-backref" href="#id12" role="doc-backlink">Tempdata</a><a class="headerlink" href="#tempdata" title="Link to this heading"></a></h3>
-<p>CodeIgniter also supports “tempdata”, or session data with a specific
-expiration time. After the value expires, or the session expires or is
-deleted, the value is automatically removed.</p>
-<p>Similarly to flashdata, tempdata variables are managed internally by the
-CodeIgniter session handler.</p>
-<p>To mark an existing item as “tempdata”, simply pass its key and expiry time
-(in seconds!) to the <code class="docutils literal notranslate"><span class="pre">markAsTempdata()</span></code> method:</p>
+<p>CodeIgniter also supports “tempdata”, or session data with a specific expiration time. After the value expires, or the
+session expires or is deleted, the value is automatically removed.</p>
+<p>Similarly to flashdata, tempdata variables are managed internally by the CodeIgniter session handler.</p>
+<p>To mark an existing item as “tempdata”, simply pass its key and expiry time (in seconds!) to the <code class="docutils literal notranslate"><span class="pre">markAsTempdata()</span></code>
+method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// 'item' will be erased after 300 seconds</span>
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsTempdata</span><span class="p">(</span><span class="s1">'item'</span><span class="p">,</span> <span class="mi">300</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>You can mark multiple items as tempdata in two ways, depending on whether
-you want them all to have the same expiry time or not:</p>
+<p>You can mark multiple items as tempdata in two ways, depending on whether you want them all to have the same expiry time
+or not:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Both 'item' and 'item2' will expire after 300 seconds</span>
@@ -717,11 +678,10 @@ you want them all to have the same expiry time or not:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If the expiration is omitted or set to 0, the default
-time-to-live value of 300 seconds (or 5 minutes) will be used.</p>
+<p>If the expiration is omitted or set to 0, the default time-to-live value of 300 seconds (or 5 minutes) will be
+used.</p>
 </div>
-<p>To read a tempdata variable, again you can just access it through the
-<code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> superglobal array:</p>
+<p>To read a tempdata variable, again you can just access it through the <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> superglobal array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$item</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">'item'</span><span class="p">];</span>
@@ -729,12 +689,11 @@ time-to-live value of 300 seconds (or 5 minutes) will be used.</p>
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">get()</span></code> method WILL return tempdata items when
-retrieving a single item by key. It will not return tempdata when
-grabbing all data from the session, however.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">get()</span></code> method WILL return tempdata items when retrieving a single item by key. It will not return
+tempdata when grabbing all data from the session, however.</p>
 </div>
-<p>Or if you want to be sure that you’re reading “tempdata” (and not any
-other kind), you can also use the <code class="docutils literal notranslate"><span class="pre">getTempdata()</span></code> method:</p>
+<p>Or if you want to be sure that you’re reading “tempdata” (and not any other kind), you can also use the
+<code class="docutils literal notranslate"><span class="pre">getTempdata()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">getTempdata</span><span class="p">(</span><span class="s1">'item'</span><span class="p">);</span>
@@ -742,8 +701,7 @@ other kind), you can also use the <code class="docutils literal notranslate"><sp
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">getTempdata()</span></code> method returns null if the item cannot be
-found.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">getTempdata()</span></code> method returns null if the item cannot be found.</p>
 </div>
 <p>And of course, if you want to retrieve all existing tempdata:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -751,17 +709,14 @@ found.</p>
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">getTempdata</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>If you need to remove a tempdata value before it expires, you can directly
-unset it from the <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> array:</p>
+<p>If you need to remove a tempdata value before it expires, you can directly unset it from the <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nb">unset</span><span class="p">(</span><span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">'item'</span><span class="p">]);</span>
 </pre></div>
 </div>
-<p>However, this won’t remove the marker that makes this specific item to be
-tempdata (it will be invalidated on the next HTTP request), so if you
-intend to reuse that same key in the same request, you’d want to use
-<code class="docutils literal notranslate"><span class="pre">removeTempdata()</span></code>:</p>
+<p>However, this won’t remove the marker that makes this specific item tempdata (it will be invalidated on the next HTTP
+request), so if you intend to reuse that same key in the same request, you’d want to use <code class="docutils literal notranslate"><span class="pre">removeTempdata()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">removeTempdata</span><span class="p">(</span><span class="s1">'item'</span><span class="p">);</span>
@@ -770,7 +725,8 @@ intend to reuse that same key in the same request, you’d want to use
 </section>
 <section id="changing-the-session-key-type">
 <h3><a class="toc-backref" href="#id13" role="doc-backlink">Changing the Session Key Type</a><a class="headerlink" href="#changing-the-session-key-type" title="Link to this heading"></a></h3>
-<p>Since session data values like Flashdata and Tempdata are differentiated only by internal flags, you can change a value’s type without rewriting its data.</p>
+<p>Since session data values like Flashdata and Tempdata are differentiated only by internal flags, you can change a
+value’s type without rewriting its data.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nx">session</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setFlashdata</span><span class="p">(</span><span class="s1">'alerts'</span><span class="p">,</span> <span class="s1">'Operation successful!'</span><span class="p">);</span>
@@ -806,18 +762,15 @@ intend to reuse that same key in the same request, you’d want to use
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 4.4.0.</span></p>
 </div>
-<p>To close the current session manually after you no longer need it, use the
-<code class="docutils literal notranslate"><span class="pre">close()</span></code> method:</p>
+<p>To close the current session manually after you no longer need it, use the <code class="docutils literal notranslate"><span class="pre">close()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">close</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>You do not have to close the session manually, PHP will close it automatically
-after your script terminated. But as session data is locked to prevent concurrent
-writes only one request may operate on a session at any time. You may improve
-your site performance by closing the session as soon as all changes to session
-data are done.</p>
+<p>You do not have to close the session manually. PHP will close it automatically after your script terminates. But as
+session data is locked to prevent concurrent writes, only one request may operate on a session at any time. You may
+improve your site performance by closing the session as soon as all changes to session data are done.</p>
 <p>This method will work in exactly the same way as PHP’s
 <a class="reference external" href="https://www.php.net/session_write_close">session_write_close()</a> function.</p>
 </section>
@@ -826,32 +779,28 @@ data are done.</p>
 <h3><a class="toc-backref" href="#id15" role="doc-backlink">Destroying a Session</a><a class="headerlink" href="#destroying-a-session" title="Link to this heading"></a></h3>
 <section id="destroy">
 <span id="session-destroy"></span><h4>destroy()<a class="headerlink" href="#destroy" title="Link to this heading"></a></h4>
-<p>To clear the current session (for example, during a logout), you may
-simply use the library’s <code class="docutils literal notranslate"><span class="pre">destroy()</span></code> method:</p>
+<p>To clear the current session (for example, during a logout), you may simply use the library’s <code class="docutils literal notranslate"><span class="pre">destroy()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">destroy</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>This method will work in exactly the same way as PHP’s
-<a class="reference external" href="https://www.php.net/session_destroy">session_destroy()</a> function.</p>
-<p>This must be the last session-related operation that you do during the same request.
-All session data (including flashdata and tempdata) will be destroyed permanently.</p>
+<p>This method will work in exactly the same way as PHP’s <a class="reference external" href="https://www.php.net/session_destroy">session_destroy()</a>
+function.</p>
+<p>This must be the last session-related operation that you do during the same request. All session data (including
+flashdata and tempdata) will be destroyed permanently.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You do not have to call this method from usual code. Cleanup session
-data rather than destroying the session.</p>
+<p>You do not have to call this method from usual code. Clean up session data rather than destroying the session.</p>
 </div>
 </section>
 </section>
 <section id="accessing-session-metadata">
 <h3><a class="toc-backref" href="#id16" role="doc-backlink">Accessing Session Metadata</a><a class="headerlink" href="#accessing-session-metadata" title="Link to this heading"></a></h3>
-<p>In CodeIgniter 2, the session data array included 4 items
-by default: ‘session_id’, ‘ip_address’, ‘user_agent’, ‘last_activity’.</p>
-<p>This was due to the specifics of how sessions worked, but is now no longer
-necessary with our new implementation. However, it may happen that your
-application relied on these values, so here are alternative methods of
-accessing them:</p>
+<p>In CodeIgniter 2, the session data array included 4 items by default: ‘session_id’, ‘ip_address’, ‘user_agent’,
+‘last_activity’.</p>
+<p>This was due to the specifics of how sessions worked, but is now no longer necessary with our new implementation.
+However, it may happen that your application relied on these values, so here are alternative methods of accessing them:</p>
 <blockquote>
 <div><ul class="simple">
 <li><p>session_id: <code class="docutils literal notranslate"><span class="pre">$session-&gt;session_id</span></code> or <code class="docutils literal notranslate"><span class="pre">session_id()</span></code> (PHP’s built-in function)</p></li>
@@ -864,17 +813,15 @@ accessing them:</p>
 </section>
 <section id="session-preferences">
 <h2><a class="toc-backref" href="#id17" role="doc-backlink">Session Preferences</a><a class="headerlink" href="#session-preferences" title="Link to this heading"></a></h2>
-<p>CodeIgniter will usually make everything work out of the box. However,
-Sessions are a very sensitive component of any application, so some
-careful configuration must be done. Please take your time to consider
-all of the options and their effects.</p>
+<p>CodeIgniter will usually make everything work out of the box. However, Sessions are a very sensitive component of any
+application, so some careful configuration must be done. Please take your time to consider all of the options and their
+effects.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Since v4.3.0, the new <strong>app/Config/Session.php</strong> has been added.
-Previously, the Session Preferences were in your <strong>app/Config/App.php</strong> file.</p>
+<p>Since v4.3.0, the new <strong>app/Config/Session.php</strong> has been added. Previously, the Session Preferences were in
+your <strong>app/Config/App.php</strong> file.</p>
 </div>
-<p>You’ll find the following Session related preferences in your
-<strong>app/Config/Session.php</strong> file:</p>
+<p>You’ll find the following Session-related preferences in your <strong>app/Config/Session.php</strong> file:</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Preference</p></th>
@@ -902,18 +849,18 @@ CodeIgniter\Session\Handlers\ArrayHandler</p></td>
 <td><p>7200 (2 hours)</p></td>
 <td><p>Time in seconds (integer)</p></td>
 <td><p>The number of seconds you would like the session to last.
-If you would like a non-expiring session (until browser is closed) set the value to zero: 0</p></td>
+If you would like a non-expiring session (until browser is closed), set the value to zero: 0</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>savePath</strong></p></td>
 <td><p>WRITEPATH . ‘session’</p></td>
 <td><p>None</p></td>
-<td><p>Specifies the storage location, depends on the driver being used.</p></td>
+<td><p>Specifies the storage location, which depends on the driver being used.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>matchIP</strong></p></td>
 <td><p>false</p></td>
 <td><p>true/false (boolean)</p></td>
 <td><p>Whether to validate the user’s IP address when reading the session cookie.
-Note that some ISPs dynamically changes the IP, so if you want a non-expiring session you
+Note that some ISPs dynamically change the IP, so if you want a non-expiring session you
 will likely set this to false.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>timeToUpdate</strong></p></td>
@@ -932,22 +879,19 @@ the session ID. When set to false, the data will be later deleted by the garbage
 </table>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>As a last resort, the Session library will try to fetch PHP’s
-session related INI settings, as well as CodeIgniter 3 settings such as
-‘sess_expire_on_close’ when any of the above is not configured.
-However, you should never rely on this behavior as it can cause
-unexpected results or be changed in the future. Please configure
+<p>As a last resort, the Session library will try to fetch PHP’s session-related INI settings, as well as
+CodeIgniter 3 settings such as ‘sess_expire_on_close’ when any of the above is not configured. However, you should
+never rely on this behavior as it can cause unexpected results or be changed in the future. Please configure
 everything properly.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If <code class="docutils literal notranslate"><span class="pre">expiration</span></code> is set to <code class="docutils literal notranslate"><span class="pre">0</span></code>, the <code class="docutils literal notranslate"><span class="pre">session.gc_maxlifetime</span></code>
-setting set by PHP in session management will be used as-is
-(often the default value of <code class="docutils literal notranslate"><span class="pre">1440</span></code>). This needs to be changed in
-<code class="docutils literal notranslate"><span class="pre">php.ini</span></code> or via <code class="docutils literal notranslate"><span class="pre">ini_set()</span></code> as needed.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">expiration</span></code> is set to <code class="docutils literal notranslate"><span class="pre">0</span></code>, the <code class="docutils literal notranslate"><span class="pre">session.gc_maxlifetime</span></code> setting set by PHP in session management
+will be used as-is (often the default value of <code class="docutils literal notranslate"><span class="pre">1440</span></code>). This needs to be changed in <code class="docutils literal notranslate"><span class="pre">php.ini</span></code> or via
+<code class="docutils literal notranslate"><span class="pre">ini_set()</span></code> as needed.</p>
 </div>
-<p>In addition to the values above, the Session cookie uses the
-following configuration values in your <strong>app/Config/Cookie.php</strong> file:</p>
+<p>In addition to the values above, the Session cookie uses the following configuration values in your
+<strong>app/Config/Cookie.php</strong> file:</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Preference</p></th>
@@ -976,16 +920,14 @@ following configuration values in your <strong>app/Config/Cookie.php</strong> fi
 </table>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">httponly</span></code> setting (in <strong>app/Config/Cookie.php</strong>) doesn’t have an effect on sessions.
-Instead the HttpOnly parameter is always enabled, for security
-reasons. Additionally, the <code class="docutils literal notranslate"><span class="pre">Config\Cookie::$prefix</span></code> setting is completely
-ignored.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">httponly</span></code> setting (in <strong>app/Config/Cookie.php</strong>) doesn’t have an effect on sessions. Instead, the
+HttpOnly parameter is always enabled, for security reasons. Additionally, the <code class="docutils literal notranslate"><span class="pre">Config\Cookie::$prefix</span></code> setting is
+completely ignored.</p>
 </div>
 </section>
 <section id="session-drivers">
 <h2><a class="toc-backref" href="#id18" role="doc-backlink">Session Drivers</a><a class="headerlink" href="#session-drivers" title="Link to this heading"></a></h2>
-<p>As already mentioned, the Session library comes with five handlers, or storage
-engines, that you can use:</p>
+<p>As already mentioned, the Session library comes with five handlers, or storage engines, that you can use:</p>
 <blockquote>
 <div><ul class="simple">
 <li><p>CodeIgniter\Session\Handlers\FileHandler</p></li>
@@ -995,87 +937,73 @@ engines, that you can use:</p>
 <li><p>CodeIgniter\Session\Handlers\ArrayHandler</p></li>
 </ul>
 </div></blockquote>
-<p>By default, the <code class="docutils literal notranslate"><span class="pre">FileHandler</span></code> will be used when a session is initialized,
-because it is the safest choice and is expected to work everywhere
-(virtually every environment has a file system).</p>
-<p>However, any other driver may be selected via the <code class="docutils literal notranslate"><span class="pre">$driver</span></code>
-setting in your <strong>app/Config/Session.php</strong> file, if you chose to do so.
-Have it in mind though, every driver has different caveats, so be sure to
-get yourself familiar with them (below) before you make that choice.</p>
+<p>By default, the <code class="docutils literal notranslate"><span class="pre">FileHandler</span></code> will be used when a session is initialized, because it is the safest choice and is
+expected to work everywhere (virtually every environment has a file system).</p>
+<p>However, any other driver may be selected via the <code class="docutils literal notranslate"><span class="pre">$driver</span></code> setting in your <strong>app/Config/Session.php</strong> file, if you
+choose to do so. Keep in mind, though, that every driver has different caveats, so be sure to familiarize yourself with
+them (below) before you make that choice.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The ArrayHandler is used during testing and stores all data within
-a PHP array, while preventing the data from being persisted. See
-<a class="reference internal" href="../testing/session_testing.html"><span class="doc">Testing Sessions</span></a>.</p>
+<p>The ArrayHandler is used during testing and stores all data within a PHP array, while preventing the data from
+being persisted. See <a class="reference internal" href="../testing/session_testing.html"><span class="doc">Testing Sessions</span></a>.</p>
 </div>
 <section id="filehandler-driver-the-default">
 <h3><a class="toc-backref" href="#id19" role="doc-backlink">FileHandler Driver (the default)</a><a class="headerlink" href="#filehandler-driver-the-default" title="Link to this heading"></a></h3>
 <p>The ‘FileHandler’ driver uses your file system for storing session data.</p>
-<p>It can safely be said that it works exactly like PHP’s own default session
-implementation, but in case this is an important detail for you, in fact it is not the same code
-and it has some limitations (and advantages).</p>
-<p>To be more specific, it doesn’t support PHP’s <a class="reference external" href="https://www.php.net/manual/en/session.configuration.php#ini.session.save-path">directory level and mode
-formats used in session.save_path</a>,
-and it has most of the options hard-coded for safety. Instead, only
-absolute paths are supported with <code class="docutils literal notranslate"><span class="pre">$savePath</span></code> setting.</p>
-<p>Another important thing that you should know, is to make sure that you
-don’t use a publicly-readable or shared directory for storing your session
-files. <em>Only you</em> should have access to the contents of your
-chosen <em>savePath</em> directory. Otherwise, anybody can see and
-steal session data (also known as “session fixation” attack).</p>
-<p>On UNIX-like operating systems, this is usually achieved by setting the
-0700 mode permissions on that directory via the <cite>chmod</cite> command, which
-allows only the directory’s owner to perform read and write operations on
-it. But be careful because the system user <em>running</em> the script is usually
-not your own, but something like ‘www-data’ instead, so only setting those
-permissions will probably break your application.</p>
+<p>It can safely be said that it works exactly like PHP’s own default session implementation, but in case this is an
+important detail for you, in fact it is not the same code and it has some limitations (and advantages).</p>
+<p>To be more specific, it doesn’t support PHP’s
+<a class="reference external" href="https://www.php.net/manual/en/session.configuration.php#ini.session.save-path">directory level and mode formats used in session.save_path</a>,
+and it has most of the options hard-coded for safety. Instead, only absolute paths are supported with the <code class="docutils literal notranslate"><span class="pre">$savePath</span></code>
+setting.</p>
+<p>Another important thing is to make sure that you don’t use a publicly readable or shared directory for storing your
+session files. <em>Only you</em> should have access to the contents of your chosen <em>savePath</em> directory. Otherwise, anybody can
+see and steal session data, potentially enabling session hijacking.</p>
+<p>On UNIX-like operating systems, this is usually achieved by setting the 0700 mode permissions on that directory via the
+<code class="docutils literal notranslate"><span class="pre">chmod</span></code> command, which allows only the directory’s owner to perform read and write operations on it. But be careful,
+because the system user <em>running</em> the script is usually not your own, but something like ‘www-data’ instead, so only
+setting those permissions will probably break your application.</p>
 <p>Instead, you should do something like this, depending on your environment:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">mkdir /&lt;path to your application directory&gt;/writable/sessions/</span>
 <span class="go">chmod 0700 /&lt;path to your application directory&gt;/writable/sessions/</span>
 <span class="go">chown www-data /&lt;path to your application directory&gt;/writable/sessions/</span>
 </pre></div>
 </div>
-<p>The <a class="reference external" href="https://www.php.net/manual/ru/session.configuration.php#ini.session.gc-probability">built-in mechanism</a> for automatically clearing expired sessions may not run often,
-and you will notice that the <em>saveDir</em> directory may be overflowing with files.
-To solve this problem, you will need to configure the <strong>cron</strong> or <strong>Task Scheduler</strong> to delete outdated files.</p>
+<p>The <a class="reference external" href="https://www.php.net/manual/en/session.configuration.php#ini.session.gc-probability">built-in mechanism</a> for
+automatically clearing expired sessions may not run often, and you will notice that the <em>savePath</em> directory may be
+overflowing with files. To solve this problem, you will need to configure <strong>cron</strong> or <strong>Task Scheduler</strong> to delete
+outdated files.</p>
 <section id="bonus-tip">
 <h4>Bonus Tip<a class="headerlink" href="#bonus-tip" title="Link to this heading"></a></h4>
-<p>Some of you will probably opt to choose another session driver because
-file storage is usually slower. This is only half true.</p>
-<p>A very basic test will probably trick you into believing that an SQL
-database is faster, but in 99% of the cases, this is true only if you
-have a few current sessions. As the sessions count and server loads
-increase - which is the time when it matters - the file system will
-consistently outperform almost all relational database setups.</p>
-<p>In addition, if performance is your only concern, you may want to look
-into using <a class="reference external" href="https://eddmann.com/posts/storing-php-sessions-file-caches-in-memory-using-tmpfs/">tmpfs</a>,
-which can make your sessions blazing fast.</p>
+<p>Some of you will probably choose another session driver because file storage is usually slower. This is only half true.</p>
+<p>A very basic test will probably trick you into believing that an SQL database is faster, but in 99% of the cases, this
+is true only if you have a few current sessions. As the session count and server load increase - which is when it
+matters - the file system will consistently outperform almost all relational database setups.</p>
+<p>In addition, if performance is your only concern, you may want to look into using
+<a class="reference external" href="https://eddmann.com/posts/storing-php-sessions-file-caches-in-memory-using-tmpfs/">tmpfs</a>, which can make your
+sessions blazing fast.</p>
 </section>
 </section>
 <section id="databasehandler-driver">
 <span id="sessions-databasehandler-driver"></span><h3><a class="toc-backref" href="#id20" role="doc-backlink">DatabaseHandler Driver</a><a class="headerlink" href="#databasehandler-driver" title="Link to this heading"></a></h3>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>Only MySQL and PostgreSQL databases are officially
-supported, due to lack of advisory locking mechanisms on other
-platforms. Using sessions without locks can cause all sorts of
-problems, especially with heavy usage of AJAX. Use the <a class="reference internal" href="#session-close"><span class="std std-ref">close()</span></a> method
-after you’ve done processing session data if you’re having performance issues.</p>
+<p>Only MySQL and PostgreSQL databases are officially supported, due to lack of advisory locking mechanisms
+on other platforms. Using sessions without locks can cause all sorts of problems, especially with heavy usage of
+AJAX. Use the <a class="reference internal" href="#session-close"><span class="std std-ref">close()</span></a> method after you’ve finished processing session data if you’re having performance
+issues.</p>
 </div>
-<p>The ‘DatabaseHandler’ driver uses a relational database such as MySQL or
-PostgreSQL to store sessions. This is a popular choice among many users,
-because it allows the developer easy access to the session data within
-an application - it is just another table in your database.</p>
+<p>The ‘DatabaseHandler’ driver uses a relational database such as MySQL or PostgreSQL to store sessions. This is a popular
+choice among many users, because it allows the developer easy access to the session data within an application - it is
+just another table in your database.</p>
 <p>However, there is a restriction: You can NOT use a persistent connection.</p>
 <section id="configure-databasehandler">
 <h4>Configure DatabaseHandler<a class="headerlink" href="#configure-databasehandler" title="Link to this heading"></a></h4>
 <section id="setting-table-name">
 <h5>Setting Table Name<a class="headerlink" href="#setting-table-name" title="Link to this heading"></a></h5>
-<p>In order to use the ‘DatabaseHandler’ session driver, you must also create this
-table that we already mentioned and then set it as your
-<code class="docutils literal notranslate"><span class="pre">$savePath</span></code> value.
-For example, if you would like to use ‘ci_sessions’ as your table name,
-you would do this:</p>
+<p>In order to use the ‘DatabaseHandler’ session driver, you must also create this table that we already mentioned and then
+set it as your <code class="docutils literal notranslate"><span class="pre">$savePath</span></code> value. For example, if you would like to use ‘ci_sessions’ as your table name, you would do
+this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -1122,23 +1050,28 @@ you would do this:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">id</span></code> value contains the session cookie name (<code class="docutils literal notranslate"><span class="pre">Config\Session::$cookieName</span></code>)
-and the session ID and a delimiter. It should be increased as needed, for example,
-when using long session IDs.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">id</span></code> value contains the session cookie name (<code class="docutils literal notranslate"><span class="pre">Config\Session::$cookieName</span></code>), the session ID, and a
+delimiter. Its size should be increased as needed, for example, when using long session IDs.</p>
 </div>
 </section>
 <section id="adding-primary-key">
 <h5>Adding Primary Key<a class="headerlink" href="#adding-primary-key" title="Link to this heading"></a></h5>
-<p>You will also need to add a PRIMARY KEY <strong>depending on your $matchIP
-setting</strong>. The examples below work both on MySQL and PostgreSQL:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// When $matchIP = true</span>
+<p>You will also need to add a PRIMARY KEY <strong>depending on your $matchIP setting</strong>. The following statements work on both
+MySQL and PostgreSQL:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">--</span> <span class="nx">When</span> <span class="nv">$matchIP</span> <span class="o">=</span> <span class="k">true</span>
 <span class="nx">ALTER</span> <span class="nx">TABLE</span> <span class="nx">ci_sessions</span> <span class="nx">ADD</span> <span class="nx">PRIMARY</span> <span class="nx">KEY</span> <span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="nx">ip_address</span><span class="p">);</span>
 
-<span class="c1">// When $matchIP = false</span>
+<span class="o">--</span> <span class="nx">When</span> <span class="nv">$matchIP</span> <span class="o">=</span> <span class="k">false</span>
 <span class="nx">ALTER</span> <span class="nx">TABLE</span> <span class="nx">ci_sessions</span> <span class="nx">ADD</span> <span class="nx">PRIMARY</span> <span class="nx">KEY</span> <span class="p">(</span><span class="nx">id</span><span class="p">);</span>
-
-<span class="c1">// To drop a previously created primary key (use when changing the setting)</span>
-<span class="nx">ALTER</span> <span class="nx">TABLE</span> <span class="nx">ci_sessions</span> <span class="nx">DROP</span> <span class="nx">PRIMARY</span> <span class="nx">KEY</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>To drop a previously created primary key when changing the setting, use the appropriate statement for your database.</p>
+<p>For MySQL:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">ALTER</span> <span class="nx">TABLE</span> <span class="nx">ci_sessions</span> <span class="nx">DROP</span> <span class="nx">PRIMARY</span> <span class="nx">KEY</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>For PostgreSQL, use the constraint name assigned when the primary key was created:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">ALTER</span> <span class="nx">TABLE</span> <span class="nx">ci_sessions</span> <span class="nx">DROP</span> <span class="nx">CONSTRAINT</span> <span class="nx">ci_sessions_pkey</span><span class="p">;</span>
 </pre></div>
 </div>
 <div class="admonition important">
@@ -1152,9 +1085,8 @@ may occur:</p>
 </section>
 <section id="changing-database-group">
 <h5>Changing Database Group<a class="headerlink" href="#changing-database-group" title="Link to this heading"></a></h5>
-<p>The default database group is used by default.
-You can change the database group to use by changing the <code class="docutils literal notranslate"><span class="pre">$DBGroup</span></code> property
-in the <strong>app/Config/Session.php</strong> file to the name of the group to use:</p>
+<p>The default database group is used by default. You can change the database group to use by changing the <code class="docutils literal notranslate"><span class="pre">$DBGroup</span></code>
+property in the <strong>app/Config/Session.php</strong> file to the name of the group to use:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -1172,20 +1104,19 @@ in the <strong>app/Config/Session.php</strong> file to the name of the group to 
 </section>
 <section id="setting-up-database-table-with-command">
 <h5>Setting Up Database Table with Command<a class="headerlink" href="#setting-up-database-table-with-command" title="Link to this heading"></a></h5>
-<p>If you’d rather not do all of this by hand, you can use the <code class="docutils literal notranslate"><span class="pre">make:migration</span> <span class="pre">--session</span></code> command
-from the cli to generate a migration file for you:</p>
+<p>If you’d rather not do all of this by hand, you can use the <code class="docutils literal notranslate"><span class="pre">make:migration</span> <span class="pre">--session</span></code> command from the CLI to
+generate a migration file for you:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark make:migration --session</span>
 <span class="go">php spark migrate</span>
 </pre></div>
 </div>
-<p>This command reads the <code class="docutils literal notranslate"><span class="pre">$matchIP</span></code> setting to decide the primary key. The table
-name and database group are not read from <strong>app/Config/Session.php</strong>, so pass
-<code class="docutils literal notranslate"><span class="pre">--table</span></code> and <code class="docutils literal notranslate"><span class="pre">--dbgroup</span></code> when they differ from <code class="docutils literal notranslate"><span class="pre">ci_sessions</span></code> and <code class="docutils literal notranslate"><span class="pre">default</span></code>:</p>
+<p>This command reads the <code class="docutils literal notranslate"><span class="pre">$matchIP</span></code> setting to decide the primary key. The table name and database group are not read
+from <strong>app/Config/Session.php</strong>, so pass <code class="docutils literal notranslate"><span class="pre">--table</span></code> and <code class="docutils literal notranslate"><span class="pre">--dbgroup</span></code> when they differ from <code class="docutils literal notranslate"><span class="pre">ci_sessions</span></code> and
+<code class="docutils literal notranslate"><span class="pre">default</span></code>:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark make:migration --session --table my_sessions --dbgroup sessions</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">--table</span></code> value should match <code class="docutils literal notranslate"><span class="pre">$savePath</span></code>, and the <code class="docutils literal notranslate"><span class="pre">--dbgroup</span></code> value
-should match <code class="docutils literal notranslate"><span class="pre">$DBGroup</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">--table</span></code> value should match <code class="docutils literal notranslate"><span class="pre">$savePath</span></code>, and the <code class="docutils literal notranslate"><span class="pre">--dbgroup</span></code> value should match <code class="docutils literal notranslate"><span class="pre">$DBGroup</span></code>.</p>
 </section>
 </section>
 </section>
@@ -1193,36 +1124,33 @@ should match <code class="docutils literal notranslate"><span class="pre">$DBGro
 <span id="sessions-redishandler-driver"></span><h3><a class="toc-backref" href="#id21" role="doc-backlink">RedisHandler Driver</a><a class="headerlink" href="#redishandler-driver" title="Link to this heading"></a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Since Redis doesn’t have a locking mechanism exposed, locks for
-this driver are emulated by a separate value that is kept for up
-to 300 seconds.</p>
+<p>Since Redis doesn’t have a locking mechanism exposed, locks for this driver are emulated by a separate value
+that is kept for up to 300 seconds.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Starting with v4.3.2, you can connect Redis with <strong>TLS</strong> protocol.</p>
+<p>Starting with v4.3.2, you can connect to Redis with the <strong>TLS</strong> protocol.</p>
 </div>
-<p>Redis is a storage engine typically used for caching and popular because
-of its high performance, which is also probably your reason to use the
-‘RedisHandler’ session driver.</p>
-<p>The downside is that it is not as ubiquitous as relational databases and
-requires the <a class="reference external" href="https://github.com/phpredis/phpredis">phpredis</a> PHP
-extension to be installed on your system, and that one doesn’t come
-bundled with PHP.
-Chances are, you’re using the RedisHandler driver only if you’re already
-both familiar with Redis and using it for other purposes.</p>
+<p>Redis is a storage engine typically used for caching and popular because of its high performance, which is also probably
+your reason to use the ‘RedisHandler’ session driver.</p>
+<p>The downside is that it is not as ubiquitous as relational databases and requires the
+<a class="reference external" href="https://github.com/phpredis/phpredis">phpredis</a> PHP extension to be installed on your system, and that one doesn’t
+come bundled with PHP. Chances are, you’re using the RedisHandler driver only if you’re already both familiar with Redis
+and using it for other purposes.</p>
 <section id="configure-redishandler">
 <h4>Configure RedisHandler<a class="headerlink" href="#configure-redishandler" title="Link to this heading"></a></h4>
-<p>Just as with the ‘FileHandler’ and ‘DatabaseHandler’ drivers, you must also configure
-the storage location for your sessions via the
-<code class="docutils literal notranslate"><span class="pre">$savePath</span></code> setting.
-The format here is a bit different and complicated. It is
-best explained by the <em>phpredis</em> extension’s README file, so we’ll simply
-give a link to it:</p>
+<p>Just as with the ‘FileHandler’ and ‘DatabaseHandler’ drivers, you must also configure the storage location for your
+sessions via the <code class="docutils literal notranslate"><span class="pre">$savePath</span></code> setting. The format here is a bit different and complicated. It is best explained by the
+<em>phpredis</em> extension’s README file, so we’ll simply give a link to it:</p>
 <blockquote>
 <div><p><a class="reference external" href="https://github.com/phpredis/phpredis">https://github.com/phpredis/phpredis</a></p>
 </div></blockquote>
-<p>For the most common case however, a simple <code class="docutils literal notranslate"><span class="pre">host:port</span></code> pair should be
-sufficient:</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>CodeIgniter’s Session library does NOT use the actual ‘redis’ <code class="docutils literal notranslate"><span class="pre">session.save_handler</span></code>. Take note
+<strong>only</strong> of the path format in the link above.</p>
+</div>
+<p>For the most common case, however, a simple <code class="docutils literal notranslate"><span class="pre">host:port</span></code> pair should be sufficient:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -1248,9 +1176,8 @@ sufficient:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Starting with v4.5.0, the interval time for acquiring locks
-(<code class="docutils literal notranslate"><span class="pre">$lockRetryInterval</span></code>) and the number of retries (<code class="docutils literal notranslate"><span class="pre">$lockMaxRetries</span></code>) are
-configurable.</p>
+<p>Starting with v4.5.0, the interval time for acquiring locks (<code class="docutils literal notranslate"><span class="pre">$lockRetryInterval</span></code>) and the number of retries
+(<code class="docutils literal notranslate"><span class="pre">$lockMaxRetries</span></code>) are configurable.</p>
 </div>
 </section>
 </section>
@@ -1258,25 +1185,20 @@ configurable.</p>
 <span id="sessions-memcachedhandler-driver"></span><h3><a class="toc-backref" href="#id22" role="doc-backlink">MemcachedHandler Driver</a><a class="headerlink" href="#memcachedhandler-driver" title="Link to this heading"></a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Since Memcached doesn’t have a locking mechanism exposed, locks
-for this driver are emulated by a separate value that is kept for
-up to 300 seconds.</p>
+<p>Since Memcached doesn’t have a locking mechanism exposed, locks for this driver are emulated by a separate
+value that is kept for up to 300 seconds.</p>
 </div>
-<p>The ‘MemcachedHandler’ driver is very similar to the ‘RedisHandler’ one in all of its
-properties, except perhaps for availability, because PHP’s <a class="reference external" href="https://www.php.net/memcached">Memcached</a> extension is distributed via PECL and some
-Linux distributions make it available as an easy to install package.</p>
-<p>Other than that, and without any intentional bias towards Redis, there’s
-not much different to be said about Memcached - it is also a popular
-product that is usually used for caching and famed for its speed.</p>
-<p>However, it is worth noting that the only guarantee given by Memcached
-is that setting value X to expire after Y seconds will result in it being
-deleted after Y seconds have passed (but not necessarily that it won’t
-expire earlier than that time). This happens very rarely, but should be
-considered as it may result in loss of sessions.</p>
+<p>The ‘MemcachedHandler’ driver is very similar to the ‘RedisHandler’ one in all of its properties, except perhaps for
+availability, because PHP’s <a class="reference external" href="https://www.php.net/memcached">Memcached</a> extension is distributed via PECL and some
+Linux distributions make it available as an easy-to-install package.</p>
+<p>Other than that, and without any intentional bias towards Redis, there’s not much different to be said about Memcached -
+it is also a popular product that is usually used for caching and famed for its speed.</p>
+<p>However, it is worth noting that the only guarantee given by Memcached is that setting value X to expire after Y seconds
+will result in it being deleted after Y seconds have passed (but not necessarily that it won’t expire earlier than that
+time). This happens very rarely, but should be considered as it may result in loss of sessions.</p>
 <section id="configure-memcachedhandler">
 <h4>Configure MemcachedHandler<a class="headerlink" href="#configure-memcachedhandler" title="Link to this heading"></a></h4>
-<p>The <code class="docutils literal notranslate"><span class="pre">$savePath</span></code> format is fairly straightforward here,
-being just a <code class="docutils literal notranslate"><span class="pre">host:port</span></code> pair:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">$savePath</span></code> format is fairly straightforward here, being just a <code class="docutils literal notranslate"><span class="pre">host:port</span></code> pair:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -1299,11 +1221,9 @@ being just a <code class="docutils literal notranslate"><span class="pre">host:p
 </section>
 <section id="id2">
 <h4>Bonus Tip<a class="headerlink" href="#id2" title="Link to this heading"></a></h4>
-<p>Multi-server configuration with an optional <em>weight</em> parameter as the
-third colon-separated (<code class="docutils literal notranslate"><span class="pre">:weight</span></code>) value is also supported, but we have
-to note that we haven’t tested if that is reliable.</p>
-<p>If you want to experiment with this feature (on your own risk), simply
-separate the multiple server paths with commas:</p>
+<p>Multi-server configuration with an optional <em>weight</em> parameter as the third colon-separated (<code class="docutils literal notranslate"><span class="pre">:weight</span></code>) value is also
+supported, but we have to note that we haven’t tested if that is reliable.</p>
+<p>If you want to experiment with this feature (at your own risk), simply separate the multiple server paths with commas:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -1340,7 +1260,7 @@ separate the multiple server paths with commas:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

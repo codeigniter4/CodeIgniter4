@@ -292,8 +292,7 @@
              
   <section id="cookie-helper">
 <h1>Cookie Helper<a class="headerlink" href="#cookie-helper" title="Link to this heading"></a></h1>
-<p>The Cookie Helper file contains functions that assist in working with
-cookies.</p>
+<p>The Cookie Helper file contains functions that assist in working with cookies.</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#loading-this-helper" id="id1">Loading this Helper</a></p></li>
@@ -320,7 +319,7 @@ cookies.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|Cookie|string</span></code></span>) – Cookie name <em>or</em> associative array of all of the parameters available to this function <em>or</em> an instance of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Cookie\Cookie</span></code></p></li>
 <li><p><strong>$value</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie value</p></li>
-<li><p><strong>$expire</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Number of seconds until expiration. If set to <code class="docutils literal notranslate"><span class="pre">0</span></code> the cookie will only last as long as the browser is open</p></li>
+<li><p><strong>$expire</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Number of seconds until expiration. If set to <code class="docutils literal notranslate"><span class="pre">0</span></code>, the cookie will only last as long as the browser is open</p></li>
 <li><p><strong>$domain</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie domain (usually: .yourdomain.com)</p></li>
 <li><p><strong>$path</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie path</p></li>
 <li><p><strong>$prefix</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie name prefix. If <code class="docutils literal notranslate"><span class="pre">''</span></code>, the default from <strong>app/Config/Cookie.php</strong> is used</p></li>
@@ -335,19 +334,17 @@ cookies.</p>
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Prior to v4.2.7, the default values of <code class="docutils literal notranslate"><span class="pre">$secure</span></code> and <code class="docutils literal notranslate"><span class="pre">$httpOnly</span></code> were <code class="docutils literal notranslate"><span class="pre">false</span></code>
-due to a bug, and these values from <strong>app/Config/Cookie.php</strong> were never used.</p>
+<p>Prior to v4.2.7, the default values of <code class="docutils literal notranslate"><span class="pre">$secure</span></code> and <code class="docutils literal notranslate"><span class="pre">$httpOnly</span></code> were <code class="docutils literal notranslate"><span class="pre">false</span></code> due to a bug, and
+these values from <strong>app/Config/Cookie.php</strong> were never used.</p>
 </div>
-<p>This helper function gives you friendlier syntax to set browser
-cookies. Refer to the <a class="reference internal" href="../outgoing/response.html"><span class="doc">Response Library</span></a> for
-a description of its use, as this function is an alias for
+<p>This helper function gives you friendlier syntax to set browser cookies. Refer to the
+<a class="reference internal" href="../outgoing/response.html"><span class="doc">Response Library</span></a> for a description of its use, as this function is an alias for
 <a class="reference internal" href="../outgoing/response.html#CodeIgniter\HTTP\Response::setCookie" title="CodeIgniter\HTTP\Response::setCookie"><code class="xref php php-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Response::setCookie()</span></code></a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This helper function just sets browser cookies to the global response
-instance that <code class="docutils literal notranslate"><span class="pre">Services::response()</span></code> returns. So, if you create and
-return another response instance (e.g., if you call <a class="reference internal" href="../general/common_functions.html#redirect" title="redirect"><code class="xref php php-func docutils literal notranslate"><span class="pre">redirect()</span></code></a>),
-the cookies set here will not be sent automatically.</p>
+<p>This helper function just sets browser cookies to the global response instance that
+<code class="docutils literal notranslate"><span class="pre">Services::response()</span></code> returns. So, if you create and return another response instance (e.g., if you call
+<a class="reference internal" href="../general/common_functions.html#redirect" title="redirect"><code class="xref php php-func docutils literal notranslate"><span class="pre">redirect()</span></code></a>), the cookies set here will not be sent automatically.</p>
 </div>
 </dd></dl>
 
@@ -359,7 +356,7 @@ the cookies set here will not be sent automatically.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$index</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie name</p></li>
 <li><p><strong>$xssClean</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether to apply XSS filtering to the returned value</p></li>
-<li><p><strong>$prefix</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string|null</span></code></span>) – Cookie name prefix. If set to <code class="docutils literal notranslate"><span class="pre">''</span></code>, the default value from <strong>app/Config/Cookie.php</strong> will be used. If set to <code class="docutils literal notranslate"><span class="pre">null</span></code>, no prefix</p></li>
+<li><p><strong>$prefix</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string|null</span></code></span>) – Cookie name prefix. If set to <code class="docutils literal notranslate"><span class="pre">''</span></code>, the default value from <strong>app/Config/Cookie.php</strong> will be used. If set to <code class="docutils literal notranslate"><span class="pre">null</span></code>, no prefix is used</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -371,18 +368,17 @@ the cookies set here will not be sent automatically.</p>
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Since v4.2.1, the third parameter <code class="docutils literal notranslate"><span class="pre">$prefix</span></code> has been introduced and the behavior has been changed a bit due to a bug fix. See <a class="reference internal" href="../installation/upgrade_421.html#upgrade-421-get-cookie"><span class="std std-ref">Upgrading</span></a> for details.</p>
+<p>Since v4.2.1, the third parameter <code class="docutils literal notranslate"><span class="pre">$prefix</span></code> has been introduced and the behavior has been changed a bit
+due to a bug fix. See <a class="reference internal" href="../installation/upgrade_421.html#upgrade-421-get-cookie"><span class="std std-ref">Upgrading</span></a> for details.</p>
 </div>
-<p>This helper function gives you friendlier syntax to get browser
-cookies. Refer to the <a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">IncomingRequest Library</span></a> for
-detailed description of its use, as this function acts very
-similarly to <a class="reference internal" href="../incoming/incomingrequest.html#CodeIgniter\HTTP\IncomingRequest::getCookie" title="CodeIgniter\HTTP\IncomingRequest::getCookie"><code class="xref php php-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\IncomingRequest::getCookie()</span></code></a>,
-except it will also prepend
-the <code class="docutils literal notranslate"><span class="pre">Config\Cookie::$prefix</span></code> that you might’ve set in your
-<strong>app/Config/Cookie.php</strong> file.</p>
+<p>This helper function gives you friendlier syntax to get browser cookies. Refer to the
+<a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">IncomingRequest Library</span></a> for a detailed description of its use, as this function
+acts very similarly to <a class="reference internal" href="../incoming/incomingrequest.html#CodeIgniter\HTTP\IncomingRequest::getCookie" title="CodeIgniter\HTTP\IncomingRequest::getCookie"><code class="xref php php-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\IncomingRequest::getCookie()</span></code></a>, except it will also prepend the
+<code class="docutils literal notranslate"><span class="pre">Config\Cookie::$prefix</span></code> that you might’ve set in your <strong>app/Config/Cookie.php</strong> file.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Using XSS filtering is a bad practice. It does not prevent XSS attacks perfectly. Using <a class="reference internal" href="../general/common_functions.html#esc" title="esc"><code class="xref php php-func docutils literal notranslate"><span class="pre">esc()</span></code></a> with the correct <code class="docutils literal notranslate"><span class="pre">$context</span></code> in the views is recommended.</p>
+<p>Using XSS filtering is a bad practice. It does not prevent XSS attacks perfectly. Using
+<a class="reference internal" href="../general/common_functions.html#esc" title="esc"><code class="xref php php-func docutils literal notranslate"><span class="pre">esc()</span></code></a> with the correct <code class="docutils literal notranslate"><span class="pre">$context</span></code> in the views is recommended.</p>
 </div>
 </dd></dl>
 
@@ -402,26 +398,22 @@ the <code class="docutils literal notranslate"><span class="pre">Config\Cookie::
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">void</span></code></span></p>
 </dd>
 </dl>
-<p>Lets you delete a cookie. Unless you’ve set a custom path or other
-values, only the name of the cookie is needed.</p>
+<p>Lets you delete a cookie. Unless you’ve set a custom path or other values, only the name of the cookie is needed.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nx">delete_cookie</span><span class="p">(</span><span class="s1">'name'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>This function is otherwise identical to <a class="reference internal" href="#set_cookie" title="set_cookie"><code class="xref php php-func docutils literal notranslate"><span class="pre">set_cookie()</span></code></a>, except that it
-does not have the <code class="docutils literal notranslate"><span class="pre">value</span></code> and <code class="docutils literal notranslate"><span class="pre">expire</span></code> parameters.</p>
-<p>This also just sets browser cookies for deleting the cookies to the global
-response instance that <code class="docutils literal notranslate"><span class="pre">Services::response()</span></code> returns.</p>
+<p>This function is otherwise identical to <a class="reference internal" href="#set_cookie" title="set_cookie"><code class="xref php php-func docutils literal notranslate"><span class="pre">set_cookie()</span></code></a>, except that it does not have the <code class="docutils literal notranslate"><span class="pre">value</span></code> and
+<code class="docutils literal notranslate"><span class="pre">expire</span></code> parameters.</p>
+<p>This also just sets the deletion cookies on the global response instance that <code class="docutils literal notranslate"><span class="pre">Services::response()</span></code> returns.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>When you use <a class="reference internal" href="#set_cookie" title="set_cookie"><code class="xref php php-func docutils literal notranslate"><span class="pre">set_cookie()</span></code></a>,
-if the <code class="docutils literal notranslate"><span class="pre">value</span></code> is set to empty string and the <code class="docutils literal notranslate"><span class="pre">expire</span></code> is set to <code class="docutils literal notranslate"><span class="pre">0</span></code>, the cookie will be deleted.
-If the <code class="docutils literal notranslate"><span class="pre">value</span></code> is set to non-empty string and the <code class="docutils literal notranslate"><span class="pre">expire</span></code> is set to <code class="docutils literal notranslate"><span class="pre">0</span></code>, the cookie will only last as long as the browser is open.</p>
+<p>When you use <a class="reference internal" href="#set_cookie" title="set_cookie"><code class="xref php php-func docutils literal notranslate"><span class="pre">set_cookie()</span></code></a>, if the <code class="docutils literal notranslate"><span class="pre">value</span></code> is set to an empty string and the <code class="docutils literal notranslate"><span class="pre">expire</span></code> is
+set to <code class="docutils literal notranslate"><span class="pre">0</span></code>, the cookie will be deleted. If the <code class="docutils literal notranslate"><span class="pre">value</span></code> is set to a non-empty string and the <code class="docutils literal notranslate"><span class="pre">expire</span></code> is
+set to <code class="docutils literal notranslate"><span class="pre">0</span></code>, the cookie will only last as long as the browser is open.</p>
 </div>
-<p>You can submit an
-array of values in the first parameter or you can set discrete
-parameters.</p>
+<p>You can submit an array of values in the first parameter, or you can set discrete parameters.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nx">delete_cookie</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$domain</span><span class="p">,</span> <span class="nv">$path</span><span class="p">,</span> <span class="nv">$prefix</span><span class="p">);</span>
@@ -444,9 +436,8 @@ parameters.</p>
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
-<p>Checks if a cookie exists by name in the global response instance that
-<code class="docutils literal notranslate"><span class="pre">Services::response()</span></code> returns. This is an alias of
-<a class="reference internal" href="../outgoing/response.html#CodeIgniter\HTTP\Response::hasCookie" title="CodeIgniter\HTTP\Response::hasCookie"><code class="xref php php-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Response::hasCookie()</span></code></a>.</p>
+<p>Checks if a cookie exists by name in the global response instance that <code class="docutils literal notranslate"><span class="pre">Services::response()</span></code> returns. This is an
+alias of <a class="reference internal" href="../outgoing/response.html#CodeIgniter\HTTP\Response::hasCookie" title="CodeIgniter\HTTP\Response::hasCookie"><code class="xref php php-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Response::hasCookie()</span></code></a>.</p>
 </dd></dl>
 
 </section>
@@ -464,7 +455,7 @@ parameters.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

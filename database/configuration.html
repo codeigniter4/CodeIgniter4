@@ -325,14 +325,12 @@
 </div>
 <section id="config-file">
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Config File</a><a class="headerlink" href="#config-file" title="Link to this heading"></a></h2>
-<p>CodeIgniter has a config file that lets you store your database
-connection values (username, password, database name, etc.). The config
-file is located at <strong>app/Config/Database.php</strong>. You can also set
-database connection values in the <strong>.env</strong> file. See below for more details.</p>
+<p>CodeIgniter has a config file that lets you store your database connection values (username, password, database name,
+etc.). The config file is located at <strong>app/Config/Database.php</strong>. You can also set database connection values in the
+<strong>.env</strong> file. See below for more details.</p>
 <section id="setting-default-database">
 <h3><a class="toc-backref" href="#id2" role="doc-backlink">Setting Default Database</a><a class="headerlink" href="#setting-default-database" title="Link to this heading"></a></h3>
-<p>The config settings are stored in a class property that is an array with this
-prototype:</p>
+<p>The config settings are stored in a class property that is an array with this prototype:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -367,20 +365,19 @@ prototype:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The name of the class property is the connection name, and can be used
-while connecting to specify a group name.</p>
+<p>The name of the class property is the connection name, and can be used while connecting to specify a group name.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The default location of the SQLite3 database is the <strong>writable</strong> folder.
-If you want to change the location, you must set the full path to the new folder (e.g., ‘database’ =&gt; WRITEPATH . ‘db/database_name.db’).</p>
+<p>The default location of the SQLite3 database is the <strong>writable</strong> folder. If you want to change the location,
+you must set the full path to the new folder (e.g., ‘database’ =&gt; WRITEPATH . ‘db/database_name.db’).</p>
 </div>
 <section id="dsn">
 <h4><a class="toc-backref" href="#id3" role="doc-backlink">DSN</a><a class="headerlink" href="#dsn" title="Link to this heading"></a></h4>
-<p>Some database drivers (such as Postgre, OCI8) requires a full DSN (Data Source Name) string to connect.
-But if you do not specify a DSN string for a driver that requires it, CodeIgniter
-will try to build it with the rest of the provided settings.</p>
-<p>If you specify a DSN, you should use the <code class="docutils literal notranslate"><span class="pre">'DSN'</span></code> configuration setting, as if
-you’re using the driver’s underlying native PHP extension, like this:</p>
+<p>Some database drivers (such as Postgre, OCI8) require a full DSN (Data Source Name) string to connect. But if you do not
+specify a DSN string for a driver that requires it, CodeIgniter will try to build it with the rest of the provided
+settings.</p>
+<p>If you specify a DSN, you should use the <code class="docutils literal notranslate"><span class="pre">'DSN'</span></code> configuration setting, as if you’re using the driver’s underlying
+native PHP extension, like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span>    <span class="c1">// OCI8</span>
     <span class="k">public</span> <span class="k">array</span> <span class="nv">$default</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">'DSN'</span> <span class="o">=&gt;</span> <span class="s1">'//localhost/XE'</span><span class="p">,</span>
@@ -390,15 +387,15 @@ you’re using the driver’s underlying native PHP extension, like this:</p>
 </div>
 <section id="dsn-in-universal-manner">
 <h5>DSN in Universal Manner<a class="headerlink" href="#dsn-in-universal-manner" title="Link to this heading"></a></h5>
-<p>You can also set a DSN in universal manner (URL like). In that case DSNs must have this prototype:</p>
+<p>You can also set a DSN in a universal manner (URL-like). In that case, DSNs must have this prototype:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span>    <span class="k">public</span> <span class="k">array</span> <span class="nv">$default</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">'DSN'</span> <span class="o">=&gt;</span> <span class="s1">'DBDriver://username:password@hostname:port/database'</span><span class="p">,</span>
         <span class="c1">// ...</span>
     <span class="p">];</span>
 </pre></div>
 </div>
-<p>To override default config values when connecting with a universal version of the DSN string,
-add the config variables as a query string:</p>
+<p>To override default config values when connecting with a universal version of the DSN string, add the config variables
+as a query string:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span>    <span class="c1">// MySQLi</span>
     <span class="k">public</span> <span class="k">array</span> <span class="nv">$default</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">'DSN'</span> <span class="o">=&gt;</span> <span class="s1">'MySQLi://username:password@hostname:3306/database?charset=utf8mb4&amp;DBCollat=utf8mb4_general_ci'</span><span class="p">,</span>
@@ -415,16 +412,15 @@ add the config variables as a query string:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you provide a DSN string and it is missing some valid settings (e.g., the
-database character set), which are present in the rest of the configuration
-fields, CodeIgniter will append them.</p>
+<p>If you provide a DSN string and it is missing some valid settings (e.g., the database character set), which
+are present in the rest of the configuration fields, CodeIgniter will append them.</p>
 </div>
 </section>
 </section>
 <section id="failovers">
 <h4><a class="toc-backref" href="#id4" role="doc-backlink">Failovers</a><a class="headerlink" href="#failovers" title="Link to this heading"></a></h4>
-<p>You can also specify failovers for the situation when the main connection cannot connect for some reason.
-These failovers can be specified by setting the failover for a connection like this:</p>
+<p>You can also specify failovers for the situation when the main connection cannot connect for some reason. These
+failovers can be specified by setting the failover for a connection like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -483,11 +479,9 @@ These failovers can be specified by setting the failover for a connection like t
 </section>
 <section id="setting-multiple-databases">
 <h3><a class="toc-backref" href="#id5" role="doc-backlink">Setting Multiple Databases</a><a class="headerlink" href="#setting-multiple-databases" title="Link to this heading"></a></h3>
-<p>You may optionally store multiple sets of connection
-values. If, for example, you run multiple environments (development,
-production, test, etc.) under a single installation, you can set up a
-connection group for each, then switch between groups as needed. For
-example, to set up a “test” environment you would do this:</p>
+<p>You may optionally store multiple sets of connection values. If, for example, you run multiple environments
+(development, production, test, etc.) under a single installation, you can set up a connection group for each, then
+switch between groups as needed. For example, to set up a “test” environment you would do this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -521,8 +515,7 @@ example, to set up a “test” environment you would do this:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Then, to globally tell the system to use that group you would set this
-variable located in the config file:</p>
+<p>Then, to globally tell the system to use that group you would set this variable located in the config file:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -541,16 +534,14 @@ variable located in the config file:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The name <code class="docutils literal notranslate"><span class="pre">test</span></code> is arbitrary. It can be anything you want. By
-default we’ve used the word <code class="docutils literal notranslate"><span class="pre">default</span></code> for the primary connection,
-but it too can be renamed to something more relevant to your project.</p>
+<p>The name <code class="docutils literal notranslate"><span class="pre">test</span></code> is arbitrary. It can be anything you want. By default we’ve used the word <code class="docutils literal notranslate"><span class="pre">default</span></code> for
+the primary connection, but it too can be renamed to something more relevant to your project.</p>
 </div>
 </section>
 <section id="changing-databases-automatically">
 <h3><a class="toc-backref" href="#id6" role="doc-backlink">Changing Databases Automatically</a><a class="headerlink" href="#changing-databases-automatically" title="Link to this heading"></a></h3>
-<p>You could modify the config file to detect the environment and automatically
-update the <code class="docutils literal notranslate"><span class="pre">defaultGroup</span></code> value to the correct one by adding the required logic
-within the class’ constructor:</p>
+<p>You could modify the config file to detect the environment and automatically update the <code class="docutils literal notranslate"><span class="pre">defaultGroup</span></code> value to the
+correct one by adding the required logic within the class’ constructor:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -580,19 +571,18 @@ within the class’ constructor:</p>
 </section>
 <section id="configuring-with-env-file">
 <span id="database-config-with-env-file"></span><h2><a class="toc-backref" href="#id7" role="doc-backlink">Configuring with .env File</a><a class="headerlink" href="#configuring-with-env-file" title="Link to this heading"></a></h2>
-<p>You can also save your configuration values within a <strong>.env</strong> file with the current server’s
-database settings. You only need to enter the values that change from what is in the
-default group’s configuration settings. The values should follow this format, where
-<code class="docutils literal notranslate"><span class="pre">default</span></code> is the group name:</p>
+<p>You can also save your configuration values within a <strong>.env</strong> file with the current server’s database settings. You only
+need to enter the values that change from what is in the default group’s configuration settings. The values should
+follow this format, where <code class="docutils literal notranslate"><span class="pre">default</span></code> is the group name:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">database</span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="nx">username</span> <span class="o">=</span> <span class="s1">'root'</span><span class="p">;</span>
 <span class="nx">database</span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="nx">password</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
 <span class="nx">database</span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="nx">database</span> <span class="o">=</span> <span class="s1">'ci4'</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>But you cannot add a new property by setting environment variables, nor change a
-scalar value to an array. See <a class="reference internal" href="../general/configuration.html#env-var-replacements-for-data"><span class="std std-ref">Environment Variables as Replacements for Data</span></a> for details.</p>
-<p>So if you want to use SSL with MySQL, you need a hack. For example, set the array
-values as a JSON string in your <strong>.env</strong> file:</p>
+<p>But you cannot add a new property by setting environment variables, nor change a scalar value to an array. See
+<a class="reference internal" href="../general/configuration.html#env-var-replacements-for-data"><span class="std std-ref">Environment Variables as Replacements for Data</span></a> for details.</p>
+<p>So if you want to use SSL with MySQL, you need a hack. For example, set the array values as a JSON string in your
+<strong>.env</strong> file:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">database</span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="nx">encrypt</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"ssl_verify"</span><span class="o">:</span><span class="k">true</span><span class="p">,</span><span class="s2">"ssl_ca"</span><span class="o">:</span><span class="s2">"/var/www/html/BaltimoreCyberTrustRoot.crt.pem"</span><span class="p">}</span>
 </pre></div>
 </div>
@@ -675,7 +665,7 @@ applications where you might run manually written queries, and need the prefix t
 customizable by the end user.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>schema</strong></p></td>
-<td><p>(<code class="docutils literal notranslate"><span class="pre">Postgre</span></code> and <code class="docutils literal notranslate"><span class="pre">SQLSRV</span></code> only) The database schema, default value varies by driver.</p></td>
+<td><p>(<code class="docutils literal notranslate"><span class="pre">Postgre</span></code> and <code class="docutils literal notranslate"><span class="pre">SQLSRV</span></code> only) The database schema. The default value varies by driver.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>encrypt</strong></p></td>
 <td><p>(<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> and <code class="docutils literal notranslate"><span class="pre">SQLSRV</span></code> only) Whether to use an encrypted connection.
@@ -693,14 +683,14 @@ strict SQL while developing an application.</p></td>
 <td><p>The database port number - Empty string <code class="docutils literal notranslate"><span class="pre">''</span></code> for default port (or dynamic port with <code class="docutils literal notranslate"><span class="pre">SQLSRV</span></code>).</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>foreignKeys</strong></p></td>
-<td><p>(<code class="docutils literal notranslate"><span class="pre">SQLite3</span></code> only) true/false (boolean) - Whether to enable Foreign Key constraint.</p></td>
+<td><p>(<code class="docutils literal notranslate"><span class="pre">SQLite3</span></code> only) true/false (boolean) - Whether to enable Foreign Key constraints.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>busyTimeout</strong></p></td>
 <td><p>(<code class="docutils literal notranslate"><span class="pre">SQLite3</span></code> only) milliseconds (int) - Sleeps for a specified amount of time when a table is locked.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>synchronous</strong></p></td>
 <td><p>(<code class="docutils literal notranslate"><span class="pre">SQLite3</span></code> only) flag (int) - How strict SQLite will be at flushing to disk during transactions.
-Use <cite>null</cite> to stay with the default setting. This can be used since v4.6.0.</p></td>
+Use <code class="docutils literal notranslate"><span class="pre">null</span></code> to stay with the default setting. This can be used since v4.6.0.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>numberNative</strong></p></td>
 <td><p>(<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> only) true/false (boolean) - Whether to enable MYSQLI_OPT_INT_AND_FLOAT_NATIVE.</p></td>
@@ -715,32 +705,30 @@ Use <cite>null</cite> to stay with the default setting. This can be used since v
 </table>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>CodeIgniter doesn’t support dots (<code class="docutils literal notranslate"><span class="pre">.</span></code>) in the table and column names.
-Since v4.5.0, database names with dots are supported.</p>
+<p>CodeIgniter doesn’t support dots (<code class="docutils literal notranslate"><span class="pre">.</span></code>) in the table and column names. Since v4.5.0, database names with dots
+are supported.</p>
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>SQLite3 Foreign Key constraint is disabled by default.
-See <a class="reference external" href="https://www.sqlite.org/pragma.html#pragma_foreign_keys">SQLite documentation</a>.
-To enforce Foreign Key constraint, set <strong>foreignKeys</strong> to true.</p>
+<p>SQLite3 Foreign Key constraints are disabled by default. See
+<a class="reference external" href="https://www.sqlite.org/pragma.html#pragma_foreign_keys">SQLite documentation</a>. To enforce Foreign Key
+constraints, set <strong>foreignKeys</strong> to true.</p>
 </div>
 <p>The <strong>dateFormat</strong> array has the following keys:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">date</span></code>        - date format</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code>    - date and time format</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">date</span></code> - date format</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> - date and time format</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">datetime-ms</span></code> - date and time with millisecond format</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">datetime-us</span></code> - date and time with microsecond format</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">time</span></code>        - time format</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">time</span></code> - time format</p></li>
 </ul>
-<p>This can be used since v4.5.0, and you can get the value, e.g., <code class="docutils literal notranslate"><span class="pre">$db-&gt;dateFormat['datetime']</span></code>.
-Currently, the database drivers do not use these values directly,
-but <a class="reference internal" href="../models/model.html#model-saving-dates"><span class="std std-ref">Model</span></a> uses them.</p>
+<p>This can be used since v4.5.0, and you can get the value, e.g., <code class="docutils literal notranslate"><span class="pre">$db-&gt;dateFormat['datetime']</span></code>. Currently, the database
+drivers do not use these values directly, but <a class="reference internal" href="../models/model.html#model-saving-dates"><span class="std std-ref">Model</span></a> uses them.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Depending on what database driver you are using (<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code>, <code class="docutils literal notranslate"><span class="pre">Postgre</span></code>,
-etc.) not all values will be needed. For example, when using <code class="docutils literal notranslate"><span class="pre">SQLite3</span></code> you
-will not need to supply a username or password, and the database name
-will be the path to your database file.</p>
+<p>Depending on what database driver you are using (<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code>, <code class="docutils literal notranslate"><span class="pre">Postgre</span></code>, etc.), not all values will be
+needed. For example, when using <code class="docutils literal notranslate"><span class="pre">SQLite3</span></code> you will not need to supply a username or password, and the database
+name will be the path to your database file.</p>
 </div>
 <section id="mysqli">
 <h3><a class="toc-backref" href="#id9" role="doc-backlink">MySQLi</a><a class="headerlink" href="#mysqli" title="Link to this heading"></a></h3>
@@ -748,9 +736,8 @@ will be the path to your database file.</p>
 <h4><a class="toc-backref" href="#id10" role="doc-backlink">hostname</a><a class="headerlink" href="#hostname" title="Link to this heading"></a></h4>
 <section id="configuring-a-socket-connection">
 <h5>Configuring a Socket Connection<a class="headerlink" href="#configuring-a-socket-connection" title="Link to this heading"></a></h5>
-<p>To connect to a MySQL server over a filesystem socket, the path to the socket should be specified in
-the <code class="docutils literal notranslate"><span class="pre">'hostname'</span></code> setting. CodeIgniter’s MySQLi driver will notice this and configure the
-connection properly.</p>
+<p>To connect to a MySQL server over a filesystem socket, the path to the socket should be specified in the <code class="docutils literal notranslate"><span class="pre">'hostname'</span></code>
+setting. CodeIgniter’s MySQLi driver will notice this and configure the connection properly.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span>    <span class="c1">// MySQLi over a socket</span>
     <span class="k">public</span> <span class="k">array</span> <span class="nv">$default</span> <span class="o">=</span> <span class="p">[</span>
         <span class="c1">// ...</span>
@@ -765,11 +752,11 @@ connection properly.</p>
 </section>
 <section id="encrypt">
 <span id="mysqli-encrypt"></span><h4><a class="toc-backref" href="#id11" role="doc-backlink">encrypt</a><a class="headerlink" href="#encrypt" title="Link to this heading"></a></h4>
-<p>MySQLi driver accepts an array with the following options:</p>
+<p>The MySQLi driver accepts an array with the following options:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">ssl_key</span></code>    - Path to the private key file</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ssl_cert</span></code>   - Path to the public key certificate file</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ssl_ca</span></code>     - Path to the certificate authority file</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ssl_key</span></code> - Path to the private key file</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ssl_cert</span></code> - Path to the public key certificate file</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ssl_ca</span></code> - Path to the certificate authority file</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ssl_capath</span></code> - Path to a directory containing trusted CA certificates in PEM format</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ssl_cipher</span></code> - List of <em>allowed</em> ciphers to be used for the encryption, separated by colons (<code class="docutils literal notranslate"><span class="pre">:</span></code>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ssl_verify</span></code> - true/false (boolean) - Whether to verify the server certificate or not</p></li>
@@ -791,7 +778,7 @@ connection properly.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

@@ -296,7 +296,7 @@
 <h1>Upgrade Output Class<a class="headerlink" href="#upgrade-output-class" title="Link to this heading"></a></h1>
 <nav class="contents local" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#documentations" id="id1">Documentations</a></p></li>
+<li><p><a class="reference internal" href="#documentation" id="id1">Documentation</a></p></li>
 <li><p><a class="reference internal" href="#what-has-been-changed" id="id2">What has been changed</a></p></li>
 <li><p><a class="reference internal" href="#upgrade-guide" id="id3">Upgrade Guide</a></p></li>
 <li><p><a class="reference internal" href="#code-example" id="id4">Code Example</a></p>
@@ -307,8 +307,8 @@
 </li>
 </ul>
 </nav>
-<section id="documentations">
-<h2><a class="toc-backref" href="#id1" role="doc-backlink">Documentations</a><a class="headerlink" href="#documentations" title="Link to this heading"></a></h2>
+<section id="documentation">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Documentation</a><a class="headerlink" href="#documentation" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="http://codeigniter.com/userguide3/libraries/output.html">Output Class Documentation CodeIgniter 3.x</a></p></li>
 <li><p><a class="reference internal" href="../outgoing/response.html"><span class="doc">HTTP Responses Documentation CodeIgniter 4.x</span></a></p></li>
@@ -324,8 +324,11 @@
 <section id="upgrade-guide">
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">Upgrade Guide</a><a class="headerlink" href="#upgrade-guide" title="Link to this heading"></a></h2>
 <ol class="arabic simple">
-<li><p>The methods in the HTTP Response class are named slightly different. The most important change in the naming is the switch from underscored method names to camelCase. The method <code class="docutils literal notranslate"><span class="pre">set_content_type()</span></code> from version 3 is now named <code class="docutils literal notranslate"><span class="pre">setContentType()</span></code> and so on.</p></li>
-<li><p>In the most cases you have to change <code class="docutils literal notranslate"><span class="pre">$this-&gt;output</span></code> to <code class="docutils literal notranslate"><span class="pre">$this-&gt;response</span></code> followed by the method. You can find all methods in <a class="reference internal" href="../outgoing/response.html"><span class="doc">HTTP Responses</span></a>.</p></li>
+<li><p>The methods in the HTTP Response class are named slightly differently. The most important change in the naming is the
+switch from underscored method names to camelCase. The method <code class="docutils literal notranslate"><span class="pre">set_content_type()</span></code> from version 3 is now named
+<code class="docutils literal notranslate"><span class="pre">setContentType()</span></code> and so on.</p></li>
+<li><p>In most cases, you have to change <code class="docutils literal notranslate"><span class="pre">$this-&gt;output</span></code> to <code class="docutils literal notranslate"><span class="pre">$this-&gt;response</span></code> followed by the method. You can find all
+methods in <a class="reference internal" href="../outgoing/response.html"><span class="doc">HTTP Responses</span></a>.</p></li>
 </ol>
 </section>
 <section id="code-example">
@@ -371,7 +374,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

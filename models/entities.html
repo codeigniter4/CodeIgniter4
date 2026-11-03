@@ -292,9 +292,9 @@
              
   <section id="using-entity-classes">
 <h1>Using Entity Classes<a class="headerlink" href="#using-entity-classes" title="Link to this heading"></a></h1>
-<p>CodeIgniter supports Entity classes as a first-class citizen, while keeping
-them completely optional to use. They are commonly used as part of the Repository pattern, but can
-be used directly with the <a class="reference internal" href="model.html"><span class="doc">Model</span></a> if that fits your needs better.</p>
+<p>CodeIgniter supports Entity classes as a first-class citizen, while keeping them completely optional to use. They are
+commonly used as part of the Repository pattern, but can be used directly with the <a class="reference internal" href="model.html"><span class="doc">Model</span></a> if that
+fits your needs better.</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#entity-usage" id="id1">Entity Usage</a></p>
@@ -328,21 +328,18 @@ be used directly with the <a class="reference internal" href="model.html"><span 
 </nav>
 <section id="entity-usage">
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Entity Usage</a><a class="headerlink" href="#entity-usage" title="Link to this heading"></a></h2>
-<p>At its core, an Entity class is simply a class that represents a single database row. It has class properties
-to represent the database columns, and provides any additional methods to implement the business logic for
-that row.</p>
+<p>At its core, an Entity class is simply a class that represents a single database row. It has class properties to
+represent the database columns, and provides any additional methods to implement the business logic for that row.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>For ease of understanding, the explanation here is based on the case of
-using a database. However, Entity can also be used for data that does not come
-from a database.</p>
+<p>For ease of understanding, the explanation here is based on the case of using a database. However, Entity can
+also be used for data that does not come from a database.</p>
 </div>
-<p>The core feature, though, is that it doesn’t know anything about how to persist itself. That’s the
-responsibility of the model or the repository class. That way, if anything changes on how you need to save the
-object, you don’t have to change how that object is used throughout the application.</p>
-<p>This makes it possible to
-use JSON or XML files to store the objects during a rapid prototyping stage, and then easily switch to a
-database when you’ve proven the concept works.</p>
+<p>The core feature, though, is that it doesn’t know anything about how to persist itself. That’s the responsibility of the
+model or the repository class. That way, if anything changes in how you need to save the object, you don’t have to
+change how that object is used throughout the application.</p>
+<p>This makes it possible to use JSON or XML files to store the objects during a rapid prototyping stage, and then easily
+switch to a database when you’ve proven the concept works.</p>
 <p>Let’s walk through a very simple User Entity and how we’d work with it to help make things clear.</p>
 <p>Assume you have a database table named <code class="docutils literal notranslate"><span class="pre">users</span></code> that has the following schema:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">id</span>          <span class="o">-</span> <span class="nx">integer</span>
@@ -354,9 +351,9 @@ database when you’ve proven the concept works.</p>
 </div>
 <section id="create-the-entity-class">
 <h3><a class="toc-backref" href="#id2" role="doc-backlink">Create the Entity Class</a><a class="headerlink" href="#create-the-entity-class" title="Link to this heading"></a></h3>
-<p>Now create a new Entity class. Since there’s no default location to store these classes, and it doesn’t fit
-in with the existing directory structure, create a new directory at <strong>app/Entities</strong>. Create the
-Entity itself at <strong>app/Entities/User.php</strong>.</p>
+<p>Now create a new Entity class. Since there’s no default location to store these classes, and it doesn’t fit in with the
+existing directory structure, create a new directory at <strong>app/Entities</strong>. Create the Entity itself at
+<strong>app/Entities/User.php</strong>.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Entities</span><span class="p">;</span>
@@ -392,17 +389,15 @@ Entity itself at <strong>app/Entities/User.php</strong>.</p>
 </pre></div>
 </div>
 <p>The model uses the <code class="docutils literal notranslate"><span class="pre">users</span></code> table in the database for all of its activities.</p>
-<p>We’ve set the <code class="docutils literal notranslate"><span class="pre">$allowedFields</span></code> property to include all of the fields that we
-want outside classes to change. The <code class="docutils literal notranslate"><span class="pre">id</span></code>, <code class="docutils literal notranslate"><span class="pre">created_at</span></code>, and <code class="docutils literal notranslate"><span class="pre">updated_at</span></code>
-fields are handled automatically by the class or the database, so we don’t want
-to change those.</p>
-<p>Finally, we’ve set our Entity class as the <code class="docutils literal notranslate"><span class="pre">$returnType</span></code>. This ensures that all
-built-in methods on the model that return rows from the database will return
-instances of our User Entity class instead of an object or array like normal.</p>
+<p>We’ve set the <code class="docutils literal notranslate"><span class="pre">$allowedFields</span></code> property to include all of the fields that we want outside classes to change. The
+<code class="docutils literal notranslate"><span class="pre">id</span></code>, <code class="docutils literal notranslate"><span class="pre">created_at</span></code>, and <code class="docutils literal notranslate"><span class="pre">updated_at</span></code> fields are handled automatically by the class or the database, so we don’t
+want to change those.</p>
+<p>Finally, we’ve set our Entity class as the <code class="docutils literal notranslate"><span class="pre">$returnType</span></code>. This ensures that all built-in methods on the model that
+return rows from the database will return instances of our User Entity class instead of an object or array like normal.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Of course, if you add a custom method to your model, you must implement it
-so that instances of <code class="docutils literal notranslate"><span class="pre">$returnType</span></code> are returned.</p>
+<p>Of course, if you add a custom method to your model, you must implement it so that instances of <code class="docutils literal notranslate"><span class="pre">$returnType</span></code> are
+returned.</p>
 </div>
 </section>
 <section id="working-with-the-entity-class">
@@ -432,29 +427,29 @@ so that instances of <code class="docutils literal notranslate"><span class="pre
 <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="nv">$user</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>You may have noticed that the <code class="docutils literal notranslate"><span class="pre">User</span></code> class has not set any properties for the columns, but you can still
-access them as if they were public properties. The base class, <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Entity\Entity</span></code>, takes care of this for you, as
-well as providing the ability to check the properties with <code class="docutils literal notranslate"><span class="pre">isset()</span></code>, or <code class="docutils literal notranslate"><span class="pre">unset()</span></code> the property, and keep track
-of what columns have changed since the object was created or pulled from the database.</p>
+<p>You may have noticed that the <code class="docutils literal notranslate"><span class="pre">User</span></code> class has not set any properties for the columns, but you can still access them
+as if they were public properties. The base class, <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Entity\Entity</span></code>, takes care of this for you, as well as
+providing the ability to check the properties with <code class="docutils literal notranslate"><span class="pre">isset()</span></code>, <code class="docutils literal notranslate"><span class="pre">unset()</span></code> them, and keep track of what columns have
+changed since the object was created or pulled from the database.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The Entity class stores the data in the class property <code class="docutils literal notranslate"><span class="pre">$attributes</span></code> internally.</p>
 </div>
-<p>When the User is passed to the model’s <code class="docutils literal notranslate"><span class="pre">save()</span></code> method, it automatically takes care of reading the  properties
-and saving any changes to columns listed in the model’s <code class="docutils literal notranslate"><span class="pre">$allowedFields</span></code> property. It also knows whether to create
-a new row, or update an existing one.</p>
+<p>When the User is passed to the model’s <code class="docutils literal notranslate"><span class="pre">save()</span></code> method, it automatically takes care of reading the properties and
+saving any changes to columns listed in the model’s <code class="docutils literal notranslate"><span class="pre">$allowedFields</span></code> property. It also knows whether to create a new
+row, or update an existing one.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>When we are making a call to the <code class="docutils literal notranslate"><span class="pre">insert()</span></code> all the values from Entity are passed to the method, but when we
-call the <code class="docutils literal notranslate"><span class="pre">update()</span></code>, then only values that have changed are passed.</p>
+<p>When we call the <code class="docutils literal notranslate"><span class="pre">insert()</span></code> method, all the values from the Entity are passed to the method, but when we
+call the <code class="docutils literal notranslate"><span class="pre">update()</span></code> method, only the values that have changed are passed.</p>
 </div>
 </section>
 <section id="filling-properties-quickly">
 <h3><a class="toc-backref" href="#id5" role="doc-backlink">Filling Properties Quickly</a><a class="headerlink" href="#filling-properties-quickly" title="Link to this heading"></a></h3>
-<p>The Entity class also provides a method, <code class="docutils literal notranslate"><span class="pre">fill()</span></code> that allows you to shove an array of key/value pairs into the class
-and populate the class properties. Any property in the array will be set on the Entity. However, when saving through
-the model, only the fields in <code class="docutils literal notranslate"><span class="pre">$allowedFields</span></code> will actually be saved to the database, so you can store additional data
-on your entities without worrying much about stray fields getting saved incorrectly.</p>
+<p>The Entity class also provides a method, <code class="docutils literal notranslate"><span class="pre">fill()</span></code>, that allows you to shove an array of key/value pairs into the class
+and populate the class properties. Any property in the array will be set on the Entity. However, when saving through the
+model, only the fields in <code class="docutils literal notranslate"><span class="pre">$allowedFields</span></code> will actually be saved to the database, so you can store additional data on
+your entities without worrying much about stray fields getting saved incorrectly.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">();</span>
@@ -464,7 +459,8 @@ on your entities without worrying much about stray fields getting saved incorrec
 <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="nv">$user</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>You can also pass the data in the constructor and the data will be passed through the <code class="docutils literal notranslate"><span class="pre">fill()</span></code> method during instantiation.</p>
+<p>You can also pass the data in the constructor and the data will be passed through the <code class="docutils literal notranslate"><span class="pre">fill()</span></code> method during
+instantiation.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">();</span>
@@ -477,19 +473,19 @@ on your entities without worrying much about stray fields getting saved incorrec
 <section id="bulk-accessing-properties">
 <h3><a class="toc-backref" href="#id6" role="doc-backlink">Bulk Accessing Properties</a><a class="headerlink" href="#bulk-accessing-properties" title="Link to this heading"></a></h3>
 <p>The Entity class has two methods to extract all available properties into an array: <code class="docutils literal notranslate"><span class="pre">toArray()</span></code> and <code class="docutils literal notranslate"><span class="pre">toRawArray()</span></code>.
-Using the raw version will bypass magic “getter” methods and casts. Both methods can take a boolean first parameter
-to specify whether returned values should be filtered by those that have changed, and a boolean final parameter to
-make the method recursive, in case of nested Entities.</p>
+Using the raw version will bypass magic “getter” methods and casts. Both methods can take a boolean first parameter to
+specify whether returned values should be filtered by those that have changed, and a boolean final parameter to make the
+method recursive, in case of nested Entities.</p>
 </section>
 <section id="hidden-properties">
 <h3><a class="toc-backref" href="#id7" role="doc-backlink">Hidden properties</a><a class="headerlink" href="#hidden-properties" title="Link to this heading"></a></h3>
 <p>An Entity may have hidden attributes - their names start with an underscore (<code class="docutils literal notranslate"><span class="pre">_</span></code>). By default, these hidden properties
 are not included when you call <code class="docutils literal notranslate"><span class="pre">toArray()</span></code>. However, you can still access them directly if needed.</p>
-<p>If you want hidden properties to appear in the <code class="docutils literal notranslate"><span class="pre">toArray()</span></code> output, you’ll need to use the <code class="docutils literal notranslate"><span class="pre">datamap</span></code> feature - it makes
-those properties “visible”.</p>
-<p>Keep in mind that the smart <code class="docutils literal notranslate"><span class="pre">__get()</span></code> and <code class="docutils literal notranslate"><span class="pre">__set()</span></code> methods (described in the next section)  ignore leading underscores
-in property names. This means that two attributes with the same name (one starting with <code class="docutils literal notranslate"><span class="pre">_</span></code> and one without) will both use
-the same getter and setter, so you have to choose which one to handle by default.</p>
+<p>If you want hidden properties to appear in the <code class="docutils literal notranslate"><span class="pre">toArray()</span></code> output, you’ll need to use the <code class="docutils literal notranslate"><span class="pre">datamap</span></code> feature - it
+makes those properties “visible”.</p>
+<p>Keep in mind that the smart <code class="docutils literal notranslate"><span class="pre">__get()</span></code> and <code class="docutils literal notranslate"><span class="pre">__set()</span></code> methods (described in the next section) ignore leading
+underscores in property names. This means that two attributes with the same name (one starting with <code class="docutils literal notranslate"><span class="pre">_</span></code> and one
+without) will both use the same getter and setter, so you have to choose which one to handle by default.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Entities</span><span class="p">;</span>
@@ -538,8 +534,8 @@ the same getter and setter, so you have to choose which one to handle by default
 <section id="handling-business-logic">
 <h2><a class="toc-backref" href="#id8" role="doc-backlink">Handling Business Logic</a><a class="headerlink" href="#handling-business-logic" title="Link to this heading"></a></h2>
 <p>While the examples above are convenient, they don’t help enforce any business logic. The base Entity class implements
-some smart <code class="docutils literal notranslate"><span class="pre">__get()</span></code> and <code class="docutils literal notranslate"><span class="pre">__set()</span></code> methods that will check for special methods and use those instead of using
-the attributes directly, allowing you to enforce any business logic or data conversion that you need.</p>
+some smart <code class="docutils literal notranslate"><span class="pre">__get()</span></code> and <code class="docutils literal notranslate"><span class="pre">__set()</span></code> methods that will check for special methods and use those instead of using the
+attributes directly, allowing you to enforce any business logic or data conversion that you need.</p>
 <p>Here’s an updated User entity to provide some examples of how this could be used:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -578,9 +574,9 @@ the attributes directly, allowing you to enforce any business logic or data conv
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The first thing to notice is the name of the methods we’ve added. For each one, the class expects the snake_case
-column name to be converted into PascalCase, and prefixed with either <code class="docutils literal notranslate"><span class="pre">set</span></code> or <code class="docutils literal notranslate"><span class="pre">get</span></code>. These methods will then
-be automatically called whenever you set or retrieve the class property using the direct syntax (i.e., <code class="docutils literal notranslate"><span class="pre">$user-&gt;email</span></code>).
+<p>The first thing to notice is the name of the methods we’ve added. For each one, the class expects the snake_case column
+name to be converted into PascalCase, and prefixed with either <code class="docutils literal notranslate"><span class="pre">set</span></code> or <code class="docutils literal notranslate"><span class="pre">get</span></code>. These methods will then be
+automatically called whenever you set or retrieve the class property using the direct syntax (i.e., <code class="docutils literal notranslate"><span class="pre">$user-&gt;email</span></code>).
 The methods do not need to be public unless you want them accessed from other classes. For example, the <code class="docutils literal notranslate"><span class="pre">created_at</span></code>
 class property will be accessed through the <code class="docutils literal notranslate"><span class="pre">setCreatedAt()</span></code> and <code class="docutils literal notranslate"><span class="pre">getCreatedAt()</span></code> methods.</p>
 <div class="admonition note">
@@ -590,10 +586,10 @@ class must call the <code class="docutils literal notranslate"><span class="pre"
 </div>
 <p>In the <code class="docutils literal notranslate"><span class="pre">setPassword()</span></code> method we ensure that the password is always hashed.</p>
 <p>In <code class="docutils literal notranslate"><span class="pre">setCreatedAt()</span></code> we convert the string we receive from the model into a DateTime object, ensuring that our timezone
-is UTC so we can easily convert the viewer’s current timezone. In <code class="docutils literal notranslate"><span class="pre">getCreatedAt()</span></code>, it converts the time to
-a formatted string in the application’s current timezone.</p>
-<p>While fairly simple, these examples show that using Entity classes can provide a very flexible way to enforce
-business logic and create objects that are pleasant to use.</p>
+is UTC so we can easily convert to the viewer’s current timezone. In <code class="docutils literal notranslate"><span class="pre">getCreatedAt()</span></code>, it converts the time to a
+formatted string in the application’s current timezone.</p>
+<p>While fairly simple, these examples show that using Entity classes can provide a very flexible way to enforce business
+logic and create objects that are pleasant to use.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Auto-hash the password - both do the same thing</span>
@@ -606,23 +602,20 @@ business logic and create objects that are pleasant to use.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 4.4.0.</span></p>
 </div>
-<p>For example, if your Entity’s parent class already has a <code class="docutils literal notranslate"><span class="pre">getParent()</span></code> method
-defined, and your Entity also has a column named <code class="docutils literal notranslate"><span class="pre">parent</span></code>, when you try to add
-business logic to the <code class="docutils literal notranslate"><span class="pre">getParent()</span></code> method in your Entity class, the method is
-already defined.</p>
-<p>In such a case, you can use the special getter/setter. Instead of <code class="docutils literal notranslate"><span class="pre">getX()</span></code>/<code class="docutils literal notranslate"><span class="pre">setX()</span></code>,
-set <code class="docutils literal notranslate"><span class="pre">_getX()</span></code>/<code class="docutils literal notranslate"><span class="pre">_setX()</span></code>.</p>
-<p>In the above example, if your Entity has the <code class="docutils literal notranslate"><span class="pre">_getParent()</span></code> method, the method
-will be used when you get <code class="docutils literal notranslate"><span class="pre">$entity-&gt;parent</span></code>, and the <code class="docutils literal notranslate"><span class="pre">_setParent()</span></code> method
-will be used when you set <code class="docutils literal notranslate"><span class="pre">$entity-&gt;parent</span></code>.</p>
+<p>For example, if your Entity’s parent class already has a <code class="docutils literal notranslate"><span class="pre">getParent()</span></code> method defined, and your Entity also has a
+column named <code class="docutils literal notranslate"><span class="pre">parent</span></code>, when you try to add business logic to the <code class="docutils literal notranslate"><span class="pre">getParent()</span></code> method in your Entity class, the
+method is already defined.</p>
+<p>In such a case, you can use the special getter/setter. Instead of <code class="docutils literal notranslate"><span class="pre">getX()</span></code>/<code class="docutils literal notranslate"><span class="pre">setX()</span></code>, set <code class="docutils literal notranslate"><span class="pre">_getX()</span></code>/<code class="docutils literal notranslate"><span class="pre">_setX()</span></code>.</p>
+<p>In the above example, if your Entity has the <code class="docutils literal notranslate"><span class="pre">_getParent()</span></code> method, the method will be used when you get
+<code class="docutils literal notranslate"><span class="pre">$entity-&gt;parent</span></code>, and the <code class="docutils literal notranslate"><span class="pre">_setParent()</span></code> method will be used when you set <code class="docutils literal notranslate"><span class="pre">$entity-&gt;parent</span></code>.</p>
 </section>
 </section>
 <section id="data-mapping">
 <h2><a class="toc-backref" href="#id10" role="doc-backlink">Data Mapping</a><a class="headerlink" href="#data-mapping" title="Link to this heading"></a></h2>
-<p>At many points in your career, you will run into situations where the use of an application has changed and the
-original column names in the database no longer make sense. Or you find that your coding style prefers camelCase
-class properties, but your database schema required snake_case names. These situations can be easily handled
-with the Entity class’ data mapping features.</p>
+<p>At many points in your career, you will run into situations where the use of an application has changed and the original
+column names in the database no longer make sense. Or you find that your coding style prefers camelCase class
+properties, but your database schema requires snake_case names. These situations can be easily handled with the Entity
+class’ data mapping features.</p>
 <p>As an example, imagine you have the simplified User Entity that is used throughout your application:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -644,9 +637,9 @@ with the Entity class’ data mapping features.</p>
 </pre></div>
 </div>
 <p>Your boss comes to you and says that no one uses usernames anymore, so you’re switching to just use emails for login.
-But they do want to personalize the application a bit, so they want you to change the <code class="docutils literal notranslate"><span class="pre">name</span></code> field to represent a user’s
-full name now, not their username like it does currently. To keep things tidy and ensure things continue making sense
-in the database you whip up a migration to rename the <code class="docutils literal notranslate"><span class="pre">name</span></code> field to <code class="docutils literal notranslate"><span class="pre">full_name</span></code> for clarity.</p>
+But they do want to personalize the application a bit, so they want you to change the <code class="docutils literal notranslate"><span class="pre">name</span></code> field to represent a
+user’s full name now, not their username like it does currently. To keep things tidy and ensure things continue making
+sense in the database, you whip up a migration to rename the <code class="docutils literal notranslate"><span class="pre">name</span></code> field to <code class="docutils literal notranslate"><span class="pre">full_name</span></code> for clarity.</p>
 <p>Ignoring how contrived this example is, we now have two choices on how to fix the User class. We could modify the class
 property from <code class="docutils literal notranslate"><span class="pre">$name</span></code> to <code class="docutils literal notranslate"><span class="pre">$full_name</span></code>, but that would require changes throughout the application. Instead, we can
 simply map the <code class="docutils literal notranslate"><span class="pre">full_name</span></code> column in the database to the <code class="docutils literal notranslate"><span class="pre">$name</span></code> property, and be done with the Entity changes:</p>
@@ -675,27 +668,26 @@ simply map the <code class="docutils literal notranslate"><span class="pre">full
 </pre></div>
 </div>
 <p>By adding our new database name to the <code class="docutils literal notranslate"><span class="pre">$datamap</span></code> array, we can tell the class what class property the database column
-should be accessible through. The key of the array is class property to map it to, where the value in the array is the
+should be accessible through. The key of the array is the class property to map it to, and the value in the array is the
 name of the column in the database.</p>
 <p>In this example, when the model sets the <code class="docutils literal notranslate"><span class="pre">full_name</span></code> field on the User class, it actually assigns that value to the
-class’ <code class="docutils literal notranslate"><span class="pre">$name</span></code> property, so it can be set and retrieved through <code class="docutils literal notranslate"><span class="pre">$user-&gt;name</span></code>. The value will still be accessible
-through the original <code class="docutils literal notranslate"><span class="pre">$user-&gt;full_name</span></code>, also, as this is needed for the model to get the data back out and save it
-to the database. However, <code class="docutils literal notranslate"><span class="pre">unset()</span></code> and <code class="docutils literal notranslate"><span class="pre">isset()</span></code> only work on the mapped property, <code class="docutils literal notranslate"><span class="pre">$user-&gt;name</span></code>, not on the database column name,
-<code class="docutils literal notranslate"><span class="pre">$user-&gt;full_name</span></code>.</p>
+class’ <code class="docutils literal notranslate"><span class="pre">$name</span></code> property, so it can be set and retrieved through <code class="docutils literal notranslate"><span class="pre">$user-&gt;name</span></code>. The value will also still be
+accessible through the original <code class="docutils literal notranslate"><span class="pre">$user-&gt;full_name</span></code>, as this is needed for the model to get the data back out and save
+it to the database. However, <code class="docutils literal notranslate"><span class="pre">unset()</span></code> and <code class="docutils literal notranslate"><span class="pre">isset()</span></code> only work on the mapped property, <code class="docutils literal notranslate"><span class="pre">$user-&gt;name</span></code>, not on the
+database column name, <code class="docutils literal notranslate"><span class="pre">$user-&gt;full_name</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>When you use Data Mapping, you must define <code class="docutils literal notranslate"><span class="pre">set*()</span></code> and <code class="docutils literal notranslate"><span class="pre">get*()</span></code> method
-for the database column name. In this example, you must define <code class="docutils literal notranslate"><span class="pre">setFullName()</span></code> and
-<code class="docutils literal notranslate"><span class="pre">getFullName()</span></code>.</p>
+<p>When you use Data Mapping, you must define <code class="docutils literal notranslate"><span class="pre">set*()</span></code> and <code class="docutils literal notranslate"><span class="pre">get*()</span></code> methods for the database column name. In
+this example, you must define <code class="docutils literal notranslate"><span class="pre">setFullName()</span></code> and <code class="docutils literal notranslate"><span class="pre">getFullName()</span></code>.</p>
 </div>
 </section>
 <section id="mutators">
 <h2><a class="toc-backref" href="#id11" role="doc-backlink">Mutators</a><a class="headerlink" href="#mutators" title="Link to this heading"></a></h2>
 <section id="date-mutators">
 <h3><a class="toc-backref" href="#id12" role="doc-backlink">Date Mutators</a><a class="headerlink" href="#date-mutators" title="Link to this heading"></a></h3>
-<p>By default, the Entity class will convert fields named <cite>created_at</cite>, <cite>updated_at</cite>, or <cite>deleted_at</cite> into
-<a class="reference internal" href="../libraries/time.html"><span class="doc">Time</span></a> instances whenever they are set or retrieved. The Time class provides a large number
-of helpful methods in an immutable, localized way.</p>
+<p>By default, the Entity class will convert fields named <code class="docutils literal notranslate"><span class="pre">created_at</span></code>, <code class="docutils literal notranslate"><span class="pre">updated_at</span></code>, or <code class="docutils literal notranslate"><span class="pre">deleted_at</span></code> into
+<a class="reference internal" href="../libraries/time.html"><span class="doc">Time</span></a> instances whenever they are set or retrieved. The Time class provides a large number of
+helpful methods in an immutable, localized way.</p>
 <p>You can define which properties are automatically converted by adding the name to the <code class="docutils literal notranslate"><span class="pre">$dates</span></code> property:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -709,8 +701,8 @@ of helpful methods in an immutable, localized way.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Now, when any of those properties are set, they will be converted to a Time instance, using the application’s
-current timezone, as set in <strong>app/Config/App.php</strong>:</p>
+<p>Now, when any of those properties are set, they will be converted to a Time instance, using the application’s current
+timezone, as set in <strong>app/Config/App.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\App\Entities\User</span><span class="p">();</span>
@@ -727,15 +719,14 @@ current timezone, as set in <strong>app/Config/App.php</strong>:</p>
 <section id="property-casting">
 <span id="entities-property-casting"></span><h3><a class="toc-backref" href="#id13" role="doc-backlink">Property Casting</a><a class="headerlink" href="#property-casting" title="Link to this heading"></a></h3>
 <p>You can specify that properties in your Entity should be converted to common data types with the <code class="docutils literal notranslate"><span class="pre">$casts</span></code> property.
-This option should be an array where the key is the name of the class property, and the value is the data type it
-should be cast to.</p>
-<p>Property casting affects both read (get) and write (set), but some types affect
-only read (get).</p>
+This option should be an array where the key is the name of the class property, and the value is the data type it should
+be cast to.</p>
+<p>Property casting affects both read (get) and write (set), but some types affect only read (get).</p>
 <section id="scalar-type-casting">
 <h4>Scalar Type Casting<a class="headerlink" href="#scalar-type-casting" title="Link to this heading"></a></h4>
-<p>Properties can be cast to any of the following data types:
-<strong>integer</strong>, <strong>float</strong>, <strong>double</strong>, <strong>string</strong>, <strong>boolean</strong>, <strong>object</strong>, <strong>array</strong>, <strong>datetime</strong>, <strong>timestamp</strong>, <strong>uri</strong>, <strong>int-bool</strong> and <strong>enum</strong>.
-Add a question mark at the beginning of type to mark property as nullable, i.e., <strong>?string</strong>, <strong>?integer</strong>.</p>
+<p>Properties can be cast to any of the following data types: <strong>integer</strong>, <strong>float</strong>, <strong>double</strong>, <strong>string</strong>, <strong>boolean</strong>,
+<strong>object</strong>, <strong>array</strong>, <strong>datetime</strong>, <strong>timestamp</strong>, <strong>uri</strong>, <strong>int-bool</strong> and <strong>enum</strong>. Add a question mark at the
+beginning of the type to mark the property as nullable, i.e., <strong>?string</strong>, <strong>?integer</strong>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p><strong>int-bool</strong> can be used since v4.3.0.</p>
@@ -763,19 +754,19 @@ Add a question mark at the beginning of type to mark property as nullable, i.e.,
 </section>
 <section id="array-json-casting">
 <h4>Array/Json Casting<a class="headerlink" href="#array-json-casting" title="Link to this heading"></a></h4>
-<p>Array/Json casting is especially useful with fields that store serialized arrays or json in them. When cast as:</p>
+<p>Array/Json casting is especially useful with fields that store serialized arrays or JSON. When you read the property’s
+value:</p>
 <ul class="simple">
-<li><p>an <strong>array</strong>, they will automatically be unserialized,</p></li>
-<li><p>a <strong>json</strong>, they will automatically be set as a value of <code class="docutils literal notranslate"><span class="pre">json_decode($value,</span> <span class="pre">false)</span></code>,</p></li>
-<li><p>a <strong>json-array</strong>, they will automatically be set as a value of <code class="docutils literal notranslate"><span class="pre">json_decode($value,</span> <span class="pre">true)</span></code>,</p></li>
+<li><p>with the <strong>array</strong> cast, the value is automatically unserialized.</p></li>
+<li><p>with the <strong>json</strong> cast, the value is automatically converted with <code class="docutils literal notranslate"><span class="pre">json_decode($value,</span> <span class="pre">false)</span></code>.</p></li>
+<li><p>with the <strong>json-array</strong> cast, the value is automatically converted with <code class="docutils literal notranslate"><span class="pre">json_decode($value,</span> <span class="pre">true)</span></code>.</p></li>
 </ul>
-<p>when you set the property’s value.
-Unlike the rest of the data types that you can cast properties into, the:</p>
+<p>Unlike the rest of the data types that you can cast properties into, these cast types also convert the value whenever
+the property is set:</p>
 <ul class="simple">
-<li><p><strong>array</strong> cast type will serialize,</p></li>
-<li><p><strong>json</strong> and <strong>json-array</strong> cast will use json_encode function on</p></li>
+<li><p>the <strong>array</strong> cast serializes the value.</p></li>
+<li><p>the <strong>json</strong> and <strong>json-array</strong> casts use <code class="docutils literal notranslate"><span class="pre">json_encode()</span></code> on the value.</p></li>
 </ul>
-<p>the value whenever the property is set:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Entities</span><span class="p">;</span>
@@ -805,17 +796,15 @@ Unlike the rest of the data types that you can cast properties into, the:</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">array</span></code> cast uses PHP serialization. Only read values previously
-written through the same Entity cast. Never store untrusted serialized strings
-directly in an <code class="docutils literal notranslate"><span class="pre">array</span></code>-cast field.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">array</span></code> cast uses PHP serialization. Only read values previously written through the same Entity
+cast. Never store untrusted serialized strings directly in an <code class="docutils literal notranslate"><span class="pre">array</span></code>-cast field.</p>
 </div>
 </section>
 <section id="csv-casting">
 <h4>CSV Casting<a class="headerlink" href="#csv-casting" title="Link to this heading"></a></h4>
-<p>If you know you have a flat array of simple values, encoding them as a serialized or JSON string
-may be more complex than the original structure. Casting as Comma-Separated Values (CSV) is
-a simpler alternative will result in a string that uses less space and is more easily read
-by humans:</p>
+<p>If you know you have a flat array of simple values, encoding them as a serialized or JSON string may be more complex
+than the original structure. Casting as Comma-Separated Values (CSV) is a simpler alternative that will result in a
+string that uses less space and is more easily read by humans:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Entities</span><span class="p">;</span>
@@ -838,7 +827,8 @@ by humans:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Casting as CSV uses PHP’s internal <code class="docutils literal notranslate"><span class="pre">implode</span></code> and <code class="docutils literal notranslate"><span class="pre">explode</span></code> methods and assumes all values are string-safe and free of commas. For more complex data casts try <code class="docutils literal notranslate"><span class="pre">array</span></code> or <code class="docutils literal notranslate"><span class="pre">json</span></code>.</p>
+<p>Casting as CSV uses PHP’s internal <code class="docutils literal notranslate"><span class="pre">implode</span></code> and <code class="docutils literal notranslate"><span class="pre">explode</span></code> methods and assumes all values are string-safe
+and free of commas. For more complex data casts try <code class="docutils literal notranslate"><span class="pre">array</span></code> or <code class="docutils literal notranslate"><span class="pre">json</span></code>.</p>
 </div>
 </section>
 <section id="enum-casting">
@@ -919,8 +909,8 @@ by humans:</p>
 <section id="custom-casting">
 <h4>Custom Casting<a class="headerlink" href="#custom-casting" title="Link to this heading"></a></h4>
 <p>You can define your own conversion types for getting and setting data.</p>
-<p>At first you need to create a handler class for your type.
-Let’s say the class will be located in the <strong>app/Entities/Cast</strong> directory:</p>
+<p>First, you need to create a handler class for your type. Let’s say the class will be located in the
+<strong>app/Entities/Cast</strong> directory:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Entities\Cast</span><span class="p">;</span>
@@ -968,7 +958,7 @@ Let’s say the class will be located in the <strong>app/Entities/Cast</strong> 
 <span class="k">echo</span> <span class="nv">$entity</span><span class="o">-&gt;</span><span class="na">key</span><span class="p">;</span>     <span class="c1">// test</span>
 </pre></div>
 </div>
-<p>If you don’t need to change values when getting or setting a value. Then just don’t implement the appropriate method:</p>
+<p>If you don’t need to change values when getting or setting a value, just don’t implement the appropriate method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Entities\Cast</span><span class="p">;</span>
@@ -987,9 +977,8 @@ Let’s say the class will be located in the <strong>app/Entities/Cast</strong> 
 </section>
 <section id="parameters">
 <h4>Parameters<a class="headerlink" href="#parameters" title="Link to this heading"></a></h4>
-<p>In some cases, one type is not enough. In this situation, you can use additional parameters.
-Additional parameters are indicated in square brackets and listed with a comma
-like <code class="docutils literal notranslate"><span class="pre">type[param1,</span> <span class="pre">param2]</span></code>.</p>
+<p>In some cases, one type is not enough. In this situation, you can use additional parameters. Additional parameters are
+indicated in square brackets and listed with a comma like <code class="docutils literal notranslate"><span class="pre">type[param1,</span> <span class="pre">param2]</span></code>.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Entities</span><span class="p">;</span>
@@ -1038,17 +1027,17 @@ like <code class="docutils literal notranslate"><span class="pre">type[param1,</
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If the casting type is marked as nullable like <code class="docutils literal notranslate"><span class="pre">?bool</span></code> and the passed value is not null, then the parameter with
-the value <code class="docutils literal notranslate"><span class="pre">nullable</span></code> will be passed to the casting type handler.
-If casting type has predefined parameters, then <code class="docutils literal notranslate"><span class="pre">nullable</span></code> will be added to the end of the list.</p>
+<p>If the casting type is marked as nullable like <code class="docutils literal notranslate"><span class="pre">?bool</span></code> and the passed value is not null, then the parameter
+with the value <code class="docutils literal notranslate"><span class="pre">nullable</span></code> will be passed to the casting type handler. If the casting type has predefined
+parameters, then <code class="docutils literal notranslate"><span class="pre">nullable</span></code> will be added to the end of the list.</p>
 </div>
 </section>
 </section>
 </section>
 <section id="checking-for-changed-attributes">
 <h2><a class="toc-backref" href="#id14" role="doc-backlink">Checking for Changed Attributes</a><a class="headerlink" href="#checking-for-changed-attributes" title="Link to this heading"></a></h2>
-<p>You can check if an Entity attribute has changed since it was created. The only parameter is the name of the
-attribute to check:</p>
+<p>You can check if an Entity attribute has changed since it was created. The only parameter is the name of the attribute
+to check:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\App\Entities\User</span><span class="p">();</span>
@@ -1058,7 +1047,7 @@ attribute to check:</p>
 <span class="nv">$user</span><span class="o">-&gt;</span><span class="na">hasChanged</span><span class="p">(</span><span class="s1">'name'</span><span class="p">);</span> <span class="c1">// true</span>
 </pre></div>
 </div>
-<p>Or to check the whole entity for changed values omit the parameter:</p>
+<p>Or, to check the whole entity for changed values, omit the parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$user</span><span class="o">-&gt;</span><span class="na">hasChanged</span><span class="p">();</span> <span class="c1">// true</span>
@@ -1069,11 +1058,12 @@ attribute to check:</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 4.7.0.</span></p>
 </div>
-<p>The Entity class performs <strong>deep comparison</strong> for objects and arrays to accurately detect changes in their internal state.</p>
+<p>The Entity class performs <strong>deep comparison</strong> for objects and arrays to accurately detect changes in their internal
+state.</p>
 <section id="scalar-values">
 <h4>Scalar Values<a class="headerlink" href="#scalar-values" title="Link to this heading"></a></h4>
-<p>For scalar values (strings, integers, floats, booleans, null), the Entity uses direct comparison. When all attributes
-in an Entity are scalars, an optimized comparison is used for better performance.</p>
+<p>For scalar values (strings, integers, floats, booleans, null), the Entity uses direct comparison. When all attributes in
+an Entity are scalars, an optimized comparison is used for better performance.</p>
 </section>
 <section id="objects-and-arrays">
 <h4>Objects and Arrays<a class="headerlink" href="#objects-and-arrays" title="Link to this heading"></a></h4>
@@ -1098,7 +1088,7 @@ and <code class="docutils literal notranslate"><span class="pre">UnitEnum</span>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

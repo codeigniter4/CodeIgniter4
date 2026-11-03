@@ -306,7 +306,7 @@
 <section id="highlights">
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Highlights</a><a class="headerlink" href="#highlights" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p>New View Layouts provide simple way to create site site view templates.</p></li>
+<li><p>New View Layouts provide a simple way to create site view templates.</p></li>
 <li><p>Fixed user guide CSS for proper wide table display</p></li>
 <li><p>Converted UploadedFile to use system messages</p></li>
 <li><p>Numerous database, migration &amp; model bugs fixed</p></li>
@@ -316,318 +316,129 @@
 <section id="new-messages">
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">New Messages</a><a class="headerlink" href="#new-messages" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p>Database.tableNotFound</p></li>
-<li><p>HTTP.uploadErr…</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Database.tableNotFound</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">HTTP.uploadErr...</span></code></p></li>
 </ul>
 </section>
 <section id="app-changes">
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">App Changes</a><a class="headerlink" href="#app-changes" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p>app/Config/Cache has new setting: database</p></li>
-<li><p>app/Views/welcome_message has logo tinted</p></li>
-<li><p>composer.json has a case correction</p></li>
-<li><p>env adds CI_ENVIRONMENT suggestion</p></li>
+<li><p><strong>app/Config/Cache</strong> has a new setting: database</p></li>
+<li><p><strong>app/Views/welcome_message</strong> has logo tinted</p></li>
+<li><p><strong>composer.json</strong> has a case correction</p></li>
+<li><p><strong>.env</strong> adds <code class="docutils literal notranslate"><span class="pre">CI_ENVIRONMENT</span></code> suggestion</p></li>
 </ul>
 </section>
 <section id="changed-files">
 <h2><a class="toc-backref" href="#id4" role="doc-backlink">Changed Files</a><a class="headerlink" href="#changed-files" title="Link to this heading"></a></h2>
 <p>The list of changed files follows, with PR numbers shown.</p>
-<ul class="simple">
-<li><dl class="simple">
-<dt>app/</dt><dd><ul>
-<li><dl class="simple">
-<dt>Config/</dt><dd><ul>
-<li><p>Cache #1719</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Views/</dt><dd><ul>
-<li><p>welome_message #1774</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>system/</dt><dd><ul>
-<li><dl class="simple">
-<dt>Cache/Handlers/</dt><dd><ul>
-<li><p>RedisHandler #1719, #1723</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Config/</dt><dd><ul>
-<li><p>Config #37dbc1</p></li>
-<li><p>Services #1704, #37dbc1</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Database/</dt><dd><ul>
-<li><p>Exceptions/DatabaseException #1739</p></li>
-<li><dl class="simple">
-<dt>Postgre/</dt><dd><ul>
-<li><p>Builder #1733</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>SQLite3/</dt><dd><ul>
-<li><p>Connection #1739</p></li>
-<li><p>Forge #1739</p></li>
-<li><p>Table #1739</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>BaseBuilder #36fbb8, #549d7d</p></li>
-<li><p>BaseConnection #549d7d, #1739</p></li>
-<li><p>Forge #1739</p></li>
-<li><p>MigrationRunner #1743</p></li>
-<li><p>Query #36fbb8</p></li>
-<li><p>Seeder #1722</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Debug/</dt><dd><ul>
-<li><p>Exceptions #1704</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Files/</dt><dd><ul>
-<li><p>UploadedFile #1708</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Helpers/</dt><dd><ul>
-<li><p>date_helper #1768</p></li>
-<li><p>number_helper #1768</p></li>
-<li><p>security_helper #1768</p></li>
-<li><p>text_helper #1768</p></li>
-<li><p>url_helper #1768</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>HTTP/</dt><dd><ul>
-<li><p>Request #1725</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Language/en/</dt><dd><ul>
-<li><p>Database #1739</p></li>
-<li><p>HTTP #1708</p></li>
-<li><p>View #1757</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Router/</dt><dd><ul>
-<li><p>RouteCollection #1709, #1732</p></li>
-<li><p>Router #1764</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Test/</dt><dd><ul>
-<li><p>ControllerResponse #1740</p></li>
-<li><p>ControllerTester #1740</p></li>
-<li><p>DOMParser #1740</p></li>
-<li><p>FeatureResponse #1740</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Validation/</dt><dd><ul>
-<li><p>Rules #1738, #1743</p></li>
-<li><p>Validation #37dbc1, #1763</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>View/</dt><dd><ul>
-<li><p>View #1729</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>Common #1741</p></li>
-<li><p>Entity #6e549a, #1739</p></li>
-<li><p>Model #4f4a37, #6e549a, #37dbc1, #1712, #1763</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>tests/system/</dt><dd><ul>
-<li><dl class="simple">
-<dt>Database/</dt><dd><ul>
-<li><p>BaseQueryTest #36fbb8</p></li>
-<li><dl class="simple">
-<dt>Live/</dt><dd><ul>
-<li><p>SQLite3/AlterTableTest #1739, #1740</p></li>
-<li><p>ForgeTest #1739, #1745</p></li>
-<li><p>ModelTest #37dbc1, #4ff1f5, #1763</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>Migrations/MigrationRunnerTest #1743</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Helpers/</dt><dd><ul>
-<li><p>FilesystemHelperTest #1740</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>I18n/</dt><dd><ul>
-<li><p>TimeTest # 1736</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Test/</dt><dd><ul>
-<li><p>DOMParserTest #1740</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Validation/</dt><dd><ul>
-<li><p>ValidationTest #1763</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>View/</dt><dd><ul>
-<li><p>ViewTest #1729</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>EntityTest #6e549a, #1736</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>user_guide_src/</dt><dd><ul>
-<li><dl class="simple">
-<dt>_themes/…/</dt><dd><ul>
-<li><p>citheme.css #1696</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>changelogs/</dt><dd><ul>
-<li><p>v4.0.0-alpha.5 #1699</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>database/</dt><dd><ul>
-<li><p>migrate #1696</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>dbmgmt/</dt><dd><ul>
-<li><p>forge #1751</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>installation/</dt><dd><ul>
-<li><p>install_manual #1699</p></li>
-<li><p>running #1750</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>intro/</dt><dd><ul>
-<li><p>psr #1752</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>libraries/</dt><dd><ul>
-<li><p>caching #1719</p></li>
-<li><p>validation #1742</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>models/</dt><dd><ul>
-<li><p>entities #1744</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>outgoing/</dt><dd><ul>
-<li><p>index #1729</p></li>
-<li><p>view_layouts #1729</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>testing/</dt><dd><ul>
-<li><p>controllers #1740</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>tutorial/</dt><dd><ul>
-<li><p>static_pages #1763</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>composer.json #1755</p></li>
-<li><p>.env #1749</p></li>
-</ul>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>.
+├── app/
+│   ├── Config/
+│   │   └── Cache #1719
+│   └── Views/
+│       └── welcome_message #1774
+├── system/
+│   ├── Cache/Handlers/
+│   │   └── RedisHandler #1719, #1723
+│   ├── Config/
+│   │   ├── Config #37dbc1
+│   │   └── Services #1704, #37dbc1
+│   ├── Database/
+│   │   ├── Exceptions/DatabaseException #1739
+│   │   ├── Postgre/
+│   │   │   └── Builder #1733
+│   │   ├── SQLite3/
+│   │   │   ├── Connection #1739
+│   │   │   ├── Forge #1739
+│   │   │   └── Table #1739
+│   │   ├── BaseBuilder #36fbb8, #549d7d
+│   │   ├── BaseConnection #549d7d, #1739
+│   │   ├── Forge #1739
+│   │   ├── MigrationRunner #1743
+│   │   ├── Query #36fbb8
+│   │   └── Seeder #1722
+│   ├── Debug/
+│   │   └── Exceptions #1704
+│   ├── Files/
+│   │   └── UploadedFile #1708
+│   ├── Helpers/
+│   │   ├── date_helper #1768
+│   │   ├── number_helper #1768
+│   │   ├── security_helper #1768
+│   │   ├── text_helper #1768
+│   │   └── url_helper #1768
+│   ├── HTTP/
+│   │   └── Request #1725
+│   ├── Language/en/
+│   │   ├── Database #1739
+│   │   ├── HTTP #1708
+│   │   └── View #1757
+│   ├── Router/
+│   │   ├── RouteCollection #1709, #1732
+│   │   └── Router #1764
+│   ├── Test/
+│   │   ├── ControllerResponse #1740
+│   │   ├── ControllerTester #1740
+│   │   ├── DOMParser #1740
+│   │   └── FeatureResponse #1740
+│   ├── Validation/
+│   │   ├── Rules #1738, #1743
+│   │   └── Validation #37dbc1, #1763
+│   ├── View/
+│   │   └── View #1729
+│   ├── Common #1741
+│   ├── Entity #6e549a, #1739
+│   └── Model #4f4a37, #6e549a, #37dbc1, #1712, #1763
+├── tests/system/
+│   ├── Database/
+│   │   ├── BaseQueryTest #36fbb8
+│   │   ├── Live/
+│   │   │   ├── SQLite3/AlterTableTest #1739, #1740
+│   │   │   ├── ForgeTest #1739, #1745
+│   │   │   └── ModelTest #37dbc1, #4ff1f5, #1763
+│   │   └── Migrations/MigrationRunnerTest #1743
+│   ├── Helpers/
+│   │   └── FilesystemHelperTest #1740
+│   ├── I18n/
+│   │   └── TimeTest # 1736
+│   ├── Test/
+│   │   └── DOMParserTest #1740
+│   ├── Validation/
+│   │   └── ValidationTest #1763
+│   ├── View/
+│   │   └── ViewTest #1729
+│   └── EntityTest #6e549a, #1736
+├── user_guide_src/
+│   ├── _themes/.../
+│   │   └── citheme.css #1696
+│   ├── changelogs/
+│   │   └── v4.0.0-alpha.5 #1699
+│   ├── database/
+│   │   └── migrate #1696
+│   ├── dbmgmt/
+│   │   └── forge #1751
+│   ├── installation/
+│   │   ├── install_manual #1699
+│   │   └── running #1750
+│   ├── intro/
+│   │   └── psr #1752
+│   ├── libraries/
+│   │   ├── caching #1719
+│   │   └── validation #1742
+│   ├── models/
+│   │   └── entities #1744
+│   ├── outgoing/
+│   │   ├── index #1729
+│   │   └── view_layouts #1729
+│   ├── testing/
+│   │   └── controllers #1740
+│   └── tutorial/
+│       └── static_pages #1763
+├── composer.json #1755
+└── .env #1749
+</pre></div>
+</div>
 </section>
 <section id="prs-merged">
 <h2><a class="toc-backref" href="#id5" role="doc-backlink">PRs merged</a><a class="headerlink" href="#prs-merged" title="Link to this heading"></a></h2>
@@ -656,9 +467,9 @@
 <li><p>#1732 Don’t check from CLI in Routes. Fixes #1724</p></li>
 <li><p>#1729 New View Layout functionality for simple template</p></li>
 <li><p>#1725 Update Request.php</p></li>
-<li><p>#1723 Log an error if redis authentication is failed</p></li>
+<li><p>#1723 Log an error if redis authentication fails</p></li>
 <li><p>#1722 Seeder adds default namespace to seeds</p></li>
-<li><p>#1719 Update Cache RedisHandler to support select database</p></li>
+<li><p>#1719 Update Cache RedisHandler to support selecting a database</p></li>
 <li><p>#4ff1f5 Additional tests for inserts and required validation failing (#1717)</p></li>
 <li><p>#549d7d Another try at getting escaping working correctly both when in and out of models</p></li>
 <li><p>#1712 Minor readability changes</p></li>
@@ -688,7 +499,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

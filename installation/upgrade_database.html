@@ -296,7 +296,7 @@
 <h1>Upgrade Database<a class="headerlink" href="#upgrade-database" title="Link to this heading"></a></h1>
 <nav class="contents local" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#documentations" id="id2">Documentations</a></p></li>
+<li><p><a class="reference internal" href="#documentation" id="id2">Documentation</a></p></li>
 <li><p><a class="reference internal" href="#what-has-been-changed" id="id3">What has been changed</a></p></li>
 <li><p><a class="reference internal" href="#upgrade-guide" id="id4">Upgrade Guide</a></p></li>
 <li><p><a class="reference internal" href="#code-example" id="id5">Code Example</a></p>
@@ -307,8 +307,8 @@
 </li>
 </ul>
 </nav>
-<section id="documentations">
-<h2><a class="toc-backref" href="#id2" role="doc-backlink">Documentations</a><a class="headerlink" href="#documentations" title="Link to this heading"></a></h2>
+<section id="documentation">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Documentation</a><a class="headerlink" href="#documentation" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="http://codeigniter.com/userguide3/database/index.html">Database Reference Documentation CodeIgniter 3.x</a></p></li>
 <li><p><a class="reference internal" href="../database/index.html"><span class="doc">Working with Databases Documentation CodeIgniter 4.x</span></a></p></li>
@@ -318,20 +318,23 @@
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">What has been changed</a><a class="headerlink" href="#what-has-been-changed" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p>The functionality in CI3 is basically the same as in CI4.</p></li>
-<li><p><a class="reference external" href="https://www.codeigniter.com/userguide3/database/caching.html">Database Caching</a> functionality known from CI3 was removed.</p></li>
-<li><p>The method names have changed to camelCase and the <a class="reference internal" href="../database/query_builder.html"><span class="doc">Query Builder</span></a>
-now needs to be initialized before you can run queries on it.</p></li>
+<li><p><a class="reference external" href="https://www.codeigniter.com/userguide3/database/caching.html">Database Caching</a> functionality known from CI3 was
+removed.</p></li>
+<li><p>The method names have changed to camelCase and the <a class="reference internal" href="../database/query_builder.html"><span class="doc">Query Builder</span></a> now needs to be
+initialized before you can run queries on it.</p></li>
 </ul>
 </section>
 <section id="upgrade-guide">
 <h2><a class="toc-backref" href="#id4" role="doc-backlink">Upgrade Guide</a><a class="headerlink" href="#upgrade-guide" title="Link to this heading"></a></h2>
-<ol class="arabic">
-<li><p>Add your database credentials to <strong>app/Config/Database.php</strong>. The options are pretty much the same as in CI3 only some names have changed slightly.</p></li>
-<li><p>Everywhere you have used the database you have to replace <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;database();</span></code> with <code class="docutils literal notranslate"><span class="pre">$db</span> <span class="pre">=</span> <span class="pre">db_connect();</span></code>.</p></li>
-<li><p>If you use multiple databases use the following code to load additional databases <code class="docutils literal notranslate"><span class="pre">$db</span> <span class="pre">=</span> <span class="pre">db_connect('group_name');</span></code>.</p></li>
-<li><p>Now you have to change all database queries. The most important change here is to replace <code class="docutils literal notranslate"><span class="pre">$this-&gt;db</span></code> with just <code class="docutils literal notranslate"><span class="pre">$db</span></code> and adjust the method name and <code class="docutils literal notranslate"><span class="pre">$db</span></code>. Here are some examples:</p>
-<blockquote>
-<div><ul class="simple">
+<ol class="arabic simple">
+<li><p>Add your database credentials to <strong>app/Config/Database.php</strong>. The options are pretty much the same as in CI3. Only
+some names have changed slightly.</p></li>
+<li><p>Everywhere you have used the database, you have to replace <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;database();</span></code> with <code class="docutils literal notranslate"><span class="pre">$db</span> <span class="pre">=</span> <span class="pre">db_connect();</span></code>.</p></li>
+<li><p>If you use multiple databases, use the following code to load additional databases:
+<code class="docutils literal notranslate"><span class="pre">$db</span> <span class="pre">=</span> <span class="pre">db_connect('group_name');</span></code>.</p></li>
+<li><p>Now you have to change all database queries. The most important change here is to replace <code class="docutils literal notranslate"><span class="pre">$this-&gt;db</span></code> with just
+<code class="docutils literal notranslate"><span class="pre">$db</span></code> and adjust the method name and <code class="docutils literal notranslate"><span class="pre">$db</span></code>. Here are some examples:</p>
+<ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;query('YOUR</span> <span class="pre">QUERY</span> <span class="pre">HERE');</span></code> to <code class="docutils literal notranslate"><span class="pre">$db-&gt;query('YOUR</span> <span class="pre">QUERY</span> <span class="pre">HERE');</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;simple_query('YOUR</span> <span class="pre">QUERY')</span></code> to <code class="docutils literal notranslate"><span class="pre">$db-&gt;simpleQuery('YOUR</span> <span class="pre">QUERY')</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;escape(&quot;something&quot;)</span></code> to <code class="docutils literal notranslate"><span class="pre">$db-&gt;escape(&quot;something&quot;);</span></code></p></li>
@@ -340,23 +343,25 @@ now needs to be initialized before you can run queries on it.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">$query-&gt;result_array();</span></code> to <code class="docutils literal notranslate"><span class="pre">$query-&gt;getResultArray();</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">$this-&gt;db-&gt;count_all('my_table');</span></code> to <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">$db-&gt;table('my_table')-&gt;countAll();</span></code></p></li>
 </ul>
-</div></blockquote>
 </li>
-<li><p>To use the new Query Builder Class you have to initialize the builder <code class="docutils literal notranslate"><span class="pre">$builder</span> <span class="pre">=</span> <span class="pre">$db-&gt;table('mytable');</span></code> after that you can run the queries on the <code class="docutils literal notranslate"><span class="pre">$builder</span></code>. Here are some examples:</p>
-<blockquote>
-<div><ul class="simple">
+<li><p>To use the new Query Builder Class, you have to initialize the builder: <code class="docutils literal notranslate"><span class="pre">$builder</span> <span class="pre">=</span> <span class="pre">$db-&gt;table('mytable');</span></code>. After
+that, you can run the queries on the <code class="docutils literal notranslate"><span class="pre">$builder</span></code>. Here are some examples:</p>
+<ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;get()</span></code> to <code class="docutils literal notranslate"><span class="pre">$builder-&gt;get();</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;get_where('mytable',</span> <span class="pre">array('id'</span> <span class="pre">=&gt;</span> <span class="pre">$id),</span> <span class="pre">$limit,</span> <span class="pre">$offset);</span></code> to <code class="docutils literal notranslate"><span class="pre">$builder-&gt;getWhere(['id'</span> <span class="pre">=&gt;</span> <span class="pre">$id],</span> <span class="pre">$limit,</span> <span class="pre">$offset);</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;get_where('mytable',</span> <span class="pre">array('id'</span> <span class="pre">=&gt;</span> <span class="pre">$id),</span> <span class="pre">$limit,</span> <span class="pre">$offset);</span></code> to
+<code class="docutils literal notranslate"><span class="pre">$builder-&gt;getWhere(['id'</span> <span class="pre">=&gt;</span> <span class="pre">$id],</span> <span class="pre">$limit,</span> <span class="pre">$offset);</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;select('title,</span> <span class="pre">content,</span> <span class="pre">date');</span></code> to <code class="docutils literal notranslate"><span class="pre">$builder-&gt;select('title,</span> <span class="pre">content,</span> <span class="pre">date');</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;select_max('age');</span></code> to <code class="docutils literal notranslate"><span class="pre">$builder-&gt;selectMax('age');</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;join('comments',</span> <span class="pre">'comments.id</span> <span class="pre">=</span> <span class="pre">blogs.id');</span></code> to <code class="docutils literal notranslate"><span class="pre">$builder-&gt;join('comments',</span> <span class="pre">'comments.id</span> <span class="pre">=</span> <span class="pre">blogs.id');</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;join('comments',</span> <span class="pre">'comments.id</span> <span class="pre">=</span> <span class="pre">blogs.id');</span></code> to
+<code class="docutils literal notranslate"><span class="pre">$builder-&gt;join('comments',</span> <span class="pre">'comments.id</span> <span class="pre">=</span> <span class="pre">blogs.id');</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;having('user_id',</span>&#160; <span class="pre">45);</span></code> to <code class="docutils literal notranslate"><span class="pre">$builder-&gt;having('user_id',</span>&#160; <span class="pre">45);</span></code></p></li>
 </ul>
-</div></blockquote>
 </li>
-<li><p>CI4 does not provide <a class="reference external" href="https://www.codeigniter.com/userguide3/database/caching.html">Database Caching</a>
-layer known from CI3, so if you need to cache the result, use <a class="reference internal" href="../libraries/caching.html"><span class="doc">Caching Driver</span></a> instead.</p></li>
-<li><p>If you use <code class="docutils literal notranslate"><span class="pre">limit(0)</span></code> in Query Builder, CI4 returns all records in stead of no records due to a bug. But since v4.5.0, you can change the incorrect behavior with a setting. So change the setting. See <a class="reference internal" href="../changelogs/v4.5.0.html#v450-query-builder-limit-0-behavior"><span class="std std-ref">limit(0) Behavior</span></a> for details.</p></li>
+<li><p>CI4 does not provide the <a class="reference external" href="https://www.codeigniter.com/userguide3/database/caching.html">Database Caching</a> layer
+known from CI3, so if you need to cache the result, use <a class="reference internal" href="../libraries/caching.html"><span class="doc">Caching Driver</span></a> instead.</p></li>
+<li><p>If you use <code class="docutils literal notranslate"><span class="pre">limit(0)</span></code> in Query Builder, CI4 returns all records instead of no records due to a bug. But since
+v4.5.0, you can change the incorrect behavior with a setting. So change the setting. See
+<a class="reference internal" href="../changelogs/v4.5.0.html#v450-query-builder-limit-0-behavior"><span class="std std-ref">limit(0) Behavior</span></a> for details.</p></li>
 </ol>
 </section>
 <section id="code-example">
@@ -400,7 +405,7 @@ layer known from CI3, so if you need to cache the result, use <a class="referenc
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

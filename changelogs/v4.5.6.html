@@ -307,15 +307,15 @@
 <li><p><strong>Session Library:</strong> The session initialization debug message now uses the correct log type “debug” instead of “info”.</p></li>
 <li><p><strong>Validation:</strong> Fixed the <code class="docutils literal notranslate"><span class="pre">getValidated()</span></code> method that did not return valid data when validation rules used multiple asterisks.</p></li>
 <li><p><strong>Database:</strong> Fixed the case insensitivity option in the <code class="docutils literal notranslate"><span class="pre">like()</span></code> method when dealing with accented characters.</p></li>
-<li><p><strong>Parser:</strong> Fixed bug that caused equal key names to be replaced by the key name defined first.</p></li>
+<li><p><strong>Parser:</strong> Fixed a bug that caused equal key names to be replaced by the key name defined first.</p></li>
 <li><p><strong>DownloadResponse:</strong> Fixed a bug that prevented setting custom cache headers. We can now also use the <code class="docutils literal notranslate"><span class="pre">setCache()</span></code> method.</p></li>
-<li><p><strong>DownloadResponse:</strong> Fixed a bug involving sending a custom “Expires-Disposition” header.</p></li>
-<li><p><strong>Routing:</strong> Fixed a TypeError in <cite>str_replace()</cite> when <cite>Routing::$translateURIDashes</cite> is set to <cite>true</cite> and a route is defined using a closure.</p></li>
+<li><p><strong>DownloadResponse:</strong> Removed the erroneous “Expires-Disposition” header.</p></li>
+<li><p><strong>Routing:</strong> Fixed a TypeError in <code class="docutils literal notranslate"><span class="pre">str_replace()</span></code> when <code class="docutils literal notranslate"><span class="pre">Routing::$translateURIDashes</span></code> is set to <code class="docutils literal notranslate"><span class="pre">true</span></code> and a route is defined using a closure.</p></li>
 <li><p><strong>Validation:</strong> Fixed a bug where complex language strings were not properly handled.</p></li>
 <li><p><strong>CURLRequest:</strong> Added support for handling proxy responses using HTTP versions other than 1.1.</p></li>
-<li><p><strong>Database:</strong> Fixed a bug that caused <code class="docutils literal notranslate"><span class="pre">Postgre\Connection::reconnect()</span></code> method to throw an error when the connection had not yet been established.</p></li>
+<li><p><strong>Database:</strong> Fixed a bug that caused the <code class="docutils literal notranslate"><span class="pre">Postgre\Connection::reconnect()</span></code> method to throw an error when the connection had not yet been established.</p></li>
 <li><p><strong>Model:</strong> Fixed a bug that caused the <code class="docutils literal notranslate"><span class="pre">Model::getIdValue()</span></code> method to not correctly recognize the primary key in the <code class="docutils literal notranslate"><span class="pre">Entity</span></code> object if a data mapping for the primary key was used.</p></li>
-<li><p><strong>Database:</strong> Fixed a bug in prepared statement to correctly handle binary data.</p></li>
+<li><p><strong>Database:</strong> Fixed a bug in prepared statements to correctly handle binary data.</p></li>
 </ul>
 <p>See the repo’s
 <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md">CHANGELOG.md</a>
@@ -335,7 +335,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

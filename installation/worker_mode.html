@@ -342,31 +342,31 @@
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>Worker Mode is currently <strong>experimental</strong>. The only officially supported
-worker implementation is <strong>FrankenPHP</strong>, which is backed by the PHP Foundation.</p>
+<p>Worker Mode is currently <strong>experimental</strong>. The only officially supported worker implementation is
+<strong>FrankenPHP</strong>, which is backed by the PHP Foundation.</p>
 </div>
 <section id="introduction">
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Introduction</a><a class="headerlink" href="#introduction" title="Link to this heading"></a></h2>
 <section id="what-is-worker-mode">
 <h3><a class="toc-backref" href="#id2" role="doc-backlink">What is Worker Mode?</a><a class="headerlink" href="#what-is-worker-mode" title="Link to this heading"></a></h3>
-<p>Worker Mode is a performance optimization feature that allows CodeIgniter to handle multiple
-HTTP requests within the same PHP process, instead of starting a new process for each request
-like traditional PHP-FPM does.</p>
+<p>Worker Mode is a performance optimization feature that allows CodeIgniter to handle multiple HTTP requests within the
+same bootstrapped application. PHP-FPM also reuses worker processes, but normally initializes and tears down the
+application for each request.</p>
 <section id="traditional-php-vs-worker-mode">
 <h4>Traditional PHP vs Worker Mode<a class="headerlink" href="#traditional-php-vs-worker-mode" title="Link to this heading"></a></h4>
 <p><strong>Traditional PHP (PHP-FPM)</strong></p>
 <p>In traditional PHP, each HTTP request goes through this cycle:</p>
 <ol class="arabic simple">
-<li><p>Web server receives request and spawns a new PHP process</p></li>
-<li><p>PHP loads and parses all required files</p></li>
+<li><p>Web server receives the request and passes it to an available PHP-FPM worker process</p></li>
+<li><p>PHP loads the required files, using cached bytecode when OPcache is enabled</p></li>
 <li><p>Framework bootstraps: autoloader, configuration, services, routes</p></li>
 <li><p>Database connections are established</p></li>
 <li><p>Request is processed and response is sent</p></li>
-<li><p>All connections are closed</p></li>
-<li><p>PHP process terminates, freeing all memory</p></li>
+<li><p>Request resources are released, including non-persistent connections</p></li>
+<li><p>Application state is torn down, and the worker process can handle another request</p></li>
 </ol>
-<p>This “shared nothing” architecture is simple and safe, but inefficient for high-traffic
-applications because steps 2-4 repeat for every single request.</p>
+<p>This “shared nothing” architecture is simple and safe, but inefficient for high-traffic applications because steps 2-4
+repeat for every single request.</p>
 <p><strong>Worker Mode</strong></p>
 <p>In Worker Mode, the lifecycle changes dramatically:</p>
 <ol class="arabic simple">
@@ -387,14 +387,14 @@ applications because steps 2-4 repeat for every single request.</p>
 </li>
 <li><p>Worker continues running, ready for the next request</p></li>
 </ol>
-<p>This approach eliminates redundant initialization work and connection overhead,
-resulting in <strong>2-3x performance improvements</strong> for typical database-driven applications.</p>
+<p>This approach eliminates redundant initialization work and connection overhead, resulting in
+<strong>2-3x performance improvements</strong> for typical database-driven applications.</p>
 </section>
 </section>
 <section id="how-codeigniter-manages-state">
 <h3><a class="toc-backref" href="#id3" role="doc-backlink">How CodeIgniter Manages State</a><a class="headerlink" href="#how-codeigniter-manages-state" title="Link to this heading"></a></h3>
-<p>The key challenge in Worker Mode is preventing state from leaking between requests.
-CodeIgniter handles this through several mechanisms:</p>
+<p>The key challenge in Worker Mode is preventing state from leaking between requests. CodeIgniter handles this through
+several mechanisms:</p>
 <dl class="simple">
 <dt><strong>Services Reset</strong></dt><dd><p>Most services are destroyed and recreated for each request. Only services listed
 in <code class="docutils literal notranslate"><span class="pre">$persistentServices</span></code> survive between requests.</p>
@@ -417,8 +417,8 @@ Unhealthy connections are automatically re-established.</p>
 <h3><a class="toc-backref" href="#id5" role="doc-backlink">Installation</a><a class="headerlink" href="#installation" title="Link to this heading"></a></h3>
 <ol class="arabic">
 <li><p>Install FrankenPHP following the <a class="reference external" href="https://frankenphp.dev/">official documentation</a></p>
-<p>You can use a static binary or Docker. Here, we will assume we use a static binary,
-which can be <a class="reference external" href="https://github.com/php/frankenphp/releases/">downloaded directly</a>.</p>
+<p>You can use a static binary or Docker. Here, we assume a static binary, which can be
+<a class="reference external" href="https://github.com/php/frankenphp/releases/">downloaded directly</a>.</p>
 </li>
 <li><p>Install the Worker Mode template files using the spark command:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark worker:install</span>
@@ -430,12 +430,13 @@ which can be <a class="reference external" href="https://github.com/php/frankenp
 <li><p><strong>public/frankenphp-worker.php</strong> - Worker entry point that handles the request loop</p></li>
 </ul>
 </li>
-<li><p>Configure your worker settings in <strong>app/Config/WorkerMode.php</strong> if needed.
-The defaults are recommended for most applications.</p></li>
+<li><p>Configure your worker settings in <strong>app/Config/WorkerMode.php</strong> if needed. The defaults are recommended for most
+applications.</p></li>
 </ol>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>When changing the project directory, see the section <a class="reference internal" href="../general/managing_apps.html#renaming-app-directory"><span class="std std-ref">Renaming or Relocating the Application Directory</span></a> and update your <strong>public/frankenphp-worker.php</strong>.</p>
+<p>When changing the project directory, see the section <a class="reference internal" href="../general/managing_apps.html#renaming-app-directory"><span class="std std-ref">Renaming or Relocating the Application Directory</span></a> and update your
+<strong>public/frankenphp-worker.php</strong>.</p>
 </div>
 </section>
 <section id="running-the-worker">
@@ -461,8 +462,8 @@ The defaults are recommended for most applications.</p></li>
 </section>
 <section id="performance-benchmarks">
 <h2><a class="toc-backref" href="#id8" role="doc-backlink">Performance Benchmarks</a><a class="headerlink" href="#performance-benchmarks" title="Link to this heading"></a></h2>
-<p>Worker Mode typically provides <strong>2-3x performance improvements</strong> for database-driven
-applications. The actual gains depend on your application’s characteristics:</p>
+<p>Worker Mode typically provides <strong>2-3x performance improvements</strong> for database-driven applications. The actual gains
+depend on your application’s characteristics:</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Scenario</p></th>
@@ -488,13 +489,13 @@ the largest gains, as this overhead is eliminated entirely.</p></td>
 </table>
 <section id="worker-count-considerations">
 <h3><a class="toc-backref" href="#id9" role="doc-backlink">Worker Count Considerations</a><a class="headerlink" href="#worker-count-considerations" title="Link to this heading"></a></h3>
-<p>Total throughput scales with worker count. Match worker count to your typical concurrency
-patterns and available CPU cores. Too few workers limit concurrency; too many waste memory.</p>
+<p>Total throughput scales with worker count. Match worker count to your typical concurrency patterns and available CPU
+cores. Too few workers limit concurrency; too many waste memory.</p>
 </section>
 <section id="first-request-latency">
 <h3><a class="toc-backref" href="#id10" role="doc-backlink">First Request Latency</a><a class="headerlink" href="#first-request-latency" title="Link to this heading"></a></h3>
-<p>The initial request to each worker is slower due to bootstrap and connection establishment.
-Subsequent requests benefit from cached resources and persistent connections.</p>
+<p>The initial request to each worker is slower due to bootstrap and connection establishment. Subsequent requests benefit
+from cached resources and persistent connections.</p>
 </section>
 </section>
 <section id="configuration">
@@ -535,8 +536,7 @@ to accumulate across requests. Default: <code class="docutils literal notranslat
 </section>
 <section id="persistent-services">
 <h3><a class="toc-backref" href="#id13" role="doc-backlink">Persistent Services</a><a class="headerlink" href="#persistent-services" title="Link to this heading"></a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">$persistentServices</span></code> array controls which services survive between requests.
-The default configuration includes:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">$persistentServices</span></code> array controls which services survive between requests. The default configuration includes:</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Service</p></th>
@@ -572,9 +572,8 @@ The default configuration includes:</p>
 </table>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Adding services to <code class="docutils literal notranslate"><span class="pre">$persistentServices</span></code> without understanding their
-state management can cause data leakage between requests. Only persist services
-that are truly stateless or manage their own request isolation.</p>
+<p>Adding services to <code class="docutils literal notranslate"><span class="pre">$persistentServices</span></code> without understanding their state management can cause data
+leakage between requests. Only persist services that are truly stateless or manage their own request isolation.</p>
 </div>
 </section>
 <section id="reset-event-listeners">
@@ -582,10 +581,9 @@ that are truly stateless or manage their own request isolation.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 4.7.1.</span></p>
 </div>
-<p>Event listeners registered at the top level of <strong>Config/Events.php</strong> are loaded once
-at worker startup and persist correctly across requests. However, if you register a
-listener inside another event’s callback, it will be re-registered on every request
-and accumulate:</p>
+<p>Event listeners registered at the top level of <strong>Config/Events.php</strong> are loaded once at worker startup and persist
+correctly across requests. However, if you register a listener inside another event’s callback, it will be re-registered
+on every request and accumulate:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Events\Events</span><span class="p">;</span>
@@ -596,8 +594,8 @@ and accumulate:</p>
 <span class="p">});</span>
 </pre></div>
 </div>
-<p>To clean up such listeners between requests, add the event name to
-<code class="docutils literal notranslate"><span class="pre">$resetEventListeners</span></code> in <strong>app/Config/WorkerMode.php</strong>:</p>
+<p>To clean up such listeners between requests, add the event name to <code class="docutils literal notranslate"><span class="pre">$resetEventListeners</span></code> in
+<strong>app/Config/WorkerMode.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -610,23 +608,21 @@ and accumulate:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The recommended approach is to register listeners at the top level of
-<strong>Config/Events.php</strong> instead of inside callbacks. Use <code class="docutils literal notranslate"><span class="pre">$resetEventListeners</span></code>
-only when registering inside a callback is unavoidable.</p>
+<p>The recommended approach is to register listeners at the top level of <strong>Config/Events.php</strong> instead of inside
+callbacks. Use <code class="docutils literal notranslate"><span class="pre">$resetEventListeners</span></code> only when registering inside a callback is unavoidable.</p>
 </div>
 </section>
 </section>
 <section id="optimize-configuration">
 <h2><a class="toc-backref" href="#id15" role="doc-backlink">Optimize Configuration</a><a class="headerlink" href="#optimize-configuration" title="Link to this heading"></a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">app/Config/Optimize.php</span></code> configuration options (Config Caching and File Locator Caching)
-should <strong>NOT</strong> be used with Worker Mode.</p>
-<p>These optimizations were designed for traditional PHP where each request starts fresh. In Worker
-Mode, the persistent process already provides these benefits naturally, and enabling them can
-cause issues with stale data.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">app/Config/Optimize.php</span></code> configuration options (Config Caching and File Locator Caching) should <strong>NOT</strong> be used
+with Worker Mode.</p>
+<p>These optimizations were designed for traditional PHP where each request starts fresh. In Worker Mode, the persistent
+process already provides these benefits naturally, and enabling them can cause issues with stale data.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Do not enable <code class="docutils literal notranslate"><span class="pre">$configCacheEnabled</span></code> or <code class="docutils literal notranslate"><span class="pre">$locatorCacheEnabled</span></code> in
-<strong>app/Config/Optimize.php</strong> when using Worker Mode.</p>
+<p>Do not enable <code class="docutils literal notranslate"><span class="pre">$configCacheEnabled</span></code> or <code class="docutils literal notranslate"><span class="pre">$locatorCacheEnabled</span></code> in <strong>app/Config/Optimize.php</strong> when using
+Worker Mode.</p>
 </div>
 <section id="opcache-settings">
 <h3><a class="toc-backref" href="#id16" role="doc-backlink">OPcache Settings</a><a class="headerlink" href="#opcache-settings" title="Link to this heading"></a></h3>
@@ -653,10 +649,9 @@ cause issues with stale data.</p>
 </section>
 <section id="registrars">
 <h3><a class="toc-backref" href="#id19" role="doc-backlink">Registrars</a><a class="headerlink" href="#registrars" title="Link to this heading"></a></h3>
-<p>Config registrars (<code class="docutils literal notranslate"><span class="pre">Config/Registrar.php</span></code> files) work correctly in Worker Mode.
-Registrar files are discovered once when the worker starts, and registrar logic is applied
-every time a Config class is instantiated. Each request gets a fresh Config instance with
-registrars applied.</p>
+<p>Config registrars (<code class="docutils literal notranslate"><span class="pre">Config/Registrar.php</span></code> files) work correctly in Worker Mode. Registrar files are discovered once
+when the worker starts, and registrar logic is applied every time a Config class is instantiated. Each request gets a
+fresh Config instance with registrars applied.</p>
 </section>
 <section id="memory-management">
 <h3><a class="toc-backref" href="#id20" role="doc-backlink">Memory Management</a><a class="headerlink" href="#memory-management" title="Link to this heading"></a></h3>
@@ -683,8 +678,8 @@ registrars applied.</p>
 </section>
 <section id="session-and-cache-handlers">
 <h3><a class="toc-backref" href="#id22" role="doc-backlink">Session and Cache Handlers</a><a class="headerlink" href="#session-and-cache-handlers" title="Link to this heading"></a></h3>
-<p><strong>File-based handlers</strong> may experience file locking contention between workers.
-For production environments, consider using:</p>
+<p><strong>File-based handlers</strong> may experience file locking contention between workers. For production environments, consider
+using:</p>
 <ul class="simple">
 <li><p><strong>Redis</strong> or <strong>Memcached</strong> for sessions and cache</p></li>
 <li><p>These provide better concurrency and automatic connection persistence</p></li>
@@ -715,7 +710,7 @@ For production environments, consider using:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

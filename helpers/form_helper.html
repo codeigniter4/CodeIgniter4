@@ -292,8 +292,7 @@
              
   <section id="form-helper">
 <h1>Form Helper<a class="headerlink" href="#form-helper" title="Link to this heading"></a></h1>
-<p>The Form Helper file contains functions that assist in working with
-forms.</p>
+<p>The Form Helper file contains functions that assist in working with forms.</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#configuration" id="id1">Configuration</a></p></li>
@@ -304,7 +303,9 @@ forms.</p>
 </nav>
 <section id="configuration">
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Configuration</a><a class="headerlink" href="#configuration" title="Link to this heading"></a></h2>
-<p>Since v4.3.0, void HTML elements (e.g. <code class="docutils literal notranslate"><span class="pre">&lt;input&gt;</span></code>) in <code class="docutils literal notranslate"><span class="pre">form_helper</span></code> functions have been changed to be HTML5-compatible by default and if you need to be compatible with XHTML, you must set the <code class="docutils literal notranslate"><span class="pre">$html5</span></code> property in <strong>app/Config/DocTypes.php</strong> to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<p>Since v4.3.0, void HTML elements (e.g. <code class="docutils literal notranslate"><span class="pre">&lt;input&gt;</span></code>) in <code class="docutils literal notranslate"><span class="pre">form_helper</span></code> functions have been changed to be
+HTML5-compatible by default. If you need to be compatible with XHTML, you must set the <code class="docutils literal notranslate"><span class="pre">$html5</span></code> property in
+<strong>app/Config/DocTypes.php</strong> to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
 </section>
 <section id="loading-this-helper">
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">Loading this Helper</a><a class="headerlink" href="#loading-this-helper" title="Link to this heading"></a></h2>
@@ -317,10 +318,8 @@ forms.</p>
 </section>
 <section id="escaping-field-values">
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">Escaping Field Values</a><a class="headerlink" href="#escaping-field-values" title="Link to this heading"></a></h2>
-<p>You may need to use HTML and characters such as quotes within your form
-elements. In order to do that safely, you’ll need to use the
-<a class="reference internal" href="../general/common_functions.html"><span class="doc">common function</span></a>
-<a class="reference internal" href="../general/common_functions.html#esc" title="esc"><code class="xref php php-func docutils literal notranslate"><span class="pre">esc()</span></code></a>.</p>
+<p>You may need to use HTML and characters such as quotes within your form elements. In order to do that safely, you’ll
+need to use the <a class="reference internal" href="../general/common_functions.html"><span class="doc">common function</span></a> <a class="reference internal" href="../general/common_functions.html#esc" title="esc"><code class="xref php php-func docutils literal notranslate"><span class="pre">esc()</span></code></a>.</p>
 <p>Consider the following example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -331,19 +330,16 @@ elements. In order to do that safely, you’ll need to use the
 <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"text"</span> <span class="na">name</span><span class="o">=</span><span class="s">"myfield"</span> <span class="na">value</span><span class="o">=</span><span class="s">"</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$string</span> <span class="cp">?&gt;</span><span class="s">"</span><span class="p">&gt;</span>
 </pre></div>
 </div>
-<p>Since the above string contains a set of quotes, it will cause the form
-to break. The <a class="reference internal" href="../general/common_functions.html#esc" title="esc"><code class="xref php php-func docutils literal notranslate"><span class="pre">esc()</span></code></a> function converts HTML special
-characters so that it can be used safely:</p>
+<p>Since the above string contains a set of quotes, it will cause the form to break. The <a class="reference internal" href="../general/common_functions.html#esc" title="esc"><code class="xref php php-func docutils literal notranslate"><span class="pre">esc()</span></code></a> function
+converts HTML special characters so that it can be used safely:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"myfield"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"&lt;?= esc(</span><span class="si">$string</span><span class="s2">) ?&gt;"</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you use any of the form helper functions listed on this page,
-and you pass values as an associative array,
-the form values will be automatically escaped, so there is no need
-to call this function. Use it only if you are creating your own
-form elements, which you would pass as strings.</p>
+<p>If you use any of the form helper functions listed on this page, and you pass values as an associative array,
+the form values will be automatically escaped, so there is no need to call this function. Use it only if you are
+creating your own form elements, which you would pass as strings.</p>
 </div>
 </section>
 <section id="available-functions">
@@ -367,20 +363,18 @@ form elements, which you would pass as strings.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Creates an opening form tag with a site URL <strong>built from your</strong> <code class="docutils literal notranslate"><span class="pre">Config\App::$baseURL</span></code>.
-It will optionally let you add form attributes and hidden input fields, and
-will always add the <cite>accept-charset</cite> attribute based on the <code class="docutils literal notranslate"><span class="pre">$charset</span></code> property in your
-<strong>app/Config/App.php</strong> config file.</p>
-<p>The main benefit of using this tag rather than hard coding your own HTML is that
-it permits your site to be more portable in the event your URLs ever change.</p>
+<p>Creates an opening form tag with a site URL <strong>built from your</strong> <code class="docutils literal notranslate"><span class="pre">Config\App::$baseURL</span></code>. It will optionally let you
+add form attributes and hidden input fields, and will always add the <code class="docutils literal notranslate"><span class="pre">accept-charset</span></code> attribute based on the
+<code class="docutils literal notranslate"><span class="pre">$charset</span></code> property in your <strong>app/Config/App.php</strong> config file.</p>
+<p>The main benefit of using this tag rather than hard coding your own HTML is that it permits your site to be more
+portable in the event your URLs ever change.</p>
 <p>Here’s a simple example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nx">form_open</span><span class="p">(</span><span class="s1">'email/send'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The above example would create a form that points to your site URL plus the
-“email/send” URI segments, like this:</p>
+<p>The above example would create a form that points to your site URL plus the “email/send” URI segments, like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">"http://example.com/index.php/email/send"</span> <span class="nx">method</span><span class="o">=</span><span class="s2">"post"</span> <span class="nx">accept</span><span class="o">-</span><span class="nx">charset</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="o">&gt;</span>
 </pre></div>
 </div>
@@ -390,15 +384,14 @@ it permits your site to be more portable in the event your URLs ever change.</p>
 <span class="k">echo</span> <span class="nx">form_open</span><span class="p">(</span><span class="s1">'{locale}/email/send'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The above example would create a form that points to your site URL plus the current request locale with
-“email/send” URI segments, like this:</p>
+<p>The above example would create a form that points to your site URL plus the current request locale with “email/send”
+URI segments, like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">"http://example.com/index.php/en/email/send"</span> <span class="nx">method</span><span class="o">=</span><span class="s2">"post"</span> <span class="nx">accept</span><span class="o">-</span><span class="nx">charset</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p><strong>Adding Attributes</strong></p>
 <blockquote>
-<div><p>Attributes can be added by passing an associative array to the second
-parameter, like this:</p>
+<div><p>Attributes can be added by passing an associative array to the second parameter, like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'class'</span> <span class="o">=&gt;</span> <span class="s1">'email'</span><span class="p">,</span> <span class="s1">'id'</span> <span class="o">=&gt;</span> <span class="s1">'myform'</span><span class="p">];</span>
@@ -415,30 +408,33 @@ parameter, like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">"http://example.com/index.php/email/send"</span> <span class="nx">class</span><span class="o">=</span><span class="s2">"email"</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"myform"</span> <span class="nx">method</span><span class="o">=</span><span class="s2">"post"</span> <span class="nx">accept</span><span class="o">-</span><span class="nx">charset</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>If <a class="reference internal" href="../libraries/security.html#cross-site-request-forgery"><span class="std std-ref">CSRF</span></a> filter is turned on <code class="docutils literal notranslate"><span class="pre">form_open()</span></code> will generate CSRF field at the beginning of the form. You can specify ID of this field by passing <strong>csrf_id</strong> as an element of the <code class="docutils literal notranslate"><span class="pre">$attributes</span></code> array:</p>
+<p>If the <a class="reference internal" href="../libraries/security.html#cross-site-request-forgery"><span class="std std-ref">CSRF</span></a> filter is turned on, <code class="docutils literal notranslate"><span class="pre">form_open()</span></code> will generate a CSRF field
+at the beginning of the form. You can specify the ID of this field by passing <strong>csrf_id</strong> as an element of the
+<code class="docutils literal notranslate"><span class="pre">$attributes</span></code> array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nx">form_open</span><span class="p">(</span><span class="s1">'/u/sign-up'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'csrf_id'</span> <span class="o">=&gt;</span> <span class="s1">'my-id'</span><span class="p">]);</span>
 </pre></div>
 </div>
-<p>will return:</p>
+<p>This will return:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">"http://example.com/index.php/u/sign-up"</span> <span class="nx">method</span><span class="o">=</span><span class="s2">"post"</span> <span class="nx">accept</span><span class="o">-</span><span class="nx">charset</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="o">&gt;</span>
 <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"hidden"</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"my-id"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"csrf_test_name"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"964ede6e0ae8a680f7b8eab69136717d"</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>To use auto-generation of CSRF field, you need to turn on the <a class="reference internal" href="../libraries/security.html#enable-csrf-protection"><span class="std std-ref">CSRF filter</span></a> in <strong>app/Config/Filters.php</strong> file.
-In most cases the form page is requested using the GET method. Normally, CSRF protection is required
-for POST/PUT/DELETE/PATCH requests, but even for GET requests, CSRF filters must be enabled for pages that display Forms.</p>
-<p>If you enable CSRF filter with <a class="reference internal" href="../incoming/filters.html#filters-globals"><span class="std std-ref">$globals</span></a>, it will be active for all request types.
-But if you enable CSRF filter with <code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">array</span> <span class="pre">$methods</span> <span class="pre">=</span> <span class="pre">['POST'</span> <span class="pre">=&gt;</span> <span class="pre">['csrf']];</span></code>, the hidden CSRF field will not be added in GET requests.</p>
+<p>To use auto-generation of the CSRF field, you need to turn on the
+<a class="reference internal" href="../libraries/security.html#enable-csrf-protection"><span class="std std-ref">CSRF filter</span></a> in the <strong>app/Config/Filters.php</strong> file. In most cases, the form
+page is requested using the GET method. Normally, CSRF protection is required for POST/PUT/DELETE/PATCH
+requests, but even for GET requests, CSRF filters must be enabled for pages that display forms.</p>
+<p>If you enable the CSRF filter with <a class="reference internal" href="../incoming/filters.html#filters-globals"><span class="std std-ref">$globals</span></a>, it will be active for all request types. But if
+you enable the CSRF filter with <code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">array</span> <span class="pre">$methods</span> <span class="pre">=</span> <span class="pre">['POST'</span> <span class="pre">=&gt;</span> <span class="pre">['csrf']];</span></code>, the hidden CSRF field
+will not be added in GET requests.</p>
 </div>
 </div></blockquote>
 <p><strong>Adding Hidden Input Fields</strong></p>
 <blockquote>
-<div><p>Hidden fields can be added by passing an associative array to the
-third parameter, like this:</p>
+<div><p>Hidden fields can be added by passing an associative array to the third parameter, like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$hidden</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'username'</span> <span class="o">=&gt;</span> <span class="s1">'Joe'</span><span class="p">,</span> <span class="s1">'member_id'</span> <span class="o">=&gt;</span> <span class="s1">'234'</span><span class="p">];</span>
@@ -473,9 +469,8 @@ third parameter, like this:</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>This function is identical to <a class="reference internal" href="#form_open" title="form_open"><code class="xref php php-func docutils literal notranslate"><span class="pre">form_open()</span></code></a> above,
-except that it adds a <em>multipart</em> attribute, which is necessary if you
-would like to use the form to upload files with.</p>
+<p>This function is identical to <a class="reference internal" href="#form_open" title="form_open"><code class="xref php php-func docutils literal notranslate"><span class="pre">form_open()</span></code></a> above, except that it adds a <em>multipart</em> attribute, which is
+necessary if you would like to use the form to upload files.</p>
 </dd></dl>
 
 <dl class="php function">
@@ -495,8 +490,7 @@ would like to use the form to upload files with.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Lets you generate hidden input fields. You can either submit a
-name/value string to create one field:</p>
+<p>Lets you generate hidden input fields. You can either submit a name/value string to create one field:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nx">form_hidden</span><span class="p">(</span><span class="s1">'username'</span><span class="p">,</span> <span class="s1">'johndoe'</span><span class="p">);</span>
@@ -568,7 +562,7 @@ name/value string to create one field:</p>
 <li><p><strong>$data</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – Field attributes data</p></li>
 <li><p><strong>$value</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Field value</p></li>
 <li><p><strong>$extra</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Extra attributes to be added to the tag either as an array or a literal string</p></li>
-<li><p><strong>$type</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The type of input field. i.e., ‘text’, ‘email’, ‘number’, etc.</p></li>
+<li><p><strong>$type</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The type of input field, e.g., ‘text’, ‘email’, ‘number’, etc.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -578,8 +572,8 @@ name/value string to create one field:</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Lets you generate a standard text input field. You can minimally pass
-the field name and value in the first and second parameter:</p>
+<p>Lets you generate a standard text input field. You can minimally pass the field name and value in the first and
+second parameters:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nx">form_input</span><span class="p">(</span><span class="s1">'username'</span><span class="p">,</span> <span class="s1">'johndoe'</span><span class="p">);</span>
@@ -589,8 +583,7 @@ the field name and value in the first and second parameter:</p>
 <span class="cm"> */</span>
 </pre></div>
 </div>
-<p>Or you can pass an associative array containing any data you wish your
-form to contain:</p>
+<p>Or you can pass an associative array containing any data you wish your form to contain:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
@@ -608,7 +601,8 @@ form to contain:</p>
 <span class="cm"> */</span>
 </pre></div>
 </div>
-<p>If you want boolean attributes, pass the boolean value (<code class="docutils literal notranslate"><span class="pre">true</span></code>/<code class="docutils literal notranslate"><span class="pre">false</span></code>). In this case the boolean value does not matter:</p>
+<p>If you want boolean attributes, pass the boolean value (<code class="docutils literal notranslate"><span class="pre">true</span></code>/<code class="docutils literal notranslate"><span class="pre">false</span></code>). In this case, the boolean value does
+not matter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
@@ -624,8 +618,8 @@ form to contain:</p>
 <span class="cm"> */</span>
 </pre></div>
 </div>
-<p>If you would like your form to contain some additional data, like
-JavaScript, you can pass it as a string in the third parameter:</p>
+<p>If you would like your form to contain some additional data, like JavaScript, you can pass it as a string in the
+third parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$js</span> <span class="o">=</span> <span class="s1">'onClick="some_function ()"'</span><span class="p">;</span>
@@ -677,8 +671,8 @@ JavaScript, you can pass it as a string in the third parameter:</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>This function is identical in all respects to the <a class="reference internal" href="#form_input" title="form_input"><code class="xref php php-func docutils literal notranslate"><span class="pre">form_input()</span></code></a>
-function above except that it uses the “password” input type.</p>
+<p>This function is identical in all respects to the <a class="reference internal" href="#form_input" title="form_input"><code class="xref php php-func docutils literal notranslate"><span class="pre">form_input()</span></code></a> function above except that it uses the
+“password” input type.</p>
 </dd></dl>
 
 <dl class="php function">
@@ -699,9 +693,8 @@ function above except that it uses the “password” input type.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>This function is identical in all respects to the <a class="reference internal" href="#form_input" title="form_input"><code class="xref php php-func docutils literal notranslate"><span class="pre">form_input()</span></code></a>
-function above except that it uses the “file” input type, allowing it to
-be used to upload files.</p>
+<p>This function is identical in all respects to the <a class="reference internal" href="#form_input" title="form_input"><code class="xref php php-func docutils literal notranslate"><span class="pre">form_input()</span></code></a> function above except that it uses the
+“file” input type, allowing it to be used to upload files.</p>
 </dd></dl>
 
 <dl class="php function">
@@ -722,12 +715,11 @@ be used to upload files.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>This function is identical in all respects to the <a class="reference internal" href="#form_input" title="form_input"><code class="xref php php-func docutils literal notranslate"><span class="pre">form_input()</span></code></a>
-function above except that it generates a “textarea” type.</p>
+<p>This function is identical in all respects to the <a class="reference internal" href="#form_input" title="form_input"><code class="xref php php-func docutils literal notranslate"><span class="pre">form_input()</span></code></a> function above except that it generates a
+“textarea” type.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Instead of the <em>maxlength</em> and <em>size</em> attributes in the above example,
-you will instead specify <em>rows</em> and <em>cols</em>.</p>
+<p>Use the <em>rows</em> and <em>cols</em> attributes to set the size of the textarea.</p>
 </div>
 </dd></dl>
 
@@ -750,11 +742,9 @@ you will instead specify <em>rows</em> and <em>cols</em>.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Lets you create a standard drop-down field. The first parameter will
-contain the name of the field, the second parameter will contain an
-associative array of options, and the third parameter will contain the
-value you wish to be selected. You can also pass an array of multiple
-items through the third parameter, and the helper will create a
+<p>Lets you create a standard drop-down field. The first parameter will contain the name of the field, the second
+parameter will contain an associative array of options, and the third parameter will contain the value you wish to
+be selected. You can also pass an array of multiple items through the third parameter, and the helper will create a
 multiple select for you.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -790,9 +780,8 @@ multiple select for you.</p>
 <span class="cm"> */</span>
 </pre></div>
 </div>
-<p>If you would like the opening &lt;select&gt; to contain additional data, like
-an id attribute or JavaScript, you can pass it as a string in the fourth
-parameter:</p>
+<p>If you would like the opening &lt;select&gt; to contain additional data, like an id attribute or JavaScript, you can pass
+it as a string in the fourth parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$js</span> <span class="o">=</span> <span class="s1">'id="shirts" onChange="some_function();"'</span><span class="p">;</span>
@@ -809,9 +798,8 @@ parameter:</p>
 <span class="k">echo</span> <span class="nx">form_dropdown</span><span class="p">(</span><span class="s1">'shirts'</span><span class="p">,</span> <span class="nv">$options</span><span class="p">,</span> <span class="s1">'large'</span><span class="p">,</span> <span class="nv">$js</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>If the array passed as <code class="docutils literal notranslate"><span class="pre">$options</span></code> is a multidimensional array, then
-<code class="docutils literal notranslate"><span class="pre">form_dropdown()</span></code> will produce an &lt;optgroup&gt; with the array key as the
-label.</p>
+<p>If the array passed as <code class="docutils literal notranslate"><span class="pre">$options</span></code> is a multidimensional array, then <code class="docutils literal notranslate"><span class="pre">form_dropdown()</span></code> will produce an &lt;optgroup&gt;
+with the array key as the label.</p>
 </dd></dl>
 
 <dl class="php function">
@@ -827,19 +815,17 @@ label.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An HTML select element with multiple attribute</p>
+<dd class="field-even"><p>An HTML select element with the multiple attribute</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Lets you create a standard multiselect field. The first parameter will
-contain the name of the field, the second parameter will contain an
-associative array of options, and the third parameter will contain the
-value or values you wish to be selected.</p>
-<p>The parameter usage is identical to using <a class="reference internal" href="#form_dropdown" title="form_dropdown"><code class="xref php php-func docutils literal notranslate"><span class="pre">form_dropdown()</span></code></a> above,
-except of course that the name of the field will need to use POST array
-syntax, e.g., foo[].</p>
+<p>Lets you create a standard multiselect field. The first parameter will contain the name of the field, the second
+parameter will contain an associative array of options, and the third parameter will contain the value or values you
+wish to be selected.</p>
+<p>The parameter usage is identical to using <a class="reference internal" href="#form_dropdown" title="form_dropdown"><code class="xref php php-func docutils literal notranslate"><span class="pre">form_dropdown()</span></code></a> above, except, of course, that the name of the
+field will need to use POST array syntax, e.g., foo[].</p>
 </dd></dl>
 
 <dl class="php function">
@@ -876,8 +862,8 @@ syntax, e.g., foo[].</p>
 <span class="p">&lt;/</span><span class="nt">fieldset</span><span class="p">&gt;</span>
 </pre></div>
 </div>
-<p>Similar to other functions, you can submit an associative array in the
-second parameter if you prefer to set additional attributes:</p>
+<p>Similar to other functions, you can submit an associative array in the second parameter if you prefer to set
+additional attributes:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span>
@@ -916,9 +902,8 @@ second parameter if you prefer to set additional attributes:</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Produces a closing <code class="docutils literal notranslate"><span class="pre">&lt;/fieldset&gt;</span></code> tag. The only advantage to using this
-function is it permits you to pass data to it which will be added below
-the tag. For example</p>
+<p>Produces a closing <code class="docutils literal notranslate"><span class="pre">&lt;/fieldset&gt;</span></code> tag. The only advantage to using this function is that it permits you to pass
+data to it which will be added below the tag. For example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$string</span> <span class="o">=</span> <span class="s1">'&lt;/div&gt;&lt;/div&gt;'</span><span class="p">;</span>
@@ -954,10 +939,8 @@ the tag. For example</p>
 <span class="c1">// Would produce:  &lt;input type="checkbox" name="newsletter" value="accept" checked="checked"&gt;</span>
 </pre></div>
 </div>
-<p>The third parameter contains a boolean true/false to determine whether
-the box should be checked or not.</p>
-<p>Similar to the other form functions in this helper, you can also pass an
-array of attributes to the function:</p>
+<p>The third parameter contains a boolean true/false to determine whether the box should be checked or not.</p>
+<p>Similar to the other form functions in this helper, you can also pass an array of attributes to the function:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
@@ -972,9 +955,8 @@ array of attributes to the function:</p>
 <span class="c1">// Would produce: &lt;input type="checkbox" name="newsletter" id="newsletter" value="accept" checked="checked" style="margin:10px"&gt;</span>
 </pre></div>
 </div>
-<p>Also as with other functions, if you would like the tag to contain
-additional data like JavaScript, you can pass it as a string in the
-fourth parameter:</p>
+<p>Also as with other functions, if you would like the tag to contain additional data like JavaScript, you can pass it
+as a string in the fourth parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$js</span> <span class="o">=</span> <span class="s1">'onClick="some_function()"'</span><span class="p">;</span>
@@ -1009,8 +991,8 @@ fourth parameter:</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>This function is identical in all respects to the <a class="reference internal" href="#form_checkbox" title="form_checkbox"><code class="xref php php-func docutils literal notranslate"><span class="pre">form_checkbox()</span></code></a>
-function above except that it uses the “radio” input type.</p>
+<p>This function is identical in all respects to the <a class="reference internal" href="#form_checkbox" title="form_checkbox"><code class="xref php php-func docutils literal notranslate"><span class="pre">form_checkbox()</span></code></a> function above except that it uses the
+“radio” input type.</p>
 </dd></dl>
 
 <dl class="php function">
@@ -1038,8 +1020,8 @@ function above except that it uses the “radio” input type.</p>
 <span class="c1">// Would produce:  &lt;label for="username"&gt;What is your Name&lt;/label&gt;</span>
 </pre></div>
 </div>
-<p>Similar to other functions, you can submit an associative array in the
-third parameter if you prefer to set additional attributes.</p>
+<p>Similar to other functions, you can submit an associative array in the third parameter if you prefer to set
+additional attributes.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1079,9 +1061,8 @@ third parameter if you prefer to set additional attributes.</p>
 <span class="c1">// Would produce:  &lt;input type="submit" name="mysubmit" value="Submit Post!"&gt;</span>
 </pre></div>
 </div>
-<p>Similar to other functions, you can submit an associative array in the
-first parameter if you prefer to set your own attributes. The third
-parameter lets you add extra data to your form, like JavaScript.</p>
+<p>Similar to other functions, you can submit an associative array in the first parameter if you prefer to set your own
+attributes. The third parameter lets you add extra data to your form, like JavaScript.</p>
 </dd></dl>
 
 <dl class="php function">
@@ -1102,8 +1083,7 @@ parameter lets you add extra data to your form, like JavaScript.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Lets you generate a standard reset button. Use is identical to
-<code class="xref py py-func docutils literal notranslate"><span class="pre">form_submit()</span></code>.</p>
+<p>Lets you generate a standard reset button. Use is identical to <code class="xref py py-func docutils literal notranslate"><span class="pre">form_submit()</span></code>.</p>
 </dd></dl>
 
 <dl class="php function">
@@ -1124,16 +1104,15 @@ parameter lets you add extra data to your form, like JavaScript.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Lets you generate a standard button element. You can minimally pass the
-button name and content in the first and second parameter:</p>
+<p>Lets you generate a standard button element. You can minimally pass the button name and content in the first and
+second parameters:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nx">form_button</span><span class="p">(</span><span class="s1">'name'</span><span class="p">,</span> <span class="s1">'content'</span><span class="p">);</span>
 <span class="c1">// Would produce: &lt;button name="name" type="button"&gt;Content&lt;/button&gt;</span>
 </pre></div>
 </div>
-<p>Or you can pass an associative array containing any data you wish your
-form to contain:</p>
+<p>Or you can pass an associative array containing any data you wish your form to contain:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
@@ -1148,8 +1127,8 @@ form to contain:</p>
 <span class="c1">// Would produce: &lt;button name="button" id="button" value="true" type="reset"&gt;Reset&lt;/button&gt;</span>
 </pre></div>
 </div>
-<p>If you would like your form to contain some additional data, like
-JavaScript, you can pass it as a string in the third parameter:</p>
+<p>If you would like your form to contain some additional data, like JavaScript, you can pass it as a string in the
+third parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$js</span> <span class="o">=</span> <span class="s1">'onClick="some_function()"'</span><span class="p">;</span>
@@ -1174,9 +1153,8 @@ JavaScript, you can pass it as a string in the third parameter:</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Produces a closing <code class="docutils literal notranslate"><span class="pre">&lt;/form&gt;</span></code> tag. The only advantage to using this
-function is it permits you to pass data to it which will be added below
-the tag. For example:</p>
+<p>Produces a closing <code class="docutils literal notranslate"><span class="pre">&lt;/form&gt;</span></code> tag. The only advantage to using this function is that it permits you to pass data to
+it which will be added below the tag. For example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$string</span> <span class="o">=</span> <span class="s1">'&lt;/div&gt;&lt;/div&gt;'</span><span class="p">;</span>
@@ -1204,12 +1182,10 @@ the tag. For example:</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|string</span></code></span></p>
 </dd>
 </dl>
-<p>Permits you to set the value of an input or textarea element. You must
-supply the field name via the first parameter of the function. The
-second (optional) parameter allows you to set a default value for the
-field value. The third (optional) parameter allows you to turn off HTML escaping
-of the value, in case you need to use this function in combination with
-i.e., <a class="reference internal" href="#form_input" title="form_input"><code class="xref php php-func docutils literal notranslate"><span class="pre">form_input()</span></code></a> and avoid double-escaping.</p>
+<p>Permits you to set the value of an input or textarea element. You must supply the field name via the first parameter
+of the function. The second (optional) parameter allows you to set a default value for the field value. The third
+(optional) parameter allows you to turn off HTML escaping of the value, in case you need to use this function in
+combination with e.g., <a class="reference internal" href="#form_input" title="form_input"><code class="xref php php-func docutils literal notranslate"><span class="pre">form_input()</span></code></a> and avoid double-escaping.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"quantity"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"&lt;?= set_value('quantity', '0') ?&gt;"</span> <span class="nx">size</span><span class="o">=</span><span class="s2">"50"</span><span class="o">&gt;</span>
 </pre></div>
@@ -1225,7 +1201,7 @@ i.e., <a class="reference internal" href="#form_input" title="form_input"><code 
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$field</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Field name</p></li>
 <li><p><strong>$value</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Value to check for</p></li>
-<li><p><strong>$default</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Whether the value is also a default one</p></li>
+<li><p><strong>$default</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether the value is also a default one</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1235,11 +1211,9 @@ i.e., <a class="reference internal" href="#form_input" title="form_input"><code 
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>If you use a &lt;select&gt; menu, this function permits you to display the
-menu item that was selected.</p>
-<p>The first parameter must contain the name of the select menu, the second
-parameter must contain the value of each item, and the third (optional)
-parameter lets you set an item as the default (use boolean true/false).</p>
+<p>If you use a &lt;select&gt; menu, this function permits you to display the menu item that was selected.</p>
+<p>The first parameter must contain the name of the select menu, the second parameter must contain the value of each
+item, and the third (optional) parameter lets you set an item as the default (use boolean true/false).</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">select</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"myselect"</span><span class="o">&gt;</span>
     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"one"</span> <span class="o">&lt;?=</span> <span class="nx">set_select</span><span class="p">(</span><span class="s1">'myselect'</span><span class="p">,</span> <span class="s1">'one'</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span> <span class="cp">?&gt;</span>&gt;One<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
@@ -1258,7 +1232,7 @@ parameter lets you set an item as the default (use boolean true/false).</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$field</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Field name</p></li>
 <li><p><strong>$value</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Value to check for</p></li>
-<li><p><strong>$default</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Whether the value is also a default one</p></li>
+<li><p><strong>$default</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether the value is also a default one</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1268,10 +1242,9 @@ parameter lets you set an item as the default (use boolean true/false).</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Permits you to display a checkbox in the state it was submitted.</p>
-<p>The first parameter must contain the name of the checkbox, the second
-parameter must contain its value, and the third (optional) parameter
-lets you set an item as the default (use boolean true/false).</p>
+<p>Permits you to display a checkbox in the state in which it was submitted.</p>
+<p>The first parameter must contain the name of the checkbox, the second parameter must contain its value, and the
+third (optional) parameter lets you set an item as the default (use boolean true/false).</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"checkbox"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"mycheck[]"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"1"</span> <span class="o">&lt;?=</span> <span class="nx">set_checkbox</span><span class="p">(</span><span class="s1">'mycheck'</span><span class="p">,</span> <span class="s1">'1'</span><span class="p">)</span> <span class="cp">?&gt;</span>&gt;
 <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"checkbox"</span> <span class="na">name</span><span class="o">=</span><span class="s">"mycheck[]"</span> <span class="na">value</span><span class="o">=</span><span class="s">"2"</span> <span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">set_checkbox</span><span class="p">(</span><span class="s1">'mycheck'</span><span class="p">,</span> <span class="s1">'2'</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&gt;</span>
@@ -1287,7 +1260,7 @@ lets you set an item as the default (use boolean true/false).</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$field</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Field name</p></li>
 <li><p><strong>$value</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Value to check for</p></li>
-<li><p><strong>$default</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Whether the value is also a default one</p></li>
+<li><p><strong>$default</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether the value is also a default one</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1297,8 +1270,8 @@ lets you set an item as the default (use boolean true/false).</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Permits you to display radio buttons in the state they were submitted.
-This function is identical to the <a class="reference internal" href="#set_checkbox" title="set_checkbox"><code class="xref php php-func docutils literal notranslate"><span class="pre">set_checkbox()</span></code></a> function above.</p>
+<p>Permits you to display radio buttons in the state in which they were submitted. This function is identical to the
+<a class="reference internal" href="#set_checkbox" title="set_checkbox"><code class="xref php php-func docutils literal notranslate"><span class="pre">set_checkbox()</span></code></a> function above.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"radio"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"myradio"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"1"</span> <span class="o">&lt;?=</span> <span class="nx">set_radio</span><span class="p">(</span><span class="s1">'myradio'</span><span class="p">,</span> <span class="s1">'1'</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span> <span class="cp">?&gt;</span>&gt;
 <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"radio"</span> <span class="na">name</span><span class="o">=</span><span class="s">"myradio"</span> <span class="na">value</span><span class="o">=</span><span class="s">"2"</span> <span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">set_radio</span><span class="p">(</span><span class="s1">'myradio'</span><span class="p">,</span> <span class="s1">'2'</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&gt;</span>
@@ -1320,15 +1293,14 @@ This function is identical to the <a class="reference internal" href="#set_check
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span></p>
 </dd>
 </dl>
-<p>Returns the validation errors. First, this function checks the validation errors
-that are stored in the session. To store the errors in the session, you need to use <code class="docutils literal notranslate"><span class="pre">withInput()</span></code> with <a class="reference internal" href="../general/common_functions.html#redirect" title="redirect"><code class="xref php php-func docutils literal notranslate"><span class="pre">redirect()</span></code></a>.</p>
-<p>The returned array is the same as <code class="docutils literal notranslate"><span class="pre">Validation::getErrors()</span></code>.
-See <a class="reference internal" href="../libraries/validation.html#validation-redirect-and-validation-errors"><span class="std std-ref">Validation</span></a> for details.</p>
+<p>Returns the validation errors. First, this function checks the validation errors that are stored in the session. To
+store the errors in the session, you need to use <code class="docutils literal notranslate"><span class="pre">withInput()</span></code> with <a class="reference internal" href="../general/common_functions.html#redirect" title="redirect"><code class="xref php php-func docutils literal notranslate"><span class="pre">redirect()</span></code></a>.</p>
+<p>The returned array is the same as <code class="docutils literal notranslate"><span class="pre">Validation::getErrors()</span></code>. See
+<a class="reference internal" href="../libraries/validation.html#validation-redirect-and-validation-errors"><span class="std std-ref">Validation</span></a> for details.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This function does not work with <a class="reference internal" href="../models/model.html#in-model-validation"><span class="std std-ref">In-Model Validation</span></a>. If you
-want to get the validation errors in model validation, see
-<a class="reference internal" href="../models/model.html#model-getting-validation-errors"><span class="std std-ref">Getting Validation Errors</span></a>.</p>
+<p>This function does not work with <a class="reference internal" href="../models/model.html#in-model-validation"><span class="std std-ref">In-Model Validation</span></a>. If you want to get the validation errors in
+model validation, see <a class="reference internal" href="../models/model.html#model-getting-validation-errors"><span class="std std-ref">Getting Validation Errors</span></a>.</p>
 </div>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="nv">$errors</span> <span class="o">=</span> <span class="nx">validation_errors</span><span class="p">();</span> <span class="cp">?&gt;</span>
@@ -1356,14 +1328,13 @@ want to get the validation errors in model validation, see
 </dd>
 </dl>
 <p>Returns the rendered HTML of the validation errors.</p>
-<p>The parameter <code class="docutils literal notranslate"><span class="pre">$template</span></code> is a Validation template name.
-See <a class="reference internal" href="../libraries/validation.html#validation-customizing-error-display"><span class="std std-ref">Customizing Error Display</span></a> for details.</p>
+<p>The parameter <code class="docutils literal notranslate"><span class="pre">$template</span></code> is a Validation template name. See <a class="reference internal" href="../libraries/validation.html#validation-customizing-error-display"><span class="std std-ref">Customizing Error Display</span></a> for
+details.</p>
 <p>This function uses <a class="reference internal" href="#validation_errors" title="validation_errors"><code class="xref php php-func docutils literal notranslate"><span class="pre">validation_errors()</span></code></a> internally.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This function does not work with <a class="reference internal" href="../models/model.html#in-model-validation"><span class="std std-ref">In-Model Validation</span></a>. If you
-want to get the validation errors in model validation, see
-<a class="reference internal" href="../models/model.html#model-getting-validation-errors"><span class="std std-ref">Getting Validation Errors</span></a>.</p>
+<p>This function does not work with <a class="reference internal" href="../models/model.html#in-model-validation"><span class="std std-ref">In-Model Validation</span></a>. If you want to get the validation errors in
+model validation, see <a class="reference internal" href="../models/model.html#model-getting-validation-errors"><span class="std std-ref">Getting Validation Errors</span></a>.</p>
 </div>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">validation_list_errors</span><span class="p">()</span> <span class="cp">?&gt;</span>
@@ -1392,14 +1363,13 @@ want to get the validation errors in model validation, see
 </dd>
 </dl>
 <p>Returns a single error for the specified field in formatted HTML.</p>
-<p>The parameter <code class="docutils literal notranslate"><span class="pre">$template</span></code> is a Validation template name.
-See <a class="reference internal" href="../libraries/validation.html#validation-customizing-error-display"><span class="std std-ref">Customizing Error Display</span></a> for details.</p>
+<p>The parameter <code class="docutils literal notranslate"><span class="pre">$template</span></code> is a Validation template name. See <a class="reference internal" href="../libraries/validation.html#validation-customizing-error-display"><span class="std std-ref">Customizing Error Display</span></a> for
+details.</p>
 <p>This function uses <a class="reference internal" href="#validation_errors" title="validation_errors"><code class="xref php php-func docutils literal notranslate"><span class="pre">validation_errors()</span></code></a> internally.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This function does not work with <a class="reference internal" href="../models/model.html#in-model-validation"><span class="std std-ref">In-Model Validation</span></a>. If you
-want to get the validation errors in model validation, see
-<a class="reference internal" href="../models/model.html#model-getting-validation-errors"><span class="std std-ref">Getting Validation Errors</span></a>.</p>
+<p>This function does not work with <a class="reference internal" href="../models/model.html#in-model-validation"><span class="std std-ref">In-Model Validation</span></a>. If you want to get the validation errors in
+model validation, see <a class="reference internal" href="../models/model.html#model-getting-validation-errors"><span class="std std-ref">Getting Validation Errors</span></a>.</p>
 </div>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">validation_show_error</span><span class="p">(</span><span class="s1">'username'</span><span class="p">)</span> <span class="cp">?&gt;</span>
@@ -1422,7 +1392,7 @@ want to get the validation errors in model validation, see
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

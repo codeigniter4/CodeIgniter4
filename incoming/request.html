@@ -292,12 +292,11 @@
              
   <section id="request-class">
 <h1>Request Class<a class="headerlink" href="#request-class" title="Link to this heading"></a></h1>
-<p>The request class is an object-oriented representation of an HTTP request. This is meant to
-work for both incoming, such as a request to the application from a browser, and outgoing requests,
-like would be used to send a request from the application to a third-party application.</p>
-<p>This class
-provides the common functionality they both need, but both cases have custom classes that extend
-from the Request class to add specific functionality. In practice, you will need to use these classes.</p>
+<p>The request class is an object-oriented representation of an HTTP request. This is meant to work for both incoming, such
+as a request to the application from a browser, and outgoing requests, like those used to send a request from the
+application to a third-party application.</p>
+<p>This class provides the common functionality they both need, but both cases have custom classes that extend from the
+Request class to add specific functionality. In practice, you will need to use these classes.</p>
 <p>See the documentation for the <a class="reference internal" href="incomingrequest.html"><span class="doc">IncomingRequest Class</span></a> and
 <a class="reference internal" href="../libraries/curlrequest.html"><span class="doc">CURLRequest Class</span></a> for more usage details.</p>
 <section id="class-reference">
@@ -310,15 +309,14 @@ from the Request class to add specific functionality. In practice, you will need
 <span class="sig-name descname"><span class="pre">getIPAddress</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Request::getIPAddress" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The user’s IP Address, if it can be detected. If the IP address
-is not a valid IP address, then will return <code class="docutils literal notranslate"><span class="pre">0.0.0.0</span></code>.</p>
+<dd class="field-odd"><p>The user’s IP address, if it can be detected. If the IP address
+is not a valid IP address, it will return <code class="docutils literal notranslate"><span class="pre">0.0.0.0</span></code>.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Returns the IP address for the current user. If the IP address is not valid, the method
-will return <code class="docutils literal notranslate"><span class="pre">0.0.0.0</span></code>:</p>
+<p>Returns the IP address for the current user. If the IP address is not valid, the method will return <code class="docutils literal notranslate"><span class="pre">0.0.0.0</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getIPAddress</span><span class="p">();</span>
@@ -326,8 +324,8 @@ will return <code class="docutils literal notranslate"><span class="pre">0.0.0.0
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>This method takes into account the <code class="docutils literal notranslate"><span class="pre">Config\App::$proxyIPs</span></code> setting and will
-return the reported client IP address by the HTTP header for the allowed IP address.</p>
+<p>This method takes into account the <code class="docutils literal notranslate"><span class="pre">Config\App::$proxyIPs</span></code> setting and will return the client
+IP address reported by the HTTP header for the allowed IP address.</p>
 </div>
 </dd></dl>
 
@@ -355,11 +353,10 @@ return the reported client IP address by the HTTP header for the allowed IP addr
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
-<p>Takes an IP address as input and returns true or false (boolean) depending
-on whether it is valid or not.</p>
+<p>Takes an IP address as input and returns true or false (boolean) depending on whether it is valid or not.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The $request-&gt;getIPAddress() method above automatically validates the IP address.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">$request-&gt;getIPAddress()</span></code> method above automatically validates the IP address.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">isValidIP</span><span class="p">(</span><span class="nv">$ip</span><span class="p">))</span> <span class="p">{</span>
@@ -370,8 +367,8 @@ on whether it is valid or not.</p>
 </pre></div>
 </div>
 </div>
-<p>Accepts an optional second string parameter of <code class="docutils literal notranslate"><span class="pre">ipv4</span></code> or <code class="docutils literal notranslate"><span class="pre">ipv6</span></code> to specify
-an IP format. The default checks for both formats.</p>
+<p>Accepts an optional second string parameter of <code class="docutils literal notranslate"><span class="pre">ipv4</span></code> or <code class="docutils literal notranslate"><span class="pre">ipv6</span></code> to specify an IP format. The default checks
+for both formats.</p>
 </dd></dl>
 
 <dl class="php method">
@@ -442,8 +439,8 @@ an IP format. The default checks for both formats.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$index</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Value name</p></li>
-<li><p><strong>$filter</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The type of filter to apply. A list of filters can be found in <a class="reference external" href="https://www.php.net/manual/en/filters.php">PHP manual</a>.</p></li>
-<li><p><strong>$flags</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int|array</span></code></span>) – Flags to apply. A list of flags can be found in <a class="reference external" href="https://www.php.net/manual/en/filter.constants.php#filter.constants.flags.generic">PHP manual</a>.</p></li>
+<li><p><strong>$filter</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The type of filter to apply. A list of filters can be found in the <a class="reference external" href="https://www.php.net/manual/en/filters.php">PHP manual</a>.</p></li>
+<li><p><strong>$flags</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int|array</span></code></span>) – Flags to apply. A list of flags can be found in the <a class="reference external" href="https://www.php.net/manual/en/filter.constants.php#filter.constants.flags.generic">PHP manual</a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -460,8 +457,7 @@ an IP format. The default checks for both formats.</p>
 <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getServer</span><span class="p">(</span><span class="s1">'some_data'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>To return an array of multiple <code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code> values, pass all the required keys
-as an array.</p>
+<p>To return an array of multiple <code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code> values, pass all the required keys as an array.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getServer</span><span class="p">([</span><span class="s1">'SERVER_PROTOCOL'</span><span class="p">,</span> <span class="s1">'REQUEST_URI'</span><span class="p">]);</span>
@@ -473,15 +469,15 @@ as an array.</p>
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Request::getEnv">
 <span class="sig-name descname"><span class="pre">getEnv</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$index</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$filter</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$flags</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Request::getEnv" title="Link to this definition"></a></dt>
 <dd><div class="deprecated">
-<p><span class="versionmodified deprecated">Deprecated since version 4.4.4: </span>This method does not work from the beginning. Use
+<p><span class="versionmodified deprecated">Deprecated since version 4.4.4: </span>This method has never worked. Use
 <a class="reference internal" href="../general/common_functions.html#env" title="env"><code class="xref php php-func docutils literal notranslate"><span class="pre">env()</span></code></a> instead.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$index</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Value name</p></li>
-<li><p><strong>$filter</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The type of filter to apply. A list of filters can be found in <a class="reference external" href="https://www.php.net/manual/en/filters.php">PHP manual</a>.</p></li>
-<li><p><strong>$flags</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int|array</span></code></span>) – Flags to apply. A list of flags can be found in <a class="reference external" href="https://www.php.net/manual/en/filter.constants.php#filter.constants.flags.generic">PHP manual</a>.</p></li>
+<li><p><strong>$filter</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The type of filter to apply. A list of filters can be found in the <a class="reference external" href="https://www.php.net/manual/en/filters.php">PHP manual</a>.</p></li>
+<li><p><strong>$flags</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int|array</span></code></span>) – Flags to apply. A list of flags can be found in the <a class="reference external" href="https://www.php.net/manual/en/filter.constants.php#filter.constants.flags.generic">PHP manual</a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -498,8 +494,7 @@ as an array.</p>
 <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getEnv</span><span class="p">(</span><span class="s1">'some_data'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>To return an array of multiple <code class="docutils literal notranslate"><span class="pre">$_ENV</span></code> values, pass all the required keys
-as an array.</p>
+<p>To return an array of multiple <code class="docutils literal notranslate"><span class="pre">$_ENV</span></code> values, pass all the required keys as an array.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getEnv</span><span class="p">([</span><span class="s1">'CI_ENVIRONMENT'</span><span class="p">,</span> <span class="s1">'S3_BUCKET'</span><span class="p">]);</span>
@@ -524,7 +519,7 @@ as an array.</p>
 <dd class="field-odd"><p><span><a class="reference internal" href="#CodeIgniter\HTTP\Request" title="CodeIgniter\HTTP\Request"><code class="xref php php-obj docutils literal notranslate"><span class="pre">Request</span></code></a></span></p>
 </dd>
 </dl>
-<p>Allows manually setting the value of PHP global, like <code class="docutils literal notranslate"><span class="pre">$_GET</span></code>, <code class="docutils literal notranslate"><span class="pre">$_POST</span></code>, etc.</p>
+<p>Allows manually setting the value of a PHP global, like <code class="docutils literal notranslate"><span class="pre">$_GET</span></code>, <code class="docutils literal notranslate"><span class="pre">$_POST</span></code>, etc.</p>
 </dd></dl>
 
 <dl class="php method">
@@ -535,16 +530,16 @@ as an array.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$method</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input filter constant</p></li>
 <li><p><strong>$index</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Value name</p></li>
-<li><p><strong>$filter</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The type of filter to apply. A list of filters can be found in <a class="reference external" href="https://www.php.net/manual/en/filters.php">PHP manual</a>.</p></li>
-<li><p><strong>$flags</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int|array</span></code></span>) – Flags to apply. A list of flags can be found in <a class="reference external" href="https://www.php.net/manual/en/filter.constants.php#filter.constants.flags.generic">PHP manual</a>.</p></li>
+<li><p><strong>$filter</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The type of filter to apply. A list of filters can be found in the <a class="reference external" href="https://www.php.net/manual/en/filters.php">PHP manual</a>.</p></li>
+<li><p><strong>$flags</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int|array</span></code></span>) – Flags to apply. A list of flags can be found in the <a class="reference external" href="https://www.php.net/manual/en/filter.constants.php#filter.constants.flags.generic">PHP manual</a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
-<p>Fetches one or more items from a global, like cookies, get, post, etc.
-Can optionally filter the input when you retrieve it by passing in a filter.</p>
+<p>Fetches one or more items from a global, like cookies, get, post, etc. Can optionally filter the input when you
+retrieve it by passing in a filter.</p>
 </dd></dl>
 
 </dd></dl>
@@ -564,7 +559,7 @@ Can optionally filter the input when you retrieve it by passing in a filter.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

@@ -292,15 +292,12 @@
              
   <section id="running-controllers-via-cli">
 <h1>Running Controllers via CLI<a class="headerlink" href="#running-controllers-via-cli" title="Link to this heading"></a></h1>
-<p>As well as calling an application’s <a class="reference internal" href="../incoming/controllers.html"><span class="doc">Controllers</span></a>
-via the URL in a browser they can also be loaded via the command-line
-interface (CLI).</p>
+<p>As well as being called via the URL in a browser, an application’s <a class="reference internal" href="../incoming/controllers.html"><span class="doc">Controllers</span></a> can also
+be loaded via the command-line interface (CLI).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>It is recommended to use Spark Commands for CLI scripts instead of
-calling controllers via CLI.
-See the <a class="reference internal" href="spark_commands.html"><span class="doc">Spark Commands</span></a> and <a class="reference internal" href="cli_commands.html"><span class="doc">Creating Spark Commands</span></a> page for detailed
-information.</p>
+<p>It is recommended to use Spark Commands for CLI scripts instead of calling controllers via CLI. See the
+<a class="reference internal" href="spark_commands.html"><span class="doc">Spark Commands</span></a> and <a class="reference internal" href="cli_commands.html"><span class="doc">Creating Spark Commands</span></a> pages for detailed information.</p>
 </div>
 <nav class="contents local" id="contents">
 <ul class="simple">
@@ -318,9 +315,8 @@ information.</p>
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Let’s try it: Hello World!</a><a class="headerlink" href="#let-s-try-it-hello-world" title="Link to this heading"></a></h2>
 <section id="create-a-controller">
 <h3><a class="toc-backref" href="#id2" role="doc-backlink">Create a Controller</a><a class="headerlink" href="#create-a-controller" title="Link to this heading"></a></h3>
-<p>Let’s create a simple controller so you can see it in action. Using your
-text editor, create a file called Tools.php, and put the following code
-in it:</p>
+<p>Let’s create a simple controller so you can see it in action. Using your text editor, create a file called
+<strong>Tools.php</strong>, and put the following code in it:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
@@ -345,10 +341,9 @@ in it:</p>
 <section id="define-a-route">
 <h3><a class="toc-backref" href="#id3" role="doc-backlink">Define a Route</a><a class="headerlink" href="#define-a-route" title="Link to this heading"></a></h3>
 <p>If you use Auto Routing, skip this.</p>
-<p>In your <strong>app/Config/Routes.php</strong> file you can create routes that are only accessible from
-the CLI as easily as you would create any other route. Instead of using the <code class="docutils literal notranslate"><span class="pre">get()</span></code>,
-<code class="docutils literal notranslate"><span class="pre">post()</span></code>, or similar method, you would use the <code class="docutils literal notranslate"><span class="pre">cli()</span></code> method. Everything else
-works exactly like a normal route definition:</p>
+<p>In your <strong>app/Config/Routes.php</strong> file you can create routes that are only accessible from the CLI as easily as you
+would create any other route. Instead of using the <code class="docutils literal notranslate"><span class="pre">get()</span></code>, <code class="docutils literal notranslate"><span class="pre">post()</span></code>, or similar method, you would use the <code class="docutils literal notranslate"><span class="pre">cli()</span></code>
+method. Everything else works exactly like a normal route definition:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">cli</span><span class="p">(</span><span class="s1">'tools/message/(:segment)'</span><span class="p">,</span> <span class="s1">'Tools::message/$1'</span><span class="p">);</span>
@@ -357,18 +352,18 @@ works exactly like a normal route definition:</p>
 <p>For more information, see the <a class="reference internal" href="../incoming/routing.html#command-line-only-routes"><span class="std std-ref">Routes</span></a> page.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>If you enable <a class="reference internal" href="../incoming/routing.html#auto-routing-legacy"><span class="std std-ref">Auto Routing (Legacy)</span></a> and place the command file in <strong>app/Controllers</strong>,
-anyone could access the command with the help of <a class="reference internal" href="../incoming/routing.html#auto-routing-legacy"><span class="std std-ref">Auto Routing (Legacy)</span></a> via HTTP.</p>
+<p>If you enable <a class="reference internal" href="../incoming/routing.html#auto-routing-legacy"><span class="std std-ref">Auto Routing (Legacy)</span></a> and place the command file in <strong>app/Controllers</strong>, anyone could
+access the command with the help of <a class="reference internal" href="../incoming/routing.html#auto-routing-legacy"><span class="std std-ref">Auto Routing (Legacy)</span></a> via HTTP.</p>
 </div>
 </section>
 <section id="run-via-cli">
 <h3><a class="toc-backref" href="#id4" role="doc-backlink">Run via CLI</a><a class="headerlink" href="#run-via-cli" title="Link to this heading"></a></h3>
-<p>Now normally you would visit your site using a URL similar to this:</p>
+<p>Normally, you would visit your site using a URL similar to this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/</span><span class="nx">tools</span><span class="o">/</span><span class="nx">message</span><span class="o">/</span><span class="nx">to</span>
 </pre></div>
 </div>
-<p>Instead, we are going to open Terminal in Mac/Linux or go to Run &gt; “cmd”
-in Windows and navigate to our CodeIgniter project’s web root.</p>
+<p>Instead, we are going to open Terminal in Mac/Linux or go to Run &gt; “cmd” in Windows and navigate to our CodeIgniter
+project’s web root.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>/path/to/project/public
 $<span class="w"> </span>php<span class="w"> </span>index.php<span class="w"> </span>tools<span class="w"> </span>message
 </pre></div>
@@ -377,8 +372,8 @@ $<span class="w"> </span>php<span class="w"> </span>index.php<span class="w"> </
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>php<span class="w"> </span>index.php<span class="w"> </span>tools<span class="w"> </span>message<span class="w"> </span><span class="s2">"John Smith"</span>
 </pre></div>
 </div>
-<p>Here we are passing it an argument in the same way that URL parameters
-work. “John Smith” is passed as an argument and output is:</p>
+<p>Here we are passing it an argument in the same way that URL parameters work. “John Smith” is passed as an argument and
+the output is:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">Hello</span> <span class="nx">John</span> <span class="nx">Smith</span><span class="o">!</span>
 </pre></div>
 </div>
@@ -386,17 +381,15 @@ work. “John Smith” is passed as an argument and output is:</p>
 </section>
 <section id="that-s-the-basics">
 <h2><a class="toc-backref" href="#id5" role="doc-backlink">That’s the Basics!</a><a class="headerlink" href="#that-s-the-basics" title="Link to this heading"></a></h2>
-<p>That, in a nutshell, is all there is to know about controllers on the
-command line. Remember that this is just a normal controller, so routing
-and <code class="docutils literal notranslate"><span class="pre">_remap()</span></code> works fine.</p>
+<p>That, in a nutshell, is all there is to know about controllers on the command line. Remember that this is just a normal
+controller, so routing and <code class="docutils literal notranslate"><span class="pre">_remap()</span></code> work fine.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p><code class="docutils literal notranslate"><span class="pre">_remap()</span></code> does not work with <a class="reference internal" href="../incoming/auto_routing_improved.html#auto-routing-improved"><span class="std std-ref">Auto Routing (Improved)</span></a>.</p>
 </div>
-<p>If you want to make sure running via CLI, check the return value of <a class="reference internal" href="../general/common_functions.html#is_cli" title="is_cli"><code class="xref php php-func docutils literal notranslate"><span class="pre">is_cli()</span></code></a>.</p>
-<p>However, CodeIgniter provides additional tools to make creating CLI-accessible
-scripts even more pleasant, include CLI-only routing, and a library that helps
-you with CLI-only tools.</p>
+<p>If you want to make sure the code is running via CLI, check the return value of <a class="reference internal" href="../general/common_functions.html#is_cli" title="is_cli"><code class="xref php php-func docutils literal notranslate"><span class="pre">is_cli()</span></code></a>.</p>
+<p>However, CodeIgniter provides additional tools to make creating CLI-accessible scripts even more pleasant, including
+CLI-only routing and a library that helps you with CLI-only tools.</p>
 </section>
 </section>
 
@@ -412,7 +405,7 @@ you with CLI-only tools.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

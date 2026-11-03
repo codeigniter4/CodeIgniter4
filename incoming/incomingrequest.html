@@ -293,8 +293,8 @@
   <section id="incomingrequest-class">
 <h1>IncomingRequest Class<a class="headerlink" href="#incomingrequest-class" title="Link to this heading"></a></h1>
 <p>The IncomingRequest class provides an object-oriented representation of an HTTP request from a client, like a browser.
-It extends from, and has access to all the methods of the <a class="reference internal" href="request.html"><span class="doc">Request</span></a> and <a class="reference internal" href="message.html"><span class="doc">Message</span></a>
-classes, in addition to the methods listed below.</p>
+It extends from, and has access to all the methods of the <a class="reference internal" href="request.html"><span class="doc">Request</span></a> and
+<a class="reference internal" href="message.html"><span class="doc">Message</span></a> classes, in addition to the methods listed below.</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#accessing-the-request" id="id2">Accessing the Request</a></p></li>
@@ -322,7 +322,7 @@ classes, in addition to the methods listed below.</p>
 </nav>
 <section id="accessing-the-request">
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">Accessing the Request</a><a class="headerlink" href="#accessing-the-request" title="Link to this heading"></a></h2>
-<p>An instance of the request class already populated for you if the current class is a descendant of
+<p>An instance of the request class is already populated for you if the current class is a descendant of
 <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Controller</span></code> and can be accessed as a class property:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -341,15 +341,15 @@ classes, in addition to the methods listed below.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>If you are not within a controller, but still need access to the application’s Request object, you can
-get a copy of it through the <a class="reference internal" href="../concepts/services.html"><span class="doc">Services class</span></a>:</p>
+<p>If you are not within a controller, but still need access to the application’s Request object, you can get a copy of it
+through the <a class="reference internal" href="../concepts/services.html"><span class="doc">Services class</span></a>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$request</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'request'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>It’s preferable, though, to pass the request in as a dependency if the class is anything other than
-the controller, where you can save it as a class property:</p>
+<p>It’s preferable, though, to pass the request in as a dependency if the class is anything other than the controller,
+where you can save it as a class property:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Libraries</span><span class="p">;</span>
@@ -372,8 +372,8 @@ the controller, where you can save it as a class property:</p>
 </section>
 <section id="determining-request-type">
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">Determining Request Type</a><a class="headerlink" href="#determining-request-type" title="Link to this heading"></a></h2>
-<p>A request could be of several types, including an AJAX request or a request from the command line. This can
-be checked with the <code class="docutils literal notranslate"><span class="pre">isAJAX()</span></code> and <code class="docutils literal notranslate"><span class="pre">isCLI()</span></code> methods:</p>
+<p>A request could be of several types, including an AJAX request or a request from the command line. This can be checked
+with the <code class="docutils literal notranslate"><span class="pre">isAJAX()</span></code> and <code class="docutils literal notranslate"><span class="pre">isCLI()</span></code> methods:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Check for AJAX request.</span>
@@ -389,20 +389,20 @@ be checked with the <code class="docutils literal notranslate"><span class="pre"
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">isAJAX()</span></code> method depends on the <code class="docutils literal notranslate"><span class="pre">X-Requested-With</span></code> header,
-which in some cases is not sent by default in XHR requests via JavaScript (i.e., fetch).
-See the <a class="reference internal" href="../general/ajax.html"><span class="doc">AJAX Requests</span></a> section on how to avoid this problem.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">isAJAX()</span></code> method depends on the <code class="docutils literal notranslate"><span class="pre">X-Requested-With</span></code> header, which in some cases is not sent by default
+in XHR requests via JavaScript (i.e., fetch). See the <a class="reference internal" href="../general/ajax.html"><span class="doc">AJAX Requests</span></a> section on how to avoid
+this problem.</p>
 </div>
 <section id="is">
 <span id="incomingrequest-is"></span><h3><a class="toc-backref" href="#id4" role="doc-backlink">is()</a><a class="headerlink" href="#is" title="Link to this heading"></a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 4.3.0.</span></p>
 </div>
-<p>Since v4.3.0, you can use the <code class="docutils literal notranslate"><span class="pre">is()</span></code> method. It accepts an HTTP method, <code class="docutils literal notranslate"><span class="pre">'ajax'</span></code>,
-or <code class="docutils literal notranslate"><span class="pre">'json'</span></code>, and returns boolean.</p>
+<p>Since v4.3.0, you can use the <code class="docutils literal notranslate"><span class="pre">is()</span></code> method. It accepts an HTTP method, <code class="docutils literal notranslate"><span class="pre">'ajax'</span></code>, or <code class="docutils literal notranslate"><span class="pre">'json'</span></code>, and returns a
+boolean.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>HTTP method should be case-sensitive, but the parameter is case-insensitive.</p>
+<p>The HTTP method should be case-sensitive, but the parameter is case-insensitive.</p>
 </div>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -432,19 +432,19 @@ or <code class="docutils literal notranslate"><span class="pre">'json'</span></c
 <span class="nv">$method</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>The HTTP method is case-sensitive, and by convention, standardized methods are
-defined in all-uppercase US-ASCII letters.</p>
+<p>The HTTP method is case-sensitive, and by convention, standardized methods are defined in all-uppercase US-ASCII
+letters.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Prior to v4.5.0, by default, the method was returned as a lowercase
-string (i.e., <code class="docutils literal notranslate"><span class="pre">'get'</span></code>, <code class="docutils literal notranslate"><span class="pre">'post'</span></code>, etc). But it was a bug.</p>
+<p>Prior to v4.5.0, by default, the method was returned as a lowercase string (i.e., <code class="docutils literal notranslate"><span class="pre">'get'</span></code>, <code class="docutils literal notranslate"><span class="pre">'post'</span></code>,
+etc.). This was a bug.</p>
 </div>
 <p>You can get a lowercase version by wrapping the call in <code class="docutils literal notranslate"><span class="pre">strtolower()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Returns 'get'</span>
 <span class="nv">$method</span> <span class="o">=</span> <span class="nb">strtolower</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">());</span>
 </pre></div>
 </div>
-<p>You can also check if the request was made through and HTTPS connection with the <code class="docutils literal notranslate"><span class="pre">isSecure()</span></code> method:</p>
+<p>You can also check if the request was made through an HTTPS connection with the <code class="docutils literal notranslate"><span class="pre">isSecure()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">isSecure</span><span class="p">())</span> <span class="p">{</span>
@@ -454,42 +454,36 @@ string (i.e., <code class="docutils literal notranslate"><span class="pre">'get'
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">X-Forwarded-Proto</span></code> and <code class="docutils literal notranslate"><span class="pre">Front-End-Https</span></code> headers are taken
-into account only when the request comes from a trusted proxy configured in
-<code class="docutils literal notranslate"><span class="pre">Config\App::$proxyIPs</span></code>. Otherwise, they are client-supplied and could be
+<p>The <code class="docutils literal notranslate"><span class="pre">X-Forwarded-Proto</span></code> and <code class="docutils literal notranslate"><span class="pre">Front-End-Https</span></code> headers are taken into account only when the request
+comes from a trusted proxy configured in <code class="docutils literal notranslate"><span class="pre">Config\App::$proxyIPs</span></code>. Otherwise, they are client-supplied and could be
 spoofed.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>On dual-stack servers, a proxy’s IPv4 address may be reported as an
-IPv4-mapped IPv6 address (e.g., <code class="docutils literal notranslate"><span class="pre">::ffff:192.168.5.21</span></code>), which does not
-match an IPv4 entry such as <code class="docutils literal notranslate"><span class="pre">192.168.5.0/24</span></code>. In that case, add the
-IPv4-mapped form to <code class="docutils literal notranslate"><span class="pre">Config\App::$proxyIPs</span></code>, e.g.,
-<code class="docutils literal notranslate"><span class="pre">::ffff:192.168.5.21</span></code> or <code class="docutils literal notranslate"><span class="pre">::ffff:192.168.5.0/120</span></code>.</p>
+<p>On dual-stack servers, a proxy’s IPv4 address may be reported as an IPv4-mapped IPv6 address (e.g.,
+<code class="docutils literal notranslate"><span class="pre">::ffff:192.168.5.21</span></code>), which does not match an IPv4 entry such as <code class="docutils literal notranslate"><span class="pre">192.168.5.0/24</span></code>. In that case, add the
+IPv4-mapped form to <code class="docutils literal notranslate"><span class="pre">Config\App::$proxyIPs</span></code>, e.g., <code class="docutils literal notranslate"><span class="pre">::ffff:192.168.5.21</span></code> or <code class="docutils literal notranslate"><span class="pre">::ffff:192.168.5.0/120</span></code>.</p>
 </div>
 </section>
 </section>
 <section id="retrieving-input">
 <h2><a class="toc-backref" href="#id6" role="doc-backlink">Retrieving Input</a><a class="headerlink" href="#retrieving-input" title="Link to this heading"></a></h2>
-<p>You can retrieve input from <code class="docutils literal notranslate"><span class="pre">$_GET</span></code>, <code class="docutils literal notranslate"><span class="pre">$_POST</span></code>, <code class="docutils literal notranslate"><span class="pre">$_COOKIE</span></code>, <code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code>
-and <code class="docutils literal notranslate"><span class="pre">$_ENV</span></code> through the Request object.
+<p>You can retrieve input from <code class="docutils literal notranslate"><span class="pre">$_GET</span></code>, <code class="docutils literal notranslate"><span class="pre">$_POST</span></code>, <code class="docutils literal notranslate"><span class="pre">$_COOKIE</span></code>, <code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code> and <code class="docutils literal notranslate"><span class="pre">$_ENV</span></code> through the Request object.
 The data is not automatically filtered and returns the raw input data as passed in the request.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>It is bad practice to use global variables. Basically, it should be avoided
-and it is recommended to use methods of the Request object.</p>
+<p>It is bad practice to use global variables. Basically, they should be avoided, and it is recommended to use
+methods of the Request object.</p>
 </div>
-<p>The main
-advantages to using these methods instead of accessing them directly (<code class="docutils literal notranslate"><span class="pre">$_POST['something']</span></code>), is that they
-will return null if the item doesn’t exist, and you can have the data filtered. This lets you conveniently
-use data without having to test whether an item exists first. In other words, normally you might do something
-like this:</p>
+<p>The main advantages to using these methods instead of accessing them directly (<code class="docutils literal notranslate"><span class="pre">$_POST['something']</span></code>) are that they
+will return null if the item doesn’t exist, and you can have the data filtered. This lets you conveniently use data
+without having to test whether an item exists first. In other words, normally you might do something like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$something</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">'foo'</span><span class="p">]</span> <span class="o">??</span> <span class="k">null</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>With CodeIgniter’s built-in methods you can simply do this:</p>
+<p>With CodeIgniter’s built-in methods, you can simply do this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$something</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">(</span><span class="s1">'foo'</span><span class="p">);</span>
@@ -543,22 +537,21 @@ maintaining the ability to control the order you look for it:</p>
 <h4>getVar()<a class="headerlink" href="#getvar" title="Link to this heading"></a></h4>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>This method exists only for backward compatibility. Do not use it
-in new projects. Even if you are already using it, we recommend that you use
-another, more appropriate method.</p>
+<p>This method exists only for backward compatibility. Do not use it in new projects. Even if you are
+already using it, we recommend that you use another, more appropriate method.</p>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">getVar()</span></code> method will pull from <code class="docutils literal notranslate"><span class="pre">$_REQUEST</span></code>, so will return any data from <code class="docutils literal notranslate"><span class="pre">$_GET</span></code>, <code class="docutils literal notranslate"><span class="pre">$_POST</span></code>, or <code class="docutils literal notranslate"><span class="pre">$_COOKIE</span></code> (depending on php.ini <a class="reference external" href="https://www.php.net/manual/en/ini.core.php#ini.request-order">request-order</a>).</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">getVar()</span></code> method will pull from <code class="docutils literal notranslate"><span class="pre">$_REQUEST</span></code>, so it will return any data from <code class="docutils literal notranslate"><span class="pre">$_GET</span></code>, <code class="docutils literal notranslate"><span class="pre">$_POST</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">$_COOKIE</span></code> (depending on <strong>php.ini</strong> <a class="reference external" href="https://www.php.net/manual/en/ini.core.php#ini.request-order">request-order</a>).</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>If you want to validate POST data only, don’t use <code class="docutils literal notranslate"><span class="pre">getVar()</span></code>.
-Newer values override older values. POST values may be overridden by the
-cookies if they have the same name, and you set “C” after “P” in
+<p>If you want to validate POST data only, don’t use <code class="docutils literal notranslate"><span class="pre">getVar()</span></code>. Newer values override older values. POST
+values may be overridden by the cookies if they have the same name, and you set “C” after “P” in
 <a class="reference external" href="https://www.php.net/manual/en/ini.core.php#ini.request-order">request-order</a>.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If the incoming request has a <code class="docutils literal notranslate"><span class="pre">Content-Type</span></code> header set to <code class="docutils literal notranslate"><span class="pre">application/json</span></code>,
-the <code class="docutils literal notranslate"><span class="pre">getVar()</span></code> method returns the JSON data instead of <code class="docutils literal notranslate"><span class="pre">$_REQUEST</span></code> data.</p>
+<p>If the incoming request has a <code class="docutils literal notranslate"><span class="pre">Content-Type</span></code> header set to <code class="docutils literal notranslate"><span class="pre">application/json</span></code>, the <code class="docutils literal notranslate"><span class="pre">getVar()</span></code> method
+returns the JSON data instead of <code class="docutils literal notranslate"><span class="pre">$_REQUEST</span></code> data.</p>
 </div>
 </section>
 </section>
@@ -567,23 +560,23 @@ the <code class="docutils literal notranslate"><span class="pre">getVar()</span>
 <p>You can grab the contents of <code class="docutils literal notranslate"><span class="pre">php://input</span></code> as a JSON stream with <code class="docutils literal notranslate"><span class="pre">getJSON()</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This has no way of checking if the incoming data is valid JSON or not, you should only use this
-method if you know that you’re expecting JSON.</p>
+<p>This has no way of checking if the incoming data is valid JSON or not, so you should only use this method if
+you know that you’re expecting JSON.</p>
 </div>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$json</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getJSON</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>By default, this will return any objects in the JSON data as objects. If you want that converted to associative
-arrays, pass in <code class="docutils literal notranslate"><span class="pre">true</span></code> as the first parameter.</p>
+<p>By default, this will return any objects in the JSON data as objects. If you want that converted to associative arrays,
+pass in <code class="docutils literal notranslate"><span class="pre">true</span></code> as the first parameter.</p>
 <p>The second and third parameters match up to the <code class="docutils literal notranslate"><span class="pre">$depth</span></code> and <code class="docutils literal notranslate"><span class="pre">$flags</span></code> arguments of the
 <a class="reference external" href="https://www.php.net/manual/en/function.json-decode.php">json_decode()</a> PHP function.</p>
 </section>
 <section id="getting-specific-data-from-json">
 <h3><a class="toc-backref" href="#id9" role="doc-backlink">Getting Specific Data from JSON</a><a class="headerlink" href="#getting-specific-data-from-json" title="Link to this heading"></a></h3>
-<p>You can get a specific piece of data from a JSON stream by passing a variable name into <code class="docutils literal notranslate"><span class="pre">getJsonVar()</span></code> for the
-data that you want or you can use “dot” notation to dig into the JSON to get data that is not on the root level.</p>
+<p>You can get a specific piece of data from a JSON stream by passing a variable name into <code class="docutils literal notranslate"><span class="pre">getJsonVar()</span></code> for the data
+that you want, or you can use “dot” notation to dig into the JSON to get data that is not on the root level.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="cm">/*</span>
@@ -603,8 +596,7 @@ data that you want or you can use “dot” notation to dig into the JSON to get
 <span class="c1">// $data = "baz"</span>
 </pre></div>
 </div>
-<p>If you want the result to be an associative array instead of an object, you can
-pass true in the second parameter:</p>
+<p>If you want the result to be an associative array instead of an object, you can pass true in the second parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// With the same request as above</span>
@@ -617,7 +609,8 @@ pass true in the second parameter:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>See the documentation for <a class="reference internal" href="../helpers/array_helper.html#dot_array_search" title="dot_array_search"><code class="xref php php-func docutils literal notranslate"><span class="pre">dot_array_search()</span></code></a> in the <code class="docutils literal notranslate"><span class="pre">Array</span></code> helper for more information on “dot” notation.</p>
+<p>See the documentation for <a class="reference internal" href="../helpers/array_helper.html#dot_array_search" title="dot_array_search"><code class="xref php php-func docutils literal notranslate"><span class="pre">dot_array_search()</span></code></a> in the <code class="docutils literal notranslate"><span class="pre">Array</span></code> helper for more information on “dot”
+notation.</p>
 </div>
 </section>
 <section id="retrieving-raw-data-put-patch-delete">
@@ -642,7 +635,7 @@ pass true in the second parameter:</p>
 <span class="cm"> */</span>
 </pre></div>
 </div>
-<p>You can also use <code class="docutils literal notranslate"><span class="pre">getRawInputVar()</span></code>, to get the specified variable from raw stream and filter it.</p>
+<p>You can also use <code class="docutils literal notranslate"><span class="pre">getRawInputVar()</span></code> to get the specified variable from the raw stream and filter it.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// When the request body is 'foo=one&amp;bar=two&amp;baz[]=10&amp;baz[]=20'</span>
@@ -677,25 +670,23 @@ pass true in the second parameter:</p>
 </section>
 <section id="filtering-input-data">
 <span id="incomingrequest-filtering-input-data"></span><h3><a class="toc-backref" href="#id11" role="doc-backlink">Filtering Input Data</a><a class="headerlink" href="#filtering-input-data" title="Link to this heading"></a></h3>
-<p>To maintain security of your application, you will want to filter all input as you access it. You can
-pass the type of filter to use as the second parameter of any of these methods. The native <code class="docutils literal notranslate"><span class="pre">filter_var()</span></code>
-function is used for the filtering. Head over to the PHP manual for a list of <a class="reference external" href="https://www.php.net/manual/en/filters.php">valid
-filter types</a>.</p>
+<p>To maintain the security of your application, you will want to filter all input as you access it. You can pass the type
+of filter to use as the second parameter of any of these methods. The native <code class="docutils literal notranslate"><span class="pre">filter_var()</span></code> function is used for the
+filtering. Head over to the PHP manual for a list of <a class="reference external" href="https://www.php.net/manual/en/filters.php">valid filter types</a>.</p>
 <p>Filtering a POST variable would look like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$email</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">(</span><span class="s1">'email'</span><span class="p">,</span> <span class="nx">FILTER_SANITIZE_EMAIL</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>All of the methods mentioned above support the filter type passed in as the second parameter, with the
-exception of <code class="docutils literal notranslate"><span class="pre">getJSON()</span></code> and <code class="docutils literal notranslate"><span class="pre">getRawInput()</span></code>.</p>
+<p>All of the methods mentioned above support the filter type passed in as the second parameter, with the exception of
+<code class="docutils literal notranslate"><span class="pre">getJSON()</span></code> and <code class="docutils literal notranslate"><span class="pre">getRawInput()</span></code>.</p>
 </section>
 </section>
 <section id="retrieving-headers">
 <h2><a class="toc-backref" href="#id12" role="doc-backlink">Retrieving Headers</a><a class="headerlink" href="#retrieving-headers" title="Link to this heading"></a></h2>
-<p>You can get access to any header that was sent with the request with the <code class="docutils literal notranslate"><span class="pre">headers()</span></code> method, which returns
-an array of all headers, with the key as the name of the header, and the value is an instance of
-<code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Header</span></code>:</p>
+<p>You can get access to any header that was sent with the request with the <code class="docutils literal notranslate"><span class="pre">headers()</span></code> method, which returns an array of
+all headers, with the key as the name of the header, and the value as an instance of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Header</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">headers</span><span class="p">());</span>
@@ -710,8 +701,8 @@ an array of all headers, with the key as the name of the header, and the value i
 <span class="cm"> */</span>
 </pre></div>
 </div>
-<p>If you only need a single header, you can pass the name into the <code class="docutils literal notranslate"><span class="pre">header()</span></code> method. This will grab the
-specified header object in a case-insensitive manner if it exists. If not, then it will return <code class="docutils literal notranslate"><span class="pre">null</span></code>:</p>
+<p>If you only need a single header, you can pass the name into the <code class="docutils literal notranslate"><span class="pre">header()</span></code> method. This will grab the specified
+header object in a case-insensitive manner if it exists. If not, then it will return <code class="docutils literal notranslate"><span class="pre">null</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// these are all equivalent</span>
@@ -728,7 +719,7 @@ specified header object in a case-insensitive manner if it exists. If not, then 
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>If you need the value of header as a string with all values on one line, you can use the <code class="docutils literal notranslate"><span class="pre">getHeaderLine()</span></code> method:</p>
+<p>If you need the value of a header as a string with all values on one line, you can use the <code class="docutils literal notranslate"><span class="pre">getHeaderLine()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Accept-Encoding: gzip, deflate, sdch</span>
@@ -751,7 +742,7 @@ specified header object in a case-insensitive manner if it exists. If not, then 
 <span class="nv">$uri</span> <span class="o">=</span> <span class="p">(</span><span class="nx">string</span><span class="p">)</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getUri</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>The object gives you full abilities to grab any part of the request on it’s own:</p>
+<p>The object gives you the full ability to grab any part of the request on its own:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$uri</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getUri</span><span class="p">();</span>
@@ -769,18 +760,18 @@ specified header object in a case-insensitive manner if it exists. If not, then 
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getTotalSegments</span><span class="p">();</span>  <span class="c1">// 3</span>
 </pre></div>
 </div>
-<p>You can work with the current URI string (the path relative to your baseURL) using the <code class="docutils literal notranslate"><span class="pre">getRoutePath()</span></code>.</p>
+<p>You can work with the current URI string (the path relative to your baseURL) using the <code class="docutils literal notranslate"><span class="pre">getRoutePath()</span></code> method.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">getRoutePath()</span></code> method can be used since v4.4.0. Prior to v4.4.0,
-the <code class="docutils literal notranslate"><span class="pre">getPath()</span></code> method returned the path relative to your baseURL.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">getRoutePath()</span></code> method can be used since v4.4.0. Prior to v4.4.0, the <code class="docutils literal notranslate"><span class="pre">getPath()</span></code> method returned the
+path relative to your baseURL.</p>
 </div>
 </section>
 <section id="uploaded-files">
 <h2><a class="toc-backref" href="#id14" role="doc-backlink">Uploaded Files</a><a class="headerlink" href="#uploaded-files" title="Link to this heading"></a></h2>
 <p>Information about all uploaded files can be retrieved through <code class="docutils literal notranslate"><span class="pre">$request-&gt;getFiles()</span></code>, which returns an array of
-<code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Files\UploadedFile</span></code> instance. This helps to ease the pain of working with uploaded files,
-and uses best practices to minimize any security risks.</p>
+<code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Files\UploadedFile</span></code> instances. This helps to ease the pain of working with uploaded files, and uses
+best practices to minimize any security risks.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$files</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getFiles</span><span class="p">();</span>
@@ -793,8 +784,8 @@ and uses best practices to minimize any security risks.</p>
 <span class="nv">$file</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getFile</span><span class="p">(</span><span class="s1">'userfile'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>You can retrieve an array of same-named files uploaded as part of a
-multi-file upload, based on the filename given in the HTML file input:</p>
+<p>You can retrieve an array of same-named files uploaded as part of a multi-file upload, based on the filename given in
+the HTML file input:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$files</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getFileMultiple</span><span class="p">(</span><span class="s1">'userfile'</span><span class="p">);</span>
@@ -802,7 +793,9 @@ multi-file upload, based on the filename given in the HTML file input:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The files here correspond to <code class="docutils literal notranslate"><span class="pre">$_FILES</span></code>. Even if a user just clicks submit button of a form and does not upload any file, the file will still exist. You can check that the file was actually uploaded by the <code class="docutils literal notranslate"><span class="pre">isValid()</span></code> method in UploadedFile. See <a class="reference internal" href="../libraries/uploaded_files.html#verify-a-file"><span class="std std-ref">Verify a File</span></a> for more details.</p>
+<p>The files here correspond to <code class="docutils literal notranslate"><span class="pre">$_FILES</span></code>. Even if a user just clicks the submit button of a form and does not
+upload any file, the file will still exist. You can check that the file was actually uploaded with the <code class="docutils literal notranslate"><span class="pre">isValid()</span></code>
+method in UploadedFile. See <a class="reference internal" href="../libraries/uploaded_files.html#verify-a-file"><span class="std std-ref">Verify a File</span></a> for more details.</p>
 </div>
 </section>
 <section id="content-negotiation">
@@ -892,9 +885,8 @@ multi-file upload, based on the filename given in the HTML file input:</p>
 </dl>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">X-Forwarded-Proto</span></code> and <code class="docutils literal notranslate"><span class="pre">Front-End-Https</span></code> headers
-are taken into account only when the request comes from a trusted
-proxy configured in <code class="docutils literal notranslate"><span class="pre">Config\App::$proxyIPs</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">X-Forwarded-Proto</span></code> and <code class="docutils literal notranslate"><span class="pre">Front-End-Https</span></code> headers are taken into account only when the
+request comes from a trusted proxy configured in <code class="docutils literal notranslate"><span class="pre">Config\App::$proxyIPs</span></code>.</p>
 </div>
 </dd></dl>
 
@@ -920,9 +912,8 @@ proxy configured in <code class="docutils literal notranslate"><span class="pre"
 </dl>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>This method exists only for backward compatibility. Do not use it
-in new projects. Even if you are already using it, we recommend that you use
-another, more appropriate method.</p>
+<p>This method exists only for backward compatibility. Do not use it in new projects. Even if you
+are already using it, we recommend that you use another, more appropriate method.</p>
 </div>
 <p>This method is identical to <code class="docutils literal notranslate"><span class="pre">getGet()</span></code>, only it fetches REQUEST data.</p>
 </dd></dl>
@@ -953,19 +944,17 @@ another, more appropriate method.</p>
 <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getGet</span><span class="p">(</span><span class="s1">'some_data'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The method returns null if the item you are attempting to retrieve
-does not exist.</p>
-<p>The second optional parameter lets you run the data through the PHP’s
-filters. Pass in the desired filter type as the second parameter:</p>
+<p>The method returns null if the item you are attempting to retrieve does not exist.</p>
+<p>The second optional parameter lets you run the data through PHP’s filters. Pass in the desired filter type as
+the second parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getGet</span><span class="p">(</span><span class="s1">'some_data'</span><span class="p">,</span> <span class="nx">FILTER_SANITIZE_FULL_SPECIAL_CHARS</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>To return an array of all GET items call without any parameters.</p>
-<p>To return all GET items and pass them through the filter, set the
-first parameter to null while setting the second parameter to the filter
-you want to use:</p>
+<p>To return an array of all GET items, call without any parameters.</p>
+<p>To return all GET items and pass them through the filter, set the first parameter to null while setting the
+second parameter to the filter you want to use:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getGet</span><span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="nx">FILTER_SANITIZE_FULL_SPECIAL_CHARS</span><span class="p">);</span>
@@ -978,8 +967,8 @@ you want to use:</p>
 <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getGet</span><span class="p">([</span><span class="s1">'field1'</span><span class="p">,</span> <span class="s1">'field2'</span><span class="p">]);</span>
 </pre></div>
 </div>
-<p>Same rule applied here, to retrieve the parameters with filtering, set the second parameter to
-the filter type to apply:</p>
+<p>The same rule applies here: to retrieve the parameters with filtering, set the second parameter to the filter
+type to apply:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getGet</span><span class="p">([</span><span class="s1">'field1'</span><span class="p">,</span> <span class="s1">'field2'</span><span class="p">],</span> <span class="nx">FILTER_SANITIZE_FULL_SPECIAL_CHARS</span><span class="p">);</span>
@@ -1031,18 +1020,17 @@ otherwise looks for POST value, if nothing found looks for GET value, if no valu
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|bool|float|int|object|string|null</span></code></span></p>
 </dd>
 </dl>
-<p>This method works pretty much the same way as <code class="docutils literal notranslate"><span class="pre">getPost()</span></code> and <code class="docutils literal notranslate"><span class="pre">getGet()</span></code>, only combined.
-It will search through both POST and GET streams for data, looking first in POST, and
-then in GET:</p>
+<p>This method works pretty much the same way as <code class="docutils literal notranslate"><span class="pre">getPost()</span></code> and <code class="docutils literal notranslate"><span class="pre">getGet()</span></code>, only combined. It will search
+through both POST and GET streams for data, looking first in POST, and then in GET:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getPostGet</span><span class="p">(</span><span class="s1">'field1'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>If an array of indexes is specified, the method returns an associative array and applies
-the POST-then-GET lookup order to each index.</p>
-<p>If no index is specified, it will return both POST and GET streams combined.
-Although POST data will be preferred in case of name conflict.</p>
+<p>If an array of indexes is specified, the method returns an associative array and applies the POST-then-GET
+lookup order to each index.</p>
+<p>If no index is specified, it will return both POST and GET streams combined, although POST data will be
+preferred in case of a name conflict.</p>
 </dd></dl>
 
 <dl class="php method">
@@ -1066,18 +1054,17 @@ otherwise looks for GET value, if nothing found looks for POST value, if no valu
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|bool|float|int|object|string|null</span></code></span></p>
 </dd>
 </dl>
-<p>This method works pretty much the same way as <code class="docutils literal notranslate"><span class="pre">getPost()</span></code> and <code class="docutils literal notranslate"><span class="pre">getGet()</span></code>, only combined.
-It will search through both GET and POST streams for data, looking first in GET, and
-then in POST:</p>
+<p>This method works pretty much the same way as <code class="docutils literal notranslate"><span class="pre">getPost()</span></code> and <code class="docutils literal notranslate"><span class="pre">getGet()</span></code>, only combined. It will search
+through both GET and POST streams for data, looking first in GET, and then in POST:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getGetPost</span><span class="p">(</span><span class="s1">'field1'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>If an array of indexes is specified, the method returns an associative array and applies
-the GET-then-POST lookup order to each index.</p>
-<p>If no index is specified, it will return both GET and POST streams combined.
-Although GET data will be preferred in case of name conflict.</p>
+<p>If an array of indexes is specified, the method returns an associative array and applies the GET-then-POST
+lookup order to each index.</p>
+<p>If no index is specified, it will return both GET and POST streams combined, although GET data will be preferred
+in case of a name conflict.</p>
 </dd></dl>
 
 <dl class="php method">
@@ -1115,9 +1102,8 @@ Although GET data will be preferred in case of name conflict.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Unlike the <a class="reference internal" href="../helpers/cookie_helper.html"><span class="doc">Cookie Helper</span></a>
-function <a class="reference internal" href="../helpers/cookie_helper.html#get_cookie" title="get_cookie"><code class="xref php php-func docutils literal notranslate"><span class="pre">get_cookie()</span></code></a>, this method does NOT prepend
-your configured <code class="docutils literal notranslate"><span class="pre">Config\Cookie::$prefix</span></code> value.</p>
+<p>Unlike the <a class="reference internal" href="../helpers/cookie_helper.html"><span class="doc">Cookie Helper</span></a> function <a class="reference internal" href="../helpers/cookie_helper.html#get_cookie" title="get_cookie"><code class="xref php php-func docutils literal notranslate"><span class="pre">get_cookie()</span></code></a>, this
+method does NOT prepend your configured <code class="docutils literal notranslate"><span class="pre">Config\Cookie::$prefix</span></code> value.</p>
 </div>
 </dd></dl>
 
@@ -1141,15 +1127,14 @@ your configured <code class="docutils literal notranslate"><span class="pre">Con
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|bool|float|int|object|string|null</span></code></span></p>
 </dd>
 </dl>
-<p>This method is identical to the <code class="docutils literal notranslate"><span class="pre">getPost()</span></code>, <code class="docutils literal notranslate"><span class="pre">getGet()</span></code> and <code class="docutils literal notranslate"><span class="pre">getCookie()</span></code>
-methods, only it fetches Server data (<code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code>):</p>
+<p>This method is identical to the <code class="docutils literal notranslate"><span class="pre">getPost()</span></code>, <code class="docutils literal notranslate"><span class="pre">getGet()</span></code> and <code class="docutils literal notranslate"><span class="pre">getCookie()</span></code> methods, only it fetches Server
+data (<code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code>):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getServer</span><span class="p">(</span><span class="s1">'some_data'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>To return an array of multiple <code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code> values, pass all the required keys
-as an array.</p>
+<p>To return an array of multiple <code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code> values, pass all the required keys as an array.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getServer</span><span class="p">([</span><span class="s1">'SERVER_PROTOCOL'</span><span class="p">,</span> <span class="s1">'REQUEST_URI'</span><span class="p">]);</span>
@@ -1162,7 +1147,7 @@ as an array.</p>
 <span class="sig-name descname"><span class="pre">getUserAgent</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\IncomingRequest::getUserAgent" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The User Agent string, as found in the SERVER data, or null if not found.</p>
+<dd class="field-odd"><p>The UserAgent object for the request.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><span><a class="reference internal" href="../libraries/user_agent.html#CodeIgniter\HTTP\UserAgent" title="CodeIgniter\HTTP\UserAgent"><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\UserAgent</span></code></a></span></p>
@@ -1190,9 +1175,8 @@ as an array.</p>
 <p>This method returns the current URI path relative to baseURL.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Prior to v4.4.0, this was the safest method to determine the
-“current URI”, since <code class="docutils literal notranslate"><span class="pre">IncomingRequest::$uri</span></code> might not be aware of
-the complete App configuration for base URLs.</p>
+<p>Prior to v4.4.0, this was the safest method to determine the “current URI”, since
+<code class="docutils literal notranslate"><span class="pre">IncomingRequest::$uri</span></code> might not be aware of the complete App configuration for base URLs.</p>
 </div>
 </dd></dl>
 
@@ -1213,7 +1197,7 @@ the complete App configuration for base URLs.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

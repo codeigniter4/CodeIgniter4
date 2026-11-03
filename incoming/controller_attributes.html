@@ -292,7 +292,10 @@
              
   <section id="controller-attributes">
 <span id="incoming-controller-attributes"></span><h1>Controller Attributes<a class="headerlink" href="#controller-attributes" title="Link to this heading"></a></h1>
-<p>PHP Attributes can be used to define filters and other metadata on controller classes and methods. This keeps the configuration close to the code it affects, and can make it easier to see at a glance what filters are applied to a given controller or method. This works across all routing methods, including auto-routing, which allows for a near feature-parity between the more robust route declarations and auto-routing.</p>
+<p>PHP Attributes can be used to define filters and other metadata on controller classes and methods. This keeps the
+configuration close to the code it affects, and can make it easier to see at a glance what filters are applied to a
+given controller or method. This works across all routing methods, including auto-routing, which allows for near feature
+parity between the more robust route declarations and auto-routing.</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#getting-started" id="id1">Getting Started</a></p>
@@ -312,7 +315,8 @@
 </nav>
 <section id="getting-started">
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Getting Started</a><a class="headerlink" href="#getting-started" title="Link to this heading"></a></h2>
-<p>Controller Attributes can be applied to either the entire class, or to a specific method. The following example shows how to apply the <code class="docutils literal notranslate"><span class="pre">Filters</span></code> attribute to a controller class:</p>
+<p>Controller Attributes can be applied to either the entire class or a specific method. The following example shows how to
+apply the <code class="docutils literal notranslate"><span class="pre">Filter</span></code> attribute to a controller class:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
@@ -330,7 +334,8 @@
 </pre></div>
 </div>
 <p>In this example, the <code class="docutils literal notranslate"><span class="pre">Auth</span></code> filter will be applied to all methods in <code class="docutils literal notranslate"><span class="pre">AdminController</span></code>.</p>
-<p>You can also apply the <code class="docutils literal notranslate"><span class="pre">Filters</span></code> attribute to a specific method within a controller. This allows you to apply filters only to certain methods, while leaving others unaffected. Here’s an example:</p>
+<p>You can also apply the <code class="docutils literal notranslate"><span class="pre">Filter</span></code> attribute to a specific method within a controller. This allows you to apply filters
+only to certain methods, while leaving others unaffected. Here’s an example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
@@ -349,17 +354,20 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Class-level and method-level attributes can work together to provide a flexible way to manage your routes at the controller level.</p>
+<p>Class-level and method-level attributes can work together to provide a flexible way to manage your routes at the
+controller level.</p>
 <section id="disabling-attributes">
 <h3><a class="toc-backref" href="#id2" role="doc-backlink">Disabling Attributes</a><a class="headerlink" href="#disabling-attributes" title="Link to this heading"></a></h3>
-<p>If you know that you will not be using attributes in your application, you can disable the feature by setting the <code class="docutils literal notranslate"><span class="pre">$useControllerAttributes</span></code> property in your <code class="docutils literal notranslate"><span class="pre">app/Config/Routing.php</span></code> file to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<p>If you know that you will not be using attributes in your application, you can disable the feature by setting the
+<code class="docutils literal notranslate"><span class="pre">$useControllerAttributes</span></code> property in your <code class="docutils literal notranslate"><span class="pre">app/Config/Routing.php</span></code> file to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
 </section>
 </section>
 <section id="provided-attributes">
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">Provided Attributes</a><a class="headerlink" href="#provided-attributes" title="Link to this heading"></a></h2>
 <section id="filter">
 <h3><a class="toc-backref" href="#id4" role="doc-backlink">Filter</a><a class="headerlink" href="#filter" title="Link to this heading"></a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">Filters</span></code> attribute allows you to specify one or more filters to be applied to a controller class or method. You can specify filters to run before or after the controller action, and you can also provide parameters to the filters. Here’s an example of how to use the <code class="docutils literal notranslate"><span class="pre">Filters</span></code> attribute:</p>
+<p>The repeatable <code class="docutils literal notranslate"><span class="pre">Filter</span></code> attribute applies a filter to a controller class or method. You can also provide arguments to
+the filter. Repeat the attribute to apply multiple filters:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
@@ -391,11 +399,13 @@
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>When filters are applied both by an attribute and in the filter configuration file, they will both be applied, but that could lead to unexpected results.</p>
+<p>When filters are applied both by an attribute and in the filter configuration file, they will both be applied, but
+that could lead to unexpected results.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Please remember that every parameter applied to the filter will be converted to a string. This behavior affects only filters.</p>
+<p>Please remember that every parameter applied to the filter will be converted to a string. This behavior affects only
+filters.</p>
 </div>
 </section>
 <section id="restrict">
@@ -435,7 +445,8 @@ the environment the application is running in. Here’s an example of how to use
 </section>
 <section id="cache">
 <h3><a class="toc-backref" href="#id6" role="doc-backlink">Cache</a><a class="headerlink" href="#cache" title="Link to this heading"></a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">Cache</span></code> attribute allows the output of the controller method to be cached for a specified amount of time. You can specify a duration in seconds, and optionally a cache key. Here’s an example of how to use the <code class="docutils literal notranslate"><span class="pre">Cache</span></code> attribute:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Cache</span></code> attribute allows the output of the controller method to be cached for a specified amount of time. You can
+specify a duration in seconds, and optionally a cache key. Here’s an example of how to use the <code class="docutils literal notranslate"><span class="pre">Cache</span></code> attribute:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
@@ -464,7 +475,9 @@ the environment the application is running in. Here’s an example of how to use
 </section>
 <section id="custom-attributes">
 <h2><a class="toc-backref" href="#id7" role="doc-backlink">Custom Attributes</a><a class="headerlink" href="#custom-attributes" title="Link to this heading"></a></h2>
-<p>You can also create your own custom attributes to add metadata or behavior to your controllers and methods. Custom attributes must implement the <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Router\Attributes\RouteAttributeInterface</span></code> interface. Here’s an example of a custom attribute that adds a custom header to the response:</p>
+<p>You can also create your own custom attributes to add metadata or behavior to your controllers and methods. Custom
+attributes must implement the <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Router\Attributes\RouteAttributeInterface</span></code> interface. Here’s an example of
+a custom attribute that adds a custom header to the response:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Attributes</span><span class="p">;</span>
@@ -588,7 +601,7 @@ the environment the application is running in. Here’s an example of how to use
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

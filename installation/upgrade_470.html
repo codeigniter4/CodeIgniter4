@@ -327,129 +327,116 @@
 <section id="php-8-2-required">
 <h3><a class="toc-backref" href="#id2" role="doc-backlink">PHP 8.2 Required</a><a class="headerlink" href="#php-8-2-required" title="Link to this heading"></a></h3>
 <p>The minimum PHP requirement has been updated to <strong>PHP 8.2</strong>.</p>
-<p>If your current runtime is older than PHP 8.2, upgrade PHP first before
-upgrading CodeIgniter.</p>
+<p>If your current runtime is older than PHP 8.2, upgrade PHP first before upgrading CodeIgniter.</p>
 </section>
 <section id="validation-regex-match-placeholders">
 <h3><a class="toc-backref" href="#id3" role="doc-backlink">Validation <code class="docutils literal notranslate"><span class="pre">regex_match</span></code> Placeholders</a><a class="headerlink" href="#validation-regex-match-placeholders" title="Link to this heading"></a></h3>
-<p>Placeholders in the <code class="docutils literal notranslate"><span class="pre">regex_match</span></code> validation rule must now use double curly
-braces.</p>
-<p>If you previously used single braces like
-<code class="docutils literal notranslate"><span class="pre">regex_match[/^{placeholder}$/]</span></code>, update it to:
+<p>Placeholders in the <code class="docutils literal notranslate"><span class="pre">regex_match</span></code> validation rule must now use double curly braces.</p>
+<p>If you previously used single braces like <code class="docutils literal notranslate"><span class="pre">regex_match[/^{placeholder}$/]</span></code>, update it to:
 <code class="docutils literal notranslate"><span class="pre">regex_match[/^{{placeholder}}$/]</span></code>.</p>
 <p>This avoids ambiguity with regex quantifiers such as <code class="docutils literal notranslate"><span class="pre">{1,3}</span></code>.</p>
 </section>
 <section id="model-primary-key-validation-timing-and-exceptions">
 <h3><a class="toc-backref" href="#id4" role="doc-backlink">Model Primary Key Validation Timing and Exceptions</a><a class="headerlink" href="#model-primary-key-validation-timing-and-exceptions" title="Link to this heading"></a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">insertBatch()</span></code> and <code class="docutils literal notranslate"><span class="pre">updateBatch()</span></code> methods now honor model settings
-like <code class="docutils literal notranslate"><span class="pre">updateOnlyChanged</span></code> and <code class="docutils literal notranslate"><span class="pre">allowEmptyInserts</span></code>. This change ensures
-consistent handling across all insert/update operations.</p>
-<p>Primary key values are now validated before database queries in
-<code class="docutils literal notranslate"><span class="pre">insert()</span></code>/<code class="docutils literal notranslate"><span class="pre">insertBatch()</span></code> (without auto-increment), <code class="docutils literal notranslate"><span class="pre">update()</span></code>, and
-<code class="docutils literal notranslate"><span class="pre">delete()</span></code>.</p>
-<p>Invalid primary key values now throw <code class="docutils literal notranslate"><span class="pre">InvalidArgumentException</span></code> instead of
-database-layer <code class="docutils literal notranslate"><span class="pre">DatabaseException</span></code>.</p>
-<p>If your code catches <code class="docutils literal notranslate"><span class="pre">DatabaseException</span></code> for invalid primary keys, update it
-to handle <code class="docutils literal notranslate"><span class="pre">InvalidArgumentException</span></code> as well.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">insertBatch()</span></code> and <code class="docutils literal notranslate"><span class="pre">updateBatch()</span></code> methods now honor model settings like <code class="docutils literal notranslate"><span class="pre">updateOnlyChanged</span></code> and
+<code class="docutils literal notranslate"><span class="pre">allowEmptyInserts</span></code>. This change ensures consistent handling across all insert/update operations.</p>
+<p>Primary key values are now validated before database queries in <code class="docutils literal notranslate"><span class="pre">insert()</span></code>/<code class="docutils literal notranslate"><span class="pre">insertBatch()</span></code> (without auto-increment),
+<code class="docutils literal notranslate"><span class="pre">update()</span></code>, and <code class="docutils literal notranslate"><span class="pre">delete()</span></code>.</p>
+<p>Invalid primary key values now throw <code class="docutils literal notranslate"><span class="pre">InvalidArgumentException</span></code> instead of database-layer <code class="docutils literal notranslate"><span class="pre">DatabaseException</span></code>.</p>
+<p>If your code catches <code class="docutils literal notranslate"><span class="pre">DatabaseException</span></code> for invalid primary keys, update it to handle <code class="docutils literal notranslate"><span class="pre">InvalidArgumentException</span></code> as
+well.</p>
 </section>
 <section id="entity-change-detection-is-now-deep">
 <h3><a class="toc-backref" href="#id5" role="doc-backlink">Entity Change Detection Is Now Deep</a><a class="headerlink" href="#entity-change-detection-is-now-deep" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">Entity::hasChanged()</span></code> and <code class="docutils literal notranslate"><span class="pre">Entity::syncOriginal()</span></code> now perform deep
-comparison for arrays and objects.</p>
-<p>If you relied on the previous shallow (reference-based) behavior, review your
-entity update flows and tests because nested changes are now detected.</p>
-<p>Also, <code class="docutils literal notranslate"><span class="pre">Entity::toRawArray()</span></code> now recursively converts arrays of entities when
-<code class="docutils literal notranslate"><span class="pre">$recursive</span></code> is <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Entity::hasChanged()</span></code> and <code class="docutils literal notranslate"><span class="pre">Entity::syncOriginal()</span></code> now perform deep comparison for arrays and objects.</p>
+<p>If you relied on the previous shallow (reference-based) behavior, review your entity update flows and tests because
+nested changes are now detected.</p>
+<p>Also, <code class="docutils literal notranslate"><span class="pre">Entity::toRawArray()</span></code> now recursively converts arrays of entities when <code class="docutils literal notranslate"><span class="pre">$recursive</span></code> is <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
 </section>
 <section id="encryption-handler-key-state">
 <h3><a class="toc-backref" href="#id6" role="doc-backlink">Encryption Handler Key State</a><a class="headerlink" href="#encryption-handler-key-state" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">OpenSSLHandler</span></code> and <code class="docutils literal notranslate"><span class="pre">SodiumHandler</span></code> no longer mutate the handler’s internal
-key when a key is passed via <code class="docutils literal notranslate"><span class="pre">$params</span></code> to <code class="docutils literal notranslate"><span class="pre">encrypt()</span></code>/<code class="docutils literal notranslate"><span class="pre">decrypt()</span></code>.</p>
-<p>If your code depended on passing a key once and reusing it implicitly later,
-move to explicit key configuration in <code class="docutils literal notranslate"><span class="pre">Config\\Encryption</span></code> (or pass a custom
-config when creating the encrypter service).</p>
+<p><code class="docutils literal notranslate"><span class="pre">OpenSSLHandler</span></code> and <code class="docutils literal notranslate"><span class="pre">SodiumHandler</span></code> no longer mutate the handler’s internal key when a key is passed via
+<code class="docutils literal notranslate"><span class="pre">$params</span></code> to <code class="docutils literal notranslate"><span class="pre">encrypt()</span></code>/<code class="docutils literal notranslate"><span class="pre">decrypt()</span></code>.</p>
+<p>If your code depended on passing a key once and reusing it implicitly later, move to explicit key configuration in
+<code class="docutils literal notranslate"><span class="pre">Config\Encryption</span></code> (or pass a custom config when creating the encrypter service).</p>
 </section>
 <section id="interface-changes">
 <h3><a class="toc-backref" href="#id7" role="doc-backlink">Interface Changes</a><a class="headerlink" href="#interface-changes" title="Link to this heading"></a></h3>
-<p>Some interface changes have been made. Classes that implement framework
-interfaces should update their APIs to reflect these changes.</p>
+<p>Some interface changes have been made. Classes that implement framework interfaces should update their APIs to reflect
+these changes.</p>
 <p>See <a class="reference internal" href="../changelogs/v4.7.0.html#v470-interface-changes"><span class="std std-ref">ChangeLog</span></a> for details.</p>
 </section>
 <section id="method-signature-changes">
 <h3><a class="toc-backref" href="#id8" role="doc-backlink">Method Signature Changes</a><a class="headerlink" href="#method-signature-changes" title="Link to this heading"></a></h3>
-<p>Some method signature changes have been made. Classes that extend framework
-classes should update their method signatures to keep LSP compatibility.</p>
+<p>Some method signature changes have been made. Classes that extend framework classes should update their method
+signatures to keep LSP compatibility.</p>
 <p>See <a class="reference internal" href="../changelogs/v4.7.0.html#v470-method-signature-changes"><span class="std std-ref">ChangeLog</span></a> for details.</p>
 </section>
 <section id="property-signature-changes">
 <h3><a class="toc-backref" href="#id9" role="doc-backlink">Property Signature Changes</a><a class="headerlink" href="#property-signature-changes" title="Link to this heading"></a></h3>
-<p>Some property type signatures have changed (for example nullable
-<code class="docutils literal notranslate"><span class="pre">Entity::$dataCaster</span></code>). If you extend these classes, update your code
-accordingly.</p>
+<p>Some property type signatures have changed (for example nullable <code class="docutils literal notranslate"><span class="pre">Entity::$dataCaster</span></code>). If you extend these classes,
+update your code accordingly.</p>
 <p>See <a class="reference internal" href="../changelogs/v4.7.0.html#v470-property-signature-changes"><span class="std std-ref">ChangeLog</span></a> for details.</p>
 </section>
 <section id="removed-deprecated-items">
 <h3><a class="toc-backref" href="#id10" role="doc-backlink">Removed Deprecated Items</a><a class="headerlink" href="#removed-deprecated-items" title="Link to this heading"></a></h3>
-<p>Some deprecated items have been removed. If your app still uses or extends
-these APIs, update your code before upgrading.</p>
+<p>Some deprecated items have been removed. If your app still uses or extends these APIs, update your code before
+upgrading.</p>
 <p>See <a class="reference internal" href="../changelogs/v4.7.0.html#v470-removed-deprecated-items"><span class="std std-ref">ChangeLog</span></a> for details.</p>
 </section>
 </section>
 <section id="project-files">
 <h2><a class="toc-backref" href="#id11" role="doc-backlink">Project Files</a><a class="headerlink" href="#project-files" title="Link to this heading"></a></h2>
-<p>Some files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to
-these files being outside of the <strong>system</strong> scope they will not be changed without your intervention.</p>
+<p>Some files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to these files being outside of
+the <strong>system</strong> scope, they will not be changed without your intervention.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>There are some third-party CodeIgniter modules available to assist
-with merging changes to the project space:
+<p>There are some third-party CodeIgniter modules available to assist with merging changes to the project space:
 <a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
 </div>
 <section id="content-changes">
 <h3><a class="toc-backref" href="#id12" role="doc-backlink">Content Changes</a><a class="headerlink" href="#content-changes" title="Link to this heading"></a></h3>
-<p>The following files received significant changes (including deprecations or visual adjustments)
-and it is recommended that you merge the updated versions with your application:</p>
+<p>The following files received significant changes (including deprecations or visual adjustments) and it is recommended
+that you merge the updated versions with your application:</p>
 <section id="config">
 <h4>Config<a class="headerlink" href="#config" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><dl class="simple">
-<dt>app/Config/Migrations.php</dt><dd><ul>
+<li><p><strong>app/Config/Migrations.php</strong></p>
+<ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">Config\Migrations::$lock</span></code> has been added, with a default value set to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
 </ul>
 <p>These files are new in this release:</p>
 <ul class="simple">
-<li><p>app/Config/Hostnames.php</p></li>
-<li><p>app/Config/WorkerMode.php</p></li>
+<li><p><strong>app/Config/Hostnames.php</strong></p></li>
+<li><p><strong>app/Config/WorkerMode.php</strong></p></li>
 </ul>
 </section>
 </section>
 <section id="all-changes">
 <h3><a class="toc-backref" href="#id13" role="doc-backlink">All Changes</a><a class="headerlink" href="#all-changes" title="Link to this heading"></a></h3>
-<p>This is a list of all files in the <strong>project space</strong> that received changes;
-many will be simple comments or formatting that have no effect on the runtime:</p>
+<p>This is a list of all files in the <strong>project space</strong> that received changes; many will be simple comments or formatting
+that have no effect on the runtime:</p>
 <ul class="simple">
-<li><p>app/Config/CURLRequest.php</p></li>
-<li><p>app/Config/Cache.php</p></li>
-<li><p>app/Config/ContentSecurityPolicy.php</p></li>
-<li><p>app/Config/Email.php</p></li>
-<li><p>app/Config/Encryption.php</p></li>
-<li><p>app/Config/Format.php</p></li>
-<li><p>app/Config/Hostnames.php</p></li>
-<li><p>app/Config/Images.php</p></li>
-<li><p>app/Config/Migrations.php</p></li>
-<li><p>app/Config/Optimize.php</p></li>
-<li><p>app/Config/Paths.php</p></li>
-<li><p>app/Config/Routing.php</p></li>
-<li><p>app/Config/Session.php</p></li>
-<li><p>app/Config/Toolbar.php</p></li>
-<li><p>app/Config/UserAgents.php</p></li>
-<li><p>app/Config/View.php</p></li>
-<li><p>app/Config/WorkerMode.php</p></li>
-<li><p>public/index.php</p></li>
+<li><p><strong>app/Config/CURLRequest.php</strong></p></li>
+<li><p><strong>app/Config/Cache.php</strong></p></li>
+<li><p><strong>app/Config/ContentSecurityPolicy.php</strong></p></li>
+<li><p><strong>app/Config/Email.php</strong></p></li>
+<li><p><strong>app/Config/Encryption.php</strong></p></li>
+<li><p><strong>app/Config/Format.php</strong></p></li>
+<li><p><strong>app/Config/Hostnames.php</strong></p></li>
+<li><p><strong>app/Config/Images.php</strong></p></li>
+<li><p><strong>app/Config/Migrations.php</strong></p></li>
+<li><p><strong>app/Config/Optimize.php</strong></p></li>
+<li><p><strong>app/Config/Paths.php</strong></p></li>
+<li><p><strong>app/Config/Routing.php</strong></p></li>
+<li><p><strong>app/Config/Session.php</strong></p></li>
+<li><p><strong>app/Config/Toolbar.php</strong></p></li>
+<li><p><strong>app/Config/UserAgents.php</strong></p></li>
+<li><p><strong>app/Config/View.php</strong></p></li>
+<li><p><strong>app/Config/WorkerMode.php</strong></p></li>
+<li><p><strong>public/index.php</strong></p></li>
 <li><p>spark</p></li>
 </ul>
 </section>
@@ -468,7 +455,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

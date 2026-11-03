@@ -369,11 +369,11 @@
 <section id="highlights">
 <h2><a class="toc-backref" href="#id8" role="doc-backlink">Highlights</a><a class="headerlink" href="#highlights" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p>Update minimal PHP requirement to 8.1.</p></li>
-<li><p>Update minimal PHPUnit requirement to 10.5.</p></li>
-<li><p><strong>CORS filter</strong> (<em>contributed by</em> <a class="reference external" href="https://github.com/kenjis">kenjis</a>)
+<li><p>Update minimum PHP requirement to 8.1.</p></li>
+<li><p>Update minimum PHPUnit requirement to 10.5.</p></li>
+<li><p><strong>CORS filter</strong> (<em>contributed by</em> <a class="reference external" href="https://github.com/kenjis">kenjis</a>).
 See <a class="reference internal" href="../libraries/cors.html"><span class="doc">Cross-Origin Resource Sharing (CORS)</span></a>.</p></li>
-<li><p>The <strong>spark optimize</strong> command for performance improvement on production
+<li><p>The <strong>spark optimize</strong> command for performance improvement in the production
 environment (<em>contributed by</em> <a class="reference external" href="https://github.com/kenjis">kenjis</a>).
 See <a class="reference internal" href="../installation/deployment.html#spark-optimize"><span class="std std-ref">spark optimize</span></a>.</p></li>
 </ul>
@@ -384,8 +384,8 @@ See <a class="reference internal" href="../installation/deployment.html#spark-op
 <span id="v450-required-filters"></span><h3><a class="toc-backref" href="#id10" role="doc-backlink">Required Filters</a><a class="headerlink" href="#required-filters" title="Link to this heading"></a></h3>
 <p>New <a class="reference internal" href="../incoming/filters.html#filters-required"><span class="std std-ref">Required Filters</span></a> have been introduced. They are
 special filters that are applied before and after other kinds of filters, and
-always applied even if a route does not exist.</p>
-<p>The following existing functionalities have been reimplemented as Required Filters.</p>
+are always applied even if a route does not exist.</p>
+<p>The following existing functionalities have been reimplemented as Required Filters:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="../incoming/filters.html#forcehttps"><span class="std std-ref">Force Global Secure Requests</span></a></p></li>
 <li><p><a class="reference internal" href="../general/caching.html"><span class="doc">Web Page Caching</span></a></p></li>
@@ -395,23 +395,19 @@ always applied even if a route does not exist.</p>
 <p>The Benchmark <strong>Timers</strong> used by Debug Toolbar now collect <em>Required Before Filters</em>
 and <em>Required After Filters</em> data.</p>
 <p>The benchmark points have been changed:</p>
-<ul>
+<ul class="simple">
 <li><p>Before</p>
-<blockquote>
-<div><ul class="simple">
+<ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">bootstrap</span></code>: Creating Request and Response objects, Event <code class="docutils literal notranslate"><span class="pre">pre_system</span></code>, Instantiating RouteCollection object, Loading Routes files, Instantiating Router object,</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">routing</span></code>: Routing,</p></li>
 </ul>
-</div></blockquote>
 </li>
 <li><p>After</p>
-<blockquote>
-<div><ul class="simple">
+<ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">bootstrap</span></code>: Creating Request and Response objects, Event <code class="docutils literal notranslate"><span class="pre">pre_system</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">required_before_filters</span></code>: Instantiating Filters object, Running <em>Required Before Filters</em>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">routing</span></code>: Instantiating RouteCollection object, Loading Routes files, Instantiating Router object, Routing,</p></li>
 </ul>
-</div></blockquote>
 </li>
 </ul>
 </section>
@@ -421,19 +417,17 @@ and <em>Required After Filters</em> data.</p>
 <li><p><strong>AutoRouting Improved:</strong> The <code class="docutils literal notranslate"><span class="pre">$translateUriToCamelCase</span></code> option has been added
 that allows using CamelCase controller and method names. See
 <a class="reference internal" href="../incoming/auto_routing_improved.html#translate-uri-to-camelcase"><span class="std std-ref">Translate URI To CamelCase</span></a>.</p></li>
-<li><dl class="simple">
-<dt><strong>Others:</strong></dt><dd><ul>
+<li><p><strong>Others:</strong></p>
+<ul>
 <li><p>Added option <code class="docutils literal notranslate"><span class="pre">$multipleSegmentsOneParam</span></code>. When this option is
 enabled, a placeholder that matches multiple segments, such as <code class="docutils literal notranslate"><span class="pre">(:any)</span></code>, will
 be passed directly as it is to one parameter, even if it contains multiple segments.
 See <a class="reference internal" href="../incoming/routing.html#multiple-uri-segments-as-one-parameter"><span class="std std-ref">Multiple URI Segments as One Parameter</span></a> for details.</p></li>
-<li><p>Now the 404 controller’s method that you set in <code class="docutils literal notranslate"><span class="pre">$override404</span></code> also receive
+<li><p>Now the 404 controller’s method that you set in <code class="docutils literal notranslate"><span class="pre">$override404</span></code> also receives
 a <code class="docutils literal notranslate"><span class="pre">PageNotFoundException</span></code> message as the first parameter.</p></li>
 <li><p>Now you can use the <code class="docutils literal notranslate"><span class="pre">__invoke()</span></code> method as the default method. See
 <a class="reference internal" href="../incoming/routing.html#routing-default-method"><span class="std std-ref">Default Method</span></a>.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
 </ul>
 </section>
@@ -448,7 +442,7 @@ See <a class="reference internal" href="../installation/deployment.html#spark-op
 <a class="reference internal" href="../general/configuration.html#confirming-config-values"><span class="std std-ref">Confirming Config Values</span></a> for the details.</p></li>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">phpini:check</span></code> command to check important PHP ini settings. See
 <a class="reference internal" href="../installation/running.html#spark-phpini-check"><span class="std std-ref">Checking PHP ini Settings</span></a> for the details.</p></li>
-<li><p>Added <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">lang:find</span></code> command to update translations keys. See <a class="reference internal" href="../outgoing/localization.html#generating-translation-files-via-command"><span class="std std-ref">Generating Translation Files via Command</span></a> for the details.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">lang:find</span></code> command to update translation keys. See <a class="reference internal" href="../outgoing/localization.html#generating-translation-files-via-command"><span class="std std-ref">Generating Translation Files via Command</span></a> for the details.</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">--dbgroup</span></code> option has been added to the <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">db:table</span></code> command.
 See <a class="reference internal" href="../dbmgmt/db_commands.html#db-command-specify-the-dbgroup"><span class="std std-ref">Database Commands</span></a>.</p></li>
 </ul>
@@ -456,8 +450,8 @@ See <a class="reference internal" href="../dbmgmt/db_commands.html#db-command-sp
 <section id="testing">
 <h3><a class="toc-backref" href="#id13" role="doc-backlink">Testing</a><a class="headerlink" href="#testing" title="Link to this heading"></a></h3>
 <ul class="simple">
-<li><p><strong>DomParser:</strong> The new methods were added <code class="docutils literal notranslate"><span class="pre">seeXPath()</span></code> and <code class="docutils literal notranslate"><span class="pre">dontSeeXPath()</span></code>
-which allows users to work directly with DOMXPath object, using complex expressions.</p></li>
+<li><p><strong>DomParser:</strong> The new methods <code class="docutils literal notranslate"><span class="pre">seeXPath()</span></code> and <code class="docutils literal notranslate"><span class="pre">dontSeeXPath()</span></code> were added,
+which allow users to work directly with a DOMXPath object, using complex expressions.</p></li>
 <li><p><strong>CLI:</strong> The new <code class="docutils literal notranslate"><span class="pre">InputOutput</span></code> class was added and now you can write tests
 for commands more easily if you use <code class="docutils literal notranslate"><span class="pre">MockInputOutput</span></code>.
 See <a class="reference internal" href="../testing/cli.html#using-mock-input-output"><span class="std std-ref">Using MockInputOutput</span></a>.</p></li>
@@ -512,10 +506,10 @@ to <code class="docutils literal notranslate"><span class="pre">findAll(null,</s
 </section>
 <section id="updateonlychanged">
 <h4><a class="toc-backref" href="#id20" role="doc-backlink">$updateOnlyChanged</a><a class="headerlink" href="#updateonlychanged" title="Link to this heading"></a></h4>
-<p>Added a property <code class="docutils literal notranslate"><span class="pre">$updateOnlyChanged</span></code> whether to update
-<a class="reference internal" href="../models/entities.html"><span class="doc">Entity</span></a>’s only changed fields. If you set this property
+<p>Added a property <code class="docutils literal notranslate"><span class="pre">$updateOnlyChanged</span></code> that controls whether to update only the
+changed fields of an <a class="reference internal" href="../models/entities.html"><span class="doc">Entity</span></a>. If you set this property
 to <code class="docutils literal notranslate"><span class="pre">false</span></code>, when you are updating an Entity, <code class="docutils literal notranslate"><span class="pre">DataException</span></code>
-“There is no data to update” will not raise even if the values in the Entity have
+“There is no data to update” will not be raised even if the values in the Entity have
 not changed.</p>
 <p>See <a class="reference internal" href="../models/model.html#model-update-only-changed"><span class="std std-ref">Using CodeIgniter’s Model</span></a> for details.</p>
 </section>
@@ -529,29 +523,25 @@ instances. See <a class="reference internal" href="../models/model.html#model-sa
 <h3><a class="toc-backref" href="#id22" role="doc-backlink">Libraries</a><a class="headerlink" href="#libraries" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>CORS:</strong> Added <a class="reference internal" href="../libraries/cors.html"><span class="doc">Cross-Origin Resource Sharing (CORS)</span></a> filter and class.</p></li>
-<li><dl class="simple">
-<dt><strong>Validation:</strong></dt><dd><ul>
-<li><p>Added the new rule <code class="docutils literal notranslate"><span class="pre">field_exists</span></code> that checks the filed exists in the
+<li><p><strong>Validation:</strong></p>
+<ul>
+<li><p>Added the new rule <code class="docutils literal notranslate"><span class="pre">field_exists</span></code> that checks that the field exists in the
 data to be validated.</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">$dbGroup</span></code> parameter of <code class="docutils literal notranslate"><span class="pre">Validation::run()</span></code> now accepts not only
 a database group name, but also a database connection instance or an array
 of database settings.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
-<li><dl class="simple">
-<dt><strong>Session:</strong></dt><dd><ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">RedisHandler</span></code> now can configure the interval time for acquiring locks
+<li><p><strong>Session:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">RedisHandler</span></code> can now configure the interval time for acquiring locks
 (<code class="docutils literal notranslate"><span class="pre">$lockRetryInterval</span></code>) and the number of retries (<code class="docutils literal notranslate"><span class="pre">$lockMaxRetries</span></code>).</p></li>
 <li><p>Now you can use Redis ACL (username and password) with <code class="docutils literal notranslate"><span class="pre">RedisHandler</span></code>.
 See <a class="reference internal" href="../libraries/sessions.html#sessions-redishandler-driver"><span class="std std-ref">RedisHandler Driver</span></a> for details.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
 <li><p><strong>Security:</strong> <code class="docutils literal notranslate"><span class="pre">Config\Security::$redirect</span></code> is now, by default, environment-specific.
-For production environment, changed to <code class="docutils literal notranslate"><span class="pre">true</span></code> but is still <code class="docutils literal notranslate"><span class="pre">false</span></code> for other
+For the production environment, it has changed to <code class="docutils literal notranslate"><span class="pre">true</span></code>, but is still <code class="docutils literal notranslate"><span class="pre">false</span></code> for other
 environments.</p></li>
 </ul>
 </section>
@@ -560,16 +550,14 @@ environments.</p></li>
 <ul class="simple">
 <li><p><strong>Bootstrap:</strong> The <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Boot</span></code> class has been introduced, replacing
 <strong>system/bootstrap.php</strong>.</p></li>
-<li><dl class="simple">
-<dt><strong>Autoloader:</strong></dt><dd><ul>
+<li><p><strong>Autoloader:</strong></p>
+<ul>
 <li><p>Autoloading performance when using Composer has been improved.
-Adding the <code class="docutils literal notranslate"><span class="pre">App</span></code> namespace in the <code class="docutils literal notranslate"><span class="pre">autoload.psr4</span></code> setting in <strong>composer.json</strong>
+Adding the <code class="docutils literal notranslate"><span class="pre">App</span></code> namespace in the <code class="docutils literal notranslate"><span class="pre">autoload.psr-4</span></code> setting in <strong>composer.json</strong>
 may also improve the performance of your app. See <a class="reference internal" href="../concepts/autoloader.html#autoloader-application-namespace"><span class="std std-ref">Application Namespace</span></a>.</p></li>
 <li><p>FileLocator Caching implemented. See <a class="reference internal" href="../concepts/autoloader.html#file-locator-caching"><span class="std std-ref">FileLocator Caching</span></a> for details.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">FileLocatorInterface</span></code> has been added.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
 <li><p><strong>CodeIgniter:</strong> Added a pseudo-variable <code class="docutils literal notranslate"><span class="pre">{memory_usage}</span></code> to show your memory
 usage in your view files, which was supported by CodeIgniter 3.</p></li>
@@ -618,7 +606,7 @@ See <a class="reference internal" href="../installation/upgrade_450.html#upgrade
 <section id="api-responsetrait">
 <h4><a class="toc-backref" href="#id29" role="doc-backlink">API\ResponseTrait</a><a class="headerlink" href="#api-responsetrait" title="Link to this heading"></a></h4>
 <p>Now when a response format is JSON, if you pass string data, the framework returns
-a JSON response. In previous versions, it returned a HTML response.
+a JSON response. In previous versions, it returned an HTML response.
 See <a class="reference internal" href="../installation/upgrade_450.html#upgrade-450-api-response-trait"><span class="std std-ref">Upgrading Guide</span></a> for details.</p>
 </section>
 <section id="factories-class">
@@ -654,7 +642,7 @@ and require no intervention.</p>
 </div>
 <ul class="simple">
 <li><p><strong>ResponseInterface:</strong> The default value of the third parameter <code class="docutils literal notranslate"><span class="pre">$expire</span></code> of
-the <code class="docutils literal notranslate"><span class="pre">ResponseInterface::setCookie()</span></code> has been fixed from <code class="docutils literal notranslate"><span class="pre">''</span></code> to <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p></li>
+<code class="docutils literal notranslate"><span class="pre">ResponseInterface::setCookie()</span></code> has been fixed from <code class="docutils literal notranslate"><span class="pre">''</span></code> to <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p></li>
 <li><p><strong>Logger:</strong> The <a class="reference external" href="https://packagist.org/packages/psr/log">psr/log</a> package has
 been upgraded to v3.0.0.</p></li>
 <li><p><strong>Validation:</strong> The method signature of <code class="docutils literal notranslate"><span class="pre">ValidationInterface::run()</span></code> has been
@@ -668,7 +656,7 @@ changed. The <code class="docutils literal notranslate"><span class="pre">?strin
 <p>The third parameter <code class="docutils literal notranslate"><span class="pre">$expire</span></code> in <a class="reference internal" href="../helpers/cookie_helper.html#set_cookie" title="set_cookie"><code class="xref php php-func docutils literal notranslate"><span class="pre">set_cookie()</span></code></a> and
 <a class="reference internal" href="../outgoing/response.html#CodeIgniter\HTTP\Response::setCookie" title="CodeIgniter\HTTP\Response::setCookie"><code class="xref php php-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Response::setCookie()</span></code></a> has been fixed.</p>
 <p>The type has been changed from <code class="docutils literal notranslate"><span class="pre">string</span></code> to <code class="docutils literal notranslate"><span class="pre">int</span></code>, and the default value has
-been changed from <code class="docutils literal notranslate"><span class="pre">''</span></code> to  <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
+been changed from <code class="docutils literal notranslate"><span class="pre">''</span></code> to <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
 </section>
 <section id="filelocatorinterface">
 <h4><a class="toc-backref" href="#id35" role="doc-backlink">FileLocatorInterface</a><a class="headerlink" href="#filelocatorinterface" title="Link to this heading"></a></h4>
@@ -689,9 +677,9 @@ and <code class="docutils literal notranslate"><span class="pre">BaseModel</span
 <section id="traditional-validation-rules">
 <h4><a class="toc-backref" href="#id37" role="doc-backlink">Traditional Validation Rules</a><a class="headerlink" href="#traditional-validation-rules" title="Link to this heading"></a></h4>
 <p>To add <code class="docutils literal notranslate"><span class="pre">declare(strict_types=1)</span></code> to the framework codebase, the method parameter
-type <code class="docutils literal notranslate"><span class="pre">?string</span></code> for a value to validate in the all Traditional Validation rule
+type <code class="docutils literal notranslate"><span class="pre">?string</span></code> for a value to validate in all Traditional Validation rule
 classes <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Validation\FormatRules</span></code> and <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Validation\Rules</span></code>
-are removed.</p>
+has been removed.</p>
 <p>For example, the method signature changed as follows:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">Before</span><span class="o">:</span> <span class="k">public</span> <span class="k">function</span> <span class="nf">integer</span><span class="p">(</span><span class="o">?</span><span class="nx">string</span> <span class="nv">$str</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span><span class="o">:</span> <span class="nx">bool</span>
 <span class="nx">After</span><span class="o">:</span>  <span class="k">public</span> <span class="k">function</span> <span class="nf">integer</span><span class="p">(</span><span class="nv">$str</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span><span class="o">:</span> <span class="nx">bool</span>
@@ -702,7 +690,7 @@ are removed.</p>
 <h4><a class="toc-backref" href="#id38" role="doc-backlink">Others</a><a class="headerlink" href="#id4" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><strong>Logger:</strong> The method signatures of the methods in <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Log\Logger</span></code>
-that implements the PSR-3 interface have been fixed. The <code class="docutils literal notranslate"><span class="pre">bool</span></code> return
+that implement the PSR-3 interface have been fixed. The <code class="docutils literal notranslate"><span class="pre">bool</span></code> return
 types are changed to <code class="docutils literal notranslate"><span class="pre">void</span></code>. The <code class="docutils literal notranslate"><span class="pre">$message</span></code> parameters now have
 <code class="docutils literal notranslate"><span class="pre">string|Stringable</span></code> types.</p></li>
 <li><p><strong>Validation:</strong> The method signature of <code class="docutils literal notranslate"><span class="pre">Validation::run()</span></code> has been
@@ -728,16 +716,14 @@ has been removed.</p></li>
 </section>
 <section id="filters">
 <h4><a class="toc-backref" href="#id41" role="doc-backlink">Filters</a><a class="headerlink" href="#filters" title="Link to this heading"></a></h4>
-<ul>
+<ul class="simple">
 <li><p>The following deprecated items have been removed, because now <a class="reference internal" href="../incoming/routing.html#multiple-filters"><span class="std std-ref">Multiple Filters</span></a> are always enabled.</p>
-<blockquote>
-<div><ul class="simple">
+<ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">Filters::enableFilter()</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">RouteCollection::getFilterForRoute()</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Router::$filterInfo</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Router::getFilter()</span></code></p></li>
 </ul>
-</div></blockquote>
 </li>
 </ul>
 </section>
@@ -758,12 +744,11 @@ has been removed.</p></li>
 </section>
 <section id="response">
 <h4><a class="toc-backref" href="#id44" role="doc-backlink">Response</a><a class="headerlink" href="#response" title="Link to this heading"></a></h4>
-<ul>
+<ul class="simple">
 <li><p>The visibility of the deprecated property <code class="docutils literal notranslate"><span class="pre">ResponseTrait::$CSP</span></code> has been
 changed to protected.</p></li>
 <li><p>The following deprecated properties have been removed.</p>
-<blockquote>
-<div><ul class="simple">
+<ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">ResponseTrait::$CSPEnabled</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ResponseTrait::$cookiePrefix</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ResponseTrait::$cookieDomain</span></code></p></li>
@@ -773,7 +758,6 @@ changed to protected.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ResponseTrait::$cookieSameSite</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ResponseTrait::$cookies</span></code></p></li>
 </ul>
-</div></blockquote>
 </li>
 </ul>
 </section>
@@ -820,14 +804,12 @@ changed to protected.</p></li>
 <h4><a class="toc-backref" href="#id49" role="doc-backlink">Others</a><a class="headerlink" href="#id7" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><strong>Cache:</strong> The deprecated <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Cache\Exceptions\ExceptionInterface</span></code> has been removed.</p></li>
-<li><dl class="simple">
-<dt><strong>Config:</strong></dt><dd><ul>
+<li><p><strong>Config:</strong></p>
+<ul>
 <li><p>The deprecated <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Config\Config</span></code> class has been removed.</p></li>
 <li><p>The deprecated <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Config\BaseService::discoverServices()</span></code> method
 has been removed.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
 <li><p><strong>Controller:</strong> The deprecated <code class="docutils literal notranslate"><span class="pre">Controller::loadHelpers()</span></code> method has been removed.</p></li>
 <li><p><strong>Exceptions:</strong> The deprecated <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Exceptions\CastException</span></code> class has been removed.</p></li>
@@ -849,26 +831,24 @@ has been removed.</p></li>
 <h2><a class="toc-backref" href="#id51" role="doc-backlink">Changes</a><a class="headerlink" href="#changes" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p><strong>Bootstrap:</strong> The loading of <strong>.env</strong> and defining <code class="docutils literal notranslate"><span class="pre">ENVIRONMENT</span></code> have been
-moved before loading of <strong>bootstrap.php</strong>.</p></li>
-<li><dl class="simple">
-<dt><strong>Config:</strong></dt><dd><ul>
+moved before the loading of <strong>bootstrap.php</strong>.</p></li>
+<li><p><strong>Config:</strong></p>
+<ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">Config\Feature::$multipleFilters</span></code> has been removed, because now
 <a class="reference internal" href="../incoming/routing.html#multiple-filters"><span class="std std-ref">Multiple Filters</span></a> are always enabled.</p></li>
 <li><p>The default error level in the production environment
 (<strong>app/Config/Boot/production.php</strong>) has been changed to <code class="docutils literal notranslate"><span class="pre">E_ALL</span> <span class="pre">&amp;</span> <span class="pre">~E_DEPRECATED</span></code>
 to match the default <strong>php.ini</strong> for production.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
 <li><p><strong>RouteCollection:</strong> The HTTP method keys in the protected property <code class="docutils literal notranslate"><span class="pre">$routes</span></code>
-has been fixed from lowercase to uppercase.</p></li>
+have been fixed from lowercase to uppercase.</p></li>
 <li><p><strong>Exceptions:</strong> Unused <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Exceptions\AlertError</span></code> and
 <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Exceptions\EmergencyError</span></code> were removed.</p></li>
 <li><p><strong>Forge:</strong> <code class="docutils literal notranslate"><span class="pre">SQLSRV</span></code> Forge now converts <code class="docutils literal notranslate"><span class="pre">ENUM</span></code> data types to <code class="docutils literal notranslate"><span class="pre">VARCHAR(n)</span></code>
-when you add table columns. In previous version, it converted to <code class="docutils literal notranslate"><span class="pre">TEXT</span></code> that
+when you add table columns. In previous versions, it converted to <code class="docutils literal notranslate"><span class="pre">TEXT</span></code>, which
 is deprecated in SQL Server.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">declare(strict_types=1)</span></code> has been added to most framework codebase.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">declare(strict_types=1)</span></code> has been added to most of the framework codebase.</p></li>
 </ul>
 </section>
 <section id="deprecations">
@@ -876,8 +856,8 @@ is deprecated in SQL Server.</p></li>
 <ul class="simple">
 <li><p><strong>Services:</strong> The <code class="docutils literal notranslate"><span class="pre">BaseService::$services</span></code> property has been deprecated. No
 longer used.</p></li>
-<li><dl class="simple">
-<dt><strong>CodeIgniter:</strong></dt><dd><ul>
+<li><p><strong>CodeIgniter:</strong></p>
+<ul>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">determinePath()</span></code> method has been deprecated. No longer used.</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">resolvePlatformExtensions()</span></code> method has been deprecated. No longer
 used. It has been moved to the <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Boot::checkMissingExtensions()</span></code>
@@ -892,21 +872,17 @@ been moved to the <code class="docutils literal notranslate"><span class="pre">A
 <li><p>The <code class="docutils literal notranslate"><span class="pre">configureKint()</span></code> method has been deprecated. No longer used. It has
 been moved to the <code class="docutils literal notranslate"><span class="pre">Autoloader</span></code>.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
 <li><p><strong>Response:</strong> The constructor parameter <code class="docutils literal notranslate"><span class="pre">$config</span></code> has been deprecated. No
 longer used.</p></li>
-<li><dl class="simple">
-<dt><strong>Filters:</strong></dt><dd><ul>
-<li><p>The feature that <code class="docutils literal notranslate"><span class="pre">Filters</span></code> accept the lowercase HTTP method keys
+<li><p><strong>Filters:</strong></p>
+<ul>
+<li><p>The feature that <code class="docutils literal notranslate"><span class="pre">Filters</span></code> accepts the lowercase HTTP method keys
 of <code class="docutils literal notranslate"><span class="pre">Config\Filters::$methods</span></code> has been deprecated. Use correct uppercase
 HTTP method keys instead.</p></li>
 <li><p>The feature that the <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">filter:check</span></code> command accepts the lowercase
-HTTP method has been deprecated. Use correct uppercase HTTP method instead.</p></li>
+HTTP method has been deprecated. Use the correct uppercase HTTP method instead.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
 <li><p><strong>RouteCollection:</strong> The feature that the <code class="docutils literal notranslate"><span class="pre">match()</span></code> and <code class="docutils literal notranslate"><span class="pre">setHTTPVerb()</span></code>
 methods accept the lowercase HTTP methods has been deprecated. Use correct
@@ -938,7 +914,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

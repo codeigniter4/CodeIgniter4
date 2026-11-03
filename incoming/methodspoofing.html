@@ -292,24 +292,24 @@
              
   <section id="http-method-spoofing">
 <h1>HTTP Method Spoofing<a class="headerlink" href="#http-method-spoofing" title="Link to this heading"></a></h1>
-<p>When working with HTML forms you can only use GET or POST HTTP verbs. In most cases, this is just fine. However, to
-support REST-ful routing you need to support other, more correct, verbs, like DELETE or PUT. Since the browsers
-don’t support this, CodeIgniter provides you with a way to spoof the method that is being used. This allows you to
-make a POST request, but tell the application that it should be treated as a different request type.</p>
-<p>To spoof the method, a hidden input is added to the form with the name of <code class="docutils literal notranslate"><span class="pre">_method</span></code>. It’s value is the HTTP verb
-that you want the request to be:</p>
+<p>When working with HTML forms, you can only use GET or POST HTTP verbs. In most cases, this is just fine. However, to
+support RESTful routing, you need to support other, more correct, verbs, like DELETE or PUT. Since browsers don’t
+support this, CodeIgniter provides you with a way to spoof the method that is being used. This allows you to make a POST
+request, but tell the application that it should be treated as a different request type.</p>
+<p>To spoof the method, a hidden input is added to the form with the name of <code class="docutils literal notranslate"><span class="pre">_method</span></code>. Its value is the HTTP verb that
+you want the request to be:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">""</span> <span class="nx">method</span><span class="o">=</span><span class="s2">"post"</span><span class="o">&gt;</span>
     <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"hidden"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"_method"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"PUT"</span><span class="o">&gt;</span>
 <span class="o">&lt;/</span><span class="nx">form</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>This form is converted into a PUT request and is a true PUT request as far as the routing and the IncomingRequest
-class are concerned.</p>
+<p>This form is converted into a PUT request and is a true PUT request as far as the routing and the IncomingRequest class
+are concerned.</p>
 <p>The form that you are using must be a POST request. GET requests cannot be spoofed.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Be sure to check your web server’s configuration as some servers do not support all HTTP verbs
-with the default configuration, and must have additional packages enabled to work.</p>
+<p>Be sure to check your web server’s configuration as some servers do not support all HTTP verbs with the
+default configuration, and must have additional packages enabled to work.</p>
 </div>
 </section>
 
@@ -325,7 +325,7 @@ with the default configuration, and must have additional packages enabled to wor
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

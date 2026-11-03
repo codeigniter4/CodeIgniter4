@@ -313,7 +313,7 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$uri</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|string</span></code></span>) – URI string or array of URI segments.</p></li>
-<li><p><strong>$protocol</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Protocol, e.g., <code class="docutils literal notranslate"><span class="pre">'http'</span></code> or <code class="docutils literal notranslate"><span class="pre">'https'</span></code>. If empty string <code class="docutils literal notranslate"><span class="pre">''</span></code> is set, a protocol-relative link is returned.</p></li>
+<li><p><strong>$protocol</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Protocol, e.g., <code class="docutils literal notranslate"><span class="pre">'http'</span></code> or <code class="docutils literal notranslate"><span class="pre">'https'</span></code>. If an empty string <code class="docutils literal notranslate"><span class="pre">''</span></code> is set, a protocol-relative link is returned.</p></li>
 <li><p><strong>$altConfig</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">\Config\App</span></code></span>) – Alternate configuration to use.</p></li>
 </ul>
 </dd>
@@ -326,25 +326,21 @@
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Since v4.3.0, if you set <code class="docutils literal notranslate"><span class="pre">Config\App::$allowedHostnames</span></code>,
-this returns the URL with the hostname set in it if the current URL matches.</p>
+<p>Since v4.3.0, if you set <code class="docutils literal notranslate"><span class="pre">Config\App::$allowedHostnames</span></code>, this returns the URL with the hostname set in
+it if the current URL matches.</p>
 </div>
-<p>Returns your site URL, as specified in your config file. The <strong>index.php</strong>
-file (or whatever you have set as your site <code class="docutils literal notranslate"><span class="pre">Config\App::$indexPage</span></code> in your config
-file) will be added to the URL, as will any URI segments you pass to the
-function.</p>
-<p>You are encouraged to use this function any time you need to generate a
-local URL so that your pages become more portable in the event your URL
-changes.</p>
-<p>Segments can be optionally passed to the function as a string or an
-array. Here is a string example:</p>
+<p>Returns your site URL, as specified in your config file. The <strong>index.php</strong> file (or whatever you have set as your
+site <code class="docutils literal notranslate"><span class="pre">Config\App::$indexPage</span></code> in your config file) will be added to the URL, as will any URI segments you pass to
+the function.</p>
+<p>You are encouraged to use this function any time you need to generate a local URL so that your pages become more
+portable in the event your URL changes.</p>
+<p>Segments can be optionally passed to the function as a string or an array. Here is a string example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nx">site_url</span><span class="p">(</span><span class="s1">'news/local/123'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The above example would return something like:
-<strong>http://example.com/index.php/news/local/123</strong></p>
+<p>The above example would return something like: <strong>http://example.com/index.php/news/local/123</strong></p>
 <p>Here is an example of segments passed as an array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -352,9 +348,8 @@ array. Here is a string example:</p>
 <span class="k">echo</span> <span class="nx">site_url</span><span class="p">(</span><span class="nv">$segments</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>You may find the alternate configuration useful if generating URLs for a
-different site than yours, which contains different configuration preferences.
-We use this for unit testing the framework itself.</p>
+<p>You may find the alternate configuration useful if generating URLs for a different site than yours, which contains
+different configuration preferences. We use this for unit testing the framework itself.</p>
 </dd></dl>
 
 <dl class="php function">
@@ -364,7 +359,7 @@ We use this for unit testing the framework itself.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$uri</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|string</span></code></span>) – URI string or array of URI segments.</p></li>
-<li><p><strong>$protocol</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Protocol, e.g., <code class="docutils literal notranslate"><span class="pre">'http'</span></code> or <code class="docutils literal notranslate"><span class="pre">'https'</span></code>. If empty string <code class="docutils literal notranslate"><span class="pre">''</span></code> is set, a protocol-relative link is returned.</p></li>
+<li><p><strong>$protocol</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Protocol, e.g., <code class="docutils literal notranslate"><span class="pre">'http'</span></code> or <code class="docutils literal notranslate"><span class="pre">'https'</span></code>. If an empty string <code class="docutils literal notranslate"><span class="pre">''</span></code> is set, a protocol-relative link is returned.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -376,14 +371,13 @@ We use this for unit testing the framework itself.</p>
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Since v4.3.0, if you set <code class="docutils literal notranslate"><span class="pre">Config\App::$allowedHostnames</span></code>,
-this returns the URL with the hostname set in it if the current URL matches.</p>
+<p>Since v4.3.0, if you set <code class="docutils literal notranslate"><span class="pre">Config\App::$allowedHostnames</span></code>, this returns the URL with the hostname set in
+it if the current URL matches.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In previous versions, this returned the base URL without a trailing
-slash (<code class="docutils literal notranslate"><span class="pre">/</span></code>) when called with no argument. The bug was fixed and
-since v4.3.2 it returns the base URL with a trailing slash.</p>
+<p>In previous versions, this returned the base URL without a trailing slash (<code class="docutils literal notranslate"><span class="pre">/</span></code>) when called with no
+argument. The bug was fixed and since v4.3.2 it returns the base URL with a trailing slash.</p>
 </div>
 <p>Returns your site base URL, as specified in your config file. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -391,35 +385,31 @@ since v4.3.2 it returns the base URL with a trailing slash.</p>
 <span class="k">echo</span> <span class="nx">base_url</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>This function returns the same thing as <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">site_url()</span></code></a>, without
-the <code class="docutils literal notranslate"><span class="pre">Config\App::$indexPage</span></code> being appended.</p>
-<p>Also like <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">site_url()</span></code></a>, you can supply segments as a string or
-an array. Here is a string example:</p>
+<p>This function returns the same thing as <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">site_url()</span></code></a>, without the <code class="docutils literal notranslate"><span class="pre">Config\App::$indexPage</span></code> being
+appended.</p>
+<p>Also like <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">site_url()</span></code></a>, you can supply segments as a string or an array. Here is a string example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Returns like `http://example.com/blog/post/123`</span>
 <span class="k">echo</span> <span class="nx">base_url</span><span class="p">(</span><span class="s1">'blog/post/123'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The above example would return something like:
-<strong>http://example.com/blog/post/123</strong></p>
-<p>If you pass an empty string <code class="docutils literal notranslate"><span class="pre">''</span></code> as the second parameter, it returns
-the protocol-relative link:</p>
+<p>The above example would return something like: <strong>http://example.com/blog/post/123</strong></p>
+<p>If you pass an empty string <code class="docutils literal notranslate"><span class="pre">''</span></code> as the second parameter, it returns the protocol-relative link:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Returns like `//example.com/blog/post/123`</span>
 <span class="k">echo</span> <span class="nx">base_url</span><span class="p">(</span><span class="s1">'blog/post/123'</span><span class="p">,</span> <span class="s1">''</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>This is useful because unlike <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">site_url()</span></code></a>, you can supply a
-string to a file, such as an image or stylesheet. For example:</p>
+<p>This is useful because, unlike <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">site_url()</span></code></a>, you can supply a string to a file, such as an image or
+stylesheet. For example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nx">base_url</span><span class="p">(</span><span class="s1">'images/icons/edit.png'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>This would give you something like:
-<strong>http://example.com/images/icons/edit.png</strong></p>
+<p>This would give you something like: <strong>http://example.com/images/icons/edit.png</strong></p>
 </dd></dl>
 
 <dl class="php function">
@@ -439,13 +429,12 @@ string to a file, such as an image or stylesheet. For example:</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string|\CodeIgniter\HTTP\URI</span></code></span></p>
 </dd>
 </dl>
-<p>Returns the full URL of the page being currently viewed.
-When returning string, the query and fragment parts of the URL are removed.
-When returning URI, the query and fragment parts are preserved.</p>
-<p>However for security reasons, it is created based on the <code class="docutils literal notranslate"><span class="pre">Config\App</span></code> settings,
-and not intended to match the browser URL.</p>
-<p>Since v4.3.0, if you set <code class="docutils literal notranslate"><span class="pre">Config\App::$allowedHostnames</span></code>,
-this returns the URL with the hostname set in it if the current URL matches.</p>
+<p>Returns the full URL of the page being currently viewed. When returning a string, the query and fragment parts of
+the URL are removed. When returning a URI, the query and fragment parts are preserved.</p>
+<p>However, for security reasons, it is created based on the <code class="docutils literal notranslate"><span class="pre">Config\App</span></code> settings, and is not intended to match the
+browser URL.</p>
+<p>Since v4.3.0, if you set <code class="docutils literal notranslate"><span class="pre">Config\App::$allowedHostnames</span></code>, this returns the URL with the hostname set in it if the
+current URL matches.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Calling <code class="docutils literal notranslate"><span class="pre">current_url()</span></code> is the same as doing this:</p>
@@ -455,7 +444,8 @@ this returns the URL with the hostname set in it if the current URL matches.</p>
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>Prior to v4.1.2, this function had a bug causing it to ignore the configuration on <code class="docutils literal notranslate"><span class="pre">Config\App::$indexPage</span></code>.</p>
+<p>Prior to v4.1.2, this function had a bug causing it to ignore the configuration on
+<code class="docutils literal notranslate"><span class="pre">Config\App::$indexPage</span></code>.</p>
 </div>
 </dd></dl>
 
@@ -478,10 +468,10 @@ this returns the URL with the hostname set in it if the current URL matches.</p>
 <p>Returns the full URL (including segments) of the page the user was previously on.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Due to security issues of blindly trusting the <code class="docutils literal notranslate"><span class="pre">HTTP_REFERER</span></code> system variable, CodeIgniter will
-store previously visited pages in the session if it’s available. This ensures that we always
-use a known and trusted source. If the session hasn’t been loaded, or is otherwise unavailable,
-then a sanitized version of <code class="docutils literal notranslate"><span class="pre">HTTP_REFERER</span></code> will be used.</p>
+<p>Due to security issues of blindly trusting the <code class="docutils literal notranslate"><span class="pre">HTTP_REFERER</span></code> system variable, CodeIgniter will store
+previously visited pages in the session if it’s available. This ensures that we always use a known and trusted
+source. If the session hasn’t been loaded, or is otherwise unavailable, then a sanitized version of
+<code class="docutils literal notranslate"><span class="pre">HTTP_REFERER</span></code> will be used.</p>
 </div>
 </dd></dl>
 
@@ -515,15 +505,13 @@ then a sanitized version of <code class="docutils literal notranslate"><span cla
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In previous versions, the parameter <code class="docutils literal notranslate"><span class="pre">$relative</span> <span class="pre">=</span> <span class="pre">false</span></code> was defined.
-However, due to a bug, this function always returned a path relative to baseURL.
-Since v4.3.2, the parameter has been removed.</p>
+<p>In previous versions, the parameter <code class="docutils literal notranslate"><span class="pre">$relative</span> <span class="pre">=</span> <span class="pre">false</span></code> was defined. However, due to a bug, this
+function always returned a path relative to baseURL. Since v4.3.2, the parameter has been removed.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In previous versions, when you navigate to the baseURL, this function
-returned <code class="docutils literal notranslate"><span class="pre">/</span></code>. Since v4.3.2, the bug has been fixed and it returns an
-empty string(<code class="docutils literal notranslate"><span class="pre">''</span></code>).</p>
+<p>In previous versions, when you navigated to the baseURL, this function returned <code class="docutils literal notranslate"><span class="pre">/</span></code>. Since v4.3.2, the
+bug has been fixed and it returns an empty string (<code class="docutils literal notranslate"><span class="pre">''</span></code>).</p>
 </div>
 </dd></dl>
 
@@ -543,17 +531,15 @@ empty string(<code class="docutils literal notranslate"><span class="pre">''</sp
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Returns your site <strong>indexPage</strong>, as specified in your config file.
-Example:</p>
+<p>Returns your site <strong>indexPage</strong>, as specified in your config file. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nx">index_page</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>As with <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">site_url()</span></code></a>, you may specify an alternate configuration.
-You may find the alternate configuration useful if generating URLs for a
-different site than yours, which contains different configuration preferences.
-We use this for unit testing the framework itself.</p>
+<p>As with <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">site_url()</span></code></a>, you may specify an alternate configuration. You may find the alternate configuration
+useful if generating URLs for a different site than yours, which contains different configuration preferences. We
+use this for unit testing the framework itself.</p>
 </dd></dl>
 
 <dl class="php function">
@@ -576,21 +562,17 @@ We use this for unit testing the framework itself.</p>
 </dd>
 </dl>
 <p>Creates a standard HTML anchor link based on your local site URL.</p>
-<p>The first parameter can contain any segments you wish appended to the
-URL. As with the <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">site_url()</span></code></a> function above, segments can
-be a string or an array.</p>
+<p>The first parameter can contain any segments you wish appended to the URL. As with the <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">site_url()</span></code></a>
+function above, segments can be a string or an array.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you are building links that are internal to your application
-do not include the base URL (<code class="docutils literal notranslate"><span class="pre">http://...</span></code>). This will be added
-automatically from the information specified in your config file.
-Include only the URI segments you wish appended to the URL.</p>
+<p>If you are building links that are internal to your application, do not include the base URL
+(<code class="docutils literal notranslate"><span class="pre">http://...</span></code>). This will be added automatically from the information specified in your config file. Include
+only the URI segments you wish appended to the URL.</p>
 </div>
-<p>The second segment is the text you would like the link to say. If you
-leave it blank, the URL will be used.</p>
-<p>The third parameter can contain a list of attributes you would like
-added to the link. The attributes can be a simple string or an
-associative array.</p>
+<p>The second parameter is the text you would like the link to say. If you leave it blank, the URL will be used.</p>
+<p>The third parameter can contain a list of attributes you would like added to the link. The attributes can be a
+simple string or an associative array.</p>
 <p>Here are some examples:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -604,13 +586,12 @@ associative array.</p>
 <span class="c1">// Prints: &lt;a href="http://example.com/index.php"&gt;Click here&lt;/a&gt;</span>
 </pre></div>
 </div>
-<p>As above, you may specify an alternate configuration.
-You may find the alternate configuration useful if generating links for a
-different site than yours, which contains different configuration preferences.
-We use this for unit testing the framework itself.</p>
+<p>As above, you may specify an alternate configuration. You may find the alternate configuration useful if generating
+links for a different site than yours, which contains different configuration preferences. We use this for unit
+testing the framework itself.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Attributes passed into the anchor function are automatically escaped to protected against XSS attacks.</p>
+<p>Attributes passed into the anchor function are automatically escaped to protect against XSS attacks.</p>
 </div>
 </dd></dl>
 
@@ -633,11 +614,9 @@ We use this for unit testing the framework itself.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Nearly identical to the <a class="reference internal" href="#anchor" title="anchor"><code class="xref php php-func docutils literal notranslate"><span class="pre">anchor()</span></code></a> function except that it
-opens the URL in a new window. You can specify JavaScript window
-attributes in the third parameter to control how the window is opened.
-If the third parameter is not set it will simply open a new window with
-your own browser settings.</p>
+<p>Nearly identical to the <a class="reference internal" href="#anchor" title="anchor"><code class="xref php php-func docutils literal notranslate"><span class="pre">anchor()</span></code></a> function except that it opens the URL in a new window. You can specify
+JavaScript window attributes in the third parameter to control how the window is opened. If the third parameter is
+not set, it will simply open a new window with your own browser settings.</p>
 <p>Here is an example with attributes:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -655,16 +634,14 @@ your own browser settings.</p>
 <span class="k">echo</span> <span class="nx">anchor_popup</span><span class="p">(</span><span class="s1">'news/local/123'</span><span class="p">,</span> <span class="s1">'Click Me!'</span><span class="p">,</span> <span class="nv">$atts</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>As above, you may specify an alternate configuration.
-You may find the alternate configuration useful if generating links for a
-different site than yours, which contains different configuration preferences.
-We use this for unit testing the framework itself.</p>
+<p>As above, you may specify an alternate configuration. You may find the alternate configuration useful if generating
+links for a different site than yours, which contains different configuration preferences. We use this for unit
+testing the framework itself.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The above attributes are the function defaults so you only need to
-set the ones that are different from what you need. If you want the
-function to use all of its defaults simply pass an empty array in the
-third parameter:</p>
+<p>The above attributes are the function defaults, so you only need to set the ones that are different from
+what you need. If you want the function to use all of its defaults, simply pass an empty array in the third
+parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nx">anchor_popup</span><span class="p">(</span><span class="s1">'news/local/123'</span><span class="p">,</span> <span class="s1">'Click Me!'</span><span class="p">,</span> <span class="p">[]);</span>
@@ -673,18 +650,17 @@ third parameter:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <strong>window_name</strong> is not really an attribute, but an argument to
-the JavaScript <a class="reference external" href="https://www.w3schools.com/jsref/met_win_open.asp">window.open()</a>
-method, which accepts either a window name or a window target.</p>
+<p>The <strong>window_name</strong> is not really an attribute, but an argument to the JavaScript
+<a class="reference external" href="https://www.w3schools.com/jsref/met_win_open.asp">window.open()</a> method, which accepts either a window name
+or a window target.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Any other attribute than the listed above will be parsed as an
-HTML attribute to the anchor tag.</p>
+<p>Any attribute other than those listed above will be parsed as an HTML attribute to the anchor tag.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Attributes passed into the anchor_popup function are automatically escaped to protected against XSS attacks.</p>
+<p>Attributes passed into the anchor_popup function are automatically escaped to protect against XSS attacks.</p>
 </div>
 </dd></dl>
 
@@ -712,8 +688,7 @@ HTML attribute to the anchor tag.</p>
 <span class="k">echo</span> <span class="nx">mailto</span><span class="p">(</span><span class="s1">'me@my-site.com'</span><span class="p">,</span> <span class="s1">'Click Here to Contact Me'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>As with the <a class="reference internal" href="#anchor" title="anchor"><code class="xref php php-func docutils literal notranslate"><span class="pre">anchor()</span></code></a> tab above, you can set attributes using the
-third parameter:</p>
+<p>As with the <a class="reference internal" href="#anchor" title="anchor"><code class="xref php php-func docutils literal notranslate"><span class="pre">anchor()</span></code></a> function above, you can set attributes using the third parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'title'</span> <span class="o">=&gt;</span> <span class="s1">'Mail me'</span><span class="p">];</span>
@@ -722,7 +697,7 @@ third parameter:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Attributes passed into the mailto function are automatically escaped to protected against XSS attacks.</p>
+<p>Attributes passed into the mailto function are automatically escaped to protect against XSS attacks.</p>
 </div>
 </dd></dl>
 
@@ -744,9 +719,8 @@ third parameter:</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Identical to the <a class="reference internal" href="#mailto" title="mailto"><code class="xref php php-func docutils literal notranslate"><span class="pre">mailto()</span></code></a> function except it writes an obfuscated
-version of the <em>mailto</em> tag using ordinal numbers written with JavaScript to
-help prevent the e-mail address from being harvested by spam bots.</p>
+<p>Identical to the <a class="reference internal" href="#mailto" title="mailto"><code class="xref php php-func docutils literal notranslate"><span class="pre">mailto()</span></code></a> function except it writes an obfuscated version of the <em>mailto</em> tag using
+ordinal numbers written with JavaScript to help prevent the e-mail address from being harvested by spam bots.</p>
 </dd></dl>
 
 <dl class="php function">
@@ -767,16 +741,14 @@ help prevent the e-mail address from being harvested by spam bots.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Automatically turns URLs and e-mail addresses contained in a string into
-links. Example:</p>
+<p>Automatically turns URLs and e-mail addresses contained in a string into links. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$string</span> <span class="o">=</span> <span class="nx">auto_link</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The second parameter determines whether URLs and e-mails are converted or
-just one or the other. The default behavior is both if the parameter is not
-specified. E-mail links are encoded as <a class="reference internal" href="#safe_mailto" title="safe_mailto"><code class="xref php php-func docutils literal notranslate"><span class="pre">safe_mailto()</span></code></a> as shown
+<p>The second parameter determines whether URLs and e-mails are converted or just one or the other. The default
+behavior is both if the parameter is not specified. E-mail links are encoded as <a class="reference internal" href="#safe_mailto" title="safe_mailto"><code class="xref php php-func docutils literal notranslate"><span class="pre">safe_mailto()</span></code></a> as shown
 above.</p>
 <p>Converts only URLs:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -790,8 +762,7 @@ above.</p>
 <span class="nv">$string</span> <span class="o">=</span> <span class="nx">auto_link</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">'email'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The third parameter determines whether links are shown in a new window.
-The value can be true or false (boolean):</p>
+<p>The third parameter determines whether links are shown in a new window. The value can be true or false (boolean):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$string</span> <span class="o">=</span> <span class="nx">auto_link</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">'both'</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
@@ -821,9 +792,8 @@ The value can be true or false (boolean):</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Takes a string as input and creates a human-friendly URL string. This is
-useful if, for example, you have a blog in which you’d like to use the
-title of your entries in the URL. Example:</p>
+<p>Takes a string as input and creates a human-friendly URL string. This is useful if, for example, you have a blog in
+which you’d like to use the title of your entries in the URL. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$title</span>     <span class="o">=</span> <span class="s2">"What's wrong with CSS?"</span><span class="p">;</span>
@@ -831,8 +801,8 @@ title of your entries in the URL. Example:</p>
 <span class="c1">// Produces: Whats-wrong-with-CSS</span>
 </pre></div>
 </div>
-<p>The second parameter determines the word delimiter. By default dashes
-are used. Preferred options are: <code class="docutils literal notranslate"><span class="pre">-</span></code> (dash) or <code class="docutils literal notranslate"><span class="pre">_</span></code> (underscore).</p>
+<p>The second parameter determines the word delimiter. By default, dashes are used. Preferred options are: <code class="docutils literal notranslate"><span class="pre">-</span></code> (dash)
+or <code class="docutils literal notranslate"><span class="pre">_</span></code> (underscore).</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -841,8 +811,8 @@ are used. Preferred options are: <code class="docutils literal notranslate"><spa
 <span class="c1">// Produces: Whats_wrong_with_CSS</span>
 </pre></div>
 </div>
-<p>The third parameter determines whether or not lowercase characters are
-forced. By default they are not. Options are boolean true/false.</p>
+<p>The third parameter determines whether or not lowercase characters are forced. By default, they are not. Options are
+boolean true/false.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -871,17 +841,16 @@ forced. By default they are not. Options are boolean true/false.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>This function works the same as <a class="reference internal" href="#url_title" title="url_title"><code class="xref php php-func docutils literal notranslate"><span class="pre">url_title()</span></code></a> but it converts all
-accented characters automatically.</p>
+<p>This function works the same as <a class="reference internal" href="#url_title" title="url_title"><code class="xref php php-func docutils literal notranslate"><span class="pre">url_title()</span></code></a> but it converts all accented characters automatically.</p>
 </dd></dl>
 
 <dl class="php function">
 <dt class="sig sig-object php" id="parse_subdomain">
-<span class="sig-name descname"><span class="pre">parse_subdomain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$hostname</span></em><span class="sig-paren">)</span><a class="headerlink" href="#parse_subdomain" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">parse_subdomain</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$host</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#parse_subdomain" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$hostname</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string|null</span></code></span>) – The hostname to parse. If null, uses the current request’s host.</p></li>
+<li><p><strong>$host</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string|null</span></code></span>) – The hostname to parse. If null, uses the current request’s host.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -909,8 +878,7 @@ accented characters automatically.</p>
 <span class="k">echo</span> <span class="nx">parse_subdomain</span><span class="p">(</span><span class="s1">'shop.old.example.co.uk'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>You can customize the list of known two-part TLDs by adding them to the
-<code class="docutils literal notranslate"><span class="pre">Config\Hostnames::TWO_PART_TLDS</span></code> array.</p>
+<p>You can customize the list of known two-part TLDs by adding them to the <code class="docutils literal notranslate"><span class="pre">Config\Hostnames::TWO_PART_TLDS</span></code> array.</p>
 </dd></dl>
 
 <dl class="php function">
@@ -930,8 +898,7 @@ accented characters automatically.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>This function will add <code class="docutils literal notranslate"><span class="pre">http://</span></code> or <code class="docutils literal notranslate"><span class="pre">https://</span></code> in the event that a protocol prefix
-is missing from a URL.</p>
+<p>This function will add <code class="docutils literal notranslate"><span class="pre">http://</span></code> or <code class="docutils literal notranslate"><span class="pre">https://</span></code> in the event that a protocol prefix is missing from a URL.</p>
 <p>Pass the URL string to the function like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -946,7 +913,7 @@ is missing from a URL.</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$controller</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Route name or Controller::method</p></li>
+<li><p><strong>$controller</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Route name or <code class="docutils literal notranslate"><span class="pre">Controller::method</span></code></p></li>
 <li><p><strong>...$args</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int|string</span></code></span>) – One or more parameters to be passed to the route. The last parameter allows you to set the locale.</p></li>
 </ul>
 </dd>
@@ -973,8 +940,7 @@ is missing from a URL.</p>
 <span class="cm">&lt;!-- Result: 'http://example.com/' --&gt;</span>
 </pre></div>
 </div>
-<p>You can also add arguments to the route.
-Here is an example:</p>
+<p>You can also add arguments to the route. Here is an example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// The route is defined as:</span>
@@ -986,9 +952,9 @@ Here is an example:</p>
 <span class="cm">&lt;!-- Result: 'http://example.com/pages/home' --&gt;</span>
 </pre></div>
 </div>
-<p>This is useful because you can still change your routes after putting links
-into your views.</p>
-<p>Since v4.3.0, when you use <code class="docutils literal notranslate"><span class="pre">{locale}</span></code> in your route, you can optionally specify the locale value as the last parameter.</p>
+<p>This is useful because you can still change your routes after putting links into your views.</p>
+<p>Since v4.3.0, when you use <code class="docutils literal notranslate"><span class="pre">{locale}</span></code> in your route, you can optionally specify the locale value as the last
+parameter.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// The route is defined as:</span>
@@ -1004,7 +970,7 @@ into your views.</p>
 <span class="cm">&lt;!-- Result: 'http://example.com/en/users/15/gallery/12' --&gt;</span>
 </pre></div>
 </div>
-<p>For full details, see the <a class="reference internal" href="../incoming/routing.html#reverse-routing"><span class="std std-ref">Reverse Routing</span></a> and <a class="reference internal" href="../incoming/routing.html#using-named-routes"><span class="std std-ref">Named Routes</span></a>.</p>
+<p>For full details, see <a class="reference internal" href="../incoming/routing.html#reverse-routing"><span class="std std-ref">Reverse Routing</span></a> and <a class="reference internal" href="../incoming/routing.html#using-named-routes"><span class="std std-ref">Named Routes</span></a>.</p>
 </dd></dl>
 
 <dl class="php function">
@@ -1028,10 +994,9 @@ into your views.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>This would match <strong>http://example.com/admin</strong>. It would match <strong>http://example.com/subdir/admin</strong>
-if your baseURL is <code class="docutils literal notranslate"><span class="pre">http://example.com/subdir/</span></code>.</p>
-<p>You can use the <code class="docutils literal notranslate"><span class="pre">*</span></code> wildcard to match
-any other applicable characters in the URL:</p>
+<p>This would match <strong>http://example.com/admin</strong>. It would match <strong>http://example.com/subdir/admin</strong> if your baseURL is
+<code class="docutils literal notranslate"><span class="pre">http://example.com/subdir/</span></code>.</p>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">*</span></code> wildcard to match any other applicable characters in the URL:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">if</span> <span class="p">(</span><span class="nx">url_is</span><span class="p">(</span><span class="s1">'admin*'</span><span class="p">))</span> <span class="p">{</span>
@@ -1063,7 +1028,7 @@ any other applicable characters in the URL:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

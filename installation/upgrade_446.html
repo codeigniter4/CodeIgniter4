@@ -317,9 +317,8 @@
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Link to this heading"></a></h2>
 <section id="time-createfromtimestamp-timezone-change">
 <h3><a class="toc-backref" href="#id2" role="doc-backlink">Time::createFromTimestamp() Timezone Change</a><a class="headerlink" href="#time-createfromtimestamp-timezone-change" title="Link to this heading"></a></h3>
-<p>When you do not specify a timezone, now
-<a class="reference internal" href="../libraries/time.html#time-createfromtimestamp"><span class="std std-ref">Time::createFromTimestamp()</span></a> returns a Time
-instance with the app’s timezone is returned.</p>
+<p>When you do not specify a timezone, now <a class="reference internal" href="../libraries/time.html#time-createfromtimestamp"><span class="std std-ref">Time::createFromTimestamp()</span></a> returns a Time
+instance with the app’s timezone.</p>
 <p>If you want to keep the timezone UTC, you need to call <code class="docutils literal notranslate"><span class="pre">setTimezone('UTC')</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
@@ -330,19 +329,19 @@ instance with the app’s timezone is returned.</p>
 </section>
 <section id="project-files">
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">Project Files</a><a class="headerlink" href="#project-files" title="Link to this heading"></a></h2>
-<p>Some files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to
-these files being outside of the <strong>system</strong> scope they will not be changed without your intervention.</p>
-<p>There are some third-party CodeIgniter modules available to assist with merging changes to
-the project space: <a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
+<p>Some files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to these files being outside of
+the <strong>system</strong> scope, they will not be changed without your intervention.</p>
+<p>There are some third-party CodeIgniter modules available to assist with merging changes to the project space:
+<a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
 <section id="all-changes">
 <h3><a class="toc-backref" href="#id4" role="doc-backlink">All Changes</a><a class="headerlink" href="#all-changes" title="Link to this heading"></a></h3>
-<p>This is a list of all files in the <strong>project space</strong> that received changes;
-many will be simple comments or formatting that have no effect on the runtime:</p>
+<p>This is a list of all files in the <strong>project space</strong> that received changes; many will be simple comments or formatting
+that have no effect on the runtime:</p>
 <ul class="simple">
-<li><p>app/Config/App.php</p></li>
-<li><p>app/Config/Routing.php</p></li>
-<li><p>app/Views/welcome_message.php</p></li>
-<li><p>composer.json</p></li>
+<li><p><strong>app/Config/App.php</strong></p></li>
+<li><p><strong>app/Config/Routing.php</strong></p></li>
+<li><p><strong>app/Views/welcome_message.php</strong></p></li>
+<li><p><strong>composer.json</strong></p></li>
 </ul>
 </section>
 </section>
@@ -360,7 +359,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

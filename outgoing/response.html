@@ -292,8 +292,8 @@
              
   <section id="http-responses">
 <h1>HTTP Responses<a class="headerlink" href="#http-responses" title="Link to this heading"></a></h1>
-<p>The Response class extends the <a class="reference internal" href="../incoming/message.html"><span class="doc">HTTP Message Class</span></a> with methods only appropriate for
-a server responding to the client that called it.</p>
+<p>The Response class extends the <a class="reference internal" href="../incoming/message.html"><span class="doc">HTTP Message Class</span></a> with methods appropriate only for a server
+responding to the client that called it.</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#working-with-the-response" id="id3">Working with the Response</a></p>
@@ -323,31 +323,29 @@ a server responding to the client that called it.</p>
 </nav>
 <section id="working-with-the-response">
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">Working with the Response</a><a class="headerlink" href="#working-with-the-response" title="Link to this heading"></a></h2>
-<p>A Response class is instantiated for you and passed into your controllers. It can
-be accessed through <code class="docutils literal notranslate"><span class="pre">$this-&gt;response</span></code>. It is the same instance that
-<code class="docutils literal notranslate"><span class="pre">Services::response()</span></code> returns. We call it the global response instance.</p>
-<p>Many times you will not need to touch the class directly, since CodeIgniter takes care of
-sending the headers and the body for you. This is great if the page successfully created the content it was asked to.
-When things go wrong, or you need to send very specific status codes back, or even take advantage of the
-powerful HTTP caching, it’s there for you.</p>
+<p>A Response class is instantiated for you and passed into your controllers. It can be accessed through
+<code class="docutils literal notranslate"><span class="pre">$this-&gt;response</span></code>. It is the same instance that <code class="docutils literal notranslate"><span class="pre">Services::response()</span></code> returns. We call it the global response
+instance.</p>
+<p>Many times you will not need to touch the class directly, since CodeIgniter takes care of sending the headers and the
+body for you. This is great if the page successfully created the content it was asked to. When things go wrong, or you
+need to send very specific status codes back, or even take advantage of the powerful HTTP caching, it’s there for you.</p>
 <section id="setting-the-output">
 <h3><a class="toc-backref" href="#id4" role="doc-backlink">Setting the Output</a><a class="headerlink" href="#setting-the-output" title="Link to this heading"></a></h3>
-<p>When you need to set the output of the script directly, and not rely on CodeIgniter to automatically get it, you
-do it manually with the <code class="docutils literal notranslate"><span class="pre">setBody</span></code> method. This is usually used in conjunction with setting the status code of
-the response:</p>
+<p>When you need to set the output of the script directly, and not rely on CodeIgniter to automatically get it, you do it
+manually with the <code class="docutils literal notranslate"><span class="pre">setBody</span></code> method. This is usually used in conjunction with setting the status code of the response:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setBody</span><span class="p">(</span><span class="nv">$body</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The reason phrase (‘OK’, ‘Created’, ‘Moved Permanently’) will be automatically added, but you can add custom reasons
-as the second parameter of the <code class="docutils literal notranslate"><span class="pre">setStatusCode()</span></code> method:</p>
+<p>The reason phrase (‘OK’, ‘Created’, ‘Moved Permanently’) will be automatically added, but you can add custom reasons as
+the second parameter of the <code class="docutils literal notranslate"><span class="pre">setStatusCode()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">404</span><span class="p">,</span> <span class="s1">'Nope. Not here.'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>You can set format an array into either JSON or XML and set the content type header to the appropriate mime with the
+<p>You can format an array into either JSON or XML and set the content type header to the appropriate MIME type with the
 <code class="docutils literal notranslate"><span class="pre">setJSON()</span></code> and <code class="docutils literal notranslate"><span class="pre">setXML()</span></code> methods. Typically, you will send an array of data to be converted:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -367,36 +365,34 @@ as the second parameter of the <code class="docutils literal notranslate"><span 
 <h3><a class="toc-backref" href="#id5" role="doc-backlink">Setting Headers</a><a class="headerlink" href="#setting-headers" title="Link to this heading"></a></h3>
 <section id="setheader">
 <h4>setHeader()<a class="headerlink" href="#setheader" title="Link to this heading"></a></h4>
-<p>Often, you will need to set headers to be set for the response. The Response class makes this very simple to do,
-with the <code class="docutils literal notranslate"><span class="pre">setHeader()</span></code> method.</p>
-<p>The first parameter is the name of the header. The second parameter is the value,
-which can be either a string or an array of values that will be combined correctly when sent to the client.</p>
+<p>Often, you will need to set headers for the response. The Response class makes this very simple to do, with the
+<code class="docutils literal notranslate"><span class="pre">setHeader()</span></code> method.</p>
+<p>The first parameter is the name of the header. The second parameter is the value, which can be either a string or an
+array of values that will be combined correctly when sent to the client.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="s1">'Location'</span><span class="p">,</span> <span class="s1">'http://example.com'</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="s1">'WWW-Authenticate'</span><span class="p">,</span> <span class="s1">'Negotiate'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Using these functions instead of using the native PHP functions allows you to ensure that no headers are sent
-prematurely, causing errors, and makes testing possible.</p>
+<p>Using these methods instead of the native PHP functions ensures that no headers are sent prematurely, causing errors,
+and makes testing possible.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>Since v4.6.0, if you set a header using PHP’s native <code class="docutils literal notranslate"><span class="pre">header()</span></code>
-function and then use the <code class="docutils literal notranslate"><span class="pre">Response</span></code> class to set the same header, the
-previous one will be overwritten.</p>
+<p>Since v4.6.0, if you set a header using PHP’s native <code class="docutils literal notranslate"><span class="pre">header()</span></code> function and then use the <code class="docutils literal notranslate"><span class="pre">Response</span></code>
+class to set the same header, the previous one will be overwritten.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This method just sets headers to the response instance. So, if you create
-and return another response instance (e.g., if you call <a class="reference internal" href="../general/common_functions.html#redirect" title="redirect"><code class="xref php php-func docutils literal notranslate"><span class="pre">redirect()</span></code></a>),
-the headers set here will not be sent automatically.</p>
+<p>This method just sets headers on the response instance. So, if you create and return another response instance
+(e.g., if you call <a class="reference internal" href="../general/common_functions.html#redirect" title="redirect"><code class="xref php php-func docutils literal notranslate"><span class="pre">redirect()</span></code></a>), the headers set here will not be sent automatically.</p>
 </div>
 </section>
 <section id="appendheader">
 <h4>appendHeader()<a class="headerlink" href="#appendheader" title="Link to this heading"></a></h4>
 <p>If the header exists and can have more than one value, you may use the <code class="docutils literal notranslate"><span class="pre">appendHeader()</span></code> and <code class="docutils literal notranslate"><span class="pre">prependHeader()</span></code>
-methods to add the value to the end or beginning of the values list, respectively. The first parameter is the name
-of the header, while the second is the value to append or prepend.</p>
+methods to add the value to the end or beginning of the values list, respectively. The first parameter is the name of
+the header, while the second is the value to append or prepend.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="s1">'Cache-Control'</span><span class="p">,</span> <span class="s1">'no-cache'</span><span class="p">)</span>
@@ -419,22 +415,20 @@ parameter. This is not case-sensitive.</p>
 <section id="redirect">
 <span id="response-redirect"></span><h2><a class="toc-backref" href="#id6" role="doc-backlink">Redirect</a><a class="headerlink" href="#redirect" title="Link to this heading"></a></h2>
 <p>If you want to create a redirect, use the <a class="reference internal" href="../general/common_functions.html#redirect" title="redirect"><code class="xref php php-func docutils literal notranslate"><span class="pre">redirect()</span></code></a> function.</p>
-<p>It returns a <code class="docutils literal notranslate"><span class="pre">RedirectResponse</span></code> instance. It is a different instance from the
-global response instance that <code class="docutils literal notranslate"><span class="pre">Services::response()</span></code> returns.</p>
+<p>It returns a <code class="docutils literal notranslate"><span class="pre">RedirectResponse</span></code> instance. It is a different instance from the global response instance that
+<code class="docutils literal notranslate"><span class="pre">Services::response()</span></code> returns.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>If you set Cookies or Response Headers before you call <code class="docutils literal notranslate"><span class="pre">redirect()</span></code>,
-they are set to the global response instance, and they are not automatically
-copied to the <code class="docutils literal notranslate"><span class="pre">RedirectResponse</span></code> instance. To send them, you need to call
+<p>If you set Cookies or Response Headers before you call <code class="docutils literal notranslate"><span class="pre">redirect()</span></code>, they are set on the global response
+instance, and they are not automatically copied to the <code class="docutils literal notranslate"><span class="pre">RedirectResponse</span></code> instance. To send them, you need to call
 the <code class="docutils literal notranslate"><span class="pre">withCookies()</span></code> or <code class="docutils literal notranslate"><span class="pre">withHeaders()</span></code> method manually.</p>
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>If you want to redirect, an instance of <code class="docutils literal notranslate"><span class="pre">RedirectResponse</span></code> must
-be returned in a method of the <a class="reference internal" href="../incoming/controllers.html"><span class="doc">Controller</span></a> or
-the <a class="reference internal" href="../incoming/filters.html"><span class="doc">Controller Filter</span></a>. Note that the <code class="docutils literal notranslate"><span class="pre">__construct()</span></code>
-or the <code class="docutils literal notranslate"><span class="pre">initController()</span></code> method cannot return any value.
-If you forget to return <code class="docutils literal notranslate"><span class="pre">RedirectResponse</span></code>, no redirection will occur.</p>
+<p>If you want to redirect, an instance of <code class="docutils literal notranslate"><span class="pre">RedirectResponse</span></code> must be returned in a method of the
+<a class="reference internal" href="../incoming/controllers.html"><span class="doc">Controller</span></a> or the <a class="reference internal" href="../incoming/filters.html"><span class="doc">Controller Filter</span></a>. Note that the
+<code class="docutils literal notranslate"><span class="pre">__construct()</span></code> or the <code class="docutils literal notranslate"><span class="pre">initController()</span></code> method cannot return any value. If you forget to return
+<code class="docutils literal notranslate"><span class="pre">RedirectResponse</span></code>, no redirection will occur.</p>
 </div>
 <section id="redirect-to-a-uri-path">
 <h3><a class="toc-backref" href="#id7" role="doc-backlink">Redirect to a URI path</a><a class="headerlink" href="#redirect-to-a-uri-path" title="Link to this heading"></a></h3>
@@ -445,22 +439,20 @@ If you forget to return <code class="docutils literal notranslate"><span class="
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If there is a fragment in your URL that you want to remove, you can
-use the refresh parameter in the method.
-Like <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">redirect()-&gt;to('admin/home',</span> <span class="pre">null,</span> <span class="pre">'refresh');</span></code>.</p>
+<p>If there is a fragment in your URL that you want to remove, you can use the refresh parameter in the method.
+For example, <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">redirect()-&gt;to('admin/home',</span> <span class="pre">null,</span> <span class="pre">'refresh');</span></code>.</p>
 </div>
 </section>
 <section id="redirect-to-a-defined-route">
 <h3><a class="toc-backref" href="#id8" role="doc-backlink">Redirect to a Defined Route</a><a class="headerlink" href="#redirect-to-a-defined-route" title="Link to this heading"></a></h3>
-<p>When you want to pass a <a class="reference internal" href="../incoming/routing.html#using-named-routes"><span class="std std-ref">route name</span></a> or Controller::method
-for <a class="reference internal" href="../incoming/routing.html#reverse-routing"><span class="std std-ref">reverse routing</span></a>, use <code class="docutils literal notranslate"><span class="pre">redirect()-&gt;route()</span></code>:</p>
+<p>When you want to pass a <a class="reference internal" href="../incoming/routing.html#using-named-routes"><span class="std std-ref">route name</span></a> or <code class="docutils literal notranslate"><span class="pre">Controller::method</span></code> for
+<a class="reference internal" href="../incoming/routing.html#reverse-routing"><span class="std std-ref">reverse routing</span></a>, use <code class="docutils literal notranslate"><span class="pre">redirect()-&gt;route()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Go to a named route. "user_gallery" is the route name, not a URI path.</span>
 <span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">route</span><span class="p">(</span><span class="s1">'user_gallery'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>When passing an argument into the function, it is treated as a route name or
-Controller::method for reverse routing, not a relative/full URI,
-treating it the same as using <code class="docutils literal notranslate"><span class="pre">redirect()-&gt;route()</span></code>:</p>
+<p>An argument passed into the function is treated as a route name or <code class="docutils literal notranslate"><span class="pre">Controller::method</span></code> for reverse routing, not a
+relative/full URI, the same as when using <code class="docutils literal notranslate"><span class="pre">redirect()-&gt;route()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Go to a named/reverse-routed URI.</span>
 <span class="k">return</span> <span class="nx">redirect</span><span class="p">(</span><span class="s1">'named_route'</span><span class="p">);</span>
 </pre></div>
@@ -481,16 +473,15 @@ treating it the same as using <code class="docutils literal notranslate"><span c
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">redirect()-&gt;back()</span></code> is not the same as browser “back” button.
-It takes a visitor to “the last page viewed during the Session” when the Session is available.
-If the Session hasn’t been loaded, or is otherwise unavailable, then a sanitized version of HTTP_REFERER will be used.</p>
+<p><code class="docutils literal notranslate"><span class="pre">redirect()-&gt;back()</span></code> is not the same as the browser “back” button. It takes a visitor to “the last page
+viewed during the Session” when the Session is available. If the Session hasn’t been loaded, or is otherwise
+unavailable, then a sanitized version of HTTP_REFERER will be used.</p>
 </div>
 </section>
 <section id="redirect-with-cookies">
 <h3><a class="toc-backref" href="#id10" role="doc-backlink">Redirect with Cookies</a><a class="headerlink" href="#redirect-with-cookies" title="Link to this heading"></a></h3>
-<p>If you set Cookies before you call <code class="docutils literal notranslate"><span class="pre">redirect()</span></code>, they are set to the global
-response instance, and they are not automatically copied to the <code class="docutils literal notranslate"><span class="pre">RedirectResponse</span></code>
-instance.</p>
+<p>If you set Cookies before you call <code class="docutils literal notranslate"><span class="pre">redirect()</span></code>, they are set on the global response instance, and they are not
+automatically copied to the <code class="docutils literal notranslate"><span class="pre">RedirectResponse</span></code> instance.</p>
 <p>To send the Cookies, you need to call the <code class="docutils literal notranslate"><span class="pre">withCookies()</span></code> method manually.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Copies all cookies from global response instance.</span>
 <span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">back</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">withCookies</span><span class="p">();</span>
@@ -499,9 +490,8 @@ instance.</p>
 </section>
 <section id="redirect-with-headers">
 <h3><a class="toc-backref" href="#id11" role="doc-backlink">Redirect with Headers</a><a class="headerlink" href="#redirect-with-headers" title="Link to this heading"></a></h3>
-<p>If you set Response Headers before you call <code class="docutils literal notranslate"><span class="pre">redirect()</span></code>, they are set to the
-global response instance, and they are not automatically copied to the
-<code class="docutils literal notranslate"><span class="pre">RedirectResponse</span></code> instance.</p>
+<p>If you set Response Headers before you call <code class="docutils literal notranslate"><span class="pre">redirect()</span></code>, they are set on the global response instance, and they are
+not automatically copied to the <code class="docutils literal notranslate"><span class="pre">RedirectResponse</span></code> instance.</p>
 <p>To send the Headers, you need to call the <code class="docutils literal notranslate"><span class="pre">withHeaders()</span></code> method manually.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Copies all headers from the global response instance.</span>
 <span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">back</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">withHeaders</span><span class="p">();</span>
@@ -510,8 +500,8 @@ global response instance, and they are not automatically copied to the
 </section>
 <section id="redirect-status-code">
 <span id="response-redirect-status-code"></span><h3><a class="toc-backref" href="#id12" role="doc-backlink">Redirect Status Code</a><a class="headerlink" href="#redirect-status-code" title="Link to this heading"></a></h3>
-<p>The default HTTP status code for GET requests is 302. However, when using HTTP/1.1
-or later, 303 is used for POST/PUT/DELETE requests and 307 for all other requests.</p>
+<p>The default HTTP status code for GET requests is 302. However, when using HTTP/1.1 or later, 303 is used for
+POST/PUT/DELETE requests and 307 for all other requests.</p>
 <p>You can specify the status code:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Redirect to a URI path relative to baseURL with status code 301.</span>
 <span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">to</span><span class="p">(</span><span class="s1">'admin/home'</span><span class="p">,</span> <span class="mi">301</span><span class="p">);</span>
@@ -525,25 +515,22 @@ or later, 303 is used for POST/PUT/DELETE requests and 307 for all other request
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Due to a bug, in v4.3.3 or previous versions, the status code of the
-actual redirect response might be changed even if a status code was specified.
-See <a class="reference internal" href="../changelogs/v4.3.4.html#v434-redirect-status-code"><span class="std std-ref">ChangeLog v4.3.4</span></a>.</p>
+<p>Due to a bug, in v4.3.3 or previous versions, the status code of the actual redirect response might be changed
+even if a status code was specified. See <a class="reference internal" href="../changelogs/v4.3.4.html#v434-redirect-status-code"><span class="std std-ref">ChangeLog v4.3.4</span></a>.</p>
 </div>
-<p>If you don’t know HTTP status code for redirection, it is recommended to read
+<p>If you don’t know the HTTP status codes for redirection, it is recommended to read
 <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections">Redirections in HTTP</a>.</p>
 </section>
 </section>
 <section id="force-file-download">
 <span id="id1"></span><h2><a class="toc-backref" href="#id13" role="doc-backlink">Force File Download</a><a class="headerlink" href="#force-file-download" title="Link to this heading"></a></h2>
-<p>The Response class provides a simple way to send a file to the client, prompting the browser to download the data
-to your computer. This sets the appropriate headers to make it happen.</p>
-<p>The first parameter is the <strong>name you want the downloaded file to be named</strong>, the second parameter is the
-file data.</p>
-<p>If you set the second parameter to null and <code class="docutils literal notranslate"><span class="pre">$filename</span></code> is an existing, readable
-file path, then its content will be read instead.</p>
-<p>If you set the third parameter to boolean true, then the actual file MIME type
-(based on the filename extension) will be sent, so that if your browser has a
-handler for that type - it can use it.</p>
+<p>The Response class provides a simple way to send a file to the client, prompting the browser to download the data to
+your computer. This sets the appropriate headers to make it happen.</p>
+<p>The first parameter is the <strong>name you want to give the downloaded file</strong>, and the second parameter is the file data.</p>
+<p>If you set the second parameter to null and <code class="docutils literal notranslate"><span class="pre">$filename</span></code> is an existing, readable file path, then its content will be
+read instead.</p>
+<p>If you set the third parameter to boolean true, then the actual file MIME type (based on the filename extension) will be
+sent, so that if your browser has a handler for that type, it can use it.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -553,8 +540,8 @@ handler for that type - it can use it.</p>
 <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">download</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>If you want to download an existing file from your server you’ll need to
-pass <code class="docutils literal notranslate"><span class="pre">null</span></code> explicitly for the second parameter:</p>
+<p>If you want to download an existing file from your server, you’ll need to pass <code class="docutils literal notranslate"><span class="pre">null</span></code> explicitly for the second
+parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Contents of photo.jpg will be automatically read</span>
@@ -569,8 +556,8 @@ pass <code class="docutils literal notranslate"><span class="pre">null</span></c
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The response object MUST be returned for the download to be sent to the client. This allows the response
-to be passed through all <strong>after</strong> filters before being sent to the client.</p>
+<p>The response object MUST be returned for the download to be sent to the client. This allows the response to be
+passed through all <strong>after</strong> filters before being sent to the client.</p>
 </div>
 <section id="open-file-in-browser">
 <span id="id2"></span><h3><a class="toc-backref" href="#id14" role="doc-backlink">Open File in Browser</a><a class="headerlink" href="#open-file-in-browser" title="Link to this heading"></a></h3>
@@ -588,15 +575,15 @@ to be passed through all <strong>after</strong> filters before being sent to the
 </section>
 <section id="http-caching">
 <h2><a class="toc-backref" href="#id15" role="doc-backlink">HTTP Caching</a><a class="headerlink" href="#http-caching" title="Link to this heading"></a></h2>
-<p>Built into the HTTP specification are tools help the client (often the web browser) cache the results. Used correctly,
-this can lead to a huge performance boost to your application because it will tell the client that they don’t need
-to contact the server at all since nothing has changed. And you can’t get faster than that.</p>
+<p>Built into the HTTP specification are tools that help the client (often the web browser) cache the results. Used
+correctly, this can lead to a huge performance boost to your application because it will tell the client that they don’t
+need to contact the server at all since nothing has changed. And you can’t get faster than that.</p>
 <p>This is handled through the <code class="docutils literal notranslate"><span class="pre">Cache-Control</span></code> and <code class="docutils literal notranslate"><span class="pre">ETag</span></code> headers. This guide is not the proper place for a thorough
-introduction to all of the cache headers power, but you can get a good understanding over at
+introduction to the power of all the cache headers, but you can get a good understanding over at
 <a class="reference external" href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching">Google Developers</a>.</p>
 <p>By default, all response objects sent through CodeIgniter have HTTP caching turned off. The options and exact
-circumstances are too varied for us to be able to create a good default other than turning it off. It’s simple
-to set the Cache values to what you need, through the <code class="docutils literal notranslate"><span class="pre">setCache()</span></code> method:</p>
+circumstances are too varied for us to be able to create a good default other than turning it off. It’s simple to set
+the Cache values to what you need, through the <code class="docutils literal notranslate"><span class="pre">setCache()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$options</span> <span class="o">=</span> <span class="p">[</span>
@@ -607,10 +594,10 @@ to set the Cache values to what you need, through the <code class="docutils lite
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setCache</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">$options</span></code> array simply takes an array of key/value pairs that are, with a couple of exceptions, assigned
-to the <code class="docutils literal notranslate"><span class="pre">Cache-Control</span></code> header. You are free to set all of the options exactly as you need for your specific
-situation. While most of the options are applied to the <code class="docutils literal notranslate"><span class="pre">Cache-Control</span></code> header, it intelligently handles
-the <code class="docutils literal notranslate"><span class="pre">etag</span></code> and <code class="docutils literal notranslate"><span class="pre">last-modified</span></code> options to their appropriate header.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">$options</span></code> array simply takes an array of key/value pairs that are, with a couple of exceptions, assigned to the
+<code class="docutils literal notranslate"><span class="pre">Cache-Control</span></code> header. You are free to set all of the options exactly as you need for your specific situation. While
+most of the options are applied to the <code class="docutils literal notranslate"><span class="pre">Cache-Control</span></code> header, it intelligently applies the <code class="docutils literal notranslate"><span class="pre">etag</span></code> and
+<code class="docutils literal notranslate"><span class="pre">last-modified</span></code> options to their appropriate headers.</p>
 </section>
 <section id="class-reference">
 <h2><a class="toc-backref" href="#id16" role="doc-backlink">Class Reference</a><a class="headerlink" href="#class-reference" title="Link to this heading"></a></h2>
@@ -621,22 +608,17 @@ the <code class="docutils literal notranslate"><span class="pre">etag</span></co
 </div>
 <p>The methods inherited from the Message Class are:</p>
 <ul class="simple">
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::body()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::getBody()</span></code></p></li>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::setBody()</span></code></p></li>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::populateHeaders()</span></code></p></li>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::headers()</span></code></p></li>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::header()</span></code></p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::headerLine()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::getHeaderLine()</span></code></p></li>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::setHeader()</span></code></p></li>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::removeHeader()</span></code></p></li>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::appendHeader()</span></code></p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::protocolVersion()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::getProtocolVersion()</span></code></p></li>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::setProtocolVersion()</span></code></p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::negotiateMedia()</span></code></p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::negotiateCharset()</span></code></p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::negotiateEncoding()</span></code></p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::negotiateLanguage()</span></code></p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::negotiateLanguage()</span></code></p></li>
 </ul>
 <dl class="php class" id="namespace-CodeIgniter\HTTP">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Response">
@@ -652,8 +634,8 @@ the <code class="docutils literal notranslate"><span class="pre">etag</span></co
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span></p>
 </dd>
 </dl>
-<p>Returns the currently status code for this response. If no status code has been set, a BadMethodCallException
-will be thrown:</p>
+<p>Returns the current status code for this response. If no status code has been set, an <code class="docutils literal notranslate"><span class="pre">HTTPException</span></code> will be
+thrown:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getStatusCode</span><span class="p">();</span>
@@ -684,8 +666,8 @@ will be thrown:</p>
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">404</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The reason phrase will be automatically generated based upon the official lists. If you need to set your own
-for a custom status code, you can pass the reason phrase as the second parameter:</p>
+<p>The reason phrase will be automatically generated based upon the official lists. If you need to set your own for
+a custom status code, you can pass the reason phrase as the second parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">230</span><span class="p">,</span> <span class="s1">'Tardis initiated'</span><span class="p">);</span>
@@ -704,7 +686,7 @@ for a custom status code, you can pass the reason phrase as the second parameter
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Returns the current status code for this response. If not status has been set, will return an empty string:</p>
+<p>Returns the current reason phrase for this response. If no status has been set, it will return an empty string:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getReasonPhrase</span><span class="p">();</span>
@@ -756,8 +738,8 @@ for a custom status code, you can pass the reason phrase as the second parameter
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setContentType</span><span class="p">(</span><span class="s1">'application/json'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>By default, the method sets the character set to <code class="docutils literal notranslate"><span class="pre">UTF-8</span></code>. If you need to change this, you can
-pass the character set as the second parameter:</p>
+<p>By default, the method sets the character set to <code class="docutils literal notranslate"><span class="pre">UTF-8</span></code>. If you need to change this, you can pass the
+character set as the second parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setContentType</span><span class="p">(</span><span class="s1">'text/plain'</span><span class="p">,</span> <span class="s1">'x-pig-latin'</span><span class="p">);</span>
@@ -776,8 +758,8 @@ pass the character set as the second parameter:</p>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Response</span></code></p>
 </dd>
 </dl>
-<p>Sets the <code class="docutils literal notranslate"><span class="pre">Cache-Control</span></code> header to turn off all HTTP caching. This is the default setting
-of all response messages:</p>
+<p>Sets the <code class="docutils literal notranslate"><span class="pre">Cache-Control</span></code> header to turn off all HTTP caching. This is the default setting of all response
+messages:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">noCache</span><span class="p">();</span>
@@ -817,7 +799,7 @@ of all response messages:</p>
 <li><p>proxy-revalidate</p></li>
 <li><p>no-transform</p></li>
 </ul>
-<p>When passing the last-modified option, it can be either a date string, or a DateTime object.</p>
+<p>When passing the last-modified option, it can be either a date string or a DateTime object.</p>
 </dd></dl>
 
 <dl class="php method">
@@ -836,8 +818,7 @@ of all response messages:</p>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Response</span></code></p>
 </dd>
 </dl>
-<p>Sets the <code class="docutils literal notranslate"><span class="pre">Last-Modified</span></code> header. The <code class="docutils literal notranslate"><span class="pre">$date</span></code> object can be either a string or a <code class="docutils literal notranslate"><span class="pre">DateTime</span></code>
-instance:</p>
+<p>Sets the <code class="docutils literal notranslate"><span class="pre">Last-Modified</span></code> header. The <code class="docutils literal notranslate"><span class="pre">$date</span></code> argument can be either a string or a <code class="docutils literal notranslate"><span class="pre">DateTime</span></code> instance:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setLastModified</span><span class="p">(</span><span class="nb">date</span><span class="p">(</span><span class="s1">'D, d M Y H:i:s'</span><span class="p">));</span>
@@ -857,14 +838,14 @@ instance:</p>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Response</span></code></p>
 </dd>
 </dl>
-<p>Tells the response to send everything back to the client. This will first send the headers,
-followed by the response body. For the main application response, you do not need to call
-this as it is handled automatically by CodeIgniter.</p>
+<p>Tells the response to send everything back to the client. This will first send the headers, followed by the
+response body. For the main application response, you do not need to call this as it is handled automatically by
+CodeIgniter.</p>
 </dd></dl>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Response::setCookie">
-<span class="sig-name descname"><span class="pre">setCookie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$value</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$expire</span> <span class="pre">=</span> <span class="pre">0</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$domain</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$path</span> <span class="pre">=</span> <span class="pre">'/'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$secure</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$httponly</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$samesite</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Response::setCookie" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">setCookie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$value</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$expire</span> <span class="pre">=</span> <span class="pre">0</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$domain</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$path</span> <span class="pre">=</span> <span class="pre">'/'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$secure</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$httponly</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$samesite</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Response::setCookie" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -874,9 +855,9 @@ this as it is handled automatically by CodeIgniter.</p>
 <li><p><strong>$domain</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie domain</p></li>
 <li><p><strong>$path</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie path</p></li>
 <li><p><strong>$prefix</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie name prefix. If set to <code class="docutils literal notranslate"><span class="pre">''</span></code>, the default value from <strong>app/Config/Cookie.php</strong> will be used</p></li>
-<li><p><strong>$secure</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether to only transfer the cookie through HTTPS. If set to <code class="docutils literal notranslate"><span class="pre">null</span></code>, the default value from <strong>app/Config/Cookie.php</strong> will be used</p></li>
-<li><p><strong>$httponly</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether to only make the cookie accessible for HTTP requests (no JavaScript). If set to <code class="docutils literal notranslate"><span class="pre">null</span></code>, the default value from <strong>app/Config/Cookie.php</strong> will be used</p></li>
-<li><p><strong>$samesite</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The value for the SameSite cookie parameter. If set to <code class="docutils literal notranslate"><span class="pre">''</span></code>, no SameSite attribute will be set on the cookie. If set to <code class="docutils literal notranslate"><span class="pre">null</span></code>, the default value from <strong>app/Config/Cookie.php</strong> will be used</p></li>
+<li><p><strong>$secure</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool|null</span></code></span>) – Whether to only transfer the cookie through HTTPS. If set to <code class="docutils literal notranslate"><span class="pre">null</span></code>, the default value from <strong>app/Config/Cookie.php</strong> will be used</p></li>
+<li><p><strong>$httponly</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool|null</span></code></span>) – Whether to only make the cookie accessible for HTTP requests (no JavaScript). If set to <code class="docutils literal notranslate"><span class="pre">null</span></code>, the default value from <strong>app/Config/Cookie.php</strong> will be used</p></li>
+<li><p><strong>$samesite</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string|null</span></code></span>) – The value for the SameSite cookie parameter. If set to <code class="docutils literal notranslate"><span class="pre">''</span></code> or <code class="docutils literal notranslate"><span class="pre">null</span></code>, the default value from <strong>app/Config/Cookie.php</strong> will be used</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -885,16 +866,14 @@ this as it is handled automatically by CodeIgniter.</p>
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Prior to v4.2.7, the default values of <code class="docutils literal notranslate"><span class="pre">$secure</span></code> and <code class="docutils literal notranslate"><span class="pre">$httponly</span></code> were <code class="docutils literal notranslate"><span class="pre">false</span></code>
-due to a bug, and these values from <strong>app/Config/Cookie.php</strong> were never used.</p>
+<p>Prior to v4.2.7, the default values of <code class="docutils literal notranslate"><span class="pre">$secure</span></code> and <code class="docutils literal notranslate"><span class="pre">$httponly</span></code> were <code class="docutils literal notranslate"><span class="pre">false</span></code> due to a bug, and
+these values from <strong>app/Config/Cookie.php</strong> were never used.</p>
 </div>
 <p>Sets a cookie containing the values you specify to the Response instance.</p>
-<p>There are two ways to
-pass information to this method so that a cookie can be set: Array
-Method, and Discrete Parameters:</p>
+<p>There are two ways to pass information to this method so that a cookie can be set: Array Method, and Discrete
+Parameters:</p>
 <p><strong>Array Method</strong></p>
-<p>Using this method, an associative array is passed as the first
-parameter:</p>
+<p>Using this method, an associative array is passed as the first parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$cookie</span> <span class="o">=</span> <span class="p">[</span>
@@ -912,31 +891,26 @@ parameter:</p>
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setCookie</span><span class="p">(</span><span class="nv">$cookie</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Only the <code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">value</span></code> are required. To delete a cookie set it with the
-<code class="docutils literal notranslate"><span class="pre">value</span></code> blank.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">expire</span></code> is set in <strong>seconds</strong>, which will be added to the current
-time. Do not include the time, but rather only the number of seconds
-from <em>now</em> that you wish the cookie to be valid. If the <code class="docutils literal notranslate"><span class="pre">expire</span></code> is
-set to zero the cookie will only last as long as the browser is open.</p>
+<p>Only the <code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">value</span></code> are required. To delete a cookie, set it with the <code class="docutils literal notranslate"><span class="pre">value</span></code> blank.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">expire</span></code> is set in <strong>seconds</strong>, which will be added to the current time. Do not include the time, but
+rather only the number of seconds from <em>now</em> that you wish the cookie to be valid. If the <code class="docutils literal notranslate"><span class="pre">expire</span></code> is set to
+zero, the cookie will only last as long as the browser is open.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>But if the <code class="docutils literal notranslate"><span class="pre">value</span></code> is set to empty string and the <code class="docutils literal notranslate"><span class="pre">expire</span></code> is set to <code class="docutils literal notranslate"><span class="pre">0</span></code>,
-the cookie will be deleted.</p>
+<p>However, if the <code class="docutils literal notranslate"><span class="pre">value</span></code> is set to an empty string and the <code class="docutils literal notranslate"><span class="pre">expire</span></code> is set to <code class="docutils literal notranslate"><span class="pre">0</span></code>, the cookie
+will be deleted.</p>
 </div>
-<p>For site-wide cookies regardless of how your site is requested, add your
-URL to the <code class="docutils literal notranslate"><span class="pre">domain</span></code> starting with a period, like this:
-.your-domain.com</p>
+<p>For site-wide cookies regardless of how your site is requested, add your URL to the <code class="docutils literal notranslate"><span class="pre">domain</span></code> starting with a
+period, like this: <code class="docutils literal notranslate"><span class="pre">.your-domain.com</span></code>.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">path</span></code> is usually not needed since the method sets a root path.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">prefix</span></code> is only needed if you need to avoid name collisions with
-other identically named cookies for your server.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">secure</span></code> flag is only needed if you want to make it a secure cookie
-by setting it to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">samesite</span></code> value controls how cookies are shared between domains and sub-domains.
-Allowed values are <code class="docutils literal notranslate"><span class="pre">'None'</span></code>, <code class="docutils literal notranslate"><span class="pre">'Lax'</span></code>, <code class="docutils literal notranslate"><span class="pre">'Strict'</span></code> or a blank string <code class="docutils literal notranslate"><span class="pre">''</span></code>.
-If set to blank string, default SameSite attribute will be set.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">prefix</span></code> is only needed if you need to avoid name collisions with other identically named cookies for your
+server.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">secure</span></code> flag is only needed if you want to make it a secure cookie by setting it to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">samesite</span></code> value controls how cookies are shared between domains and sub-domains. Allowed values are
+<code class="docutils literal notranslate"><span class="pre">'None'</span></code>, <code class="docutils literal notranslate"><span class="pre">'Lax'</span></code>, <code class="docutils literal notranslate"><span class="pre">'Strict'</span></code> or a blank string <code class="docutils literal notranslate"><span class="pre">''</span></code>. If set to a blank string, the default SameSite
+attribute will be set.</p>
 <p><strong>Discrete Parameters</strong></p>
-<p>If you prefer, you can set the cookie by passing data using individual
-parameters:</p>
+<p>If you prefer, you can set the cookie by passing data using individual parameters:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setCookie</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$value</span><span class="p">,</span> <span class="nv">$expire</span><span class="p">,</span> <span class="nv">$domain</span><span class="p">,</span> <span class="nv">$path</span><span class="p">,</span> <span class="nv">$prefix</span><span class="p">,</span> <span class="nv">$secure</span><span class="p">,</span> <span class="nv">$httponly</span><span class="p">,</span> <span class="nv">$samesite</span><span class="p">);</span>
@@ -960,19 +934,17 @@ parameters:</p>
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">void</span></code></span></p>
 </dd>
 </dl>
-<p>Delete an existing cookie.</p>
+<p>Deletes an existing cookie.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This also just sets browser cookie for deleting the cookie.</p>
+<p>This also just sets a browser cookie for deleting the cookie.</p>
 </div>
 <p>Only the <code class="docutils literal notranslate"><span class="pre">name</span></code> is required.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">prefix</span></code> is only needed if you need to avoid name collisions with
-other identically named cookies for your server.</p>
-<p>Provide a <code class="docutils literal notranslate"><span class="pre">prefix</span></code> if cookies should only be deleted for that subset.
-Provide a <code class="docutils literal notranslate"><span class="pre">domain</span></code> name if cookies should only be deleted for that domain.
-Provide a <code class="docutils literal notranslate"><span class="pre">path</span></code> name if cookies should only be deleted for that path.</p>
-<p>If any of the optional parameters are empty, then the same-named
-cookie will be deleted across all that apply.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">prefix</span></code> is only needed if you need to avoid name collisions with other identically named cookies for your
+server.</p>
+<p>Provide a <code class="docutils literal notranslate"><span class="pre">prefix</span></code> if cookies should only be deleted for that subset. Provide a <code class="docutils literal notranslate"><span class="pre">domain</span></code> name if cookies
+should only be deleted for that domain. Provide a <code class="docutils literal notranslate"><span class="pre">path</span></code> name if cookies should only be deleted for that path.</p>
+<p>If any of the optional parameters are empty, then the same-named cookie will be deleted across all that apply.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -988,7 +960,7 @@ cookie will be deleted across all that apply.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Cookie name or an array of parameters</p></li>
-<li><p><strong>$value</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – cookie value</p></li>
+<li><p><strong>$value</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie value</p></li>
 <li><p><strong>$prefix</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie name prefix</p></li>
 </ul>
 </dd>
@@ -999,9 +971,8 @@ cookie will be deleted across all that apply.</p>
 <p>Checks to see if the Response has a specified cookie or not.</p>
 <p><strong>Notes</strong></p>
 <p>Only the <code class="docutils literal notranslate"><span class="pre">name</span></code> is required. If a <code class="docutils literal notranslate"><span class="pre">prefix</span></code> is specified, it will be prepended to the cookie name.</p>
-<p>If no <code class="docutils literal notranslate"><span class="pre">value</span></code> is given, the method just checks for the existence of the named cookie.
-If a <code class="docutils literal notranslate"><span class="pre">value</span></code> is given, then the method checks that the cookie exists, and that it
-has the prescribed value.</p>
+<p>If no <code class="docutils literal notranslate"><span class="pre">value</span></code> is given, the method just checks for the existence of the named cookie. If a <code class="docutils literal notranslate"><span class="pre">value</span></code> is given,
+then the method checks that the cookie exists, and that it has the prescribed value.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1026,8 +997,8 @@ has the prescribed value.</p>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">Cookie|Cookie[]|null</span></code></p>
 </dd>
 </dl>
-<p>Returns the named cookie, if found, or <code class="docutils literal notranslate"><span class="pre">null</span></code>.
-If no <code class="docutils literal notranslate"><span class="pre">name</span></code> is given, returns the array of <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> objects.</p>
+<p>Returns the named cookie, if found, or <code class="docutils literal notranslate"><span class="pre">null</span></code>. If no <code class="docutils literal notranslate"><span class="pre">name</span></code> is given, returns the array of <code class="docutils literal notranslate"><span class="pre">Cookie</span></code>
+objects.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1044,9 +1015,8 @@ If no <code class="docutils literal notranslate"><span class="pre">name</span></
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">Cookie[]</span></code></p>
 </dd>
 </dl>
-<p>Returns all cookies currently set within the Response instance.
-These are any cookies that you have specifically specified to set during the current
-request only.</p>
+<p>Returns all cookies currently set within the Response instance. These are any cookies that you have specifically
+set during the current request only.</p>
 </dd></dl>
 
 </dd></dl>
@@ -1066,7 +1036,7 @@ request only.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

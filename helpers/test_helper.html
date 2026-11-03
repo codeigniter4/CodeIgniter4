@@ -313,22 +313,23 @@
 <p>The following functions are available:</p>
 <dl class="php function">
 <dt class="sig sig-object php" id="fake">
-<span class="sig-name descname"><span class="pre">fake</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$model</span></em>, <em class="sig-param"><span class="pre">array</span> <span class="pre">$overrides</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fake" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">fake</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$model</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">?array</span> <span class="pre">$overrides</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$persist</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#fake" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$model</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">Model|object|string</span></code></span>) – Instance or name of the model to use with Fabricator</p></li>
-<li><p><strong>$overrides</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|null</span></code></span>) – Overriding data to pass to Fabricator::setOverrides()</p></li>
+<li><p><strong>$overrides</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|null</span></code></span>) – Overriding data to pass to <code class="docutils literal notranslate"><span class="pre">Fabricator::setOverrides()</span></code></p></li>
+<li><p><strong>$persist</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether to save the generated item to the database</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A random fake item created and added to the database by Fabricator</p>
+<dd class="field-even"><p>A random fake item, saved to the database if <code class="docutils literal notranslate"><span class="pre">$persist</span></code> is true</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">object|array</span></code></span></p>
 </dd>
 </dl>
-<p>Uses <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Test\Fabricator</span></code> to create a random item and add it to the database.</p>
+<p>Uses <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Test\Fabricator</span></code> to create a random item and optionally add it to the database.</p>
 <p>Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -362,7 +363,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

@@ -327,9 +327,9 @@
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Link to this heading"></a></h2>
 <section id="changes-for-set-method-in-basebuilder-and-model-class">
 <h3><a class="toc-backref" href="#id2" role="doc-backlink">Changes for set() method in BaseBuilder and Model class</a><a class="headerlink" href="#changes-for-set-method-in-basebuilder-and-model-class" title="Link to this heading"></a></h3>
-<p>The casting for the <code class="docutils literal notranslate"><span class="pre">$value</span></code> parameter has been removed to fix a bug where passing parameters as array and string
-to the <code class="docutils literal notranslate"><span class="pre">set()</span></code> method were handled differently. If you extended the <code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code> class or <code class="docutils literal notranslate"><span class="pre">Model</span></code> class yourself
-and modified the <code class="docutils literal notranslate"><span class="pre">set()</span></code> method, then you need to change its definition from
+<p>The casting for the <code class="docutils literal notranslate"><span class="pre">$value</span></code> parameter has been removed to fix a bug where passing parameters as an array and as a
+string to the <code class="docutils literal notranslate"><span class="pre">set()</span></code> method was handled differently. If you extended the <code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code> class or <code class="docutils literal notranslate"><span class="pre">Model</span></code> class
+yourself and modified the <code class="docutils literal notranslate"><span class="pre">set()</span></code> method, then you need to change its definition from
 <code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">function</span> <span class="pre">set($key,</span> <span class="pre">?string</span> <span class="pre">$value</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">?bool</span> <span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null)</span></code> to
 <code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">function</span> <span class="pre">set($key,</span> <span class="pre">$value</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">?bool</span> <span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null)</span></code>.</p>
 </section>
@@ -337,34 +337,31 @@ and modified the <code class="docutils literal notranslate"><span class="pre">se
 <h3><a class="toc-backref" href="#id3" role="doc-backlink">Session DatabaseHandler’s Database Table Change</a><a class="headerlink" href="#session-databasehandler-s-database-table-change" title="Link to this heading"></a></h3>
 <p>The types of the following columns in the session table have been changed for optimization.</p>
 <ul class="simple">
-<li><dl class="simple">
-<dt>MySQL</dt><dd><ul>
+<li><p>MySQL</p>
+<ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">timestamp</span></code></p></li>
 </ul>
-</dd>
-</dl>
 </li>
-<li><dl class="simple">
-<dt>PostgreSQL</dt><dd><ul>
+<li><p>PostgreSQL</p>
+<ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">ip_address</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">timestamp</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">data</span></code></p></li>
 </ul>
-</dd>
-</dl>
 </li>
 </ul>
 <p>Update the definition of the session table. See the <a class="reference internal" href="../libraries/sessions.html"><span class="doc">Session Library</span></a> for the new definition.</p>
-<p>The change was introduced in v4.1.2. But due to <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/issues/4807">a bug</a>,
-the DatabaseHandler Driver did not work properly.</p>
+<p>The change was introduced in v4.1.2. But due to <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/issues/4807">a bug</a>, the
+DatabaseHandler Driver did not work properly.</p>
 </section>
 <section id="csrf-protection">
 <h3><a class="toc-backref" href="#id4" role="doc-backlink">CSRF Protection</a><a class="headerlink" href="#csrf-protection" title="Link to this heading"></a></h3>
-<p>Because of a bug fix,
-now CSRF protection works on not only <strong>POST</strong> but also <strong>PUT/PATCH/DELETE</strong> requests when CSRF filter is applied.</p>
-<p>When you use <strong>PUT/PATCH/DELETE</strong> requests, you need to send CSRF token. Or remove the CSRF filter
-for such requests if you don’t need CSRF protection for them.</p>
-<p>If you want the same behavior as the previous version, set the CSRF filter like the following in <strong>app/Config/Filters.php</strong>:</p>
+<p>Because of a bug fix, CSRF protection now works on not only <strong>POST</strong> but also <strong>PUT/PATCH/DELETE</strong> requests when the
+CSRF filter is applied.</p>
+<p>When you use <strong>PUT/PATCH/DELETE</strong> requests, you need to send the CSRF token. Or remove the CSRF filter for such requests
+if you don’t need CSRF protection for them.</p>
+<p>If you want the same behavior as the previous version, set the CSRF filter like the following in
+<strong>app/Config/Filters.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -383,27 +380,29 @@ for such requests if you don’t need CSRF protection for them.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Protecting <strong>GET</strong> method needs only when you use <code class="docutils literal notranslate"><span class="pre">form_open()</span></code> auto-generation of CSRF field.</p>
+<p>Protecting the <strong>GET</strong> method is needed only when you use <code class="docutils literal notranslate"><span class="pre">form_open()</span></code> auto-generation of the CSRF field.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>In general, if you use <code class="docutils literal notranslate"><span class="pre">$methods</span></code> filters, you should <a class="reference internal" href="../incoming/routing.html#use-defined-routes-only"><span class="std std-ref">disable Auto Routing (Legacy)</span></a>
-because <a class="reference internal" href="../incoming/routing.html#auto-routing-legacy"><span class="std std-ref">Auto Routing (Legacy)</span></a> permits any HTTP method to access a controller.
-Accessing the controller with a method you don’t expect could bypass the filter.</p>
+<p>In general, if you use <code class="docutils literal notranslate"><span class="pre">$methods</span></code> filters, you should
+<a class="reference internal" href="../incoming/routing.html#use-defined-routes-only"><span class="std std-ref">disable Auto Routing (Legacy)</span></a> because <a class="reference internal" href="../incoming/routing.html#auto-routing-legacy"><span class="std std-ref">Auto Routing (Legacy)</span></a> permits any HTTP
+method to access a controller. Accessing the controller with a method you don’t expect could bypass the filter.</p>
 </div>
 </section>
 <section id="curlrequest-header-change">
 <h3><a class="toc-backref" href="#id5" role="doc-backlink">CURLRequest Header Change</a><a class="headerlink" href="#curlrequest-header-change" title="Link to this heading"></a></h3>
-<p>In the previous version, if you didn’t provide your own headers, <code class="docutils literal notranslate"><span class="pre">CURLRequest</span></code> would send the request-headers from the browser.
-The bug was fixed. If your requests depend on the headers, your requests might fail after upgrading.
-In this case, add the necessary headers manually.
-See <a class="reference internal" href="../libraries/curlrequest.html#curlrequest-request-options-headers"><span class="std std-ref">CURLRequest Class</span></a> for how to add.</p>
+<p>In the previous version, if you didn’t provide your own headers, <code class="docutils literal notranslate"><span class="pre">CURLRequest</span></code> would send the request-headers from the
+browser. The bug was fixed. If your requests depend on the headers, your requests might fail after upgrading. In this
+case, add the necessary headers manually. See <a class="reference internal" href="../libraries/curlrequest.html#curlrequest-request-options-headers"><span class="std std-ref">CURLRequest Class</span></a> for how to
+add them.</p>
 </section>
 <section id="query-builder-changes">
 <h3><a class="toc-backref" href="#id6" role="doc-backlink">Query Builder Changes</a><a class="headerlink" href="#query-builder-changes" title="Link to this heading"></a></h3>
 <p>For optimization and a bug fix, the following behaviors, mostly used in testing, have been changed.</p>
 <ul class="simple">
-<li><p>When you use <code class="docutils literal notranslate"><span class="pre">insertBatch()</span></code> and <code class="docutils literal notranslate"><span class="pre">updateBatch()</span></code>, the return value of <code class="docutils literal notranslate"><span class="pre">$query-&gt;getOriginalQuery()</span></code> has changed. It no longer returns the query with the binded parameters, but the actual query that was run.</p></li>
-<li><p>If <code class="docutils literal notranslate"><span class="pre">testMode</span></code> is <code class="docutils literal notranslate"><span class="pre">true</span></code>, <code class="docutils literal notranslate"><span class="pre">insertBatch()</span></code> will return an SQL string array instead of the number of affected rows. This change was made so that the returned data type is the same as the <code class="docutils literal notranslate"><span class="pre">updateBatch()</span></code> method.</p></li>
+<li><p>When you use <code class="docutils literal notranslate"><span class="pre">insertBatch()</span></code> and <code class="docutils literal notranslate"><span class="pre">updateBatch()</span></code>, the return value of <code class="docutils literal notranslate"><span class="pre">$query-&gt;getOriginalQuery()</span></code> has changed.
+It no longer returns the query with the bound parameters, but the actual query that was run.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">testMode</span></code> is <code class="docutils literal notranslate"><span class="pre">true</span></code>, <code class="docutils literal notranslate"><span class="pre">insertBatch()</span></code> will return an SQL string array instead of the number of affected rows.
+This change was made so that the returned data type is the same as the <code class="docutils literal notranslate"><span class="pre">updateBatch()</span></code> method.</p></li>
 </ul>
 </section>
 </section>
@@ -411,35 +410,29 @@ See <a class="reference internal" href="../libraries/curlrequest.html#curlreques
 <h2><a class="toc-backref" href="#id7" role="doc-backlink">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Link to this heading"></a></h2>
 <section id="multiple-filters-for-a-route">
 <span id="upgrade-415-multiple-filters-for-a-route"></span><h3><a class="toc-backref" href="#id8" role="doc-backlink">Multiple Filters for a Route</a><a class="headerlink" href="#multiple-filters-for-a-route" title="Link to this heading"></a></h3>
-<p>A new feature to set multiple filters for a route.</p>
+<p>A new feature has been added to set multiple filters for a route.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>This feature is disabled by default. Because it breaks backward compatibility.</p>
+<p>This feature is disabled by default because it breaks backward compatibility.</p>
 </div>
-<p>If you want to use this, you need to set the property <code class="docutils literal notranslate"><span class="pre">$multipleFilters</span></code> <code class="docutils literal notranslate"><span class="pre">true</span></code> in <code class="docutils literal notranslate"><span class="pre">app/Config/Feature.php</span></code>.
-If you enable it:</p>
+<p>If you want to use this, you need to set the property <code class="docutils literal notranslate"><span class="pre">$multipleFilters</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code> in <code class="docutils literal notranslate"><span class="pre">app/Config/Feature.php</span></code>. If
+you enable it:</p>
 <ul class="simple">
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">CodeIgniter\CodeIgniter::handleRequest()</span></code> uses</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\CodeIgniter::handleRequest()</span></code> uses</p>
+<ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Filters\Filters::enableFilters()</span></code>, instead of <code class="docutils literal notranslate"><span class="pre">enableFilter()</span></code></p></li>
 </ul>
-</dd>
-</dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">CodeIgniter\CodeIgniter::tryToRouteIt()</span></code> uses</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\CodeIgniter::tryToRouteIt()</span></code> uses</p>
+<ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Router\Router::getFilters()</span></code>, instead of <code class="docutils literal notranslate"><span class="pre">getFilter()</span></code></p></li>
 </ul>
-</dd>
-</dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Router\Router::handle()</span></code> uses</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Router\Router::handle()</span></code> uses</p>
+<ul>
 <li><p>the property <code class="docutils literal notranslate"><span class="pre">$filtersInfo</span></code>, instead of <code class="docutils literal notranslate"><span class="pre">$filterInfo</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Router\RouteCollection::getFiltersForRoute()</span></code>, instead of <code class="docutils literal notranslate"><span class="pre">getFilterForRoute()</span></code></p></li>
 </ul>
-</dd>
-</dl>
 </li>
 </ul>
 <p>If you extended the above classes, then you need to change them.</p>
@@ -455,20 +448,20 @@ If you enable it:</p>
 </section>
 <section id="project-files">
 <h2><a class="toc-backref" href="#id9" role="doc-backlink">Project Files</a><a class="headerlink" href="#project-files" title="Link to this heading"></a></h2>
-<p>Numerous files in the project space (root, app, public, writable) received updates. Due to
-these files being outside of the system scope they will not be changed without your intervention.
-There are some third-party CodeIgniter modules available to assist with merging changes to
-the project space: <a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
+<p>Numerous files in the project space (root, app, public, writable) received updates. Due to these files being outside of
+the system scope, they will not be changed without your intervention. There are some third-party CodeIgniter modules
+available to assist with merging changes to the project space:
+<a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Except in very rare cases for bug fixes, no changes made to files for the project space
-will break your application. All changes noted here are optional until the next major version,
-and any mandatory changes will be covered in the sections above.</p>
+<p>Except in very rare cases for bug fixes, no changes made to files for the project space will break your
+application. All changes noted here are optional until the next major version, and any mandatory changes will be
+covered in the sections above.</p>
 </div>
 <section id="content-changes">
 <h3><a class="toc-backref" href="#id10" role="doc-backlink">Content Changes</a><a class="headerlink" href="#content-changes" title="Link to this heading"></a></h3>
-<p>The following files received significant changes (including deprecations or visual adjustments)
-and it is recommended that you merge the updated versions with your application:</p>
+<p>The following files received significant changes (including deprecations or visual adjustments) and it is recommended
+that you merge the updated versions with your application:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">app/Config/CURLRequest.php</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Cache.php</span></code></p></li>
@@ -481,8 +474,8 @@ and it is recommended that you merge the updated versions with your application:
 </section>
 <section id="all-changes">
 <h3><a class="toc-backref" href="#id11" role="doc-backlink">All Changes</a><a class="headerlink" href="#all-changes" title="Link to this heading"></a></h3>
-<p>This is a list of all files in the project space that received changes;
-many will be simple comments or formatting that have no effect on the runtime:</p>
+<p>This is a list of all files in the project space that received changes; many will be simple comments or formatting that
+have no effect on the runtime:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">app/Config/CURLRequest.php</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Cache.php</span></code></p></li>
@@ -509,7 +502,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

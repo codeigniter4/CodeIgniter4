@@ -309,16 +309,16 @@
 <li><p><em>Remote Code Execution Vulnerability in Validation Placeholders</em> was fixed.
 See the <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-m6m8-6gq8-c9fj">Security advisory GHSA-m6m8-6gq8-c9fj</a>
 for more information.</p></li>
-<li><p>Fixed that <code class="docutils literal notranslate"><span class="pre">Session::stop()</span></code> did not destroy the session.</p></li>
+<li><p>Fixed a bug where <code class="docutils literal notranslate"><span class="pre">Session::stop()</span></code> did not destroy the session.</p></li>
 </ul>
 </section>
 <section id="changes">
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">Changes</a><a class="headerlink" href="#changes" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p><strong>make:cell command:</strong> When creating a new cell, the controller would always have the <code class="docutils literal notranslate"><span class="pre">Cell</span></code> suffixed to the class name.
+<li><p><strong>make:cell command:</strong> When creating a new cell, the controller will always have <code class="docutils literal notranslate"><span class="pre">Cell</span></code> suffixed to the class name.
 For the view file, the final <code class="docutils literal notranslate"><span class="pre">_cell</span></code> is always removed.</p></li>
 <li><p><strong>View Cells:</strong> For compatibility with previous versions, view filenames ending with <code class="docutils literal notranslate"><span class="pre">_cell</span></code> can still be
-located by the <code class="docutils literal notranslate"><span class="pre">Cell</span></code> as long as auto-detection of view file is enabled (via setting the <code class="docutils literal notranslate"><span class="pre">$view</span></code> property
+located by the <code class="docutils literal notranslate"><span class="pre">Cell</span></code> as long as auto-detection of the view file is enabled (by setting the <code class="docutils literal notranslate"><span class="pre">$view</span></code> property
 to an empty string).</p></li>
 </ul>
 </section>
@@ -326,7 +326,7 @@ to an empty string).</p></li>
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">Deprecations</a><a class="headerlink" href="#deprecations" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p><strong>Session:</strong> The <code class="docutils literal notranslate"><span class="pre">Session::stop()</span></code> method is deprecated.
-Use the <a class="reference internal" href="../libraries/sessions.html#session-destroy"><span class="std std-ref">Session::destroy()</span></a> instead.</p></li>
+Use <a class="reference internal" href="../libraries/sessions.html#session-destroy"><span class="std std-ref">Session::destroy()</span></a> instead.</p></li>
 </ul>
 </section>
 <section id="bugs-fixed">
@@ -334,7 +334,7 @@ Use the <a class="reference internal" href="../libraries/sessions.html#session-d
 <ul class="simple">
 <li><p><strong>Validation:</strong> Fixed a bug where a closure used in combination with <code class="docutils literal notranslate"><span class="pre">permit_empty</span></code> or <code class="docutils literal notranslate"><span class="pre">if_exist</span></code> rules was causing an error.</p></li>
 <li><p><strong>make:cell command:</strong> Fixed generating view files as classes.</p></li>
-<li><p><strong>make:cell command:</strong> Fixed treatment of single word class input for case-insensitive OS.</p></li>
+<li><p><strong>make:cell command:</strong> Fixed treatment of single-word class input for case-insensitive OS.</p></li>
 </ul>
 <p>See the repo’s
 <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md">CHANGELOG.md</a>
@@ -354,7 +354,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

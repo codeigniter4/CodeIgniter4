@@ -309,7 +309,7 @@
 <p>Fixed <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/issues/4116">a bug</a> in <code class="docutils literal notranslate"><span class="pre">current_url()</span></code> that prevented
 configurations with an <code class="docutils literal notranslate"><span class="pre">indexPage</span></code> from including that value in the return value. Any installations
 using <code class="docutils literal notranslate"><span class="pre">App::$indexPage</span></code> should expect altered values from <code class="docutils literal notranslate"><span class="pre">current_url()</span></code> and all its dependencies
-(including Response Testing, Pager, Form Helper, Pager, and View Parser).</p>
+(including Response Testing, Pager, Form Helper, and View Parser).</p>
 </section>
 <section id="enhancements">
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">Enhancements</a><a class="headerlink" href="#enhancements" title="Link to this heading"></a></h2>
@@ -318,8 +318,8 @@ using <code class="docutils literal notranslate"><span class="pre">App::$indexPa
 <li><p>New <code class="docutils literal notranslate"><span class="pre">assertRedirectTo()</span></code> assertion available for HTTP tests.</p></li>
 <li><p>New logger handler, <code class="docutils literal notranslate"><span class="pre">ErrorlogHandler</span></code>, that writes to <code class="docutils literal notranslate"><span class="pre">error_log()</span></code>.</p></li>
 <li><p>Entity. Added custom type casting functionality.</p></li>
-<li><p>New option in routing. The <code class="docutils literal notranslate"><span class="pre">priority</span></code> option lower the priority of specific route processing.</p></li>
-<li><p>The <code class="docutils literal notranslate"><span class="pre">Autoloader</span></code> class can now load files which do not contain PHP classes. The list of <cite>non-class</cite> files will be listed in the <code class="docutils literal notranslate"><span class="pre">$files</span></code> property of <code class="docutils literal notranslate"><span class="pre">Config\Autoload</span></code> class.</p></li>
+<li><p>New option in routing. The <code class="docutils literal notranslate"><span class="pre">priority</span></code> option lowers the priority of specific route processing.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Autoloader</span></code> class can now load files which do not contain PHP classes. The non-class files are listed in the <code class="docutils literal notranslate"><span class="pre">$files</span></code> property of the <code class="docutils literal notranslate"><span class="pre">Config\Autoload</span></code> class.</p></li>
 </ul>
 </section>
 <section id="changes">
@@ -327,14 +327,14 @@ using <code class="docutils literal notranslate"><span class="pre">App::$indexPa
 <ul class="simple">
 <li><p>Layouts in views now support nested sections.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Response::getCookie</span></code> now returns a <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instance instead of an array of cookie attributes.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Response::getCookies</span></code> now returns an array of <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instances instead of array of array of attributes.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Response::getCookies</span></code> now returns an array of <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instances instead of an array of arrays of attributes.</p></li>
 <li><p>To eliminate warnings from modern browsers’ consoles, empty samesite values will be defaulted to <code class="docutils literal notranslate"><span class="pre">Lax</span></code> on cookie dispatch.</p></li>
-<li><p><cite>Model::errors()</cite> and <cite>BaseModel::errors()</cite> now always returns <cite>array</cite>; there was no definition change but the docblock has been updated.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Model::errors()</span></code> and <code class="docutils literal notranslate"><span class="pre">BaseModel::errors()</span></code> now always return <code class="docutils literal notranslate"><span class="pre">array</span></code>; there was no definition change but the docblock has been updated.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Entity::castAs</span></code> has changed behavior. Added new parameter <code class="docutils literal notranslate"><span class="pre">$method</span></code>. Type casting has been moved to separate handlers.</p></li>
 <li><p>Entity. Timestamp casting now throws an exception when an invalid value is passed</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Entity::castAsJson</span></code> uses external cast handler <code class="docutils literal notranslate"><span class="pre">JsonCast::get</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Entity::mutateDate</span></code> uses external cast handler <code class="docutils literal notranslate"><span class="pre">DatetimeCast::get</span></code>.</p></li>
-<li><p>In order for <code class="docutils literal notranslate"><span class="pre">Config\**</span></code> classes to get their respective properties’ values from the <code class="docutils literal notranslate"><span class="pre">.env</span></code>, it is now necessary to namespace the property with the name of the class. Previously, the property names are enough but now disallowed because it can get system environment variables, like <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.</p></li>
+<li><p>In order for <code class="docutils literal notranslate"><span class="pre">Config\**</span></code> classes to get their respective properties’ values from the <code class="docutils literal notranslate"><span class="pre">.env</span></code>, it is now necessary to namespace the property with the name of the class. Previously, the property names were enough, but this is now disallowed because it can get system environment variables, like <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.</p></li>
 <li><p>The array helper <code class="docutils literal notranslate"><span class="pre">_array_search_dot</span></code> is now marked for <code class="docutils literal notranslate"><span class="pre">&#64;internal</span></code> use. As this is used by <code class="docutils literal notranslate"><span class="pre">dot_array_search</span></code>, users should not use <code class="docutils literal notranslate"><span class="pre">_array_search_dot</span></code> directly in their code.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CacheInterface::getMetaData()</span></code> returns <code class="docutils literal notranslate"><span class="pre">null</span></code> for misses, or an array with at least the “expires” key set to the absolute epoch expiration, or <code class="docutils literal notranslate"><span class="pre">null</span></code> for “never expires”. The File, Memcached, and Wincache Handlers still return <code class="docutils literal notranslate"><span class="pre">false</span></code> which will become <code class="docutils literal notranslate"><span class="pre">null</span></code> in a future release.</p></li>
 </ul>
@@ -343,12 +343,12 @@ using <code class="docutils literal notranslate"><span class="pre">App::$indexPa
 <h2><a class="toc-backref" href="#id4" role="doc-backlink">Deprecations</a><a class="headerlink" href="#deprecations" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">CodeIgniter\View\View::$currentSection</span></code> property.</p></li>
-<li><p>Language strings and exceptions on invalid cookie samesite are deprecated for the <code class="docutils literal notranslate"><span class="pre">CookieException</span></code>’s own exception message.</p></li>
-<li><p>Deprecated <cite>CodeIgniterEntity</cite> in favor of <cite>CodeIgniterEntityEntity</cite></p></li>
+<li><p>Language strings and exceptions for invalid cookie samesite values are deprecated in favor of <code class="docutils literal notranslate"><span class="pre">CookieException</span></code>’s own exception message.</p></li>
+<li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Entity</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Entity\Entity</span></code></p></li>
 <li><p>Deprecated cookie-related properties of <code class="docutils literal notranslate"><span class="pre">Response</span></code> in order to use the <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> class.</p></li>
 <li><p>Deprecated cookie-related properties of <code class="docutils literal notranslate"><span class="pre">Security</span></code> in order to use the <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> class.</p></li>
 <li><p>Deprecated cookie-related properties of <code class="docutils literal notranslate"><span class="pre">Session</span></code> in order to use the <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> class.</p></li>
-<li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">Security::isExpired()</span></code> to use the <code class="docutils literal notranslate"><span class="pre">Cookie</span></code>’s internal expires status.</p></li>
+<li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">Security::isExpired()</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">Cookie</span></code>’s internal expiration status.</p></li>
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">CIDatabaseTestCase</span></code> to use the <code class="docutils literal notranslate"><span class="pre">DatabaseTestTrait</span></code> instead.</p></li>
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">FeatureTestCase</span></code> to use the <code class="docutils literal notranslate"><span class="pre">FeatureTestTrait</span></code> instead.</p></li>
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">ControllerTester</span></code> to use the <code class="docutils literal notranslate"><span class="pre">ControllerTestTrait</span></code> instead.</p></li>
@@ -381,7 +381,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

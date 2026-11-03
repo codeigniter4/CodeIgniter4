@@ -310,7 +310,7 @@
 <ul>
 <li><p><a class="reference internal" href="#validation-with-dot-array-syntax" id="id4">Validation with Dot Array Syntax</a></p></li>
 <li><p><a class="reference internal" href="#validation-rules-matches-and-differs" id="id5">Validation rules matches and differs</a></p></li>
-<li><p><a class="reference internal" href="#the-use-of-the-ssl-key-option-in-curlrequest-was-removed" id="id6">The use of the <cite>ssl_key</cite> option in CURLRequest was removed</a></p></li>
+<li><p><a class="reference internal" href="#the-use-of-the-ssl-key-option-in-curlrequest-was-removed" id="id6">The use of the <code class="docutils literal notranslate"><span class="pre">ssl_key</span></code> option in CURLRequest was removed</a></p></li>
 </ul>
 </li>
 <li><p><a class="reference internal" href="#project-files" id="id7">Project Files</a></p>
@@ -326,8 +326,8 @@
 <h3><a class="toc-backref" href="#id2" role="doc-backlink">Error Files</a><a class="headerlink" href="#error-files" title="Link to this heading"></a></h3>
 <p>Update the following files to show correct error messages:</p>
 <ul class="simple">
-<li><p>app/Views/errors/cli/error_exception.php</p></li>
-<li><p>app/Views/errors/html/error_exception.php</p></li>
+<li><p><strong>app/Views/errors/cli/error_exception.php</strong></p></li>
+<li><p><strong>app/Views/errors/html/error_exception.php</strong></p></li>
 </ul>
 </section>
 </section>
@@ -335,12 +335,11 @@
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Link to this heading"></a></h2>
 <section id="validation-with-dot-array-syntax">
 <span id="upgrade-444-validation-with-dot-array-syntax"></span><h3><a class="toc-backref" href="#id4" role="doc-backlink">Validation with Dot Array Syntax</a><a class="headerlink" href="#validation-with-dot-array-syntax" title="Link to this heading"></a></h3>
-<p>If you are using <a class="reference internal" href="../libraries/validation.html#validation-dot-array-syntax"><span class="std std-ref">dot array syntax</span></a> in validation
-rules, a bug where <code class="docutils literal notranslate"><span class="pre">*</span></code> would validate data in incorrect dimensions has been fixed.</p>
-<p>In previous versions, the rule key <code class="docutils literal notranslate"><span class="pre">contacts.*.name</span></code> captured data with any
-level like <code class="docutils literal notranslate"><span class="pre">contacts.*.name</span></code>, <code class="docutils literal notranslate"><span class="pre">contacts.*.*.name</span></code>, <code class="docutils literal notranslate"><span class="pre">contacts.*.*.*.name</span></code>,
-etc., incorrectly.</p>
-<p>The following code explains details:</p>
+<p>If you are using <a class="reference internal" href="../libraries/validation.html#validation-dot-array-syntax"><span class="std std-ref">dot array syntax</span></a> in validation rules, a bug where <code class="docutils literal notranslate"><span class="pre">*</span></code> would
+validate data in incorrect dimensions has been fixed.</p>
+<p>In previous versions, the rule key <code class="docutils literal notranslate"><span class="pre">contacts.*.name</span></code> captured data with any level like <code class="docutils literal notranslate"><span class="pre">contacts.*.name</span></code>,
+<code class="docutils literal notranslate"><span class="pre">contacts.*.*.name</span></code>, <code class="docutils literal notranslate"><span class="pre">contacts.*.*.*.name</span></code>, etc., incorrectly.</p>
+<p>The following code explains the details:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">Config\Services</span><span class="p">;</span>
 
 <span class="nv">$validation</span> <span class="o">=</span> <span class="nx">Services</span><span class="o">::</span><span class="na">validation</span><span class="p">();</span>
@@ -379,50 +378,47 @@ etc., incorrectly.</p>
 <span class="cm">*/</span>
 </pre></div>
 </div>
-<p>If you have code that depends on the bug, fix the the rule key.</p>
+<p>If you have code that depends on the bug, fix the rule key.</p>
 </section>
 <section id="validation-rules-matches-and-differs">
 <h3><a class="toc-backref" href="#id5" role="doc-backlink">Validation rules matches and differs</a><a class="headerlink" href="#validation-rules-matches-and-differs" title="Link to this heading"></a></h3>
-<p>Because bugs have been fixed in the case where <code class="docutils literal notranslate"><span class="pre">matches</span></code> and <code class="docutils literal notranslate"><span class="pre">differs</span></code> in
-the Strict and Traditional rules validate data of non-string types, if you are
-using these rules and validate non-string data, the validation results might be
+<p>Because bugs have been fixed in the case where <code class="docutils literal notranslate"><span class="pre">matches</span></code> and <code class="docutils literal notranslate"><span class="pre">differs</span></code> in the Strict and Traditional rules validate
+data of non-string types, if you are using these rules and validate non-string data, the validation results might be
 changed (fixed).</p>
-<p>Note that Traditional Rules should not be used to validate data that is not a
-string.</p>
+<p>Note that Traditional Rules should not be used to validate data that is not a string.</p>
 </section>
 <section id="the-use-of-the-ssl-key-option-in-curlrequest-was-removed">
-<h3><a class="toc-backref" href="#id6" role="doc-backlink">The use of the <cite>ssl_key</cite> option in CURLRequest was removed</a><a class="headerlink" href="#the-use-of-the-ssl-key-option-in-curlrequest-was-removed" title="Link to this heading"></a></h3>
-<p>CURLRequest option <cite>ssl_key</cite> it’s not recognized anymore.
-If in use, option <cite>ssl_key</cite> must be replaced with option <cite>verify</cite> in order to define the path
-to a CA bundle for CURLRequest.</p>
-<p>CURLRequest option <cite>verify</cite> can also take <em>boolean</em> values as usual.</p>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">The use of the <code class="docutils literal notranslate"><span class="pre">ssl_key</span></code> option in CURLRequest was removed</a><a class="headerlink" href="#the-use-of-the-ssl-key-option-in-curlrequest-was-removed" title="Link to this heading"></a></h3>
+<p>The CURLRequest option <code class="docutils literal notranslate"><span class="pre">ssl_key</span></code> is not recognized anymore. If in use, the option <code class="docutils literal notranslate"><span class="pre">ssl_key</span></code> must be replaced with
+the option <code class="docutils literal notranslate"><span class="pre">verify</span></code> in order to define the path to a CA bundle for CURLRequest.</p>
+<p>The CURLRequest option <code class="docutils literal notranslate"><span class="pre">verify</span></code> can also take <em>boolean</em> values as usual.</p>
 </section>
 </section>
 <section id="project-files">
 <h2><a class="toc-backref" href="#id7" role="doc-backlink">Project Files</a><a class="headerlink" href="#project-files" title="Link to this heading"></a></h2>
-<p>Some files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to
-these files being outside of the <strong>system</strong> scope they will not be changed without your intervention.</p>
-<p>There are some third-party CodeIgniter modules available to assist with merging changes to
-the project space: <a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
+<p>Some files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to these files being outside of
+the <strong>system</strong> scope, they will not be changed without your intervention.</p>
+<p>There are some third-party CodeIgniter modules available to assist with merging changes to the project space:
+<a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
 <section id="all-changes">
 <h3><a class="toc-backref" href="#id8" role="doc-backlink">All Changes</a><a class="headerlink" href="#all-changes" title="Link to this heading"></a></h3>
-<p>This is a list of all files in the <strong>project space</strong> that received changes;
-many will be simple comments or formatting that have no effect on the runtime:</p>
+<p>This is a list of all files in the <strong>project space</strong> that received changes; many will be simple comments or formatting
+that have no effect on the runtime:</p>
 <ul class="simple">
-<li><p>app/Config/App.php</p></li>
-<li><p>app/Config/Autoload.php</p></li>
-<li><p>app/Config/Boot/development.php</p></li>
-<li><p>app/Config/Boot/testing.php</p></li>
-<li><p>app/Config/Cache.php</p></li>
-<li><p>app/Config/Email.php</p></li>
-<li><p>app/Config/Filters.php</p></li>
-<li><p>app/Config/Kint.php</p></li>
-<li><p>app/Config/Modules.php</p></li>
-<li><p>app/Config/Publisher.php</p></li>
-<li><p>app/Config/Session.php</p></li>
-<li><p>app/Views/errors/cli/error_exception.php</p></li>
-<li><p>app/Views/errors/html/error_exception.php</p></li>
-<li><p>composer.json</p></li>
+<li><p><strong>app/Config/App.php</strong></p></li>
+<li><p><strong>app/Config/Autoload.php</strong></p></li>
+<li><p><strong>app/Config/Boot/development.php</strong></p></li>
+<li><p><strong>app/Config/Boot/testing.php</strong></p></li>
+<li><p><strong>app/Config/Cache.php</strong></p></li>
+<li><p><strong>app/Config/Email.php</strong></p></li>
+<li><p><strong>app/Config/Filters.php</strong></p></li>
+<li><p><strong>app/Config/Kint.php</strong></p></li>
+<li><p><strong>app/Config/Modules.php</strong></p></li>
+<li><p><strong>app/Config/Publisher.php</strong></p></li>
+<li><p><strong>app/Config/Session.php</strong></p></li>
+<li><p><strong>app/Views/errors/cli/error_exception.php</strong></p></li>
+<li><p><strong>app/Views/errors/html/error_exception.php</strong></p></li>
+<li><p><strong>composer.json</strong></p></li>
 <li><p>env</p></li>
 <li><p>spark</p></li>
 </ul>
@@ -442,7 +438,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

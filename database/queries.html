@@ -348,8 +348,8 @@
 <h2><a class="toc-backref" href="#id4" role="doc-backlink">Query Basics</a><a class="headerlink" href="#query-basics" title="Link to this heading"></a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>CodeIgniter doesn’t support dots (<code class="docutils literal notranslate"><span class="pre">.</span></code>) in the table and column names.
-Since v4.5.0, database names with dots are supported.</p>
+<p>CodeIgniter doesn’t support dots (<code class="docutils literal notranslate"><span class="pre">.</span></code>) in the table and column names. Since v4.5.0, database names with dots
+are supported.</p>
 </div>
 <section id="regular-queries">
 <h3><a class="toc-backref" href="#id5" role="doc-backlink">Regular Queries</a><a class="headerlink" href="#regular-queries" title="Link to this heading"></a></h3>
@@ -362,11 +362,9 @@ Since v4.5.0, database names with dots are supported.</p>
 <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">'YOUR QUERY HERE'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">query()</span></code> method returns a database result <strong>object</strong> when “read”
-type queries are run which you can use to <a class="reference internal" href="results.html"><span class="doc">show your
-results</span></a>. When “write” type queries are run it simply
-returns true or false depending on success or failure. When retrieving
-data you will typically assign the query to your own variable, like
+<p>The <code class="docutils literal notranslate"><span class="pre">query()</span></code> method returns a database result <strong>object</strong> when “read” type queries are run, and you can use that
+object to <a class="reference internal" href="results.html"><span class="doc">show your results</span></a>. When “write” type queries are run, it simply returns true or false
+depending on success or failure. When retrieving data, you will typically assign the query to your own variable, like
 this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -375,8 +373,8 @@ this:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you are using OCI8 Driver, SQL statements should not end with a semi-colon (<code class="docutils literal notranslate"><span class="pre">;</span></code>).
-PL/SQL statements should end with a semi-colon (<code class="docutils literal notranslate"><span class="pre">;</span></code>).</p>
+<p>If you are using the OCI8 driver, SQL statements should not end with a semi-colon (<code class="docutils literal notranslate"><span class="pre">;</span></code>). PL/SQL statements
+should end with a semi-colon (<code class="docutils literal notranslate"><span class="pre">;</span></code>).</p>
 </div>
 </section>
 </section>
@@ -384,16 +382,12 @@ PL/SQL statements should end with a semi-colon (<code class="docutils literal no
 <h3><a class="toc-backref" href="#id6" role="doc-backlink">Simplified Queries</a><a class="headerlink" href="#simplified-queries" title="Link to this heading"></a></h3>
 <section id="db-simplequery">
 <span id="id2"></span><h4>$db-&gt;simpleQuery()<a class="headerlink" href="#db-simplequery" title="Link to this heading"></a></h4>
-<p>The <code class="docutils literal notranslate"><span class="pre">simpleQuery()</span></code> method is a simplified version of the
-<code class="docutils literal notranslate"><span class="pre">$db-&gt;query()</span></code> method. It DOES
-NOT return a database result set, nor does it set the query timer, or
-compile bind data, or store your query for debugging. It simply lets you
+<p>The <code class="docutils literal notranslate"><span class="pre">simpleQuery()</span></code> method is a simplified version of the <code class="docutils literal notranslate"><span class="pre">$db-&gt;query()</span></code> method. It DOES NOT return a database
+result set, nor does it set the query timer, or compile bind data, or store your query for debugging. It simply lets you
 submit a query. Most users will rarely use this function.</p>
-<p>It returns whatever the database drivers “execute” function returns.
-That typically is true/false on success or failure for write type queries
-such as INSERT, DELETE or UPDATE statements (which is what it really
-should be used for) and a resource/object on success for queries with
-fetchable results.</p>
+<p>It returns whatever the database driver’s “execute” function returns. That typically is true/false on success or failure
+for write type queries such as INSERT, DELETE or UPDATE statements (which is what it really should be used for) and a
+resource/object on success for queries with fetchable results.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">if</span> <span class="p">(</span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">simpleQuery</span><span class="p">(</span><span class="s1">'YOUR QUERY'</span><span class="p">))</span> <span class="p">{</span>
@@ -405,9 +399,8 @@ fetchable results.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>PostgreSQL’s <code class="docutils literal notranslate"><span class="pre">pg_exec()</span></code> function (for example) always
-returns a resource on success even for write type queries.
-So keep that in mind if you’re looking for a boolean value.</p>
+<p>PostgreSQL’s <code class="docutils literal notranslate"><span class="pre">pg_exec()</span></code> function (for example) always returns a resource on success even for write type
+queries. So keep that in mind if you’re looking for a boolean value.</p>
 </div>
 </section>
 </section>
@@ -416,9 +409,8 @@ So keep that in mind if you’re looking for a boolean value.</p>
 <h2><a class="toc-backref" href="#id7" role="doc-backlink">Working with Database Prefixes Manually</a><a class="headerlink" href="#working-with-database-prefixes-manually" title="Link to this heading"></a></h2>
 <section id="db-prefixtable">
 <h3><a class="toc-backref" href="#id8" role="doc-backlink">$db-&gt;prefixTable()</a><a class="headerlink" href="#db-prefixtable" title="Link to this heading"></a></h3>
-<p>If you have configured a database prefix and would like to prepend it to
-a table name for use in a native SQL query for example, then you can use
-the following:</p>
+<p>If you have configured a database prefix and would like to prepend it to a table name for use in a native SQL query, for
+example, then you can use the following:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">prefixTable</span><span class="p">(</span><span class="s1">'tablename'</span><span class="p">);</span> <span class="c1">// outputs prefix_tablename</span>
@@ -427,8 +419,8 @@ the following:</p>
 </section>
 <section id="db-setprefix">
 <h3><a class="toc-backref" href="#id9" role="doc-backlink">$db-&gt;setPrefix()</a><a class="headerlink" href="#db-setprefix" title="Link to this heading"></a></h3>
-<p>If for any reason you would like to change the prefix programmatically
-without needing to create a new connection you can use this method:</p>
+<p>If for any reason you would like to change the prefix programmatically without needing to create a new connection, you
+can use this method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">setPrefix</span><span class="p">(</span><span class="s1">'newprefix_'</span><span class="p">);</span>
@@ -450,10 +442,8 @@ without needing to create a new connection you can use this method:</p>
 <h2><a class="toc-backref" href="#id11" role="doc-backlink">Protecting Identifiers</a><a class="headerlink" href="#protecting-identifiers" title="Link to this heading"></a></h2>
 <section id="db-protectidentifiers">
 <h3><a class="toc-backref" href="#id12" role="doc-backlink">$db-&gt;protectIdentifiers()</a><a class="headerlink" href="#db-protectidentifiers" title="Link to this heading"></a></h3>
-<p>In many databases, it is advisable to protect table and field names - for
-example with backticks in MySQL. <strong>Query Builder queries are
-automatically protected</strong>, but if you need to manually protect an
-identifier you can use:</p>
+<p>In many databases, it is advisable to protect table and field names - for example with backticks in MySQL.
+<strong>Query Builder queries are automatically protected</strong>, but if you need to manually protect an identifier you can use:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">protectIdentifiers</span><span class="p">(</span><span class="s1">'table_name'</span><span class="p">);</span>
@@ -461,14 +451,11 @@ identifier you can use:</p>
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>Although the Query Builder will try its best to properly
-quote any field and table names that you feed it. Note that it
-is NOT designed to work with arbitrary user input. DO NOT feed it
-with unsanitized user data.</p>
+<p>Although the Query Builder will try its best to properly quote any field and table names that you feed
+it, note that it is NOT designed to work with arbitrary user input. DO NOT feed it with unsanitized user data.</p>
 </div>
-<p>This function will also add a <strong>table prefix</strong> to your table, assuming you
-have a prefix specified in your database config file. To enable the
-prefixing set <code class="docutils literal notranslate"><span class="pre">true</span></code> (boolean) via the second parameter:</p>
+<p>This function will also add a <strong>table prefix</strong> to your table, assuming you have a prefix specified in your database
+config file. To enable prefixing, set <code class="docutils literal notranslate"><span class="pre">true</span></code> (boolean) via the second parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">protectIdentifiers</span><span class="p">(</span><span class="s1">'table_name'</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
@@ -478,14 +465,12 @@ prefixing set <code class="docutils literal notranslate"><span class="pre">true<
 </section>
 <section id="escaping-values">
 <span id="database-queries-escaping"></span><h2><a class="toc-backref" href="#id13" role="doc-backlink">Escaping Values</a><a class="headerlink" href="#escaping-values" title="Link to this heading"></a></h2>
-<p>It’s a very good security practice to escape your data before submitting
-it into your database. CodeIgniter has three methods that help you do
-this:</p>
+<p>It’s a very good security practice to escape your data before submitting it into your database. CodeIgniter has three
+methods that help you do this:</p>
 <section id="db-escape">
 <span id="database-queries-db-escape"></span><h3><a class="toc-backref" href="#id14" role="doc-backlink">1. $db-&gt;escape()</a><a class="headerlink" href="#db-escape" title="Link to this heading"></a></h3>
-<p>This function determines the data type so that it can escape only string
-data. It also automatically adds single quotes around the data so you
-don’t have to:</p>
+<p>This function determines the data type so that it can escape only string data. It also automatically adds single quotes
+around the data so you don’t have to:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$sql</span> <span class="o">=</span> <span class="s1">'INSERT INTO table (title) VALUES('</span> <span class="o">.</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">escape</span><span class="p">(</span><span class="nv">$title</span><span class="p">)</span> <span class="o">.</span> <span class="s1">')'</span><span class="p">;</span>
@@ -494,9 +479,8 @@ don’t have to:</p>
 </section>
 <section id="db-escapestring">
 <h3><a class="toc-backref" href="#id15" role="doc-backlink">2. $db-&gt;escapeString()</a><a class="headerlink" href="#db-escapestring" title="Link to this heading"></a></h3>
-<p>This function escapes the data passed to
-it, regardless of type. Most of the time you’ll use the above
-function rather than this one. Use the function like this:</p>
+<p>This function escapes the data passed to it, regardless of type. Most of the time you’ll use the above function rather
+than this one. Use the function like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$sql</span> <span class="o">=</span> <span class="s2">"INSERT INTO table (title) VALUES('"</span> <span class="o">.</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">escapeString</span><span class="p">(</span><span class="nv">$title</span><span class="p">)</span> <span class="o">.</span> <span class="s2">"')"</span><span class="p">;</span>
@@ -505,9 +489,8 @@ function rather than this one. Use the function like this:</p>
 </section>
 <section id="db-escapelikestring">
 <h3><a class="toc-backref" href="#id16" role="doc-backlink">3. $db-&gt;escapeLikeString()</a><a class="headerlink" href="#db-escapelikestring" title="Link to this heading"></a></h3>
-<p>This method should be used when
-strings are to be used in LIKE conditions so that LIKE wildcards
-(<code class="docutils literal notranslate"><span class="pre">%</span></code>, <code class="docutils literal notranslate"><span class="pre">_</span></code>) in the string are also properly escaped.</p>
+<p>This method should be used when strings are to be used in LIKE conditions so that LIKE wildcards (<code class="docutils literal notranslate"><span class="pre">%</span></code>, <code class="docutils literal notranslate"><span class="pre">_</span></code>) in the
+string are also properly escaped.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$search</span> <span class="o">=</span> <span class="s1">'20% raise'</span><span class="p">;</span>
@@ -516,27 +499,25 @@ strings are to be used in LIKE conditions so that LIKE wildcards
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">escapeLikeString()</span></code> method uses <code class="docutils literal notranslate"><span class="pre">'!'</span></code> (exclamation mark)
-to escape special characters for <code class="docutils literal notranslate"><span class="pre">LIKE</span></code> conditions. Because this
-method escapes partial strings that you would wrap in quotes
-yourself, it cannot automatically add the <code class="docutils literal notranslate"><span class="pre">ESCAPE</span> <span class="pre">'!'</span></code>
-condition for you, and so you’ll have to manually do that.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">escapeLikeString()</span></code> method uses <code class="docutils literal notranslate"><span class="pre">'!'</span></code> (exclamation mark) to escape special characters for
+<code class="docutils literal notranslate"><span class="pre">LIKE</span></code> conditions. Because this method escapes partial strings that you would wrap in quotes yourself, it cannot
+automatically add the <code class="docutils literal notranslate"><span class="pre">ESCAPE</span> <span class="pre">'!'</span></code> condition for you, and so you’ll have to manually do that.</p>
 </div>
 </section>
 </section>
 <section id="query-bindings">
 <span id="database-queries-query-bindings"></span><h2><a class="toc-backref" href="#id17" role="doc-backlink">Query Bindings</a><a class="headerlink" href="#query-bindings" title="Link to this heading"></a></h2>
-<p>Bindings enable you to simplify your query syntax by letting the system
-put the queries together for you. Consider the following example:</p>
+<p>Bindings enable you to simplify your query syntax by letting the system put the queries together for you. Consider the
+following example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$sql</span> <span class="o">=</span> <span class="s1">'SELECT * FROM some_table WHERE id = ? AND status = ? AND author = ?'</span><span class="p">;</span>
 <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="nv">$sql</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="s1">'live'</span><span class="p">,</span> <span class="s1">'Rick'</span><span class="p">]);</span>
 </pre></div>
 </div>
-<p>The question marks in the query are automatically replaced with the
-values in the array in the second parameter of the query function.</p>
-<p>Binding also work with arrays, which will be transformed to IN sets:</p>
+<p>The question marks in the query are automatically replaced with the values in the array in the second parameter of the
+query function.</p>
+<p>Bindings also work with arrays, which will be transformed to IN sets:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$sql</span> <span class="o">=</span> <span class="s1">'SELECT * FROM some_table WHERE id IN ? AND status = ? AND author = ?'</span><span class="p">;</span>
@@ -547,14 +528,12 @@ values in the array in the second parameter of the query function.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">SELECT</span> <span class="o">*</span> <span class="nx">FROM</span> <span class="nx">some_table</span> <span class="nx">WHERE</span> <span class="nx">id</span> <span class="nx">IN</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span> <span class="k">AND</span> <span class="nx">status</span> <span class="o">=</span> <span class="s1">'live'</span> <span class="k">AND</span> <span class="nx">author</span> <span class="o">=</span> <span class="s1">'Rick'</span>
 </pre></div>
 </div>
-<p>The secondary benefit of using binds is that the values are
-automatically escaped producing safer queries.
-You don’t have to remember to manually escape data - the engine does it automatically for you.</p>
+<p>The secondary benefit of using binds is that the values are automatically escaped, producing safer queries. You don’t
+have to remember to manually escape data - the engine does it automatically for you.</p>
 <section id="named-bindings">
 <h3><a class="toc-backref" href="#id18" role="doc-backlink">Named Bindings</a><a class="headerlink" href="#named-bindings" title="Link to this heading"></a></h3>
-<p>Instead of using the question mark to mark the location of the bound values,
-you can name the bindings, allowing the keys of the values passed in to match
-placeholders in the query:</p>
+<p>Instead of using the question mark to mark the location of the bound values, you can name the bindings, allowing the
+keys of the values passed in to match placeholders in the query:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$sql</span> <span class="o">=</span> <span class="s1">'SELECT * FROM some_table WHERE id = :id: AND status = :status: AND author = :name:'</span><span class="p">;</span>
@@ -571,11 +550,10 @@ placeholders in the query:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Placeholders are only recognized where the SQL parser would see them as
-part of the query. A placeholder inside a quoted string, a quoted identifier,
-or a SQL comment is left untouched. If you need a value inside a quoted
-string, for example in a <code class="docutils literal notranslate"><span class="pre">LIKE</span></code> pattern, put the whole string into the
-bound value (<code class="docutils literal notranslate"><span class="pre">'name'</span> <span class="pre">=&gt;</span> <span class="pre">'%Rick%'</span></code>) and use the placeholder without quotes.</p>
+<p>Placeholders are only recognized where the SQL parser would see them as part of the query. A placeholder
+inside a quoted string, a quoted identifier, or a SQL comment is left untouched. If you need a value inside a quoted
+string, for example in a <code class="docutils literal notranslate"><span class="pre">LIKE</span></code> pattern, put the whole string into the bound value (<code class="docutils literal notranslate"><span class="pre">'name'</span> <span class="pre">=&gt;</span> <span class="pre">'%Rick%'</span></code>) and
+use the placeholder without quotes.</p>
 </div>
 </section>
 </section>
@@ -583,9 +561,8 @@ bound value (<code class="docutils literal notranslate"><span class="pre">'name'
 <h2><a class="toc-backref" href="#id19" role="doc-backlink">Handling Errors</a><a class="headerlink" href="#handling-errors" title="Link to this heading"></a></h2>
 <section id="db-error">
 <h3><a class="toc-backref" href="#id20" role="doc-backlink">$db-&gt;error()</a><a class="headerlink" href="#db-error" title="Link to this heading"></a></h3>
-<p>If you need to get the last error that has occurred, the <code class="docutils literal notranslate"><span class="pre">error()</span></code> method
-will return an array containing its code and message. Here’s a quick
-example:</p>
+<p>If you need to get the last error that has occurred, the <code class="docutils literal notranslate"><span class="pre">error()</span></code> method will return an array containing its code and
+message. Here’s a quick example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">simpleQuery</span><span class="p">(</span><span class="s1">'SELECT `example_field` FROM `example_table`'</span><span class="p">))</span> <span class="p">{</span>
@@ -597,20 +574,20 @@ example:</p>
 </section>
 <section id="prepared-queries">
 <h2><a class="toc-backref" href="#id21" role="doc-backlink">Prepared Queries</a><a class="headerlink" href="#prepared-queries" title="Link to this heading"></a></h2>
-<p>Most database engines support some form of prepared statements, that allow you to prepare a query once, and then run
-that query multiple times with new sets of data. This eliminates the possibility of SQL injection since the data is
-passed to the database in a different format than the query itself. When you need to run the same query multiple times
-it can be quite a bit faster, too. However, to use it for every query can have major performance hits, since you’re calling
-out to the database twice as often. Since the Query Builder and Database connections already handle escaping the data
-for you, the safety aspect is already taken care of for you. There will be times, though, when you need the ability
-to optimize the query by running a prepared statement, or prepared query.</p>
+<p>Most database engines support some form of prepared statements that allow you to prepare a query once, and then run that
+query multiple times with new sets of data. This eliminates the possibility of SQL injection since the data is passed to
+the database in a different format than the query itself. When you need to run the same query multiple times, it can be
+quite a bit faster, too. However, to use it for every query can have major performance hits, since you’re calling out to
+the database twice as often. Since the Query Builder and Database connections already handle escaping the data for you,
+the safety aspect is already taken care of for you. There will be times, though, when you need the ability to optimize
+the query by running a prepared statement, or prepared query.</p>
 <section id="preparing-the-query">
 <h3><a class="toc-backref" href="#id22" role="doc-backlink">Preparing the Query</a><a class="headerlink" href="#preparing-the-query" title="Link to this heading"></a></h3>
-<p>This can be easily done with the <code class="docutils literal notranslate"><span class="pre">prepare()</span></code> method. This takes a single parameter, which is a Closure that returns
-a query object. Query objects are automatically generated by any of the “final” type queries, including <strong>insert</strong>,
-<strong>update</strong>, <strong>delete</strong>, <strong>replace</strong>, and <strong>get</strong>. This is handled the easiest by using the Query Builder to
-run a query. The query is not actually run, and the values don’t matter since they’re never applied, acting instead
-as placeholders. This returns a PreparedQuery object:</p>
+<p>This can be easily done with the <code class="docutils literal notranslate"><span class="pre">prepare()</span></code> method. This takes a single parameter, which is a Closure that returns a
+query object. Query objects are automatically generated by any of the “final” type queries, including <strong>insert</strong>,
+<strong>update</strong>, <strong>delete</strong>, <strong>replace</strong>, and <strong>get</strong>. The easiest way to handle this is to use the Query Builder to run a
+query. The query is not actually run, and the values don’t matter since they’re never applied, acting instead as
+placeholders. This returns a PreparedQuery object:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$pQuery</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">prepare</span><span class="p">(</span><span class="k">static</span> <span class="nx">fn</span> <span class="p">(</span><span class="nv">$db</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">'user'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">([</span>
@@ -620,8 +597,8 @@ as placeholders. This returns a PreparedQuery object:</p>
 <span class="p">]));</span>
 </pre></div>
 </div>
-<p>If you don’t want to use the Query Builder you can create the Query object manually using question marks for
-value placeholders:</p>
+<p>If you don’t want to use the Query Builder, you can create the Query object manually using question marks for value
+placeholders:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Database\Query</span><span class="p">;</span>
@@ -633,8 +610,8 @@ value placeholders:</p>
 <span class="p">});</span>
 </pre></div>
 </div>
-<p>If the database requires an array of options passed to it during the prepare statement phase you can pass that
-array through in the second parameter:</p>
+<p>If the database requires an array of options passed to it during the prepare statement phase, you can pass that array
+through in the second parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Database\Query</span><span class="p">;</span>
@@ -648,15 +625,14 @@ array through in the second parameter:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Currently, the only database that actually uses the array of option is SQLSRV.</p>
+<p>Currently, the only database that actually uses the array of options is SQLSRV.</p>
 </div>
 </section>
 <section id="executing-the-query">
 <h3><a class="toc-backref" href="#id23" role="doc-backlink">Executing the Query</a><a class="headerlink" href="#executing-the-query" title="Link to this heading"></a></h3>
-<p>Once you have a prepared query you can use the <code class="docutils literal notranslate"><span class="pre">execute()</span></code> method to actually run the query. You can pass in as
-many variables as you need in the query parameters. The number of parameters you pass must match the number of
-placeholders in the query. They must also be passed in the same order as the placeholders appear in the original
-query:</p>
+<p>Once you have a prepared query, you can use the <code class="docutils literal notranslate"><span class="pre">execute()</span></code> method to actually run the query. You can pass in as many
+variables as you need in the query parameters. The number of parameters you pass must match the number of placeholders
+in the query. They must also be passed in the same order as the placeholders appear in the original query:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Prepare the Query</span>
@@ -675,16 +651,16 @@ query:</p>
 <span class="nv">$results</span> <span class="o">=</span> <span class="nv">$pQuery</span><span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$email</span><span class="p">,</span> <span class="nv">$country</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>For queries of type “write” it returns true or false, indicating the success or failure of the query.
-For queries of type “read” it returns a standard <a class="reference internal" href="results.html"><span class="doc">result set</span></a>.</p>
+<p>For queries of type “write”, it returns true or false, indicating the success or failure of the query. For queries of
+type “read”, it returns a standard <a class="reference internal" href="results.html"><span class="doc">result set</span></a>.</p>
 </section>
 <section id="other-methods">
 <h3><a class="toc-backref" href="#id24" role="doc-backlink">Other Methods</a><a class="headerlink" href="#other-methods" title="Link to this heading"></a></h3>
 <p>In addition to these two primary methods, the prepared query object also has the following methods:</p>
 <section id="close">
 <span id="database-queries-stmt-close"></span><h4>close()<a class="headerlink" href="#close" title="Link to this heading"></a></h4>
-<p>While PHP does a pretty good job of closing all open statements with the database it’s always a good idea to
-close out the prepared statement when you’re done with it:</p>
+<p>While PHP does a pretty good job of closing all open statements with the database, it’s always a good idea to close out
+the prepared statement when you’re done with it:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">if</span> <span class="p">(</span><span class="nv">$pQuery</span><span class="o">-&gt;</span><span class="na">close</span><span class="p">())</span> <span class="p">{</span>
@@ -696,7 +672,8 @@ close out the prepared statement when you’re done with it:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Since v4.3.0, the <code class="docutils literal notranslate"><span class="pre">close()</span></code> method deallocates the prepared statement in all DBMS. Previously, they were not deallocated in Postgre, SQLSRV and OCI8.</p>
+<p>Since v4.3.0, the <code class="docutils literal notranslate"><span class="pre">close()</span></code> method deallocates the prepared statement in all DBMS. Previously, they were not
+deallocated in Postgre, SQLSRV and OCI8.</p>
 </div>
 </section>
 <section id="getquerystring">
@@ -712,20 +689,17 @@ close out the prepared statement when you’re done with it:</p>
 </section>
 <section id="geterrormessage">
 <h4>getErrorMessage()<a class="headerlink" href="#geterrormessage" title="Link to this heading"></a></h4>
-<p>If any errors were encountered these methods can be used to retrieve the error code and string.</p>
+<p>If any errors were encountered, these methods can be used to retrieve the error code and string.</p>
 </section>
 </section>
 </section>
 <section id="working-with-query-objects">
 <h2><a class="toc-backref" href="#id25" role="doc-backlink">Working with Query Objects</a><a class="headerlink" href="#working-with-query-objects" title="Link to this heading"></a></h2>
-<p>Internally, all queries are processed and stored as instances of
-<code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\Query</span></code>. This class is responsible for binding
-the parameters, otherwise preparing the query, and storing performance
-data about its query.</p>
+<p>Internally, all queries are processed and stored as instances of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\Query</span></code>. This class is
+responsible for binding the parameters, otherwise preparing the query, and storing performance data about its query.</p>
 <section id="db-getlastquery">
 <h3><a class="toc-backref" href="#id26" role="doc-backlink">$db-&gt;getLastQuery()</a><a class="headerlink" href="#db-getlastquery" title="Link to this heading"></a></h3>
-<p>When you just need to retrieve the last Query object, use the
-<code class="docutils literal notranslate"><span class="pre">getLastQuery()</span></code> method:</p>
+<p>When you just need to retrieve the last Query object, use the <code class="docutils literal notranslate"><span class="pre">getLastQuery()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">getLastQuery</span><span class="p">();</span>
@@ -735,13 +709,11 @@ data about its query.</p>
 </section>
 <section id="the-query-class">
 <h3><a class="toc-backref" href="#id27" role="doc-backlink">The Query Class</a><a class="headerlink" href="#the-query-class" title="Link to this heading"></a></h3>
-<p>Each query object stores several pieces of information about the query itself.
-This is used, in part, by the Timeline feature, but is available for your use
-as well.</p>
+<p>Each query object stores several pieces of information about the query itself. This is used, in part, by the Timeline
+feature, but is available for your use as well.</p>
 <section id="getquery">
 <h4>getQuery()<a class="headerlink" href="#getquery" title="Link to this heading"></a></h4>
-<p>Returns the final query after all processing has happened. This is the exact
-query that was sent to the database:</p>
+<p>Returns the final query after all processing has happened. This is the exact query that was sent to the database:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$sql</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getQuery</span><span class="p">();</span>
@@ -756,8 +728,7 @@ query that was sent to the database:</p>
 </section>
 <section id="getoriginalquery">
 <h4>getOriginalQuery()<a class="headerlink" href="#getoriginalquery" title="Link to this heading"></a></h4>
-<p>Returns the raw SQL that was passed into the object. This will not have any
-binds in it, or prefixes swapped out, etc:</p>
+<p>Returns the raw SQL that was passed into the object. This will not have any binds in it, or prefixes swapped out, etc.:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$sql</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getOriginalQuery</span><span class="p">();</span>
@@ -766,8 +737,7 @@ binds in it, or prefixes swapped out, etc:</p>
 </section>
 <section id="id3">
 <h4>hasError()<a class="headerlink" href="#id3" title="Link to this heading"></a></h4>
-<p>If an error was encountered during the execution of this query this method
-will return true:</p>
+<p>If an error was encountered during the execution of this query, this method will return true:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">if</span> <span class="p">(</span><span class="nv">$query</span><span class="o">-&gt;</span><span class="na">hasError</span><span class="p">())</span> <span class="p">{</span>
@@ -779,8 +749,7 @@ will return true:</p>
 </section>
 <section id="iswritetype">
 <h4>isWriteType()<a class="headerlink" href="#iswritetype" title="Link to this heading"></a></h4>
-<p>Returns true if the query was determined to be a write-type query (i.e.,
-INSERT, UPDATE, DELETE, etc):</p>
+<p>Returns true if the query was determined to be a write-type query (i.e., INSERT, UPDATE, DELETE, etc.):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">if</span> <span class="p">(</span><span class="nv">$query</span><span class="o">-&gt;</span><span class="na">isWriteType</span><span class="p">())</span> <span class="p">{</span>
@@ -791,9 +760,8 @@ INSERT, UPDATE, DELETE, etc):</p>
 </section>
 <section id="swapprefix">
 <h4>swapPrefix()<a class="headerlink" href="#swapprefix" title="Link to this heading"></a></h4>
-<p>Replaces one table prefix with another value in the SQL. The first
-parameter is the original prefix that you want replaced, and the second
-parameter is the value you want it replaced with:</p>
+<p>Replaces one table prefix with another value in the SQL. The first parameter is the original prefix that you want
+replaced, and the second parameter is the value you want it replaced with:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$sql</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">swapPrefix</span><span class="p">(</span><span class="s1">'ci3_'</span><span class="p">,</span> <span class="s1">'ci4_'</span><span class="p">);</span>
@@ -834,7 +802,7 @@ parameter is the value you want it replaced with:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

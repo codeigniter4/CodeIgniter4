@@ -331,21 +331,18 @@
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Link to this heading"></a></h2>
 <section id="exception-changes">
 <h3><a class="toc-backref" href="#id2" role="doc-backlink">Exception Changes</a><a class="headerlink" href="#exception-changes" title="Link to this heading"></a></h3>
-<p>Some classes have changed the exception classes that are thrown. Some exception
-classes have changed parent classes.
-See <a class="reference internal" href="../changelogs/v4.6.0.html#v460-behavior-changes-exceptions"><span class="std std-ref">ChangeLog</span></a> for details.</p>
+<p>Some classes have changed the exception classes that are thrown. Some exception classes have changed parent classes. See
+<a class="reference internal" href="../changelogs/v4.6.0.html#v460-behavior-changes-exceptions"><span class="std std-ref">ChangeLog</span></a> for details.</p>
 <p>If you have code that catches these exceptions, change the exception classes.</p>
 </section>
 <section id="time-createfromtimestamp-timezone-change">
 <span id="upgrade-460-time-create-from-timestamp"></span><h3><a class="toc-backref" href="#id3" role="doc-backlink">Time::createFromTimestamp() Timezone Change</a><a class="headerlink" href="#time-createfromtimestamp-timezone-change" title="Link to this heading"></a></h3>
-<p>When you do not explicitly pass a timezone, now
-<a class="reference internal" href="../libraries/time.html#time-createfromtimestamp"><span class="std std-ref">Time::createFromTimestamp()</span></a> returns a Time
-instance with <strong>UTC</strong>. In v4.4.6 to prior to v4.6.0, a Time instance with the
-currently set default timezone was returned.</p>
-<p>This behavior change normalizes behavior with changes in PHP 8.4 which adds a
-new <code class="docutils literal notranslate"><span class="pre">DateTimeInterface::createFromTimestamp()</span></code> method.</p>
-<p>If you want to keep the default timezone, you need to pass the timezone as the
-second parameter:</p>
+<p>When you do not explicitly pass a timezone, now <a class="reference internal" href="../libraries/time.html#time-createfromtimestamp"><span class="std std-ref">Time::createFromTimestamp()</span></a> returns a
+Time instance with <strong>UTC</strong>. From v4.4.6 to before v4.6.0, a Time instance with the currently set default timezone was
+returned.</p>
+<p>This behavior change normalizes behavior with changes in PHP 8.4, which adds a new
+<code class="docutils literal notranslate"><span class="pre">DateTimeInterface::createFromTimestamp()</span></code> method.</p>
+<p>If you want to keep the default timezone, you need to pass the timezone as the second parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
 <span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromTimestamp</span><span class="p">(</span><span class="mi">1501821586</span><span class="p">,</span> <span class="nb">date_default_timezone_get</span><span class="p">());</span>
@@ -354,8 +351,7 @@ second parameter:</p>
 </section>
 <section id="time-keeps-microseconds">
 <span id="upgrade-460-time-keeps-microseconds"></span><h3><a class="toc-backref" href="#id4" role="doc-backlink">Time keeps Microseconds</a><a class="headerlink" href="#time-keeps-microseconds" title="Link to this heading"></a></h3>
-<p>In previous versions, <a class="reference internal" href="../libraries/time.html"><span class="doc">Time</span></a> lost microseconds in some
-cases. But the bugs have been fixed.</p>
+<p>In previous versions, <a class="reference internal" href="../libraries/time.html"><span class="doc">Time</span></a> lost microseconds in some cases. But the bugs have been fixed.</p>
 <p>The results of the <code class="docutils literal notranslate"><span class="pre">Time</span></code> comparison may differ due to these fixes:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
@@ -367,7 +363,7 @@ cases. But the bugs have been fixed.</p>
 <span class="c1">//  After: false</span>
 </pre></div>
 </div>
-<p>In a such case, you need to remove the microseconds:</p>
+<p>In such a case, you need to remove the microseconds:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
 <span class="nv">$time1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">'2024-01-01 12:00:00.654321'</span><span class="p">);</span>
@@ -385,7 +381,7 @@ cases. But the bugs have been fixed.</p>
 <span class="c1">//  After: true</span>
 </pre></div>
 </div>
-<p>The following cases now keeps microseconds:</p>
+<p>The following cases now keep microseconds:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
 <span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromFormat</span><span class="p">(</span><span class="s1">'Y-m-d H:i:s.u'</span><span class="p">,</span> <span class="s1">'2024-07-09 09:13:34.654321'</span><span class="p">);</span>
@@ -402,7 +398,7 @@ cases. But the bugs have been fixed.</p>
 <span class="c1">//  After: 2024-07-26 21:05:57.857235</span>
 </pre></div>
 </div>
-<p>Note that <code class="docutils literal notranslate"><span class="pre">Time</span></code> with the current time has been holding microseconds since before.</p>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">Time</span></code> with the current time already held microseconds before this change.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
 <span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">();</span>
@@ -411,7 +407,7 @@ cases. But the bugs have been fixed.</p>
 <span class="c1">//  After: 2024-07-26 21:39:32.249072</span>
 </pre></div>
 </div>
-<p>Also, methods that returns an <code class="docutils literal notranslate"><span class="pre">int</span></code> still lose the microseconds.</p>
+<p>Also, methods that return an <code class="docutils literal notranslate"><span class="pre">int</span></code> still lose the microseconds.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
 <span class="nv">$time1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">'2024-01-01 12:00:00'</span><span class="p">);</span>
@@ -424,9 +420,8 @@ cases. But the bugs have been fixed.</p>
 </section>
 <section id="time-settimestamp-behavior-fix">
 <span id="upgrade-460-time-set-timestamp"></span><h3><a class="toc-backref" href="#id5" role="doc-backlink">Time::setTimestamp() Behavior Fix</a><a class="headerlink" href="#time-settimestamp-behavior-fix" title="Link to this heading"></a></h3>
-<p>In previous versions, if you call <code class="docutils literal notranslate"><span class="pre">Time::setTimestamp()</span></code> on a Time instance with
-a timezone other than the default timezone might return a Time instance with the
-wrong date/time.</p>
+<p>In previous versions, calling <code class="docutils literal notranslate"><span class="pre">Time::setTimestamp()</span></code> on a Time instance with a timezone other than the default
+timezone might return a Time instance with the wrong date/time.</p>
 <p>This bug has been fixed, and it now behaves in the same way as <code class="docutils literal notranslate"><span class="pre">DateTimeImmutable</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
@@ -468,15 +463,14 @@ wrong date/time.</p>
 </section>
 <section id="registrars-with-dirty-hack">
 <span id="upgrade-460-registrars-with-dirty-hack"></span><h3><a class="toc-backref" href="#id6" role="doc-backlink">Registrars with Dirty Hack</a><a class="headerlink" href="#registrars-with-dirty-hack" title="Link to this heading"></a></h3>
-<p>To prevent Auto-Discovery of <a class="reference internal" href="../general/configuration.html#registrars"><span class="std std-ref">Registrars</span></a> from running twice, when a registrar
-class is loaded or instantiated, if it instantiates a Config class (which extends
-<code class="docutils literal notranslate"><span class="pre">CodeIgniter\Config\BaseConfig</span></code>), <code class="docutils literal notranslate"><span class="pre">ConfigException</span></code> will be raised.</p>
-<p>This is because if Auto-Discovery of Registrars is performed twice, duplicate
-values may be added to properties of Config classes.</p>
-<p>All registrar classes (<strong>Config/Registrar.php</strong> in all namespaces) must be modified
-so that they do not instantiate any Config class when loaded or instantiated.</p>
-<p>If the packages/modules you are using provide such registrar classes, the registrar
-classes in the packages/modules need to be fixed.</p>
+<p>To prevent Auto-Discovery of <a class="reference internal" href="../general/configuration.html#registrars"><span class="std std-ref">Registrars</span></a> from running twice, when a registrar class is loaded or instantiated, if
+it instantiates a Config class (which extends <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Config\BaseConfig</span></code>), <code class="docutils literal notranslate"><span class="pre">ConfigException</span></code> will be raised.</p>
+<p>This is because if Auto-Discovery of Registrars is performed twice, duplicate values may be added to properties of
+Config classes.</p>
+<p>All registrar classes (<strong>Config/Registrar.php</strong> in all namespaces) must be modified so that they do not instantiate any
+Config class when loaded or instantiated.</p>
+<p>If the packages/modules you are using provide such registrar classes, the registrar classes in the packages/modules need
+to be fixed.</p>
 <p>The following is an example of code that will no longer work:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -516,110 +510,97 @@ classes in the packages/modules need to be fixed.</p>
 </section>
 <section id="session-id-sid-change">
 <span id="upgrade-460-sid-change"></span><h3><a class="toc-backref" href="#id7" role="doc-backlink">Session ID (SID) Change</a><a class="headerlink" href="#session-id-sid-change" title="Link to this heading"></a></h3>
-<p>Now <a class="reference internal" href="../libraries/sessions.html"><span class="doc">Session Library</span></a> forces to use the PHP default 32 character SIDs,
-with 4 bits of entropy per character. This change is to match the behavior of
-PHP 9.</p>
+<p>Now <a class="reference internal" href="../libraries/sessions.html"><span class="doc">Session Library</span></a> forces the use of the PHP default 32-character SIDs, with 4 bits of entropy per
+character. This change is to match the behavior of PHP 9.</p>
 <p>In other words, the following settings are always used:</p>
 <div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">session.sid_bits_per_character</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">4</span>
 <span class="na">session.sid_length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">32</span>
 </pre></div>
 </div>
-<p>In previous versions, the PHP ini settings was respected. So this change may
-change your SID length.</p>
+<p>In previous versions, the PHP ini settings were respected. So this change may change your SID length.</p>
 <p>If you cannot accept this change, customize the Session library.</p>
 </section>
 <section id="interface-changes">
 <h3><a class="toc-backref" href="#id8" role="doc-backlink">Interface Changes</a><a class="headerlink" href="#interface-changes" title="Link to this heading"></a></h3>
-<p>Some interface changes have been made. Classes that implement them should update
-their APIs to reflect the changes. See <a class="reference internal" href="../changelogs/v4.6.0.html#v460-interface-changes"><span class="std std-ref">ChangeLog</span></a>
-for details.</p>
+<p>Some interface changes have been made. Classes that implement them should update their APIs to reflect the changes. See
+<a class="reference internal" href="../changelogs/v4.6.0.html#v460-interface-changes"><span class="std std-ref">ChangeLog</span></a> for details.</p>
 </section>
 <section id="method-signature-changes">
 <h3><a class="toc-backref" href="#id9" role="doc-backlink">Method Signature Changes</a><a class="headerlink" href="#method-signature-changes" title="Link to this heading"></a></h3>
-<p>Some method signature changes have been made. Classes that extend them should
-update their APIs to reflect the changes. See <a class="reference internal" href="../changelogs/v4.6.0.html#v460-method-signature-changes"><span class="std std-ref">ChangeLog</span></a>
-for details.</p>
+<p>Some method signature changes have been made. Classes that extend them should update their APIs to reflect the changes.
+See <a class="reference internal" href="../changelogs/v4.6.0.html#v460-method-signature-changes"><span class="std std-ref">ChangeLog</span></a> for details.</p>
 </section>
 <section id="removed-deprecated-items">
 <h3><a class="toc-backref" href="#id10" role="doc-backlink">Removed Deprecated Items</a><a class="headerlink" href="#removed-deprecated-items" title="Link to this heading"></a></h3>
-<p>Some deprecated items have been removed. If you are still using these items, or
-extending these classes, upgrade your code.
-See <a class="reference internal" href="../changelogs/v4.6.0.html#v460-removed-deprecated-items"><span class="std std-ref">ChangeLog</span></a> for details.</p>
+<p>Some deprecated items have been removed. If you are still using these items, or extending these classes, upgrade your
+code. See <a class="reference internal" href="../changelogs/v4.6.0.html#v460-removed-deprecated-items"><span class="std std-ref">ChangeLog</span></a> for details.</p>
 </section>
 </section>
 <section id="breaking-enhancements">
 <h2><a class="toc-backref" href="#id11" role="doc-backlink">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Link to this heading"></a></h2>
 <section id="filters-changes">
 <span id="upgrade-460-filters-changes"></span><h3><a class="toc-backref" href="#id12" role="doc-backlink">Filters Changes</a><a class="headerlink" href="#filters-changes" title="Link to this heading"></a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">Filters</span></code> class has been changed to allow multiple runs of the same filter
-with different arguments in before or after.</p>
-<p>If you are extending <code class="docutils literal notranslate"><span class="pre">Filters</span></code>, you will need to modify it to conform to the
-following changes:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Filters</span></code> class has been changed to allow multiple runs of the same filter with different arguments in before or
+after.</p>
+<p>If you are extending <code class="docutils literal notranslate"><span class="pre">Filters</span></code>, you will need to modify it to conform to the following changes:</p>
 <ul class="simple">
-<li><p>The structure of the array properties <code class="docutils literal notranslate"><span class="pre">$filters</span></code> and <code class="docutils literal notranslate"><span class="pre">$filtersClasses</span></code> have
-been changed.</p></li>
+<li><p>The structure of the array properties <code class="docutils literal notranslate"><span class="pre">$filters</span></code> and <code class="docutils literal notranslate"><span class="pre">$filtersClasses</span></code> has been changed.</p></li>
 <li><p>The properties <code class="docutils literal notranslate"><span class="pre">$arguments</span></code> and <code class="docutils literal notranslate"><span class="pre">$argumentsClass</span></code> are no longer used.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Filters</span></code> has been changed so that the same filter class is not instantiated
-multiple times. If a filter class is used both before and after, the same instance
-is used.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Filters</span></code> has been changed so that the same filter class is not instantiated multiple times. If a filter class is
+used both before and after, the same instance is used.</p></li>
 </ul>
 </section>
 </section>
 <section id="project-files">
 <h2><a class="toc-backref" href="#id13" role="doc-backlink">Project Files</a><a class="headerlink" href="#project-files" title="Link to this heading"></a></h2>
-<p>Some files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to
-these files being outside of the <strong>system</strong> scope they will not be changed without your intervention.</p>
-<p>There are some third-party CodeIgniter modules available to assist with merging changes to
-the project space: <a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
+<p>Some files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to these files being outside of
+the <strong>system</strong> scope, they will not be changed without your intervention.</p>
+<p>There are some third-party CodeIgniter modules available to assist with merging changes to the project space:
+<a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
 <section id="content-changes">
 <h3><a class="toc-backref" href="#id14" role="doc-backlink">Content Changes</a><a class="headerlink" href="#content-changes" title="Link to this heading"></a></h3>
-<p>The following files received significant changes (including deprecations or visual adjustments)
-and it is recommended that you merge the updated versions with your application:</p>
+<p>The following files received significant changes (including deprecations or visual adjustments) and it is recommended
+that you merge the updated versions with your application:</p>
 <section id="config">
 <h4>Config<a class="headerlink" href="#config" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><dl class="simple">
-<dt>app/Config/Feature.php</dt><dd><ul>
+<li><p><strong>app/Config/Feature.php</strong></p>
+<ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">Config\Feature::$autoRoutesImproved</span></code> has been changed to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Config\Feature::$strictLocaleNegotiation</span></code> has been added.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
-<li><dl class="simple">
-<dt>app/Config/Routing.php</dt><dd><ul>
+<li><p><strong>app/Config/Routing.php</strong></p>
+<ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">Config\Routing::$translateUriToCamelCase</span></code> has been changed to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
-<li><dl class="simple">
-<dt>app/Config/Kint.php</dt><dd><ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">Config\Kint::$richSort</span></code> has been removed. Kint in v6 no longer uses <code class="docutils literal notranslate"><span class="pre">AbstractRenderer::SORT_FULL</span></code>. Leaving this property in your code will cause a runtime error due to the undefined constant.</p></li>
+<li><p><strong>app/Config/Kint.php</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Config\Kint::$richSort</span></code> has been removed. Kint in v6 no longer uses <code class="docutils literal notranslate"><span class="pre">AbstractRenderer::SORT_FULL</span></code>. Leaving this
+property in your code will cause a runtime error due to the undefined constant.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
 </ul>
 </section>
 </section>
 <section id="all-changes">
 <h3><a class="toc-backref" href="#id15" role="doc-backlink">All Changes</a><a class="headerlink" href="#all-changes" title="Link to this heading"></a></h3>
-<p>This is a list of all files in the <strong>project space</strong> that received changes;
-many will be simple comments or formatting that have no effect on the runtime:</p>
+<p>This is a list of all files in the <strong>project space</strong> that received changes; many will be simple comments or formatting
+that have no effect on the runtime:</p>
 <ul class="simple">
-<li><p>app/Config/Cache.php</p></li>
-<li><p>app/Config/Constants.php</p></li>
-<li><p>app/Config/Database.php</p></li>
-<li><p>app/Config/Feature.php</p></li>
-<li><p>app/Config/Format.php</p></li>
-<li><p>app/Config/Kint.php</p></li>
-<li><p>app/Config/Routing.php</p></li>
-<li><p>app/Config/Security.php</p></li>
-<li><p>app/Views/errors/html/debug.css</p></li>
-<li><p>app/Views/errors/html/error_400.php</p></li>
-<li><p>preload.php</p></li>
-<li><p>public/index.php</p></li>
+<li><p><strong>app/Config/Cache.php</strong></p></li>
+<li><p><strong>app/Config/Constants.php</strong></p></li>
+<li><p><strong>app/Config/Database.php</strong></p></li>
+<li><p><strong>app/Config/Feature.php</strong></p></li>
+<li><p><strong>app/Config/Format.php</strong></p></li>
+<li><p><strong>app/Config/Kint.php</strong></p></li>
+<li><p><strong>app/Config/Routing.php</strong></p></li>
+<li><p><strong>app/Config/Security.php</strong></p></li>
+<li><p><strong>app/Views/errors/html/debug.css</strong></p></li>
+<li><p><strong>app/Views/errors/html/error_400.php</strong></p></li>
+<li><p><strong>preload.php</strong></p></li>
+<li><p><strong>public/index.php</strong></p></li>
 <li><p>spark</p></li>
 </ul>
 </section>
@@ -638,7 +619,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

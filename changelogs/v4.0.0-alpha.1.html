@@ -302,243 +302,105 @@
 </nav>
 <section id="new-packages-list">
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">New Packages List</a><a class="headerlink" href="#new-packages-list" title="Link to this heading"></a></h2>
-<blockquote>
-<div><ul class="simple">
-<li><dl class="simple">
-<dt>API</dt><dd><ul>
-<li><p>\ ResponseTrait</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Autoloader</dt><dd><ul>
-<li><p>\ AutoLoader, FileLocator</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>CLI</dt><dd><ul>
-<li><p>\ BaseCommand, CLI, CommandRunner, Console</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Cache</dt><dd><ul>
-<li><p>\ CacheFactory, CacheInterface</p></li>
-<li><p>\ Handlers … Dummy, File, Memcached, Predis, Redis, Wincache</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Commands</dt><dd><ul>
-<li><p>\ Help, ListCommands</p></li>
-<li><p>\ Database \ CreateMigration, MigrateCurrent, MigrateLatest, MigrateRefresh,
-MigrateRollback, MigrateStatus, MigrateVersion, Seed</p></li>
-<li><p>\ Server \ Serve</p></li>
-<li><p>\ Sessions \ CreateMigration</p></li>
-<li><p>\ Utilities \ Namespaces, Routes</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Config</dt><dd><ul>
-<li><p>\ AutoloadConfig, BaseConfig, BaseService, Config, DotEnv, ForeignCharacters,
-Routes, Services, View</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Database</dt><dd><ul>
-<li><p>\ BaseBuilder, BaseConnection, BasePreparedQuery, BaseResult, BaseUtils, Config,
-ConnectionInterface, Database, Forge, Migration, MigrationRunner, PreparedQueryInterface, Query,
-QueryInterface, ResultInterface, Seeder</p></li>
-<li><p>\ MySQLi \ Builder, Connection, Forge, PreparedQuery, Result</p></li>
-<li><p>\ Postgre \ Builder, Connection, Forge, PreparedQuery, Result, Utils</p></li>
-<li><p>\ SQLite3 \ Builder, Connection, Forge, PreparedQuery, Result, Utils</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Debug</dt><dd><ul>
-<li><p>\ Exceptions, Iterator, Timer, Toolbar</p></li>
-<li><p>\ Toolbar \ Collectors…</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Email</dt><dd><ul>
-<li><p>\ Email</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Events</dt><dd><ul>
-<li><p>\ Events</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Files</dt><dd><ul>
-<li><p>\ File</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Filters</dt><dd><ul>
-<li><p>\ FilterInterface, Filters</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Format</dt><dd><ul>
-<li><p>\ FormatterInterface, JSONFormatter, XMLFormatter</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>HTTP</dt><dd><ul>
-<li><p>\ CLIRequest, CURLRequest, ContentSecurityPolicy, Header,
-IncomingRequest, Message, Negotiate, Request, RequestInterface,
-Response, ResponseInterface, URI, UserAgent</p></li>
-<li><p>\ Files \ FileCollection, UploadedFile, UploadedFileInterface</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Helpers</dt><dd><ul>
-<li><p>… array, cookie, date, filesystem, form, html, inflector, number,
-security, text, url</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Honeypot</dt><dd><ul>
-<li><p>\ Honeypot</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>I18n</dt><dd><ul>
-<li><p>\ Time, TimeDifference</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Images</dt><dd><ul>
-<li><p>\ Image, ImageHandlerInterface</p></li>
-<li><p>\ Handlers … Base, GD, ImageMagick</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Language</dt><dd><ul>
-<li><p>\ Language</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Log</dt><dd><ul>
-<li><p>Logger, LoggerAwareTrait</p></li>
-<li><p>\ Handlers …  Base, ChromeLogger, File, HandlerInterface</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Pager</dt><dd><ul>
-<li><p>\ Pager, PagerInterface, PagerRenderer</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Router</dt><dd><ul>
-<li><p>\ RouteCollection, RouteCollectionInterface, Router, RouterInterface</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Security</dt><dd><ul>
-<li><p>\ Security</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Session</dt><dd><ul>
-<li><p>\ Session, SessionInterface</p></li>
-<li><p>\ Handlers … Base, File, Memcached, Redis</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Test</dt><dd><ul>
-<li><p>\ CIDatabaseTestCase, CIUnitTestCase, FeatureResponse, FeatureTestCase, ReflectionHelper</p></li>
-<li><p>\ Filters \ CITestStreamFilter</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>ThirdParty (bundled)</dt><dd><ul>
-<li><p>\ Kint (for \Debug)</p></li>
-<li><p>\ PSR \ Log (for \Log)</p></li>
-<li><p>\ ZendEscaper \ Escaper (for \View)</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Throttle</dt><dd><ul>
-<li><p>\ Throttler, ThrottlerInterface</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Typography</dt><dd><ul>
-<li><p>\ Typography</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Validation</dt><dd><ul>
-<li><p>\ CreditCardRules, FileRules, FormatRules, Rules, Validation, ValidationInterface</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>View</dt><dd><ul>
-<li><p>\ Cell, Filters, Parser, Plugins, RendererInterface, View</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</div></blockquote>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">.</span>
+<span class="nx">├──</span> <span class="nx">API</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">ResponseTrait</span>
+<span class="nx">├──</span> <span class="nx">Autoloader</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">AutoLoader</span><span class="p">,</span> <span class="nx">FileLocator</span>
+<span class="nx">├──</span> <span class="nx">CLI</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">BaseCommand</span><span class="p">,</span> <span class="nx">CLI</span><span class="p">,</span> <span class="nx">CommandRunner</span><span class="p">,</span> <span class="nx">Console</span>
+<span class="nx">├──</span> <span class="nx">Cache</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">├──</span> <span class="nx">CacheFactory</span><span class="p">,</span> <span class="nx">CacheInterface</span>
+<span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">Handlers</span><span class="o">/</span>
+<span class="nx">│</span>       <span class="nx">└──</span> <span class="nx">Dummy</span><span class="p">,</span> <span class="nx">File</span><span class="p">,</span> <span class="nx">Memcached</span><span class="p">,</span> <span class="nx">Predis</span><span class="p">,</span> <span class="nx">Redis</span><span class="p">,</span> <span class="nx">Wincache</span>
+<span class="nx">├──</span> <span class="nx">Commands</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">├──</span> <span class="nx">Help</span><span class="p">,</span> <span class="nx">ListCommands</span>
+<span class="nx">│</span>   <span class="nx">├──</span> <span class="nx">Database</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">CreateMigration</span><span class="p">,</span> <span class="nx">MigrateCurrent</span><span class="p">,</span> <span class="nx">MigrateLatest</span><span class="p">,</span> <span class="nx">MigrateRefresh</span><span class="p">,</span> <span class="nx">MigrateRollback</span><span class="p">,</span> <span class="nx">MigrateStatus</span><span class="p">,</span>
+<span class="nx">│</span>   <span class="nx">│</span>       <span class="nx">MigrateVersion</span><span class="p">,</span> <span class="nx">Seed</span>
+<span class="nx">│</span>   <span class="nx">├──</span> <span class="nx">Server</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">Serve</span>
+<span class="nx">│</span>   <span class="nx">├──</span> <span class="nx">Sessions</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">CreateMigration</span>
+<span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">Utilities</span><span class="o">/</span>
+<span class="nx">│</span>       <span class="nx">└──</span> <span class="nx">Namespaces</span><span class="p">,</span> <span class="nx">Routes</span>
+<span class="nx">├──</span> <span class="nx">Config</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">AutoloadConfig</span><span class="p">,</span> <span class="nx">BaseConfig</span><span class="p">,</span> <span class="nx">BaseService</span><span class="p">,</span> <span class="nx">Config</span><span class="p">,</span> <span class="nx">DotEnv</span><span class="p">,</span> <span class="nx">ForeignCharacters</span><span class="p">,</span> <span class="nx">Routes</span><span class="p">,</span> <span class="nx">Services</span><span class="p">,</span> <span class="nx">View</span>
+<span class="nx">├──</span> <span class="nx">Database</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">├──</span> <span class="nx">BaseBuilder</span><span class="p">,</span> <span class="nx">BaseConnection</span><span class="p">,</span> <span class="nx">BasePreparedQuery</span><span class="p">,</span> <span class="nx">BaseResult</span><span class="p">,</span> <span class="nx">BaseUtils</span><span class="p">,</span> <span class="nx">Config</span><span class="p">,</span> <span class="nx">ConnectionInterface</span><span class="p">,</span>
+<span class="nx">│</span>   <span class="nx">│</span>   <span class="nx">Database</span><span class="p">,</span> <span class="nx">Forge</span><span class="p">,</span> <span class="nx">Migration</span><span class="p">,</span> <span class="nx">MigrationRunner</span><span class="p">,</span> <span class="nx">PreparedQueryInterface</span><span class="p">,</span> <span class="nx">Query</span><span class="p">,</span> <span class="nx">QueryInterface</span><span class="p">,</span>
+<span class="nx">│</span>   <span class="nx">│</span>   <span class="nx">ResultInterface</span><span class="p">,</span> <span class="nx">Seeder</span>
+<span class="nx">│</span>   <span class="nx">├──</span> <span class="nx">MySQLi</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">Builder</span><span class="p">,</span> <span class="nx">Connection</span><span class="p">,</span> <span class="nx">Forge</span><span class="p">,</span> <span class="nx">PreparedQuery</span><span class="p">,</span> <span class="nx">Result</span>
+<span class="nx">│</span>   <span class="nx">├──</span> <span class="nx">Postgre</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">Builder</span><span class="p">,</span> <span class="nx">Connection</span><span class="p">,</span> <span class="nx">Forge</span><span class="p">,</span> <span class="nx">PreparedQuery</span><span class="p">,</span> <span class="nx">Result</span><span class="p">,</span> <span class="nx">Utils</span>
+<span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">SQLite3</span><span class="o">/</span>
+<span class="nx">│</span>       <span class="nx">└──</span> <span class="nx">Builder</span><span class="p">,</span> <span class="nx">Connection</span><span class="p">,</span> <span class="nx">Forge</span><span class="p">,</span> <span class="nx">PreparedQuery</span><span class="p">,</span> <span class="nx">Result</span><span class="p">,</span> <span class="nx">Utils</span>
+<span class="nx">├──</span> <span class="nx">Debug</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">├──</span> <span class="nx">Exceptions</span><span class="p">,</span> <span class="nx">Iterator</span><span class="p">,</span> <span class="nx">Timer</span><span class="p">,</span> <span class="nx">Toolbar</span>
+<span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">Toolbar</span><span class="o">/</span>
+<span class="nx">│</span>       <span class="nx">└──</span> <span class="nx">Collectors</span><span class="o">...</span>
+<span class="nx">├──</span> <span class="nx">Email</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">Email</span>
+<span class="nx">├──</span> <span class="nx">Events</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">Events</span>
+<span class="nx">├──</span> <span class="nx">Files</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">File</span>
+<span class="nx">├──</span> <span class="nx">Filters</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">FilterInterface</span><span class="p">,</span> <span class="nx">Filters</span>
+<span class="nx">├──</span> <span class="nx">Format</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">FormatterInterface</span><span class="p">,</span> <span class="nx">JSONFormatter</span><span class="p">,</span> <span class="nx">XMLFormatter</span>
+<span class="nx">├──</span> <span class="nx">HTTP</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">├──</span> <span class="nx">CLIRequest</span><span class="p">,</span> <span class="nx">CURLRequest</span><span class="p">,</span> <span class="nx">ContentSecurityPolicy</span><span class="p">,</span> <span class="nx">Header</span><span class="p">,</span> <span class="nx">IncomingRequest</span><span class="p">,</span> <span class="nx">Message</span><span class="p">,</span> <span class="nx">Negotiate</span><span class="p">,</span> <span class="nx">Request</span><span class="p">,</span>
+<span class="nx">│</span>   <span class="nx">│</span>   <span class="nx">RequestInterface</span><span class="p">,</span> <span class="nx">Response</span><span class="p">,</span> <span class="nx">ResponseInterface</span><span class="p">,</span> <span class="nx">URI</span><span class="p">,</span> <span class="nx">UserAgent</span>
+<span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">Files</span><span class="o">/</span>
+<span class="nx">│</span>       <span class="nx">└──</span> <span class="nx">FileCollection</span><span class="p">,</span> <span class="nx">UploadedFile</span><span class="p">,</span> <span class="nx">UploadedFileInterface</span>
+<span class="nx">├──</span> <span class="nx">Helpers</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">└──</span> <span class="k">array</span><span class="p">,</span> <span class="nx">cookie</span><span class="p">,</span> <span class="nb">date</span><span class="p">,</span> <span class="nx">filesystem</span><span class="p">,</span> <span class="nx">form</span><span class="p">,</span> <span class="nx">html</span><span class="p">,</span> <span class="nx">inflector</span><span class="p">,</span> <span class="nx">number</span><span class="p">,</span> <span class="nx">security</span><span class="p">,</span> <span class="nx">text</span><span class="p">,</span> <span class="nx">url</span>
+<span class="nx">├──</span> <span class="nx">Honeypot</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">Honeypot</span>
+<span class="nx">├──</span> <span class="nx">I18n</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">Time</span><span class="p">,</span> <span class="nx">TimeDifference</span>
+<span class="nx">├──</span> <span class="nx">Images</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">├──</span> <span class="nx">Image</span><span class="p">,</span> <span class="nx">ImageHandlerInterface</span>
+<span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">Handlers</span><span class="o">/</span>
+<span class="nx">│</span>       <span class="nx">└──</span> <span class="nx">Base</span><span class="p">,</span> <span class="nx">GD</span><span class="p">,</span> <span class="nx">ImageMagick</span>
+<span class="nx">├──</span> <span class="nx">Language</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">Language</span>
+<span class="nx">├──</span> <span class="nx">Log</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">├──</span> <span class="nx">Logger</span><span class="p">,</span> <span class="nx">LoggerAwareTrait</span>
+<span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">Handlers</span><span class="o">/</span>
+<span class="nx">│</span>       <span class="nx">└──</span> <span class="nx">Base</span><span class="p">,</span> <span class="nx">ChromeLogger</span><span class="p">,</span> <span class="nx">File</span><span class="p">,</span> <span class="nx">HandlerInterface</span>
+<span class="nx">├──</span> <span class="nx">Pager</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">Pager</span><span class="p">,</span> <span class="nx">PagerInterface</span><span class="p">,</span> <span class="nx">PagerRenderer</span>
+<span class="nx">├──</span> <span class="nx">Router</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">RouteCollection</span><span class="p">,</span> <span class="nx">RouteCollectionInterface</span><span class="p">,</span> <span class="nx">Router</span><span class="p">,</span> <span class="nx">RouterInterface</span>
+<span class="nx">├──</span> <span class="nx">Security</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">Security</span>
+<span class="nx">├──</span> <span class="nx">Session</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">├──</span> <span class="nx">Session</span><span class="p">,</span> <span class="nx">SessionInterface</span>
+<span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">Handlers</span><span class="o">/</span>
+<span class="nx">│</span>       <span class="nx">└──</span> <span class="nx">Base</span><span class="p">,</span> <span class="nx">File</span><span class="p">,</span> <span class="nx">Memcached</span><span class="p">,</span> <span class="nx">Redis</span>
+<span class="nx">├──</span> <span class="nx">Test</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">├──</span> <span class="nx">CIDatabaseTestCase</span><span class="p">,</span> <span class="nx">CIUnitTestCase</span><span class="p">,</span> <span class="nx">FeatureResponse</span><span class="p">,</span> <span class="nx">FeatureTestCase</span><span class="p">,</span> <span class="nx">ReflectionHelper</span>
+<span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">Filters</span><span class="o">/</span>
+<span class="nx">│</span>       <span class="nx">└──</span> <span class="nx">CITestStreamFilter</span>
+<span class="nx">├──</span> <span class="nx">ThirdParty</span><span class="o">/</span> <span class="p">(</span><span class="nx">bundled</span><span class="p">)</span>
+<span class="nx">│</span>   <span class="nx">├──</span> <span class="nx">Kint</span> <span class="p">(</span><span class="k">for</span> <span class="nx">Debug</span><span class="p">)</span>
+<span class="nx">│</span>   <span class="nx">├──</span> <span class="nx">PSR</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">Log</span> <span class="p">(</span><span class="k">for</span> <span class="nx">Log</span><span class="p">)</span>
+<span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">ZendEscaper</span><span class="o">/</span>
+<span class="nx">│</span>       <span class="nx">└──</span> <span class="nx">Escaper</span> <span class="p">(</span><span class="k">for</span> <span class="nx">View</span><span class="p">)</span>
+<span class="nx">├──</span> <span class="nx">Throttle</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">Throttler</span><span class="p">,</span> <span class="nx">ThrottlerInterface</span>
+<span class="nx">├──</span> <span class="nx">Typography</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">Typography</span>
+<span class="nx">├──</span> <span class="nx">Validation</span><span class="o">/</span>
+<span class="nx">│</span>   <span class="nx">└──</span> <span class="nx">CreditCardRules</span><span class="p">,</span> <span class="nx">FileRules</span><span class="p">,</span> <span class="nx">FormatRules</span><span class="p">,</span> <span class="nx">Rules</span><span class="p">,</span> <span class="nx">Validation</span><span class="p">,</span> <span class="nx">ValidationInterface</span>
+<span class="nx">└──</span> <span class="nx">View</span><span class="o">/</span>
+    <span class="nx">└──</span> <span class="nx">Cell</span><span class="p">,</span> <span class="nx">Filters</span><span class="p">,</span> <span class="nx">Parser</span><span class="p">,</span> <span class="nx">Plugins</span><span class="p">,</span> <span class="nx">RendererInterface</span><span class="p">,</span> <span class="nx">View</span>
+</pre></div>
+</div>
 </section>
 </section>
 
@@ -554,7 +416,7 @@ security, text, url</p></li>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

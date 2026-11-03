@@ -292,16 +292,13 @@
              
   <section id="database-migrations">
 <h1>Database Migrations<a class="headerlink" href="#database-migrations" title="Link to this heading"></a></h1>
-<p>Migrations are a convenient way for you to alter your database in a
-structured and organized manner. You could edit fragments of SQL by hand
-but you would then be responsible for telling other developers that they
-need to go and run them. You would also have to keep track of which changes
-need to be run against the production machines next time you deploy.</p>
-<p>The database table <strong>migrations</strong> tracks which migrations have already been
-run, so all you have to do is make sure your migrations are in place and
-run the <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">migrate</span></code> command to bring the database up to the most recent
-state. You can also use <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">migrate</span> <span class="pre">--all</span></code> to
-include migrations from all namespaces.</p>
+<p>Migrations are a convenient way for you to alter your database in a structured and organized manner. You could edit
+fragments of SQL by hand but you would then be responsible for telling other developers that they need to go and run
+them. You would also have to keep track of which changes need to be run against the production machines next time you
+deploy.</p>
+<p>The database table <strong>migrations</strong> tracks which migrations have already been run, so all you have to do is make sure your
+migrations are in place and run the <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">migrate</span></code> command to bring the database up to the most recent state. You can
+also use <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">migrate</span> <span class="pre">--all</span></code> to include migrations from all namespaces.</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#migration-file-names" id="id2">Migration File Names</a></p></li>
@@ -327,31 +324,27 @@ include migrations from all namespaces.</p>
 </nav>
 <section id="migration-file-names">
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">Migration File Names</a><a class="headerlink" href="#migration-file-names" title="Link to this heading"></a></h2>
-<p>A migration file name is made up of a timestamp prefix, an underscore (<code class="docutils literal notranslate"><span class="pre">_</span></code>),
-and a descriptive name (classname).</p>
+<p>A migration file name is made up of a timestamp prefix, an underscore (<code class="docutils literal notranslate"><span class="pre">_</span></code>), and a descriptive name (classname).</p>
 <ul class="simple">
-<li><p>2024-09-08-013653_AddBlogTable.php</p></li>
+<li><p><strong>2024-09-08-013653_AddBlogTable.php</strong></p></li>
 </ul>
-<p>Each migration is numbered using the timestamp (<strong>2024-09-08-013653</strong>) when the
-migration was created, in <strong>YYYY-MM-DD-HHIISS</strong> format.</p>
-<p>The descriptive name (<strong>AddBlogTable</strong>) for the migration is a classname in PHP.
-So you must name a valid classname.</p>
-<p>The year, month, day, and time in a prefix can be separated from each other by
-dashes (<code class="docutils literal notranslate"><span class="pre">-</span></code>), underscores (<code class="docutils literal notranslate"><span class="pre">_</span></code>), or not at all. For example:</p>
+<p>Each migration is numbered using the timestamp (<strong>2024-09-08-013653</strong>) when the migration was created, in
+<strong>YYYY-MM-DD-HHIISS</strong> format.</p>
+<p>The descriptive name (<strong>AddBlogTable</strong>) for the migration is a classname in PHP. So you must use a valid classname.</p>
+<p>The year, month, day, and time in a prefix can be separated from each other by dashes (<code class="docutils literal notranslate"><span class="pre">-</span></code>), underscores (<code class="docutils literal notranslate"><span class="pre">_</span></code>), or
+not at all. For example:</p>
 <ul class="simple">
-<li><p>2012-10-31-100538_AlterBlogTrackViews.php</p></li>
-<li><p>2012_10_31_100539_AlterBlogAddTranslations.php</p></li>
-<li><p>20121031100537_AddBlog.php</p></li>
+<li><p><strong>2012-10-31-100538_AlterBlogTrackViews.php</strong></p></li>
+<li><p><strong>2012_10_31_100539_AlterBlogAddTranslations.php</strong></p></li>
+<li><p><strong>20121031100537_AddBlog.php</strong></p></li>
 </ul>
-<p>Each Migration is run in numeric order forward or backwards depending on the
-method taken. This helps prevent numbering conflicts when working in a team
-environment.</p>
+<p>Each migration is run in numeric order forward or backwards depending on the method taken. This helps prevent numbering
+conflicts when working in a team environment.</p>
 </section>
 <section id="create-a-migration">
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">Create a Migration</a><a class="headerlink" href="#create-a-migration" title="Link to this heading"></a></h2>
-<p>This will be the first migration for a new site which has a blog. All
-migrations go in the <strong>app/Database/Migrations/</strong> directory and have names such
-as <strong>2022-01-31-013057_AddBlog.php</strong>.</p>
+<p>This will be the first migration for a new site which has a blog. All migrations go in the <strong>app/Database/Migrations/</strong>
+directory and have names such as <strong>2022-01-31-013057_AddBlog.php</strong>.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Database\Migrations</span><span class="p">;</span>
@@ -389,18 +382,18 @@ as <strong>2022-01-31-013057_AddBlog.php</strong>.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The database connection and the database Forge class are both available to you through
-<code class="docutils literal notranslate"><span class="pre">$this-&gt;db</span></code> and <code class="docutils literal notranslate"><span class="pre">$this-&gt;forge</span></code>, respectively.</p>
-<p>Alternatively, you can use a command-line call to generate a skeleton migration file.
-See <a class="reference internal" href="#make-migration">make:migration</a> in <a class="reference internal" href="#command-line-tools"><span class="std std-ref">Command-Line Tools</span></a> for more details.</p>
+<p>The database connection and the database Forge class are both available to you through <code class="docutils literal notranslate"><span class="pre">$this-&gt;db</span></code> and
+<code class="docutils literal notranslate"><span class="pre">$this-&gt;forge</span></code>, respectively.</p>
+<p>Alternatively, you can use a command-line call to generate a skeleton migration file. See <a class="reference internal" href="#make-migration">make:migration</a> in
+<a class="reference internal" href="#command-line-tools"><span class="std std-ref">Command-Line Tools</span></a> for more details.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Since the migration class is a PHP class, the classname must be unique in every migration file.</p>
 </div>
 <section id="foreign-keys">
 <h3><a class="toc-backref" href="#id4" role="doc-backlink">Foreign Keys</a><a class="headerlink" href="#foreign-keys" title="Link to this heading"></a></h3>
-<p>When your tables include Foreign Keys, migrations can often cause problems as you attempt to drop tables and columns.
-To temporarily bypass the foreign key checks while running migrations, use the <code class="docutils literal notranslate"><span class="pre">disableForeignKeyChecks()</span></code> and
+<p>When your tables include Foreign Keys, migrations can often cause problems as you attempt to drop tables and columns. To
+temporarily bypass the foreign key checks while running migrations, use the <code class="docutils literal notranslate"><span class="pre">disableForeignKeyChecks()</span></code> and
 <code class="docutils literal notranslate"><span class="pre">enableForeignKeyChecks()</span></code> methods on the database connection.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -425,14 +418,12 @@ To temporarily bypass the foreign key checks while running migrations, use the <
 <section id="database-groups">
 <h3><a class="toc-backref" href="#id5" role="doc-backlink">Database Groups</a><a class="headerlink" href="#database-groups" title="Link to this heading"></a></h3>
 <p>A migration will only be run against a single database group. If you have multiple groups defined in
-<strong>app/Config/Database.php</strong>, then by default it will run against the <code class="docutils literal notranslate"><span class="pre">$defaultGroup</span></code> as specified
-in that same configuration file.</p>
-<p>There may be times when you need different schemas for different
-database groups. Perhaps you have one database that is used for all general site information, while
-another database is used for mission critical data.</p>
-<p>You can ensure that migrations are run only
-against the proper group by setting the <code class="docutils literal notranslate"><span class="pre">$DBGroup</span></code> property on your migration. This name must
-match the name of the database group exactly:</p>
+<strong>app/Config/Database.php</strong>, then by default it will run against the <code class="docutils literal notranslate"><span class="pre">$defaultGroup</span></code> as specified in that same
+configuration file.</p>
+<p>There may be times when you need different schemas for different database groups. Perhaps you have one database that is
+used for all general site information, while another database is used for mission-critical data.</p>
+<p>You can ensure that migrations are run only against the proper group by setting the <code class="docutils literal notranslate"><span class="pre">$DBGroup</span></code> property on your
+migration. This name must match the name of the database group exactly:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Database\Migrations</span><span class="p">;</span>
@@ -457,19 +448,18 @@ match the name of the database group exactly:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <strong>migrations</strong> table that tracks which migrations have already been
-run will be always created in the default database group.</p>
+<p>The <strong>migrations</strong> table that tracks which migrations have already been run will always be created in the
+default database group.</p>
 </div>
 </section>
 <section id="namespaces">
 <h3><a class="toc-backref" href="#id6" role="doc-backlink">Namespaces</a><a class="headerlink" href="#namespaces" title="Link to this heading"></a></h3>
-<p>The migration library can automatically scan all namespaces you have defined within
-<strong>app/Config/Autoload.php</strong> or loaded from an external source like Composer, using
-the <code class="docutils literal notranslate"><span class="pre">$psr4</span></code> property for matching directory names. It will include all migrations
-it finds in <strong>Database/Migrations</strong>.</p>
-<p>Each namespace has its own version sequence, this will help you upgrade and downgrade each module (namespace) without affecting other namespaces.</p>
-<p>For example, assume that we have the following namespaces defined in our Autoload
-configuration file:</p>
+<p>The migration library can automatically scan all namespaces you have defined within <strong>app/Config/Autoload.php</strong> or
+loaded from an external source like Composer, using the <code class="docutils literal notranslate"><span class="pre">$psr4</span></code> property for matching directory names. It will include
+all migrations it finds in <strong>Database/Migrations</strong>.</p>
+<p>Each namespace has its own version sequence, which will help you upgrade and downgrade each module (namespace) without
+affecting other namespaces.</p>
+<p>For example, assume that we have the following namespaces defined in our Autoload configuration file:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$psr4</span> <span class="o">=</span> <span class="p">[</span>
     <span class="nx">APP_NAMESPACE</span> <span class="o">=&gt;</span> <span class="nx">APPPATH</span><span class="p">,</span>
     <span class="s1">'MyCompany'</span>   <span class="o">=&gt;</span> <span class="nx">ROOTPATH</span> <span class="o">.</span> <span class="s1">'MyCompany'</span><span class="p">,</span>
@@ -477,15 +467,15 @@ configuration file:</p>
 </pre></div>
 </div>
 <p>This will look for any migrations located at both <strong>APPPATH/Database/Migrations</strong> and
-<strong>ROOTPATH/MyCompany/Database/Migrations</strong>. This makes it simple to include migrations in your
-re-usable, modular code suites.</p>
+<strong>ROOTPATH/MyCompany/Database/Migrations</strong>. This makes it simple to include migrations in your re-usable, modular code
+suites.</p>
 </section>
 </section>
 <section id="command-line-tools">
 <span id="id1"></span><h2><a class="toc-backref" href="#id7" role="doc-backlink">Command-Line Tools</a><a class="headerlink" href="#command-line-tools" title="Link to this heading"></a></h2>
 <p>CodeIgniter ships with several <a class="reference internal" href="../cli/spark_commands.html"><span class="doc">commands</span></a> that are available from the command line to help
-you work with migrations. These tools make things easier for those of you
-that wish to use them. The tools primarily provide access to the same methods that are available within the MigrationRunner class.</p>
+you work with migrations. These tools make things easier for those of you that wish to use them. The tools primarily
+provide access to the same methods that are available within the MigrationRunner class.</p>
 <section id="migrate">
 <h3><a class="toc-backref" href="#id8" role="doc-backlink">migrate</a><a class="headerlink" href="#migrate" title="Link to this heading"></a></h3>
 <p>Migrates a database group with all available migrations:</p>
@@ -494,11 +484,12 @@ that wish to use them. The tools primarily provide access to the same methods th
 </div>
 <p>You can use <code class="docutils literal notranslate"><span class="pre">migrate</span></code> with the following options:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">-g</span></code> - to specify database group. If specified, only migrations for the specified database group will be run. If not specified, all migrations will be run.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code> - to choose namespace, otherwise <code class="docutils literal notranslate"><span class="pre">App</span></code> namespace will be used.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-g</span></code> - to specify a database group. If specified, only migrations for the specified database group will be run. If
+not specified, all migrations will be run.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code> - to choose a namespace, otherwise the <code class="docutils literal notranslate"><span class="pre">App</span></code> namespace will be used.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--all</span></code> - to migrate all namespaces to the latest migration.</p></li>
 </ul>
-<p>This example will migrate <code class="docutils literal notranslate"><span class="pre">Acme\Blog</span></code> namespace with any new migrations on the test database group:</p>
+<p>This example will migrate the <code class="docutils literal notranslate"><span class="pre">Acme\Blog</span></code> namespace with any new migrations on the test database group:</p>
 <p>For Unix:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark migrate -g test -n Acme\\Blog</span>
 </pre></div>
@@ -507,9 +498,9 @@ that wish to use them. The tools primarily provide access to the same methods th
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark migrate -g test -n Acme\Blog</span>
 </pre></div>
 </div>
-<p>When using the <code class="docutils literal notranslate"><span class="pre">--all</span></code> option, it will scan through all namespaces attempting to find any migrations that have
-not been run. These will all be collected and then sorted as a group by date created. This should help
-to minimize any potential conflicts between the main application and any modules.</p>
+<p>When using the <code class="docutils literal notranslate"><span class="pre">--all</span></code> option, it will scan through all namespaces attempting to find any migrations that have not
+been run. These will all be collected and then sorted as a group by date created. This should help to minimize any
+potential conflicts between the main application and any modules.</p>
 </section>
 <section id="migrate-rollback">
 <h3><a class="toc-backref" href="#id9" role="doc-backlink">migrate:rollback</a><a class="headerlink" href="#migrate-rollback" title="Link to this heading"></a></h3>
@@ -520,7 +511,7 @@ to minimize any potential conflicts between the main application and any modules
 <p>You can use <code class="docutils literal notranslate"><span class="pre">migrate:rollback</span></code> with the following options:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">-b</span></code> - to choose a batch: natural numbers specify the batch.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-f</span></code> - to force a bypass confirmation question, it is only asked in a production environment.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-f</span></code> - to bypass the confirmation question, which is only asked in a production environment.</p></li>
 </ul>
 </section>
 <section id="migrate-refresh">
@@ -531,10 +522,11 @@ to minimize any potential conflicts between the main application and any modules
 </div>
 <p>You can use <code class="docutils literal notranslate"><span class="pre">migrate:refresh</span></code> with the following options:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">-g</span></code> - to specify database group. If specified, only migrations for the specified database group will be run. If not specified, all migrations will be run.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code> - to choose namespace, otherwise <code class="docutils literal notranslate"><span class="pre">App</span></code> namespace will be used.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-g</span></code> - to specify a database group. If specified, only migrations for the specified database group will be run. If
+not specified, all migrations will be run.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code> - to choose a namespace, otherwise the <code class="docutils literal notranslate"><span class="pre">App</span></code> namespace will be used.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--all</span></code> - to refresh all namespaces.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-f</span></code> - to force a bypass confirmation question, it is only asked in a production environment.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-f</span></code> - to bypass the confirmation question, which is only asked in a production environment.</p></li>
 </ul>
 </section>
 <section id="migrate-status">
@@ -555,28 +547,27 @@ to minimize any potential conflicts between the main application and any modules
 </div>
 <p>You can use <code class="docutils literal notranslate"><span class="pre">migrate:status</span></code> with the following options:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">-g</span></code> - to specify database group. If specified, only migrations for the specified database group will be checked. If not specified, all migrations will be checked.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-g</span></code> - to specify a database group. If specified, only migrations for the specified database group will be checked.
+If not specified, all migrations will be checked.</p></li>
 </ul>
 </section>
 <section id="make-migration">
 <h3><a class="toc-backref" href="#id12" role="doc-backlink">make:migration</a><a class="headerlink" href="#make-migration" title="Link to this heading"></a></h3>
-<p>Creates a skeleton migration file in <strong>app/Database/Migrations</strong>.
-It automatically prepends the current timestamp. The class name it
-creates is the Pascal case version of the filename.</p>
+<p>Creates a skeleton migration file in <strong>app/Database/Migrations</strong>. It automatically prepends the current timestamp. The
+class name it creates is the Pascal case version of the filename.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark make:migration &lt;class&gt; [options]</span>
 </pre></div>
 </div>
 <p>You can use <code class="docutils literal notranslate"><span class="pre">make:migration</span></code> with the following options:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code> - Set root namespace. Default: <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--suffix</span></code>    - Append the component title to the class name.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--suffix</span></code> - Append the component title to the class name.</p></li>
 </ul>
-<p>The following options are also available to generate the migration file for
-database sessions:</p>
+<p>The following options are also available to generate the migration file for database sessions:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">--session</span></code>   - Generates the migration file for database sessions.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--table</span></code>     - Table name to use for database sessions. Default: <code class="docutils literal notranslate"><span class="pre">ci_sessions</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--dbgroup</span></code>   - Database group to use for database sessions. Default: <code class="docutils literal notranslate"><span class="pre">default</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--session</span></code> - Generates the migration file for database sessions.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--table</span></code> - Table name to use for database sessions. Default: <code class="docutils literal notranslate"><span class="pre">ci_sessions</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--dbgroup</span></code> - Database group to use for database sessions. Default: <code class="docutils literal notranslate"><span class="pre">default</span></code>.</p></li>
 </ul>
 </section>
 </section>
@@ -634,7 +625,7 @@ in multi-process environments (e.g., Kubernetes).</p></td>
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span></p>
 </dd>
 </dl>
-<p>An array of migration filenames are returned that are found in the <code class="docutils literal notranslate"><span class="pre">path</span></code> property.</p>
+<p>An array of migration filenames found in the <code class="docutils literal notranslate"><span class="pre">path</span></code> property is returned.</p>
 </dd></dl>
 
 <dl class="php method">
@@ -653,8 +644,8 @@ in multi-process environments (e.g., Kubernetes).</p></td>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
-<p>This locates migrations for a namespace (or all namespaces), determines which migrations
-have not yet been run, and runs them in order of their version (namespaces intermingled).</p>
+<p>This locates migrations for a namespace (or all namespaces), determines which migrations have not yet been run,
+and runs them in order of their version (namespaces intermingled).</p>
 </dd></dl>
 
 <dl class="php method">
@@ -668,7 +659,7 @@ have not yet been run, and runs them in order of their version (namespaces inter
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">true</span></code> on success, <code class="docutils literal notranslate"><span class="pre">false</span></code> on failure or no migrations are found</p>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">true</span></code> on success, <code class="docutils literal notranslate"><span class="pre">false</span></code> on failure or if no migrations are found</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
@@ -701,7 +692,8 @@ have not yet been run, and runs them in order of their version (namespaces inter
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
-<p>This forces a single file to migrate regardless of order or batches. Method <code class="docutils literal notranslate"><span class="pre">up()</span></code> or <code class="docutils literal notranslate"><span class="pre">down()</span></code> is detected based on whether it has already been migrated.</p>
+<p>This forces a single file to migrate regardless of order or batches. The <code class="docutils literal notranslate"><span class="pre">up()</span></code> or <code class="docutils literal notranslate"><span class="pre">down()</span></code> method is
+detected based on whether it has already been migrated.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This method is recommended only for testing and could cause data consistency issues.</p>
@@ -724,7 +716,7 @@ have not yet been run, and runs them in order of their version (namespaces inter
 <dd class="field-odd"><p><span><a class="reference internal" href="#CodeIgniter\Database\MigrationRunner" title="CodeIgniter\Database\MigrationRunner"><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\Database\MigrationRunner</span></code></a></span></p>
 </dd>
 </dl>
-<p>Sets the namespace the library should look for migration files:</p>
+<p>Sets the namespace in which the library should look for migration files:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$migration</span><span class="o">-&gt;</span><span class="na">setNamespace</span><span class="p">(</span><span class="nv">$namespace</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">latest</span><span class="p">();</span>
@@ -752,7 +744,7 @@ have not yet been run, and runs them in order of their version (namespaces inter
 <dd class="field-odd"><p><span><a class="reference internal" href="#CodeIgniter\Database\MigrationRunner" title="CodeIgniter\Database\MigrationRunner"><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\Database\MigrationRunner</span></code></a></span></p>
 </dd>
 </dl>
-<p>Sets the group the library should look for migration files:</p>
+<p>Sets the group in which the library should look for migration files:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$migration</span><span class="o">-&gt;</span><span class="na">setGroup</span><span class="p">(</span><span class="nv">$group</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">latest</span><span class="p">();</span>
@@ -777,7 +769,7 @@ have not yet been run, and runs them in order of their version (namespaces inter
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

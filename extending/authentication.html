@@ -292,25 +292,27 @@
              
   <section id="authentication">
 <h1>Authentication<a class="headerlink" href="#authentication" title="Link to this heading"></a></h1>
-<p>CodeIgniter provides an official authentication and authorization framework
-<a class="reference internal" href="../libraries/official_packages.html#shield"><span class="std std-ref">CodeIgniter Shield</span></a> for CodeIgniter 4,
-It is designed to be secure, flexible, and easily extendable to meet the needs
-of many different types of websites.</p>
-<p>The following are recommended guidelines to encourage consistency among developers of
-modules, projects, and the framework itself.</p>
+<p>CodeIgniter provides an official authentication and authorization framework <a class="reference internal" href="../libraries/official_packages.html#shield"><span class="std std-ref">CodeIgniter Shield</span></a> for
+CodeIgniter 4. It is designed to be secure, flexible, and easily extendable to meet the needs of many different types of
+websites.</p>
+<p>The following are recommended guidelines to encourage consistency among developers of modules, projects, and the
+framework itself.</p>
 <section id="recommendations">
 <h2>Recommendations<a class="headerlink" href="#recommendations" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p>Modules that handle login and logout operations should trigger the <code class="docutils literal notranslate"><span class="pre">login</span></code> and <code class="docutils literal notranslate"><span class="pre">logout</span></code> Events when successful</p></li>
-<li><p>Modules that define a “current user” should define the function <code class="docutils literal notranslate"><span class="pre">user_id()</span></code> to return the user’s unique identifier, or <code class="docutils literal notranslate"><span class="pre">null</span></code> for “no current user”</p></li>
+<li><p>Modules that define a “current user” should define the function <code class="docutils literal notranslate"><span class="pre">user_id()</span></code> to return the user’s unique identifier,
+or <code class="docutils literal notranslate"><span class="pre">null</span></code> for “no current user”</p></li>
 </ul>
-<p>Modules that fulfill these recommendations may indicate compatibility by adding the following provision to <strong>composer.json</strong>:</p>
+<p>Modules that fulfill these recommendations may indicate compatibility by adding the following provision to
+<strong>composer.json</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="s2">"provide"</span><span class="o">:</span> <span class="p">{</span>
     <span class="s2">"codeigniter4/authentication-implementation"</span><span class="o">:</span> <span class="s2">"1.0"</span>
 <span class="p">},</span>
 </pre></div>
 </div>
-<p>You may view a list of modules that provide this implementation on <a class="reference external" href="https://packagist.org/providers/codeigniter4/authentication-implementation">Packagist</a>.</p>
+<p>You may view a list of modules that provide this implementation on
+<a class="reference external" href="https://packagist.org/providers/codeigniter4/authentication-implementation">Packagist</a>.</p>
 </section>
 </section>
 
@@ -326,7 +328,7 @@ modules, projects, and the framework itself.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

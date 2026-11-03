@@ -292,8 +292,7 @@
              
   <section id="image-manipulation-class">
 <h1>Image Manipulation Class<a class="headerlink" href="#image-manipulation-class" title="Link to this heading"></a></h1>
-<p>CodeIgniter’s Image Manipulation class lets you perform the following
-actions:</p>
+<p>CodeIgniter’s Image Manipulation class lets you perform the following actions:</p>
 <ul class="simple">
 <li><p>Image Resizing</p></li>
 <li><p>Thumbnail Creation</p></li>
@@ -301,7 +300,7 @@ actions:</p>
 <li><p>Image Rotating</p></li>
 <li><p>Image Watermarking</p></li>
 </ul>
-<p>The following image libraries are supported: GD/GD2, and ImageMagick.</p>
+<p>The following image libraries are supported: GD/GD2 and ImageMagick.</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#initializing-the-class" id="id1">Initializing the Class</a></p></li>
@@ -327,15 +326,14 @@ actions:</p>
 </nav>
 <section id="initializing-the-class">
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Initializing the Class</a><a class="headerlink" href="#initializing-the-class" title="Link to this heading"></a></h2>
-<p>Like most other classes in CodeIgniter, the image class is initialized
-in your controller by calling the global function <code class="docutils literal notranslate"><span class="pre">service()</span></code>:</p>
+<p>Like most other classes in CodeIgniter, the image class is initialized in your controller by calling the global function
+<code class="docutils literal notranslate"><span class="pre">service()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$image</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'image'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>You can pass the alias for the image library you wish to use into the global
-function <code class="docutils literal notranslate"><span class="pre">service()</span></code>:</p>
+<p>You can pass the alias for the image library you wish to use into the global function <code class="docutils literal notranslate"><span class="pre">service()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$image</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'image'</span><span class="p">,</span> <span class="s1">'imagick'</span><span class="p">);</span>
@@ -343,8 +341,8 @@ function <code class="docutils literal notranslate"><span class="pre">service()<
 </div>
 <p>The available Handlers are as follows:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">gd</span></code>      The GD/GD2 image library</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">imagick</span></code> The ImageMagick library.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gd</span></code>: The GD/GD2 image library.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">imagick</span></code>: The ImageMagick library.</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -352,26 +350,23 @@ function <code class="docutils literal notranslate"><span class="pre">service()<
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>On Windows, the ImageMagick handler requires <strong>absolute file paths</strong> when
-loading images (for example, using <code class="docutils literal notranslate"><span class="pre">WRITEPATH</span></code> or <code class="docutils literal notranslate"><span class="pre">FCPATH</span></code>).</p>
+<p>On Windows, the ImageMagick handler requires <strong>absolute file paths</strong> when loading images (for example, using
+<code class="docutils literal notranslate"><span class="pre">WRITEPATH</span></code> or <code class="docutils literal notranslate"><span class="pre">FCPATH</span></code>).</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Do not let user input directly decide the image source path, storage
-directory, or filename. This includes values passed to methods like
-<code class="docutils literal notranslate"><span class="pre">save()</span></code>, <code class="docutils literal notranslate"><span class="pre">copy()</span></code> and others, and any path or filename used to store
-processed images. Use directories controlled by your application, and
-generate filenames yourself or sanitize them with
+<p>Do not let user input directly decide the image source path, storage directory, or filename. This includes values
+passed to methods like <code class="docutils literal notranslate"><span class="pre">save()</span></code>, <code class="docutils literal notranslate"><span class="pre">copy()</span></code> and others, and any path or filename used to store processed images.
+Use directories controlled by your application, and generate filenames yourself or sanitize them with
 <a class="reference internal" href="../helpers/security_helper.html#sanitize_filename" title="sanitize_filename"><code class="xref php php-func docutils literal notranslate"><span class="pre">sanitize_filename</span></code></a>.</p>
 </div>
 </section>
 <section id="processing-an-image">
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">Processing an Image</a><a class="headerlink" href="#processing-an-image" title="Link to this heading"></a></h2>
-<p>Regardless of the type of processing you would like to perform
-(resizing, cropping, rotation, or watermarking), the general process is
-identical. You will set some preferences corresponding to the action you
-intend to perform, then call one of the available processing functions.</p>
-<p>For example, to create an image thumbnail you’ll do this:</p>
+<p>Regardless of the type of processing you would like to perform (resizing, cropping, rotation, or watermarking), the
+general process is identical. You will set some preferences corresponding to the action you intend to perform, then call
+one of the available processing functions.</p>
+<p>For example, to create an image thumbnail, you’ll do this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$image</span><span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">'/path/to/image/mypic.jpg'</span><span class="p">)</span>
@@ -379,16 +374,12 @@ intend to perform, then call one of the available processing functions.</p>
     <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">'/path/to/image/mypic_thumb.jpg'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The above code tells the library to look for an image
-called <strong>mypic.jpg</strong> located in the <strong>/path/to/image</strong> folder, then create a
-new image from it that is 100 x 100 pixels,
-and save it to a new file <strong>mypic_thumb.jpg</strong>. Since it is using the <code class="docutils literal notranslate"><span class="pre">fit()</span></code> method,
-it will attempt to find the best portion of the image to crop based on the
-desired aspect ratio, and then crop and resize the result.</p>
-<p>An image can be processed through as many of the available methods as
-needed before saving. The original image is left untouched, and a new image
-is used and passed through each method, applying the results on top of the
-previous results:</p>
+<p>The above code tells the library to look for an image called <strong>mypic.jpg</strong> located in the <strong>/path/to/image</strong> folder,
+then create a new image from it that is 100 x 100 pixels, and save it to a new file <strong>mypic_thumb.jpg</strong>. Since it is
+using the <code class="docutils literal notranslate"><span class="pre">fit()</span></code> method, it will attempt to find the best portion of the image to crop based on the desired aspect
+ratio, and then crop and resize the result.</p>
+<p>An image can be processed through as many of the available methods as needed before saving. The original image is left
+untouched, and a new image is used and passed through each method, applying the results on top of the previous results:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$image</span><span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">'/path/to/image/mypic.jpg'</span><span class="p">)</span>
@@ -398,27 +389,25 @@ previous results:</p>
     <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">'/path/to/image/mypic_thumb.jpg'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>This example would take the same image and first fix any mobile phone orientation issues,
-rotate the image by 90 degrees, and then crop the result into a 100 x 100 pixel image,
-starting at the top left corner. The result would be saved as the thumbnail.</p>
+<p>This example would take the same image and first fix any mobile phone orientation issues, rotate the image by 90
+degrees, and then crop the result into a 100 x 100 pixel image, starting at the top left corner. The result would be
+saved as the thumbnail.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In order for the image class to be allowed to do any
-processing, the folder containing the image files must have write
-permissions.</p>
+<p>In order for the image class to be allowed to do any processing, the folder containing the image files must
+have write permissions.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Image processing can require a considerable amount of server
-memory for some operations. If you are experiencing out of memory errors
-while processing images you may need to limit their maximum size, and/or
-adjust PHP memory limits.</p>
+<p>Image processing can require a considerable amount of server memory for some operations. If you are
+experiencing out-of-memory errors while processing images, you may need to limit their maximum size, and/or adjust
+PHP memory limits.</p>
 </div>
 <section id="image-quality">
 <h3><a class="toc-backref" href="#id3" role="doc-backlink">Image Quality</a><a class="headerlink" href="#image-quality" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">save()</span></code> can take an additional parameter <code class="docutils literal notranslate"><span class="pre">$quality</span></code> to alter the resulting image
-quality. Values range from 0 to 100 with 90 being the framework default. This parameter
-only applies to JPEG and WebP images, will be ignored otherwise:</p>
+<p><code class="docutils literal notranslate"><span class="pre">save()</span></code> can take an additional parameter <code class="docutils literal notranslate"><span class="pre">$quality</span></code> to alter the resulting image quality. Values range from 0 to
+100, with 90 being the framework default. This parameter only applies to JPEG and WebP images, and will be ignored
+otherwise:</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The parameter <code class="docutils literal notranslate"><span class="pre">$quality</span></code> for WebP can be used since v4.4.0.</p>
@@ -426,8 +415,8 @@ only applies to JPEG and WebP images, will be ignored otherwise:</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>When using ImageMagick, the target path passed to <code class="docutils literal notranslate"><span class="pre">save()</span></code> determines the output format by its extension.
-ImageMagick may also interpret explicit format prefixes like <code class="docutils literal notranslate"><span class="pre">jpg:filename.png</span></code>. If the target path is based on user
-input, validate it against the formats your application allows, including any format prefix or extension.</p>
+ImageMagick may also interpret explicit format prefixes like <code class="docutils literal notranslate"><span class="pre">jpg:filename.png</span></code>. If the target path is based on
+user input, validate it against the formats your application allows, including any format prefix or extension.</p>
 </div>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -440,8 +429,8 @@ input, validate it against the formats your application allows, including any fo
 <p class="admonition-title">Note</p>
 <p>Higher quality will result in larger file sizes. See also <a class="reference external" href="https://www.php.net/manual/en/function.imagejpeg.php">https://www.php.net/manual/en/function.imagejpeg.php</a></p>
 </div>
-<p>If you are only interested in changing the image quality without doing any processing.
-You will need to include the image resource or you will end up with an exact copy:</p>
+<p>If you are only interested in changing the image quality without doing any processing, you will need to include the
+image resource, or you will end up with an exact copy:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$image</span><span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">'/path/to/image/mypic.jpg'</span><span class="p">)</span>
@@ -453,7 +442,7 @@ You will need to include the image resource or you will end up with an exact cop
 </section>
 <section id="processing-methods">
 <h2><a class="toc-backref" href="#id4" role="doc-backlink">Processing Methods</a><a class="headerlink" href="#processing-methods" title="Link to this heading"></a></h2>
-<p>There are seven available processing methods:</p>
+<p>There are eight available processing methods:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">$image-&gt;crop()</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">$image-&gt;convert()</span></code></p></li>
@@ -464,10 +453,9 @@ You will need to include the image resource or you will end up with an exact cop
 <li><p><code class="docutils literal notranslate"><span class="pre">$image-&gt;rotate()</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">$image-&gt;text()</span></code></p></li>
 </ul>
-<p>These methods return the class instance so they can be chained together, as shown above.
-If they fail they will throw a <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Images\ImageException</span></code> that contains
-the error message. A good practice is to catch the exceptions, showing an
-error upon failure, like this:</p>
+<p>These methods return the class instance so they can be chained together, as shown above. If they fail, they will throw a
+<code class="docutils literal notranslate"><span class="pre">CodeIgniter\Images\ImageException</span></code> that contains the error message. A good practice is to catch the exceptions,
+showing an error upon failure, like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$image</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'image'</span><span class="p">);</span>
@@ -483,8 +471,8 @@ error upon failure, like this:</p>
 </div>
 <section id="cropping-images">
 <h3><a class="toc-backref" href="#id5" role="doc-backlink">Cropping Images</a><a class="headerlink" href="#cropping-images" title="Link to this heading"></a></h3>
-<p>Images can be cropped so that only a portion of the original image remains. This is often used when creating
-thumbnail images that should match a certain size/aspect ratio. This is handled with the <code class="docutils literal notranslate"><span class="pre">crop()</span></code> method:</p>
+<p>Images can be cropped so that only a portion of the original image remains. This is often used when creating thumbnail
+images that should match a certain size/aspect ratio. This is handled with the <code class="docutils literal notranslate"><span class="pre">crop()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">crop</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$width</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$height</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$x</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$y</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">bool</span> <span class="nv">$maintainRatio</span> <span class="o">=</span> <span class="k">false</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$masterDim</span> <span class="o">=</span> <span class="s1">'auto'</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -494,7 +482,8 @@ thumbnail images that should match a certain size/aspect ratio. This is handled 
 <li><p><code class="docutils literal notranslate"><span class="pre">$x</span></code> is the number of pixels from the left side of the image to start cropping.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">$y</span></code> is the number of pixels from the top of the image to start cropping.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">$maintainRatio</span></code> will, if true, adjust the final dimensions as needed to maintain the image’s original aspect ratio.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">$masterDim</span></code> specifies which dimension should be left untouched when <code class="docutils literal notranslate"><span class="pre">$maintainRatio</span></code> is true. Values can be: <code class="docutils literal notranslate"><span class="pre">'width'</span></code>, <code class="docutils literal notranslate"><span class="pre">'height'</span></code>, or <code class="docutils literal notranslate"><span class="pre">'auto'</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$masterDim</span></code> specifies which dimension should be left untouched when <code class="docutils literal notranslate"><span class="pre">$maintainRatio</span></code> is true. Values can be:
+<code class="docutils literal notranslate"><span class="pre">'width'</span></code>, <code class="docutils literal notranslate"><span class="pre">'height'</span></code>, or <code class="docutils literal notranslate"><span class="pre">'auto'</span></code>.</p></li>
 </ul>
 <p>To take a 50 x 50 pixel square out of the center of an image, you would need to first calculate the appropriate x and y
 offset values:</p>
@@ -517,12 +506,14 @@ offset values:</p>
 </section>
 <section id="converting-images">
 <h3><a class="toc-backref" href="#id6" role="doc-backlink">Converting Images</a><a class="headerlink" href="#converting-images" title="Link to this heading"></a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">convert()</span></code> method changes the library’s internal indicator for the desired file format. This doesn’t touch the actual image resource, but indicates to <code class="docutils literal notranslate"><span class="pre">save()</span></code> what format to use:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">convert()</span></code> method changes the library’s internal indicator for the desired file format. This doesn’t touch the
+actual image resource, but indicates to <code class="docutils literal notranslate"><span class="pre">save()</span></code> what format to use:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">convert</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$imageType</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">$imageType</span></code> is one of PHP’s image type constants (see for example <a class="reference external" href="https://www.php.net/manual/en/function.image-type-to-mime-type.php">https://www.php.net/manual/en/function.image-type-to-mime-type.php</a>):</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">$imageType</span></code> is one of PHP’s image type constants (see for example
+<a class="reference external" href="https://www.php.net/manual/en/function.image-type-to-mime-type.php">https://www.php.net/manual/en/function.image-type-to-mime-type.php</a>):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nx">service</span><span class="p">(</span><span class="s1">'image'</span><span class="p">)</span>
@@ -540,7 +531,8 @@ offset values:</p>
 </section>
 <section id="fitting-images">
 <h3><a class="toc-backref" href="#id7" role="doc-backlink">Fitting Images</a><a class="headerlink" href="#fitting-images" title="Link to this heading"></a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">fit()</span></code> method aims to help simplify cropping a portion of an image in a “smart” way, by doing the following steps:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">fit()</span></code> method aims to help simplify cropping a portion of an image in a “smart” way, by doing the following
+steps:</p>
 <ul class="simple">
 <li><p>Determine the correct portion of the original image to crop in order to maintain the desired aspect ratio.</p></li>
 <li><p>Crop the original image.</p></li>
@@ -552,7 +544,8 @@ offset values:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">$width</span></code> is the desired final width of the image.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">$height</span></code> is the desired final height of the image.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">$position</span></code> determines the portion of the image to crop out. Allowed positions: <code class="docutils literal notranslate"><span class="pre">'top-left'</span></code>, <code class="docutils literal notranslate"><span class="pre">'top'</span></code>, <code class="docutils literal notranslate"><span class="pre">'top-right'</span></code>, <code class="docutils literal notranslate"><span class="pre">'left'</span></code>, <code class="docutils literal notranslate"><span class="pre">'center'</span></code>, <code class="docutils literal notranslate"><span class="pre">'right'</span></code>, <code class="docutils literal notranslate"><span class="pre">'bottom-left'</span></code>, <code class="docutils literal notranslate"><span class="pre">'bottom'</span></code>, <code class="docutils literal notranslate"><span class="pre">'bottom-right'</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$position</span></code> determines the portion of the image to crop out. Allowed positions: <code class="docutils literal notranslate"><span class="pre">'top-left'</span></code>, <code class="docutils literal notranslate"><span class="pre">'top'</span></code>,
+<code class="docutils literal notranslate"><span class="pre">'top-right'</span></code>, <code class="docutils literal notranslate"><span class="pre">'left'</span></code>, <code class="docutils literal notranslate"><span class="pre">'center'</span></code>, <code class="docutils literal notranslate"><span class="pre">'right'</span></code>, <code class="docutils literal notranslate"><span class="pre">'bottom-left'</span></code>, <code class="docutils literal notranslate"><span class="pre">'bottom'</span></code>, <code class="docutils literal notranslate"><span class="pre">'bottom-right'</span></code>.</p></li>
 </ul>
 <p>This provides a much simpler way to crop that will always maintain the aspect ratio:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -566,9 +559,10 @@ offset values:</p>
 </section>
 <section id="flattening-images">
 <h3><a class="toc-backref" href="#id8" role="doc-backlink">Flattening Images</a><a class="headerlink" href="#flattening-images" title="Link to this heading"></a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">flatten()</span></code> method aims to add a background color behind transparent images (PNG) and convert RGBA pixels to RGB pixels</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">flatten()</span></code> method aims to add a background color behind transparent images (PNG) and convert RGBA pixels to RGB
+pixels.</p>
 <ul class="simple">
-<li><p>Specify a background color when converting from transparent images to jpgs.</p></li>
+<li><p>Specify a background color when converting from transparent images to JPGs.</p></li>
 </ul>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">flatten</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$red</span> <span class="o">=</span> <span class="mi">255</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$green</span> <span class="o">=</span> <span class="mi">255</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$blue</span> <span class="o">=</span> <span class="mi">255</span><span class="p">)</span>
 </pre></div>
@@ -617,14 +611,16 @@ offset values:</p>
 </pre></div>
 </div>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">$width</span></code> is the desired width of the new image in pixels</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">$height</span></code> is the desired height of the new image in pixels</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">$maintainRatio</span></code> determines whether the image is stretched to fit the new dimensions, or the original aspect ratio is maintained.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">$masterDim</span></code> specifies which axis should have its dimension honored when maintaining ratio. Either <code class="docutils literal notranslate"><span class="pre">'width'</span></code>, <code class="docutils literal notranslate"><span class="pre">'height'</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$width</span></code> is the desired width of the new image in pixels.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$height</span></code> is the desired height of the new image in pixels.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$maintainRatio</span></code> determines whether the image is stretched to fit the new dimensions, or the original aspect ratio
+is maintained.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$masterDim</span></code> specifies which axis should have its dimension honored when maintaining ratio. Use <code class="docutils literal notranslate"><span class="pre">'width'</span></code>,
+<code class="docutils literal notranslate"><span class="pre">'height'</span></code>, or <code class="docutils literal notranslate"><span class="pre">'auto'</span></code> to choose automatically.</p></li>
 </ul>
-<p>When resizing images you can choose whether to maintain the ratio of the original image, or stretch/squash the new
-image to fit the desired dimensions. If <code class="docutils literal notranslate"><span class="pre">$maintainRatio</span></code> is true, the dimension specified by <code class="docutils literal notranslate"><span class="pre">$masterDim</span></code> will stay the same,
-while the other dimension will be altered to match the original image’s aspect ratio.</p>
+<p>When resizing images, you can choose whether to maintain the ratio of the original image, or stretch/squash the new
+image to fit the desired dimensions. If <code class="docutils literal notranslate"><span class="pre">$maintainRatio</span></code> is true, the dimension specified by <code class="docutils literal notranslate"><span class="pre">$masterDim</span></code> will stay
+the same, while the other dimension will be altered to match the original image’s aspect ratio.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nx">service</span><span class="p">(</span><span class="s1">'image'</span><span class="p">,</span> <span class="s1">'imagick'</span><span class="p">)</span>
@@ -636,7 +632,7 @@ while the other dimension will be altered to match the original image’s aspect
 </section>
 <section id="rotating-images">
 <h3><a class="toc-backref" href="#id11" role="doc-backlink">Rotating Images</a><a class="headerlink" href="#rotating-images" title="Link to this heading"></a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">rotate()</span></code> method allows you to rotate an image in 90 degree increments:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">rotate()</span></code> method allows you to rotate an image in 90-degree increments:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">rotate</span><span class="p">(</span><span class="nx">float</span> <span class="nv">$angle</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -645,20 +641,20 @@ while the other dimension will be altered to match the original image’s aspect
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>While the <code class="docutils literal notranslate"><span class="pre">$angle</span></code> parameter accepts a float, it will convert it to an integer during the process.
-If the value is any other than the three values listed above, it will throw a <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Images\ImageException</span></code>.</p>
+<p>While the <code class="docutils literal notranslate"><span class="pre">$angle</span></code> parameter accepts a float, it will convert it to an integer during the process. If the
+value is anything other than the three values listed above, it will throw a <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Images\ImageException</span></code>.</p>
 </div>
 </section>
 <section id="adding-a-text-watermark">
 <h3><a class="toc-backref" href="#id12" role="doc-backlink">Adding a Text Watermark</a><a class="headerlink" href="#adding-a-text-watermark" title="Link to this heading"></a></h3>
-<p>You can overlay a text watermark onto the image very simply with the <code class="docutils literal notranslate"><span class="pre">text()</span></code> method. This is useful for placing copyright
-notices, photographer names, or simply marking the images as a preview so they won’t be used in other people’s final
-products.</p>
+<p>You can overlay a text watermark onto the image very simply with the <code class="docutils literal notranslate"><span class="pre">text()</span></code> method. This is useful for placing
+copyright notices, photographer names, or simply marking the images as a preview so they won’t be used in other people’s
+final products.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">text</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$text</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$options</span> <span class="o">=</span> <span class="p">[])</span>
 </pre></div>
 </div>
-<p>The first parameter is the string of text that you wish to display. The second parameter is an array of options
-that allow you to specify how the text should be displayed:</p>
+<p>The first parameter is the string of text that you wish to display. The second parameter is an array of options that
+allow you to specify how the text should be displayed:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nx">service</span><span class="p">(</span><span class="s1">'image'</span><span class="p">,</span> <span class="s1">'imagick'</span><span class="p">)</span>
@@ -676,31 +672,31 @@ that allow you to specify how the text should be displayed:</p>
 </div>
 <p>The possible options that are recognized are as follows:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">color</span></code>         Text Color (hex number), i.e., <code class="docutils literal notranslate"><span class="pre">'#ff0000'</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">opacity</span></code>        A number between <code class="docutils literal notranslate"><span class="pre">0</span></code> and <code class="docutils literal notranslate"><span class="pre">1</span></code> that represents the opacity of the text.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">withShadow</span></code>    Boolean value whether to display a shadow or not.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">shadowColor</span></code>   Color of the shadow (hex number)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">shadowOffset</span></code>    How many pixels to offset the shadow. Applies to both the vertical and horizontal values.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">hAlign</span></code>        Horizontal alignment: <code class="docutils literal notranslate"><span class="pre">'left'</span></code>, <code class="docutils literal notranslate"><span class="pre">'center'</span></code>, <code class="docutils literal notranslate"><span class="pre">'right'</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">vAlign</span></code>        Vertical alignment: <code class="docutils literal notranslate"><span class="pre">'top'</span></code>, <code class="docutils literal notranslate"><span class="pre">'middle'</span></code>, <code class="docutils literal notranslate"><span class="pre">'bottom'</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">hOffset</span></code>        Additional offset on the x axis, in pixels</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">vOffset</span></code>        Additional offset on the y axis, in pixels</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">fontPath</span></code>        The full server path to the TTF font you wish to use. System font will be used if none is given.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">fontSize</span></code>        The font size to use. When using the GD handler with the system font, valid values are between <code class="docutils literal notranslate"><span class="pre">1</span></code> to <code class="docutils literal notranslate"><span class="pre">5</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">color</span></code>: Text color (hex number), i.e., <code class="docutils literal notranslate"><span class="pre">'#ff0000'</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">opacity</span></code>: A number between <code class="docutils literal notranslate"><span class="pre">0</span></code> and <code class="docutils literal notranslate"><span class="pre">1</span></code> that represents the opacity of the text.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">withShadow</span></code>: Boolean value indicating whether to display a shadow.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">shadowColor</span></code>: Color of the shadow (hex number)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">shadowOffset</span></code>: How many pixels to offset the shadow. Applies to both the vertical and horizontal values.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hAlign</span></code>: Horizontal alignment: <code class="docutils literal notranslate"><span class="pre">'left'</span></code>, <code class="docutils literal notranslate"><span class="pre">'center'</span></code>, <code class="docutils literal notranslate"><span class="pre">'right'</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vAlign</span></code>: Vertical alignment: <code class="docutils literal notranslate"><span class="pre">'top'</span></code>, <code class="docutils literal notranslate"><span class="pre">'middle'</span></code>, <code class="docutils literal notranslate"><span class="pre">'bottom'</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hOffset</span></code>: Additional offset on the x axis, in pixels</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vOffset</span></code>: Additional offset on the y axis, in pixels</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fontPath</span></code>: The full server path to the TTF font you wish to use. System font will be used if none is given.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fontSize</span></code>: The font size to use. When using the GD handler with the system font, valid values are between <code class="docutils literal notranslate"><span class="pre">1</span></code> and
+<code class="docutils literal notranslate"><span class="pre">5</span></code>.</p></li>
 </ul>
 </section>
 <section id="clearing-image-metadata">
 <h3><a class="toc-backref" href="#id13" role="doc-backlink">Clearing Image Metadata</a><a class="headerlink" href="#clearing-image-metadata" title="Link to this heading"></a></h3>
-<p>This method removes metadata (EXIF, XMP, ICC, IPTC, comments, etc.) from an image.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">clearMetadata()</span></code> method removes metadata (EXIF, XMP, ICC, IPTC, comments, etc.) from an image.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>The GD image library automatically strips all metadata during processing,
-so this method has no additional effect when using the GD handler.
-This behavior is built into GD itself and cannot be modified.</p>
+<p>The GD image library automatically strips all metadata during processing, so this method has no
+additional effect when using the GD handler. This behavior is built into GD itself and cannot be modified.</p>
 </div>
-<p>Some essential technical metadata (dimensions, color depth) will be regenerated during save operations
-as they’re required for image display. However, all privacy-sensitive information such as GPS location,
-camera details, and timestamps will be completely removed.</p>
+<p>Some essential technical metadata (dimensions, color depth) will be regenerated during save operations as they’re
+required for image display. However, all privacy-sensitive information such as GPS location, camera details, and
+timestamps will be completely removed.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nx">service</span><span class="p">(</span><span class="s1">'image'</span><span class="p">,</span> <span class="s1">'imagick'</span><span class="p">)</span>
@@ -725,7 +721,7 @@ camera details, and timestamps will be completely removed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

@@ -292,12 +292,10 @@
              
   <section id="handling-multiple-environments">
 <h1>Handling Multiple Environments<a class="headerlink" href="#handling-multiple-environments" title="Link to this heading"></a></h1>
-<p>Developers often desire different system behavior depending on whether
-an application is running in a development or production environment.
-For example, verbose error output is something that would be useful
-while developing an application, but it may also pose a security issue
-when “live”. In development environments, you might want additional
-tools loaded that you don’t in production environments, etc.</p>
+<p>Developers often desire different system behavior depending on whether an application is running in a development or
+production environment. For example, verbose error output is something that would be useful while developing an
+application, but it may also pose a security issue when “live”. In development environments, you might want additional
+tools loaded that you don’t want in production environments, etc.</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#the-defined-environments" id="id2">The Defined Environments</a></p></li>
@@ -335,20 +333,17 @@ tools loaded that you don’t in production environments, etc.</p>
 </ul>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>The environment <code class="docutils literal notranslate"><span class="pre">testing</span></code> is reserved for PHPUnit testing. It
-has special conditions built into the framework at various places to assist
-with that. You can’t use it for your development.</p>
+<p>The environment <code class="docutils literal notranslate"><span class="pre">testing</span></code> is reserved for PHPUnit testing. It has special conditions built into the
+framework at various places to assist with that. You can’t use it for your development.</p>
 </div>
-<p>If you want another environment, e.g., for staging, you can add custom environments.
-See <a class="reference internal" href="#adding-environments">Adding Environments</a>.</p>
+<p>If you want another environment, e.g., for staging, you can add custom environments. See <a class="reference internal" href="#adding-environments">Adding Environments</a>.</p>
 </section>
 <section id="setting-environment">
 <span id="id1"></span><h2><a class="toc-backref" href="#id3" role="doc-backlink">Setting Environment</a><a class="headerlink" href="#setting-environment" title="Link to this heading"></a></h2>
 <section id="the-environment-constant">
 <span id="environment-constant"></span><h3><a class="toc-backref" href="#id4" role="doc-backlink">The ENVIRONMENT Constant</a><a class="headerlink" href="#the-environment-constant" title="Link to this heading"></a></h3>
-<p>To set your environment, CodeIgniter comes with the <code class="docutils literal notranslate"><span class="pre">ENVIRONMENT</span></code> constant.
-If you set <code class="docutils literal notranslate"><span class="pre">$_SERVER['CI_ENVIRONMENT']</span></code>, the value will be used,
-otherwise defaulting to <code class="docutils literal notranslate"><span class="pre">production</span></code>.</p>
+<p>To set your environment, CodeIgniter comes with the <code class="docutils literal notranslate"><span class="pre">ENVIRONMENT</span></code> constant. If you set <code class="docutils literal notranslate"><span class="pre">$_SERVER['CI_ENVIRONMENT']</span></code>,
+the value will be used. Otherwise, it defaults to <code class="docutils literal notranslate"><span class="pre">production</span></code>.</p>
 <p>This can be set in several ways depending on your server setup.</p>
 <section id="env">
 <h4><a class="toc-backref" href="#id5" role="doc-backlink">.env</a><a class="headerlink" href="#env" title="Link to this heading"></a></h4>
@@ -358,7 +353,7 @@ otherwise defaulting to <code class="docutils literal notranslate"><span class="
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You can change the <code class="docutils literal notranslate"><span class="pre">CI_ENVIRONMENT</span></code> value in <strong>.env</strong> file by <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">env</span></code> command:</p>
+<p>You can change the <code class="docutils literal notranslate"><span class="pre">CI_ENVIRONMENT</span></code> value in the <strong>.env</strong> file with the <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">env</span></code> command:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark env production</span>
 </pre></div>
 </div>
@@ -366,18 +361,17 @@ otherwise defaulting to <code class="docutils literal notranslate"><span class="
 </section>
 <section id="apache">
 <span id="environment-apache"></span><h4><a class="toc-backref" href="#id6" role="doc-backlink">Apache</a><a class="headerlink" href="#apache" title="Link to this heading"></a></h4>
-<p>This server variable can be set in your <strong>.htaccess</strong> file or Apache
-config using <a class="reference external" href="https://httpd.apache.org/docs/2.4/mod/mod_env.html#setenv">SetEnv</a>.</p>
+<p>This server variable can be set in your <strong>.htaccess</strong> file or Apache config using
+<a class="reference external" href="https://httpd.apache.org/docs/2.4/mod/mod_env.html#setenv">SetEnv</a>.</p>
 <div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">SetEnv</span><span class="w"> </span>CI_ENVIRONMENT<span class="w"> </span>development
 </pre></div>
 </div>
 </section>
 <section id="nginx">
 <span id="environment-nginx"></span><h4><a class="toc-backref" href="#id7" role="doc-backlink">nginx</a><a class="headerlink" href="#nginx" title="Link to this heading"></a></h4>
-<p>Under nginx, you must pass the environment variable through the <code class="docutils literal notranslate"><span class="pre">fastcgi_params</span></code>
-in order for it to show up under the <code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code> variable. This allows it to work on the
-virtual-host level, instead of using <cite>env</cite> to set it for the entire server, though that
-would work fine on a dedicated server. You would then modify your server config to something
+<p>Under nginx, you must pass the environment variable through the <code class="docutils literal notranslate"><span class="pre">fastcgi_params</span></code> in order for it to show up under the
+<code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code> variable. This allows it to work on the virtual-host level, instead of using <code class="docutils literal notranslate"><span class="pre">env</span></code> to set it for the
+entire server, though that would work fine on a dedicated server. You would then modify your server config to something
 like:</p>
 <div class="highlight-nginx notranslate"><div class="highlight"><pre><span></span><span class="k">server</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">localhost</span><span class="p">;</span>
@@ -391,12 +385,10 @@ like:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Alternative methods are available for nginx and other servers, or you can
-remove this logic entirely and set the constant based on the server’s IP address
-(for instance).</p>
-<p>In addition to affecting some basic framework behavior (see the next
-section), you may use this constant in your own development to
-differentiate between which environment you are running in.</p>
+<p>Alternative methods are available for nginx and other servers, or you can remove this logic entirely and set the
+constant based on the server’s IP address (for instance).</p>
+<p>In addition to affecting some basic framework behavior (see the next section), you may use this constant in your own
+development to differentiate between which environment you are running in.</p>
 </section>
 </section>
 </section>
@@ -405,45 +397,39 @@ differentiate between which environment you are running in.</p>
 <p>To add custom environments, you just need to add boot files for them.</p>
 <section id="boot-files">
 <h3><a class="toc-backref" href="#id9" role="doc-backlink">Boot Files</a><a class="headerlink" href="#boot-files" title="Link to this heading"></a></h3>
-<p>CodeIgniter requires that a PHP script matching the environment’s name is located
-under <strong>APPPATH/Config/Boot</strong>. These files can contain any customizations that
-you would like to make for your environment, whether it’s updating the error display
-settings, loading additional developer tools, or anything else. These are
-automatically loaded by the system. The following files are already created in
-a fresh install:</p>
+<p>CodeIgniter requires that a PHP script matching the environment’s name is located under <strong>APPPATH/Config/Boot</strong>. These
+files can contain any customizations that you would like to make for your environment, whether it’s updating the error
+display settings, loading additional developer tools, or anything else. These are automatically loaded by the system.
+The following files are already created in a fresh install:</p>
 <ul class="simple">
-<li><p>development.php</p></li>
-<li><p>production.php</p></li>
-<li><p>testing.php</p></li>
+<li><p><strong>development.php</strong></p></li>
+<li><p><strong>production.php</strong></p></li>
+<li><p><strong>testing.php</strong></p></li>
 </ul>
-<p>For example, if you want to add <code class="docutils literal notranslate"><span class="pre">staging</span></code> environment for staging, all you need
-to do is:</p>
+<p>For example, if you want to add a <code class="docutils literal notranslate"><span class="pre">staging</span></code> environment for staging, all you need to do is:</p>
 <ol class="arabic simple">
-<li><p>copy <strong>APPPATH/Config/Boot/production.php</strong> to <strong>staging.php</strong>.</p></li>
-<li><p>customize settings in <strong>staging.php</strong> if you want.</p></li>
+<li><p>Copy <strong>APPPATH/Config/Boot/production.php</strong> to <strong>staging.php</strong>.</p></li>
+<li><p>Customize settings in <strong>staging.php</strong> if you want.</p></li>
 </ol>
 </section>
 </section>
 <section id="confirming-the-current-environment">
 <h2><a class="toc-backref" href="#id10" role="doc-backlink">Confirming the Current Environment</a><a class="headerlink" href="#confirming-the-current-environment" title="Link to this heading"></a></h2>
 <p>To confirm the current environment, simply echo the constant <code class="docutils literal notranslate"><span class="pre">ENVIRONMENT</span></code>.</p>
-<p>You can also check the current environment by <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">env</span></code> command:</p>
+<p>You can also check the current environment with the <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">env</span></code> command:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark env</span>
 </pre></div>
 </div>
 </section>
 <section id="effects-on-default-framework-behavior">
 <h2><a class="toc-backref" href="#id11" role="doc-backlink">Effects on Default Framework Behavior</a><a class="headerlink" href="#effects-on-default-framework-behavior" title="Link to this heading"></a></h2>
-<p>There are some places in the CodeIgniter system where the <code class="docutils literal notranslate"><span class="pre">ENVIRONMENT</span></code>
-constant is used. This section describes how default framework behavior
-is affected.</p>
+<p>There are some places in the CodeIgniter system where the <code class="docutils literal notranslate"><span class="pre">ENVIRONMENT</span></code> constant is used. This section describes how
+default framework behavior is affected.</p>
 <section id="error-reporting">
 <h3><a class="toc-backref" href="#id12" role="doc-backlink">Error Reporting</a><a class="headerlink" href="#error-reporting" title="Link to this heading"></a></h3>
-<p>Setting the <code class="docutils literal notranslate"><span class="pre">ENVIRONMENT</span></code> constant to a value of <code class="docutils literal notranslate"><span class="pre">development</span></code> will cause
-all PHP errors to be rendered to the browser when they occur.
-Conversely, setting the constant to <code class="docutils literal notranslate"><span class="pre">production</span></code> will disable all error
-output. Disabling error reporting in production is a
-<a class="reference internal" href="../concepts/security.html"><span class="doc">good security practice</span></a>.</p>
+<p>Setting the <code class="docutils literal notranslate"><span class="pre">ENVIRONMENT</span></code> constant to a value of <code class="docutils literal notranslate"><span class="pre">development</span></code> will cause all PHP errors to be rendered to the
+browser when they occur. Conversely, setting the constant to <code class="docutils literal notranslate"><span class="pre">production</span></code> will disable all error output. Disabling
+error reporting in production is a <a class="reference internal" href="../concepts/security.html"><span class="doc">good security practice</span></a>.</p>
 </section>
 </section>
 </section>
@@ -460,7 +446,7 @@ output. Disabling error reporting in production is a
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

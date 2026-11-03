@@ -292,8 +292,8 @@
              
   <section id="cli-generators">
 <h1>CLI Generators<a class="headerlink" href="#cli-generators" title="Link to this heading"></a></h1>
-<p>CodeIgniter4 now comes equipped with generators to ease the creation of stock controllers, models, entities,
-etc. You can also scaffold a complete set of files with just one command.</p>
+<p>CodeIgniter4 now comes equipped with generators to ease the creation of stock controllers, models, entities, etc. You
+can also scaffold a complete set of files with just one command.</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#introduction" id="id34">Introduction</a></p></li>
@@ -320,31 +320,30 @@ etc. You can also scaffold a complete set of files with just one command.</p>
 </nav>
 <section id="introduction">
 <h2><a class="toc-backref" href="#id34" role="doc-backlink">Introduction</a><a class="headerlink" href="#introduction" title="Link to this heading"></a></h2>
-<p>All built-in generators reside under the <code class="docutils literal notranslate"><span class="pre">Generators</span></code> group when listed using <code class="docutils literal notranslate"><span class="pre">php</span> <span class="pre">spark</span> <span class="pre">list</span></code>.
-To view the full description and usage information on a particular generator, use the command:</p>
+<p>All built-in generators reside under the <code class="docutils literal notranslate"><span class="pre">Generators</span></code> group when listed using <code class="docutils literal notranslate"><span class="pre">php</span> <span class="pre">spark</span> <span class="pre">list</span></code>. To view the full
+description and usage information on a particular generator, use the command:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark help &lt;generator_command&gt;</span>
 </pre></div>
 </div>
 <p>where <code class="docutils literal notranslate"><span class="pre">&lt;generator_command&gt;</span></code> will be replaced with the command to check.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Do you need to have the generated code in a subfolder? Let’s say if you want to create a controller
-class to reside in the <code class="docutils literal notranslate"><span class="pre">Admin</span></code> subfolder of the main <code class="docutils literal notranslate"><span class="pre">Controllers</span></code> folder, you will just need
-to prepend the subfolder to the class name, like this: <code class="docutils literal notranslate"><span class="pre">php</span> <span class="pre">spark</span> <span class="pre">make:controller</span> <span class="pre">admin/login</span></code>. This
-command will create the <code class="docutils literal notranslate"><span class="pre">Login</span></code> controller in the <code class="docutils literal notranslate"><span class="pre">Controllers/Admin</span></code> subfolder with
-a namespace of <code class="docutils literal notranslate"><span class="pre">App\Controllers\Admin</span></code>.</p>
+<p>Do you need to have the generated code in a subfolder? If you want to create a controller class to reside in
+the <code class="docutils literal notranslate"><span class="pre">Admin</span></code> subfolder of the main <code class="docutils literal notranslate"><span class="pre">Controllers</span></code> folder, you will just need to prepend the subfolder to the class
+name, like this: <code class="docutils literal notranslate"><span class="pre">php</span> <span class="pre">spark</span> <span class="pre">make:controller</span> <span class="pre">admin/login</span></code>. This command will create the <code class="docutils literal notranslate"><span class="pre">Login</span></code> controller in the
+<code class="docutils literal notranslate"><span class="pre">Controllers/Admin</span></code> subfolder with a namespace of <code class="docutils literal notranslate"><span class="pre">App\Controllers\Admin</span></code>.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Working on modules? Code generation will set the root namespace to a default of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.
-Should you need to have the generated code elsewhere in your module namespace, make sure to set
-the <code class="docutils literal notranslate"><span class="pre">--namespace</span></code> option in your command, e.g., <code class="docutils literal notranslate"><span class="pre">php</span> <span class="pre">spark</span> <span class="pre">make:model</span> <span class="pre">blog</span> <span class="pre">--namespace</span> <span class="pre">Acme\\Blog</span></code>.</p>
+<p>Working on modules? Code generation will set the root namespace to a default of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>. Should you
+need to have the generated code elsewhere in your module namespace, make sure to set the <code class="docutils literal notranslate"><span class="pre">--namespace</span></code> option in
+your command, e.g., <code class="docutils literal notranslate"><span class="pre">php</span> <span class="pre">spark</span> <span class="pre">make:model</span> <span class="pre">blog</span> <span class="pre">--namespace</span> <span class="pre">Acme\\Blog</span></code>.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Make sure when setting the <code class="docutils literal notranslate"><span class="pre">--namespace</span></code> option that the supplied namespace is a valid
-namespace defined in your <code class="docutils literal notranslate"><span class="pre">$psr4</span></code> array in <code class="docutils literal notranslate"><span class="pre">Config\Autoload</span></code> or defined in your composer autoload
-file. Otherwise, code generation will be interrupted.</p>
+<p>Make sure when setting the <code class="docutils literal notranslate"><span class="pre">--namespace</span></code> option that the supplied namespace is a valid namespace defined
+in your <code class="docutils literal notranslate"><span class="pre">$psr4</span></code> array in <code class="docutils literal notranslate"><span class="pre">Config\Autoload</span></code> or defined in your composer autoload file. Otherwise, code generation
+will be interrupted.</p>
 </div>
 </section>
 <section id="built-in-generators">
@@ -371,7 +370,7 @@ file. Otherwise, code generation will be interrupted.</p>
 <section id="options">
 <h4>Options:<a class="headerlink" href="#options" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code>: Set the root namespace. Defaults to value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code>: Set the root namespace. Defaults to the value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--force</span></code>: Set this flag to overwrite existing files on destination.</p></li>
 </ul>
 </section>
@@ -395,9 +394,10 @@ file. Otherwise, code generation will be interrupted.</p>
 <h4>Options:<a class="headerlink" href="#id3" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">--command</span></code>: The command name to run in spark. Defaults to <code class="docutils literal notranslate"><span class="pre">command:name</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--group</span></code>: The group/namespace of the command. Defaults to <code class="docutils literal notranslate"><span class="pre">App</span></code> for basic commands, and <code class="docutils literal notranslate"><span class="pre">Generators</span></code> for generator commands.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--group</span></code>: The group/namespace of the command. Defaults to <code class="docutils literal notranslate"><span class="pre">App</span></code> for basic commands, and <code class="docutils literal notranslate"><span class="pre">Generators</span></code> for
+generator commands.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--type</span></code>: The type of command, whether a <code class="docutils literal notranslate"><span class="pre">basic</span></code> command or a <code class="docutils literal notranslate"><span class="pre">generator</span></code> command. Defaults to <code class="docutils literal notranslate"><span class="pre">basic</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code>: Set the root namespace. Defaults to value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code>: Set the root namespace. Defaults to the value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--suffix</span></code>: Append the component suffix to the generated class name.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--force</span></code>: Set this flag to overwrite existing files on destination.</p></li>
 </ul>
@@ -421,7 +421,7 @@ file. Otherwise, code generation will be interrupted.</p>
 <section id="id6">
 <h4>Options:<a class="headerlink" href="#id6" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code>: Set the root namespace. Defaults to value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code>: Set the root namespace. Defaults to the value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--suffix</span></code>: Append the component suffix to the generated class name.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--force</span></code>: Set this flag to overwrite existing files on destination.</p></li>
 </ul>
@@ -446,19 +446,18 @@ file. Otherwise, code generation will be interrupted.</p>
 <h4>Options:<a class="headerlink" href="#id9" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">--bare</span></code>: Extends from <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Controller</span></code> instead of <code class="docutils literal notranslate"><span class="pre">BaseController</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--restful</span></code>: Extends from a RESTful resource. Choices are <code class="docutils literal notranslate"><span class="pre">controller</span></code> and <code class="docutils literal notranslate"><span class="pre">presenter</span></code>. Defaults to <code class="docutils literal notranslate"><span class="pre">controller</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code>: Set the root namespace. Defaults to value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--restful</span></code>: Extends from a RESTful resource. Choices are <code class="docutils literal notranslate"><span class="pre">controller</span></code> and <code class="docutils literal notranslate"><span class="pre">presenter</span></code>. Defaults to
+<code class="docutils literal notranslate"><span class="pre">controller</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code>: Set the root namespace. Defaults to the value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--suffix</span></code>: Append the component suffix to the generated class name.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--force</span></code>: Set this flag to overwrite existing files on destination.</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you use <code class="docutils literal notranslate"><span class="pre">--suffix</span></code>, the generated controller name will be like
-<code class="docutils literal notranslate"><span class="pre">ProductController</span></code>. That violates the Controller naming convention
-when using <a class="reference internal" href="../incoming/controllers.html#controller-auto-routing-improved"><span class="std std-ref">Auto Routing</span></a>
-(Controller class names MUST start with an uppercase letter and
-ONLY the first character can be uppercase). So <code class="docutils literal notranslate"><span class="pre">--suffix</span></code> can be used
-when you use <a class="reference internal" href="../incoming/routing.html#defined-route-routing"><span class="std std-ref">Defined Routes</span></a>.</p>
+<p>If you use <code class="docutils literal notranslate"><span class="pre">--suffix</span></code>, the generated controller name will be like <code class="docutils literal notranslate"><span class="pre">ProductController</span></code>. That violates the
+Controller naming convention when using <a class="reference internal" href="../incoming/controllers.html#controller-auto-routing-improved"><span class="std std-ref">Auto Routing</span></a> (Controller class
+names MUST start with an uppercase letter and ONLY the first character can be uppercase). So <code class="docutils literal notranslate"><span class="pre">--suffix</span></code> can be
+used when you use <a class="reference internal" href="../incoming/routing.html#defined-route-routing"><span class="std std-ref">Defined Routes</span></a>.</p>
 </div>
 </section>
 </section>
@@ -480,7 +479,7 @@ when you use <a class="reference internal" href="../incoming/routing.html#define
 <section id="id12">
 <h4>Options:<a class="headerlink" href="#id12" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code>: Set the root namespace. Defaults to value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code>: Set the root namespace. Defaults to the value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--suffix</span></code>: Append the component suffix to the generated class name.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--force</span></code>: Set this flag to overwrite existing files on destination.</p></li>
 </ul>
@@ -504,7 +503,7 @@ when you use <a class="reference internal" href="../incoming/routing.html#define
 <section id="id15">
 <h4>Options:<a class="headerlink" href="#id15" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code>: Set the root namespace. Defaults to value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code>: Set the root namespace. Defaults to the value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--suffix</span></code>: Append the component suffix to the generated class name.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--force</span></code>: Set this flag to overwrite existing files on destination.</p></li>
 </ul>
@@ -531,7 +530,7 @@ when you use <a class="reference internal" href="../incoming/routing.html#define
 <li><p><code class="docutils literal notranslate"><span class="pre">--dbgroup</span></code>: Database group to use. Defaults to <code class="docutils literal notranslate"><span class="pre">default</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--return</span></code>: Set the return type from <code class="docutils literal notranslate"><span class="pre">array</span></code>, <code class="docutils literal notranslate"><span class="pre">object</span></code>, or <code class="docutils literal notranslate"><span class="pre">entity</span></code>. Defaults to <code class="docutils literal notranslate"><span class="pre">array</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--table</span></code>: Supply a different table name. Defaults to the pluralized class name.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code>: Set the root namespace. Defaults to value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code>: Set the root namespace. Defaults to the value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--suffix</span></code>: Append the component suffix to the generated class name.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--force</span></code>: Set this flag to overwrite existing files on destination.</p></li>
 </ul>
@@ -555,7 +554,7 @@ when you use <a class="reference internal" href="../incoming/routing.html#define
 <section id="id21">
 <h4>Options:<a class="headerlink" href="#id21" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code>: Set the root namespace. Defaults to value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code>: Set the root namespace. Defaults to the value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--suffix</span></code>: Append the component suffix to the generated class name.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--force</span></code>: Set this flag to overwrite existing files on destination.</p></li>
 </ul>
@@ -582,7 +581,7 @@ when you use <a class="reference internal" href="../incoming/routing.html#define
 <section id="id24">
 <h4>Options:<a class="headerlink" href="#id24" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code>: Set the root namespace. Defaults to value of <code class="docutils literal notranslate"><span class="pre">Tests</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code>: Set the root namespace. Defaults to <code class="docutils literal notranslate"><span class="pre">Tests</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--force</span></code>: Set this flag to overwrite existing files on destination.</p></li>
 </ul>
 </section>
@@ -605,7 +604,7 @@ when you use <a class="reference internal" href="../incoming/routing.html#define
 <section id="id27">
 <h4>Options:<a class="headerlink" href="#id27" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code>: Set the root namespace. Defaults to value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code>: Set the root namespace. Defaults to the value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--suffix</span></code>: Append the component suffix to the generated class name.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--force</span></code>: Set this flag to overwrite existing files on destination.</p></li>
 </ul>
@@ -632,7 +631,7 @@ when you use <a class="reference internal" href="../incoming/routing.html#define
 <li><p><code class="docutils literal notranslate"><span class="pre">--session</span></code>: Generate a migration file for database sessions.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--table</span></code>: Set the table name to use for database sessions. Defaults to <code class="docutils literal notranslate"><span class="pre">ci_sessions</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--dbgroup</span></code>: Set the database group for database sessions. Defaults to <code class="docutils literal notranslate"><span class="pre">default</span></code> group.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code>: Set the root namespace. Defaults to value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code>: Set the root namespace. Defaults to the value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--suffix</span></code>: Append the component suffix to the generated class name.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--force</span></code>: Set this flag to overwrite existing files on destination.</p></li>
 </ul>
@@ -656,7 +655,7 @@ when you use <a class="reference internal" href="../incoming/routing.html#define
 <section id="id33">
 <h4>Options:<a class="headerlink" href="#id33" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code>: Set the root namespace. Defaults to value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code>: Set the root namespace. Defaults to the value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--suffix</span></code>: Append the component suffix to the generated class name.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--force</span></code>: Set this flag to overwrite existing files on destination.</p></li>
 </ul>
@@ -665,14 +664,13 @@ when you use <a class="reference internal" href="../incoming/routing.html#define
 </section>
 <section id="scaffolding-a-complete-set-of-stock-code">
 <h2><a class="toc-backref" href="#id48" role="doc-backlink">Scaffolding a Complete Set of Stock Code</a><a class="headerlink" href="#scaffolding-a-complete-set-of-stock-code" title="Link to this heading"></a></h2>
-<p>Sometimes in our development phase we are creating functionalities by groups, such as creating an <em>Admin</em> group.
-This group will contain its own controller, model, migration files, or even entities. You may be tempted to type
-each generator command one-by-one in the terminal and wishfully thinking it would be great to have a single generator
-command to rule them all.</p>
-<p>Fret no more! CodeIgniter4 is also shipped with a dedicated <code class="docutils literal notranslate"><span class="pre">make:scaffold</span></code> command that is basically a
-wrapper to the controller, model, entity, migration, and seeder generator commands. All you need is the class
-name that will be used to name all the generated classes. Also, <strong>individual options</strong> supported by each
-generator command are recognized by the scaffold command.</p>
+<p>Sometimes in our development phase we create functionality in groups, such as an <em>Admin</em> group. This group will contain
+its own controller, model, migration files, or even entities. You may be tempted to type each generator command one by
+one in the terminal and wishfully think it would be great to have a single generator command to rule them all.</p>
+<p>Fret no more! CodeIgniter4 is also shipped with a dedicated <code class="docutils literal notranslate"><span class="pre">make:scaffold</span></code> command that is basically a wrapper around
+the controller, model, entity, migration, and seeder generator commands. All you need is the class name that will be
+used to name all the generated classes. Also, <strong>individual options</strong> supported by each generator command are recognized
+by the scaffold command.</p>
 <p>Running this in your terminal:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark make:scaffold user</span>
 </pre></div>
@@ -684,21 +682,21 @@ generator command are recognized by the scaffold command.</p>
 <li><p><strong>app/Database/Migrations/&lt;some date here&gt;_User.php</strong> and</p></li>
 <li><p><strong>app/Database/Seeds/User.php</strong></p></li>
 </ol>
-<p>To include an <code class="docutils literal notranslate"><span class="pre">Entity</span></code> class in the scaffolded files, just include the <code class="docutils literal notranslate"><span class="pre">--return</span> <span class="pre">entity</span></code> to the command
-and it will be passed to the model generator.</p>
+<p>To include an <code class="docutils literal notranslate"><span class="pre">Entity</span></code> class in the scaffolded files, just add <code class="docutils literal notranslate"><span class="pre">--return</span> <span class="pre">entity</span></code> to the command and it will be
+passed to the model generator.</p>
 </section>
 <section id="generatortrait">
 <h2><a class="toc-backref" href="#id49" role="doc-backlink">GeneratorTrait</a><a class="headerlink" href="#generatortrait" title="Link to this heading"></a></h2>
-<p>All generator commands must use the <code class="docutils literal notranslate"><span class="pre">GeneratorTrait</span></code> to fully utilize its methods that are used in code
-generation.</p>
+<p>All generator commands must use the <code class="docutils literal notranslate"><span class="pre">GeneratorTrait</span></code> to fully utilize its methods that are used in code generation.</p>
 </section>
 <section id="declaring-the-location-of-a-custom-generator-command-template">
 <h2><a class="toc-backref" href="#id50" role="doc-backlink">Declaring the Location of a Custom Generator Command Template</a><a class="headerlink" href="#declaring-the-location-of-a-custom-generator-command-template" title="Link to this heading"></a></h2>
-<p>The default order of lookup for generator templates is (1) the template defined in the <strong>app/Config/Generators.php</strong> file,
-and (2) if not found, the template found at the <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Commands\Generators\Views</span></code> namespace.</p>
-<p>To declare the template location for your custom generator command, you will need to add it to the <strong>app/Config/Generators.php</strong>
-file. For example, if you have a command <code class="docutils literal notranslate"><span class="pre">make:awesome-command</span></code> and your generator template is located within your <em>app</em>
-directory <strong>app/Commands/Generators/Views/awesomecommand.tpl.php</strong>, you would update the config file like so:</p>
+<p>The default order of lookup for generator templates is (1) the template defined in the <strong>app/Config/Generators.php</strong>
+file, and (2) if not found, the template found at the <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Commands\Generators\Views</span></code> namespace.</p>
+<p>To declare the template location for your custom generator command, you will need to add it to the
+<strong>app/Config/Generators.php</strong> file. For example, if you have a command <code class="docutils literal notranslate"><span class="pre">make:awesome-command</span></code> and your generator
+template is located within your <em>app</em> directory <strong>app/Commands/Generators/Views/awesomecommand.tpl.php</strong>, you would
+update the config file like so:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -729,7 +727,7 @@ directory <strong>app/Commands/Generators/Views/awesomecommand.tpl.php</strong>,
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

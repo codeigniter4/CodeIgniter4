@@ -292,12 +292,12 @@
              
   <section id="testing">
 <h1>Testing<a class="headerlink" href="#testing" title="Link to this heading"></a></h1>
-<p>CodeIgniter has been built to make testing both the framework and your application as simple as possible.
-Support for <a class="reference external" href="https://phpunit.de/">PHPUnit</a> is built in, and the framework provides a number of convenient
-helper methods to make testing every aspect of your application as painless as possible.</p>
+<p>CodeIgniter has been built to make testing both the framework and your application as simple as possible. Support for
+<a class="reference external" href="https://phpunit.de/">PHPUnit</a> is built in, and the framework provides a number of convenient helper methods to make
+testing every aspect of your application as painless as possible.</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#system-set-up" id="id1">System Set Up</a></p>
+<li><p><a class="reference internal" href="#system-setup" id="id1">System Setup</a></p>
 <ul>
 <li><p><a class="reference internal" href="#installing-phpunit" id="id2">Installing PHPUnit</a></p>
 <ul>
@@ -331,24 +331,24 @@ helper methods to make testing every aspect of your application as painless as p
 </li>
 </ul>
 </nav>
-<section id="system-set-up">
-<h2><a class="toc-backref" href="#id1" role="doc-backlink">System Set Up</a><a class="headerlink" href="#system-set-up" title="Link to this heading"></a></h2>
+<section id="system-setup">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">System Setup</a><a class="headerlink" href="#system-setup" title="Link to this heading"></a></h2>
 <section id="installing-phpunit">
 <h3><a class="toc-backref" href="#id2" role="doc-backlink">Installing PHPUnit</a><a class="headerlink" href="#installing-phpunit" title="Link to this heading"></a></h3>
 <p>CodeIgniter uses <a class="reference external" href="https://phpunit.de/">PHPUnit</a> as the basis for all of its testing. There are two ways to install
 PHPUnit to use within your system.</p>
 <section id="composer">
 <h4><a class="toc-backref" href="#id3" role="doc-backlink">Composer</a><a class="headerlink" href="#composer" title="Link to this heading"></a></h4>
-<p>The recommended method is to install it in your project using <a class="reference external" href="https://getcomposer.org/">Composer</a>. While it’s possible
-to install it globally we do not recommend it, since it can cause compatibility issues with other projects on your
-system as time goes on.</p>
+<p>The recommended method is to install it in your project using <a class="reference external" href="https://getcomposer.org/">Composer</a>. While it’s
+possible to install it globally, we do not recommend it, since it can cause compatibility issues with other projects on
+your system as time goes on.</p>
 <p>Ensure that you have Composer installed on your system. From the project root (the directory that contains the
 application and system directories) type the following from the command line:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">composer require --dev phpunit/phpunit</span>
 </pre></div>
 </div>
-<p>This will install the correct version for your current PHP version. Once that is done, you can run all of the
-tests for this project by typing:</p>
+<p>This will install the correct version for your current PHP version. Once that is done, you can run all of the tests for
+this project by typing:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">vendor/bin/phpunit</span>
 </pre></div>
 </div>
@@ -359,8 +359,9 @@ tests for this project by typing:</p>
 </section>
 <section id="phar">
 <h4><a class="toc-backref" href="#id4" role="doc-backlink">Phar</a><a class="headerlink" href="#phar" title="Link to this heading"></a></h4>
-<p>The other option is to download the .phar file from the <a class="reference external" href="https://phpunit.de/getting-started/phpunit-9.html">PHPUnit</a> site.
-This is a standalone file that should be placed within your project root.</p>
+<p>The other option is to download the .phar file as described in the
+<a class="reference external" href="https://docs.phpunit.de/en/10.5/installation.html">PHPUnit installation guide</a>. This is a standalone file that
+should be placed within your project root.</p>
 </section>
 </section>
 </section>
@@ -368,21 +369,17 @@ This is a standalone file that should be placed within your project root.</p>
 <h2><a class="toc-backref" href="#id5" role="doc-backlink">Testing Your Application</a><a class="headerlink" href="#testing-your-application" title="Link to this heading"></a></h2>
 <section id="phpunit-configuration">
 <h3><a class="toc-backref" href="#id6" role="doc-backlink">PHPUnit Configuration</a><a class="headerlink" href="#phpunit-configuration" title="Link to this heading"></a></h3>
-<p>In your CodeIgniter project root, there is the <code class="docutils literal notranslate"><span class="pre">phpunit.dist.xml</span></code> file. This
-controls unit testing of your application. If you provide your own <code class="docutils literal notranslate"><span class="pre">phpunit.xml</span></code>,
-it will over-ride this.</p>
+<p>In your CodeIgniter project root, there is the <code class="docutils literal notranslate"><span class="pre">phpunit.dist.xml</span></code> file. This controls unit testing of your
+application. If you provide your own <code class="docutils literal notranslate"><span class="pre">phpunit.xml</span></code>, it will override this.</p>
 <p>By default, test files are placed under the <strong>tests</strong> directory in the project root.</p>
 </section>
 <section id="the-test-class">
 <h3><a class="toc-backref" href="#id7" role="doc-backlink">The Test Class</a><a class="headerlink" href="#the-test-class" title="Link to this heading"></a></h3>
-<p>In order to take advantage of the additional tools provided, your tests must extend
-<code class="docutils literal notranslate"><span class="pre">CodeIgniter\Test\CIUnitTestCase</span></code>.</p>
-<p>There are no rules for how test files must be placed. However, we recommend that
-you establish placement rules in advance so that you can quickly understand where
-the test files are located.</p>
-<p>In this document, the test files corresponding to the classes in the <strong>app</strong> directory
-will be placed in the <strong>tests/app</strong> directory. To test a new library,
-<strong>app/Libraries/Foo.php</strong>, you would create a new file at
+<p>In order to take advantage of the additional tools provided, your tests must extend <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Test\CIUnitTestCase</span></code>.</p>
+<p>There are no rules for how test files must be placed. However, we recommend that you establish placement rules in
+advance so that you can quickly understand where the test files are located.</p>
+<p>In this document, the test files corresponding to the classes in the <strong>app</strong> directory will be placed in the
+<strong>tests/app</strong> directory. To test a new library, <strong>app/Libraries/Foo.php</strong>, you would create a new file at
 <strong>tests/app/Libraries/FooTest.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -399,8 +396,8 @@ will be placed in the <strong>tests/app</strong> directory. To test a new librar
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>To test one of your models, <strong>app/Models/UserModel.php</strong>, you might end up with
-something like this in <strong>tests/app/Models/UserModelTest.php</strong>:</p>
+<p>To test one of your models, <strong>app/Models/UserModel.php</strong>, you might end up with something like this in
+<strong>tests/app/Models/UserModelTest.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
@@ -416,9 +413,9 @@ something like this in <strong>tests/app/Models/UserModelTest.php</strong>:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>You can create any directory structure that fits your testing style/needs. When namespacing the test classes,
-remember that the <strong>app</strong> directory is the root of the <code class="docutils literal notranslate"><span class="pre">App</span></code> namespace, so any classes you use must
-have the correct namespace relative to <code class="docutils literal notranslate"><span class="pre">App</span></code>.</p>
+<p>You can create any directory structure that fits your testing style/needs. When namespacing the test classes, remember
+that the <strong>app</strong> directory is the root of the <code class="docutils literal notranslate"><span class="pre">App</span></code> namespace, so any classes you use must have the correct namespace
+relative to <code class="docutils literal notranslate"><span class="pre">App</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Namespaces are not strictly required for test classes, but they are helpful to ensure no class names collide.</p>
@@ -426,8 +423,8 @@ have the correct namespace relative to <code class="docutils literal notranslate
 <p>When testing database results, you must use the <a class="reference internal" href="database.html"><span class="doc">DatabaseTestTrait</span></a> in your class.</p>
 <section id="staging">
 <h4><a class="toc-backref" href="#id8" role="doc-backlink">Staging</a><a class="headerlink" href="#staging" title="Link to this heading"></a></h4>
-<p>Most tests require some preparation in order to run correctly. PHPUnit’s <code class="docutils literal notranslate"><span class="pre">TestCase</span></code> provides four methods
-to help with staging and clean up:</p>
+<p>Most tests require some preparation in order to run correctly. PHPUnit’s <code class="docutils literal notranslate"><span class="pre">TestCase</span></code> provides four methods to help with
+staging and cleanup:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">setUpBeforeClass</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
 <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">tearDownAfterClass</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
 
@@ -435,10 +432,10 @@ to help with staging and clean up:</p>
 <span class="k">protected</span> <span class="k">function</span> <span class="nf">tearDown</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
 </pre></div>
 </div>
-<p>The static methods <code class="docutils literal notranslate"><span class="pre">setUpBeforeClass()</span></code> and <code class="docutils literal notranslate"><span class="pre">tearDownAfterClass()</span></code> run before and after the entire test case, whereas the protected methods <code class="docutils literal notranslate"><span class="pre">setUp()</span></code> and <code class="docutils literal notranslate"><span class="pre">tearDown()</span></code> run
-between each test.</p>
-<p>If you implement any of these special functions, make sure you run their
-parent as well so extended test cases do not interfere with staging:</p>
+<p>The static methods <code class="docutils literal notranslate"><span class="pre">setUpBeforeClass()</span></code> and <code class="docutils literal notranslate"><span class="pre">tearDownAfterClass()</span></code> run before and after the entire test case,
+whereas the protected methods <code class="docutils literal notranslate"><span class="pre">setUp()</span></code> and <code class="docutils literal notranslate"><span class="pre">tearDown()</span></code> run between each test.</p>
+<p>If you implement any of these special functions, make sure you run their parent as well so extended test cases do not
+interfere with staging:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
@@ -461,12 +458,11 @@ parent as well so extended test cases do not interfere with staging:</p>
 </section>
 <section id="traits">
 <span id="testing-overview-traits"></span><h4><a class="toc-backref" href="#id9" role="doc-backlink">Traits</a><a class="headerlink" href="#traits" title="Link to this heading"></a></h4>
-<p>A common way to enhance your tests is using traits to consolidate staging across different
-test cases. <code class="docutils literal notranslate"><span class="pre">CIUnitTestCase</span></code> will detect any class traits and look for staging methods
-to run named for the trait itself (i.e. <cite>setUp{NameOfTrait}()</cite> and <cite>tearDown{NameOfTrait}()</cite>).</p>
-<p>For example, if you needed to add authentication to some
-of your test cases you could create an authentication trait with a set up method to fake a
-logged in user:</p>
+<p>A common way to enhance your tests is to use traits to consolidate staging across different test cases.
+<code class="docutils literal notranslate"><span class="pre">CIUnitTestCase</span></code> will detect any class traits and look for staging methods to run named for the trait itself (i.e.,
+<code class="docutils literal notranslate"><span class="pre">setUp{NameOfTrait}()</span></code> and <code class="docutils literal notranslate"><span class="pre">tearDown{NameOfTrait}()</span></code>).</p>
+<p>For example, if you needed to add authentication to some of your test cases, you could create an authentication trait
+with a setup method to fake a logged-in user:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Traits</span><span class="p">;</span>
@@ -505,20 +501,19 @@ logged in user:</p>
 <section id="assertlogged-level-expectedmessage">
 <h5>assertLogged($level, $expectedMessage)<a class="headerlink" href="#assertlogged-level-expectedmessage" title="Link to this heading"></a></h5>
 <p>Ensure that something you expected to be logged was actually logged:</p>
-</section>
-<section id="assertlogcontains-level-logmessage">
-<h5>assertLogContains($level, $logMessage)<a class="headerlink" href="#assertlogcontains-level-logmessage" title="Link to this heading"></a></h5>
-<p>Ensure that there’s a record in the logs which contains a message part.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Config\Logger</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Config\Logger</span><span class="p">();</span>
 <span class="nv">$logger</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Log\Logger</span><span class="p">(</span><span class="nv">$config</span><span class="p">);</span>
 
 <span class="c1">// check verbatim the log message</span>
 <span class="nv">$logger</span><span class="o">-&gt;</span><span class="na">log</span><span class="p">(</span><span class="s1">'error'</span><span class="p">,</span> <span class="s2">"That's no moon"</span><span class="p">);</span>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertLogged</span><span class="p">(</span><span class="s1">'error'</span><span class="p">,</span> <span class="s2">"That's no moon"</span><span class="p">);</span>
-
-<span class="c1">// check that a portion of the message is found in the logs</span>
+</pre></div>
+</div>
+</section>
+<section id="assertlogcontains-level-logmessage">
+<h5>assertLogContains($level, $logMessage)<a class="headerlink" href="#assertlogcontains-level-logmessage" title="Link to this heading"></a></h5>
+<p>Ensure that there’s a record in the logs which contains a message part.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// check that a portion of the message is found in the logs</span>
 <span class="nv">$exception</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\RuntimeException</span><span class="p">(</span><span class="s1">'Hello world.'</span><span class="p">);</span>
 <span class="nv">$logger</span><span class="o">-&gt;</span><span class="na">log</span><span class="p">(</span><span class="s1">'error'</span><span class="p">,</span> <span class="nv">$exception</span><span class="o">-&gt;</span><span class="na">getTraceAsString</span><span class="p">());</span>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertLogContains</span><span class="p">(</span><span class="s1">'error'</span><span class="p">,</span> <span class="s1">'{main}'</span><span class="p">);</span>
@@ -558,9 +553,8 @@ logged in user:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The test case with this should be run as a separate process
-(with <a class="reference external" href="https://docs.phpunit.de/en/10.5/annotations.html#runinseparateprocess">&#64;runInSeparateProcess annotation</a> or <a class="reference external" href="https://docs.phpunit.de/en/10.5/attributes.html#runinseparateprocess">RunInSeparateProcess attribute</a>)
-in PHPUnit.</p>
+<p>The test case with this should be run as a separate process (with <a class="reference external" href="https://docs.phpunit.de/en/10.5/annotations.html#runinseparateprocess">&#64;runInSeparateProcess annotation</a> or
+<a class="reference external" href="https://docs.phpunit.de/en/10.5/attributes.html#runinseparateprocess">RunInSeparateProcess attribute</a>) in PHPUnit.</p>
 </div>
 </section>
 <section id="assertheadernotemitted-header-ignorecase-false">
@@ -579,15 +573,14 @@ in PHPUnit.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The test case with this should be run as a separate process
-(with <a class="reference external" href="https://docs.phpunit.de/en/10.5/annotations.html#runinseparateprocess">&#64;runInSeparateProcess annotation</a> or <a class="reference external" href="https://docs.phpunit.de/en/10.5/attributes.html#runinseparateprocess">RunInSeparateProcess attribute</a>)
-in PHPUnit.</p>
+<p>The test case with this should be run as a separate process (with <a class="reference external" href="https://docs.phpunit.de/en/10.5/annotations.html#runinseparateprocess">&#64;runInSeparateProcess annotation</a> or
+<a class="reference external" href="https://docs.phpunit.de/en/10.5/attributes.html#runinseparateprocess">RunInSeparateProcess attribute</a>) in PHPUnit.</p>
 </div>
 </section>
 <section id="assertcloseenough-expected-actual-message-tolerance-1">
 <h5>assertCloseEnough($expected, $actual, $message = ‘’, $tolerance = 1)<a class="headerlink" href="#assertcloseenough-expected-actual-message-tolerance-1" title="Link to this heading"></a></h5>
-<p>For extended execution time testing, tests that the absolute difference
-between expected and actual time is within the prescribed tolerance:</p>
+<p>For extended execution time testing, tests that the absolute difference between expected and actual time is within the
+prescribed tolerance:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Debug\Timer</span><span class="p">;</span>
@@ -601,8 +594,8 @@ between expected and actual time is within the prescribed tolerance:</p>
 </section>
 <section id="assertcloseenoughstring-expected-actual-message-tolerance-1">
 <h5>assertCloseEnoughString($expected, $actual, $message = ‘’, $tolerance = 1)<a class="headerlink" href="#assertcloseenoughstring-expected-actual-message-tolerance-1" title="Link to this heading"></a></h5>
-<p>For extended execution time testing, tests that the absolute difference
-between expected and actual time, formatted as strings, is within the prescribed tolerance:</p>
+<p>For extended execution time testing, tests that the absolute difference between expected and actual time, formatted as
+strings, is within the prescribed tolerance:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Debug\Timer</span><span class="p">;</span>
@@ -617,8 +610,8 @@ between expected and actual time, formatted as strings, is within the prescribed
 </section>
 <section id="accessing-protected-private-properties">
 <h4><a class="toc-backref" href="#id11" role="doc-backlink">Accessing Protected/Private Properties</a><a class="headerlink" href="#accessing-protected-private-properties" title="Link to this heading"></a></h4>
-<p>When testing, you can use the following setter and getter methods to access protected and private methods and
-properties in the classes that you are testing.</p>
+<p>When testing, you can use the following setter and getter methods to access protected and private methods and properties
+in the classes that you are testing.</p>
 <section id="getprivatemethodinvoker-instance-method">
 <h5>getPrivateMethodInvoker($instance, $method)<a class="headerlink" href="#getprivatemethodinvoker-instance-method" title="Link to this heading"></a></h5>
 <p>Enables you to call private methods from outside the class. This returns a function that can be called. The first
@@ -676,14 +669,13 @@ parameter is the name of the property to set the value of. The third parameter i
 </section>
 <section id="mocking-services">
 <h3><a class="toc-backref" href="#id12" role="doc-backlink">Mocking Services</a><a class="headerlink" href="#mocking-services" title="Link to this heading"></a></h3>
-<p>You will often find that you need to mock one of the services defined in <strong>app/Config/Services.php</strong> to limit
-your tests to only the code in question, while simulating various responses from the services. This is especially
-true when testing controllers and other integration testing. The <strong>Services</strong> class provides the following methods
-to simplify this.</p>
+<p>You will often find that you need to mock one of the services defined in <strong>app/Config/Services.php</strong> to limit your tests
+to only the code in question, while simulating various responses from the services. This is especially true when testing
+controllers and other integration testing. The <strong>Services</strong> class provides the following methods to simplify this.</p>
 <section id="services-injectmock">
 <h4><a class="toc-backref" href="#id13" role="doc-backlink">Services::injectMock()</a><a class="headerlink" href="#services-injectmock" title="Link to this heading"></a></h4>
-<p>This method allows you to define the exact instance that will be returned by the Services class. You can use this to
-set properties of a service so that it behaves in a certain way, or replace a service with a mocked class.</p>
+<p>This method allows you to define the exact instance that will be returned by the Services class. You can use this to set
+properties of a service so that it behaves in a certain way, or replace a service with a mocked class.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Tests</span><span class="p">;</span>
@@ -706,8 +698,8 @@ set properties of a service so that it behaves in a certain way, or replace a se
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The first parameter is the service that you are replacing. The name must match the function name in the Services
-class exactly. The second parameter is the instance to replace it with.</p>
+<p>The first parameter is the service that you are replacing. The name must match the function name in the Services class
+exactly. The second parameter is the instance to replace it with.</p>
 </section>
 <section id="services-reset">
 <h4><a class="toc-backref" href="#id14" role="doc-backlink">Services::reset()</a><a class="headerlink" href="#services-reset" title="Link to this heading"></a></h4>
@@ -715,9 +707,8 @@ class exactly. The second parameter is the instance to replace it with.</p>
 <p>You can also use the <code class="docutils literal notranslate"><span class="pre">$this-&gt;resetServices()</span></code> method that <code class="docutils literal notranslate"><span class="pre">CIUnitTestCase</span></code> provides.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This method resets the all states of Services, and the <code class="docutils literal notranslate"><span class="pre">RouteCollection</span></code>
-will have no routes. If you want to use your routes to be loaded, you need to
-call the <code class="docutils literal notranslate"><span class="pre">loadRoutes()</span></code> method like <code class="docutils literal notranslate"><span class="pre">Services::routes()-&gt;loadRoutes()</span></code>.</p>
+<p>This method resets all states of Services, and the <code class="docutils literal notranslate"><span class="pre">RouteCollection</span></code> will have no routes. If you want your
+routes to be loaded, you need to call the <code class="docutils literal notranslate"><span class="pre">loadRoutes()</span></code> method like <code class="docutils literal notranslate"><span class="pre">Services::routes()-&gt;loadRoutes()</span></code>.</p>
 </div>
 </section>
 <section id="services-resetsingle-string-name">
@@ -725,16 +716,17 @@ call the <code class="docutils literal notranslate"><span class="pre">loadRoutes
 <p>Removes any mock and shared instances for a single service, by its name.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">Cache</span></code>, <code class="docutils literal notranslate"><span class="pre">Email</span></code> and <code class="docutils literal notranslate"><span class="pre">Session</span></code> services are mocked by default to prevent intrusive testing behavior. To prevent these from mocking remove their method callback from the class property: <code class="docutils literal notranslate"><span class="pre">$setUpMethods</span> <span class="pre">=</span> <span class="pre">['mockEmail',</span> <span class="pre">'mockSession'];</span></code></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Cache</span></code>, <code class="docutils literal notranslate"><span class="pre">Email</span></code> and <code class="docutils literal notranslate"><span class="pre">Session</span></code> services are mocked by default to prevent intrusive testing behavior.
+To prevent these from being mocked, remove their method callback from the class property:
+<code class="docutils literal notranslate"><span class="pre">$setUpMethods</span> <span class="pre">=</span> <span class="pre">['mockEmail',</span> <span class="pre">'mockSession'];</span></code></p>
 </div>
 </section>
 </section>
 <section id="mocking-factory-instances">
 <h3><a class="toc-backref" href="#id16" role="doc-backlink">Mocking Factory Instances</a><a class="headerlink" href="#mocking-factory-instances" title="Link to this heading"></a></h3>
-<p>Similar to Services, you may find yourself needing to supply a pre-configured class instance
-during testing that will be used with <code class="docutils literal notranslate"><span class="pre">Factories</span></code>. Use the same <code class="docutils literal notranslate"><span class="pre">Factories::injectMock()</span></code> and <code class="docutils literal notranslate"><span class="pre">Factories::reset()</span></code>
-static methods like <strong>Services</strong>, but they take an additional preceding parameter for the
-component name:</p>
+<p>Similar to Services, you may find yourself needing to supply a pre-configured class instance during testing that will be
+used with <code class="docutils literal notranslate"><span class="pre">Factories</span></code>. Use the same <code class="docutils literal notranslate"><span class="pre">Factories::injectMock()</span></code> and <code class="docutils literal notranslate"><span class="pre">Factories::reset()</span></code> static methods as
+<strong>Services</strong>, but they take an additional preceding parameter for the component name:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Tests</span><span class="p">;</span>
@@ -758,15 +750,15 @@ component name:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>All component Factories are reset by default between each test. Modify your test case’s <code class="docutils literal notranslate"><span class="pre">$setUpMethods</span></code> if you need instances to persist.</p>
+<p>All component Factories are reset by default between each test. Modify your test case’s <code class="docutils literal notranslate"><span class="pre">$setUpMethods</span></code> if
+you need instances to persist.</p>
 </div>
 </section>
 <section id="testing-and-time">
 <h3><a class="toc-backref" href="#id17" role="doc-backlink">Testing and Time</a><a class="headerlink" href="#testing-and-time" title="Link to this heading"></a></h3>
-<p>Testing time-dependent code can be challenging. However, when using the
-<a class="reference internal" href="../libraries/time.html"><span class="doc">Time</span></a> class, the current time can be fixed or changed
-at will during testing.</p>
-<p>Below is a sample test code that fixes the current time:</p>
+<p>Testing time-dependent code can be challenging. However, when using the <a class="reference internal" href="../libraries/time.html"><span class="doc">Time</span></a> class, the
+current time can be fixed or changed at will during testing.</p>
+<p>Below is sample test code that fixes the current time:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Tests</span><span class="p">;</span>
@@ -795,10 +787,9 @@ at will during testing.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>You can fix the current time with the <code class="docutils literal notranslate"><span class="pre">Time::setTestNow()</span></code> method.
-Optionally, you can specify a locale as the second parameter.</p>
-<p>Don’t forget to reset the current time after the test with calling it without
-parameters.</p>
+<p>You can fix the current time with the <code class="docutils literal notranslate"><span class="pre">Time::setTestNow()</span></code> method. Optionally, you can specify a locale as the second
+parameter.</p>
+<p>Don’t forget to reset the current time after the test by calling it without parameters.</p>
 </section>
 </section>
 </section>
@@ -815,7 +806,7 @@ parameters.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

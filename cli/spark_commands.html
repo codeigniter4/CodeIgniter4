@@ -314,24 +314,22 @@
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Running Commands</a><a class="headerlink" href="#running-commands" title="Link to this heading"></a></h2>
 <section id="running-via-cli">
 <h3><a class="toc-backref" href="#id2" role="doc-backlink">Running via CLI</a><a class="headerlink" href="#running-via-cli" title="Link to this heading"></a></h3>
-<p>The commands are run from the command line, in the project root directory.
-The command file <strong>spark</strong> has been provided that is used to run any of the CLI commands.</p>
+<p>The commands are run from the command line, in the project root directory. The command file <strong>spark</strong> is provided to run
+any of the CLI commands.</p>
 <section id="showing-list-of-commands">
 <h4><a class="toc-backref" href="#id3" role="doc-backlink">Showing List of Commands</a><a class="headerlink" href="#showing-list-of-commands" title="Link to this heading"></a></h4>
-<p>When called <strong>spark</strong> without specifying a command, a simple help page is displayed
-that also provides a list of available commands and their descriptions, sorted by
-categories:</p>
+<p>When <strong>spark</strong> is called without specifying a command, a simple help page is displayed that also provides a list of
+available commands and their descriptions, sorted by categories:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark</span>
 </pre></div>
 </div>
 <section id="spark-list">
 <h5>spark list<a class="headerlink" href="#spark-list" title="Link to this heading"></a></h5>
-<p><code class="docutils literal notranslate"><span class="pre">php</span> <span class="pre">spark</span></code> is the exactly same as the <code class="docutils literal notranslate"><span class="pre">list</span></code> command:</p>
+<p><code class="docutils literal notranslate"><span class="pre">php</span> <span class="pre">spark</span></code> is exactly the same as the <code class="docutils literal notranslate"><span class="pre">list</span></code> command:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark list</span>
 </pre></div>
 </div>
-<p>You may also use the <code class="docutils literal notranslate"><span class="pre">--simple</span></code> option to get a raw list of all available commands,
-sorted alphabetically:</p>
+<p>You may also use the <code class="docutils literal notranslate"><span class="pre">--simple</span></code> option to get a raw list of all available commands, sorted alphabetically:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark list --simple</span>
 </pre></div>
 </div>
@@ -358,8 +356,8 @@ sorted alphabetically:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark db:seed DevUserSeeder</span>
 </pre></div>
 </div>
-<p>For all of the commands CodeIgniter provides, if you do not provide the required arguments, you will be prompted
-for the information it needs to run correctly:</p>
+<p>For all of the commands CodeIgniter provides, if you do not provide the required arguments, you will be prompted for the
+information it needs to run correctly:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark make:controller</span>
 
 <span class="go">Controller class name :</span>
@@ -368,8 +366,7 @@ for the information it needs to run correctly:</p>
 </section>
 <section id="suppressing-header-output">
 <h4><a class="toc-backref" href="#id6" role="doc-backlink">Suppressing Header Output</a><a class="headerlink" href="#suppressing-header-output" title="Link to this heading"></a></h4>
-<p>When you run a command, the header with CodeIgniter version and the current time
-is output:</p>
+<p>When you run a command, the header with the CodeIgniter version and the current time is output:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark env</span>
 
 <span class="go">CodeIgniter v4.3.5 Command Line Tool - Server Time: 2023-06-16 12:45:31 UTC+00:00</span>
@@ -377,7 +374,7 @@ is output:</p>
 <span class="go">Your environment is currently set as development.</span>
 </pre></div>
 </div>
-<p>You may always pass <code class="docutils literal notranslate"><span class="pre">--no-header</span></code> to suppress the header output, helpful for parsing results:</p>
+<p>You may always pass <code class="docutils literal notranslate"><span class="pre">--no-header</span></code> to suppress the header output, which is helpful for parsing results:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark env --no-header</span>
 
 <span class="go">Your environment is currently set as development.</span>
@@ -387,17 +384,17 @@ is output:</p>
 </section>
 <section id="calling-commands">
 <h3><a class="toc-backref" href="#id7" role="doc-backlink">Calling Commands</a><a class="headerlink" href="#calling-commands" title="Link to this heading"></a></h3>
-<p>Commands can also be ran from within your own code. This is most often done within a controller for cronjob tasks,
-but they can be used at any time. You do this by using the <code class="docutils literal notranslate"><span class="pre">command()</span></code> function. This function is always available.</p>
+<p>Commands can also be run from within your own code. This is most often done within a controller for cronjob tasks, but
+they can be used at any time. You do this by using the <code class="docutils literal notranslate"><span class="pre">command()</span></code> function. This function is always available.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nx">command</span><span class="p">(</span><span class="s1">'make:migration TestMigration'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The only argument is string that is the command called and any parameters. This appears exactly as you would call
+<p>The only argument is a string containing the command to call and any parameters. This appears exactly as you would call
 it from the command line.</p>
-<p>All output from the command that is ran is captured when not run from the command line. It is returned from the command
-so that you can choose to display it or not.</p>
+<p>All output from the command is captured when it is not run from the command line. It is returned from the command so
+that you can choose to display it or not.</p>
 </section>
 </section>
 </section>
@@ -414,7 +411,7 @@ so that you can choose to display it or not.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

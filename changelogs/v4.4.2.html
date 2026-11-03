@@ -316,17 +316,17 @@
 command was removed. It did not work from the beginning. Also, the rollback
 command returns the database(s) state to a specified batch number and cannot
 specify only a specific database group.</p></li>
-<li><p><strong>Security:</strong> The presence of the CSRF token is now also checked in the raw body (not JSON format) for PUT, PATCH, and DELETE type of requests.</p></li>
+<li><p><strong>Security:</strong> The presence of the CSRF token is now also checked in the raw body (not JSON format) for PUT, PATCH, and DELETE requests.</p></li>
 </ul>
 </section>
 <section id="deprecations">
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">Deprecations</a><a class="headerlink" href="#deprecations" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p><strong>Filters:</strong> The Auto-Discovery for Filters and <code class="docutils literal notranslate"><span class="pre">Filters::discoverFilters()</span></code>
-is deprecated. Use <a class="reference internal" href="../general/configuration.html#registrars"><span class="std std-ref">Registrars</span></a> instead. See <a class="reference internal" href="../general/modules.html#modules-filters"><span class="std std-ref">Filters</span></a> for
+are deprecated. Use <a class="reference internal" href="../general/configuration.html#registrars"><span class="std std-ref">Registrars</span></a> instead. See <a class="reference internal" href="../general/modules.html#modules-filters"><span class="std std-ref">Filters</span></a> for
 details.</p></li>
-<li><p><strong>CLI:</strong> The public property <code class="docutils literal notranslate"><span class="pre">CLI::$readline_support</span></code> and <code class="docutils literal notranslate"><span class="pre">CLI::$wait_msg</span></code>
-are deprecated. These methods will be protected.</p></li>
+<li><p><strong>CLI:</strong> The public properties <code class="docutils literal notranslate"><span class="pre">CLI::$readline_support</span></code> and <code class="docutils literal notranslate"><span class="pre">CLI::$wait_msg</span></code>
+are deprecated. These properties will be protected.</p></li>
 <li><p><strong>CodeIgniter:</strong> The parameter <code class="docutils literal notranslate"><span class="pre">$config</span></code> for the <code class="docutils literal notranslate"><span class="pre">displayCache()</span></code> method is
 deprecated. It was not used.</p></li>
 </ul>
@@ -334,13 +334,13 @@ deprecated. It was not used.</p></li>
 <section id="bugs-fixed">
 <h2><a class="toc-backref" href="#id4" role="doc-backlink">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p><strong>CodeIgniter:</strong> Fixed a bug that returned “200 OK” response status code when
+<li><p><strong>CodeIgniter:</strong> Fixed a bug that returned a “200 OK” response status code on
 Page Not Found.</p></li>
-<li><p><strong>Spark:</strong> Fixed a bug that caused spark to not display exceptions in the
-production mode or to display backtrace in json when an exception occurred.</p></li>
+<li><p><strong>Spark:</strong> Fixed a bug that caused spark to not display exceptions in
+production mode or to display a backtrace in JSON when an exception occurred.</p></li>
 <li><p><strong>Forge:</strong> Fixed a bug where adding a Primary Key to an existing table was
 ignored if there were no other Keys added too.</p></li>
-<li><p><strong>Routing:</strong> Fixed a bug that <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">routes</span></code> may show incorrect route names.</p></li>
+<li><p><strong>Routing:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">routes</span></code> could show incorrect route names.</p></li>
 </ul>
 <p>See the repo’s
 <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md">CHANGELOG.md</a>
@@ -360,7 +360,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

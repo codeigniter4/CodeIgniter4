@@ -299,31 +299,26 @@
 </nav>
 <section id="db-callfunction">
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">$db-&gt;callFunction()</a><a class="headerlink" href="#db-callfunction" title="Link to this heading"></a></h2>
-<p>This function enables you to call PHP database functions that are not
-natively included in CodeIgniter, in a platform-independent manner. For
-example, let’s say you want to call the <code class="docutils literal notranslate"><span class="pre">mysql_get_client_info()</span></code>
-function, which is <strong>not</strong> natively supported by CodeIgniter. You could
-do so like this:</p>
+<p>This function enables you to call PHP database functions that are not natively included in CodeIgniter, in a
+platform-independent manner. For example, let’s say you want to call the <code class="docutils literal notranslate"><span class="pre">mysqli_get_client_info()</span></code> function, which is
+<strong>not</strong> natively supported by CodeIgniter. You could do so like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">callFunction</span><span class="p">(</span><span class="s1">'get_client_info'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>You must supply the name of the function, <strong>without</strong> the <code class="docutils literal notranslate"><span class="pre">mysql_</span></code>
-prefix, in the first parameter. The prefix is added automatically based
-on which database driver is currently being used. This permits you to
-run the same function on different database platforms. Obviously, not all
-function calls are identical between platforms, so there are limits to
+<p>You must supply the name of the function, <strong>without</strong> the <code class="docutils literal notranslate"><span class="pre">mysqli_</span></code> prefix, in the first parameter. The prefix is
+added automatically based on which database driver is currently being used. This permits you to run the same function on
+different database platforms. Obviously, not all function calls are identical between platforms, so there are limits to
 how useful this function can be in terms of portability.</p>
-<p>Any parameters needed by the function you are calling will be added to
-the second parameter.</p>
+<p>Any parameters needed by the function you are calling are passed starting from the second parameter.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">callFunction</span><span class="p">(</span><span class="s1">'some_function'</span><span class="p">,</span> <span class="nv">$param1</span><span class="p">,</span> <span class="nv">$param2</span> <span class="cm">/* , ... */</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Often, you will either need to supply a database connection ID or a
-database result ID. The connection ID can be accessed using:</p>
+<p>Often, you will either need to supply a database connection ID or a database result ID. The connection ID can be
+accessed using:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">connID</span><span class="p">;</span>
@@ -352,7 +347,7 @@ database result ID. The connection ID can be accessed using:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

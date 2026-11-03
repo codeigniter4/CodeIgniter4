@@ -314,13 +314,12 @@
 <li><p><a class="reference internal" href="#creating-loops" id="id14">Creating Loops</a></p></li>
 </ul>
 </nav>
-<p>A view is simply a web page, or a page fragment, like a header, footer, sidebar, etc. In fact,
-views can flexibly be embedded within other views (within other views, etc.) if you need
-this type of hierarchy.</p>
-<p>Views are never called directly, they must be loaded by a controller or <a class="reference internal" href="../incoming/routing.html#view-routes"><span class="std std-ref">view route</span></a>.</p>
-<p>Remember that in an MVC framework,
-the Controller acts as the traffic cop, so it is responsible for fetching a particular view. If you have
-not read the <a class="reference internal" href="../incoming/controllers.html"><span class="doc">Controllers</span></a> page, you should do so before continuing.</p>
+<p>A view is simply a web page, or a page fragment, like a header, footer, sidebar, etc. In fact, views can flexibly be
+embedded within other views (within other views, etc.) if you need this type of hierarchy.</p>
+<p>Views are never called directly. They must be loaded by a controller or <a class="reference internal" href="../incoming/routing.html#view-routes"><span class="std std-ref">view route</span></a>.</p>
+<p>Remember that in an MVC framework, the Controller acts as the traffic cop, so it is responsible for fetching a
+particular view. If you have not read the <a class="reference internal" href="../incoming/controllers.html"><span class="doc">Controllers</span></a> page, you should do so before
+continuing.</p>
 <p>Using the example controller you created in the controller page, let’s add a view to it.</p>
 <section id="creating-a-view">
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">Creating a View</a><a class="headerlink" href="#creating-a-view" title="Link to this heading"></a></h2>
@@ -339,8 +338,8 @@ not read the <a class="reference internal" href="../incoming/controllers.html"><
 </section>
 <section id="displaying-a-view">
 <h2><a class="toc-backref" href="#id4" role="doc-backlink">Displaying a View</a><a class="headerlink" href="#displaying-a-view" title="Link to this heading"></a></h2>
-<p>To load and display a particular view file you will use the <a class="reference internal" href="../general/common_functions.html#view" title="view"><code class="xref php php-func docutils literal notranslate"><span class="pre">view()</span></code></a>
-function like following code in your controller:</p>
+<p>To load and display a particular view file, you will use the <a class="reference internal" href="../general/common_functions.html#view" title="view"><code class="xref php php-func docutils literal notranslate"><span class="pre">view()</span></code></a> function in your controller, as in the
+following code:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'name'</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -353,8 +352,7 @@ function like following code in your controller:</p>
 <p class="admonition-title">Note</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">view()</span></code> function uses <a class="reference internal" href="view_renderer.html"><span class="doc">View Renderer</span></a> internally.</p>
 </div>
-<p>Now, create a file called <strong>Blog.php</strong> in the <strong>app/Controllers</strong> directory,
-and put this in it:</p>
+<p>Now, create a file called <strong>Blog.php</strong> in the <strong>app/Controllers</strong> directory, and put this in it:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
@@ -368,24 +366,24 @@ and put this in it:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Open the routing file located at <strong>app/Config/Routes.php</strong>, and look for the “Route Definitions”.
-Add the following code:</p>
+<p>Open the routing file located at <strong>app/Config/Routes.php</strong>, and look for the “Route Definitions”. Add the following
+code:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">App\Controllers\Blog</span><span class="p">;</span>
 
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'blog'</span><span class="p">,</span> <span class="p">[</span><span class="nx">Blog</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="s1">'index'</span><span class="p">]);</span>
 </pre></div>
 </div>
-<p>If you visit your site, you should see your new view. The URL was similar to this:</p>
+<p>If you visit your site, you should see your new view. The URL is similar to this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/</span><span class="nx">blog</span><span class="o">/</span>
 </pre></div>
 </div>
 </section>
 <section id="loading-multiple-views">
 <h2><a class="toc-backref" href="#id5" role="doc-backlink">Loading Multiple Views</a><a class="headerlink" href="#loading-multiple-views" title="Link to this heading"></a></h2>
-<p>CodeIgniter will intelligently handle multiple calls to <a class="reference internal" href="../general/common_functions.html#view" title="view"><code class="xref php php-func docutils literal notranslate"><span class="pre">view()</span></code></a> from
-within a controller. If more than one call happens they will be appended together.</p>
-<p>For example, you may wish to have a header view, a menu view, a
-content view, and a footer view. That might look something like this:</p>
+<p>CodeIgniter will intelligently handle multiple calls to <a class="reference internal" href="../general/common_functions.html#view" title="view"><code class="xref php php-func docutils literal notranslate"><span class="pre">view()</span></code></a> from within a controller. If more than one
+call happens, they will be appended together.</p>
+<p>For example, you may wish to have a header view, a menu view, a content view, and a footer view. That might look
+something like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
@@ -412,22 +410,22 @@ content view, and a footer view. That might look something like this:</p>
 </section>
 <section id="storing-views-within-sub-directories">
 <h2><a class="toc-backref" href="#id6" role="doc-backlink">Storing Views within Sub-directories</a><a class="headerlink" href="#storing-views-within-sub-directories" title="Link to this heading"></a></h2>
-<p>Your view files can also be stored within sub-directories if you prefer that type of organization.
-When doing so you will need to include the directory name loading the view. Example:</p>
+<p>Your view files can also be stored within sub-directories if you prefer that type of organization. When doing so, you
+will need to include the directory name when loading the view. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'directory_name/file_name'</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
 <section id="namespaced-views">
 <span id="id1"></span><h2><a class="toc-backref" href="#id7" role="doc-backlink">Namespaced Views</a><a class="headerlink" href="#namespaced-views" title="Link to this heading"></a></h2>
-<p>You can store views under a <strong>Views</strong> directory that is namespaced, and load that view as if it was namespaced. While
-PHP does not support loading non-class files from a namespace, CodeIgniter provides this feature to make it possible
-to package your views together in a module-like fashion for easy re-use or distribution.</p>
-<p>If you have <strong>example/blog</strong> directory that has a PSR-4 mapping set up in the <a class="reference internal" href="../concepts/autoloader.html"><span class="doc">Autoloader</span></a> living
-under the namespace <code class="docutils literal notranslate"><span class="pre">Example\Blog</span></code>, you could retrieve view files as if they were namespaced also.</p>
-<p>Following this
-example, you could load the <strong>blog_view.php</strong> file from <strong>example/blog/Views</strong> by prepending the namespace to the view name
-(specifying the end directory <code class="docutils literal notranslate"><span class="pre">Views</span></code> as in <code class="docutils literal notranslate"><span class="pre">Example\Blog\Views\</span></code> is not required):</p>
+<p>You can store views under a <strong>Views</strong> directory that is namespaced, and load that view as if it were namespaced. While
+PHP does not support loading non-class files from a namespace, CodeIgniter provides this feature to make it possible to
+package your views together in a module-like fashion for easy re-use or distribution.</p>
+<p>If you have an <strong>example/blog</strong> directory that has a PSR-4 mapping set up in the
+<a class="reference internal" href="../concepts/autoloader.html"><span class="doc">Autoloader</span></a> living under the namespace <code class="docutils literal notranslate"><span class="pre">Example\Blog</span></code>, you could retrieve view files as
+if they were namespaced also.</p>
+<p>Following this example, you could load the <strong>blog_view.php</strong> file from <strong>example/blog/Views</strong> by prepending the
+namespace to the view name (specifying the end directory <code class="docutils literal notranslate"><span class="pre">Views</span></code> as in <code class="docutils literal notranslate"><span class="pre">Example\Blog\Views\</span></code> is not required):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'Example\Blog\blog_view'</span><span class="p">);</span>
@@ -435,10 +433,9 @@ example, you could load the <strong>blog_view.php</strong> file from <strong>exa
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You must use backslashes (<code class="docutils literal notranslate"><span class="pre">\</span></code>) when referencing namespaced views,
-as this is how CodeIgniter distinguishes a namespaced view from a regular
-file path. Forward slashes (<code class="docutils literal notranslate"><span class="pre">/</span></code>) are only used for subdirectories within
-the standard <strong>app/Views</strong> folder.</p>
+<p>You must use backslashes (<code class="docutils literal notranslate"><span class="pre">\</span></code>) when referencing namespaced views, as this is how CodeIgniter distinguishes a
+namespaced view from a regular file path. Forward slashes (<code class="docutils literal notranslate"><span class="pre">/</span></code>) are only used for subdirectories within the
+standard <strong>app/Views</strong> folder.</p>
 </div>
 </section>
 <section id="overriding-namespaced-views">
@@ -446,15 +443,17 @@ the standard <strong>app/Views</strong> folder.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 4.7.0.</span></p>
 </div>
-<p>You can override a namespaced view by creating a matching directory structure within your application’s <strong>app/Views</strong> directory.
-This allows you to customize the output of modules or packages without modifying their core source code.</p>
+<p>You can override a namespaced view by creating a matching directory structure within your application’s <strong>app/Views</strong>
+directory. This allows you to customize the output of modules or packages without modifying their core source code.</p>
 <section id="configuration">
 <h3><a class="toc-backref" href="#id9" role="doc-backlink">Configuration</a><a class="headerlink" href="#configuration" title="Link to this heading"></a></h3>
-<p>By default, overrides are looked for in the <strong>app/Views/overrides</strong> directory. You can configure this location via the <code class="docutils literal notranslate"><span class="pre">$appOverridesFolder</span></code> property in <strong>app/Config/View.php</strong>:</p>
+<p>By default, overrides are looked for in the <strong>app/Views/overrides</strong> directory. You can configure this location via the
+<code class="docutils literal notranslate"><span class="pre">$appOverridesFolder</span></code> property in <strong>app/Config/View.php</strong>:</p>
 <div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">public string $appOverridesFolder = 'overrides';</span>
 </pre></div>
 </div>
-<p>If you prefer to map namespaces directly to the root of <strong>app/Views</strong> (without a subdirectory), you can set this value to an empty string (<code class="docutils literal notranslate"><span class="pre">''</span></code>).</p>
+<p>If you prefer to map namespaces directly to the root of <strong>app/Views</strong> (without a subdirectory), you can set this value
+to an empty string (<code class="docutils literal notranslate"><span class="pre">''</span></code>).</p>
 </section>
 <section id="example">
 <h3><a class="toc-backref" href="#id10" role="doc-backlink">Example</a><a class="headerlink" href="#example" title="Link to this heading"></a></h3>
@@ -466,7 +465,8 @@ This allows you to customize the output of modules or packages without modifying
             └── blog_view.php
 </pre></div>
 </div>
-<p>To override this view (using the default configuration), create a file at the matching path within <strong>app/Views/overrides</strong>:</p>
+<p>To override this view (using the default configuration), create a file at the matching path within
+<strong>app/Views/overrides</strong>:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>/app
 └── Views
     └── overrides                 &lt;-- Configured $appOverridesFolder
@@ -475,28 +475,28 @@ This allows you to customize the output of modules or packages without modifying
                 └── blog_view.php &lt;-- Your custom view
 </pre></div>
 </div>
-<p>Now, when you call <code class="docutils literal notranslate"><span class="pre">view('Example\Blog\blog_view')</span></code>, CodeIgniter will automatically load your custom view from <strong>app/Views/overrides/Example/Blog/blog_view.php</strong> instead of the original module view file.</p>
+<p>Now, when you call <code class="docutils literal notranslate"><span class="pre">view('Example\Blog\blog_view')</span></code>, CodeIgniter will automatically load your custom view from
+<strong>app/Views/overrides/Example/Blog/blog_view.php</strong> instead of the original module view file.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The override path must match exactly how you reference the view.
-If you load a view as <code class="docutils literal notranslate"><span class="pre">view('Example\Blog\blog_view')</span></code>, the override
-path is <strong>app/Views/overrides/Example/Blog/blog_view.php</strong>. However,
-if you explicitly include the <code class="docutils literal notranslate"><span class="pre">Views</span></code> directory in the call, e.g.,
-<code class="docutils literal notranslate"><span class="pre">view('Example\Blog\Views\blog_view')</span></code>, the override path must also
-include it: <strong>app/Views/overrides/Example/Blog/Views/blog_view.php</strong>.</p>
+<p>The override path must match exactly how you reference the view. If you load a view as
+<code class="docutils literal notranslate"><span class="pre">view('Example\Blog\blog_view')</span></code>, the override path is <strong>app/Views/overrides/Example/Blog/blog_view.php</strong>.
+However, if you explicitly include the <code class="docutils literal notranslate"><span class="pre">Views</span></code> directory in the call, e.g.,
+<code class="docutils literal notranslate"><span class="pre">view('Example\Blog\Views\blog_view')</span></code>, the override path must also include it:
+<strong>app/Views/overrides/Example/Blog/Views/blog_view.php</strong>.</p>
 </div>
 </section>
 </section>
 <section id="caching-views">
 <span id="id2"></span><h2><a class="toc-backref" href="#id11" role="doc-backlink">Caching Views</a><a class="headerlink" href="#caching-views" title="Link to this heading"></a></h2>
-<p>You can cache a view with the <a class="reference internal" href="../general/common_functions.html#view" title="view"><code class="xref php php-func docutils literal notranslate"><span class="pre">view()</span></code></a> function by passing a <code class="docutils literal notranslate"><span class="pre">cache</span></code>
-option with the number of seconds to cache the view for, in the third parameter:</p>
+<p>You can cache a view with the <a class="reference internal" href="../general/common_functions.html#view" title="view"><code class="xref php php-func docutils literal notranslate"><span class="pre">view()</span></code></a> function by passing a <code class="docutils literal notranslate"><span class="pre">cache</span></code> option with the number of seconds to
+cache the view for, in the third parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Cache the view for 60 seconds</span>
 <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'file_name'</span><span class="p">,</span> <span class="nv">$data</span><span class="p">,</span> <span class="p">[</span><span class="s1">'cache'</span> <span class="o">=&gt;</span> <span class="mi">60</span><span class="p">]);</span>
 </pre></div>
 </div>
-<p>By default, the view will be cached using the same name as the view file itself. You can customize this by passing
-along <code class="docutils literal notranslate"><span class="pre">cache_name</span></code> and the cache ID you wish to use:</p>
+<p>By default, the view will be cached using the same name as the view file itself. You can customize this by passing along
+<code class="docutils literal notranslate"><span class="pre">cache_name</span></code> and the cache ID you wish to use:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Cache the view for 60 seconds</span>
 <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'file_name'</span><span class="p">,</span> <span class="nv">$data</span><span class="p">,</span> <span class="p">[</span><span class="s1">'cache'</span> <span class="o">=&gt;</span> <span class="mi">60</span><span class="p">,</span> <span class="s1">'cache_name'</span> <span class="o">=&gt;</span> <span class="s1">'my_cached_view'</span><span class="p">]);</span>
 </pre></div>
@@ -504,8 +504,8 @@ along <code class="docutils literal notranslate"><span class="pre">cache_name</s
 </section>
 <section id="adding-dynamic-data-to-the-view">
 <h2><a class="toc-backref" href="#id12" role="doc-backlink">Adding Dynamic Data to the View</a><a class="headerlink" href="#adding-dynamic-data-to-the-view" title="Link to this heading"></a></h2>
-<p>Data is passed from the controller to the view by way of an array in the second
-parameter of the <a class="reference internal" href="../general/common_functions.html#view" title="view"><code class="xref php php-func docutils literal notranslate"><span class="pre">view()</span></code></a> function.</p>
+<p>Data is passed from the controller to the view by way of an array in the second parameter of the <a class="reference internal" href="../general/common_functions.html#view" title="view"><code class="xref php php-func docutils literal notranslate"><span class="pre">view()</span></code></a>
+function.</p>
 <p>Here’s an example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">'title'</span>   <span class="o">=&gt;</span> <span class="s1">'My title'</span><span class="p">,</span>
@@ -547,12 +547,10 @@ parameter of the <a class="reference internal" href="../general/common_functions
 <p>Then load the page at the URL you’ve been using and you should see the variables replaced.</p>
 <section id="the-savedata-option">
 <h3><a class="toc-backref" href="#id13" role="doc-backlink">The saveData Option</a><a class="headerlink" href="#the-savedata-option" title="Link to this heading"></a></h3>
-<p>The data passed in is retained for subsequent calls to <a class="reference internal" href="../general/common_functions.html#view" title="view"><code class="xref php php-func docutils literal notranslate"><span class="pre">view()</span></code></a>. If you
-call the function multiple times in a single request, you will not have to pass
-the desired data to each <code class="docutils literal notranslate"><span class="pre">view()</span></code>.</p>
-<p>But this might not keep any data from “bleeding” into
-other views, potentially causing issues. If you would prefer to clean the data after one call, you can pass the <code class="docutils literal notranslate"><span class="pre">saveData</span></code> option
-into the <code class="docutils literal notranslate"><span class="pre">$option</span></code> array in the third parameter.</p>
+<p>The data passed in is retained for subsequent calls to <a class="reference internal" href="../general/common_functions.html#view" title="view"><code class="xref php php-func docutils literal notranslate"><span class="pre">view()</span></code></a>. If you call the function multiple times in a
+single request, you will not have to pass the desired data to each <code class="docutils literal notranslate"><span class="pre">view()</span></code>.</p>
+<p>However, this might allow data to “bleed” into other views, potentially causing issues. If you would prefer to clean the
+data after one call, you can pass the <code class="docutils literal notranslate"><span class="pre">saveData</span></code> option into the <code class="docutils literal notranslate"><span class="pre">$options</span></code> array in the third parameter.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">'title'</span>   <span class="o">=&gt;</span> <span class="s1">'My title'</span><span class="p">,</span>
     <span class="s1">'heading'</span> <span class="o">=&gt;</span> <span class="s1">'My Heading'</span><span class="p">,</span>
@@ -562,15 +560,15 @@ into the <code class="docutils literal notranslate"><span class="pre">$option</s
 <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'blog_view'</span><span class="p">,</span> <span class="nv">$data</span><span class="p">,</span> <span class="p">[</span><span class="s1">'saveData'</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span>
 </pre></div>
 </div>
-<p>Additionally, if you would like the default functionality of the <code class="docutils literal notranslate"><span class="pre">view()</span></code> function to be that it does clear the data
-between calls, you can set <code class="docutils literal notranslate"><span class="pre">$saveData</span></code> to <code class="docutils literal notranslate"><span class="pre">false</span></code> in <strong>app/Config/Views.php</strong>.</p>
+<p>Additionally, if you would like the <code class="docutils literal notranslate"><span class="pre">view()</span></code> function to clear the data by default between calls, you can set
+<code class="docutils literal notranslate"><span class="pre">$saveData</span></code> to <code class="docutils literal notranslate"><span class="pre">false</span></code> in <strong>app/Config/View.php</strong>.</p>
 </section>
 </section>
 <section id="creating-loops">
 <h2><a class="toc-backref" href="#id14" role="doc-backlink">Creating Loops</a><a class="headerlink" href="#creating-loops" title="Link to this heading"></a></h2>
-<p>The data array you pass to your view files is not limited to simple variables. You can pass multi dimensional
-arrays, which can be looped to generate multiple rows. For example, if you pull data from your database it will
-typically be in the form of a multi-dimensional array.</p>
+<p>The data array you pass to your view files is not limited to simple variables. You can pass multi-dimensional arrays,
+which can be looped to generate multiple rows. For example, if you pull data from your database, it will typically be in
+the form of a multi-dimensional array.</p>
 <p>Here’s a simple example. Add this to your controller:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -628,7 +626,7 @@ typically be in the form of a multi-dimensional array.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

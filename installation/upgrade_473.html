@@ -323,8 +323,8 @@
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Mandatory File Changes</a><a class="headerlink" href="#mandatory-file-changes" title="Link to this heading"></a></h2>
 <section id="worker-mode">
 <h3><a class="toc-backref" href="#id2" role="doc-backlink">Worker Mode</a><a class="headerlink" href="#worker-mode" title="Link to this heading"></a></h3>
-<p>If you are using Worker Mode, you must update <strong>public/frankenphp-worker.php</strong> after
-upgrading. The easiest way is to re-run the install command:</p>
+<p>If you are using Worker Mode, you must update <strong>public/frankenphp-worker.php</strong> after upgrading. The easiest way is to
+re-run the install command:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark worker:install --force</span>
 </pre></div>
 </div>
@@ -334,50 +334,45 @@ upgrading. The easiest way is to re-run the install command:</p>
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Link to this heading"></a></h2>
 <section id="file-validation">
 <h3><a class="toc-backref" href="#id4" role="doc-backlink">File Validation</a><a class="headerlink" href="#file-validation" title="Link to this heading"></a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">ext_in</span></code> file upload validation rule now checks the client filename
-extension and verifies that the detected MIME type is associated with that
-extension. Previously, <code class="docutils literal notranslate"><span class="pre">ext_in</span></code> only checked the MIME-derived guessed
-extension.</p>
-<p>This means files with no client filename extension, or files whose client
-filename extension does not match the detected MIME type, now fail <code class="docutils literal notranslate"><span class="pre">ext_in</span></code>
-validation. If your application intentionally accepts such files, remove
-<code class="docutils literal notranslate"><span class="pre">ext_in</span></code> from those validation rules and use a custom validation rule that
-matches your application’s requirements.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">ext_in</span></code> file upload validation rule now checks the client filename extension and verifies that the detected MIME
+type is associated with that extension. Previously, <code class="docutils literal notranslate"><span class="pre">ext_in</span></code> only checked the MIME-derived guessed extension.</p>
+<p>This means files with no client filename extension, or files whose client filename extension does not match the detected
+MIME type, now fail <code class="docutils literal notranslate"><span class="pre">ext_in</span></code> validation. If your application intentionally accepts such files, remove <code class="docutils literal notranslate"><span class="pre">ext_in</span></code> from
+those validation rules and use a custom validation rule that matches your application’s requirements.</p>
 </section>
 </section>
 <section id="project-files">
 <h2><a class="toc-backref" href="#id5" role="doc-backlink">Project Files</a><a class="headerlink" href="#project-files" title="Link to this heading"></a></h2>
-<p>Some files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to
-these files being outside of the <strong>system</strong> scope they will not be changed without your intervention.</p>
+<p>Some files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to these files being outside of
+the <strong>system</strong> scope, they will not be changed without your intervention.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>There are some third-party CodeIgniter modules available to assist
-with merging changes to the project space:
+<p>There are some third-party CodeIgniter modules available to assist with merging changes to the project space:
 <a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
 </div>
 <section id="content-changes">
 <h3><a class="toc-backref" href="#id6" role="doc-backlink">Content Changes</a><a class="headerlink" href="#content-changes" title="Link to this heading"></a></h3>
-<p>The following files received significant changes (including deprecations or visual adjustments)
-and it is recommended that you merge the updated versions with your application:</p>
+<p>The following files received significant changes (including deprecations or visual adjustments) and it is recommended
+that you merge the updated versions with your application:</p>
 <section id="config">
 <h4>Config<a class="headerlink" href="#config" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p>app/Config/Database.php</p></li>
-<li><p>app/Config/Events.php</p></li>
-<li><p>app/Config/Routes.php</p></li>
-<li><p>app/Config/View.php</p></li>
+<li><p><strong>app/Config/Database.php</strong></p></li>
+<li><p><strong>app/Config/Events.php</strong></p></li>
+<li><p><strong>app/Config/Routes.php</strong></p></li>
+<li><p><strong>app/Config/View.php</strong></p></li>
 </ul>
 </section>
 </section>
 <section id="all-changes">
 <h3><a class="toc-backref" href="#id7" role="doc-backlink">All Changes</a><a class="headerlink" href="#all-changes" title="Link to this heading"></a></h3>
-<p>This is a list of all files in the <strong>project space</strong> that received changes;
-many will be simple comments or formatting that have no effect on the runtime:</p>
+<p>This is a list of all files in the <strong>project space</strong> that received changes; many will be simple comments or formatting
+that have no effect on the runtime:</p>
 <ul class="simple">
-<li><p>app/Config/Database.php</p></li>
-<li><p>app/Config/Events.php</p></li>
-<li><p>app/Config/Routes.php</p></li>
-<li><p>app/Config/View.php</p></li>
+<li><p><strong>app/Config/Database.php</strong></p></li>
+<li><p><strong>app/Config/Events.php</strong></p></li>
+<li><p><strong>app/Config/Routes.php</strong></p></li>
+<li><p><strong>app/Config/View.php</strong></p></li>
 </ul>
 </section>
 </section>
@@ -395,7 +390,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

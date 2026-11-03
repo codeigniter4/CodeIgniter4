@@ -293,11 +293,14 @@
              
   <section id="building-a-restful-controller">
 <span id="ci47-rest-part4"></span><h1>Building a RESTful Controller<a class="headerlink" href="#building-a-restful-controller" title="Link to this heading"></a></h1>
-<p>In this chapter, we build the API endpoints to expose your <code class="docutils literal notranslate"><span class="pre">book</span></code> table through a proper RESTful API.
-We’ll use <code class="xref php php-class docutils literal notranslate"><span class="pre">CodeIgniter\RESTful\ResourceController</span></code> to handle CRUD actions with almost no boilerplate.</p>
+<p>In this chapter, we build the API endpoints to expose your <code class="docutils literal notranslate"><span class="pre">books</span></code> table through a proper RESTful API. We’ll extend
+<code class="docutils literal notranslate"><span class="pre">BaseController</span></code> and use <code class="xref php php-trait docutils literal notranslate"><span class="pre">CodeIgniter\API\ResponseTrait</span></code> with Improved Auto Routing.</p>
 <section id="what-is-restful">
 <h2>What is RESTful?<a class="headerlink" href="#what-is-restful" title="Link to this heading"></a></h2>
-<p>RESTful APIs use standard HTTP verbs (<code class="docutils literal notranslate"><span class="pre">GET</span></code>, <code class="docutils literal notranslate"><span class="pre">POST</span></code>, <code class="docutils literal notranslate"><span class="pre">PUT</span></code>, <code class="docutils literal notranslate"><span class="pre">DELETE</span></code>) to perform actions on resources identified by URIs. This approach makes APIs predictable and easy to use. There can be much debate on some of the finer points of what makes a REST API, but following these basics can get it close enough for many uses. By using auto-routing and the <code class="xref php php-class docutils literal notranslate"><span class="pre">ApiResponseTrait</span></code>, CodeIgniter makes it simple to create RESTful endpoints.</p>
+<p>RESTful APIs use standard HTTP verbs (<code class="docutils literal notranslate"><span class="pre">GET</span></code>, <code class="docutils literal notranslate"><span class="pre">POST</span></code>, <code class="docutils literal notranslate"><span class="pre">PUT</span></code>, <code class="docutils literal notranslate"><span class="pre">DELETE</span></code>) to perform actions on resources identified
+by URIs. This approach makes APIs predictable and easy to use. There can be much debate on some of the finer points of
+what makes a REST API, but following these basics can get it close enough for many uses. By using auto-routing and the
+<code class="xref php php-class docutils literal notranslate"><span class="pre">ApiResponseTrait</span></code>, CodeIgniter makes it simple to create RESTful endpoints.</p>
 </section>
 <section id="generate-the-controller">
 <h2>Generate the controller<a class="headerlink" href="#generate-the-controller" title="Link to this heading"></a></h2>
@@ -312,7 +315,7 @@ We’ll use <code class="xref php php-class docutils literal notranslate"><span 
 <span class="k">namespace</span> <span class="nx">App\Controllers\Api</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">App\Controllers\BaseController</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">CodeIgniter\Api\ResponseTrait</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\API\ResponseTrait</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">Books</span> <span class="k">extends</span> <span class="nx">BaseController</span>
 <span class="p">{</span>
@@ -357,21 +360,30 @@ We’ll use <code class="xref php php-class docutils literal notranslate"><span 
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Since we’re using auto-routing, we need to use the <code class="docutils literal notranslate"><span class="pre">index</span></code> method names so it doesn’t interfere with mapping to the URI segments. But we can use the HTTP verb prefixes (<code class="docutils literal notranslate"><span class="pre">get</span></code>, <code class="docutils literal notranslate"><span class="pre">post</span></code>, <code class="docutils literal notranslate"><span class="pre">put</span></code>, <code class="docutils literal notranslate"><span class="pre">delete</span></code>) to indicate which method handles which verb. The only one that is slightly odd is <code class="docutils literal notranslate"><span class="pre">getIndex()</span></code>, which must be used to map to both listing all resources and listing a single resource by ID.</p>
+<p>Since we’re using auto-routing, we need to use the <code class="docutils literal notranslate"><span class="pre">index</span></code> method names so they don’t interfere with mapping to the
+URI segments. But we can use the HTTP verb prefixes (<code class="docutils literal notranslate"><span class="pre">get</span></code>, <code class="docutils literal notranslate"><span class="pre">post</span></code>, <code class="docutils literal notranslate"><span class="pre">put</span></code>, <code class="docutils literal notranslate"><span class="pre">delete</span></code>) to indicate which method
+handles which verb. The only one that is slightly odd is <code class="docutils literal notranslate"><span class="pre">getIndex()</span></code>, which must be used to map to both listing all
+resources and listing a single resource by ID.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>If you prefer a different naming scheme, you would need to define routes explicitly in <strong>app/Config/Routes.php</strong> and turn auto-routing off.</p>
+<p>If you prefer a different naming scheme, you would need to define routes explicitly in <strong>app/Config/Routes.php</strong> and
+turn auto-routing off.</p>
 </div>
 </section>
 <section id="api-transformers">
 <h2>API Transformers<a class="headerlink" href="#api-transformers" title="Link to this heading"></a></h2>
-<p>It is considered a best practice to separate your data models from the way they are presented in your API responses. This is often done using transformers or resource classes that format the data consistently. CodeIgniter provides API transformers to help with this.</p>
-<p>Create the transformers with the generator command:</p>
+<p>It is considered a best practice to separate your data models from the way they are presented in your API responses.
+This is often done using transformers or resource classes that format the data consistently. CodeIgniter provides API
+transformers to help with this.</p>
+<p>Create the transformer with the generator command:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark make:transformer BookTransformer</span>
 </pre></div>
 </div>
-<p>The transformer requires a single method, <code class="docutils literal notranslate"><span class="pre">toArray()</span></code>, to be present and accept a mixed data type called <code class="docutils literal notranslate"><span class="pre">$resource</span></code>. This method transforms the resource into an array format suitable for API responses. The returned array is then encoded as JSON or XML for the API response.</p>
-<p>Edit the Book transformer at <strong>app/Transformers/BookTransformer.php</strong>. This one is a little more complex since it includes related author data:</p>
+<p>The transformer requires a single method, <code class="docutils literal notranslate"><span class="pre">toArray()</span></code>, to be present and accept a mixed data type called
+<code class="docutils literal notranslate"><span class="pre">$resource</span></code>. This method transforms the resource into an array format suitable for API responses. The returned array
+is then encoded as JSON or XML for the API response.</p>
+<p>Edit the Book transformer at <strong>app/Transformers/BookTransformer.php</strong>. This one is a little more complex since it
+includes related author data:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Transformers</span><span class="p">;</span>
@@ -403,12 +415,20 @@ We’ll use <code class="xref php php-class docutils literal notranslate"><span 
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>One feature of transformers is the ability to include related resources conditionally. In this case, we check if the <code class="docutils literal notranslate"><span class="pre">author</span></code> relationship is loaded on the book resource before including it in the response. This allows flexibility in how much data is returned based on the request context. The client calling the API would have to request the related data explicitly through query parameters such as <code class="docutils literal notranslate"><span class="pre">/api/books?include=author</span></code>. The method name must start with <code class="docutils literal notranslate"><span class="pre">include</span></code> followed by the related resource name with the first letter capitalized.</p>
-<p>You may have noticed that we did not use an AuthorTransformer. This is because the author data is simple enough that we can return it directly without additional transformation. However, for more complex related resources, you might want to create separate transformers for them as well. Additionally, we’ll collect the author information at query time so that we don’t hit any N+1 query issues later.</p>
+<p>One feature of transformers is the ability to include related resources conditionally. In this case, we check if the
+<code class="docutils literal notranslate"><span class="pre">author</span></code> relationship is loaded on the book resource before including it in the response. This allows flexibility in
+how much data is returned based on the request context. The client calling the API would have to request the related
+data explicitly through query parameters such as <code class="docutils literal notranslate"><span class="pre">/api/books?include=author</span></code>. The method name must start with
+<code class="docutils literal notranslate"><span class="pre">include</span></code> followed by the related resource name with the first letter capitalized.</p>
+<p>You may have noticed that we did not use an AuthorTransformer. This is because the author data is simple enough that we
+can return it directly without additional transformation. However, for more complex related resources, you might want to
+create separate transformers for them as well. Additionally, we’ll collect the author information at query time so that
+we don’t hit any N+1 query issues later.</p>
 </section>
 <section id="listing-books">
 <h2>Listing Books<a class="headerlink" href="#listing-books" title="Link to this heading"></a></h2>
-<p>We made the <code class="docutils literal notranslate"><span class="pre">$id</span></code> parameter optional so that the same method can handle both listing all books and retrieving a single book by ID. Let’s implement that now.</p>
+<p>We made the <code class="docutils literal notranslate"><span class="pre">$id</span></code> parameter optional so that the same method can handle both listing all books and retrieving a single
+book by ID. Let’s implement that now.</p>
 <div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">     * List one or many resources</span>
 <span class="x">     * GET /api/books</span>
 <span class="x">     *    and</span>
@@ -437,12 +457,19 @@ We’ll use <code class="xref php php-class docutils literal notranslate"><span 
 <span class="x">    }</span>
 </pre></div>
 </div>
-<p>In this method, we check if an <code class="docutils literal notranslate"><span class="pre">$id</span></code> is provided. If it is, we attempt to find the specific book. If we could not find the book by that ID, we return a 404 Not Found response using the <a class="reference internal" href="../../outgoing/api_responses.html#failNotFound" title="failNotFound"><code class="xref php php-meth docutils literal notranslate"><span class="pre">failNotFound()</span></code></a> helper from <code class="xref php php-trait docutils literal notranslate"><span class="pre">ResponseTrait</span></code>. If we do find the book, we use our BookTransformer and return the formatted response.</p>
-<p>If no <code class="docutils literal notranslate"><span class="pre">$id</span></code> is provided, we use the model to retrieve all books, stopping short of actually retrieving the records. This allows us to use the <code class="docutils literal notranslate"><span class="pre">ResponseTrait</span></code>’s <a class="reference internal" href="../../outgoing/api_responses.html#paginate" title="paginate"><code class="xref php php-meth docutils literal notranslate"><span class="pre">paginate</span></code></a> method to handle pagination automatically. We pass the name of the transformer to the <code class="docutils literal notranslate"><span class="pre">paginate</span></code> method so that it can format each book in the paginated result set.</p>
-<p>In both of these cases, we use a new method on the model called <code class="docutils literal notranslate"><span class="pre">withAuthorInfo()</span></code>. This is a custom method we will add to the model to join the related author data when retrieving books.</p>
+<p>In this method, we check if an <code class="docutils literal notranslate"><span class="pre">$id</span></code> is provided. If it is, we attempt to find the specific book. If we could not find
+the book by that ID, we return a 404 Not Found response using the <a class="reference internal" href="../../outgoing/api_responses.html#failNotFound" title="failNotFound"><code class="xref php php-meth docutils literal notranslate"><span class="pre">failNotFound()</span></code></a> helper from
+<code class="xref php php-trait docutils literal notranslate"><span class="pre">ResponseTrait</span></code>. If we do find the book, we use our BookTransformer and return the formatted response.</p>
+<p>If no <code class="docutils literal notranslate"><span class="pre">$id</span></code> is provided, we use the model to retrieve all books, stopping short of actually retrieving the records.
+This allows us to use the <code class="docutils literal notranslate"><span class="pre">ResponseTrait</span></code>’s <a class="reference internal" href="../../outgoing/api_responses.html#paginate" title="paginate"><code class="xref php php-meth docutils literal notranslate"><span class="pre">paginate</span></code></a> method to handle pagination automatically. We pass
+the name of the transformer to the <code class="docutils literal notranslate"><span class="pre">paginate</span></code> method so that it can format each book in the paginated result set.</p>
+<p>In both of these cases, we use a new method on the model called <code class="docutils literal notranslate"><span class="pre">withAuthorInfo()</span></code>. This is a custom method we will
+add to the model to join the related author data when retrieving books.</p>
 <section id="add-the-model-helper-method">
 <h3>Add the Model helper method<a class="headerlink" href="#add-the-model-helper-method" title="Link to this heading"></a></h3>
-<p>In your BookModel, we add a new method called <code class="docutils literal notranslate"><span class="pre">withAuthorInfo()</span></code>. This method uses the Query Builder to join the <code class="docutils literal notranslate"><span class="pre">author</span></code> table and select the relevant author fields. This way, when we retrieve books, we also get the associated author information without needing to make separate queries for each book.</p>
+<p>In your BookModel, we add a new method called <code class="docutils literal notranslate"><span class="pre">withAuthorInfo()</span></code>. This method uses the Query Builder to join the
+<code class="docutils literal notranslate"><span class="pre">authors</span></code> table and select the relevant author fields. This way, when we retrieve books, we also get the associated
+author information without needing to make separate queries for each book.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
@@ -635,11 +662,17 @@ We’ll use <code class="xref php php-class docutils literal notranslate"><span 
 </pre></div>
 </div>
 <p>Each method uses helpers from <code class="xref php php-trait docutils literal notranslate"><span class="pre">ResponseTrait</span></code> to send proper HTTP status codes and JSON payloads.</p>
-<p>And that’s it! You now have a fully functional RESTful API for managing books, complete with proper HTTP methods, status codes, and data transformation. You can further enhance this API by adding authentication, validation, and other features as needed.</p>
+<p>And that’s it! You now have a fully functional RESTful API for managing books, complete with proper HTTP methods, status
+codes, and data transformation. You can further enhance this API by adding authentication, validation, and other
+features as needed.</p>
 </section>
 <section id="a-more-semantic-naming-scheme">
 <h2>A More Semantic Naming Scheme<a class="headerlink" href="#a-more-semantic-naming-scheme" title="Link to this heading"></a></h2>
-<p>In the previous examples, we used method names like <code class="docutils literal notranslate"><span class="pre">getIndex()</span></code>, <code class="docutils literal notranslate"><span class="pre">putIndex()</span></code>, etc. because we wanted to rely solely on the HTTP verb to determine the action. With auto-routing enabled, we have to use the <code class="docutils literal notranslate"><span class="pre">index</span></code> method name to avoid conflicts with URI segments. However, if you prefer more semantic method names, you could change the method names so that they reflect the action being performed, such as <code class="docutils literal notranslate"><span class="pre">getList()</span></code>, <code class="docutils literal notranslate"><span class="pre">postCreate()</span></code>, <code class="docutils literal notranslate"><span class="pre">putUpdate()</span></code>, and <code class="docutils literal notranslate"><span class="pre">deleteDelete()</span></code>. This would make each method’s purpose clearer at a glance and would add one new segment to the URI.</p>
+<p>In the previous examples, we used method names like <code class="docutils literal notranslate"><span class="pre">getIndex()</span></code>, <code class="docutils literal notranslate"><span class="pre">putIndex()</span></code>, etc. because we wanted to rely
+solely on the HTTP verb to determine the action. With auto-routing enabled, we have to use the <code class="docutils literal notranslate"><span class="pre">index</span></code> method name to
+avoid conflicts with URI segments. However, if you prefer more semantic method names, you could change the method names
+so that they reflect the action being performed, such as <code class="docutils literal notranslate"><span class="pre">getList()</span></code>, <code class="docutils literal notranslate"><span class="pre">postCreate()</span></code>, <code class="docutils literal notranslate"><span class="pre">putUpdate()</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">deleteDelete()</span></code>. This would make each method’s purpose clearer at a glance and would add one new segment to the URI.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>GET    /api/books/list         -&gt; getList()
 POST   /api/books/create       -&gt; postCreate()
 PUT    /api/books/update/(:id) -&gt; putUpdate($id)
@@ -661,7 +694,7 @@ DELETE /api/books/delete/(:id) -&gt; deleteDelete($id)
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

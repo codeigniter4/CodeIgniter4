@@ -292,8 +292,7 @@
              
   <section id="validation">
 <span id="id1"></span><h1>Validation<a class="headerlink" href="#validation" title="Link to this heading"></a></h1>
-<p>CodeIgniter provides a comprehensive data validation class that
-helps minimize the amount of code you’ll write.</p>
+<p>CodeIgniter provides a comprehensive data validation class that helps minimize the amount of code you’ll write.</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#overview" id="id5">Overview</a></p></li>
@@ -367,53 +366,42 @@ helps minimize the amount of code you’ll write.</p>
 </nav>
 <section id="overview">
 <h2><a class="toc-backref" href="#id5" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
-<p>Before explaining CodeIgniter’s approach to data validation, let’s
-describe the ideal scenario:</p>
+<p>Before explaining CodeIgniter’s approach to data validation, let’s describe the ideal scenario:</p>
 <ol class="arabic simple">
 <li><p>A form is displayed.</p></li>
 <li><p>You fill it in and submit it.</p></li>
-<li><p>If you submitted something invalid, or perhaps missed a required
-item, the form is redisplayed containing your data along with an
-error message describing the problem.</p></li>
+<li><p>If you submitted something invalid, or perhaps missed a required item, the form is redisplayed containing your data
+along with an error message describing the problem.</p></li>
 <li><p>This process continues until you have submitted a valid form.</p></li>
 </ol>
 <p>On the receiving end, the script must:</p>
 <ol class="arabic simple">
 <li><p>Check for required data.</p></li>
-<li><p>Verify that the data is of the correct type, and meets the correct
-criteria. For example, if a username is submitted it must be
-validated to contain only permitted characters. It must be of a
-minimum length, and not exceed a maximum length. The username can’t
-be someone else’s existing username, or perhaps even a reserved word.
-Etc.</p></li>
+<li><p>Verify that the data is of the correct type, and meets the correct criteria. For example, if a username is submitted
+it must be validated to contain only permitted characters. It must be of a minimum length, and not exceed a maximum
+length. The username can’t be someone else’s existing username, or perhaps even a reserved word. Etc.</p></li>
 <li><p>Sanitize the data for security.</p></li>
 <li><p>Pre-format the data if needed.</p></li>
 <li><p>Prep the data for insertion in the database.</p></li>
 </ol>
-<p>Although there is nothing terribly complex about the above process, it
-usually requires a significant amount of code, and to display error
-messages, various control structures are usually placed within the form
-HTML. Form validation, while simple to create, is generally very messy
-and tedious to implement.</p>
+<p>Although there is nothing terribly complex about the above process, it usually requires a significant amount of code,
+and to display error messages, various control structures are usually placed within the form HTML. Form validation,
+while simple to create, is generally very messy and tedious to implement.</p>
 </section>
 <section id="form-validation-tutorial">
 <h2><a class="toc-backref" href="#id6" role="doc-backlink">Form Validation Tutorial</a><a class="headerlink" href="#form-validation-tutorial" title="Link to this heading"></a></h2>
-<p>What follows is a “hands on” tutorial for implementing CodeIgniter’s Form
-Validation.</p>
-<p>In order to implement form validation you’ll need three things:</p>
+<p>What follows is a “hands-on” tutorial for implementing CodeIgniter’s Form Validation.</p>
+<p>In order to implement form validation, you’ll need three things:</p>
 <ol class="arabic simple">
 <li><p>A <a class="reference internal" href="../outgoing/views.html"><span class="doc">View</span></a> file containing a form.</p></li>
-<li><p>A View file containing a “success” message to be displayed upon
-successful submission.</p></li>
-<li><p>A <a class="reference internal" href="../incoming/controllers.html"><span class="doc">controller</span></a> method to receive and
-process the submitted data.</p></li>
+<li><p>A View file containing a “success” message to be displayed upon successful submission.</p></li>
+<li><p>A <a class="reference internal" href="../incoming/controllers.html"><span class="doc">controller</span></a> method to receive and process the submitted data.</p></li>
 </ol>
-<p>Let’s create those three things, using a member sign-up form as the
-example.</p>
+<p>Let’s create those three things, using a member sign-up form as the example.</p>
 <section id="the-form">
 <h3><a class="toc-backref" href="#id7" role="doc-backlink">The Form</a><a class="headerlink" href="#the-form" title="Link to this heading"></a></h3>
-<p>Using a text editor, create a form called <strong>signup.php</strong>. In it, place this
-code and save it to your <strong>app/Views/</strong> folder:</p>
+<p>Using a text editor, create a form called <strong>signup.php</strong>. In it, place this code and save it to your <strong>app/Views/</strong>
+folder:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
 <span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
     <span class="o">&lt;</span><span class="nx">title</span><span class="o">&gt;</span><span class="nx">My</span> <span class="nx">Form</span><span class="o">&lt;/</span><span class="nx">title</span><span class="o">&gt;</span>
@@ -447,8 +435,8 @@ code and save it to your <strong>app/Views/</strong> folder:</p>
 </section>
 <section id="the-success-page">
 <h3><a class="toc-backref" href="#id8" role="doc-backlink">The Success Page</a><a class="headerlink" href="#the-success-page" title="Link to this heading"></a></h3>
-<p>Using a text editor, create a form called <strong>success.php</strong>. In it, place
-this code and save it to your <strong>app/Views/</strong> folder:</p>
+<p>Using a text editor, create a form called <strong>success.php</strong>. In it, place this code and save it to your <strong>app/Views/</strong>
+folder:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
 <span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
     <span class="o">&lt;</span><span class="nx">title</span><span class="o">&gt;</span><span class="nx">My</span> <span class="nx">Form</span><span class="o">&lt;/</span><span class="nx">title</span><span class="o">&gt;</span>
@@ -466,8 +454,8 @@ this code and save it to your <strong>app/Views/</strong> folder:</p>
 </section>
 <section id="the-controller">
 <h3><a class="toc-backref" href="#id9" role="doc-backlink">The Controller</a><a class="headerlink" href="#the-controller" title="Link to this heading"></a></h3>
-<p>Using a text editor, create a controller called <strong>Form.php</strong>. In it, place
-this code and save it to your <strong>app/Controllers/</strong> folder:</p>
+<p>Using a text editor, create a controller called <strong>Form.php</strong>. In it, place this code and save it to your
+<strong>app/Controllers/</strong> folder:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
@@ -502,14 +490,13 @@ this code and save it to your <strong>app/Controllers/</strong> folder:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <a class="reference internal" href="../incoming/incomingrequest.html#incomingrequest-is"><span class="std std-ref">$this-&gt;request-&gt;is()</span></a> method can be used since v4.3.0.
-In previous versions, you need to use
-<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(strtolower($this-&gt;request-&gt;getMethod())</span> <span class="pre">!==</span> <span class="pre">'post')</span></code>.</p>
+<p>The <a class="reference internal" href="../incoming/incomingrequest.html#incomingrequest-is"><span class="std std-ref">$this-&gt;request-&gt;is()</span></a> method can be used since v4.3.0. In previous versions,
+you need to use <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(strtolower($this-&gt;request-&gt;getMethod())</span> <span class="pre">!==</span> <span class="pre">'post')</span></code>.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <a class="reference internal" href="#validation-getting-validated-data"><span class="std std-ref">$this-&gt;validator-&gt;getValidated()</span></a>
-method can be used since v4.4.0.</p>
+<p>The <a class="reference internal" href="#validation-getting-validated-data"><span class="std std-ref">$this-&gt;validator-&gt;getValidated()</span></a> method can be used since
+v4.4.0.</p>
 </div>
 </section>
 <section id="the-routes">
@@ -530,16 +517,15 @@ method can be used since v4.4.0.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/</span><span class="nx">form</span><span class="o">/</span>
 </pre></div>
 </div>
-<p>If you submit the form you should simply see the form reload. That’s
-because you haven’t set up any validation rules in <a class="reference internal" href="../incoming/controllers.html#controller-validatedata"><span class="std std-ref">$this-&gt;validateData()</span></a> yet.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">validateData()</span></code> method is a method in the Controller. It uses
-the <strong>Validation class</strong> inside. See <a class="reference internal" href="../incoming/controllers.html#controller-validatedata"><span class="std std-ref">$this-&gt;validateData()</span></a>.</p>
+<p>If you submit the form, you should simply see the form reload. That’s because you haven’t set up any validation rules in
+<a class="reference internal" href="../incoming/controllers.html#controller-validatedata"><span class="std std-ref">$this-&gt;validateData()</span></a> yet.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">validateData()</span></code> method is a method in the Controller. It uses the <strong>Validation class</strong> inside. See
+<a class="reference internal" href="../incoming/controllers.html#controller-validatedata"><span class="std std-ref">$this-&gt;validateData()</span></a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Since you haven’t told the <code class="docutils literal notranslate"><span class="pre">validateData()</span></code> method to validate anything
-yet, it <strong>returns false</strong> (boolean false) <strong>by default</strong>. The <code class="docutils literal notranslate"><span class="pre">validateData()</span></code>
-method only returns true if it has successfully applied your rules without
-any of them failing.</p>
+<p>Since you haven’t told the <code class="docutils literal notranslate"><span class="pre">validateData()</span></code> method to validate anything yet, it <strong>returns false</strong> (boolean
+false) <strong>by default</strong>. The <code class="docutils literal notranslate"><span class="pre">validateData()</span></code> method only returns true if it has successfully applied your rules
+without any of them failing.</p>
 </div>
 </section>
 <section id="explanation">
@@ -549,30 +535,25 @@ any of them failing.</p>
 <h4>signup.php<a class="headerlink" href="#signup-php" title="Link to this heading"></a></h4>
 <p>The form (<strong>signup.php</strong>) is a standard web form with a couple of exceptions:</p>
 <ol class="arabic">
-<li><p>It uses a <a class="reference internal" href="../helpers/form_helper.html"><span class="doc">form helper</span></a> to create the form opening
-and closing. Technically, this
-isn’t necessary. You could create the form using standard HTML.
-However, the benefit of using the helper is that it generates the
-action URL for you, based on the URL in your config file. This makes
-your application more portable in the event your URLs change.</p></li>
-<li><p>At the top of the form you’ll notice the following function call:</p>
+<li><p>It uses a <a class="reference internal" href="../helpers/form_helper.html"><span class="doc">form helper</span></a> to create the form opening and closing. Technically, this isn’t
+necessary. You could create the form using standard HTML. However, the benefit of using the helper is that it
+generates the action URL for you, based on the URL in your config file. This makes your application more portable in
+the event your URLs change.</p></li>
+<li><p>At the top of the form, you’ll notice the following function call:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">validation_list_errors</span><span class="p">()</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
-<p>This function will return any error messages sent back by the
-validator. If there are no messages it returns an empty string.</p>
+<p>This function will return any error messages sent back by the validator. If there are no messages, it returns an
+empty string.</p>
 </li>
 </ol>
 </section>
 <section id="form-php">
 <h4>Form.php<a class="headerlink" href="#form-php" title="Link to this heading"></a></h4>
-<p>The controller (<strong>Form.php</strong>) has one property: <code class="docutils literal notranslate"><span class="pre">$helpers</span></code>.
-It loads the form helper used by your view files.</p>
-<p>The controller has one method: <code class="docutils literal notranslate"><span class="pre">index()</span></code>. This method returns
-the <strong>signup</strong> view to show the form when a non-POST request comes. Otherwise, it
-uses the Controller-provided <a class="reference internal" href="../incoming/controllers.html#controller-validatedata"><span class="std std-ref">$this-&gt;validateData()</span></a> method. It also runs the validation routine.
-Based on whether the validation was successful it either presents the
-form or the success page.</p>
+<p>The controller (<strong>Form.php</strong>) has one property: <code class="docutils literal notranslate"><span class="pre">$helpers</span></code>. It loads the form helper used by your view files.</p>
+<p>The controller has one method: <code class="docutils literal notranslate"><span class="pre">index()</span></code>. This method returns the <strong>signup</strong> view to show the form when a non-POST
+request comes. Otherwise, it uses the Controller-provided <a class="reference internal" href="../incoming/controllers.html#controller-validatedata"><span class="std std-ref">$this-&gt;validateData()</span></a> method. It also runs the
+validation routine. Based on whether the validation was successful, it either presents the form or the success page.</p>
 </section>
 </section>
 <section id="add-validation-rules">
@@ -590,7 +571,7 @@ form or the success page.</p>
 <span class="c1">// ...</span>
 </pre></div>
 </div>
-<p>If you submit the form you should see the success page or the form with error messages.</p>
+<p>If you submit the form, you should see the success page or the form with error messages.</p>
 </section>
 </section>
 <section id="config-for-validation">
@@ -598,12 +579,10 @@ form or the success page.</p>
 <section id="traditional-and-strict-rules">
 <span id="validation-traditional-and-strict-rules"></span><h3><a class="toc-backref" href="#id15" role="doc-backlink">Traditional and Strict Rules</a><a class="headerlink" href="#traditional-and-strict-rules" title="Link to this heading"></a></h3>
 <p>CodeIgniter 4 has two kinds of Validation rule classes.</p>
-<p>The default rule classes (<strong>Strict Rules</strong>) have the namespace
-<code class="docutils literal notranslate"><span class="pre">CodeIgniter\Validation\StrictRules</span></code>, and they provide strict validation.</p>
-<p>The traditional rule classes (<strong>Traditional Rules</strong>) have the namespace
-<code class="docutils literal notranslate"><span class="pre">CodeIgniter\Validation</span></code>. They are provided for backward compatibility only.
-They may not validate non-string values correctly and need not be used in new
-projects.</p>
+<p>The default rule classes (<strong>Strict Rules</strong>) have the namespace <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Validation\StrictRules</span></code>, and they provide
+strict validation.</p>
+<p>The traditional rule classes (<strong>Traditional Rules</strong>) have the namespace <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Validation</span></code>. They are provided
+for backward compatibility only. They may not validate non-string values correctly and need not be used in new projects.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Since v4.3.0, <strong>Strict Rules</strong> are used by default for better security.</p>
@@ -619,29 +598,25 @@ projects.</p>
 <h4>Traditional Rules<a class="headerlink" href="#traditional-rules" title="Link to this heading"></a></h4>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>Traditional Rules exist only for backward compatibility. Do not
-use them in new projects. Even if you are already using them, we recommend
-switching to Strict Rules.</p>
+<p>Traditional Rules exist only for backward compatibility. Do not use them in new projects. Even if you are
+already using them, we recommend switching to Strict Rules.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>When validating data that contains non-string values, such as JSON data,
-you should use <strong>Strict Rules</strong>.</p>
+<p>When validating data that contains non-string values, such as JSON data, you should use <strong>Strict Rules</strong>.</p>
 </div>
-<p>The <strong>Traditional Rules</strong> implicitly assume that string values are validated,
-and the input value may be converted implicitly to a string value.
-It works for most basic cases like validating POST data.</p>
-<p>However, for example, if you use JSON input data, it may be a type of bool/null/array.
-When you validate the boolean <code class="docutils literal notranslate"><span class="pre">true</span></code>, it is converted to string <code class="docutils literal notranslate"><span class="pre">'1'</span></code> with the Traditional rule classes.
-If you validate it with the <code class="docutils literal notranslate"><span class="pre">integer</span></code> rule, <code class="docutils literal notranslate"><span class="pre">'1'</span></code> passes the validation.</p>
+<p>The <strong>Traditional Rules</strong> implicitly assume that string values are validated, and the input value may be converted
+implicitly to a string value. It works for most basic cases like validating POST data.</p>
+<p>However, for example, if you use JSON input data, it may be of type bool/null/array. When you validate the boolean
+<code class="docutils literal notranslate"><span class="pre">true</span></code>, it is converted to the string <code class="docutils literal notranslate"><span class="pre">'1'</span></code> with the Traditional rule classes. If you validate it with the
+<code class="docutils literal notranslate"><span class="pre">integer</span></code> rule, <code class="docutils literal notranslate"><span class="pre">'1'</span></code> passes the validation.</p>
 </section>
 <section id="using-traditional-rules">
 <h4>Using Traditional Rules<a class="headerlink" href="#using-traditional-rules" title="Link to this heading"></a></h4>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>The <strong>Traditional Rules</strong> are provided for backward compatibility only.
-They may not validate non-string values correctly and need not be used in new
-projects.</p>
+<p>The <strong>Traditional Rules</strong> are provided for backward compatibility only. They may not validate non-string
+values correctly and need not be used in new projects.</p>
 </div>
 <p>If you want to use traditional rules, you need to change the rule classes in <strong>app/Config/Validation.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -674,25 +649,23 @@ projects.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$validation</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'validation'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>This automatically loads the <code class="docutils literal notranslate"><span class="pre">Config\Validation</span></code> file which contains settings
-for including multiple Rulesets, and collections of rules that can be easily reused.</p>
+<p>This automatically loads the <code class="docutils literal notranslate"><span class="pre">Config\Validation</span></code> file, which contains settings for including multiple Rulesets, and
+collections of rules that can be easily reused.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You may never need to use this method, as both the <a class="reference internal" href="../incoming/controllers.html"><span class="doc">Controller</span></a> and
-the <a class="reference internal" href="../models/model.html"><span class="doc">Model</span></a> provide methods to make validation even easier.</p>
+<p>You may never need to use this method, as both the <a class="reference internal" href="../incoming/controllers.html"><span class="doc">Controller</span></a> and the
+<a class="reference internal" href="../models/model.html"><span class="doc">Model</span></a> provide methods to make validation even easier.</p>
 </div>
 </section>
 <section id="how-validation-works">
 <h2><a class="toc-backref" href="#id17" role="doc-backlink">How Validation Works</a><a class="headerlink" href="#how-validation-works" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p>The validation never changes data to be validated.</p></li>
-<li><p>The validation checks each field in turn according to the Validation Rules you
-set. If any rule returns false, the check for that field ends there.</p></li>
-<li><p>The Format Rules do not permit empty string. If you want to permit empty string,
-add the <code class="docutils literal notranslate"><span class="pre">permit_empty</span></code> rule.</p></li>
-<li><p>If a field does not exist in the data to be validated, the value is interpreted
-as <code class="docutils literal notranslate"><span class="pre">null</span></code>. If you want to check that the field exists, add the <code class="docutils literal notranslate"><span class="pre">field_exists</span></code>
-rule.</p></li>
+<li><p>The validation never changes the data to be validated.</p></li>
+<li><p>The validation checks each field in turn according to the Validation Rules you set. If any rule returns false, the
+check for that field ends there.</p></li>
+<li><p>The Format Rules do not permit an empty string. If you want to permit an empty string, add the <code class="docutils literal notranslate"><span class="pre">permit_empty</span></code> rule.</p></li>
+<li><p>If a field does not exist in the data to be validated, the value is interpreted as <code class="docutils literal notranslate"><span class="pre">null</span></code>. If you want to check that
+the field exists, add the <code class="docutils literal notranslate"><span class="pre">field_exists</span></code> rule.</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -701,10 +674,8 @@ rule.</p></li>
 </section>
 <section id="setting-validation-rules">
 <h2><a class="toc-backref" href="#id18" role="doc-backlink">Setting Validation Rules</a><a class="headerlink" href="#setting-validation-rules" title="Link to this heading"></a></h2>
-<p>CodeIgniter lets you set as many validation rules as you need for a
-given field, cascading them in order. To set validation rules you
-will use the <code class="docutils literal notranslate"><span class="pre">setRule()</span></code>, <code class="docutils literal notranslate"><span class="pre">setRules()</span></code>, or <code class="docutils literal notranslate"><span class="pre">withRequest()</span></code>
-methods.</p>
+<p>CodeIgniter lets you set as many validation rules as you need for a given field, cascading them in order. To set
+validation rules, you will use the <code class="docutils literal notranslate"><span class="pre">setRule()</span></code>, <code class="docutils literal notranslate"><span class="pre">setRules()</span></code>, or <code class="docutils literal notranslate"><span class="pre">withRequest()</span></code> methods.</p>
 <section id="setting-a-single-rule">
 <h3><a class="toc-backref" href="#id19" role="doc-backlink">Setting a Single Rule</a><a class="headerlink" href="#setting-a-single-rule" title="Link to this heading"></a></h3>
 <section id="setrule">
@@ -713,20 +684,18 @@ methods.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">setRule</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$field</span><span class="p">,</span> <span class="o">?</span><span class="nx">string</span> <span class="nv">$label</span><span class="p">,</span> <span class="k">array</span><span class="o">|</span><span class="nx">string</span> <span class="nv">$rules</span><span class="p">[,</span> <span class="k">array</span> <span class="nv">$errors</span> <span class="o">=</span> <span class="p">[]])</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">$rules</span></code> either takes in a pipe-delimited list of rules or an array collection of rules:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">$rules</span></code> parameter takes in either a pipe-delimited list of rules or an array collection of rules:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRule</span><span class="p">(</span><span class="s1">'username'</span><span class="p">,</span> <span class="s1">'Username'</span><span class="p">,</span> <span class="s1">'required|max_length[30]|min_length[3]'</span><span class="p">);</span>
 <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRule</span><span class="p">(</span><span class="s1">'password'</span><span class="p">,</span> <span class="s1">'Password'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'required'</span><span class="p">,</span> <span class="s1">'max_length[255]'</span><span class="p">,</span> <span class="s1">'min_length[8]'</span><span class="p">,</span> <span class="s1">'alpha_numeric_punct'</span><span class="p">]);</span>
 </pre></div>
 </div>
-<p>The value you pass to <code class="docutils literal notranslate"><span class="pre">$field</span></code> must match the key of any data array that is sent in. If
-the data is taken directly from <code class="docutils literal notranslate"><span class="pre">$_POST</span></code>, then it must be an exact match for
-the form input name.</p>
+<p>The value you pass to <code class="docutils literal notranslate"><span class="pre">$field</span></code> must match the key of any data array that is sent in. If the data is taken directly
+from <code class="docutils literal notranslate"><span class="pre">$_POST</span></code>, then it must be an exact match for the form input name.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Prior to v4.2.0, this method’s third parameter, <code class="docutils literal notranslate"><span class="pre">$rules</span></code>, was typehinted to accept
-<code class="docutils literal notranslate"><span class="pre">string</span></code>. In v4.2.0 and after, the typehint was removed to allow arrays, too. To avoid LSP being
-broken in extending classes overriding this method, the child class’s method should also be modified
-to remove the typehint.</p>
+<p>Prior to v4.2.0, this method’s third parameter, <code class="docutils literal notranslate"><span class="pre">$rules</span></code>, was typehinted to accept <code class="docutils literal notranslate"><span class="pre">string</span></code>. In v4.2.0
+and after, the typehint was removed to allow arrays, too. To avoid LSP being broken in extending classes overriding
+this method, the child class’s method should also be modified to remove the typehint.</p>
 </div>
 </section>
 </section>
@@ -746,7 +715,7 @@ to remove the typehint.</p>
 <span class="p">]);</span>
 </pre></div>
 </div>
-<p>To give a labeled error message you can set up as:</p>
+<p>To give a labeled error message, you can set it up as follows:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
     <span class="s1">'username'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'label'</span> <span class="o">=&gt;</span> <span class="s1">'Username'</span><span class="p">,</span> <span class="s1">'rules'</span> <span class="o">=&gt;</span> <span class="s1">'required|max_length[30]'</span><span class="p">],</span>
     <span class="s1">'password'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'label'</span> <span class="o">=&gt;</span> <span class="s1">'Password'</span><span class="p">,</span> <span class="s1">'rules'</span> <span class="o">=&gt;</span> <span class="s1">'required|max_length[255]|min_length[10]'</span><span class="p">],</span>
@@ -760,15 +729,14 @@ to remove the typehint.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">setRules()</span></code> will overwrite any rules that were set previously. To add more than one
-rule to an existing set of rules, use <code class="docutils literal notranslate"><span class="pre">setRule()</span></code> multiple times.</p>
+<p><code class="docutils literal notranslate"><span class="pre">setRules()</span></code> will overwrite any rules that were set previously. To add more than one rule to an existing set
+of rules, use <code class="docutils literal notranslate"><span class="pre">setRule()</span></code> multiple times.</p>
 </div>
 </section>
 </section>
 <section id="setting-rules-for-array-data">
 <span id="validation-dot-array-syntax"></span><h3><a class="toc-backref" href="#id21" role="doc-backlink">Setting Rules for Array Data</a><a class="headerlink" href="#setting-rules-for-array-data" title="Link to this heading"></a></h3>
-<p>If your data is in a nested associative array, you can use “dot array syntax” to
-easily validate your data:</p>
+<p>If your data is in a nested associative array, you can use “dot array syntax” to easily validate your data:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
 <span class="cm"> * The data to test:</span>
 <span class="cm"> * [</span>
@@ -801,12 +769,11 @@ easily validate your data:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Prior to v4.4.4, due to a bug, the wildcard <code class="docutils literal notranslate"><span class="pre">*</span></code> validated data in incorrect
-dimensions. See <a class="reference internal" href="../installation/upgrade_444.html#upgrade-444-validation-with-dot-array-syntax"><span class="std std-ref">Upgrading</span></a>
-for details.</p>
+<p>Prior to v4.4.4, due to a bug, the wildcard <code class="docutils literal notranslate"><span class="pre">*</span></code> validated data in incorrect dimensions. See
+<a class="reference internal" href="../installation/upgrade_444.html#upgrade-444-validation-with-dot-array-syntax"><span class="std std-ref">Upgrading</span></a> for details.</p>
 </div>
-<p>“dot array syntax” can also be useful when you have single dimension array data.
-For example, data returned by multi select dropdown:</p>
+<p>The “dot array syntax” can also be useful when you have single-dimension array data. For example, data returned by a
+multi-select dropdown:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
 <span class="cm"> * The data to test:</span>
 <span class="cm"> * [</span>
@@ -829,23 +796,20 @@ For example, data returned by multi select dropdown:</p>
 <span id="validation-withrequest"></span><h3><a class="toc-backref" href="#id22" role="doc-backlink">withRequest()</a><a class="headerlink" href="#withrequest" title="Link to this heading"></a></h3>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>This method exists only for backward compatibility. Do not use it
-in new projects. Even if you are already using it, we recommend that you use
-another, more appropriate method.</p>
+<p>This method exists only for backward compatibility. Do not use it in new projects. Even if you are
+already using it, we recommend that you use another, more appropriate method.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>If you want to validate POST data only, don’t use <code class="docutils literal notranslate"><span class="pre">withRequest()</span></code>.
-This method uses <a class="reference internal" href="../incoming/incomingrequest.html#incomingrequest-getting-data"><span class="std std-ref">$request-&gt;getVar()</span></a>
-which returns <code class="docutils literal notranslate"><span class="pre">$_GET</span></code>, <code class="docutils literal notranslate"><span class="pre">$_POST</span></code> or <code class="docutils literal notranslate"><span class="pre">$_COOKIE</span></code> data in that order
-(depending on php.ini <a class="reference external" href="https://www.php.net/manual/en/ini.core.php#ini.request-order">request-order</a>).
-Newer values override older values. POST values may be overridden by the
-cookies if they have the same name.</p>
+<p>If you want to validate POST data only, don’t use <code class="docutils literal notranslate"><span class="pre">withRequest()</span></code>. This method uses
+<a class="reference internal" href="../incoming/incomingrequest.html#incomingrequest-getting-data"><span class="std std-ref">$request-&gt;getVar()</span></a> which returns <code class="docutils literal notranslate"><span class="pre">$_GET</span></code>, <code class="docutils literal notranslate"><span class="pre">$_POST</span></code> or <code class="docutils literal notranslate"><span class="pre">$_COOKIE</span></code> data in
+that order (depending on <strong>php.ini</strong>
+<a class="reference external" href="https://www.php.net/manual/en/ini.core.php#ini.request-order">request-order</a>). Newer values override older
+values. POST values may be overridden by the cookies if they have the same name.</p>
 </div>
-<p>One of the most common times you will use the validation library is when validating
-data that was input from an HTTP Request. If desired, you can pass an instance of the
-current Request object and it will take all of the input data and set it as the
-data to be validated:</p>
+<p>One of the most common times you will use the validation library is when validating data that was input from an HTTP
+Request. If desired, you can pass an instance of the current Request object and it will take all of the input data and
+set it as the data to be validated:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$validation</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'validation'</span><span class="p">);</span>
 <span class="nv">$request</span>    <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'request'</span><span class="p">);</span>
 
@@ -860,22 +824,17 @@ data to be validated:</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>When you use this method, you should use the
-<a class="reference internal" href="#validation-getting-validated-data"><span class="std std-ref">getValidated()</span></a> method to get the
-validated data. Because this method gets JSON data from
-<a class="reference internal" href="../incoming/incomingrequest.html#incomingrequest-getting-json-data"><span class="std std-ref">$request-&gt;getJSON()</span></a>
-when the request is a JSON request (<code class="docutils literal notranslate"><span class="pre">Content-Type:</span> <span class="pre">application/json</span></code>),
-or gets Raw data from
-<a class="reference internal" href="../incoming/incomingrequest.html#incomingrequest-retrieving-raw-data"><span class="std std-ref">$request-&gt;getRawInput()</span></a>
-when the request is a PUT, PATCH, DELETE request and
-is not HTML form post (<code class="docutils literal notranslate"><span class="pre">Content-Type:</span> <span class="pre">multipart/form-data</span></code>),
-or gets data from <a class="reference internal" href="../incoming/incomingrequest.html#incomingrequest-getting-data"><span class="std std-ref">$request-&gt;getVar()</span></a>,
-and an attacker could change what data is validated.</p>
+<p>When you use this method, you should use the <a class="reference internal" href="#validation-getting-validated-data"><span class="std std-ref">getValidated()</span></a>
+method to get the validated data. Because this method gets JSON data from
+<a class="reference internal" href="../incoming/incomingrequest.html#incomingrequest-getting-json-data"><span class="std std-ref">$request-&gt;getJSON()</span></a> when the request is a JSON request
+(<code class="docutils literal notranslate"><span class="pre">Content-Type:</span> <span class="pre">application/json</span></code>), or gets raw data from
+<a class="reference internal" href="../incoming/incomingrequest.html#incomingrequest-retrieving-raw-data"><span class="std std-ref">$request-&gt;getRawInput()</span></a> when the request is a PUT, PATCH, or DELETE
+request and is not an HTML form post (<code class="docutils literal notranslate"><span class="pre">Content-Type:</span> <span class="pre">multipart/form-data</span></code>), or gets data from
+<a class="reference internal" href="../incoming/incomingrequest.html#incomingrequest-getting-data"><span class="std std-ref">$request-&gt;getVar()</span></a>, and an attacker could change what data is validated.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <a class="reference internal" href="#validation-getting-validated-data"><span class="std std-ref">getValidated()</span></a>
-method can be used since v4.4.0.</p>
+<p>The <a class="reference internal" href="#validation-getting-validated-data"><span class="std std-ref">getValidated()</span></a> method can be used since v4.4.0.</p>
 </div>
 </section>
 </section>
@@ -887,9 +846,9 @@ method can be used since v4.4.0.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">run</span><span class="p">(</span><span class="o">?</span><span class="k">array</span> <span class="nv">$data</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="o">?</span><span class="nx">string</span> <span class="nv">$group</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="o">?</span><span class="nx">string</span> <span class="nv">$dbGroup</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span><span class="o">:</span> <span class="nx">bool</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">$data</span></code> is an array of data to validate. The optional second parameter
-<code class="docutils literal notranslate"><span class="pre">$group</span></code> is the <a class="reference internal" href="#validation-array"><span class="std std-ref">predefined group of rules</span></a> to apply.
-The optional third parameter <code class="docutils literal notranslate"><span class="pre">$dbGroup</span></code> is the database group to use.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">$data</span></code> is an array of data to validate. The optional second parameter <code class="docutils literal notranslate"><span class="pre">$group</span></code> is the
+<a class="reference internal" href="#validation-array"><span class="std std-ref">predefined group of rules</span></a> to apply. The optional third parameter <code class="docutils literal notranslate"><span class="pre">$dbGroup</span></code> is the database
+group to use.</p>
 <p>This method returns true if the validation is successful.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">(</span><span class="nv">$data</span><span class="p">))</span> <span class="p">{</span>
     <span class="c1">// handle validation errors</span>
@@ -905,14 +864,13 @@ The optional third parameter <code class="docutils literal notranslate"><span cl
 <h3><a class="toc-backref" href="#id25" role="doc-backlink">Running Multiple Validations</a><a class="headerlink" href="#running-multiple-validations" title="Link to this heading"></a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">run()</span></code> method will not reset error state. Should a previous run fail,
-<code class="docutils literal notranslate"><span class="pre">run()</span></code> will always return false and <code class="docutils literal notranslate"><span class="pre">getErrors()</span></code> will return
-all previous errors until explicitly reset.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">run()</span></code> method will not reset the error state. Should a previous run fail, <code class="docutils literal notranslate"><span class="pre">run()</span></code> will always return
+false and <code class="docutils literal notranslate"><span class="pre">getErrors()</span></code> will return all previous errors until explicitly reset.</p>
 </div>
-<p>If you intend to run multiple validations, for instance on different data sets or with different
-rules after one another, you might need to call <code class="docutils literal notranslate"><span class="pre">$validation-&gt;reset()</span></code> before each run to get rid of
-errors from previous run. Be aware that <code class="docutils literal notranslate"><span class="pre">reset()</span></code> will invalidate any data, rule or custom error
-you previously set, so <code class="docutils literal notranslate"><span class="pre">setRules()</span></code>, <code class="docutils literal notranslate"><span class="pre">setRuleGroup()</span></code> etc. need to be repeated:</p>
+<p>If you intend to run multiple validations, for instance on different data sets or with different rules after one
+another, you might need to call <code class="docutils literal notranslate"><span class="pre">$validation-&gt;reset()</span></code> before each run to get rid of errors from the previous run. Be
+aware that <code class="docutils literal notranslate"><span class="pre">reset()</span></code> will invalidate any data, rule or custom error you previously set, so <code class="docutils literal notranslate"><span class="pre">setRules()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">setRuleGroup()</span></code> etc. need to be repeated:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">foreach</span> <span class="p">(</span><span class="nv">$userAccounts</span> <span class="k">as</span> <span class="nv">$user</span><span class="p">)</span> <span class="p">{</span>
     <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">reset</span><span class="p">();</span>
     <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">(</span><span class="nv">$userAccountRules</span><span class="p">);</span>
@@ -926,10 +884,9 @@ you previously set, so <code class="docutils literal notranslate"><span class="p
 </section>
 <section id="validating-1-value">
 <h3><a class="toc-backref" href="#id26" role="doc-backlink">Validating 1 Value</a><a class="headerlink" href="#validating-1-value" title="Link to this heading"></a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">check()</span></code> method validates one value against the rules.
-The first parameter <code class="docutils literal notranslate"><span class="pre">$value</span></code> is the value to validate. The second parameter
-<code class="docutils literal notranslate"><span class="pre">$rule</span></code> is the validation rules.
-The optional third parameter <code class="docutils literal notranslate"><span class="pre">$errors</span></code> is the the custom error message.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">check()</span></code> method validates one value against the rules. The first parameter <code class="docutils literal notranslate"><span class="pre">$value</span></code> is the value to validate.
+The second parameter <code class="docutils literal notranslate"><span class="pre">$rule</span></code> holds the validation rules. The optional third parameter <code class="docutils literal notranslate"><span class="pre">$errors</span></code> is the custom error
+message.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">check</span><span class="p">(</span><span class="nv">$value</span><span class="p">,</span> <span class="s1">'required'</span><span class="p">))</span> <span class="p">{</span>
     <span class="c1">// $value is valid.</span>
 <span class="p">}</span>
@@ -937,9 +894,8 @@ The optional third parameter <code class="docutils literal notranslate"><span cl
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Prior to v4.4.0, this method’s second parameter, <code class="docutils literal notranslate"><span class="pre">$rule</span></code>, was
-typehinted to accept <code class="docutils literal notranslate"><span class="pre">string</span></code>. In v4.4.0 and after, the typehint was
-removed to allow arrays, too.</p>
+<p>Prior to v4.4.0, this method’s second parameter, <code class="docutils literal notranslate"><span class="pre">$rule</span></code>, was typehinted to accept <code class="docutils literal notranslate"><span class="pre">string</span></code>. In v4.4.0 and
+after, the typehint was removed to allow arrays, too.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -951,9 +907,8 @@ removed to allow arrays, too.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 4.4.0.</span></p>
 </div>
-<p>The actual validated data can be retrieved with the <code class="docutils literal notranslate"><span class="pre">getValidated()</span></code> method.
-This method returns an array of only those elements that have been validated by
-the validation rules.</p>
+<p>The actual validated data can be retrieved with the <code class="docutils literal notranslate"><span class="pre">getValidated()</span></code> method. This method returns an array of only
+those elements that have been validated by the validation rules.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$validation</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'validation'</span><span class="p">);</span>
 <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
     <span class="s1">'username'</span> <span class="o">=&gt;</span> <span class="s1">'required'</span><span class="p">,</span>
@@ -996,15 +951,14 @@ the validation rules.</p>
 </section>
 <section id="saving-sets-of-validation-rules-to-the-config-file">
 <span id="saving-validation-rules-to-config-file"></span><h3><a class="toc-backref" href="#id28" role="doc-backlink">Saving Sets of Validation Rules to the Config File</a><a class="headerlink" href="#saving-sets-of-validation-rules-to-the-config-file" title="Link to this heading"></a></h3>
-<p>A nice feature of the Validation class is that it permits you to store all
-your validation rules for your entire application in a config file. You organize
-the rules into “groups”. You can specify a different group every time you run
+<p>A nice feature of the Validation class is that it permits you to store all your validation rules for your entire
+application in a config file. You organize the rules into “groups”. You can specify a different group every time you run
 the validation.</p>
 <section id="how-to-save-your-rules">
 <span id="validation-array"></span><h4>How to Save Your Rules<a class="headerlink" href="#how-to-save-your-rules" title="Link to this heading"></a></h4>
-<p>To store your validation rules, simply create a new public property in the <code class="docutils literal notranslate"><span class="pre">Config\Validation</span></code>
-class with the name of your group. This element will hold an array with your validation
-rules. As shown earlier, the validation array will have this prototype:</p>
+<p>To store your validation rules, simply create a new public property in the <code class="docutils literal notranslate"><span class="pre">Config\Validation</span></code> class with the name of
+your group. This element will hold an array with your validation rules. As shown earlier, the validation array will have
+this prototype:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -1036,9 +990,8 @@ rules. As shown earlier, the validation array will have this prototype:</p>
 </section>
 <section id="how-to-save-error-messages">
 <h4>How to Save Error Messages<a class="headerlink" href="#how-to-save-error-messages" title="Link to this heading"></a></h4>
-<p>You can also store custom error messages in this configuration file by naming the
-property the same as the group, and appended with <code class="docutils literal notranslate"><span class="pre">_errors</span></code>. These will automatically
-be used for any errors when this group is used:</p>
+<p>You can also store custom error messages in this configuration file by naming the property the same as the group, with
+<code class="docutils literal notranslate"><span class="pre">_errors</span></code> appended. These will automatically be used for any errors when this group is used:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -1121,11 +1074,10 @@ be used for any errors when this group is used:</p>
 </section>
 <section id="validation-placeholders">
 <span id="id2"></span><h3><a class="toc-backref" href="#id29" role="doc-backlink">Validation Placeholders</a><a class="headerlink" href="#validation-placeholders" title="Link to this heading"></a></h3>
-<p>The Validation class provides a simple method to replace parts of your rules based on data that’s being passed into it. This
-sounds fairly obscure but can be especially handy with the <code class="docutils literal notranslate"><span class="pre">is_unique</span></code> validation rule.</p>
-<p>Placeholders are simply
-the name of the field (or array key) that was passed in as <code class="docutils literal notranslate"><span class="pre">$data</span></code> surrounded by curly brackets. It will be
-replaced by the <strong>value</strong> of the matched incoming field. An example should clarify this:</p>
+<p>The Validation class provides a simple method to replace parts of your rules based on data that’s being passed into it.
+This sounds fairly obscure but can be especially handy with the <code class="docutils literal notranslate"><span class="pre">is_unique</span></code> validation rule.</p>
+<p>Placeholders are simply the name of the field (or array key) that was passed in as <code class="docutils literal notranslate"><span class="pre">$data</span></code> surrounded by curly
+brackets. This will be replaced by the <strong>value</strong> of the matched incoming field. An example should clarify this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
     <span class="s1">'id'</span>    <span class="o">=&gt;</span> <span class="s1">'max_length[19]|is_natural_no_zero'</span><span class="p">,</span>
     <span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="s1">'required|max_length[254]|valid_email|is_unique[users.email,id,{id}]'</span><span class="p">,</span>
@@ -1134,12 +1086,11 @@ replaced by the <strong>value</strong> of the matched incoming field. An example
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Since v4.3.5, you must set the validation rules for the placeholder
-field (the <code class="docutils literal notranslate"><span class="pre">id</span></code> field in the sample code above) for security reasons. Because
-attackers can send any data to your application.</p>
+<p>Since v4.3.5, you must set the validation rules for the placeholder field (the <code class="docutils literal notranslate"><span class="pre">id</span></code> field in the sample
+code above) for security reasons, because attackers can send any data to your application.</p>
 </div>
-<p>In this set of rules, it states that the email address should be unique in the database, except for the row
-that has an id matching the placeholder’s value. Assuming that the form POST data had the following:</p>
+<p>This set of rules states that the email address should be unique in the database, except for the row that has an id
+matching the placeholder’s value. Assuming that the form POST data had the following:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$_POST</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">'id'</span>    <span class="o">=&gt;</span> <span class="mi">4</span><span class="p">,</span>
     <span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="s1">'foo@example.com'</span><span class="p">,</span>
@@ -1156,28 +1107,27 @@ that has an id matching the placeholder’s value. Assuming that the form POST d
 <p>So it will ignore the row in the database that has <code class="docutils literal notranslate"><span class="pre">id=4</span></code> when it verifies the email is unique.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Since v4.3.5, if the placeholder (<code class="docutils literal notranslate"><span class="pre">id</span></code>) value does not pass the
-validation, the placeholder would not be replaced.</p>
+<p>Since v4.3.5, if the placeholder (<code class="docutils literal notranslate"><span class="pre">id</span></code>) value does not pass the validation, the placeholder would not be
+replaced.</p>
 </div>
-<p>This can also be used to create more dynamic rules at runtime, as long as you take care that any dynamic
-keys passed in don’t conflict with your form data.</p>
+<p>This can also be used to create more dynamic rules at runtime, as long as you take care that any dynamic keys passed in
+don’t conflict with your form data.</p>
 </section>
 </section>
 <section id="working-with-errors">
 <h2><a class="toc-backref" href="#id30" role="doc-backlink">Working with Errors</a><a class="headerlink" href="#working-with-errors" title="Link to this heading"></a></h2>
-<p>The Validation library provides several methods to help you set error messages, provide
-custom error messages, and retrieve one or more errors to display.</p>
-<p>By default, error messages are derived from language strings in <strong>system/Language/en/Validation.php</strong>, where
-each rule has an entry. In case you want to change a message default, create a file
-<strong>app/Language/en/Validation.php</strong> (and/or corresponding folder of locale you use in place of/besides <code class="docutils literal notranslate"><span class="pre">en</span></code>)
-and place in it keys and values of those error messages for which you want different defaults.</p>
+<p>The Validation library provides several methods to help you set error messages, provide custom error messages, and
+retrieve one or more errors to display.</p>
+<p>By default, error messages are derived from language strings in <strong>system/Language/en/Validation.php</strong>, where each rule
+has an entry. In case you want to change a message default, create a file <strong>app/Language/en/Validation.php</strong> (and/or the
+corresponding folder of the locale you use in place of/besides <code class="docutils literal notranslate"><span class="pre">en</span></code>) and place in it keys and values of those error
+messages for which you want different defaults.</p>
 <section id="setting-custom-error-messages">
 <span id="validation-custom-errors"></span><h3><a class="toc-backref" href="#id31" role="doc-backlink">Setting Custom Error Messages</a><a class="headerlink" href="#setting-custom-error-messages" title="Link to this heading"></a></h3>
-<p>Both the <code class="docutils literal notranslate"><span class="pre">setRule()</span></code> and <code class="docutils literal notranslate"><span class="pre">setRules()</span></code> methods can accept an array of custom messages
-that will be used as errors specific to each field as their last parameter. This allows
-for a very pleasant experience for the user since the errors are tailored to each
-instance. If not custom error message is provided, the default value will be used.</p>
-<p>These are two ways to provide custom error messages.</p>
+<p>Both the <code class="docutils literal notranslate"><span class="pre">setRule()</span></code> and <code class="docutils literal notranslate"><span class="pre">setRules()</span></code> methods can accept an array of custom messages that will be used as errors
+specific to each field as their last parameter. This allows for a very pleasant experience for the user since the errors
+are tailored to each instance. If no custom error message is provided, the default value will be used.</p>
+<p>There are two ways to provide custom error messages.</p>
 <p>As the last parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">(</span>
     <span class="p">[</span>
@@ -1195,7 +1145,7 @@ instance. If not custom error message is provided, the default value will be use
 <span class="p">);</span>
 </pre></div>
 </div>
-<p>Or as a labeled style:</p>
+<p>Or in a labeled style:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
     <span class="s1">'username'</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">'label'</span>  <span class="o">=&gt;</span> <span class="s1">'Username'</span><span class="p">,</span>
@@ -1214,27 +1164,31 @@ instance. If not custom error message is provided, the default value will be use
 <span class="p">]);</span>
 </pre></div>
 </div>
-<p>If you’d like to include a field’s “human” name, or the optional parameter some rules allow for (such as max_length),
-or the value that was validated you can add the <code class="docutils literal notranslate"><span class="pre">{field}</span></code>, <code class="docutils literal notranslate"><span class="pre">{param}</span></code> and <code class="docutils literal notranslate"><span class="pre">{value}</span></code> tags to your message, respectively:</p>
+<p>If you’d like to include a field’s “human” name, or the optional parameter some rules allow for (such as max_length), or
+the value that was validated, you can add the <code class="docutils literal notranslate"><span class="pre">{field}</span></code>, <code class="docutils literal notranslate"><span class="pre">{param}</span></code> and <code class="docutils literal notranslate"><span class="pre">{value}</span></code> tags to your message,
+respectively:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="s1">'min_length'</span> <span class="o">=&gt;</span> <span class="s1">'Supplied value ({value}) for {field} must have at least {param} characters.'</span>
 </pre></div>
 </div>
-<p>On a field with the human name Username and a rule of <code class="docutils literal notranslate"><span class="pre">min_length[6]</span></code> with a value of “Pizza”, an error would display: “Supplied value (Pizza) for Username must have
-at least 6 characters.”</p>
+<p>On a field with the human name Username and a rule of <code class="docutils literal notranslate"><span class="pre">min_length[6]</span></code> with a value of “Pizza”, an error would display:
+“Supplied value (Pizza) for Username must have at least 6 characters.”</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>If you get the error messages with <code class="docutils literal notranslate"><span class="pre">getErrors()</span></code> or <code class="docutils literal notranslate"><span class="pre">getError()</span></code>, the messages are not HTML escaped. If you use user input data like <code class="docutils literal notranslate"><span class="pre">({value})</span></code> to make the error message, it might contain HTML tags. If you don’t escape the messages before displaying them, XSS attacks are possible.</p>
+<p>If you get the error messages with <code class="docutils literal notranslate"><span class="pre">getErrors()</span></code> or <code class="docutils literal notranslate"><span class="pre">getError()</span></code>, the messages are not HTML-escaped. If
+you use user input data like <code class="docutils literal notranslate"><span class="pre">({value})</span></code> to make the error message, it might contain HTML tags. If you don’t
+escape the messages before displaying them, XSS attacks are possible.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>When using label-style error messages, if you pass the second parameter to <code class="docutils literal notranslate"><span class="pre">setRules()</span></code>, it will be overwritten with the value of the first parameter.</p>
+<p>When using label-style error messages, if you pass the second parameter to <code class="docutils literal notranslate"><span class="pre">setRules()</span></code>, it will be
+overwritten with the value of the first parameter.</p>
 </div>
 </section>
 <section id="translation-of-messages-and-validation-labels">
 <h3><a class="toc-backref" href="#id32" role="doc-backlink">Translation of Messages and Validation Labels</a><a class="headerlink" href="#translation-of-messages-and-validation-labels" title="Link to this heading"></a></h3>
-<p>To use translated strings from language files, we can simply use the dot syntax.
-Let’s say we have a file with translations located here: <strong>app/Languages/en/Rules.php</strong>.
-We can simply use the language lines defined in this file, like this:</p>
+<p>To use translated strings from language files, we can simply use the dot syntax. Let’s say we have a file with
+translations located here: <strong>app/Language/en/Rules.php</strong>. We can simply use the language lines defined in this file,
+like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
     <span class="s1">'username'</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">'label'</span>  <span class="o">=&gt;</span> <span class="s1">'Rules.username'</span><span class="p">,</span>
@@ -1268,12 +1222,13 @@ We can simply use the language lines defined in this file, like this:</p>
 </pre></div>
 </div>
 <p>If no errors exist, an empty array will be returned.</p>
-<p>When using a wildcard (<code class="docutils literal notranslate"><span class="pre">*</span></code>), the error will point to a specific field, replacing the asterisk with the appropriate key/keys:</p>
+<p>When using a wildcard (<code class="docutils literal notranslate"><span class="pre">*</span></code>), the error will point to a specific field, replacing the asterisk with the appropriate
+key/keys:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// for data</span>
 <span class="s1">'contacts'</span> <span class="o">=&gt;</span> <span class="p">[</span>
     <span class="s1">'friends'</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="p">[</span>
-            <span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'Fred Flinstone'</span><span class="p">,</span>
+            <span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'Fred Flintstone'</span><span class="p">,</span>
         <span class="p">],</span>
         <span class="p">[</span>
             <span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">''</span><span class="p">,</span>
@@ -1291,15 +1246,15 @@ We can simply use the language lines defined in this file, like this:</p>
 </section>
 <section id="getting-a-single-error">
 <h3><a class="toc-backref" href="#id34" role="doc-backlink">Getting a Single Error</a><a class="headerlink" href="#getting-a-single-error" title="Link to this heading"></a></h3>
-<p>You can retrieve the error for a single field with the <code class="docutils literal notranslate"><span class="pre">getError()</span></code> method. The only parameter is the field
-name:</p>
+<p>You can retrieve the error for a single field with the <code class="docutils literal notranslate"><span class="pre">getError()</span></code> method. The only parameter is the field name:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$error</span> <span class="o">=</span> <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">getError</span><span class="p">(</span><span class="s1">'username'</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If no error exists, an empty string will be returned.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>When using a wildcard, all found errors that match the mask will be combined into one line separated by the EOL character.</p>
+<p>When using a wildcard, all found errors that match the mask will be combined into one line separated by the
+EOL character.</p>
 </div>
 </section>
 <section id="check-if-error-exists">
@@ -1326,14 +1281,12 @@ name:</p>
 </section>
 <section id="redirect-and-validation-errors">
 <span id="validation-redirect-and-validation-errors"></span><h3><a class="toc-backref" href="#id36" role="doc-backlink">Redirect and Validation Errors</a><a class="headerlink" href="#redirect-and-validation-errors" title="Link to this heading"></a></h3>
-<p>PHP shares nothing between requests. So when you redirect if a validation fails,
-there will be no validation errors in the redirected request because the validation
-has run in the previous request.</p>
-<p>In that case, you need to use Form helper function <a class="reference internal" href="../helpers/form_helper.html#validation_errors" title="validation_errors"><code class="xref php php-func docutils literal notranslate"><span class="pre">validation_errors()</span></code></a>,
-<a class="reference internal" href="../helpers/form_helper.html#validation_list_errors" title="validation_list_errors"><code class="xref php php-func docutils literal notranslate"><span class="pre">validation_list_errors()</span></code></a> and <a class="reference internal" href="../helpers/form_helper.html#validation_show_error" title="validation_show_error"><code class="xref php php-func docutils literal notranslate"><span class="pre">validation_show_error()</span></code></a>.
-These functions check the validation errors that are stored in the session.</p>
-<p>To store the validation errors in the session, you need to use <code class="docutils literal notranslate"><span class="pre">withInput()</span></code>
-with <a class="reference internal" href="../general/common_functions.html#redirect" title="redirect"><code class="xref php php-func docutils literal notranslate"><span class="pre">redirect()</span></code></a>:</p>
+<p>PHP shares nothing between requests. So when you redirect if a validation fails, there will be no validation errors in
+the redirected request because the validation has run in the previous request.</p>
+<p>In that case, you need to use the Form helper functions <a class="reference internal" href="../helpers/form_helper.html#validation_errors" title="validation_errors"><code class="xref php php-func docutils literal notranslate"><span class="pre">validation_errors()</span></code></a>,
+<a class="reference internal" href="../helpers/form_helper.html#validation_list_errors" title="validation_list_errors"><code class="xref php php-func docutils literal notranslate"><span class="pre">validation_list_errors()</span></code></a> and <a class="reference internal" href="../helpers/form_helper.html#validation_show_error" title="validation_show_error"><code class="xref php php-func docutils literal notranslate"><span class="pre">validation_show_error()</span></code></a>. These functions check the validation
+errors that are stored in the session.</p>
+<p>To store the validation errors in the session, you need to use <code class="docutils literal notranslate"><span class="pre">withInput()</span></code> with <a class="reference internal" href="../general/common_functions.html#redirect" title="redirect"><code class="xref php php-func docutils literal notranslate"><span class="pre">redirect()</span></code></a>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// In Controller.</span>
 <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validateData</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="nv">$rules</span><span class="p">))</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">back</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">withInput</span><span class="p">();</span>
@@ -1344,14 +1297,14 @@ with <a class="reference internal" href="../general/common_functions.html#redire
 </section>
 <section id="customizing-error-display">
 <span id="validation-customizing-error-display"></span><h2><a class="toc-backref" href="#id37" role="doc-backlink">Customizing Error Display</a><a class="headerlink" href="#customizing-error-display" title="Link to this heading"></a></h2>
-<p>When you call <code class="docutils literal notranslate"><span class="pre">$validation-&gt;listErrors()</span></code> or <code class="docutils literal notranslate"><span class="pre">$validation-&gt;showError()</span></code>, it loads a view file in the background
-that determines how the errors are displayed. By default, they display with a class of <code class="docutils literal notranslate"><span class="pre">errors</span></code> on the wrapping div.
-You can easily create new views and use them throughout your application.</p>
+<p>When you call <code class="docutils literal notranslate"><span class="pre">$validation-&gt;listErrors()</span></code> or <code class="docutils literal notranslate"><span class="pre">$validation-&gt;showError()</span></code>, it loads a view file in the background that
+determines how the errors are displayed. By default, they display with a class of <code class="docutils literal notranslate"><span class="pre">errors</span></code> on the wrapping div. You
+can easily create new views and use them throughout your application.</p>
 <section id="creating-the-views">
 <h3><a class="toc-backref" href="#id38" role="doc-backlink">Creating the Views</a><a class="headerlink" href="#creating-the-views" title="Link to this heading"></a></h3>
-<p>The first step is to create custom views. These can be placed anywhere that the <code class="docutils literal notranslate"><span class="pre">view()</span></code> method can locate them,
-which means the standard View directory, or any namespaced View folder will work. For example, you could create
-a new view at <strong>app/Views/_errors_list.php</strong>:</p>
+<p>The first step is to create custom views. These can be placed anywhere that the <code class="docutils literal notranslate"><span class="pre">view()</span></code> method can locate them, which
+means the standard View directory or any namespaced View folder will work. For example, you could create a new view at
+<strong>app/Views/_errors_list.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="k">empty</span><span class="p">(</span><span class="nv">$errors</span><span class="p">))</span><span class="o">:</span> <span class="cp">?&gt;</span>
     <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"alert alert-danger"</span> <span class="na">role</span><span class="o">=</span><span class="s">"alert"</span><span class="p">&gt;</span>
         <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
@@ -1363,26 +1316,27 @@ a new view at <strong>app/Views/_errors_list.php</strong>:</p>
 <span class="cp">&lt;?php</span> <span class="k">endif</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
-<p>An array named <code class="docutils literal notranslate"><span class="pre">$errors</span></code> is available within the view that contains a list of the errors, where the key is
-the name of the field that had the error, and the value is the error message, like this:</p>
+<p>An array named <code class="docutils literal notranslate"><span class="pre">$errors</span></code> is available within the view that contains a list of the errors, where the key is the name of
+the field that had the error, and the value is the error message, like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$errors</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">'username'</span> <span class="o">=&gt;</span> <span class="s1">'The username field must be unique.'</span><span class="p">,</span>
     <span class="s1">'email'</span>    <span class="o">=&gt;</span> <span class="s1">'You must provide a valid email address.'</span><span class="p">,</span>
 <span class="p">];</span>
 </pre></div>
 </div>
-<p>There are actually two types of views that you can create. The first has an array of all of the errors, and is what
-we just looked at. The other type is simpler, and only contains a single variable, <code class="docutils literal notranslate"><span class="pre">$error</span></code> that contains the
-error message. This is used with the <code class="docutils literal notranslate"><span class="pre">showError()</span></code> method where a field must be specified:</p>
+<p>There are actually two types of views that you can create. The first has an array of all of the errors, and is what we
+just looked at. The other type is simpler, and only contains a single variable, <code class="docutils literal notranslate"><span class="pre">$error</span></code>, that contains the error
+message. This is used with the <code class="docutils literal notranslate"><span class="pre">showError()</span></code> method where a field must be specified:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">span</span> <span class="nx">class</span><span class="o">=</span><span class="s2">"help-block"</span><span class="o">&gt;&lt;?=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$error</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 </section>
 <section id="configuration">
 <h3><a class="toc-backref" href="#id39" role="doc-backlink">Configuration</a><a class="headerlink" href="#configuration" title="Link to this heading"></a></h3>
-<p>Once you have your views created, you need to let the Validation library know about them. Open <strong>app/Config/Validation.php</strong>.
-Inside, you’ll find the <code class="docutils literal notranslate"><span class="pre">$templates</span></code> property where you can list as many custom views as you want, and provide a
-short alias they can be referenced by. If we were to add our example file from above, it would look something like:</p>
+<p>Once you have your views created, you need to let the Validation library know about them. Open
+<strong>app/Config/Validation.php</strong>. Inside, you’ll find the <code class="docutils literal notranslate"><span class="pre">$templates</span></code> property where you can list as many custom views
+as you want, and provide a short alias they can be referenced by. If we were to add our example file from above, it
+would look something like:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -1406,12 +1360,12 @@ short alias they can be referenced by. If we were to add our example file from a
 </section>
 <section id="specifying-the-template">
 <h3><a class="toc-backref" href="#id40" role="doc-backlink">Specifying the Template</a><a class="headerlink" href="#specifying-the-template" title="Link to this heading"></a></h3>
-<p>You can specify the template to use by passing it’s alias as the first parameter in <code class="docutils literal notranslate"><span class="pre">listErrors()</span></code>:</p>
+<p>You can specify the template to use by passing its alias as the first parameter in <code class="docutils literal notranslate"><span class="pre">listErrors()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">listErrors</span><span class="p">(</span><span class="s1">'my_list'</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
-<p>When showing field-specific errors, you can pass the alias as the second parameter to the <code class="docutils literal notranslate"><span class="pre">showError()</span></code> method,
-right after the name of the field the error should belong to:</p>
+<p>When showing field-specific errors, you can pass the alias as the second parameter to the <code class="docutils literal notranslate"><span class="pre">showError()</span></code> method, right
+after the name of the field the error should belong to:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">showError</span><span class="p">(</span><span class="s1">'username'</span><span class="p">,</span> <span class="s1">'my_single'</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
@@ -1422,11 +1376,10 @@ right after the name of the field the error should belong to:</p>
 <section id="using-rule-classes">
 <span id="validation-using-rule-classes"></span><h3><a class="toc-backref" href="#id42" role="doc-backlink">Using Rule Classes</a><a class="headerlink" href="#using-rule-classes" title="Link to this heading"></a></h3>
 <p>Rules are stored within simple, namespaced classes. They can be stored in any location you would like, as long as the
-autoloader can find it. These files are called RuleSets.</p>
+autoloader can find them. These files are called RuleSets.</p>
 <section id="adding-a-ruleset">
 <h4>Adding a RuleSet<a class="headerlink" href="#adding-a-ruleset" title="Link to this heading"></a></h4>
-<p>To add a new RuleSet, edit <strong>app/Config/Validation.php</strong> and
-add the new file to the <code class="docutils literal notranslate"><span class="pre">$ruleSets</span></code> array:</p>
+<p>To add a new RuleSet, edit <strong>app/Config/Validation.php</strong> and add the new file to the <code class="docutils literal notranslate"><span class="pre">$ruleSets</span></code> array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -1452,13 +1405,14 @@ add the new file to the <code class="docutils literal notranslate"><span class="
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>You can add it as either a simple string with the fully qualified class name, or using the <code class="docutils literal notranslate"><span class="pre">::class</span></code> suffix as
-shown above. The primary benefit of using the <code class="docutils literal notranslate"><span class="pre">::class</span></code> suffix is that it provides some extra navigation capabilities in more advanced IDEs.</p>
+<p>You can add it as either a simple string with the fully qualified class name, or using the <code class="docutils literal notranslate"><span class="pre">::class</span></code> suffix as shown
+above. The primary benefit of using the <code class="docutils literal notranslate"><span class="pre">::class</span></code> suffix is that it provides some extra navigation capabilities in
+more advanced IDEs.</p>
 </section>
 <section id="creating-a-rule-class">
 <h4>Creating a Rule Class<a class="headerlink" href="#creating-a-rule-class" title="Link to this heading"></a></h4>
-<p>Within the file itself, each method is a rule and must accept a value to validate as the first parameter, and must return
-a boolean true or false value signifying true if it passed the test or false if it did not:</p>
+<p>Within the file itself, each method is a rule and must accept a value to validate as the first parameter, and must
+return a boolean true or false value signifying true if it passed the test or false if it did not:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">class</span> <span class="nc">MyRules</span>
@@ -1471,11 +1425,11 @@ a boolean true or false value signifying true if it passed the test or false if 
 </pre></div>
 </div>
 <p>By default, the system will look within <strong>system/Language/en/Validation.php</strong> for the language strings used within
-errors. To provide default error messages for your custom rules, you may place them in <strong>app/Language/en/Validation.php</strong>
-(and/or corresponding folder of locale you use in place of <code class="docutils literal notranslate"><span class="pre">en</span></code>). Also, in case you want to use some other language
-string file in place of the default <strong>Validation.php</strong>, you may provide error messages by accepting an <code class="docutils literal notranslate"><span class="pre">&amp;$error</span></code>
-variable by reference in the second (or, in case your rule needs to work with parameters, as described below – the
-fourth) parameter:</p>
+errors. To provide default error messages for your custom rules, you may place them in
+<strong>app/Language/en/Validation.php</strong> (and/or the corresponding folder of the locale you use in place of <code class="docutils literal notranslate"><span class="pre">en</span></code>). Also, in
+case you want to use some other language string file in place of the default <strong>Validation.php</strong>, you may provide error
+messages by accepting an <code class="docutils literal notranslate"><span class="pre">&amp;$error</span></code> variable by reference in the second (or, in case your rule needs to work with
+parameters, as described below – the fourth) parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">class</span> <span class="nc">MyRules</span>
@@ -1509,18 +1463,17 @@ fourth) parameter:</p>
 <ol class="arabic simple">
 <li><p>the value to validate (<code class="docutils literal notranslate"><span class="pre">$value</span></code>)</p></li>
 <li><p>the parameter string (<code class="docutils literal notranslate"><span class="pre">$params</span></code>)</p></li>
-<li><p>an array with all of the data that was submitted the form (<code class="docutils literal notranslate"><span class="pre">$data</span></code>)</p></li>
+<li><p>an array with all of the data that was submitted with the form (<code class="docutils literal notranslate"><span class="pre">$data</span></code>)</p></li>
 <li><p>(optional) a custom error string (<code class="docutils literal notranslate"><span class="pre">&amp;$error</span></code>), just as described above.</p></li>
 </ol>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>The field values in <code class="docutils literal notranslate"><span class="pre">$data</span></code> are unvalidated (or may be invalid).
-Using unvalidated input data is a source of vulnerability. You must
-perform the necessary validation within your custom rules before using the
-data in <code class="docutils literal notranslate"><span class="pre">$data</span></code>.</p>
+<p>The field values in <code class="docutils literal notranslate"><span class="pre">$data</span></code> are unvalidated (or may be invalid). Using unvalidated input data is a source
+of vulnerability. You must perform the necessary validation within your custom rules before using the data in
+<code class="docutils literal notranslate"><span class="pre">$data</span></code>.</p>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">$data</span></code> array is especially handy
-for rules like <code class="docutils literal notranslate"><span class="pre">required_with</span></code> that needs to check the value of another submitted field to base its result on:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">$data</span></code> array is especially handy for rules like <code class="docutils literal notranslate"><span class="pre">required_with</span></code> that need to check the value of another
+submitted field to base its result on:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">class</span> <span class="nc">MyRules</span>
@@ -1565,8 +1518,8 @@ for rules like <code class="docutils literal notranslate"><span class="pre">requ
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 4.3.0.</span></p>
 </div>
-<p>If you only need the functionality of a custom rule once throughout your application,
-you may use a closure instead of a rule class.</p>
+<p>If you only need the functionality of a custom rule once throughout your application, you may use a closure instead of a
+rule class.</p>
 <p>You need to use an array for validation rules:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">(</span>
     <span class="p">[</span>
@@ -1589,9 +1542,8 @@ you may use a closure instead of a rule class.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>You must set the error message for the closure rule.
-When you specify the error message, set the array key for the closure rule.
-In the above code, the <code class="docutils literal notranslate"><span class="pre">required</span></code> rule has the key <code class="docutils literal notranslate"><span class="pre">0</span></code>, and the closure has <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
+<p>You must set the error message for the closure rule. When you specify the error message, set the array key for the
+closure rule. In the above code, the <code class="docutils literal notranslate"><span class="pre">required</span></code> rule has the key <code class="docutils literal notranslate"><span class="pre">0</span></code>, and the closure has <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
 <p>Or you can use the following parameters:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
     <span class="s1">'foo'</span> <span class="o">=&gt;</span> <span class="p">[</span>
@@ -1615,7 +1567,7 @@ In the above code, the <code class="docutils literal notranslate"><span class="p
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 4.5.0.</span></p>
 </div>
-<p>If you like to use an array callback as a rule, you may use it instead of a Closure Rule.</p>
+<p>If you would like to use an array callback as a rule, you may use it instead of a Closure Rule.</p>
 <p>You need to use an array for validation rules:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
 
@@ -1658,9 +1610,8 @@ In the above code, the <code class="docutils literal notranslate"><span class="p
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>You must set the error message for the callable rule.
-When you specify the error message, set the array key for the callable rule.
-In the above code, the <code class="docutils literal notranslate"><span class="pre">required</span></code> rule has the key <code class="docutils literal notranslate"><span class="pre">0</span></code>, and the callable has <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
+<p>You must set the error message for the callable rule. When you specify the error message, set the array key for the
+callable rule. In the above code, the <code class="docutils literal notranslate"><span class="pre">required</span></code> rule has the key <code class="docutils literal notranslate"><span class="pre">0</span></code>, and the callable has <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
 <p>Or you can use the following parameters:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
 
@@ -1690,8 +1641,8 @@ In the above code, the <code class="docutils literal notranslate"><span class="p
 <span id="validation-available-rules"></span><h2><a class="toc-backref" href="#id45" role="doc-backlink">Available Rules</a><a class="headerlink" href="#available-rules" title="Link to this heading"></a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Rule is a string; there must be <strong>no spaces</strong> between the parameters, especially the <code class="docutils literal notranslate"><span class="pre">is_unique</span></code> rule.
-There can be no spaces before and after <code class="docutils literal notranslate"><span class="pre">ignore_value</span></code>.</p>
+<p>A rule is a string, so there must be <strong>no spaces</strong> between the parameters, especially for the <code class="docutils literal notranslate"><span class="pre">is_unique</span></code>
+rule. There can be no spaces before and after <code class="docutils literal notranslate"><span class="pre">ignore_value</span></code>.</p>
 </div>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// is_unique[table.field,ignore_field,ignore_value]</span>
 
@@ -1739,7 +1690,7 @@ alphanumeric characters in ASCII or is empty.</p></td>
 <tr class="row-odd"><td><p>alpha_numeric_punct</p></td>
 <td><p>No</p></td>
 <td><p>Fails if field contains anything other than
-alphanumeric, space, this limited set of
+alphanumeric, space, or this limited set of
 punctuation characters: <code class="docutils literal notranslate"><span class="pre">~</span></code> (tilde),
 <code class="docutils literal notranslate"><span class="pre">!</span></code> (exclamation), <code class="docutils literal notranslate"><span class="pre">#</span></code> (number),
 <code class="docutils literal notranslate"><span class="pre">$</span></code> (dollar), <code class="docutils literal notranslate"><span class="pre">%</span></code> (percent),
@@ -1830,8 +1781,8 @@ an integer.</p></td>
 <tr class="row-even"><td><p>is_natural</p></td>
 <td><p>No</p></td>
 <td><p>Fails if field contains anything other than
-a natural number: <code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">3</span></code>
-, etc.</p></td>
+a natural number: <code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">2</span></code>,
+<code class="docutils literal notranslate"><span class="pre">3</span></code>, etc.</p></td>
 <td></td>
 </tr>
 <tr class="row-odd"><td><p>is_natural_no_zero</p></td>
@@ -1845,7 +1796,7 @@ a natural number, except zero: <code class="docutils literal notranslate"><span 
 <td><p>Yes</p></td>
 <td><p>Checks the database to see if the given value
 exists. Can ignore records by field/value to
-filter (currently accept only one filter).
+filter (currently accepts only one filter).
 (Since v4.6.0, you can optionally pass
 the dbGroup as a parameter)</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">is_not_unique[table.field,where_field,where_value]</span></code> or <code class="docutils literal notranslate"><span class="pre">is_not_unique[dbGroup.table.field,where_field,where_value]</span></code></p></td>
@@ -1958,10 +1909,10 @@ valid Base64 characters.</p></td>
 <td><p>Yes</p></td>
 <td><p>Verifies that the credit card number matches
 the format used by the specified provider.
-Current supported providers are:
+Currently supported providers are:
 American Express (<code class="docutils literal notranslate"><span class="pre">amex</span></code>),
 China Unionpay (<code class="docutils literal notranslate"><span class="pre">unionpay</span></code>),
-Diners Club CarteBlance (<code class="docutils literal notranslate"><span class="pre">carteblanche</span></code>),
+Diners Club Carte Blanche (<code class="docutils literal notranslate"><span class="pre">carteblanche</span></code>),
 Diners Club (<code class="docutils literal notranslate"><span class="pre">dinersclub</span></code>),
 Discover Card (<code class="docutils literal notranslate"><span class="pre">discover</span></code>),
 Interpayment (<code class="docutils literal notranslate"><span class="pre">interpayment</span></code>),
@@ -1996,8 +1947,8 @@ email address.</p></td>
 </tr>
 <tr class="row-even"><td><p>valid_emails</p></td>
 <td><p>No</p></td>
-<td><p>Fails if any value provided in a comma
-separated list is not a valid email.</p></td>
+<td><p>Fails if any value provided in a
+comma-separated list is not a valid email.</p></td>
 <td></td>
 </tr>
 <tr class="row-odd"><td><p>valid_ip</p></td>
@@ -2026,7 +1977,7 @@ be used.</strong></p></td>
 <td><p>Yes</p></td>
 <td><p>Fails if field does not contain a valid URL.
 You can optionally specify a list of valid
-schemas. If not specified, <code class="docutils literal notranslate"><span class="pre">http,https</span></code>
+schemes. If not specified, <code class="docutils literal notranslate"><span class="pre">http,https</span></code>
 are valid. This rule uses PHP’s
 <code class="docutils literal notranslate"><span class="pre">FILTER_VALIDATE_URL</span></code>.</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">valid_url_strict[https]</span></code></p></td>
@@ -2035,8 +1986,8 @@ are valid. This rule uses PHP’s
 </table>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You can also use any native PHP functions that return boolean and
-permit at least one parameter, the field data to validate.</p>
+<p>You can also use any native PHP functions that return boolean and permit at least one parameter, the field
+data to validate.</p>
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
@@ -2045,18 +1996,16 @@ permit at least one parameter, the field data to validate.</p>
 </section>
 <section id="rules-for-file-uploads">
 <span id="id4"></span><h3><a class="toc-backref" href="#id47" role="doc-backlink">Rules for File Uploads</a><a class="headerlink" href="#rules-for-file-uploads" title="Link to this heading"></a></h3>
-<p>When you validate uploaded files, you must use the rules specifically created for
-file validation.</p>
+<p>When you validate uploaded files, you must use the rules specifically created for file validation.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>Only rules that are listed in the table below can be used to validate
-files. Therefore, adding any general rules, like <code class="docutils literal notranslate"><span class="pre">permit_empty</span></code>, to file
-validation rules array or string, the file validation will not work correctly.</p>
+<p>Only rules that are listed in the table below can be used to validate files. Therefore, if you add any
+general rules, like <code class="docutils literal notranslate"><span class="pre">permit_empty</span></code>, to a file validation rules array or string, the file validation will not work
+correctly.</p>
 </div>
-<p>Since the value of a file upload HTML field doesn’t exist, and is stored in the
-<code class="docutils literal notranslate"><span class="pre">$_FILES</span></code> global, the name of the input field will need to be used twice. Once
-to specify the field name as you would for any other rule, but again as the first
-parameter of all file upload related rules:</p>
+<p>Since the value of a file upload HTML field doesn’t exist, and is stored in the <code class="docutils literal notranslate"><span class="pre">$_FILES</span></code> global, the name of the
+input field will need to be used twice: once to specify the field name as you would for any other rule, and again as the
+first parameter of all file-upload-related rules:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// In the HTML</span>
 <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"file"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"avatar"</span><span class="o">&gt;</span>
 
@@ -2088,16 +2037,16 @@ If you want the file upload to be optional
 <td><p>Yes</p></td>
 <td><p>Fails if the uploaded file is larger
 than the second parameter
-in kilobytes (kb). Or if the file
-is larger than allowed maximum size declared
-in php.ini config file -
-<code class="docutils literal notranslate"><span class="pre">upload_max_filesize</span></code> directive.</p></td>
+in kilobytes (kb), or if the file
+is larger than the allowed maximum size
+declared in the php.ini config file
+(<code class="docutils literal notranslate"><span class="pre">upload_max_filesize</span></code> directive).</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">max_size[field_name,2048]</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>max_dims</p></td>
 <td><p>Yes</p></td>
 <td><p>Fails if the maximum width and height of an
-uploaded image exceed values. The first
+uploaded image exceed the values. The first
 parameter is the field name. The second is
 the width, and the third is the height. Will
 also fail if the file cannot be determined
@@ -2108,7 +2057,7 @@ error other than <code class="docutils literal notranslate"><span class="pre">UP
 <tr class="row-odd"><td><p>min_dims</p></td>
 <td><p>Yes</p></td>
 <td><p>Fails if the minimum width and height of an
-uploaded image not meet values. The first
+uploaded image do not meet values. The first
 parameter is the field name. The second is
 the width, and the third is the height. Will
 also fail if the file cannot be determined
@@ -2140,7 +2089,7 @@ an image based on the mime type.</p></td>
 </tr>
 </tbody>
 </table>
-<p>The file validation rules apply for both single and multiple file uploads.</p>
+<p>The file validation rules apply to both single and multiple file uploads.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">is_image</span></code>, <code class="docutils literal notranslate"><span class="pre">mime_in</span></code>, and <code class="docutils literal notranslate"><span class="pre">ext_in</span></code> rules check the uploaded file and its client filename, but they cannot
 guarantee that a web server will not execute a file saved under that name. See <a class="reference internal" href="uploaded_files.html#uploaded-files-moving-files"><span class="std std-ref">Moving Files</span></a> for
 safe storage practices.</p>
@@ -2160,7 +2109,7 @@ safe storage practices.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

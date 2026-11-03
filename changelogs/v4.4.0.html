@@ -364,32 +364,26 @@ or more was specified. See <a class="reference internal" href="../installation/u
 <a class="reference internal" href="../concepts/factories.html#factories-passing-classname-without-namespace"><span class="std std-ref">a classname without a namespace</span></a>.</p>
 <p>For example, when you call <code class="docutils literal notranslate"><span class="pre">model(\Myth\Auth\Models\UserModel::class)</span></code> or
 <code class="docutils literal notranslate"><span class="pre">model('Myth\Auth\Models\UserModel')</span></code>:</p>
-<blockquote>
-<div><ul>
+<ul class="simple">
 <li><p>before:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>returns <code class="docutils literal notranslate"><span class="pre">App\Models\UserModel</span></code> if exists and <code class="docutils literal notranslate"><span class="pre">preferApp</span></code> is true (default)</p></li>
-<li><p>returns <code class="docutils literal notranslate"><span class="pre">Myth\Auth\Models\UserModel</span></code> if exists and <code class="docutils literal notranslate"><span class="pre">preferApp</span></code> is false</p></li>
+<ul>
+<li><p>returns <code class="docutils literal notranslate"><span class="pre">App\Models\UserModel</span></code> if it exists and <code class="docutils literal notranslate"><span class="pre">preferApp</span></code> is true (default)</p></li>
+<li><p>returns <code class="docutils literal notranslate"><span class="pre">Myth\Auth\Models\UserModel</span></code> if it exists and <code class="docutils literal notranslate"><span class="pre">preferApp</span></code> is false</p></li>
 </ul>
-</div></blockquote>
 </li>
 <li><p>after:</p>
-<blockquote>
-<div><ul class="simple">
+<ul>
 <li><p>returns <code class="docutils literal notranslate"><span class="pre">Myth\Auth\Models\UserModel</span></code> even if <code class="docutils literal notranslate"><span class="pre">preferApp</span></code> is true (default)</p></li>
-<li><p>returns <code class="docutils literal notranslate"><span class="pre">App\Models\UserModel</span></code> if you define <code class="docutils literal notranslate"><span class="pre">Factories::define('models',</span> <span class="pre">'Myth\Auth\Models\UserModel',</span> <span class="pre">'App\Models\UserModel')</span></code> before calling the <code class="docutils literal notranslate"><span class="pre">model()</span></code></p></li>
+<li><p>returns <code class="docutils literal notranslate"><span class="pre">App\Models\UserModel</span></code> if you define <code class="docutils literal notranslate"><span class="pre">Factories::define('models',</span> <span class="pre">'Myth\Auth\Models\UserModel',</span> <span class="pre">'App\Models\UserModel')</span></code> before calling <code class="docutils literal notranslate"><span class="pre">model()</span></code></p></li>
 </ul>
-</div></blockquote>
 </li>
 </ul>
-</div></blockquote>
 <p>If you had passed a non-existent classname by mistake, the previous version
 would have returned a class instance in the <code class="docutils literal notranslate"><span class="pre">App</span></code> or <code class="docutils literal notranslate"><span class="pre">Config</span></code> namespace
 because of the <code class="docutils literal notranslate"><span class="pre">preferApp</span></code> feature.</p>
 <p>For example, in a controller (<code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Controllers</span></code>), if you called
 <code class="docutils literal notranslate"><span class="pre">config(Config\App::class)</span></code> by mistake (note the class is missing the leading <code class="docutils literal notranslate"><span class="pre">\</span></code>),
-meaning you actually passed <code class="docutils literal notranslate"><span class="pre">App\Controllers\Config\App</span></code>.
+you actually passed <code class="docutils literal notranslate"><span class="pre">App\Controllers\Config\App</span></code>.
 But that class does not exist, so now Factories will return <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
 </section>
 <section id="property-name">
@@ -399,13 +393,13 @@ But that class does not exist, so now Factories will return <code class="docutil
 </section>
 <section id="autoloader">
 <h4><a class="toc-backref" href="#id6" role="doc-backlink">Autoloader</a><a class="headerlink" href="#autoloader" title="Link to this heading"></a></h4>
-<p>Previously, CodeIgniter’s autoloader allowed loading class names ending with the <cite>.php</cite> extension. This means instantiating objects like <cite>new Foo.php()</cite> was possible
-and would instantiate as <cite>new Foo()</cite>. Since <cite>Foo.php</cite> is an invalid class name, this behavior of the autoloader is changed. Now, instantiating such classes would fail.</p>
+<p>Previously, CodeIgniter’s autoloader stripped <code class="docutils literal notranslate"><span class="pre">.php</span></code> from names passed to <code class="docutils literal notranslate"><span class="pre">loadClass()</span></code> before looking up a class file.
+Since v4.4.0, this normalization has been removed. Pass the class name without a <code class="docutils literal notranslate"><span class="pre">.php</span></code> extension.</p>
 </section>
 <section id="codeigniter-and-exit">
 <span id="v440-codeigniter-and-exit"></span><h4><a class="toc-backref" href="#id7" role="doc-backlink">CodeIgniter and exit()</a><a class="headerlink" href="#codeigniter-and-exit" title="Link to this heading"></a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">CodeIgniter::run()</span></code> method no longer calls <code class="docutils literal notranslate"><span class="pre">exit(EXIT_SUCCESS)</span></code>. The
-exit call is moved to <strong>public/index.php</strong>.</p>
+exit call has been moved to <strong>public/index.php</strong>.</p>
 </section>
 <section id="site-uri-changes">
 <span id="v440-site-uri-changes"></span><h4><a class="toc-backref" href="#id8" role="doc-backlink">Site URI Changes</a><a class="headerlink" href="#site-uri-changes" title="Link to this heading"></a></h4>
@@ -416,7 +410,7 @@ Also, <a class="reference internal" href="../helpers/url_helper.html#site_url" t
 use the SiteURI internally.</p>
 <section id="getpath">
 <h5>getPath()<a class="headerlink" href="#getpath" title="Link to this heading"></a></h5>
-<p>The <code class="docutils literal notranslate"><span class="pre">getPath()</span></code> method now always returns the full URI path with leading <code class="docutils literal notranslate"><span class="pre">/</span></code>.
+<p>The <code class="docutils literal notranslate"><span class="pre">getPath()</span></code> method now always returns the full URI path with a leading <code class="docutils literal notranslate"><span class="pre">/</span></code>.
 Therefore, when your baseURL has sub-directories and you want to get the relative
 path to baseURL, you must use the new <code class="docutils literal notranslate"><span class="pre">getRoutePath()</span></code> method instead.</p>
 <p>For example:</p>
@@ -459,26 +453,22 @@ and require no intervention.</p>
 <section id="parameter-type-changes">
 <span id="v440-parameter-type-changes"></span><h4><a class="toc-backref" href="#id11" role="doc-backlink">Parameter Type Changes</a><a class="headerlink" href="#parameter-type-changes" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><dl class="simple">
-<dt><strong>Services:</strong></dt><dd><ul>
+<li><p><strong>Services:</strong></p>
+<ul>
 <li><p>The first parameter of <code class="docutils literal notranslate"><span class="pre">Services::security()</span></code> has been changed from
 <code class="docutils literal notranslate"><span class="pre">Config\App</span></code> to <code class="docutils literal notranslate"><span class="pre">Config\Security</span></code>.</p></li>
 <li><p>The first parameter of <code class="docutils literal notranslate"><span class="pre">Services::session()</span></code> has been changed from
 <code class="docutils literal notranslate"><span class="pre">Config\App</span></code> to <code class="docutils literal notranslate"><span class="pre">Config\Session</span></code>.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
-<li><dl class="simple">
-<dt><strong>Session:</strong></dt><dd><ul>
+<li><p><strong>Session:</strong></p>
+<ul>
 <li><p>The second parameter of <code class="docutils literal notranslate"><span class="pre">Session::__construct()</span></code> has been changed from
 <code class="docutils literal notranslate"><span class="pre">Config\App</span></code> to <code class="docutils literal notranslate"><span class="pre">Config\Session</span></code>.</p></li>
 <li><p>The first parameter of <code class="docutils literal notranslate"><span class="pre">__construct()</span></code> in the database’s <code class="docutils literal notranslate"><span class="pre">BaseHandler</span></code>,
 <code class="docutils literal notranslate"><span class="pre">DatabaseHandler</span></code>, <code class="docutils literal notranslate"><span class="pre">FileHandler</span></code>, <code class="docutils literal notranslate"><span class="pre">MemcachedHandler</span></code>, and <code class="docutils literal notranslate"><span class="pre">RedisHandler</span></code>
 has been changed from <code class="docutils literal notranslate"><span class="pre">Config\App</span></code> to <code class="docutils literal notranslate"><span class="pre">Config\Session</span></code>.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
 <li><p><strong>Security:</strong> The first parameter of <code class="docutils literal notranslate"><span class="pre">Security::__construct()</span></code> has been
 changed from <code class="docutils literal notranslate"><span class="pre">Config\App</span></code> to <code class="docutils literal notranslate"><span class="pre">Config\Security</span></code>.</p></li>
@@ -486,16 +476,14 @@ changed from <code class="docutils literal notranslate"><span class="pre">Config
 The <code class="docutils literal notranslate"><span class="pre">string</span></code> typehint on the <code class="docutils literal notranslate"><span class="pre">$rule</span></code> parameter was removed.</p></li>
 <li><p><strong>CodeIgniter:</strong> The method signature of <code class="docutils literal notranslate"><span class="pre">CodeIgniter::setRequest()</span></code> has been
 changed. The <code class="docutils literal notranslate"><span class="pre">Request</span></code> typehint on the <code class="docutils literal notranslate"><span class="pre">$request</span></code> parameter was removed.</p></li>
-<li><dl class="simple">
-<dt><strong>FeatureTestCase:</strong></dt><dd><ul>
+<li><p><strong>FeatureTestCase:</strong></p>
+<ul>
 <li><p>The method signature of <code class="docutils literal notranslate"><span class="pre">FeatureTestCase::populateGlobals()</span></code> has been
 changed. The <code class="docutils literal notranslate"><span class="pre">Request</span></code> typehint on the <code class="docutils literal notranslate"><span class="pre">$request</span></code> parameter was removed.</p></li>
 <li><p>The method signature of <code class="docutils literal notranslate"><span class="pre">FeatureTestCase::setRequestBody()</span></code> has been
 changed. The <code class="docutils literal notranslate"><span class="pre">Request</span></code> typehint on the <code class="docutils literal notranslate"><span class="pre">$request</span></code> parameter and the
 return type <code class="docutils literal notranslate"><span class="pre">Request</span></code> were removed.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
 </ul>
 </section>
@@ -518,8 +506,8 @@ return type <code class="docutils literal notranslate"><span class="pre">Request
 <section id="return-type-changes">
 <h4><a class="toc-backref" href="#id14" role="doc-backlink">Return Type Changes</a><a class="headerlink" href="#return-type-changes" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p><strong>Autoloader:</strong> The return signatures of the <cite>loadClass</cite> and <cite>loadClassmap</cite> methods are made <cite>void</cite>
-to be compatible as callbacks in <cite>spl_autoload_register</cite> and <cite>spl_autoload_unregister</cite> functions.</p></li>
+<li><p><strong>Autoloader:</strong> The return signatures of the <code class="docutils literal notranslate"><span class="pre">loadClass</span></code> and <code class="docutils literal notranslate"><span class="pre">loadClassmap</span></code> methods are made <code class="docutils literal notranslate"><span class="pre">void</span></code>
+to be compatible as callbacks in the <code class="docutils literal notranslate"><span class="pre">spl_autoload_register</span></code> and <code class="docutils literal notranslate"><span class="pre">spl_autoload_unregister</span></code> functions.</p></li>
 </ul>
 </section>
 </section>
@@ -529,13 +517,12 @@ to be compatible as callbacks in <cite>spl_autoload_register</cite> and <cite>sp
 <section id="commands">
 <h3><a class="toc-backref" href="#id16" role="doc-backlink">Commands</a><a class="headerlink" href="#commands" title="Link to this heading"></a></h3>
 <ul>
-<li><dl>
-<dt><strong>spark routes:</strong></dt><dd><ul>
+<li><p><strong>spark routes:</strong></p>
+<ul>
 <li><p>Now you can specify the host in the request URL.
 See <a class="reference internal" href="../incoming/routing.html#routing-spark-routes-specify-host"><span class="std std-ref">Specify Host</span></a>.</p></li>
 <li><p>It shows view files of <a class="reference internal" href="../incoming/routing.html#view-routes"><span class="std std-ref">View Routes</span></a> in <em>Handler</em> like the following:</p>
-<blockquote>
-<div><table class="docutils align-default">
+<table class="docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p>Method</p></td>
 <td><p>Route</p></td>
@@ -553,26 +540,21 @@ See <a class="reference internal" href="../incoming/routing.html#routing-spark-r
 </tr>
 </tbody>
 </table>
-</div></blockquote>
 </li>
 </ul>
-</dd>
-</dl>
 </li>
 </ul>
 </section>
 <section id="testing">
 <h3><a class="toc-backref" href="#id17" role="doc-backlink">Testing</a><a class="headerlink" href="#testing" title="Link to this heading"></a></h3>
 <ul class="simple">
-<li><dl class="simple">
-<dt><strong>DebugBar:</strong></dt><dd><ul>
+<li><p><strong>DebugBar:</strong></p>
+<ul>
 <li><p>The Debug Toolbar now has a new “Hot Reload” feature that can be used to
 automatically reload the page when a file is changed.
 See <a class="reference internal" href="../testing/debugging.html#debug-toolbar-hot-reload"><span class="std std-ref">Hot Reloading</span></a>.</p></li>
 <li><p>Now <a class="reference internal" href="../incoming/routing.html#view-routes"><span class="std std-ref">View Routes</span></a> are displayed in <em>DEFINED ROUTES</em> on the <em>Routes</em> tab.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
 </ul>
 </section>
@@ -587,7 +569,7 @@ See <a class="reference internal" href="../database/configuration.html#database-
 <section id="model">
 <h3><a class="toc-backref" href="#id19" role="doc-backlink">Model</a><a class="headerlink" href="#model" title="Link to this heading"></a></h3>
 <ul class="simple">
-<li><p>Added special getter/setter to Entity to avoid method name conflicts.
+<li><p>Added a special getter/setter to Entity to avoid method name conflicts.
 See <a class="reference internal" href="../models/entities.html#entities-special-getter-setter"><span class="std std-ref">Special Getter/Setter</span></a>.</p></li>
 </ul>
 </section>
@@ -598,7 +580,7 @@ See <a class="reference internal" href="../models/entities.html#entities-special
 the actual validated data. See <a class="reference internal" href="../libraries/validation.html#validation-getting-validated-data"><span class="std std-ref">Getting Validated Data</span></a> for details.</p></li>
 <li><p><strong>Images:</strong> The option <code class="docutils literal notranslate"><span class="pre">$quality</span></code> can now be used to compress WebP images.</p></li>
 <li><p><strong>Uploaded Files:</strong> Added <code class="docutils literal notranslate"><span class="pre">UploadedFiles::getClientPath()</span></code> method that returns
-the value of the <cite>full_path</cite> index of the file if it was uploaded via directory upload.</p></li>
+the value of the <code class="docutils literal notranslate"><span class="pre">full_path</span></code> index of the file if it was uploaded via directory upload.</p></li>
 <li><p><strong>CURLRequest:</strong> Added a request option <code class="docutils literal notranslate"><span class="pre">proxy</span></code>. See
 <a class="reference internal" href="../libraries/curlrequest.html#curlrequest-request-options-proxy"><span class="std std-ref">CURLRequest Class</span></a>.</p></li>
 <li><p><strong>URI:</strong> A new <code class="docutils literal notranslate"><span class="pre">SiteURI</span></code> class that extends <code class="docutils literal notranslate"><span class="pre">URI</span></code> and represents the site
@@ -619,9 +601,9 @@ values together. Supports dot-notation syntax.</p></li>
 <li><p><strong>DownloadResponse:</strong> Added <code class="docutils literal notranslate"><span class="pre">DownloadResponse::inline()</span></code> method that sets
 the <code class="docutils literal notranslate"><span class="pre">Content-Disposition:</span> <span class="pre">inline</span></code> header to display the file in the browser.
 See <a class="reference internal" href="../outgoing/response.html#open-file-in-browser"><span class="std std-ref">Open File in Browser</span></a> for details.</p></li>
-<li><p><strong>View:</strong> Added optional 2nd parameter <code class="docutils literal notranslate"><span class="pre">$saveData</span></code> on <code class="docutils literal notranslate"><span class="pre">renderSection()</span></code> to prevent from auto cleans the data after displaying. See <a class="reference internal" href="../outgoing/view_layouts.html#creating-a-layout"><span class="std std-ref">View Layouts</span></a> for details.</p></li>
-<li><dl class="simple">
-<dt><strong>Auto Routing (Improved)</strong>:</dt><dd><ul>
+<li><p><strong>View:</strong> Added an optional 2nd parameter <code class="docutils literal notranslate"><span class="pre">$saveData</span></code> to <code class="docutils literal notranslate"><span class="pre">renderSection()</span></code> to prevent the data from being automatically cleaned after it is displayed. See <a class="reference internal" href="../outgoing/view_layouts.html#creating-a-layout"><span class="std std-ref">View Layouts</span></a> for details.</p></li>
+<li><p><strong>Auto Routing (Improved)</strong>:</p>
+<ul>
 <li><p>Now you can route to Modules. See <a class="reference internal" href="../incoming/auto_routing_improved.html#auto-routing-improved-module-routing"><span class="std std-ref">Module Routing</span></a>
 for details.</p></li>
 <li><p>If a controller is found that corresponds to a URI segment and that controller
@@ -629,29 +611,23 @@ does not have a method defined for the URI segment, the default method will
 now be executed. This addition allows for more flexible handling of URIs in
 auto routing. See <a class="reference internal" href="../incoming/auto_routing_improved.html#auto-routing-improved-default-method-fallback"><span class="std std-ref">Default Method Fallback</span></a> for details.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
 <li><p><strong>Filters:</strong> Now you can use Filter Arguments with <a class="reference internal" href="../incoming/filters.html#filters-filters-filter-arguments"><span class="std std-ref">$filters property</span></a>.</p></li>
 <li><p><strong>Request:</strong> Added <code class="docutils literal notranslate"><span class="pre">IncomingRequest::setValidLocales()</span></code> method to set valid locales.</p></li>
 <li><p><strong>Table:</strong> Added <code class="docutils literal notranslate"><span class="pre">Table::setSyncRowsWithHeading()</span></code> method to synchronize row columns with headings. See <a class="reference internal" href="../outgoing/table.html#table-sync-rows-with-headings"><span class="std std-ref">Synchronizing Rows with Headings</span></a> for details.</p></li>
 <li><p><strong>Error Handling:</strong> Now you can use <a class="reference internal" href="../general/errors.html#custom-exception-handlers"><span class="std std-ref">Custom Exception Handlers</span></a>.</p></li>
-<li><dl class="simple">
-<dt><strong>RedirectException:</strong></dt><dd><ul>
+<li><p><strong>RedirectException:</strong></p>
+<ul>
 <li><p>It can also take an object that implements <code class="docutils literal notranslate"><span class="pre">ResponseInterface</span></code> as its first argument.</p></li>
 <li><p>It implements <code class="docutils literal notranslate"><span class="pre">ResponsableInterface</span></code>.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
-<li><dl class="simple">
-<dt><strong>Factories:</strong></dt><dd><ul>
+<li><p><strong>Factories:</strong></p>
+<ul>
 <li><p>You can now define the classname that will actually be loaded.
 See <a class="reference internal" href="../concepts/factories.html#factories-defining-classname-to-be-loaded"><span class="std std-ref">Defining Classname to be Loaded</span></a>.</p></li>
 <li><p>Config Caching implemented. See <a class="reference internal" href="../concepts/factories.html#factories-config-caching"><span class="std std-ref">Config Caching</span></a> for details.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
 </ul>
 </section>
@@ -667,31 +643,27 @@ See <a class="reference internal" href="../concepts/factories.html#factories-def
 <h2><a class="toc-backref" href="#id24" role="doc-backlink">Changes</a><a class="headerlink" href="#changes" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p><strong>Images:</strong> The default quality for WebP in <code class="docutils literal notranslate"><span class="pre">GDHandler</span></code> has been changed from 80 to 90.</p></li>
-<li><dl class="simple">
-<dt><strong>Config:</strong></dt><dd><ul>
-<li><p>The deprecated Cookie items in <strong>app/Config/App.php</strong> has been removed.</p></li>
-<li><p>The deprecated Session items in <strong>app/Config/App.php</strong> has been removed.</p></li>
-<li><p>The deprecated CSRF items in <strong>app/Config/App.php</strong> has been removed.</p></li>
-<li><p>Routing settings have been moved to <strong>app/Config/Routing.php</strong> config file.
+<li><p><strong>Config:</strong></p>
+<ul>
+<li><p>The deprecated Cookie items in <strong>app/Config/App.php</strong> have been removed.</p></li>
+<li><p>The deprecated Session items in <strong>app/Config/App.php</strong> have been removed.</p></li>
+<li><p>The deprecated CSRF items in <strong>app/Config/App.php</strong> have been removed.</p></li>
+<li><p>Routing settings have been moved to the <strong>app/Config/Routing.php</strong> config file.
 See <a class="reference internal" href="../installation/upgrade_440.html#upgrade-440-config-routing"><span class="std std-ref">Upgrading Guide</span></a>.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
-<li><p><strong>DownloadResponse:</strong> When generating response headers, does not replace the <code class="docutils literal notranslate"><span class="pre">Content-Disposition</span></code> header if it was previously specified.</p></li>
-<li><dl class="simple">
-<dt><strong>Autoloader:</strong></dt><dd><ul>
-<li><p>Before v4.4.0, CodeIgniter autoloader did not allow special
+<li><p><strong>DownloadResponse:</strong> When generating response headers, it does not replace the <code class="docutils literal notranslate"><span class="pre">Content-Disposition</span></code> header if it was previously specified.</p></li>
+<li><p><strong>Autoloader:</strong></p>
+<ul>
+<li><p>Before v4.4.0, the CodeIgniter autoloader did not allow special
 characters that are illegal in filenames on certain operating systems.
 The symbols that can be used are <code class="docutils literal notranslate"><span class="pre">/</span></code>, <code class="docutils literal notranslate"><span class="pre">_</span></code>, <code class="docutils literal notranslate"><span class="pre">.</span></code>, <code class="docutils literal notranslate"><span class="pre">:</span></code>, <code class="docutils literal notranslate"><span class="pre">\</span></code> and space.
-So if you installed CodeIgniter under the folder that contains the special
+So if you installed CodeIgniter under a folder that contains special
 characters like <code class="docutils literal notranslate"><span class="pre">(</span></code>, <code class="docutils literal notranslate"><span class="pre">)</span></code>, etc., CodeIgniter didn’t work. Since v4.4.0,
 this restriction has been removed.</p></li>
 <li><p>The methods <code class="docutils literal notranslate"><span class="pre">Autoloader::loadClass()</span></code> and <code class="docutils literal notranslate"><span class="pre">Autoloader::loadClassmap()</span></code> are now both
 marked <code class="docutils literal notranslate"><span class="pre">&#64;internal</span></code>.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
 <li><p><strong>RouteCollection:</strong> The array structure of the protected property <code class="docutils literal notranslate"><span class="pre">$routes</span></code>
 has been modified for performance.</p></li>
@@ -706,11 +678,11 @@ In previous versions, it was 302.</p></li>
 <ul class="simple">
 <li><p><strong>Entity:</strong> <code class="docutils literal notranslate"><span class="pre">Entity::setAttributes()</span></code> is deprecated. Use <code class="docutils literal notranslate"><span class="pre">Entity::injectRawData()</span></code> instead.</p></li>
 <li><p><strong>Error Handling:</strong> Many methods and properties in <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Debug\Exceptions</span></code>
-are deprecated. Because these methods have been moved to <code class="docutils literal notranslate"><span class="pre">BaseExceptionHandler</span></code> or
+are deprecated, because these methods have been moved to <code class="docutils literal notranslate"><span class="pre">BaseExceptionHandler</span></code> or
 <code class="docutils literal notranslate"><span class="pre">ExceptionHandler</span></code>.</p></li>
 <li><p><strong>Autoloader:</strong> <code class="docutils literal notranslate"><span class="pre">Autoloader::sanitizeFilename()</span></code> is deprecated.</p></li>
-<li><dl class="simple">
-<dt><strong>CodeIgniter:</strong></dt><dd><ul>
+<li><p><strong>CodeIgniter:</strong></p>
+<ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter::$returnResponse</span></code> property is deprecated. No longer used.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter::$cacheTTL</span></code> property is deprecated. No longer used. Use <code class="docutils literal notranslate"><span class="pre">ResponseCache</span></code> instead.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter::cache()</span></code> method is deprecated. No longer used. Use <code class="docutils literal notranslate"><span class="pre">ResponseCache</span></code> instead.</p></li>
@@ -718,31 +690,27 @@ are deprecated. Because these methods have been moved to <code class="docutils l
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter::generateCacheName()</span></code> method is deprecated. No longer used. Use <code class="docutils literal notranslate"><span class="pre">ResponseCache</span></code> instead.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter::callExit()</span></code> method is deprecated. No longer used.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
 <li><p><strong>RedirectException:</strong> <code class="docutils literal notranslate"><span class="pre">\CodeIgniter\Router\Exceptions\RedirectException</span></code> is deprecated. Use <code class="docutils literal notranslate"><span class="pre">\CodeIgniter\HTTP\Exceptions\RedirectException</span></code> instead.</p></li>
-<li><p><strong>Session:</strong> The property <code class="docutils literal notranslate"><span class="pre">$sessionDriverName</span></code>, <code class="docutils literal notranslate"><span class="pre">$sessionCookieName</span></code>,
+<li><p><strong>Session:</strong> The properties <code class="docutils literal notranslate"><span class="pre">$sessionDriverName</span></code>, <code class="docutils literal notranslate"><span class="pre">$sessionCookieName</span></code>,
 <code class="docutils literal notranslate"><span class="pre">$sessionExpiration</span></code>, <code class="docutils literal notranslate"><span class="pre">$sessionSavePath</span></code>, <code class="docutils literal notranslate"><span class="pre">$sessionMatchIP</span></code>,
 <code class="docutils literal notranslate"><span class="pre">$sessionTimeToUpdate</span></code>, and <code class="docutils literal notranslate"><span class="pre">$sessionRegenerateDestroy</span></code> in <code class="docutils literal notranslate"><span class="pre">Session</span></code> are
 deprecated, and no longer used. Use <code class="docutils literal notranslate"><span class="pre">$config</span></code> instead.</p></li>
-<li><p><strong>Security:</strong> The property <code class="docutils literal notranslate"><span class="pre">$csrfProtection</span></code>, <code class="docutils literal notranslate"><span class="pre">$tokenRandomize</span></code>,
+<li><p><strong>Security:</strong> The properties <code class="docutils literal notranslate"><span class="pre">$csrfProtection</span></code>, <code class="docutils literal notranslate"><span class="pre">$tokenRandomize</span></code>,
 <code class="docutils literal notranslate"><span class="pre">$tokenName</span></code>, <code class="docutils literal notranslate"><span class="pre">$headerName</span></code>, <code class="docutils literal notranslate"><span class="pre">$expires</span></code>, <code class="docutils literal notranslate"><span class="pre">$regenerate</span></code>, and
 <code class="docutils literal notranslate"><span class="pre">$redirect</span></code> in <code class="docutils literal notranslate"><span class="pre">Security</span></code> are deprecated, and no longer used. Use
 <code class="docutils literal notranslate"><span class="pre">$config</span></code> instead.</p></li>
-<li><dl class="simple">
-<dt><strong>URI:</strong></dt><dd><ul>
+<li><p><strong>URI:</strong></p>
+<ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">URI::$uriString</span></code> is deprecated.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">URI::$baseURL</span></code> is deprecated. Use <code class="docutils literal notranslate"><span class="pre">SiteURI</span></code> instead.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">URI::setSilent()</span></code> is deprecated.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">URI::setScheme()</span></code> is deprecated. Use <code class="docutils literal notranslate"><span class="pre">withScheme()</span></code> instead.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">URI::setURI()</span></code> is deprecated.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
-<li><dl class="simple">
-<dt><strong>IncomingRequest:</strong></dt><dd><ul>
+<li><p><strong>IncomingRequest:</strong></p>
+<ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">IncomingRequest::detectURI()</span></code> is deprecated and no longer used.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">IncomingRequest::detectPath()</span></code> is deprecated, and no longer used. It
 moved to <code class="docutils literal notranslate"><span class="pre">SiteURIFactory</span></code>.</p></li>
@@ -752,8 +720,6 @@ moved to <code class="docutils literal notranslate"><span class="pre">SiteURIFac
 moved to <code class="docutils literal notranslate"><span class="pre">SiteURIFactory</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">IncomingRequest::setPath()</span></code> is deprecated.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
 </ul>
 </section>
@@ -761,13 +727,13 @@ moved to <code class="docutils literal notranslate"><span class="pre">SiteURIFac
 <h2><a class="toc-backref" href="#id26" role="doc-backlink">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p><strong>Auto Routing (Improved)</strong>: In previous versions, when <code class="docutils literal notranslate"><span class="pre">$translateURIDashes</span></code>
-is true, two URIs correspond to a single controller method, one URI for dashes
+was true, two URIs corresponded to a single controller method, one URI for dashes
 (e.g., <strong>foo-bar</strong>) and one URI for underscores (e.g., <strong>foo_bar</strong>). This bug
 has been fixed. Now the URI for underscores (<strong>foo_bar</strong>) is not accessible.</p></li>
 <li><p><strong>Output Buffering:</strong> Bug fix with output buffering.</p></li>
 <li><p><strong>ControllerTestTrait:</strong> <code class="docutils literal notranslate"><span class="pre">ControllerTestTrait::withUri()</span></code> creates a new Request
-instance with the URI. Because the Request instance should have the URI instance.
-Also if the hostname in the URI string is invalid with <code class="docutils literal notranslate"><span class="pre">Config\App</span></code>, the valid
+instance with the URI, because the Request instance should have the URI instance.
+Also, if the hostname in the URI string is invalid with <code class="docutils literal notranslate"><span class="pre">Config\App</span></code>, the valid
 hostname will be set.</p></li>
 </ul>
 <p>See the repo’s
@@ -788,7 +754,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

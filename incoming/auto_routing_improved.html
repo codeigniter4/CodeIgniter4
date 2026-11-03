@@ -297,7 +297,7 @@
 </div>
 <nav class="contents local" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#what-is-auto-routing-improved" id="id5">What is Auto Routing (Improved) ?</a></p></li>
+<li><p><a class="reference internal" href="#what-is-auto-routing-improved" id="id5">What is Auto Routing (Improved)?</a></p></li>
 <li><p><a class="reference internal" href="#differences-from-auto-routing-legacy" id="id6">Differences from Auto Routing (Legacy)</a></p></li>
 <li><p><a class="reference internal" href="#enable-auto-routing-improved" id="id7">Enable Auto Routing (Improved)</a></p></li>
 <li><p><a class="reference internal" href="#uri-segments" id="id8">URI Segments</a></p></li>
@@ -346,101 +346,78 @@
 </ul>
 </nav>
 <section id="what-is-auto-routing-improved">
-<h2><a class="toc-backref" href="#id5" role="doc-backlink">What is Auto Routing (Improved) ?</a><a class="headerlink" href="#what-is-auto-routing-improved" title="Link to this heading"></a></h2>
-<p>By default, all routes must be <a class="reference internal" href="routing.html#defined-route-routing"><span class="std std-ref">defined</span></a> in the
-configuration file.</p>
-<p>However, with <strong>Auto Routing (Improved)</strong>, you can define the controller name and
-its method name according to the convention and it will be automatically routed.
-In other words, there is no need to define routes manually.</p>
-<p>If you enable Auto Routing (Improved), when no defined route is found that matches
-the URI, the system will attempt to match that URI against the controllers and
-methods.</p>
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">What is Auto Routing (Improved)?</a><a class="headerlink" href="#what-is-auto-routing-improved" title="Link to this heading"></a></h2>
+<p>By default, all routes must be <a class="reference internal" href="routing.html#defined-route-routing"><span class="std std-ref">defined</span></a> in the configuration file.</p>
+<p>However, with <strong>Auto Routing (Improved)</strong>, you can define the controller name and its method name according to the
+convention and it will be automatically routed. In other words, there is no need to define routes manually.</p>
+<p>If you enable Auto Routing (Improved), when no defined route is found that matches the URI, the system will attempt to
+match that URI against the controllers and methods.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>For security reasons, if a controller is used in the defined routes,
-Auto Routing (Improved) does not route to the controller.</p>
+<p>For security reasons, if a controller is used in the defined routes, Auto Routing (Improved) does not
+route to the controller.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Auto Routing (Improved) is disabled by default. To use it, see
-<a class="reference internal" href="#enabled-auto-routing-improved"><span class="std std-ref">Enable Auto Routing (Improved)</span></a>.</p>
+<p>Auto Routing (Improved) is disabled by default. To use it, see <a class="reference internal" href="#enabled-auto-routing-improved"><span class="std std-ref">Enable Auto Routing (Improved)</span></a>.</p>
 </div>
 </section>
 <section id="differences-from-auto-routing-legacy">
 <h2><a class="toc-backref" href="#id6" role="doc-backlink">Differences from Auto Routing (Legacy)</a><a class="headerlink" href="#differences-from-auto-routing-legacy" title="Link to this heading"></a></h2>
-<p><a class="reference internal" href="routing.html#auto-routing-legacy"><span class="std std-ref">Auto Routing (Legacy)</span></a> is a routing system from CodeIgniter 3. If you are not
-familiar with it, go to the next section.</p>
+<p><a class="reference internal" href="routing.html#auto-routing-legacy"><span class="std std-ref">Auto Routing (Legacy)</span></a> is a routing system from CodeIgniter 3. If you are not familiar with it, go to the next
+section.</p>
 <p>If you know it well, these are some changes in <strong>Auto Routing (Improved)</strong>:</p>
 <ul class="simple">
-<li><dl class="simple">
-<dt>A controller method needs HTTP verb prefix like <code class="docutils literal notranslate"><span class="pre">getIndex()</span></code>, <code class="docutils literal notranslate"><span class="pre">postCreate()</span></code>.</dt><dd><ul>
-<li><p>Since developers always know the HTTP method, a request with an unexpected
-HTTP method will never execute the controller.</p></li>
+<li><p>A controller method needs an HTTP verb prefix like <code class="docutils literal notranslate"><span class="pre">getIndex()</span></code>, <code class="docutils literal notranslate"><span class="pre">postCreate()</span></code>.</p>
+<ul>
+<li><p>Since developers always know the HTTP method, a request with an unexpected HTTP method will never execute the
+controller.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
-<li><dl class="simple">
-<dt>The Default Controller (<code class="docutils literal notranslate"><span class="pre">Home</span></code> by default) and the Default Method (<code class="docutils literal notranslate"><span class="pre">index</span></code> by default) must be omitted in the URI.</dt><dd><ul>
+<li><p>The Default Controller (<code class="docutils literal notranslate"><span class="pre">Home</span></code> by default) and the Default Method (<code class="docutils literal notranslate"><span class="pre">index</span></code> by default) must be omitted in the URI.</p>
+<ul>
 <li><p>It restricts one-to-one correspondence between controller methods and URIs.</p></li>
-<li><p>E.g. by default, you can access <code class="docutils literal notranslate"><span class="pre">/</span></code>, but <code class="docutils literal notranslate"><span class="pre">/home</span></code> and <code class="docutils literal notranslate"><span class="pre">/home/index</span></code>
-will be 404 Not Found.</p></li>
+<li><p>For example, by default, you can access <code class="docutils literal notranslate"><span class="pre">/</span></code>, but <code class="docutils literal notranslate"><span class="pre">/home</span></code> and <code class="docutils literal notranslate"><span class="pre">/home/index</span></code> will be 404 Not Found.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
-<li><dl class="simple">
-<dt>It checks method parameter count.</dt><dd><ul>
-<li><p>If there are more parameters in the URI than the method parameters, it results
-in 404 Not Found.</p></li>
+<li><p>It checks the method parameter count.</p>
+<ul>
+<li><p>If there are more parameters in the URI than the method parameters, it results in 404 Not Found.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
-<li><dl class="simple">
-<dt>It does not support <code class="docutils literal notranslate"><span class="pre">_remap()</span></code> method.</dt><dd><ul>
+<li><p>It does not support the <code class="docutils literal notranslate"><span class="pre">_remap()</span></code> method.</p>
+<ul>
 <li><p>It restricts one-to-one correspondence between controller methods and URIs.</p></li>
-<li><p>But it has the <a class="reference internal" href="#auto-routing-improved-default-method-fallback"><span class="std std-ref">Default Method Fallback</span></a> feature
-instead.</p></li>
+<li><p>But it has the <a class="reference internal" href="#auto-routing-improved-default-method-fallback"><span class="std std-ref">Default Method Fallback</span></a> feature instead.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
-<li><dl class="simple">
-<dt>Can’t access controllers in Defined Routes.</dt><dd><ul>
-<li><p>It completely separates controllers accessible via <strong>Auto Routing</strong> from
-those accessible via <strong>Defined Routes</strong>.</p></li>
+<li><p>It cannot access controllers in Defined Routes.</p>
+<ul>
+<li><p>It completely separates controllers accessible via <strong>Auto Routing</strong> from those accessible via <strong>Defined Routes</strong>.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
 </ul>
 </section>
 <section id="enable-auto-routing-improved">
 <span id="enabled-auto-routing-improved"></span><h2><a class="toc-backref" href="#id7" role="doc-backlink">Enable Auto Routing (Improved)</a><a class="headerlink" href="#enable-auto-routing-improved" title="Link to this heading"></a></h2>
-<p>To use it, you need to change the setting <code class="docutils literal notranslate"><span class="pre">$autoRoute</span></code> option to <code class="docutils literal notranslate"><span class="pre">true</span></code> in
-<strong>app/Config/Routing.php</strong>:</p>
+<p>To use it, you need to set the <code class="docutils literal notranslate"><span class="pre">$autoRoute</span></code> option to <code class="docutils literal notranslate"><span class="pre">true</span></code> in <strong>app/Config/Routing.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">bool</span> <span class="nv">$autoRoute</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>And you need to change the property <code class="docutils literal notranslate"><span class="pre">$autoRoutesImproved</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code> in
-<strong>app/Config/Feature.php</strong>:</p>
+<p>And you need to change the property <code class="docutils literal notranslate"><span class="pre">$autoRoutesImproved</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code> in <strong>app/Config/Feature.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">bool</span> <span class="nv">$autoRoutesImproved</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
 </pre></div>
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>When you use Auto Routing (Improved), you must remove the line
-<code class="docutils literal notranslate"><span class="pre">$routes-&gt;get('/',</span> <span class="pre">'Home::index');</span></code>  in <strong>app/Config/Routes.php</strong>. Because
-defined routes take precedence over Auto Routing, and controllers defined in
-the defined routes are denied access by Auto Routing (Improved) for security
-reasons.</p>
+<p>When you use Auto Routing (Improved), you must remove the line <code class="docutils literal notranslate"><span class="pre">$routes-&gt;get('/',</span> <span class="pre">'Home::index');</span></code> in
+<strong>app/Config/Routes.php</strong>, because defined routes take precedence over Auto Routing, and controllers defined in the
+defined routes are denied access by Auto Routing (Improved) for security reasons.</p>
 </div>
 </section>
 <section id="uri-segments">
 <h2><a class="toc-backref" href="#id8" role="doc-backlink">URI Segments</a><a class="headerlink" href="#uri-segments" title="Link to this heading"></a></h2>
-<p>The segments in the URL, in following with the Model-View-Controller approach,
-usually represent:</p>
+<p>The segments in the URL, following the Model-View-Controller approach, usually represent:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">http</span><span class="o">://</span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="p">{</span><span class="nx">class</span><span class="p">}</span><span class="o">/</span><span class="p">{</span><span class="nx">method</span><span class="p">}</span><span class="o">/</span><span class="p">{</span><span class="nx">param1</span><span class="p">}</span>
 </pre></div>
 </div>
@@ -453,20 +430,17 @@ usually represent:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">http</span><span class="o">://</span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">hello</span><span class="o">-</span><span class="nx">world</span><span class="o">/</span><span class="nx">hello</span><span class="o">/</span><span class="mi">1</span>
 </pre></div>
 </div>
-<p>In the above example, when you send an HTTP request with <strong>GET</strong> method,
-Auto Routing (Improved) would attempt to find a controller named
-<code class="docutils literal notranslate"><span class="pre">App\Controllers\HelloWorld</span></code> and executes <code class="docutils literal notranslate"><span class="pre">getHello()</span></code> method with passing
-<code class="docutils literal notranslate"><span class="pre">'1'</span></code> as the first parameter.</p>
+<p>In the above example, when you send an HTTP request with the <strong>GET</strong> method, Auto Routing (Improved) would attempt to
+find a controller named <code class="docutils literal notranslate"><span class="pre">App\Controllers\HelloWorld</span></code> and execute the <code class="docutils literal notranslate"><span class="pre">getHello()</span></code> method, passing <code class="docutils literal notranslate"><span class="pre">'1'</span></code> as the
+first parameter.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>A controller method that will be executed by Auto Routing (Improved)
-needs HTTP verb (<code class="docutils literal notranslate"><span class="pre">get</span></code>, <code class="docutils literal notranslate"><span class="pre">post</span></code>, <code class="docutils literal notranslate"><span class="pre">put</span></code>, etc.) prefix like <code class="docutils literal notranslate"><span class="pre">getIndex()</span></code>,
-<code class="docutils literal notranslate"><span class="pre">postCreate()</span></code>.</p>
+<p>A controller method that will be executed by Auto Routing (Improved) needs an HTTP verb (<code class="docutils literal notranslate"><span class="pre">get</span></code>, <code class="docutils literal notranslate"><span class="pre">post</span></code>,
+<code class="docutils literal notranslate"><span class="pre">put</span></code>, etc.) prefix like <code class="docutils literal notranslate"><span class="pre">getIndex()</span></code>, <code class="docutils literal notranslate"><span class="pre">postCreate()</span></code>.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>When a controller’s short name matches the first segment of a URI, it
-will be loaded.</p>
+<p>When a controller’s short name matches the first segment of a URI, it will be loaded.</p>
 </div>
 </section>
 <section id="let-s-try-it-hello-world">
@@ -474,8 +448,8 @@ will be loaded.</p>
 <p>Let’s create a simple controller so you can see it in action.</p>
 <section id="create-a-controller">
 <h3><a class="toc-backref" href="#id10" role="doc-backlink">Create a Controller</a><a class="headerlink" href="#create-a-controller" title="Link to this heading"></a></h3>
-<p>Using your text editor, create a file called <strong>HelloWorld.php</strong> in your
-<strong>app/Controllers</strong> directory, and put the following code in it.</p>
+<p>Using your text editor, create a file called <strong>HelloWorld.php</strong> in your <strong>app/Controllers</strong> directory, and put the
+following code in it.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
@@ -491,20 +465,17 @@ will be loaded.</p>
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>The file must be called <strong>HelloWorld.php</strong>. When you use Auto
-Routing (Improved), controller class names MUST be CamelCase.</p>
+<p>The file must be called <strong>HelloWorld.php</strong>. When you use Auto Routing (Improved), controller class names
+MUST be CamelCase.</p>
 </div>
-<p>You will notice that the <code class="docutils literal notranslate"><span class="pre">HelloWorld</span></code> Controller is extending the <code class="docutils literal notranslate"><span class="pre">BaseController</span></code>.
-You can also extend the <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Controller</span></code> if you do not need the functionality
-of the BaseController.</p>
-<p>The BaseController provides a convenient place for loading components and performing
-functions that are needed by all your controllers. You can extend this class in
-any new controller.</p>
+<p>You will notice that the <code class="docutils literal notranslate"><span class="pre">HelloWorld</span></code> Controller is extending the <code class="docutils literal notranslate"><span class="pre">BaseController</span></code>. You can also extend the
+<code class="docutils literal notranslate"><span class="pre">CodeIgniter\Controller</span></code> if you do not need the functionality of the BaseController.</p>
+<p>The BaseController provides a convenient place for loading components and performing functions that are needed by all
+your controllers. You can extend this class in any new controller.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>A controller method that will be executed by Auto Routing (Improved)
-needs HTTP verb (<code class="docutils literal notranslate"><span class="pre">get</span></code>, <code class="docutils literal notranslate"><span class="pre">post</span></code>, <code class="docutils literal notranslate"><span class="pre">put</span></code>, etc.) prefix like <code class="docutils literal notranslate"><span class="pre">getIndex()</span></code>,
-<code class="docutils literal notranslate"><span class="pre">postCreate()</span></code>.</p>
+<p>A controller method that will be executed by Auto Routing (Improved) needs an HTTP verb (<code class="docutils literal notranslate"><span class="pre">get</span></code>,
+<code class="docutils literal notranslate"><span class="pre">post</span></code>, <code class="docutils literal notranslate"><span class="pre">put</span></code>, etc.) prefix like <code class="docutils literal notranslate"><span class="pre">getIndex()</span></code>, <code class="docutils literal notranslate"><span class="pre">postCreate()</span></code>.</p>
 </div>
 </section>
 <section id="check-the-routes">
@@ -529,8 +500,7 @@ needs HTTP verb (<code class="docutils literal notranslate"><span class="pre">ge
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">http</span><span class="o">://</span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">hello</span><span class="o">-</span><span class="nx">world</span>
 </pre></div>
 </div>
-<p>The system automatically translates URI with dashes (<code class="docutils literal notranslate"><span class="pre">-</span></code>) to CamelCase in the
-controller and method URI segments.</p>
+<p>The system automatically translates a URI with dashes (<code class="docutils literal notranslate"><span class="pre">-</span></code>) to CamelCase in the controller and method URI segments.</p>
 <p>For example, the URI <code class="docutils literal notranslate"><span class="pre">sub-dir/hello-controller/some-method</span></code> will execute the
 <code class="docutils literal notranslate"><span class="pre">SubDir\HelloController::getSomeMethod()</span></code> method.</p>
 <p>If you did it right, you should see:</p>
@@ -541,8 +511,7 @@ controller and method URI segments.</p>
 </section>
 <section id="examples-of-controller-names">
 <h2><a class="toc-backref" href="#id13" role="doc-backlink">Examples of Controller Names</a><a class="headerlink" href="#examples-of-controller-names" title="Link to this heading"></a></h2>
-<p>The following is an valid controller name. Because <code class="docutils literal notranslate"><span class="pre">App\Controllers\HelloWorld</span></code>
-is CamelCase.</p>
+<p>The following is a valid controller name, because <code class="docutils literal notranslate"><span class="pre">App\Controllers\HelloWorld</span></code> is CamelCase.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
@@ -553,7 +522,7 @@ is CamelCase.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The following is <strong>not</strong> valid. Because the first letter (<code class="docutils literal notranslate"><span class="pre">h</span></code>) is not capital.</p>
+<p>The following is <strong>not</strong> valid, because the first letter (<code class="docutils literal notranslate"><span class="pre">h</span></code>) is not capitalized.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
@@ -564,7 +533,7 @@ is CamelCase.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The following is also <strong>not</strong> valid. Because the first letter (<code class="docutils literal notranslate"><span class="pre">h</span></code>) is not capital.</p>
+<p>The following is also <strong>not</strong> valid, because the first letter (<code class="docutils literal notranslate"><span class="pre">h</span></code>) is not capitalized.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
@@ -580,19 +549,16 @@ is CamelCase.</p>
 <h2><a class="toc-backref" href="#id14" role="doc-backlink">Controller Methods</a><a class="headerlink" href="#controller-methods" title="Link to this heading"></a></h2>
 <section id="method-visibility">
 <h3><a class="toc-backref" href="#id15" role="doc-backlink">Method Visibility</a><a class="headerlink" href="#method-visibility" title="Link to this heading"></a></h3>
-<p>When you define a method that is executable via HTTP request, the method must be
-declared as <code class="docutils literal notranslate"><span class="pre">public</span></code>.</p>
+<p>When you define a method that is executable via HTTP request, the method must be declared as <code class="docutils literal notranslate"><span class="pre">public</span></code>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>For security reasons be sure to declare any new utility methods as
-<code class="docutils literal notranslate"><span class="pre">protected</span></code> or <code class="docutils literal notranslate"><span class="pre">private</span></code>.</p>
+<p>For security reasons, be sure to declare any new utility methods as <code class="docutils literal notranslate"><span class="pre">protected</span></code> or <code class="docutils literal notranslate"><span class="pre">private</span></code>.</p>
 </div>
 </section>
 <section id="default-method">
 <h3><a class="toc-backref" href="#id16" role="doc-backlink">Default Method</a><a class="headerlink" href="#default-method" title="Link to this heading"></a></h3>
-<p>In the above example, the method name is <code class="docutils literal notranslate"><span class="pre">getIndex()</span></code>. The method
-(HTTP verb + <code class="docutils literal notranslate"><span class="pre">Index()</span></code>) is called the <strong>Default Method</strong>, and is loaded if the
-<strong>second segment</strong> of the URI is empty.</p>
+<p>In the above example, the method name is <code class="docutils literal notranslate"><span class="pre">getIndex()</span></code>. The method (HTTP verb + <code class="docutils literal notranslate"><span class="pre">Index()</span></code>) is called the
+<strong>Default Method</strong>, and is loaded if the <strong>second segment</strong> of the URI is empty.</p>
 </section>
 <section id="normal-methods">
 <h3><a class="toc-backref" href="#id17" role="doc-backlink">Normal Methods</a><a class="headerlink" href="#normal-methods" title="Link to this heading"></a></h3>
@@ -625,8 +591,7 @@ declared as <code class="docutils literal notranslate"><span class="pre">public<
 </section>
 <section id="passing-uri-segments-to-your-methods">
 <h2><a class="toc-backref" href="#id18" role="doc-backlink">Passing URI Segments to Your Methods</a><a class="headerlink" href="#passing-uri-segments-to-your-methods" title="Link to this heading"></a></h2>
-<p>If your URI contains more than two segments they will be passed to your
-method as parameters.</p>
+<p>If your URI contains more than two segments, they will be passed to your method as parameters.</p>
 <p>For example, let’s say you have a URI like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">http</span><span class="o">://</span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">products</span><span class="o">/</span><span class="nx">shoes</span><span class="o">/</span><span class="nx">sandals</span><span class="o">/</span><span class="mi">123</span>
 </pre></div>
@@ -647,34 +612,29 @@ method as parameters.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If there are more parameters in the URI than the method parameters,
-Auto Routing (Improved) does not execute the method, and it results in 404
-Not Found.</p>
+<p>If there are more parameters in the URI than the method parameters, Auto Routing (Improved) does not execute
+the method, and it results in 404 Not Found.</p>
 </div>
 </section>
 <section id="default-controller">
 <h2><a class="toc-backref" href="#id19" role="doc-backlink">Default Controller</a><a class="headerlink" href="#default-controller" title="Link to this heading"></a></h2>
-<p>The <strong>Default Controller</strong> is a special controller that is used when a URI ends
-with a directory name or when a URI is not present, as will be the case when only
-your site root URL is requested.</p>
+<p>The <strong>Default Controller</strong> is a special controller that is used when a URI ends with a directory name or when a URI is
+not present, as will be the case when only your site root URL is requested.</p>
 <p>By default, the Default Controller is <code class="docutils literal notranslate"><span class="pre">Home</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Define only the default method (<code class="docutils literal notranslate"><span class="pre">getIndex()</span></code> for GET requests)
-in the default controller. If you define any other public method, that method
-will not be executed.</p>
+<p>Define only the default method (<code class="docutils literal notranslate"><span class="pre">getIndex()</span></code> for GET requests) in the default controller. If you define any
+other public method, that method will not be executed.</p>
 </div>
-<p>For more information, please refer to the
-<a class="reference internal" href="#routing-auto-routing-improved-configuration-options"><span class="std std-ref">Configuration Options</span></a>.</p>
+<p>For more information, please refer to the <a class="reference internal" href="#routing-auto-routing-improved-configuration-options"><span class="std std-ref">Configuration Options</span></a>.</p>
 </section>
 <section id="default-method-fallback">
 <span id="auto-routing-improved-default-method-fallback"></span><h2><a class="toc-backref" href="#id20" role="doc-backlink">Default Method Fallback</a><a class="headerlink" href="#default-method-fallback" title="Link to this heading"></a></h2>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 4.4.0.</span></p>
 </div>
-<p>If the controller method corresponding to the URI segment of the method name
-does not exist, and if the default method is defined, the remaining URI segments
-are passed to the default method for execution.</p>
+<p>If the controller method corresponding to the URI segment of the method name does not exist, and if the default method
+is defined, the remaining URI segments are passed to the default method for execution.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
@@ -692,21 +652,18 @@ are passed to the default method for execution.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">http</span><span class="o">://</span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">product</span><span class="o">/</span><span class="mi">15</span><span class="o">/</span><span class="nx">edit</span>
 </pre></div>
 </div>
-<p>The method will be passed URI segments 2 and 3 (<code class="docutils literal notranslate"><span class="pre">'15'</span></code> and <code class="docutils literal notranslate"><span class="pre">'edit'</span></code>):</p>
+<p>The method will be passed URI segments 2 and 3 (<code class="docutils literal notranslate"><span class="pre">'15'</span></code> and <code class="docutils literal notranslate"><span class="pre">'edit'</span></code>).</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>If there are more parameters in the URI than the method parameters,
-Auto Routing (Improved) does not execute the method, and it results in 404
-Not Found.</p>
+<p>If there are more parameters in the URI than the method parameters, Auto Routing (Improved) does not
+execute the method, and it results in 404 Not Found.</p>
 </div>
 <section id="fallback-to-default-controller">
 <h3><a class="toc-backref" href="#id21" role="doc-backlink">Fallback to Default Controller</a><a class="headerlink" href="#fallback-to-default-controller" title="Link to this heading"></a></h3>
-<p>If the controller corresponding to the URI segment of the controller name
-does not exist, and if the default controller (<code class="docutils literal notranslate"><span class="pre">Home</span></code> by default) exists in
-the directory, the remaining URI segments are passed to the default controller’s
-default method.</p>
-<p>For example, when you have the following default controller <code class="docutils literal notranslate"><span class="pre">Home</span></code> in the
-<strong>app/Controllers/News</strong> directory:</p>
+<p>If the controller corresponding to the URI segment of the controller name does not exist, and if the default controller
+(<code class="docutils literal notranslate"><span class="pre">Home</span></code> by default) exists in the directory, the remaining URI segments are passed to the default controller’s default
+method.</p>
+<p>For example, when you have the following default controller <code class="docutils literal notranslate"><span class="pre">Home</span></code> in the <strong>app/Controllers/News</strong> directory:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Controllers\News</span><span class="p">;</span>
@@ -726,58 +683,51 @@ default method.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">http</span><span class="o">://</span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">news</span><span class="o">/</span><span class="mi">101</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">News\Home</span></code> controller and the default <code class="docutils literal notranslate"><span class="pre">getIndex()</span></code> method will be found.
-So the default method will get the second URI segment (<code class="docutils literal notranslate"><span class="pre">'101'</span></code>):</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">News\Home</span></code> controller and the default <code class="docutils literal notranslate"><span class="pre">getIndex()</span></code> method will be found. So the default method will get the
+second URI segment (<code class="docutils literal notranslate"><span class="pre">'101'</span></code>).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If there is <code class="docutils literal notranslate"><span class="pre">App\Controllers\News</span></code> controller, it takes precedence.
-The URI segments are searched sequentially and the first controller found
-is used.</p>
+<p>If there is an <code class="docutils literal notranslate"><span class="pre">App\Controllers\News</span></code> controller, it takes precedence. The URI segments are searched
+sequentially and the first controller found is used.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If there are more parameters in the URI than the method parameters,
-Auto Routing (Improved) does not execute the method, and it results in 404
-Not Found.</p>
+<p>If there are more parameters in the URI than the method parameters, Auto Routing (Improved) does not execute
+the method, and it results in 404 Not Found.</p>
 </div>
 </section>
 </section>
 <section id="organizing-your-controllers-into-sub-directories">
 <h2><a class="toc-backref" href="#id22" role="doc-backlink">Organizing Your Controllers into Sub-directories</a><a class="headerlink" href="#organizing-your-controllers-into-sub-directories" title="Link to this heading"></a></h2>
-<p>If you are building a large application you might want to hierarchically
-organize or structure your controllers into sub-directories. CodeIgniter
-permits you to do this.</p>
-<p>Simply create sub-directories under the main <strong>app/Controllers</strong>,
-and place your controller classes within them.</p>
+<p>If you are building a large application, you might want to hierarchically organize or structure your controllers into
+sub-directories. CodeIgniter permits you to do this.</p>
+<p>Simply create sub-directories under the main <strong>app/Controllers</strong>, and place your controller classes within them.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Directory names MUST start with an uppercase letter and be CamelCase.</p>
 </div>
-<p>When using this feature the first segment of your URI must
-specify the directory. For example, let’s say you have a controller located here:</p>
+<p>When using this feature, the first segment of your URI must specify the directory. For example, let’s say you have a
+controller located here:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">app</span><span class="o">/</span><span class="nx">Controllers</span><span class="o">/</span><span class="nx">Products</span><span class="o">/</span><span class="nx">Shoes</span><span class="o">.</span><span class="nx">php</span>
 </pre></div>
 </div>
-<p>To call the above controller your URI will look something like this:</p>
+<p>To call the above controller, your URI will look something like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">http</span><span class="o">://</span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">products</span><span class="o">/</span><span class="nx">shoes</span><span class="o">/</span><span class="nx">show</span><span class="o">/</span><span class="mi">123</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You cannot have directories with the same name in <strong>app/Controllers</strong>
-and <strong>public</strong>.
-This is because if there is a directory, the web server will search for it and
-it will not be routed to CodeIgniter.</p>
+<p>You cannot have directories with the same name in <strong>app/Controllers</strong> and <strong>public</strong>. This is because if there
+is a directory, the web server will search for it and it will not be routed to CodeIgniter.</p>
 </div>
-<p>Each of your sub-directories may contain a default controller which will be
-called if the URL contains <em>only</em> the sub-directory. Simply put a controller
-in there that matches the name of your default controller as specified in
-your <strong>app/Config/Routing.php</strong> file.</p>
+<p>Each of your sub-directories may contain a default controller which will be called if the URL contains <em>only</em> the
+sub-directory. Simply put a controller in there that matches the name of your default controller as specified in your
+<strong>app/Config/Routing.php</strong> file.</p>
 </section>
 <section id="examples-of-controller-methods-and-uris">
 <h2><a class="toc-backref" href="#id23" role="doc-backlink">Examples of Controller/Methods and URIs</a><a class="headerlink" href="#examples-of-controller-methods-and-uris" title="Link to this heading"></a></h2>
-<p>In the case of a <strong>GET</strong> request with the default configuration, the mapping
-between controller/methods and URIs is as follows:</p>
+<p>In the case of a <strong>GET</strong> request with the default configuration, the mapping between controller/methods and URIs is as
+follows:</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Controller/Method</p></th>
@@ -788,7 +738,7 @@ between controller/methods and URIs is as follows:</p>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Home::getIndex()</span></code></p></td>
 <td><p>/</p></td>
-<td><p>The default controller and the default method.</p></td>
+<td><p>The default controller and default method.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Blog::getIndex()</span></code></p></td>
 <td><p>/blog</p></td>
@@ -809,19 +759,19 @@ between controller/methods and URIs is as follows:</p>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Blog\Home::getIndex()</span></code></p></td>
 <td><p>/blog</p></td>
 <td><p>Sub-directory <code class="docutils literal notranslate"><span class="pre">Blog</span></code> and the default
-controller and the default method. If there
-is <code class="docutils literal notranslate"><span class="pre">Blog</span></code> controller, it takes precedence.</p></td>
+controller and the default method.
+A <code class="docutils literal notranslate"><span class="pre">Blog</span></code> controller takes precedence.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Blog\Tags::getIndex()</span></code></p></td>
 <td><p>/blog/tags</p></td>
 <td><p>Sub-directory <code class="docutils literal notranslate"><span class="pre">Blog</span></code> and the default
-method. If there is <code class="docutils literal notranslate"><span class="pre">Blog</span></code> controller, it
+method. If a <code class="docutils literal notranslate"><span class="pre">Blog</span></code> controller exists, it
 takes precedence.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Blog\News::getIndex($id)</span></code></p></td>
 <td><p>/blog/news/123</p></td>
 <td><p>Sub-directory <code class="docutils literal notranslate"><span class="pre">Blog</span></code> and the default method
-fallback. If there is <code class="docutils literal notranslate"><span class="pre">Blog</span></code> controller, it
+fallback. If a <code class="docutils literal notranslate"><span class="pre">Blog</span></code> controller exists, it
 takes precedence.</p></td>
 </tr>
 </tbody>
@@ -829,11 +779,10 @@ takes precedence.</p></td>
 </section>
 <section id="applying-filters">
 <h2><a class="toc-backref" href="#id24" role="doc-backlink">Applying Filters</a><a class="headerlink" href="#applying-filters" title="Link to this heading"></a></h2>
-<p>Applying controller filters allows you to add processing before and after the
-controller method execution. This is especially handy during authentication or
-api logging.</p>
-<p>If you use Auto Routing, set the filters to be applied in <strong>app/Config/Filters.php</strong>.
-See <a class="reference internal" href="filters.html"><span class="doc">Controller Filters</span></a> for more information on setting up filters.</p>
+<p>Applying controller filters allows you to add processing before and after the controller method execution. This is
+especially handy during authentication or API logging.</p>
+<p>If you use Auto Routing, set the filters to be applied in <strong>app/Config/Filters.php</strong>. See
+<a class="reference internal" href="filters.html"><span class="doc">Controller Filters</span></a> for more information on setting up filters.</p>
 </section>
 <section id="configuration-options">
 <span id="routing-auto-routing-improved-configuration-options"></span><h2><a class="toc-backref" href="#id25" role="doc-backlink">Configuration Options</a><a class="headerlink" href="#configuration-options" title="Link to this heading"></a></h2>
@@ -842,45 +791,39 @@ See <a class="reference internal" href="filters.html"><span class="doc">Controll
 <h3><a class="toc-backref" href="#id26" role="doc-backlink">Default Controller</a><a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
 <section id="for-site-root-uri">
 <h4><a class="toc-backref" href="#id27" role="doc-backlink">For Site Root URI</a><a class="headerlink" href="#for-site-root-uri" title="Link to this heading"></a></h4>
-<p>When a user visits the root of your site (i.e., <strong>http://example.com</strong>) the controller
-to use is determined by the value set to the <code class="docutils literal notranslate"><span class="pre">$defaultController</span></code> property,
-unless a route exists for it explicitly.</p>
-<p>The default value for this is <code class="docutils literal notranslate"><span class="pre">Home</span></code> which matches the controller at
-<strong>app/Controllers/Home.php</strong>:</p>
+<p>When a user visits the root of your site (i.e., <strong>http://example.com</strong>), the controller to use is determined by the
+value set to the <code class="docutils literal notranslate"><span class="pre">$defaultController</span></code> property, unless a route exists for it explicitly.</p>
+<p>The default value for this is <code class="docutils literal notranslate"><span class="pre">Home</span></code>, which matches the controller at <strong>app/Controllers/Home.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">string</span> <span class="nv">$defaultController</span> <span class="o">=</span> <span class="s1">'Home'</span><span class="p">;</span>
 </pre></div>
 </div>
 </section>
 <section id="for-directory-uri">
 <h4><a class="toc-backref" href="#id28" role="doc-backlink">For Directory URI</a><a class="headerlink" href="#for-directory-uri" title="Link to this heading"></a></h4>
-<p>The default controller is also used when no matching route has been found, and
-the URI would point to a directory in the controllers directory. For example, if
-the user visits <strong>http://example.com/admin</strong>, if a controller was found at
+<p>The default controller is also used when no matching route has been found, and the URI would point to a directory in the
+controllers directory. For example, if the user visits <strong>http://example.com/admin</strong>, and a controller was found at
 <strong>app/Controllers/Admin/Home.php</strong>, it would be used.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>You cannot access the default controller with the URI of the
-controller name. When the default controller is <code class="docutils literal notranslate"><span class="pre">Home</span></code>, you can access
-<strong>http://example.com/</strong>, but if you access <strong>http://example.com/home</strong>, it
-will be not found.</p>
+<p>You cannot access the default controller with the URI of the controller name. When the default controller
+is <code class="docutils literal notranslate"><span class="pre">Home</span></code>, you can access <strong>http://example.com/</strong>, but if you access <strong>http://example.com/home</strong>, it will not be
+found.</p>
 </div>
 </section>
 </section>
 <section id="routing-auto-routing-improved-default-method">
 <span id="id3"></span><h3><a class="toc-backref" href="#id29" role="doc-backlink">Default Method</a><a class="headerlink" href="#routing-auto-routing-improved-default-method" title="Link to this heading"></a></h3>
-<p>This works similar to the default controller setting, but is used to determine
-the default method that is used when a controller is found that matches the URI,
-but no segment exists for the method. The default value is <code class="docutils literal notranslate"><span class="pre">index</span></code>.</p>
-<p>In this example, if the user were to visit <strong>example.com/products</strong>, and a <code class="docutils literal notranslate"><span class="pre">Products</span></code>
-controller existed, the <code class="docutils literal notranslate"><span class="pre">Products::getListAll()</span></code> method would be executed:</p>
+<p>This works similarly to the default controller setting, but is used to determine the default method that is used when a
+controller is found that matches the URI, but no segment exists for the method. The default value is <code class="docutils literal notranslate"><span class="pre">index</span></code>.</p>
+<p>In this example, if the user were to visit <strong>example.com/products</strong>, and a <code class="docutils literal notranslate"><span class="pre">Products</span></code> controller existed, the
+<code class="docutils literal notranslate"><span class="pre">Products::getListAll()</span></code> method would be executed:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">string</span> <span class="nv">$defaultMethod</span> <span class="o">=</span> <span class="s1">'listAll'</span><span class="p">;</span>
 </pre></div>
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>You cannot access the controller with the URI of the default method
-name. In the example above, you can access <strong>example.com/products</strong>, but if
-you access <strong>example.com/products/listall</strong>, it will be not found.</p>
+<p>You cannot access the controller with the URI of the default method name. In the example above, you can
+access <strong>example.com/products</strong>, but if you access <strong>example.com/products/listall</strong>, it will not be found.</p>
 </div>
 </section>
 <section id="translate-uri-to-camelcase">
@@ -890,29 +833,26 @@ you access <strong>example.com/products/listall</strong>, it will be not found.<
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Since v4.6.0, the <code class="docutils literal notranslate"><span class="pre">$translateUriToCamelCase</span></code> option is enabled by
-default.</p>
+<p>Since v4.6.0, the <code class="docutils literal notranslate"><span class="pre">$translateUriToCamelCase</span></code> option is enabled by default.</p>
 </div>
-<p>Since v4.5.0, the <code class="docutils literal notranslate"><span class="pre">$translateUriToCamelCase</span></code> option has been implemented,
-which works well with the current CodeIgniter’s coding standards.</p>
-<p>This option enables you to automatically translate URI with dashes (<code class="docutils literal notranslate"><span class="pre">-</span></code>) to
-CamelCase in the controller and method URI segments.</p>
+<p>Since v4.5.0, the <code class="docutils literal notranslate"><span class="pre">$translateUriToCamelCase</span></code> option has been implemented, which works well with CodeIgniter’s current
+coding standards.</p>
+<p>This option enables you to automatically translate a URI with dashes (<code class="docutils literal notranslate"><span class="pre">-</span></code>) to CamelCase in the controller and method
+URI segments.</p>
 <p>For example, the URI <code class="docutils literal notranslate"><span class="pre">sub-dir/hello-controller/some-method</span></code> will execute the
 <code class="docutils literal notranslate"><span class="pre">SubDir\HelloController::getSomeMethod()</span></code> method.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>When this option is enabled, the <code class="docutils literal notranslate"><span class="pre">$translateURIDashes</span></code> option is
-ignored.</p>
+<p>When this option is enabled, the <code class="docutils literal notranslate"><span class="pre">$translateURIDashes</span></code> option is ignored.</p>
 </div>
 <section id="disable-translate-uri-to-camelcase">
 <h4><a class="toc-backref" href="#id31" role="doc-backlink">Disable Translate URI To CamelCase</a><a class="headerlink" href="#disable-translate-uri-to-camelcase" title="Link to this heading"></a></h4>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The option to disable “Translate URI To CamelCase” exists only for
-backward compatibility. We don’t recommend to disable it.</p>
+<p>The option to disable “Translate URI To CamelCase” exists only for backward compatibility. We don’t recommend
+disabling it.</p>
 </div>
-<p>To disable it, you need to change the setting <code class="docutils literal notranslate"><span class="pre">$translateUriToCamelCase</span></code> option
-to <code class="docutils literal notranslate"><span class="pre">false</span></code> in <strong>app/Config/Routing.php</strong>:</p>
+<p>To disable it, you need to set the <code class="docutils literal notranslate"><span class="pre">$translateUriToCamelCase</span></code> option to <code class="docutils literal notranslate"><span class="pre">false</span></code> in <strong>app/Config/Routing.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">bool</span> <span class="nv">$translateUriToCamelCase</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -924,23 +864,19 @@ to <code class="docutils literal notranslate"><span class="pre">false</span></co
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 4.4.0.</span></p>
 </div>
-<p>You can use auto routing even if you use <a class="reference internal" href="../general/modules.html"><span class="doc">Code Modules</span></a> and place
-the controllers in a different namespace.</p>
-<p>To route to a module, the <code class="docutils literal notranslate"><span class="pre">$moduleRoutes</span></code> property in <strong>app/Config/Routing.php</strong>
-must be set:</p>
+<p>You can use auto routing even if you use <a class="reference internal" href="../general/modules.html"><span class="doc">Code Modules</span></a> and place the controllers in a different namespace.</p>
+<p>To route to a module, the <code class="docutils literal notranslate"><span class="pre">$moduleRoutes</span></code> property in <strong>app/Config/Routing.php</strong> must be set:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">array</span> <span class="nv">$moduleRoutes</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">'blog'</span> <span class="o">=&gt;</span> <span class="s1">'Acme\Blog\Controllers'</span><span class="p">,</span>
 <span class="p">];</span>
 </pre></div>
 </div>
-<p>The key is the first URI segment for the module, and the value is the controller
-namespace. In the above configuration, <strong>http://localhost:8080/blog/foo/bar</strong>
-will be routed to <code class="docutils literal notranslate"><span class="pre">Acme\Blog\Controllers\Foo::getBar()</span></code>.</p>
+<p>The key is the first URI segment for the module, and the value is the controller namespace. In the above configuration,
+<strong>http://localhost:8080/blog/foo/bar</strong> will be routed to <code class="docutils literal notranslate"><span class="pre">Acme\Blog\Controllers\Foo::getBar()</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you define <code class="docutils literal notranslate"><span class="pre">$moduleRoutes</span></code>, the routing for the module takes
-precedence. In the above example, even if you have the <code class="docutils literal notranslate"><span class="pre">App\Controllers\Blog</span></code>
-controller, <strong>http://localhost:8080/blog</strong> will be routed to the default
+<p>If you define <code class="docutils literal notranslate"><span class="pre">$moduleRoutes</span></code>, the routing for the module takes precedence. In the above example, even if
+you have the <code class="docutils literal notranslate"><span class="pre">App\Controllers\Blog</span></code> controller, <strong>http://localhost:8080/blog</strong> will be routed to the default
 controller <code class="docutils literal notranslate"><span class="pre">Acme\Blog\Controllers\Home</span></code>.</p>
 </div>
 </section>
@@ -958,7 +894,7 @@ controller <code class="docutils literal notranslate"><span class="pre">Acme\Blo
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

@@ -294,31 +294,27 @@
 <h1>Encryption Service<a class="headerlink" href="#encryption-service" title="Link to this heading"></a></h1>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>DO NOT use this or any other <em>encryption</em> library for
-password storage! Passwords must be <em>hashed</em> instead, and you
-should do that through PHP’s <a class="reference external" href="https://www.php.net/password">Password Hashing extension</a>.</p>
+<p>DO NOT use this or any other <em>encryption</em> library for password storage! Passwords must be <em>hashed</em>
+instead, and you should do that through PHP’s <a class="reference external" href="https://www.php.net/password">Password Hashing extension</a>.</p>
 </div>
-<p>The Encryption Service provides two-way symmetric (secret key) data encryption.
-The service will instantiate and/or initialize an
-encryption <strong>handler</strong> to suit your parameters as explained below.</p>
-<p>Encryption Service handlers must implement CodeIgniter’s simple <code class="docutils literal notranslate"><span class="pre">EncrypterInterface</span></code>.
-Using an appropriate PHP cryptographic extension or third-party library may require
-additional software to be installed on your server and/or might need to be explicitly
-enabled in your instance of PHP.</p>
+<p>The Encryption Service provides two-way symmetric (secret key) data encryption. The service will instantiate and/or
+initialize an encryption <strong>handler</strong> to suit your parameters as explained below.</p>
+<p>Encryption Service handlers must implement CodeIgniter’s simple <code class="docutils literal notranslate"><span class="pre">EncrypterInterface</span></code>. Using an appropriate PHP
+cryptographic extension or third-party library may require additional software to be installed on your server and/or
+might need to be explicitly enabled in your instance of PHP.</p>
 <p>The following PHP extensions are currently supported:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.php.net/openssl">OpenSSL</a></p></li>
 <li><p><a class="reference external" href="https://www.php.net/manual/en/book.sodium">Sodium</a></p></li>
 </ul>
-<p>This is not a full cryptographic solution. If you need more capabilities, for example,
-public-key encryption, we suggest you consider direct use of OpenSSL or
-one of the other <a class="reference external" href="https://www.php.net/manual/en/refs.crypto.php">Cryptography Extensions</a>.
-A more comprehensive package like <a class="reference external" href="https://github.com/paragonie/halite">Halite</a>
-(an O-O package built on libsodium) is another possibility.</p>
+<p>This is not a full cryptographic solution. If you need more capabilities, for example, public-key encryption, we suggest
+you consider direct use of OpenSSL or one of the other
+<a class="reference external" href="https://www.php.net/manual/en/refs.crypto.php">Cryptography Extensions</a>. A more comprehensive package like
+<a class="reference external" href="https://github.com/paragonie/halite">Halite</a> (an O-O package built on libsodium) is another possibility.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Support for the <code class="docutils literal notranslate"><span class="pre">MCrypt</span></code> extension has been dropped, as that has
-been deprecated as of PHP 7.2.</p>
+<p>Support for the <code class="docutils literal notranslate"><span class="pre">MCrypt</span></code> extension has been dropped. PHP deprecated it in 7.1 and removed it from the core
+in 7.2.</p>
 </div>
 <nav class="contents local" id="contents">
 <ul class="simple">
@@ -367,9 +363,8 @@ been deprecated as of PHP 7.2.</p>
 <span class="nv">$encrypter</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'encrypter'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Assuming you have set your starting key (see <a class="reference internal" href="#configuration"><span class="std std-ref">Configuring the Library</span></a>),
-encrypting and decrypting data is simple - pass the appropriate string to <code class="docutils literal notranslate"><span class="pre">encrypt()</span></code>
-and/or <code class="docutils literal notranslate"><span class="pre">decrypt()</span></code> methods:</p>
+<p>Assuming you have set your starting key (see <a class="reference internal" href="#configuration"><span class="std std-ref">Configuring the Library</span></a>), encrypting and decrypting data is simple - pass the
+appropriate string to the <code class="docutils literal notranslate"><span class="pre">encrypt()</span></code> and/or <code class="docutils literal notranslate"><span class="pre">decrypt()</span></code> methods:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$plainText</span>  <span class="o">=</span> <span class="s1">'This is a plain-text message!'</span><span class="p">;</span>
@@ -379,9 +374,8 @@ and/or <code class="docutils literal notranslate"><span class="pre">decrypt()</s
 <span class="k">echo</span> <span class="nv">$encrypter</span><span class="o">-&gt;</span><span class="na">decrypt</span><span class="p">(</span><span class="nv">$ciphertext</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>And that’s it! The Encryption library will do everything necessary
-for the whole process to be cryptographically secure out-of-the-box.
-You don’t need to worry about it.</p>
+<p>And that’s it! The Encryption library will do everything necessary for the whole process to be cryptographically secure
+out of the box. You don’t need to worry about it.</p>
 <section id="configuring-the-library">
 <span id="configuration"></span><h3><a class="toc-backref" href="#id5" role="doc-backlink">Configuring the Library</a><a class="headerlink" href="#configuring-the-library" title="Link to this heading"></a></h3>
 <p>The example above uses the configuration settings found in <strong>app/Config/Encryption.php</strong>.</p>
@@ -418,9 +412,8 @@ You don’t need to worry about it.</p>
 </tr>
 </tbody>
 </table>
-<p>You can replace the config file’s settings by passing a configuration
-object of your own to the <code class="docutils literal notranslate"><span class="pre">Services</span></code> call. The <code class="docutils literal notranslate"><span class="pre">$config</span></code> variable must be
-an instance of the <code class="docutils literal notranslate"><span class="pre">Config\Encryption</span></code> class.</p>
+<p>You can replace the config file’s settings by passing a configuration object of your own to the <code class="docutils literal notranslate"><span class="pre">Services</span></code> call. The
+<code class="docutils literal notranslate"><span class="pre">$config</span></code> variable must be an instance of the <code class="docutils literal notranslate"><span class="pre">Config\Encryption</span></code> class.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">Config\Encryption</span><span class="p">;</span>
@@ -437,8 +430,8 @@ an instance of the <code class="docutils literal notranslate"><span class="pre">
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 4.3.0.</span></p>
 </div>
-<p>Since v4.3.0, you can decrypt data encrypted with CI3’s Encryption.
-If you need to decrypt such data, use the following settings to maintain compatibility.</p>
+<p>Since v4.3.0, you can decrypt data encrypted with CI3’s Encryption. If you need to decrypt such data, use the following
+settings to maintain compatibility.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">Config\Encryption</span><span class="p">;</span>
@@ -461,8 +454,7 @@ If you need to decrypt such data, use the following settings to maintain compati
 </section>
 <section id="supported-hmac-authentication-algorithms">
 <h4><a class="toc-backref" href="#id7" role="doc-backlink">Supported HMAC Authentication Algorithms</a><a class="headerlink" href="#supported-hmac-authentication-algorithms" title="Link to this heading"></a></h4>
-<p>For HMAC message authentication, the Encryption library supports
-usage of the SHA-2 family of algorithms:</p>
+<p>For HMAC message authentication, the Encryption library supports usage of the SHA-2 family of algorithms:</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Algorithm</p></th>
@@ -489,27 +481,23 @@ usage of the SHA-2 family of algorithms:</p>
 </tr>
 </tbody>
 </table>
-<p>The reason for not including other popular algorithms, such as
-MD5 or SHA1 is that they are no longer considered secure enough
-and as such, we don’t want to encourage their usage.
-If you absolutely need to use them, it is easy to do so via PHP’s
-native <a class="reference external" href="http://php.net/manual/en/function.hash-hmac.php">hash_hmac()</a> function.</p>
-<p>Stronger algorithms of course will be added in the future as they
-appear and become widely available.</p>
+<p>The reason for not including other popular algorithms, such as MD5 or SHA1, is that they are no longer considered secure
+enough and as such, we don’t want to encourage their usage. If you absolutely need to use them, it is easy to do so via
+PHP’s native <a class="reference external" href="http://php.net/manual/en/function.hash-hmac.php">hash_hmac()</a> function.</p>
+<p>Stronger algorithms will, of course, be added in the future as they appear and become widely available.</p>
 </section>
 </section>
 <section id="default-behavior">
 <h3><a class="toc-backref" href="#id8" role="doc-backlink">Default Behavior</a><a class="headerlink" href="#default-behavior" title="Link to this heading"></a></h3>
-<p>By default, the Encryption Library uses the OpenSSL handler. That handler encrypts using
-the AES-256-CTR algorithm, your configured <em>key</em>, and SHA512 HMAC authentication.</p>
+<p>By default, the Encryption Library uses the OpenSSL handler. That handler encrypts using the AES-256-CTR algorithm, your
+configured <em>key</em>, and SHA512 HMAC authentication.</p>
 </section>
 <section id="setting-your-encryption-key">
 <h3><a class="toc-backref" href="#id9" role="doc-backlink">Setting Your Encryption Key</a><a class="headerlink" href="#setting-your-encryption-key" title="Link to this heading"></a></h3>
-<p>Your encryption key <strong>must</strong> be as long as the encryption algorithm in use allows.
-For AES-256, that’s 256 bits or 32 bytes (characters) long.</p>
-<p>The key should be as random as possible, and it <strong>must not</strong> be a regular text string,
-nor the output of a hashing function, etc. To create a proper key,
-you can use the Encryption library’s <code class="docutils literal notranslate"><span class="pre">createKey()</span></code> method.</p>
+<p>Your encryption key <strong>must</strong> be as long as the encryption algorithm in use allows. For AES-256, that’s 256 bits or 32
+bytes (characters) long.</p>
+<p>The key should be as random as possible, and it <strong>must not</strong> be a regular text string, nor the output of a hashing
+function, etc. To create a proper key, you can use the Encryption library’s <code class="docutils literal notranslate"><span class="pre">createKey()</span></code> method.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// $key will be assigned a 32-byte (256-bit) random key</span>
@@ -520,10 +508,9 @@ you can use the Encryption library’s <code class="docutils literal notranslate
 <span class="nv">$key</span> <span class="o">=</span> <span class="nx">\CodeIgniter\Encryption\Encryption</span><span class="o">::</span><span class="na">createKey</span><span class="p">(</span><span class="nx">SODIUM_CRYPTO_SECRETBOX_KEYBYTES</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The key can be stored in <strong>app/Config/Encryption.php</strong>, or you can design
-a storage mechanism of your own and pass the key dynamically when encrypting/decrypting.</p>
-<p>To save your key to your <strong>app/Config/Encryption.php</strong>, open the file
-and set:</p>
+<p>The key can be stored in <strong>app/Config/Encryption.php</strong>, or you can design a storage mechanism of your own and pass the
+key dynamically when encrypting/decrypting.</p>
+<p>To save your key to your <strong>app/Config/Encryption.php</strong>, open the file and set:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -540,10 +527,9 @@ and set:</p>
 </div>
 <section id="encoding-keys-or-results">
 <h4><a class="toc-backref" href="#id10" role="doc-backlink">Encoding Keys or Results</a><a class="headerlink" href="#encoding-keys-or-results" title="Link to this heading"></a></h4>
-<p>You’ll notice that the <code class="docutils literal notranslate"><span class="pre">createKey()</span></code> method outputs binary data, which
-is hard to deal with (i.e., a copy-paste may damage it), so you may use
-<code class="docutils literal notranslate"><span class="pre">bin2hex()</span></code>, or <code class="docutils literal notranslate"><span class="pre">base64_encode</span></code> to work with the key in
-a more friendly manner. For example:</p>
+<p>You’ll notice that the <code class="docutils literal notranslate"><span class="pre">createKey()</span></code> method outputs binary data, which is hard to deal with (i.e., a copy-paste may
+damage it), so you may use <code class="docutils literal notranslate"><span class="pre">bin2hex()</span></code> or <code class="docutils literal notranslate"><span class="pre">base64_encode</span></code> to work with the key in a more friendly manner. For
+example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Get a hex-encoded representation of the key:</span>
@@ -554,8 +540,7 @@ a more friendly manner. For example:</p>
 <span class="nv">$key</span> <span class="o">=</span> <span class="nb">hex2bin</span><span class="p">(</span><span class="s1">'your-hex-encoded-key'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>You might find the same technique useful for the results
-of encryption:</p>
+<p>You might find the same technique useful for the results of encryption:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Encrypt some text &amp; make the results text</span>
@@ -565,11 +550,9 @@ of encryption:</p>
 </section>
 <section id="using-prefixes-in-storing-keys">
 <h4><a class="toc-backref" href="#id11" role="doc-backlink">Using Prefixes in Storing Keys</a><a class="headerlink" href="#using-prefixes-in-storing-keys" title="Link to this heading"></a></h4>
-<p>You may take advantage of two special prefixes in storing your
-encryption keys: <code class="docutils literal notranslate"><span class="pre">hex2bin:</span></code> and <code class="docutils literal notranslate"><span class="pre">base64:</span></code>. When these prefixes
-immediately precede the value of your key, <code class="docutils literal notranslate"><span class="pre">Encryption</span></code> will
-intelligently parse the key and still pass a binary string to
-the library.</p>
+<p>You may take advantage of two special prefixes when storing your encryption keys: <code class="docutils literal notranslate"><span class="pre">hex2bin:</span></code> and <code class="docutils literal notranslate"><span class="pre">base64:</span></code>. When
+these prefixes immediately precede the value of your key, <code class="docutils literal notranslate"><span class="pre">Encryption</span></code> will intelligently parse the key and still pass
+a binary string to the library.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -601,9 +584,9 @@ the library.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 4.7.0.</span></p>
 </div>
-<p>When you need to rotate your encryption key (for security best practices or compliance requirements),
-you can use the <code class="docutils literal notranslate"><span class="pre">previousKeys</span></code> configuration option to maintain the ability to decrypt data encrypted
-with old keys while using a new key for all new encryption operations.</p>
+<p>When you need to rotate your encryption key (for security best practices or compliance requirements), you can use the
+<code class="docutils literal notranslate"><span class="pre">previousKeys</span></code> configuration option to maintain the ability to decrypt data encrypted with old keys while using a new
+key for all new encryption operations.</p>
 <section id="how-it-works">
 <h4><a class="toc-backref" href="#id13" role="doc-backlink">How It Works</a><a class="headerlink" href="#how-it-works" title="Link to this heading"></a></h4>
 <ul class="simple">
@@ -656,30 +639,28 @@ with old keys while using a new key for all new encryption operations.</p>
 </ol>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">previousKeys</span></code> feature is for <strong>decryption fallback only</strong>. All new encryption
-operations always use the current <code class="docutils literal notranslate"><span class="pre">key</span></code>. If you pass an explicit key via the <code class="docutils literal notranslate"><span class="pre">$params</span></code>
-argument to <code class="docutils literal notranslate"><span class="pre">encrypt()</span></code> or <code class="docutils literal notranslate"><span class="pre">decrypt()</span></code>, the previousKeys fallback will not be used.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">previousKeys</span></code> feature is for <strong>decryption fallback only</strong>. All new encryption operations always
+use the current <code class="docutils literal notranslate"><span class="pre">key</span></code>. If you pass an explicit key via the <code class="docutils literal notranslate"><span class="pre">$params</span></code> argument to <code class="docutils literal notranslate"><span class="pre">encrypt()</span></code> or <code class="docutils literal notranslate"><span class="pre">decrypt()</span></code>,
+the previousKeys fallback will not be used.</p>
 </div>
 </section>
 </section>
 <section id="padding">
 <h3><a class="toc-backref" href="#id17" role="doc-backlink">Padding</a><a class="headerlink" href="#padding" title="Link to this heading"></a></h3>
-<p>Sometimes, the length of a message may provide a lot of information about its nature. If
-a message is one of “yes”, “no” and “maybe”, encrypting the message doesn’t help: knowing
-the length is enough to know what the message is.</p>
+<p>Sometimes, the length of a message may provide a lot of information about its nature. If a message is one of “yes”, “no”
+and “maybe”, encrypting the message doesn’t help: knowing the length is enough to know what the message is.</p>
 <p>Padding is a technique to mitigate this, by making the length a multiple of a given block size.</p>
-<p>Padding is implemented in <code class="docutils literal notranslate"><span class="pre">SodiumHandler</span></code> using libsodium’s native <code class="docutils literal notranslate"><span class="pre">sodium_pad</span></code> and <code class="docutils literal notranslate"><span class="pre">sodium_unpad</span></code>
-functions. This requires the use of a padding length (in bytes) that is added to the plaintext
-message prior to encryption, and removed after decryption. Padding is configurable via the
-<code class="docutils literal notranslate"><span class="pre">$blockSize</span></code> property of <code class="docutils literal notranslate"><span class="pre">Config\Encryption</span></code>. This value should be greater than zero.</p>
+<p>Padding is implemented in <code class="docutils literal notranslate"><span class="pre">SodiumHandler</span></code> using libsodium’s native <code class="docutils literal notranslate"><span class="pre">sodium_pad</span></code> and <code class="docutils literal notranslate"><span class="pre">sodium_unpad</span></code> functions. This
+requires the use of a padding length (in bytes) that is added to the plaintext message prior to encryption, and removed
+after decryption. Padding is configurable via the <code class="docutils literal notranslate"><span class="pre">$blockSize</span></code> property of <code class="docutils literal notranslate"><span class="pre">Config\Encryption</span></code>. This value should be
+greater than zero.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>You are advised not to devise your own padding implementation. You must always use
-the more secure implementation of a library. Also, passwords should not be padded. Usage of
-padding in order to hide the length of a password is not recommended. A client willing to send
-a password to a server should hash it instead (even with a single iteration of the hash function).
-This ensures that the length of the transmitted data is constant, and that the server doesn’t
-effortlessly get a copy of the password.</p>
+<p>You are advised not to devise your own padding implementation. You must always use the more secure
+implementation of a library. Also, passwords should not be padded. Usage of padding in order to hide the length of a
+password is not recommended. A client willing to send a password to a server should hash it instead (even with a
+single iteration of the hash function). This ensures that the length of the transmitted data is constant, and that
+the server doesn’t effortlessly get a copy of the password.</p>
 </div>
 </section>
 <section id="encryption-handler-notes">
@@ -688,34 +669,30 @@ effortlessly get a copy of the password.</p>
 <h4><a class="toc-backref" href="#id19" role="doc-backlink">OpenSSL Notes</a><a class="headerlink" href="#openssl-notes" title="Link to this heading"></a></h4>
 <p>The <a class="reference external" href="https://www.php.net/openssl">OpenSSL</a> extension has been a standard part of PHP for a long time.</p>
 <p>CodeIgniter’s OpenSSL handler uses the AES-256-CTR cipher.</p>
-<p>The <em>key</em> your configuration provides is used to derive two other keys, one for
-encryption and one for authentication. This is achieved by way of a technique known
-as an <a class="reference external" href="https://en.wikipedia.org/wiki/HKDF">HMAC-based Key Derivation Function</a> (HKDF).</p>
+<p>The <em>key</em> your configuration provides is used to derive two other keys, one for encryption and one for authentication.
+This is achieved by way of a technique known as an
+<a class="reference external" href="https://en.wikipedia.org/wiki/HKDF">HMAC-based Key Derivation Function</a> (HKDF).</p>
 </section>
 <section id="sodium-notes">
 <h4><a class="toc-backref" href="#id20" role="doc-backlink">Sodium Notes</a><a class="headerlink" href="#sodium-notes" title="Link to this heading"></a></h4>
-<p>The <a class="reference external" href="https://www.php.net/manual/en/book.sodium">Sodium</a> extension is bundled by default in PHP as
-of PHP 7.2.0.</p>
-<p>Sodium uses the algorithms XSalsa20 to encrypt, Poly1305 for MAC, and XS25519 for key exchange in
-sending secret messages in an end-to-end scenario. To encrypt and/or authenticate a string using
-a shared-key, such as symmetric encryption, Sodium uses the XSalsa20 algorithm to encrypt and
-HMAC-SHA512 for the authentication.</p>
+<p>The <a class="reference external" href="https://www.php.net/manual/en/book.sodium">Sodium</a> extension is bundled by default in PHP as of PHP 7.2.0.</p>
+<p>CodeIgniter’s Sodium handler uses <code class="docutils literal notranslate"><span class="pre">sodium_crypto_secretbox()</span></code> for shared-key authenticated encryption. It uses
+XSalsa20 for encryption and Poly1305 for authentication. This handler does not perform public-key key exchange.</p>
 </section>
 </section>
 <section id="message-length">
 <h3><a class="toc-backref" href="#id21" role="doc-backlink">Message Length</a><a class="headerlink" href="#message-length" title="Link to this heading"></a></h3>
 <p>An encrypted string is usually longer than the original, plain-text string (depending on the cipher).</p>
-<p>This is influenced by the cipher algorithm itself, the initialization vector (IV)
-prepended to the cipher-text, and the HMAC authentication message that is also prepended.
-Furthermore, the encrypted message is also Base64-encoded so that it is safe
-for storage and transmission regardless of the character-set in use.</p>
-<p>Keep this information in mind when selecting your data storage mechanism.
-Cookies, for example, can only hold 4K of information.</p>
+<p>This is influenced by the cipher algorithm itself, the initialization vector (IV) prepended to the cipher-text, and the
+HMAC authentication message that is also prepended. Furthermore, the encrypted message is also Base64-encoded so that it
+is safe for storage and transmission regardless of the character set in use.</p>
+<p>Keep this information in mind when selecting your data storage mechanism. Cookies, for example, can only hold 4K of
+information.</p>
 </section>
 <section id="using-the-encryption-service-directly">
 <h3><a class="toc-backref" href="#id22" role="doc-backlink">Using the Encryption Service Directly</a><a class="headerlink" href="#using-the-encryption-service-directly" title="Link to this heading"></a></h3>
-<p>Instead of (or in addition to) using <code class="docutils literal notranslate"><span class="pre">Services</span></code> as described in <a class="reference internal" href="#usage"><span class="std std-ref">Using the Encryption Library</span></a>,
-you can create an “Encrypter” directly, or change the settings of an existing instance.</p>
+<p>Instead of (or in addition to) using <code class="docutils literal notranslate"><span class="pre">Services</span></code> as described in <a class="reference internal" href="#usage"><span class="std std-ref">Using the Encryption Library</span></a>, you can create an “Encrypter” directly,
+or change the settings of an existing instance.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// create an Encryption instance</span>
@@ -725,7 +702,7 @@ you can create an “Encrypter” directly, or change the settings of an existin
 <span class="nv">$encrypter</span> <span class="o">=</span> <span class="nv">$encryption</span><span class="o">-&gt;</span><span class="na">initialize</span><span class="p">(</span><span class="nv">$config</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Remember, that <code class="docutils literal notranslate"><span class="pre">$config</span></code> must be an instance of <code class="docutils literal notranslate"><span class="pre">Config\Encryption</span></code> class.</p>
+<p>Remember that <code class="docutils literal notranslate"><span class="pre">$config</span></code> must be an instance of the <code class="docutils literal notranslate"><span class="pre">Config\Encryption</span></code> class.</p>
 </section>
 </section>
 <section id="class-reference">
@@ -749,8 +726,8 @@ you can create an “Encrypter” directly, or change the settings of an existin
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Creates a cryptographic key by fetching random data from
-the operating system’s sources (<em>i.e.</em> <code class="docutils literal notranslate"><span class="pre">/dev/urandom</span></code>).</p>
+<p>Creates a cryptographic key by fetching random data from the operating system’s sources (<em>i.e.</em>
+<code class="docutils literal notranslate"><span class="pre">/dev/urandom</span></code>).</p>
 </dd></dl>
 
 <dl class="php method">
@@ -808,11 +785,10 @@ the operating system’s sources (<em>i.e.</em> <code class="docutils literal no
 </dd>
 </dl>
 <p>Encrypts the input data and returns its ciphertext.</p>
-<p>If you pass parameters as the second argument, the <code class="docutils literal notranslate"><span class="pre">key</span></code> element
-will be used as the starting key for this operation if <code class="docutils literal notranslate"><span class="pre">$params</span></code>
-is an array; or the starting key may be passed as a string.</p>
-<p>If you are using the SodiumHandler and want to pass a different <code class="docutils literal notranslate"><span class="pre">blockSize</span></code>
-on runtime, pass the <code class="docutils literal notranslate"><span class="pre">blockSize</span></code> key in the <code class="docutils literal notranslate"><span class="pre">$params</span></code> array.</p>
+<p>If you pass parameters as the second argument, the <code class="docutils literal notranslate"><span class="pre">key</span></code> element will be used as the starting key for this
+operation if <code class="docutils literal notranslate"><span class="pre">$params</span></code> is an array. Alternatively, the starting key may be passed as a string.</p>
+<p>If you are using the SodiumHandler and want to pass a different <code class="docutils literal notranslate"><span class="pre">blockSize</span></code> at runtime, pass the <code class="docutils literal notranslate"><span class="pre">blockSize</span></code>
+key in the <code class="docutils literal notranslate"><span class="pre">$params</span></code> array.</p>
 <p>Examples:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -845,12 +821,11 @@ on runtime, pass the <code class="docutils literal notranslate"><span class="pre
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Encryption\Exceptions\EncryptionException</span></code></p>
 </dd>
 </dl>
-<p>Decrypts the input data and returns it in plain-text.</p>
-<p>If you pass parameters as the second argument, the <code class="docutils literal notranslate"><span class="pre">key</span></code> element
-will be used as the starting key for this operation if <code class="docutils literal notranslate"><span class="pre">$params</span></code>
-is an array; or the starting key may be passed as a string.</p>
-<p>If you are using the SodiumHandler and want to pass a different <code class="docutils literal notranslate"><span class="pre">blockSize</span></code>
-on runtime, pass the <code class="docutils literal notranslate"><span class="pre">blockSize</span></code> key in the <code class="docutils literal notranslate"><span class="pre">$params</span></code> array.</p>
+<p>Decrypts the input data and returns it in plain text.</p>
+<p>If you pass parameters as the second argument, the <code class="docutils literal notranslate"><span class="pre">key</span></code> element will be used as the starting key for this
+operation if <code class="docutils literal notranslate"><span class="pre">$params</span></code> is an array. Alternatively, the starting key may be passed as a string.</p>
+<p>If you are using the SodiumHandler and want to pass a different <code class="docutils literal notranslate"><span class="pre">blockSize</span></code> at runtime, pass the <code class="docutils literal notranslate"><span class="pre">blockSize</span></code>
+key in the <code class="docutils literal notranslate"><span class="pre">$params</span></code> array.</p>
 <p>Examples:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -880,7 +855,7 @@ on runtime, pass the <code class="docutils literal notranslate"><span class="pre
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

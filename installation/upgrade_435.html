@@ -319,7 +319,8 @@
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Link to this heading"></a></h2>
 <section id="validation-placeholders">
 <h3><a class="toc-backref" href="#id2" role="doc-backlink">Validation Placeholders</a><a class="headerlink" href="#validation-placeholders" title="Link to this heading"></a></h3>
-<p>To use <a class="reference internal" href="../libraries/validation.html#validation-placeholders"><span class="std std-ref">Validation Placeholders</span></a> securely, please remember to create a validation rule for the field you will use as a placeholder.</p>
+<p>To use <a class="reference internal" href="../libraries/validation.html#validation-placeholders"><span class="std std-ref">Validation Placeholders</span></a> securely, please remember to create a validation rule for the field you will use
+as a placeholder.</p>
 <p>E.g., if you have the following code:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
     <span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="s1">'required|max_length[254]|valid_email|is_unique[users.email,id,{id}]'</span><span class="p">,</span>
@@ -336,38 +337,37 @@
 </section>
 <section id="session-stop">
 <h3><a class="toc-backref" href="#id3" role="doc-backlink">Session::stop()</a><a class="headerlink" href="#session-stop" title="Link to this heading"></a></h3>
-<p>Prior to v4.3.5, the <code class="docutils literal notranslate"><span class="pre">Session::stop()</span></code> method did not destroy the session due
-to a bug. This method has been modified to destroy the session, and now deprecated
-because it is exactly the same as the <code class="docutils literal notranslate"><span class="pre">Session::destroy()</span></code> method. So use the
-<a class="reference internal" href="../libraries/sessions.html#session-destroy"><span class="std std-ref">Session::destroy</span></a> method instead.</p>
-<p>If you have code to depend on the bug, replace it with <code class="docutils literal notranslate"><span class="pre">session_regenerate_id(true)</span></code>.</p>
+<p>Prior to v4.3.5, the <code class="docutils literal notranslate"><span class="pre">Session::stop()</span></code> method did not destroy the session due to a bug. This method has been modified
+to destroy the session, and is now deprecated because it is exactly the same as the <code class="docutils literal notranslate"><span class="pre">Session::destroy()</span></code> method. So
+use the <a class="reference internal" href="../libraries/sessions.html#session-destroy"><span class="std std-ref">Session::destroy</span></a> method instead.</p>
+<p>If you have code that depends on the bug, replace it with <code class="docutils literal notranslate"><span class="pre">session_regenerate_id(true)</span></code>.</p>
 </section>
 </section>
 <section id="project-files">
 <h2><a class="toc-backref" href="#id4" role="doc-backlink">Project Files</a><a class="headerlink" href="#project-files" title="Link to this heading"></a></h2>
-<p>Some files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to
-these files being outside of the <strong>system</strong> scope they will not be changed without your intervention.</p>
-<p>There are some third-party CodeIgniter modules available to assist with merging changes to
-the project space: <a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
+<p>Some files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to these files being outside of
+the <strong>system</strong> scope, they will not be changed without your intervention.</p>
+<p>There are some third-party CodeIgniter modules available to assist with merging changes to the project space:
+<a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
 <section id="content-changes">
 <h3><a class="toc-backref" href="#id5" role="doc-backlink">Content Changes</a><a class="headerlink" href="#content-changes" title="Link to this heading"></a></h3>
-<p>The following files received significant changes (including deprecations or visual adjustments)
-and it is recommended that you merge the updated versions with your application:</p>
+<p>The following files received significant changes (including deprecations or visual adjustments) and it is recommended
+that you merge the updated versions with your application:</p>
 <section id="config">
 <h4>Config<a class="headerlink" href="#config" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p>app/Config/Generators.php</p></li>
+<li><p><strong>app/Config/Generators.php</strong></p></li>
 </ul>
 </section>
 </section>
 <section id="all-changes">
 <h3><a class="toc-backref" href="#id6" role="doc-backlink">All Changes</a><a class="headerlink" href="#all-changes" title="Link to this heading"></a></h3>
-<p>This is a list of all files in the <strong>project space</strong> that received changes;
-many will be simple comments or formatting that have no effect on the runtime:</p>
+<p>This is a list of all files in the <strong>project space</strong> that received changes; many will be simple comments or formatting
+that have no effect on the runtime:</p>
 <ul class="simple">
-<li><p>app/Config/App.php</p></li>
-<li><p>app/Config/Generators.php</p></li>
-<li><p>composer.json</p></li>
+<li><p><strong>app/Config/App.php</strong></p></li>
+<li><p><strong>app/Config/Generators.php</strong></p></li>
+<li><p><strong>composer.json</strong></p></li>
 </ul>
 </section>
 </section>
@@ -385,7 +385,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

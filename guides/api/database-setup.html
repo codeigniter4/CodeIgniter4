@@ -300,17 +300,20 @@
 <li><p><a class="reference internal" href="#create-the-book-model" id="id3">Create the Book model</a></p></li>
 </ul>
 </nav>
-<p>In this section, we set up the data layer by creating a SQLite database table for our <code class="docutils literal notranslate"><span class="pre">books</span></code> resource, seeding it with sample data, and defining a model to access it. By the end, you’ll have a working <code class="docutils literal notranslate"><span class="pre">books</span></code> table populated with example rows.</p>
+<p>In this section, we set up the data layer by creating a SQLite database table for our <code class="docutils literal notranslate"><span class="pre">books</span></code> resource, seeding it
+with sample data, and defining a model to access it. By the end, you’ll have a working <code class="docutils literal notranslate"><span class="pre">books</span></code> table populated with
+example rows.</p>
 <section id="create-the-migrations">
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Create the Migrations</a><a class="headerlink" href="#create-the-migrations" title="Link to this heading"></a></h2>
-<p>Migrations let you version-control your database schema by defining what to apply and how to roll it back. Let’s make ones for simple <code class="docutils literal notranslate"><span class="pre">authors</span></code> and <code class="docutils literal notranslate"><span class="pre">books</span></code> tables.</p>
+<p>Migrations let you version-control your database schema by defining what to apply and how to roll it back. Let’s create
+migrations for simple <code class="docutils literal notranslate"><span class="pre">authors</span></code> and <code class="docutils literal notranslate"><span class="pre">books</span></code> tables.</p>
 <p>Run the Spark command:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark make:migration CreateAuthorsTable</span>
 <span class="go">php spark make:migration CreateBooksTable</span>
 </pre></div>
 </div>
-<p>This creates a new file under <strong>app/Database/Migrations/</strong>.</p>
-<p>Edit <strong>app/Database/Migrations/CreateAuthorsTable.php</strong> to look like this:</p>
+<p>This creates two new files under <strong>app/Database/Migrations/</strong>.</p>
+<p>Edit the generated <strong>app/Database/Migrations/&lt;timestamp&gt;_CreateAuthorsTable.php</strong> file to look like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Database\Migrations</span><span class="p">;</span>
@@ -355,7 +358,7 @@
 </pre></div>
 </div>
 <p>Each author only needs a name for our purposes. We’ve made the name a unique key to prevent duplicates.</p>
-<p>Now, edit <strong>app/Database/Migrations/CreateBooksTable.php</strong> to look like this:</p>
+<p>Now, edit the generated <strong>app/Database/Migrations/&lt;timestamp&gt;_CreateBooksTable.php</strong> file to look like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Database\Migrations</span><span class="p">;</span>
@@ -408,8 +411,9 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>This contains a foreign key reference to the <code class="docutils literal notranslate"><span class="pre">authors</span></code> table. It lets us associate each book with an author and keep author names in one place.</p>
-<p>Now run the migration:</p>
+<p>This contains a foreign key reference to the <code class="docutils literal notranslate"><span class="pre">authors</span></code> table. It lets us associate each book with an author and keep
+author names in one place.</p>
+<p>Now run the migrations:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark migrate</span>
 </pre></div>
 </div>
@@ -417,7 +421,8 @@
 </section>
 <section id="create-a-seeder">
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">Create a seeder</a><a class="headerlink" href="#create-a-seeder" title="Link to this heading"></a></h2>
-<p>Seeders load sample data for development so you have something to work with right away. Here, we’ll add some example books and their authors.</p>
+<p>Seeders load sample data for development so you have something to work with right away. Here, we’ll add some example
+books and their authors.</p>
 <p>Run:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark make:seeder BookSeeder</span>
 </pre></div>
@@ -473,7 +478,8 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>This seeder first inserts authors into the <code class="docutils literal notranslate"><span class="pre">authors</span></code> table, captures their IDs, and then uses those IDs to insert books into the <code class="docutils literal notranslate"><span class="pre">books</span></code> table.</p>
+<p>This seeder first inserts authors into the <code class="docutils literal notranslate"><span class="pre">authors</span></code> table, captures their IDs, and then uses those IDs to insert
+books into the <code class="docutils literal notranslate"><span class="pre">books</span></code> table.</p>
 <p>Then run the seeder:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark db:seed BookSeeder</span>
 </pre></div>
@@ -482,8 +488,9 @@
 </section>
 <section id="create-the-book-model">
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">Create the Book model</a><a class="headerlink" href="#create-the-book-model" title="Link to this heading"></a></h2>
-<p>Models make database access simple and reusable by providing an object-oriented interface to your tables and a fluent query API. Let’s create models for the <code class="docutils literal notranslate"><span class="pre">authors</span></code> and <code class="docutils literal notranslate"><span class="pre">books</span></code> tables.</p>
-<p>Generate one:</p>
+<p>Models make database access simple and reusable by providing an object-oriented interface to your tables and a fluent
+query API. Let’s create models for the <code class="docutils literal notranslate"><span class="pre">authors</span></code> and <code class="docutils literal notranslate"><span class="pre">books</span></code> tables.</p>
+<p>Generate them:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark make:model AuthorModel</span>
 <span class="go">php spark make:model BookModel</span>
 </pre></div>
@@ -522,8 +529,8 @@
 </pre></div>
 </div>
 <p>This tells CodeIgniter which table to use and which fields can be mass-assigned.</p>
-<p>In the next section, we’ll use your new models to power a RESTful API controller.
-You’ll build the <code class="docutils literal notranslate"><span class="pre">/api/books</span></code> endpoint and see how CodeIgniter’s <code class="docutils literal notranslate"><span class="pre">Api\ResponseTrait</span></code> makes CRUD operations easy.</p>
+<p>In the next section, we’ll use your new models to power a RESTful API controller. You’ll build the <code class="docutils literal notranslate"><span class="pre">/api/books</span></code>
+endpoint and see how CodeIgniter’s <code class="docutils literal notranslate"><span class="pre">Api\ResponseTrait</span></code> makes CRUD operations easy.</p>
 </section>
 </section>
 
@@ -539,7 +546,7 @@ You’ll build the <code class="docutils literal notranslate"><span class="pre">
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

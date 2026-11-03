@@ -292,8 +292,7 @@
              
   <section id="filesystem-helper">
 <h1>Filesystem Helper<a class="headerlink" href="#filesystem-helper" title="Link to this heading"></a></h1>
-<p>The Filesystem Helper file contains functions that assist in working with
-files and directories.</p>
+<p>The Filesystem Helper file contains functions that assist in working with files and directories.</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#loading-this-helper" id="id2">Loading this Helper</a></p></li>
@@ -319,7 +318,7 @@ files and directories.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$sourceDir</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Path to the source directory</p></li>
-<li><p><strong>$directoryDepth</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Depth of directories to traverse (<code class="docutils literal notranslate"><span class="pre">0</span></code> = fully recursive, <code class="docutils literal notranslate"><span class="pre">1</span></code> = current dir, etc)</p></li>
+<li><p><strong>$directoryDepth</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Depth of directories to traverse (<code class="docutils literal notranslate"><span class="pre">0</span></code> = fully recursive, <code class="docutils literal notranslate"><span class="pre">1</span></code> = current dir, etc.)</p></li>
 <li><p><strong>$hidden</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether to include hidden paths</p></li>
 </ul>
 </dd>
@@ -340,24 +339,22 @@ files and directories.</p>
 <p class="admonition-title">Note</p>
 <p>Paths are almost always relative to your main <strong>index.php</strong> file.</p>
 </div>
-<p>Sub-folders contained within the directory will be mapped as well. If
-you wish to control the recursion depth, you can do so using the second
-parameter (integer). A depth of <code class="docutils literal notranslate"><span class="pre">1</span></code> will only map the top level directory:</p>
+<p>Sub-folders contained within the directory will be mapped as well. If you wish to control the recursion depth, you
+can do so using the second parameter (integer). A depth of <code class="docutils literal notranslate"><span class="pre">1</span></code> will only map the top-level directory:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$map</span> <span class="o">=</span> <span class="nx">directory_map</span><span class="p">(</span><span class="s1">'./mydirectory/'</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>By default, hidden files will not be included in the returned array and
-hidden directories will be skipped. To override this behavior, you may
-set a third parameter to <code class="docutils literal notranslate"><span class="pre">true</span></code> (boolean):</p>
+<p>By default, hidden files will not be included in the returned array and hidden directories will be skipped. To
+override this behavior, you may set the third parameter to <code class="docutils literal notranslate"><span class="pre">true</span></code> (boolean):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$map</span> <span class="o">=</span> <span class="nx">directory_map</span><span class="p">(</span><span class="s1">'./mydirectory/'</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Each folder name will be an array index, while its contained files will
-be numerically indexed. Here is an example of a typical array:</p>
+<p>Each folder name will be an array index, while its contained files will be numerically indexed. Here is an example
+of a typical array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">Array</span> <span class="p">(</span>
     <span class="p">[</span><span class="nx">libraries</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="k">Array</span>
         <span class="p">(</span>
@@ -401,8 +398,8 @@ be numerically indexed. Here is an example of a typical array:</p>
 </ul>
 </dd>
 </dl>
-<p>Recursively copies the files and directories of the origin directory
-into the target directory, i.e. “mirror” its contents.</p>
+<p>Recursively copies the files and directories of the origin directory into the target directory, i.e., “mirrors” its
+contents.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -423,7 +420,7 @@ into the target directory, i.e. “mirror” its contents.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$path</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – File path</p></li>
-<li><p><strong>$data</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Data to write to file</p></li>
+<li><p><strong>$data</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Data to write to the file</p></li>
 <li><p><strong>$mode</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – <code class="docutils literal notranslate"><span class="pre">fopen()</span></code> mode</p></li>
 </ul>
 </dd>
@@ -434,8 +431,7 @@ into the target directory, i.e. “mirror” its contents.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
-<p>Writes data to the file specified in the path. If the file does not exist then the
-function will create it.</p>
+<p>Writes data to the file specified in the path. If the file does not exist, then the function will create it.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -454,19 +450,17 @@ function will create it.</p>
 <span class="nx">write_file</span><span class="p">(</span><span class="s1">'./path/to/file.php'</span><span class="p">,</span> <span class="nv">$data</span><span class="p">,</span> <span class="s1">'r+'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The default mode is <code class="docutils literal notranslate"><span class="pre">'wb'</span></code>. Please see <a class="reference external" href="https://www.php.net/manual/en/function.fopen.php">fopen()</a> in the PHP manual
-for mode options.</p>
+<p>The default mode is <code class="docutils literal notranslate"><span class="pre">'wb'</span></code>. Please see <a class="reference external" href="https://www.php.net/manual/en/function.fopen.php">fopen()</a> in the PHP
+manual for mode options.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In order for this function to write data to a file, its permissions must
-be set such that it is writable. If the file does not already exist,
-then the directory containing it must be writable.</p>
+<p>In order for this function to write data to a file, its permissions must be set such that it is writable.
+If the file does not already exist, then the directory containing it must be writable.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The path is relative to your main site <strong>index.php</strong> file, NOT your
-controller or view files. CodeIgniter uses a front controller so paths
-are always relative to the main site index.</p>
+<p>The path is relative to your main site <strong>index.php</strong> file, NOT your controller or view files. CodeIgniter
+uses a front controller, so paths are always relative to the main site index.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -500,8 +494,8 @@ are always relative to the main site index.</p>
 <span class="nx">delete_files</span><span class="p">(</span><span class="s1">'./path/to/directory/'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>If the second parameter is set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, any directories contained within the supplied
-root path will be deleted as well.</p>
+<p>If the second parameter is set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, any directories contained within the supplied root path will be deleted
+as well.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -533,10 +527,9 @@ root path will be deleted as well.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span></p>
 </dd>
 </dl>
-<p>Takes a server path as input and returns an array containing the names of all files
-contained within it. The file path can optionally be added to the file names by setting
-the second parameter to ‘relative’ for relative paths or any other non-empty value for
-a full file path.</p>
+<p>Takes a server path as input and returns an array containing the names of all files contained within it. The file
+path can optionally be added to the file names by setting the second parameter to <code class="docutils literal notranslate"><span class="pre">null</span></code> for relative paths or
+<code class="docutils literal notranslate"><span class="pre">true</span></code> for a full file path.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Prior to v4.4.4, due to a bug, this function did not follow symlink folders.</p>
@@ -566,10 +559,9 @@ a full file path.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span></p>
 </dd>
 </dl>
-<p>Reads the specified directory and builds an array containing the filenames, filesize,
-dates, and permissions. Sub-folders contained within the specified path are only read
-if forced by sending the second parameter to false, as this can be an intensive
-operation.</p>
+<p>Reads the specified directory and builds an array containing the filenames, filesize, dates, and permissions.
+Sub-folders contained within the specified path are only read if forced by setting the second parameter to false, as
+this can be an intensive operation.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -585,20 +577,19 @@ operation.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$file</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – File path</p></li>
-<li><p><strong>$returnedValues</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|string</span></code></span>) – What type of info to return to be passed as array or comma separated string</p></li>
+<li><p><strong>$returnedValues</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|string</span></code></span>) – What type of info to return, passed as an array or comma-separated string</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An array containing info on the specified file or false on failure</p>
+<dd class="field-even"><p>An array containing info on the specified file, or null if it is not a file</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span></p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|null</span></code></span></p>
 </dd>
 </dl>
-<p>Given a file and path, returns (optionally) the <em>name</em>, <em>path</em>, <em>size</em> and <em>date modified</em>
-information attributes for a file. Second parameter allows you to explicitly declare what
-information you want returned.</p>
-<p>Valid <code class="docutils literal notranslate"><span class="pre">$returnedValues</span></code> options are: <code class="docutils literal notranslate"><span class="pre">name</span></code>, <code class="docutils literal notranslate"><span class="pre">size</span></code>, <code class="docutils literal notranslate"><span class="pre">date</span></code>, <code class="docutils literal notranslate"><span class="pre">readable</span></code>, <code class="docutils literal notranslate"><span class="pre">writeable</span></code>,
+<p>Given a file and path, returns (optionally) the <em>name</em>, <em>path</em>, <em>size</em> and <em>date modified</em> information attributes
+for a file. The second parameter allows you to explicitly declare what information you want returned.</p>
+<p>Valid <code class="docutils literal notranslate"><span class="pre">$returnedValues</span></code> options are: <code class="docutils literal notranslate"><span class="pre">name</span></code>, <code class="docutils literal notranslate"><span class="pre">server_path</span></code>, <code class="docutils literal notranslate"><span class="pre">size</span></code>, <code class="docutils literal notranslate"><span class="pre">date</span></code>, <code class="docutils literal notranslate"><span class="pre">readable</span></code>, <code class="docutils literal notranslate"><span class="pre">writable</span></code>,
 <code class="docutils literal notranslate"><span class="pre">executable</span></code> and <code class="docutils literal notranslate"><span class="pre">fileperms</span></code>.</p>
 </dd></dl>
 
@@ -618,8 +609,9 @@ information you want returned.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Takes numeric permissions (such as is returned by <a class="reference external" href="https://www.php.net/manual/en/function.fileperms.php">fileperms()</a>) and returns
-standard symbolic notation of file permissions.</p>
+<p>Takes numeric permissions (such as is returned by
+<a class="reference external" href="https://www.php.net/manual/en/function.fileperms.php">fileperms()</a>) and returns standard symbolic notation of
+file permissions.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nx">symbolic_permissions</span><span class="p">(</span><span class="nb">fileperms</span><span class="p">(</span><span class="s1">'./index.php'</span><span class="p">));</span>  <span class="c1">// -rw-r--r--</span>
@@ -643,8 +635,9 @@ standard symbolic notation of file permissions.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Takes numeric permissions (such as is returned by <a class="reference external" href="https://www.php.net/manual/en/function.fileperms.php">fileperms()</a>) and returns
-a three character octal notation of file permissions.</p>
+<p>Takes numeric permissions (such as is returned by
+<a class="reference external" href="https://www.php.net/manual/en/function.fileperms.php">fileperms()</a>) and returns a three-character octal notation
+of file permissions.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nx">octal_permissions</span><span class="p">(</span><span class="nb">fileperms</span><span class="p">(</span><span class="s1">'./index.php'</span><span class="p">));</span> <span class="c1">// 644</span>
@@ -694,9 +687,8 @@ a three character octal notation of file permissions.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>This function will return a server path without symbolic links or
-relative directory structures. An optional second argument will
-cause an error to be triggered if the path cannot be resolved.</p>
+<p>This function will return a server path without symbolic links or relative directory structures. An optional second
+argument will cause an error to be triggered if the path cannot be resolved.</p>
 <p>Examples:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -732,7 +724,7 @@ cause an error to be triggered if the path cannot be resolved.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

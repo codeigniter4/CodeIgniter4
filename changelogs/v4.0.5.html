@@ -307,10 +307,10 @@
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Enhancements</a><a class="headerlink" href="#enhancements" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p>New URL helper function <a class="reference internal" href="../helpers/url_helper.html#url_to" title="url_to"><code class="xref php php-func docutils literal notranslate"><span class="pre">url_to()</span></code></a> which creates absolute URLs based on controllers.</p></li>
-<li><p>New Model option: <code class="docutils literal notranslate"><span class="pre">$useAutoIncrement</span></code> which when set to <code class="docutils literal notranslate"><span class="pre">false</span></code> allows you to provide your own primary key for each record in the table. Handy when we want to implement 1:1 relation or use UUIDs for our model.</p></li>
-<li><p>New URL helper function <a class="reference internal" href="../helpers/url_helper.html#url_is" title="url_is"><code class="xref php php-func docutils literal notranslate"><span class="pre">url_is()</span></code></a> which allows you to check the current URL to see if matches the given string.</p></li>
+<li><p>New Model option: <code class="docutils literal notranslate"><span class="pre">$useAutoIncrement</span></code> which when set to <code class="docutils literal notranslate"><span class="pre">false</span></code> allows you to provide your own primary key for each record in the table. Handy when we want to implement a 1:1 relation or use UUIDs for our model.</p></li>
+<li><p>New URL helper function <a class="reference internal" href="../helpers/url_helper.html#url_is" title="url_is"><code class="xref php php-func docutils literal notranslate"><span class="pre">url_is()</span></code></a> which allows you to check the current URL to see if it matches the given string.</p></li>
 <li><p>Services now have their config parameters strictly typehinted. This will ensure no one will pass a different config instance. If you need to pass a new config with additional properties, you need to extend that particular config.</p></li>
-<li><p>Support for setting SameSite attribute on Session and CSRF cookies has been added. For security and compatibility with latest browser versions, the default setting is <code class="docutils literal notranslate"><span class="pre">Lax</span></code>.</p></li>
+<li><p>Support for setting the SameSite attribute on Session and CSRF cookies has been added. For security and compatibility with the latest browser versions, the default setting is <code class="docutils literal notranslate"><span class="pre">Lax</span></code>.</p></li>
 <li><p>Guessing file extensions from mime type in <code class="docutils literal notranslate"><span class="pre">Config\Mimes::guessExtensionFromType()</span></code> now only reverse searches the <code class="docutils literal notranslate"><span class="pre">$mimes</span></code> array if no extension is proposed (i.e., usually not for uploaded files).</p></li>
 <li><p>The getter functions for file extensions of uploaded files now have different fallback values (<code class="docutils literal notranslate"><span class="pre">UploadedFile::getClientExtension()</span></code> for <code class="docutils literal notranslate"><span class="pre">UploadedFile::getExtension()</span></code> and <code class="docutils literal notranslate"><span class="pre">''</span></code> for <code class="docutils literal notranslate"><span class="pre">UploadedFile::guessExtension()</span></code>). This is a security fix and makes the process less dependent on the client.</p></li>
 <li><p>The Cache <code class="docutils literal notranslate"><span class="pre">FileHandler</span></code> now allows setting the file permissions mode via <code class="docutils literal notranslate"><span class="pre">Config\Cache</span></code>.</p></li>
@@ -319,14 +319,14 @@
 <section id="changes">
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">Changes</a><a class="headerlink" href="#changes" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p>System messages defined in <strong>system/Language/en/</strong> are now strictly for internal framework use and are not covered by backwards compatibility (BC) promise. Users may use these messages in their applications but at their own risks.</p></li>
+<li><p>System messages defined in <strong>system/Language/en/</strong> are now strictly for internal framework use and are not covered by the backwards compatibility (BC) promise. Users may use these messages in their applications but at their own risk.</p></li>
 </ul>
 </section>
 <section id="deprecations">
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">Deprecations</a><a class="headerlink" href="#deprecations" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">BaseCommand::getPad()</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">BaseCommand::setPad()</span></code>.</p></li>
-<li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Controller::loadHelpers()</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">helper()</span></code> function.</p></li>
+<li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Controller::loadHelpers()</span></code> in favor of the <code class="docutils literal notranslate"><span class="pre">helper()</span></code> function.</p></li>
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">Config\Format::getFormatter()</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Format\Format::getFormatter()</span></code></p></li>
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Security\Security::CSRFVerify()</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Security\Security::verify()</span></code></p></li>
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Security\Security::getCSRFHash()</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Security\Security::getHash()</span></code></p></li>
@@ -338,7 +338,7 @@
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">Config\App::$CSRFRegenerate</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">Config\Security::$regenerate</span></code></p></li>
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">Config\App::$CSRFRedirect</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">Config\Security::$redirect</span></code></p></li>
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">Config\App::$CSRFSameSite</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">Config\Security::$samesite</span></code></p></li>
-<li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">migrate:create</span></code> command in favor of <code class="docutils literal notranslate"><span class="pre">make:migration</span></code> command.</p></li>
+<li><p>Deprecated the <code class="docutils literal notranslate"><span class="pre">migrate:create</span></code> command in favor of the <code class="docutils literal notranslate"><span class="pre">make:migration</span></code> command.</p></li>
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\ModelFactory</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Config\Factories::models()</span></code></p></li>
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Config\Config</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Config\Factories::config()</span></code></p></li>
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::getHeader()</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">header()</span></code> to prepare for PSR-7</p></li>
@@ -349,8 +349,8 @@
 <section id="bugs-fixed">
 <h2><a class="toc-backref" href="#id4" role="doc-backlink">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p>Fixed a bug in <code class="docutils literal notranslate"><span class="pre">Entity</span></code> class where declaring class parameters was preventing data propagation to the <code class="docutils literal notranslate"><span class="pre">attributes</span></code> array.</p></li>
-<li><p>Handling for the environment variable <code class="docutils literal notranslate"><span class="pre">encryption.key</span></code> has changed. Previously, explicit function calls, like <code class="docutils literal notranslate"><span class="pre">getenv('encryption.key')</span></code> or <code class="docutils literal notranslate"><span class="pre">env('encryption.key')</span></code> where the value has the special prefix <code class="docutils literal notranslate"><span class="pre">hex2bin:</span></code> returns an automatically converted binary string. This is now changed to just return the character string with the prefix. This change was due to incompatibility with handling binary strings in environment variables on Windows platforms. However, accessing <code class="docutils literal notranslate"><span class="pre">$key</span></code> using <code class="docutils literal notranslate"><span class="pre">Encryption</span></code> class config remains unchanged and still returns a binary string.</p></li>
+<li><p>Fixed a bug in the <code class="docutils literal notranslate"><span class="pre">Entity</span></code> class where declaring class parameters was preventing data propagation to the <code class="docutils literal notranslate"><span class="pre">attributes</span></code> array.</p></li>
+<li><p>Handling for the environment variable <code class="docutils literal notranslate"><span class="pre">encryption.key</span></code> has changed. Previously, explicit function calls, like <code class="docutils literal notranslate"><span class="pre">getenv('encryption.key')</span></code> or <code class="docutils literal notranslate"><span class="pre">env('encryption.key')</span></code> where the value has the special prefix <code class="docutils literal notranslate"><span class="pre">hex2bin:</span></code>, returned an automatically converted binary string. These calls now return the character string with the prefix. This change was due to incompatibility with handling binary strings in environment variables on Windows platforms. However, accessing <code class="docutils literal notranslate"><span class="pre">$key</span></code> using the <code class="docutils literal notranslate"><span class="pre">Encryption</span></code> class config remains unchanged and still returns a binary string.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Config\Services</span></code> (in <strong>app/Config/Services.php</strong>) now extends <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Config\BaseService</span></code> to allow proper discovery of third-party services.</p></li>
 </ul>
 <p>See the repo’s
@@ -371,7 +371,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

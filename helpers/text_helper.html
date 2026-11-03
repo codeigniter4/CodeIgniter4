@@ -292,7 +292,7 @@
              
   <section id="text-helper">
 <h1>Text Helper<a class="headerlink" href="#text-helper" title="Link to this heading"></a></h1>
-<p>The Text Helper file contains functions that assist in working with Text.</p>
+<p>The Text Helper file contains functions that assist in working with text.</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#loading-this-helper" id="id1">Loading this Helper</a></p></li>
@@ -328,10 +328,10 @@
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Generates a random string based on the type and length you specify.
-Useful for creating passwords or generating random hashes.</p>
-<p>The first parameter specifies the type of string, the second parameter
-specifies the length. The following choices are available:</p>
+<p>Generates a random string based on the type and length you specify. Useful for creating passwords or generating
+random hashes.</p>
+<p>The first parameter specifies the type of string, and the second parameter specifies the length. The following
+choices are available:</p>
 <ul class="simple">
 <li><p><strong>alpha</strong>: A string with lower and uppercase letters only.</p></li>
 <li><p><strong>alnum</strong>: Alphanumeric string with lower and uppercase characters.</p></li>
@@ -341,15 +341,13 @@ specifies the length. The following choices are available:</p>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>When you use <strong>crypto</strong>, you must set an even number to the second parameter.
-Since v4.2.2, if you set an odd number, <code class="docutils literal notranslate"><span class="pre">InvalidArgumentException</span></code> will be thrown.</p>
+<p>When you use <strong>crypto</strong>, you must pass an even number as the second parameter. Since v4.2.2, if you set an
+odd number, <code class="docutils literal notranslate"><span class="pre">InvalidArgumentException</span></code> will be thrown.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Since v4.3.3, <strong>alpha</strong>, <strong>alnum</strong> and <strong>nozero</strong> use <code class="docutils literal notranslate"><span class="pre">random_byte()</span></code>,
-and <strong>numeric</strong> uses <code class="docutils literal notranslate"><span class="pre">random_int()</span></code>.
-In the previous versions, it used <code class="docutils literal notranslate"><span class="pre">str_shuffle()</span></code> that is not
-cryptographically secure.</p>
+<p>Since v4.3.3, <strong>alpha</strong>, <strong>alnum</strong> and <strong>nozero</strong> use <code class="docutils literal notranslate"><span class="pre">random_bytes()</span></code>, and <strong>numeric</strong> uses
+<code class="docutils literal notranslate"><span class="pre">random_int()</span></code>. In previous versions, they used <code class="docutils literal notranslate"><span class="pre">str_shuffle()</span></code>, which is not cryptographically secure.</p>
 </div>
 <p>Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -377,9 +375,8 @@ cryptographically secure.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Increments a string by appending a number to it or increasing the
-number. Useful for creating “copies” or a file or duplicating database
-content which has unique titles or slugs.</p>
+<p>Increments a string by appending a number to it or increasing the number. Useful for creating “copies” of a file or
+duplicating database content which has unique titles or slugs.</p>
 <p>Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -406,8 +403,7 @@ content which has unique titles or slugs.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
-<p>Allows two or more items to be alternated between, when cycling through
-a loop. Example:</p>
+<p>Allows two or more items to be alternated between, when cycling through a loop. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
@@ -415,8 +411,7 @@ a loop. Example:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>You can add as many parameters as you want, and with each iteration of
-your loop the next item will be returned.</p>
+<p>You can add as many parameters as you want, and with each iteration of your loop the next item will be returned.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
@@ -426,8 +421,8 @@ your loop the next item will be returned.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>To use multiple separate calls to this function simply call the
-function with no arguments to re-initialize.</p>
+<p>To use multiple separate calls to this function, simply call the function with no arguments to
+re-initialize.</p>
 </div>
 </dd></dl>
 
@@ -447,8 +442,8 @@ function with no arguments to re-initialize.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Converts double slashes in a string to a single slash, except those
-found in URL protocol prefixes (e.g., http&amp;#58;//).</p>
+<p>Converts double slashes in a string to a single slash, except those found in URL protocol prefixes (e.g.,
+<code class="docutils literal notranslate"><span class="pre">http://</span></code>).</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -497,9 +492,8 @@ found in URL protocol prefixes (e.g., http&amp;#58;//).</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>For historical reasons, this function will also accept
-and handle string inputs. This however makes it just an
-alias for <code class="docutils literal notranslate"><span class="pre">stripslashes()</span></code>.</p>
+<p>For historical reasons, this function will also accept and handle string inputs. However, this makes it
+just an alias for <code class="docutils literal notranslate"><span class="pre">stripslashes()</span></code>.</p>
 </div>
 </dd></dl>
 
@@ -521,16 +515,15 @@ alias for <code class="docutils literal notranslate"><span class="pre">stripslas
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Reduces multiple instances of a particular character occurring directly
-after each other. Example:</p>
+<p>Reduces multiple instances of a particular character occurring directly after each other. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$string</span> <span class="o">=</span> <span class="s1">'Fred, Bill,, Joe, Jimmy'</span><span class="p">;</span>
 <span class="nv">$string</span> <span class="o">=</span> <span class="nx">reduce_multiples</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span> <span class="c1">// results in "Fred, Bill, Joe, Jimmy"</span>
 </pre></div>
 </div>
-<p>If the third parameter is set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, it will remove occurrences of the
-character at the beginning and the end of the string. Example:</p>
+<p>If the third parameter is set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, it will remove occurrences of the character at the beginning and the end
+of the string. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$string</span> <span class="o">=</span> <span class="s1">',Fred, Bill,, Joe, Jimmy,'</span><span class="p">;</span>
@@ -555,8 +548,7 @@ character at the beginning and the end of the string. Example:</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Converts single and double quotes in a string to the corresponding HTML
-entities. Example:</p>
+<p>Converts single and double quotes in a string to the corresponding HTML entities. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$string</span> <span class="o">=</span> <span class="s2">"Joe's </span><span class="se">\"</span><span class="s2">dinner</span><span class="se">\"</span><span class="s2">"</span><span class="p">;</span>
@@ -616,8 +608,7 @@ entities. Example:</p>
 <span class="c1">// Returns:  Here is a nice</span>
 </pre></div>
 </div>
-<p>The third parameter is an optional suffix added to the string. By
-default it adds an ellipsis.</p>
+<p>The third parameter is an optional suffix added to the string. By default, it adds an ellipsis.</p>
 </dd></dl>
 
 <dl class="php function">
@@ -638,9 +629,8 @@ default it adds an ellipsis.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Truncates a string to the number of <em>characters</em> specified. It
-maintains the integrity of words so the character count may be slightly
-more or less than what you specify.</p>
+<p>Truncates a string to the number of <em>characters</em> specified. It maintains the integrity of words, so the character
+count may be slightly more or less than what you specify.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -649,12 +639,11 @@ more or less than what you specify.</p>
 <span class="c1">// Returns:  Here is a nice text string</span>
 </pre></div>
 </div>
-<p>The third parameter is an optional suffix added to the string, if
-undeclared this helper uses an ellipsis.</p>
+<p>The third parameter is an optional suffix added to the string. If undeclared, this helper uses an ellipsis.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you need to truncate to an exact number of characters, please
-see the <a class="reference internal" href="#ellipsize" title="ellipsize"><code class="xref php php-func docutils literal notranslate"><span class="pre">ellipsize()</span></code></a> function below.</p>
+<p>If you need to truncate to an exact number of characters, please see the <a class="reference internal" href="#ellipsize" title="ellipsize"><code class="xref php php-func docutils literal notranslate"><span class="pre">ellipsize()</span></code></a> function
+below.</p>
 </div>
 </dd></dl>
 
@@ -674,13 +663,11 @@ see the <a class="reference internal" href="#ellipsize" title="ellipsize"><code 
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Converts ASCII values to character entities, including high ASCII and MS
-Word characters that can cause problems when used in a web page, so that
-they can be shown consistently regardless of browser settings or stored
-reliably in a database. There is some dependence on your server’s
-supported character sets, so it may not be 100% reliable in all cases,
-but for the most part, it should correctly identify characters outside
-the normal range (like accented characters).</p>
+<p>Converts ASCII values to character entities, including high ASCII and MS Word characters that can cause problems
+when used in a web page, so that they can be shown consistently regardless of browser settings or stored reliably in
+a database. There is some dependence on your server’s supported character sets, so it may not be 100% reliable in
+all cases, but for the most part, it should correctly identify characters outside the normal range (like accented
+characters).</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -706,8 +693,7 @@ the normal range (like accented characters).</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>This function does the opposite of <a class="reference internal" href="#ascii_to_entities" title="ascii_to_entities"><code class="xref php php-func docutils literal notranslate"><span class="pre">ascii_to_entities()</span></code></a>.
-It turns character entities back into ASCII.</p>
+<p>This function does the opposite of <a class="reference internal" href="#ascii_to_entities" title="ascii_to_entities"><code class="xref php php-func docutils literal notranslate"><span class="pre">ascii_to_entities()</span></code></a>. It turns character entities back into ASCII.</p>
 </dd></dl>
 
 <dl class="php function">
@@ -726,9 +712,8 @@ It turns character entities back into ASCII.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Transliterates high ASCII characters to low ASCII equivalents. Useful
-when non-English characters need to be used where only standard ASCII
-characters are safely used, for instance, in URLs.</p>
+<p>Transliterates high ASCII characters to low ASCII equivalents. Useful when non-English characters need to be used
+where only standard ASCII characters are safely used, for instance, in URLs.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -737,9 +722,8 @@ characters are safely used, for instance, in URLs.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This function uses a companion config file
-<strong>app/Config/ForeignCharacters.php</strong> to define the to and
-from array for transliteration.</p>
+<p>This function uses a companion config file <strong>app/Config/ForeignCharacters.php</strong> to define the to and from
+array for transliteration.</p>
 </div>
 </dd></dl>
 
@@ -761,11 +745,9 @@ from array for transliteration.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Enables you to censor words within a text string. The first parameter
-will contain the original string. The second will contain an array of
-words which you disallow. The third (optional) parameter can contain
-a replacement value for the words. If not specified they are replaced
-with pound signs: ####.</p>
+<p>Enables you to censor words within a text string. The first parameter will contain the original string. The second
+will contain an array of words which you disallow. The third (optional) parameter can contain a replacement value
+for the words. If not specified, they are replaced with pound signs: ####.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -797,8 +779,8 @@ with pound signs: ####.</p>
 <span class="nv">$string</span> <span class="o">=</span> <span class="nx">highlight_code</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The function uses PHP’s <code class="docutils literal notranslate"><span class="pre">highlight_string()</span></code> function, so the
-colors used are the ones specified in your php.ini file.</p>
+<p>The function uses PHP’s <code class="docutils literal notranslate"><span class="pre">highlight_string()</span></code> function, so the colors used are the ones specified in your
+<strong>php.ini</strong> file.</p>
 </dd></dl>
 
 <dl class="php function">
@@ -820,10 +802,9 @@ colors used are the ones specified in your php.ini file.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Will highlight a phrase within a text string. The first parameter will
-contain the original string, the second will contain the phrase you wish
-to highlight. The third and fourth parameters will contain the
-opening/closing HTML tags you would like the phrase wrapped in.</p>
+<p>Will highlight a phrase within a text string. The first parameter will contain the original string, and the second
+will contain the phrase you wish to highlight. The third and fourth parameters will contain the opening/closing HTML
+tags you would like the phrase wrapped in.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -844,7 +825,7 @@ such browsers:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">mark</span> <span class="p">{</span>
     <span class="nx">background</span><span class="o">:</span> <span class="c1">#ff0;</span>
     <span class="nx">color</span><span class="o">:</span> <span class="c1">#000;</span>
-<span class="p">};</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div>
@@ -867,8 +848,7 @@ such browsers:</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Wraps text at the specified <em>character</em> count while maintaining
-complete words.</p>
+<p>Wraps text at the specified <em>character</em> count while maintaining complete words.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -906,15 +886,11 @@ complete words.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>This function will strip tags from a string, split it at a defined
-maximum length, and insert an ellipsis.</p>
-<p>The first parameter is the string to ellipsize, the second is the number
-of characters in the final string. The third parameter is where in the
-string the ellipsis should appear from 0 - 1, left to right. For
-example. a value of 1 will place the ellipsis at the right of the
-string, .5 in the middle, and 0 at the left.</p>
-<p>An optional fourth parameter is the kind of ellipsis. By default,
-&amp;hellip; will be inserted.</p>
+<p>This function will strip tags from a string, split it at a defined maximum length, and insert an ellipsis.</p>
+<p>The first parameter is the string to ellipsize, and the second is the number of characters in the final string. The
+third parameter is where in the string the ellipsis should appear from 0 - 1, left to right. For example, a value of
+1 will place the ellipsis at the right of the string, .5 in the middle, and 0 at the left.</p>
+<p>An optional fourth parameter is the kind of ellipsis. By default, <code class="docutils literal notranslate"><span class="pre">&amp;hellip;</span></code> will be inserted.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -934,9 +910,9 @@ string, .5 in the middle, and 0 at the left.</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$text</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Text to extract an excerpt</p></li>
+<li><p><strong>$text</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Text to extract an excerpt from</p></li>
 <li><p><strong>$phrase</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Phrase or word to extract the text around</p></li>
-<li><p><strong>$radius</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Number of characters before and after $phrase</p></li>
+<li><p><strong>$radius</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Number of characters before and after <code class="docutils literal notranslate"><span class="pre">$phrase</span></code></p></li>
 <li><p><strong>$ellipsis</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – What to use as the ellipsis character</p></li>
 </ul>
 </dd>
@@ -947,13 +923,11 @@ string, .5 in the middle, and 0 at the left.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>This function will extract $radius number of characters before and after the
-central $phrase with an ellipsis before and after.</p>
-<p>The first parameter is the text to extract an excerpt from, the second is the
-central word or phrase to count before and after. The third parameter is the
-number of characters to count before and after the central phrase. If no phrase
-passed, the excerpt will include the first $radius characters with the ellipsis
-at the end.</p>
+<p>This function will extract <code class="docutils literal notranslate"><span class="pre">$radius</span></code> number of characters before and after the central <code class="docutils literal notranslate"><span class="pre">$phrase</span></code> with an
+ellipsis before and after.</p>
+<p>The first parameter is the text to extract an excerpt from, and the second is the central word or phrase to count
+before and after. The third parameter is the number of characters to count before and after the central phrase. If
+no phrase is passed, the excerpt will include the first <code class="docutils literal notranslate"><span class="pre">$radius</span></code> characters with the ellipsis at the end.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -992,7 +966,7 @@ at the end.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

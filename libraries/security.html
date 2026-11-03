@@ -326,9 +326,9 @@
 </nav>
 <section id="loading-the-library">
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">Loading the Library</a><a class="headerlink" href="#loading-the-library" title="Link to this heading"></a></h2>
-<p>If your only interest in loading the library is to handle CSRF protection, then you will never need to load it,
-as it runs as a filter and has no manual interaction.</p>
-<p>If you find a case where you do need direct access though, you may load it through the Services file:</p>
+<p>If your only interest in loading the library is to handle CSRF protection, then you will never need to load it, as it
+runs as a filter and has no manual interaction.</p>
+<p>If you find a case where you do need direct access, though, you may load it through the Services file:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$security</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'security'</span><span class="p">);</span>
@@ -339,13 +339,13 @@ as it runs as a filter and has no manual interaction.</p>
 <span id="cross-site-request-forgery"></span><h2><a class="toc-backref" href="#id4" role="doc-backlink">Cross-Site Request Forgery (CSRF)</a><a class="headerlink" href="#cross-site-request-forgery-csrf" title="Link to this heading"></a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>The CSRF Protection is only available for <strong>POST/PUT/PATCH/DELETE</strong> requests.
-Requests for other methods are not protected.</p>
+<p>The CSRF Protection is only available for <strong>POST/PUT/PATCH/DELETE</strong> requests. Requests for other methods
+are not protected.</p>
 </div>
 <section id="prerequisite">
 <h3><a class="toc-backref" href="#id5" role="doc-backlink">Prerequisite</a><a class="headerlink" href="#prerequisite" title="Link to this heading"></a></h3>
-<p>When you use the CodeIgniter’s CSRF protection, you still need to code as the following.
-Otherwise, the CSRF protection may be bypassed.</p>
+<p>When you use CodeIgniter’s CSRF protection, you still need to code as follows. Otherwise, the CSRF protection may be
+bypassed.</p>
 <section id="when-auto-routing-is-disabled">
 <h4><a class="toc-backref" href="#id6" role="doc-backlink">When Auto-Routing is Disabled</a><a class="headerlink" href="#when-auto-routing-is-disabled" title="Link to this heading"></a></h4>
 <p>Do one of the following:</p>
@@ -361,9 +361,8 @@ Otherwise, the CSRF protection may be bypassed.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <a class="reference internal" href="../incoming/incomingrequest.html#incomingrequest-is"><span class="std std-ref">$this-&gt;request-&gt;is()</span></a> method can be used since v4.3.0.
-In previous versions, you need to use
-<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(strtolower($this-&gt;request-&gt;getMethod())</span> <span class="pre">!==</span> <span class="pre">'post')</span></code>.</p>
+<p>The <a class="reference internal" href="../incoming/incomingrequest.html#incomingrequest-is"><span class="std std-ref">$this-&gt;request-&gt;is()</span></a> method can be used since v4.3.0. In previous versions,
+you need to use <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(strtolower($this-&gt;request-&gt;getMethod())</span> <span class="pre">!==</span> <span class="pre">'post')</span></code>.</p>
 </div>
 </section>
 <section id="when-auto-routing-is-enabled">
@@ -385,18 +384,16 @@ In previous versions, you need to use
 <span id="id1"></span><h4><a class="toc-backref" href="#id9" role="doc-backlink">CSRF Protection Methods</a><a class="headerlink" href="#csrf-protection-methods" title="Link to this heading"></a></h4>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>If you use <a class="reference internal" href="sessions.html"><span class="doc">Session</span></a>, be sure to use Session based
-CSRF protection. Cookie based CSRF protection will not prevent Same-site attacks.
-See
-<a class="reference external" href="https://github.com/codeigniter4/shield/security/advisories/GHSA-5hm8-vh6r-2cjq">GHSA-5hm8-vh6r-2cjq</a>
-for details.</p>
+<p>If you use <a class="reference internal" href="sessions.html"><span class="doc">Session</span></a>, be sure to use Session-based CSRF protection. Cookie-based CSRF
+protection will not prevent Same-site attacks. See
+<a class="reference external" href="https://github.com/codeigniter4/shield/security/advisories/GHSA-5hm8-vh6r-2cjq">GHSA-5hm8-vh6r-2cjq</a> for details.</p>
 </div>
-<p>By default, the Cookie based CSRF Protection is used. It is
+<p>By default, the Cookie-based CSRF Protection is used. It is the
 <a class="reference external" href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#double-submit-cookie">Double Submit Cookie</a>
-on OWASP Cross-Site Request Forgery Prevention Cheat Sheet.</p>
-<p>You can also use Session based CSRF Protection. It is
+pattern on the OWASP Cross-Site Request Forgery Prevention Cheat Sheet.</p>
+<p>You can also use Session-based CSRF Protection. It is the
 <a class="reference external" href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#synchronizer-token-pattern">Synchronizer Token Pattern</a>.</p>
-<p>You can set to use the Session based CSRF protection by editing the following config parameter value in
+<p>You can use the Session-based CSRF protection by editing the following config parameter value in
 <strong>app/Config/Security.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -415,10 +412,10 @@ on OWASP Cross-Site Request Forgery Prevention Cheat Sheet.</p>
 </section>
 <section id="token-randomization">
 <h4><a class="toc-backref" href="#id10" role="doc-backlink">Token Randomization</a><a class="headerlink" href="#token-randomization" title="Link to this heading"></a></h4>
-<p>To mitigate compression side-channel attacks like <a class="reference external" href="https://en.wikipedia.org/wiki/BREACH">BREACH</a>, and prevent an attacker from guessing the CSRF tokens, you can configure token randomization (off by default).</p>
+<p>To mitigate compression side-channel attacks like <a class="reference external" href="https://en.wikipedia.org/wiki/BREACH">BREACH</a>, and prevent an attacker from guessing the CSRF tokens, you
+can configure token randomization (off by default).</p>
 <p>If you enable it, a random mask is added to the token and used to scramble it.</p>
-<p>You can enable it by editing the following config parameter value in
-<strong>app/Config/Security.php</strong>:</p>
+<p>You can enable it by editing the following config parameter value in <strong>app/Config/Security.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -436,14 +433,11 @@ on OWASP Cross-Site Request Forgery Prevention Cheat Sheet.</p>
 </section>
 <section id="token-regeneration">
 <h4><a class="toc-backref" href="#id11" role="doc-backlink">Token Regeneration</a><a class="headerlink" href="#token-regeneration" title="Link to this heading"></a></h4>
-<p>Tokens may be either regenerated on every submission (default) or
-kept the same throughout the life of the Session or CSRF cookie.</p>
-<p>The default
-regeneration of tokens provides stricter security, but may result
-in usability concerns as other tokens become invalid (back/forward
-navigation, multiple tabs/windows, asynchronous actions, etc). You
-may alter this behavior by editing the following config parameter value in
-<strong>app/Config/Security.php</strong>:</p>
+<p>Tokens may be either regenerated on every submission (default) or kept the same throughout the life of the Session or
+CSRF cookie.</p>
+<p>The default regeneration of tokens provides stricter security, but may result in usability concerns as other tokens
+become invalid (back/forward navigation, multiple tabs/windows, asynchronous actions, etc.). You may alter this behavior
+by editing the following config parameter value in <strong>app/Config/Security.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -460,29 +454,26 @@ may alter this behavior by editing the following config parameter value in
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>If you use Cookie based CSRF protection, and <a class="reference internal" href="../general/common_functions.html#redirect" title="redirect"><code class="xref php php-func docutils literal notranslate"><span class="pre">redirect()</span></code></a>
-after the submission, you must call <code class="docutils literal notranslate"><span class="pre">withCookie()</span></code> to send the regenerated
-CSRF cookie. See <a class="reference internal" href="../outgoing/response.html#response-redirect"><span class="std std-ref">Redirect</span></a> for details.</p>
+<p>If you use Cookie-based CSRF protection, and <a class="reference internal" href="../general/common_functions.html#redirect" title="redirect"><code class="xref php php-func docutils literal notranslate"><span class="pre">redirect()</span></code></a> after the submission, you must call
+<code class="docutils literal notranslate"><span class="pre">withCookie()</span></code> to send the regenerated CSRF cookie. See <a class="reference internal" href="../outgoing/response.html#response-redirect"><span class="std std-ref">Redirect</span></a> for details.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Since v4.2.3, you can regenerate CSRF token manually with the
-<code class="docutils literal notranslate"><span class="pre">Security::generateHash()</span></code> method.</p>
+<p>Since v4.2.3, you can regenerate the CSRF token manually with the <code class="docutils literal notranslate"><span class="pre">Security::generateHash()</span></code> method.</p>
 </div>
 </section>
 <section id="redirection-on-failure">
 <span id="csrf-redirection-on-failure"></span><h4><a class="toc-backref" href="#id12" role="doc-backlink">Redirection on Failure</a><a class="headerlink" href="#redirection-on-failure" title="Link to this heading"></a></h4>
-<p>Starting with v4.5.0, when a request fails the CSRF validation check, by default,
-the user is redirected to the previous page in production environment, or a
-SecurityException is thrown in other environments.</p>
+<p>Starting with v4.5.0, when a request fails the CSRF validation check, by default, the user is redirected to the previous
+page in the production environment, or a SecurityException is thrown in other environments.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In production environment, when you use HTML forms, it is recommended
-to enable this redirection for a better user experience.</p>
+<p>In the production environment, when you use HTML forms, it is recommended to enable this redirection for a
+better user experience.</p>
 <p>Upgrade users should check their configuration files.</p>
 </div>
-<p>If you want to make it redirect to the previous page, set the following config
-parameter value to <code class="docutils literal notranslate"><span class="pre">true</span></code> in <strong>app/Config/Security.php</strong>:</p>
+<p>If you want to make it redirect to the previous page, set the following config parameter value to <code class="docutils literal notranslate"><span class="pre">true</span></code> in
+<strong>app/Config/Security.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -499,7 +490,8 @@ parameter value to <code class="docutils literal notranslate"><span class="pre">
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>When redirected, an <code class="docutils literal notranslate"><span class="pre">error</span></code> flash message is set and can be displayed to the end user with the following code in your view:</p>
+<p>When redirected, an <code class="docutils literal notranslate"><span class="pre">error</span></code> flash message is set and can be displayed to the end user with the following code in your
+view:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">session</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getFlashdata</span><span class="p">(</span><span class="s1">'error'</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
@@ -509,8 +501,7 @@ parameter value to <code class="docutils literal notranslate"><span class="pre">
 </section>
 <section id="enable-csrf-protection">
 <span id="id2"></span><h3><a class="toc-backref" href="#id13" role="doc-backlink">Enable CSRF Protection</a><a class="headerlink" href="#enable-csrf-protection" title="Link to this heading"></a></h3>
-<p>You can enable CSRF protection by altering your <strong>app/Config/Filters.php</strong>
-and enabling the <cite>csrf</cite> filter globally:</p>
+<p>You can enable CSRF protection by altering your <strong>app/Config/Filters.php</strong> and enabling the <code class="docutils literal notranslate"><span class="pre">csrf</span></code> filter globally:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -530,9 +521,8 @@ and enabling the <cite>csrf</cite> filter globally:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Select URIs can be whitelisted from CSRF protection (for example API
-endpoints expecting externally POSTed content). You can add these URIs
-by adding them as exceptions in the filter:</p>
+<p>Select URIs can be whitelisted from CSRF protection (for example, API endpoints expecting externally POSTed content).
+You can do this by adding them as exceptions in the filter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -591,36 +581,31 @@ by adding them as exceptions in the filter:</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>If you use <code class="docutils literal notranslate"><span class="pre">$methods</span></code> filters, you should <a class="reference internal" href="../incoming/routing.html#use-defined-routes-only"><span class="std std-ref">disable Auto Routing (Legacy)</span></a>
-because <a class="reference internal" href="../incoming/routing.html#auto-routing-legacy"><span class="std std-ref">Auto Routing (Legacy)</span></a> permits any HTTP method to access a controller.
-Accessing the controller with a method you don’t expect could bypass the filter.</p>
+because <a class="reference internal" href="../incoming/routing.html#auto-routing-legacy"><span class="std std-ref">Auto Routing (Legacy)</span></a> permits any HTTP method to access a controller. Accessing the controller with a
+method you don’t expect could bypass the filter.</p>
 </div>
 </section>
 <section id="html-forms">
 <h3><a class="toc-backref" href="#id14" role="doc-backlink">HTML Forms</a><a class="headerlink" href="#html-forms" title="Link to this heading"></a></h3>
-<p>If you use the <a class="reference internal" href="../helpers/form_helper.html"><span class="doc">form helper</span></a>, then
-<code class="xref py py-func docutils literal notranslate"><span class="pre">form_open()</span></code> will automatically insert a hidden csrf field in
-your forms.</p>
+<p>If you use the <a class="reference internal" href="../helpers/form_helper.html"><span class="doc">form helper</span></a>, then <code class="xref py py-func docutils literal notranslate"><span class="pre">form_open()</span></code> will automatically insert a hidden
+CSRF field in your forms.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>To use auto-generation of CSRF field, you need to turn CSRF filter on to the form page.
-In most cases it is requested using the <code class="docutils literal notranslate"><span class="pre">GET</span></code> method.</p>
+<p>To use auto-generation of the CSRF field, you need to turn the CSRF filter on for the form page. In most
+cases, it is requested using the <code class="docutils literal notranslate"><span class="pre">GET</span></code> method.</p>
 </div>
-<p>If not, then you can use the always available <code class="docutils literal notranslate"><span class="pre">csrf_token()</span></code>
-and <code class="docutils literal notranslate"><span class="pre">csrf_hash()</span></code> functions</p>
+<p>If not, then you can use the always available <code class="docutils literal notranslate"><span class="pre">csrf_token()</span></code> and <code class="docutils literal notranslate"><span class="pre">csrf_hash()</span></code> functions:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"hidden"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"&lt;?= csrf_token() ?&gt;"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"&lt;?= csrf_hash() ?&gt;"</span> <span class="o">/&gt;</span>
 </pre></div>
 </div>
-<p>Additionally, you can use the <code class="docutils literal notranslate"><span class="pre">csrf_field()</span></code> method to generate this
-hidden input field for you:</p>
+<p>Additionally, you can use the <code class="docutils literal notranslate"><span class="pre">csrf_field()</span></code> method to generate this hidden input field for you:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Generates: &lt;input type="hidden" name="{csrf_token}" value="{csrf_hash}" /&gt;</span>
 <span class="o">&lt;?=</span> <span class="nx">csrf_field</span><span class="p">()</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
-<p>When sending a JSON request the CSRF token can also be passed as one of the parameters.
-The next way to pass the CSRF token is a special Http header that’s name is available by
-<code class="docutils literal notranslate"><span class="pre">csrf_header()</span></code> function.</p>
-<p>Additionally, you can use the <code class="docutils literal notranslate"><span class="pre">csrf_meta()</span></code> method to generate this handy
-meta tag for you:</p>
+<p>When sending a JSON request, the CSRF token can also be passed as one of the parameters. The next way to pass the CSRF
+token is a special HTTP header whose name is available from the <code class="docutils literal notranslate"><span class="pre">csrf_header()</span></code> function.</p>
+<p>Additionally, you can use the <code class="docutils literal notranslate"><span class="pre">csrf_meta()</span></code> method to generate this handy meta tag for you:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Generates: &lt;meta name="{csrf_header}" content="{csrf_hash}" /&gt;</span>
 <span class="o">&lt;?=</span> <span class="nx">csrf_meta</span><span class="p">()</span> <span class="cp">?&gt;</span>
 </pre></div>
@@ -632,7 +617,8 @@ meta tag for you:</p>
 <ol class="arabic simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">$_POST</span></code> array</p></li>
 <li><p>HTTP header</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">php://input</span></code> (JSON request) - bear in mind that this approach is the slowest one since we have to decode JSON and then re-encode it</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">php://input</span></code> (JSON request) - bear in mind that this approach is the slowest one since we have to decode JSON and
+then re-encode it</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">php://input</span></code> (raw body) - for PUT, PATCH, and DELETE type of requests</p></li>
 </ol>
 <div class="admonition note">
@@ -641,23 +627,22 @@ meta tag for you:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you include the CSRF token in a JSON object, removing it decodes and
-re-encodes the body. This changes its formatting and may affect number
-precision. To keep the JSON body unchanged, send the token in the
-<code class="docutils literal notranslate"><span class="pre">X-CSRF-TOKEN</span></code> header and leave the CSRF field out of the body.</p>
+<p>If you include the CSRF token in a JSON object, removing it decodes and re-encodes the body. This changes its
+formatting and may affect number precision. To keep the JSON body unchanged, send the token in the <code class="docutils literal notranslate"><span class="pre">X-CSRF-TOKEN</span></code>
+header and leave the CSRF field out of the body.</p>
 </div>
 </section>
 </section>
 <section id="other-helpful-methods">
 <h2><a class="toc-backref" href="#id16" role="doc-backlink">Other Helpful Methods</a><a class="headerlink" href="#other-helpful-methods" title="Link to this heading"></a></h2>
-<p>You will never need to use most of the methods in the Security class directly. The following are methods that
-you might find helpful that are not related to the CSRF protection.</p>
+<p>You will never need to use most of the methods in the Security class directly. The following are methods that you might
+find helpful that are not related to the CSRF protection.</p>
 <section id="sanitizefilename">
 <h3><a class="toc-backref" href="#id17" role="doc-backlink">sanitizeFilename()</a><a class="headerlink" href="#sanitizefilename" title="Link to this heading"></a></h3>
 <p>Tries to sanitize filenames in order to prevent directory traversal attempts and other security threats, which is
 particularly useful for files that were supplied via user input. The first parameter is the path to sanitize.</p>
-<p>If it is acceptable for the user input to include relative paths, e.g., <strong>file/in/some/approved/folder.txt</strong>, you can set
-the second optional parameter, <code class="docutils literal notranslate"><span class="pre">$relativePath</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
+<p>If it is acceptable for the user input to include relative paths, e.g., <strong>file/in/some/approved/folder.txt</strong>, you can
+set the second optional parameter, <code class="docutils literal notranslate"><span class="pre">$relativePath</span></code>, to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$path</span> <span class="o">=</span> <span class="nv">$security</span><span class="o">-&gt;</span><span class="na">sanitizeFilename</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getVar</span><span class="p">(</span><span class="s1">'filepath'</span><span class="p">));</span>
@@ -680,7 +665,7 @@ the second optional parameter, <code class="docutils literal notranslate"><span 
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

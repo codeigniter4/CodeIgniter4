@@ -325,25 +325,22 @@
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Link to this heading"></a></h2>
 <section id="view-parser-no-longer-parses-substituted-values">
 <span id="upgrade-475-view-parser-values"></span><h3><a class="toc-backref" href="#id2" role="doc-backlink">View Parser No Longer Parses Substituted Values</a><a class="headerlink" href="#view-parser-no-longer-parses-substituted-values" title="Link to this heading"></a></h3>
-<p>For security reasons, the <code class="docutils literal notranslate"><span class="pre">Parser</span></code> now treats every substituted value strictly as
-data. A value that contains Parser syntax, such as <code class="docutils literal notranslate"><span class="pre">{name}</span></code>, <code class="docutils literal notranslate"><span class="pre">{!name!}</span></code> or
-<code class="docutils literal notranslate"><span class="pre">{name|upper}</span></code>, is rendered literally and is never parsed again by a later
+<p>For security reasons, the <code class="docutils literal notranslate"><span class="pre">Parser</span></code> now treats every substituted value strictly as data. A value that contains Parser
+syntax, such as <code class="docutils literal notranslate"><span class="pre">{name}</span></code>, <code class="docutils literal notranslate"><span class="pre">{!name!}</span></code> or <code class="docutils literal notranslate"><span class="pre">{name|upper}</span></code>, is rendered literally and is never parsed again by a later
 substitution pass. See the
 <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-vgrf-mv2j-gp8w">Security advisory GHSA-vgrf-mv2j-gp8w</a>
 for more information.</p>
-<p>Previously, such a value could be parsed again, depending on the order of the keys in
-the data array. This behavior was never documented, but code that relied on it will
-now output the placeholders literally. For example, the following used to render
-<code class="docutils literal notranslate"><span class="pre">&lt;p&gt;Hello,</span> <span class="pre">Bob!&lt;/p&gt;</span></code> and now renders <code class="docutils literal notranslate"><span class="pre">&lt;p&gt;Hello,</span> <span class="pre">{name}!&lt;/p&gt;</span></code>:</p>
+<p>Previously, such a value could be parsed again, depending on the order of the keys in the data array. This behavior was
+never documented, but code that relied on it will now output the placeholders literally. For example, the following used
+to render <code class="docutils literal notranslate"><span class="pre">&lt;p&gt;Hello,</span> <span class="pre">Bob!&lt;/p&gt;</span></code> and now renders <code class="docutils literal notranslate"><span class="pre">&lt;p&gt;Hello,</span> <span class="pre">{name}!&lt;/p&gt;</span></code>:</p>
 <div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">$parser-&gt;setData([</span>
 <span class="x">    'greeting' =&gt; 'Hello, {name}!',</span>
 <span class="x">    'name'     =&gt; 'Bob',</span>
 <span class="x">])-&gt;renderString('&lt;p&gt;{greeting}&lt;/p&gt;');</span>
 </pre></div>
 </div>
-<p>If you need to insert a rendered template fragment into another template, render the
-fragment first and pass the result as a value, using the <code class="docutils literal notranslate"><span class="pre">{!</span> <span class="pre">!}</span></code> syntax so it is not
-escaped again:</p>
+<p>If you need to insert a rendered template fragment into another template, render the fragment first and pass the result
+as a value, using the <code class="docutils literal notranslate"><span class="pre">{!</span> <span class="pre">!}</span></code> syntax so it is not escaped again:</p>
 <div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">$greeting = $parser-&gt;setData(['name' =&gt; 'Bob'])-&gt;renderString('Hello, {name}!');</span>
 
 <span class="x">$parser-&gt;setData(['greeting' =&gt; $greeting])-&gt;renderString('&lt;p&gt;{! greeting !}&lt;/p&gt;');</span>
@@ -352,76 +349,67 @@ escaped again:</p>
 </section>
 <section id="built-in-parser-plugin-output">
 <h3><a class="toc-backref" href="#id3" role="doc-backlink">Built-in Parser Plugin Output</a><a class="headerlink" href="#built-in-parser-plugin-output" title="Link to this heading"></a></h3>
-<p>The output of built-in Parser plugins is now treated as rendered data and is not
-processed again as Parser syntax. This prevents values such as URLs and validation
-messages from introducing variable or plugin instructions. Applications that relied
-on placeholders within built-in plugin output must render those fragments explicitly.
-Custom plugins that transform template code retain their existing behavior and are
-responsible for keeping untrusted data separate from Parser syntax.</p>
+<p>The output of built-in Parser plugins is now treated as rendered data and is not processed again as Parser syntax. This
+prevents values such as URLs and validation messages from introducing variable or plugin instructions. Applications that
+relied on placeholders within built-in plugin output must render those fragments explicitly. Custom plugins that
+transform template code retain their existing behavior and are responsible for keeping untrusted data separate from
+Parser syntax.</p>
 </section>
 <section id="file-upload-validation">
 <h3><a class="toc-backref" href="#id4" role="doc-backlink">File Upload Validation</a><a class="headerlink" href="#file-upload-validation" title="Link to this heading"></a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">is_image</span></code>, <code class="docutils literal notranslate"><span class="pre">mime_in</span></code>, and <code class="docutils literal notranslate"><span class="pre">ext_in</span></code> rules now reject client filenames
-with a PHP handler extension before the final extension, including extensions
-revealed by <code class="docutils literal notranslate"><span class="pre">sanitize_filename()</span></code> (for example, <code class="docutils literal notranslate"><span class="pre">shell.p$hp.gif</span></code> becomes
-<code class="docutils literal notranslate"><span class="pre">shell.php.gif</span></code>). Filenames ending in dots, including dots followed by spaces,
-are also rejected.</p>
-<p>These checks apply regardless of the file’s contents or the intended meaning of
-its name. For example, both <code class="docutils literal notranslate"><span class="pre">shell.php.gif</span></code> and an innocent PHP logo named
-<code class="docutils literal notranslate"><span class="pre">logo.php.gif</span></code> fail validation, even if the latter contains only a GIF image.
-Rename such files before uploading, for example to <code class="docutils literal notranslate"><span class="pre">logo-php.gif</span></code>. Choosing a
-generated filename when saving the file does not bypass these validation checks,
-which run against the client filename before the file is saved.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">is_image</span></code>, <code class="docutils literal notranslate"><span class="pre">mime_in</span></code>, and <code class="docutils literal notranslate"><span class="pre">ext_in</span></code> rules now reject client filenames with a PHP handler extension before the
+final extension, including extensions revealed by <code class="docutils literal notranslate"><span class="pre">sanitize_filename()</span></code> (for example, <code class="docutils literal notranslate"><span class="pre">shell.p$hp.gif</span></code> becomes
+<code class="docutils literal notranslate"><span class="pre">shell.php.gif</span></code>). Filenames ending in dots, including dots followed by spaces, are also rejected.</p>
+<p>These checks apply regardless of the file’s contents or the intended meaning of its name. For example, both
+<code class="docutils literal notranslate"><span class="pre">shell.php.gif</span></code> and an innocent PHP logo named <code class="docutils literal notranslate"><span class="pre">logo.php.gif</span></code> fail validation, even if the latter contains only a
+GIF image. Rename such files before uploading, for example to <code class="docutils literal notranslate"><span class="pre">logo-php.gif</span></code>. Choosing a generated filename when
+saving the file does not bypass these validation checks, which run against the client filename before the file is saved.</p>
 </section>
 </section>
 <section id="behavior-changes">
 <h2><a class="toc-backref" href="#id5" role="doc-backlink">Behavior Changes</a><a class="headerlink" href="#behavior-changes" title="Link to this heading"></a></h2>
 <section id="curlrequest-options-after-a-failed-request">
 <h3><a class="toc-backref" href="#id6" role="doc-backlink">CURLRequest Options After a Failed Request</a><a class="headerlink" href="#curlrequest-options-after-a-failed-request" title="Link to this heading"></a></h3>
-<p>When <code class="docutils literal notranslate"><span class="pre">Config\CURLRequest::$shareOptions</span></code> is <code class="docutils literal notranslate"><span class="pre">false</span></code>, request-specific options
-are now reset even when the request throws an exception. Per-request <code class="docutils literal notranslate"><span class="pre">baseURI</span></code>
-and <code class="docutils literal notranslate"><span class="pre">delay</span></code> values are also reset after both successful and failed requests.
-Constructor defaults remain available for subsequent requests.</p>
-<p>If your application retries a failed request, pass its options again and reapply
-any settings made with <code class="docutils literal notranslate"><span class="pre">setAuth()</span></code>, <code class="docutils literal notranslate"><span class="pre">setBody()</span></code>, <code class="docutils literal notranslate"><span class="pre">setForm()</span></code>, or <code class="docutils literal notranslate"><span class="pre">setJSON()</span></code>.
-Do not rely on credentials or body data from the failed request remaining on the client.</p>
+<p>When <code class="docutils literal notranslate"><span class="pre">Config\CURLRequest::$shareOptions</span></code> is <code class="docutils literal notranslate"><span class="pre">false</span></code>, request-specific options are now reset even when the request
+throws an exception. Per-request <code class="docutils literal notranslate"><span class="pre">baseURI</span></code> and <code class="docutils literal notranslate"><span class="pre">delay</span></code> values are also reset after both successful and failed
+requests. Constructor defaults remain available for subsequent requests.</p>
+<p>If your application retries a failed request, pass its options again and reapply any settings made with <code class="docutils literal notranslate"><span class="pre">setAuth()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">setBody()</span></code>, <code class="docutils literal notranslate"><span class="pre">setForm()</span></code>, or <code class="docutils literal notranslate"><span class="pre">setJSON()</span></code>. Do not rely on credentials or body data from the failed request
+remaining on the client.</p>
 </section>
 </section>
 <section id="project-files">
 <h2><a class="toc-backref" href="#id7" role="doc-backlink">Project Files</a><a class="headerlink" href="#project-files" title="Link to this heading"></a></h2>
-<p>Some files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to
-these files being outside of the <strong>system</strong> scope they will not be changed without your intervention.</p>
+<p>Some files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to these files being outside of
+the <strong>system</strong> scope, they will not be changed without your intervention.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>There are some third-party CodeIgniter modules available to assist
-with merging changes to the project space:
+<p>There are some third-party CodeIgniter modules available to assist with merging changes to the project space:
 <a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
 </div>
 <section id="content-changes">
 <h3><a class="toc-backref" href="#id8" role="doc-backlink">Content Changes</a><a class="headerlink" href="#content-changes" title="Link to this heading"></a></h3>
-<p>The following files received significant changes (including deprecations or visual adjustments)
-and it is recommended that you merge the updated versions with your application:</p>
+<p>The following files received significant changes (including deprecations or visual adjustments) and it is recommended
+that you merge the updated versions with your application:</p>
 <section id="config">
 <h4>Config<a class="headerlink" href="#config" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><dl class="simple">
-<dt>app/Config/View.php</dt><dd><ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">Config\View::$restrictParserConditionals</span></code> has been added, with a default
-value set to <code class="docutils literal notranslate"><span class="pre">false</span></code>. See <a class="reference internal" href="../outgoing/view_parser.html#parser-restricting-conditionals"><span class="std std-ref">Restricting Conditionals</span></a> for details.</p></li>
+<li><p><strong>app/Config/View.php</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Config\View::$restrictParserConditionals</span></code> has been added, with a default value set to <code class="docutils literal notranslate"><span class="pre">false</span></code>. See
+<a class="reference internal" href="../outgoing/view_parser.html#parser-restricting-conditionals"><span class="std std-ref">Restricting Conditionals</span></a> for details.</p></li>
 </ul>
-</dd>
-</dl>
 </li>
 </ul>
 </section>
 </section>
 <section id="all-changes">
 <h3><a class="toc-backref" href="#id9" role="doc-backlink">All Changes</a><a class="headerlink" href="#all-changes" title="Link to this heading"></a></h3>
-<p>This is a list of all files in the <strong>project space</strong> that received changes;
-many will be simple comments or formatting that have no effect on the runtime:</p>
+<p>This is a list of all files in the <strong>project space</strong> that received changes; many will be simple comments or formatting
+that have no effect on the runtime:</p>
 <ul class="simple">
-<li><p>app/Config/View.php</p></li>
-<li><p>app/Controllers/BaseController.php</p></li>
+<li><p><strong>app/Config/View.php</strong></p></li>
+<li><p><strong>app/Controllers/BaseController.php</strong></p></li>
 </ul>
 </section>
 </section>
@@ -439,7 +427,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

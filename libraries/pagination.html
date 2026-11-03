@@ -292,8 +292,8 @@
              
   <section id="pagination">
 <h1>Pagination<a class="headerlink" href="#pagination" title="Link to this heading"></a></h1>
-<p>CodeIgniter provides a very simple, but flexible pagination library that is simple to theme, works with the model,
-and capable of supporting multiple paginators on a single page.</p>
+<p>CodeIgniter provides a very simple but flexible pagination library that is simple to theme, works with the model, and is
+capable of supporting multiple paginators on a single page.</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#loading-the-library" id="id3">Loading the Library</a></p></li>
@@ -319,8 +319,8 @@ and capable of supporting multiple paginators on a single page.</p>
 </nav>
 <section id="loading-the-library">
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">Loading the Library</a><a class="headerlink" href="#loading-the-library" title="Link to this heading"></a></h2>
-<p>Like all services in CodeIgniter, it can be loaded via <code class="docutils literal notranslate"><span class="pre">Config\Services</span></code>, though you usually will not need
-to load it manually:</p>
+<p>Like all services in CodeIgniter, it can be loaded via <code class="docutils literal notranslate"><span class="pre">Config\Services</span></code>, though you usually will not need to load it
+manually:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$pager</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'pager'</span><span class="p">);</span>
@@ -331,8 +331,8 @@ to load it manually:</p>
 <span id="id1"></span><h2><a class="toc-backref" href="#id4" role="doc-backlink">Paginating with Models</a><a class="headerlink" href="#paginating-with-models" title="Link to this heading"></a></h2>
 <p>In most cases, you will be using the Pager library in order to paginate results that you retrieve from the database.
 When using the <a class="reference internal" href="../models/model.html"><span class="doc">Model</span></a> class, you can use its built-in <code class="docutils literal notranslate"><span class="pre">paginate()</span></code> method to automatically
-retrieve the current batch of results, as well as set up the Pager library so it’s ready to use in your controllers.
-It even reads the current page it should display from the current URL via a <code class="docutils literal notranslate"><span class="pre">page=X</span></code> query variable.</p>
+retrieve the current batch of results, as well as set up the Pager library so it’s ready to use in your controllers. It
+even reads the current page it should display from the current URL via a <code class="docutils literal notranslate"><span class="pre">page=X</span></code> query variable.</p>
 <p>To provide a paginated list of users in your application, your controller’s method would look something like:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -356,16 +356,15 @@ It even reads the current page it should display from the current URL via a <cod
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>In this example, we first create a new instance of our <code class="docutils literal notranslate"><span class="pre">UserModel</span></code>. Then we populate the data to send to the view.
-The first element is the results from the database, <strong>users</strong>, which is retrieved for the correct page, returning
-10 users per page. The second item that must be sent to the view is the Pager instance itself. As a convenience,
-the Model will hold on to the instance it used and store it in the public property, <code class="docutils literal notranslate"><span class="pre">$pager</span></code>. So, we grab
-that and assign it to the <code class="docutils literal notranslate"><span class="pre">$pager</span></code> variable in the view.</p>
+<p>In this example, we first create a new instance of our <code class="docutils literal notranslate"><span class="pre">UserModel</span></code>. Then we populate the data to send to the view. The
+first element is the results from the database, <strong>users</strong>, which are retrieved for the correct page, returning 10 users
+per page. The second item that must be sent to the view is the Pager instance itself. As a convenience, the Model will
+hold on to the instance it used and store it in the public property, <code class="docutils literal notranslate"><span class="pre">$pager</span></code>. So, we grab that and assign it to the
+<code class="docutils literal notranslate"><span class="pre">$pager</span></code> variable in the view.</p>
 <section id="customizing-query-for-pagination">
 <h3><a class="toc-backref" href="#id5" role="doc-backlink">Customizing Query for Pagination</a><a class="headerlink" href="#customizing-query-for-pagination" title="Link to this heading"></a></h3>
-<p>To customize a query for pagination in a model, you can add
-<a class="reference internal" href="../database/query_builder.html"><span class="doc">Query Builder</span></a> methods before <code class="docutils literal notranslate"><span class="pre">paginate()</span></code>
-method.</p>
+<p>To customize a query for pagination in a model, you can add <a class="reference internal" href="../database/query_builder.html"><span class="doc">Query Builder</span></a> methods
+before the <code class="docutils literal notranslate"><span class="pre">paginate()</span></code> method.</p>
 <section id="adding-where">
 <h4>Adding WHERE<a class="headerlink" href="#adding-where" title="Link to this heading"></a></h4>
 <p>If you want to add WHERE conditions, you can specify conditions directly:</p>
@@ -443,14 +442,13 @@ method.</p>
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>It is important to understand that the <code class="docutils literal notranslate"><span class="pre">Model::paginate()</span></code> method
-uses the <strong>Model</strong> and the <strong>Query Builder</strong> instance in the Model.
-Therefore, trying to use <code class="docutils literal notranslate"><span class="pre">Model::paginate()</span></code> with <a class="reference internal" href="../database/queries.html#db-query"><span class="std std-ref">$db-&gt;query()</span></a>
-<strong>will not work</strong> because <code class="docutils literal notranslate"><span class="pre">$db-&gt;query()</span></code> executes the query immediately
-and is not associated with the Query Builder.</p>
+<p>It is important to understand that the <code class="docutils literal notranslate"><span class="pre">Model::paginate()</span></code> method uses the <strong>Model</strong> and the
+<strong>Query Builder</strong> instance in the Model. Therefore, trying to use <code class="docutils literal notranslate"><span class="pre">Model::paginate()</span></code> with <a class="reference internal" href="../database/queries.html#db-query"><span class="std std-ref">$db-&gt;query()</span></a>
+<strong>will not work</strong> because <code class="docutils literal notranslate"><span class="pre">$db-&gt;query()</span></code> executes the query immediately and is not associated with the Query
+Builder.</p>
 </div>
-<p>If you need a complicated SQL query that you cannot write with Query Builder,
-try using <a class="reference internal" href="../database/queries.html#db-query"><span class="std std-ref">$db-&gt;query()</span></a> and <a class="reference internal" href="#manual-pagination">Manual Pagination</a>.</p>
+<p>If you need a complicated SQL query that you cannot write with Query Builder, try using <a class="reference internal" href="../database/queries.html#db-query"><span class="std std-ref">$db-&gt;query()</span></a> and
+<a class="reference internal" href="#manual-pagination">Manual Pagination</a>.</p>
 </section>
 </section>
 <section id="displaying-pager-links">
@@ -459,22 +457,24 @@ try using <a class="reference internal" href="../database/queries.html#db-query"
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">links</span><span class="p">()</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
-<p>And that’s all it takes. The Pager class will render First and Last page links, as well as Next and Previous links
-for any pages more than two pages on either side of the current page.</p>
-<p>It is important to be aware that the library pattern for Next and Previous is different from what is used in the traditional way of paging results.</p>
-<p>Next and Previous here is linked to the group of links to be displayed in the pagination structure, and not to the next or previous page of records.</p>
+<p>And that’s all it takes. The Pager class will render First and Last page links, as well as Next and Previous links for
+any pages more than two pages on either side of the current page.</p>
+<p>It is important to be aware that the library pattern for Next and Previous is different from what is used in the
+traditional way of paging results.</p>
+<p>Next and Previous here are linked to the group of links to be displayed in the pagination structure, and not to the next
+or previous page of records.</p>
 <p>If you prefer a simpler output, you can use the <code class="docutils literal notranslate"><span class="pre">simpleLinks()</span></code> method, which only uses “Older” and “Newer” links,
-instead of the details pagination links:</p>
+instead of the detailed pagination links:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">simpleLinks</span><span class="p">()</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
-<p>Behind the scenes, the library loads a view file that determines how the links are formatted, making it simple to
-modify to your needs. See below for details on how to completely customize the output.</p>
+<p>Behind the scenes, the library loads a view file that determines how the links are formatted, making it simple to modify
+to your needs. See below for details on how to completely customize the output.</p>
 </section>
 <section id="paginating-multiple-results">
 <h3><a class="toc-backref" href="#id7" role="doc-backlink">Paginating Multiple Results</a><a class="headerlink" href="#paginating-multiple-results" title="Link to this heading"></a></h3>
-<p>If you need to provide links from two different result sets, you can pass group names to most of the pagination
-methods to keep the data separate:</p>
+<p>If you need to provide links from two different result sets, you can pass group names to most of the pagination methods
+to keep the data separate:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
@@ -508,8 +508,8 @@ methods to keep the data separate:</p>
 </section>
 <section id="setting-page-manually">
 <h3><a class="toc-backref" href="#id8" role="doc-backlink">Setting Page Manually</a><a class="headerlink" href="#setting-page-manually" title="Link to this heading"></a></h3>
-<p>If you need to specify which page of results to return you can specify the page as the 3rd argument. This can be
-handy when you have a different manner than the default <code class="docutils literal notranslate"><span class="pre">$_GET</span></code> variable to control which page to show.</p>
+<p>If you need to specify which page of results to return, you can specify the page as the 3rd argument. This can be handy
+when you use a different way than the default <code class="docutils literal notranslate"><span class="pre">$_GET</span></code> variable to control which page to show.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">App\Models\UserModel</span><span class="p">;</span>
@@ -524,21 +524,21 @@ handy when you have a different manner than the default <code class="docutils li
 <section id="specifying-the-uri-segment-for-page">
 <h3><a class="toc-backref" href="#id9" role="doc-backlink">Specifying the URI Segment for Page</a><a class="headerlink" href="#specifying-the-uri-segment-for-page" title="Link to this heading"></a></h3>
 <p>It is also possible to use a URI segment for the page number, instead of the page query parameter. Simply specify the
-segment number to use as the fourth argument. URIs generated by the pager would then look
-like <strong>https://domain.tld/foo/bar/[pageNumber]</strong> instead of <strong>https://domain.tld/foo/bar?page=[pageNumber]</strong>.</p>
+segment number to use as the fourth argument. URIs generated by the pager would then look like
+<strong>https://domain.tld/foo/bar/[pageNumber]</strong> instead of <strong>https://domain.tld/foo/bar?page=[pageNumber]</strong>.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s1">'group1'</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="nv">$segment</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Please note: <code class="docutils literal notranslate"><span class="pre">$segment</span></code> value cannot be greater than the number of URI segments plus 1.</p>
+<p>Please note: the <code class="docutils literal notranslate"><span class="pre">$segment</span></code> value cannot be greater than the number of URI segments plus 1.</p>
 </section>
 </section>
 <section id="manual-pagination">
 <h2><a class="toc-backref" href="#id10" role="doc-backlink">Manual Pagination</a><a class="headerlink" href="#manual-pagination" title="Link to this heading"></a></h2>
-<p>You may find times where you just need to create pagination based on known data. You can create links manually
-with the <code class="docutils literal notranslate"><span class="pre">makeLinks()</span></code> method, which takes the current page, the number of results per page, and
-the total number of items as the first, second, and third parameters, respectively:</p>
+<p>There may be times when you just need to create pagination based on known data. You can create links manually with the
+<code class="docutils literal notranslate"><span class="pre">makeLinks()</span></code> method, which takes the current page, the number of results per page, and the total number of items as
+the first, second, and third parameters, respectively:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
@@ -578,13 +578,13 @@ sections:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">makeLinks</span><span class="p">(</span><span class="nv">$page</span><span class="p">,</span> <span class="nv">$perPage</span><span class="p">,</span> <span class="nv">$total</span><span class="p">,</span> <span class="s1">'template_name'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>It is also possible to use a URI segment for the page number, instead of the page query parameter, as described in
-the previous section. Specify the segment number to use as the fifth parameter to <code class="docutils literal notranslate"><span class="pre">makeLinks()</span></code>:</p>
+<p>It is also possible to use a URI segment for the page number, instead of the page query parameter, as described in the
+previous section. Specify the segment number to use as the fifth parameter to <code class="docutils literal notranslate"><span class="pre">makeLinks()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">makeLinks</span><span class="p">(</span><span class="nv">$page</span><span class="p">,</span> <span class="nv">$perPage</span><span class="p">,</span> <span class="nv">$total</span><span class="p">,</span> <span class="s1">'template_name'</span><span class="p">,</span> <span class="nv">$segment</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Please note: <code class="docutils literal notranslate"><span class="pre">$segment</span></code> value cannot be greater than the number of URI segments plus 1.</p>
-<p>If you need to show many pagers on one page then the additional parameter which will define a group could be helpful:</p>
+<p>Please note: the <code class="docutils literal notranslate"><span class="pre">$segment</span></code> value cannot be greater than the number of URI segments plus 1.</p>
+<p>If you need to show many pagers on one page, then an additional parameter that defines a group can be helpful:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$pager</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">'pager'</span><span class="p">);</span>
@@ -592,12 +592,14 @@ the previous section. Specify the segment number to use as the fifth parameter t
 <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">makeLinks</span><span class="p">(</span><span class="nv">$page</span><span class="p">,</span> <span class="nv">$perPage</span><span class="p">,</span> <span class="nv">$total</span><span class="p">,</span> <span class="s1">'template_name'</span><span class="p">,</span> <span class="nv">$segment</span><span class="p">,</span> <span class="s1">'my-group'</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Pagination library uses <strong>page</strong> query parameter for HTTP queries by default (if no group or <code class="docutils literal notranslate"><span class="pre">default</span></code> group name given) or <code class="docutils literal notranslate"><span class="pre">page_[groupName]</span></code> for custom group names.</p>
+<p>The Pagination library uses the <strong>page</strong> query parameter for HTTP queries by default (if no group or the <code class="docutils literal notranslate"><span class="pre">default</span></code>
+group name is given) or <code class="docutils literal notranslate"><span class="pre">page_[groupName]</span></code> for custom group names.</p>
 </section>
 <section id="paginating-with-only-expected-queries">
 <h2><a class="toc-backref" href="#id11" role="doc-backlink">Paginating with Only Expected Queries</a><a class="headerlink" href="#paginating-with-only-expected-queries" title="Link to this heading"></a></h2>
 <p>By default, all GET queries are shown in the pagination links.</p>
-<p>For example, when accessing the URL <strong>https://domain.tld?search=foo&amp;order=asc&amp;hello=i+am+here&amp;page=2</strong>, the page 3 link can be generated, along with the other links, as follows:</p>
+<p>For example, when accessing the URL <strong>https://domain.tld?search=foo&amp;order=asc&amp;hello=i+am+here&amp;page=2</strong>, the page 3 link
+can be generated, along with the other links, as follows:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">links</span><span class="p">();</span>
@@ -611,7 +613,7 @@ the previous section. Specify the segment number to use as the fifth parameter t
 <span class="c1">// Page 3 link: https://domain.tld?search=foo&amp;order=asc&amp;page=3</span>
 </pre></div>
 </div>
-<p>The <em>page</em> query is enabled by default. And <code class="docutils literal notranslate"><span class="pre">only()</span></code> acts in all pagination links.</p>
+<p>The <em>page</em> query is enabled by default. The <code class="docutils literal notranslate"><span class="pre">only()</span></code> method applies to all pagination links.</p>
 </section>
 <section id="customizing-the-links">
 <h2><a class="toc-backref" href="#id12" role="doc-backlink">Customizing the Links</a><a class="headerlink" href="#customizing-the-links" title="Link to this heading"></a></h2>
@@ -636,24 +638,23 @@ that is used by editing <strong>app/Config/Pager.php</strong>:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>This setting stores the alias and <a class="reference internal" href="../outgoing/views.html"><span class="doc">namespaced view paths</span></a> for the view that
-should be used. The <code class="docutils literal notranslate"><span class="pre">default_full</span></code> and <code class="docutils literal notranslate"><span class="pre">default_simple</span></code> views are used for the <code class="docutils literal notranslate"><span class="pre">links()</span></code> and <code class="docutils literal notranslate"><span class="pre">simpleLinks()</span></code>
-methods, respectively. To change the way those are displayed application-wide, you could assign a new view here.</p>
-<p>For example, say you create a new view file that works with the Foundation CSS framework, and
-you place that file at <strong>app/Views/Pagers/foundation_full.php</strong>. Since the <strong>application</strong> directory is
-namespaced as <code class="docutils literal notranslate"><span class="pre">App</span></code>, and all directories underneath it map directly to segments of the namespace, you can locate
-the view file through it’s namespace:</p>
+<p>This setting stores the alias and <a class="reference internal" href="../outgoing/views.html"><span class="doc">namespaced view paths</span></a> for the view that should be used. The
+<code class="docutils literal notranslate"><span class="pre">default_full</span></code> and <code class="docutils literal notranslate"><span class="pre">default_simple</span></code> views are used for the <code class="docutils literal notranslate"><span class="pre">links()</span></code> and <code class="docutils literal notranslate"><span class="pre">simpleLinks()</span></code> methods, respectively.
+To change the way those are displayed application-wide, you could assign a new view here.</p>
+<p>For example, say you create a new view file that works with the Foundation CSS framework, and you place that file at
+<strong>app/Views/Pagers/foundation_full.php</strong>. Since the <strong>app</strong> directory is namespaced as <code class="docutils literal notranslate"><span class="pre">App</span></code>, and all directories
+underneath it map directly to segments of the namespace, you can locate the view file through its namespace:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="s1">'default_full'</span> <span class="o">=&gt;</span> <span class="s1">'App\Views\Pagers\foundation_full'</span>
 </pre></div>
 </div>
-<p>Since it is under the standard <strong>app/Views</strong> directory, though, you do not need to namespace it since the
-<code class="docutils literal notranslate"><span class="pre">view()</span></code> method can locate it by filename. In that case, you can simply give the sub-directory and file name:</p>
+<p>Since it is under the standard <strong>app/Views</strong> directory, though, you do not need to namespace it since the <code class="docutils literal notranslate"><span class="pre">view()</span></code>
+method can locate it by filename. In that case, you can simply give the sub-directory and file name:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="s1">'default_full'</span> <span class="o">=&gt;</span> <span class="s1">'Pagers/foundation_full'</span>
 </pre></div>
 </div>
-<p>Once you have created the view and set it in the configuration, it will automatically be used. You don’t have to
-replace the existing templates. You can create as many additional templates as you need in the configuration
-file. A common situation would be needing different styles for the frontend and the backend of your application.</p>
+<p>Once you have created the view and set it in the configuration, it will automatically be used. You don’t have to replace
+the existing templates. You can create as many additional templates as you need in the configuration file. A common
+situation would be needing different styles for the frontend and the backend of your application.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -672,7 +673,7 @@ file. A common situation would be needing different styles for the frontend and 
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Once configured, you can specify it as a the last parameter in the <code class="docutils literal notranslate"><span class="pre">links()</span></code>, <code class="docutils literal notranslate"><span class="pre">simpleLinks()</span></code>, and <code class="docutils literal notranslate"><span class="pre">makeLinks()</span></code>
+<p>Once configured, you can specify it as the last parameter in the <code class="docutils literal notranslate"><span class="pre">links()</span></code>, <code class="docutils literal notranslate"><span class="pre">simpleLinks()</span></code>, and <code class="docutils literal notranslate"><span class="pre">makeLinks()</span></code>
 methods:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">links</span><span class="p">(</span><span class="s1">'group1'</span><span class="p">,</span> <span class="s1">'front_full'</span><span class="p">)</span> <span class="cp">?&gt;</span>
 <span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">simpleLinks</span><span class="p">(</span><span class="s1">'group2'</span><span class="p">,</span> <span class="s1">'front_full'</span><span class="p">)</span> <span class="cp">?&gt;</span>
@@ -682,9 +683,10 @@ methods:</p>
 </section>
 <section id="creating-the-view">
 <h3><a class="toc-backref" href="#id14" role="doc-backlink">Creating the View</a><a class="headerlink" href="#creating-the-view" title="Link to this heading"></a></h3>
-<p>When you create a new view, you only need to create the code that is needed for creating the pagination links themselves.
-You should not create unnecessary wrapping divs since it might be used in multiple places and you only limit their
-usefulness. It is easiest to demonstrate creating a new view by showing you the existing <code class="docutils literal notranslate"><span class="pre">default_full</span></code> template:</p>
+<p>When you create a new view, you only need to create the code that is needed for creating the pagination links
+themselves. You should not create unnecessary wrapping divs, since the view might be used in multiple places and they
+would only limit its usefulness. It is easiest to demonstrate creating a new view by showing you the existing
+<code class="docutils literal notranslate"><span class="pre">default_full</span></code> template:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">setSurroundCount</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="cp">?&gt;</span>
 
 <span class="p">&lt;</span><span class="nt">nav</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">"Page navigation"</span><span class="p">&gt;</span>
@@ -728,8 +730,8 @@ usefulness. It is easiest to demonstrate creating a new view by showing you the 
 </div>
 <section id="setsurroundcount">
 <h4>setSurroundCount()<a class="headerlink" href="#setsurroundcount" title="Link to this heading"></a></h4>
-<p>In the first line, the <code class="docutils literal notranslate"><span class="pre">setSurroundCount()</span></code> method specifies that we want to show two links to either side of
-the current page link. The only parameter that it accepts is the number of links to show.</p>
+<p>In the first line, the <code class="docutils literal notranslate"><span class="pre">setSurroundCount()</span></code> method specifies that we want to show two links to either side of the
+current page link. The only parameter that it accepts is the number of links to show.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>You must call this method first to generate correct pagination links.</p>
@@ -737,20 +739,21 @@ the current page link. The only parameter that it accepts is the number of links
 </section>
 <section id="hasprevious-hasnext">
 <h4>hasPrevious() &amp; hasNext()<a class="headerlink" href="#hasprevious-hasnext" title="Link to this heading"></a></h4>
-<p>These methods return a boolean <code class="docutils literal notranslate"><span class="pre">true</span></code> if there are more links that can be displayed on either side of the current page,
-based on the value passed to <a class="reference internal" href="#setsurroundcount">setSurroundCount()</a>.</p>
-<p>For example, let’s say we have 20 pages of data. The current
-page is page 3. If the surrounding count is 2, then the following links would show up like this:</p>
+<p>These methods return a boolean <code class="docutils literal notranslate"><span class="pre">true</span></code> if there are more links that can be displayed on either side of the current
+page, based on the value passed to <a class="reference internal" href="#setsurroundcount">setSurroundCount()</a>.</p>
+<p>For example, let’s say we have 20 pages of data. The current page is page 3. If the surrounding count is 2, then the
+following links would show up like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span>  <span class="o">|</span>  <span class="mi">2</span>  <span class="o">|</span>  <span class="mi">3</span>  <span class="o">|</span>  <span class="mi">4</span>  <span class="o">|</span>  <span class="mi">5</span>
 </pre></div>
 </div>
-<p>Since the first link displayed is page one, <code class="docutils literal notranslate"><span class="pre">hasPrevious()</span></code> would return <code class="docutils literal notranslate"><span class="pre">false</span></code> since there is no page zero. However,
-<code class="docutils literal notranslate"><span class="pre">hasNext()</span></code> would return <code class="docutils literal notranslate"><span class="pre">true</span></code> since there are 15 additional pages of results after page five.</p>
+<p>Since the first link displayed is page one, <code class="docutils literal notranslate"><span class="pre">hasPrevious()</span></code> would return <code class="docutils literal notranslate"><span class="pre">false</span></code> since there is no page zero.
+However, <code class="docutils literal notranslate"><span class="pre">hasNext()</span></code> would return <code class="docutils literal notranslate"><span class="pre">true</span></code> since there are 15 additional pages of results after page five.</p>
 </section>
 <section id="getprevious-getnext">
 <h4>getPrevious() &amp; getNext()<a class="headerlink" href="#getprevious-getnext" title="Link to this heading"></a></h4>
 <p>These methods return the <strong>URL</strong> for the previous or next pages of results on either side of the numbered links.</p>
-<p>For example, you have the current page set at 5 and you want to have the links before and after (the surroundCount) to be 2 each, that will give you something like this:</p>
+<p>For example, if you have the current page set at 5 and you want the links before and after (the surroundCount) to be 2
+each, that will give you something like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span>  <span class="o">|</span>  <span class="mi">4</span>  <span class="o">|</span>  <span class="mi">5</span>  <span class="o">|</span>  <span class="mi">6</span>  <span class="o">|</span>  <span class="mi">7</span>
 </pre></div>
 </div>
@@ -759,13 +762,12 @@ page is page 3. If the surrounding count is 2, then the following links would sh
 </section>
 <section id="getfirst-getlast">
 <h4>getFirst() &amp; getLast()<a class="headerlink" href="#getfirst-getlast" title="Link to this heading"></a></h4>
-<p>Much like <a class="reference internal" href="#getprevious-getnext">getPrevious() &amp; getNext()</a>, these methods return the <strong>URL</strong> to the first and last pages in the
-result set.</p>
+<p>Much like <a class="reference internal" href="#getprevious-getnext">getPrevious() &amp; getNext()</a>, these methods return the <strong>URL</strong> to the first and last pages in the result set.</p>
 </section>
 <section id="links">
 <h4>links()<a class="headerlink" href="#links" title="Link to this heading"></a></h4>
-<p>Returns an array of data about all of the numbered links. Each link’s array contains the uri for the link, the
-title, which is just the number, and a boolean that tells whether the link is the current/active link or not:</p>
+<p>Returns an array of data about all of the numbered links. Each link’s array contains the URI for the link, the title,
+which is just the number, and a boolean that tells whether the link is the current/active link or not:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$link</span> <span class="o">=</span> <span class="p">[</span>
@@ -775,8 +777,11 @@ title, which is just the number, and a boolean that tells whether the link is th
 <span class="p">];</span>
 </pre></div>
 </div>
-<p>In the code presented for the standard pagination structure, the methods <a class="reference internal" href="#getprevious-getnext">getPrevious() &amp; getNext()</a> are used to obtain the links to the previous and next pagination groups respectively.</p>
-<p>If you want to use the pagination structure where prev and next will be links to the previous and next pages based on the current page, just replace the <a class="reference internal" href="#getprevious-getnext">getPrevious() &amp; getNext()</a> methods with <a class="reference internal" href="#getpreviouspage-getnextpage">getPreviousPage() &amp; getNextPage()</a>, and the methods <a class="reference internal" href="#hasprevious-hasnext">hasPrevious() &amp; hasNext()</a> by <a class="reference internal" href="#haspreviouspage-hasnextpage">hasPreviousPage() &amp; hasNextPage()</a> respectively.</p>
+<p>In the code presented for the standard pagination structure, the methods <a class="reference internal" href="#getprevious-getnext">getPrevious() &amp; getNext()</a> are used to obtain
+the links to the previous and next pagination groups, respectively.</p>
+<p>If you want to use the pagination structure where prev and next will be links to the previous and next pages based on
+the current page, just replace the <a class="reference internal" href="#getprevious-getnext">getPrevious() &amp; getNext()</a> methods with <a class="reference internal" href="#getpreviouspage-getnextpage">getPreviousPage() &amp; getNextPage()</a>, and
+the methods <a class="reference internal" href="#hasprevious-hasnext">hasPrevious() &amp; hasNext()</a> with <a class="reference internal" href="#haspreviouspage-hasnextpage">hasPreviousPage() &amp; hasNextPage()</a>, respectively.</p>
 <p>See the following example with these changes:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">nav</span> <span class="nx">aria</span><span class="o">-</span><span class="nx">label</span><span class="o">=</span><span class="s2">"&lt;?= lang('Pager.pageNavigation') ?&gt;"</span><span class="o">&gt;</span>
     <span class="o">&lt;</span><span class="nx">ul</span> <span class="nx">class</span><span class="o">=</span><span class="s2">"pagination"</span><span class="o">&gt;</span>
@@ -820,34 +825,35 @@ title, which is just the number, and a boolean that tells whether the link is th
 </section>
 <section id="haspreviouspage-hasnextpage">
 <h4>hasPreviousPage() &amp; hasNextPage()<a class="headerlink" href="#haspreviouspage-hasnextpage" title="Link to this heading"></a></h4>
-<p>This method returns a boolean <code class="docutils literal notranslate"><span class="pre">true</span></code> if there are links to a page before and after, respectively, the current page being displayed.</p>
-<p>For example, let’s say we have 20 pages of data. The current
-page is page 3. If the surrounding count is 2, then the following links would show up like this:</p>
+<p>These methods return a boolean <code class="docutils literal notranslate"><span class="pre">true</span></code> if there are links to a page before and after, respectively, the current page
+being displayed.</p>
+<p>For example, let’s say we have 20 pages of data. The current page is page 3. If the surrounding count is 2, then the
+following links would show up like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span>  <span class="o">|</span>  <span class="mi">2</span>  <span class="o">|</span>  <span class="mi">3</span>  <span class="o">|</span>  <span class="mi">4</span>  <span class="o">|</span>  <span class="mi">5</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">hasPreviousPage()</span></code> would return <code class="docutils literal notranslate"><span class="pre">true</span></code> since there is page 2. And,
-<code class="docutils literal notranslate"><span class="pre">hasNextPage()</span></code> would return <code class="docutils literal notranslate"><span class="pre">true</span></code> since there is page 4.</p>
+<p><code class="docutils literal notranslate"><span class="pre">hasPreviousPage()</span></code> would return <code class="docutils literal notranslate"><span class="pre">true</span></code> since page 2 exists, and <code class="docutils literal notranslate"><span class="pre">hasNextPage()</span></code> would return <code class="docutils literal notranslate"><span class="pre">true</span></code> since page
+4 exists.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The difference to <a class="reference internal" href="#hasprevious-hasnext">hasPrevious() &amp; hasNext()</a> is that they are based
-on the current page while <a class="reference internal" href="#hasprevious-hasnext">hasPrevious() &amp; hasNext()</a> are based on the set
-of links to be displayed before and after the current page based on the value
-passed in <a class="reference internal" href="#setsurroundcount">setSurroundCount()</a>.</p>
+<p>The difference from <a class="reference internal" href="#hasprevious-hasnext">hasPrevious() &amp; hasNext()</a> is that these methods are based on the current page, while
+<a class="reference internal" href="#hasprevious-hasnext">hasPrevious() &amp; hasNext()</a> are based on the set of links to be displayed before and after the current page based
+on the value passed in <a class="reference internal" href="#setsurroundcount">setSurroundCount()</a>.</p>
 </div>
 </section>
 <section id="getpreviouspage-getnextpage">
 <h4>getPreviousPage() &amp; getNextPage()<a class="headerlink" href="#getpreviouspage-getnextpage" title="Link to this heading"></a></h4>
 <p>These methods return a <strong>URL</strong> for the previous and next pages in relation to the current page being displayed.</p>
-<p>For example, you have the current page set at 5 and you want to have the links before and after (the surroundCount) to be 2 each, that will give you something like this:</p>
+<p>For example, if you have the current page set at 5 and you want the links before and after (the surroundCount) to be 2
+each, that will give you something like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span>  <span class="o">|</span>  <span class="mi">4</span>  <span class="o">|</span>  <span class="mi">5</span>  <span class="o">|</span>  <span class="mi">6</span>  <span class="o">|</span>  <span class="mi">7</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">getPreviousPage()</span></code> returns the URL for page 4. <code class="docutils literal notranslate"><span class="pre">getNextPage()</span></code> returns the URL for page 6.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><a class="reference internal" href="#getprevious-getnext">getPrevious() &amp; getNext()</a> returns the URL for the previous or next
-pages of results on either side of the numbered links.</p>
+<p><a class="reference internal" href="#getprevious-getnext">getPrevious() &amp; getNext()</a> return the URL for the previous or next pages of results on either side of the
+numbered links.</p>
 </div>
 <p>If you want page numbers instead of URLs, you can use the following methods:</p>
 </section>
@@ -857,17 +863,16 @@ pages of results on either side of the numbered links.</p>
 </section>
 <section id="getfirstpagenumber-getlastpagenumber">
 <h4>getFirstPageNumber() &amp; getLastPageNumber()<a class="headerlink" href="#getfirstpagenumber-getlastpagenumber" title="Link to this heading"></a></h4>
-<p>These methods return the page numbers of the first and last pages in the set of
-links to be displayed. For example, if the set of links to be displayed is something like this:</p>
+<p>These methods return the page numbers of the first and last pages in the set of links to be displayed. For example, if
+the set of links to be displayed is something like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span>  <span class="o">|</span>  <span class="mi">4</span>  <span class="o">|</span>  <span class="mi">5</span>  <span class="o">|</span>  <span class="mi">6</span>  <span class="o">|</span>  <span class="mi">7</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">getFirstPageNumber()</span></code> will return 3 while <code class="docutils literal notranslate"><span class="pre">getLastPageNumber()</span></code> will return 7.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>To obtain the page numbers of the first and last pages in the entire
-result set, you can use the following approach: The first page number is always 1, and <a class="reference internal" href="#getpagecount">getPageCount()</a> can be used to
-retrieve the last page number.</p>
+<p>To obtain the page numbers of the first and last pages in the entire result set, you can use the following
+approach: The first page number is always 1, and <a class="reference internal" href="#getpagecount">getPageCount()</a> can be used to retrieve the last page number.</p>
 </div>
 </section>
 <section id="getcurrentpagenumber">
@@ -876,7 +881,7 @@ retrieve the last page number.</p>
 </section>
 <section id="getpagecount">
 <h4>getPageCount()<a class="headerlink" href="#getpagecount" title="Link to this heading"></a></h4>
-<p>This method returns total number of pages.</p>
+<p>This method returns the total number of pages.</p>
 </section>
 </section>
 <section id="displaying-the-number-of-items-on-the-page">
@@ -884,7 +889,9 @@ retrieve the last page number.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 4.6.0.</span></p>
 </div>
-<p>When paginating items, it’s often helpful to display the total number of items and the range of items shown on the current page. To simplify this task, new methods have been added. These methods make it easier to manage and display pagination details. Here’s an example:</p>
+<p>When paginating items, it’s often helpful to display the total number of items and the range of items shown on the
+current page. To simplify this task, new methods have been added. These methods make it easier to manage and display
+pagination details. Here’s an example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">setSurroundCount</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="cp">?&gt;</span>
 
 <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
@@ -896,7 +903,7 @@ retrieve the last page number.</p>
 </div>
 <section id="gettotal">
 <h4>getTotal()<a class="headerlink" href="#gettotal" title="Link to this heading"></a></h4>
-<p>Returns the total items of the page.</p>
+<p>Returns the total number of items.</p>
 </section>
 <section id="getperpage">
 <h4>getPerPage()<a class="headerlink" href="#getperpage" title="Link to this heading"></a></h4>
@@ -904,11 +911,11 @@ retrieve the last page number.</p>
 </section>
 <section id="getperpagestart">
 <h4>getPerPageStart()<a class="headerlink" href="#getperpagestart" title="Link to this heading"></a></h4>
-<p>Returns the number of items the page starts with.</p>
+<p>Returns the number of the item the page starts with.</p>
 </section>
 <section id="getperpageend">
 <h4>getPerPageEnd()<a class="headerlink" href="#getperpageend" title="Link to this heading"></a></h4>
-<p>Returns the number of items the page ends with.</p>
+<p>Returns the number of the item the page ends with.</p>
 </section>
 </section>
 </section>
@@ -926,7 +933,7 @@ retrieve the last page number.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

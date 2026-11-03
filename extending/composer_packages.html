@@ -292,8 +292,8 @@
              
   <section id="creating-composer-packages">
 <h1>Creating Composer Packages<a class="headerlink" href="#creating-composer-packages" title="Link to this heading"></a></h1>
-<p>You can make the <a class="reference internal" href="../general/modules.html"><span class="doc">Code Modules</span></a> you create into Composer packages,
-or can create a Composer package for CodeIgniter 4.</p>
+<p>You can make the <a class="reference internal" href="../general/modules.html"><span class="doc">Code Modules</span></a> you create into Composer packages, or you can create a Composer package for
+CodeIgniter 4.</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#folder-structure" id="id1">Folder Structure</a></p></li>
@@ -301,7 +301,7 @@ or can create a Composer package for CodeIgniter 4.</p>
 <ul>
 <li><p><a class="reference internal" href="#package-name" id="id3">Package Name</a></p></li>
 <li><p><a class="reference internal" href="#namespace" id="id4">Namespace</a></p></li>
-<li><p><a class="reference internal" href="#choosing-license" id="id5">Choosing License</a></p></li>
+<li><p><a class="reference internal" href="#choosing-a-license" id="id5">Choosing a License</a></p></li>
 </ul>
 </li>
 <li><p><a class="reference internal" href="#preparing-development-tools" id="id6">Preparing Development Tools</a></p>
@@ -337,8 +337,8 @@ or can create a Composer package for CodeIgniter 4.</p>
 </section>
 <section id="creating-composer-json">
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">Creating composer.json</a><a class="headerlink" href="#creating-composer-json" title="Link to this heading"></a></h2>
-<p>In the root of your package directory, create a <strong>composer.json</strong> file. This file
-defines metadata about your package and its dependencies.</p>
+<p>In the root of your package directory, create a <strong>composer.json</strong> file. This file defines metadata about your package
+and its dependencies.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">init</span></code> command helps you create it.</p>
 <p>For example, <strong>composer.json</strong> might look like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -357,32 +357,30 @@ defines metadata about your package and its dependencies.</p>
             <span class="s2">"email"</span><span class="o">:</span> <span class="s2">"yourname@example.com"</span>
         <span class="p">}</span>
     <span class="p">],</span>
-    <span class="s2">"require"</span><span class="o">:</span> <span class="p">{</span>
-        <span class="c1">// Any dependencies required by your package go here</span>
-    <span class="p">},</span>
-    <span class="s2">"require-dev"</span><span class="o">:</span> <span class="p">{</span>
-        <span class="c1">// Any development dependencies (e.g., PHPUnit) go here</span>
-    <span class="p">}</span>
+    <span class="s2">"require"</span><span class="o">:</span> <span class="p">{},</span>
+    <span class="s2">"require-dev"</span><span class="o">:</span> <span class="p">{}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
+<p>Add runtime dependencies to <code class="docutils literal notranslate"><span class="pre">require</span></code> and development dependencies, such as PHPUnit, to <code class="docutils literal notranslate"><span class="pre">require-dev</span></code>.</p>
 <section id="package-name">
 <h3><a class="toc-backref" href="#id3" role="doc-backlink">Package Name</a><a class="headerlink" href="#package-name" title="Link to this heading"></a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">name</span></code> field is important here. Package names are generally written in the
-format “vendor-name/package-name” with all lowercase. Here is a common example:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">name</span></code> field is important here. Package names are generally written in the format “vendor-name/package-name” with
+all lowercase. Here is a common example:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">your-vendor-name</span></code>: The name that identifies the vendor (creator of the package),
-such as your name or your organization.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">your-vendor-name</span></code>: The name that identifies the vendor (creator of the package), such as your name or your
+organization.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">your-package-name</span></code>: The name of the package you are creating.</p></li>
 </ul>
-<p>Thus, it is important to make the name unique to distinguish it from other packages.
-Uniqueness is especially important when publishing.</p>
+<p>Thus, it is important to make the name unique to distinguish it from other packages. Uniqueness is especially important
+when publishing.</p>
 </section>
 <section id="namespace">
 <h3><a class="toc-backref" href="#id4" role="doc-backlink">Namespace</a><a class="headerlink" href="#namespace" title="Link to this heading"></a></h3>
-<p>The package name then determines the vendor namespace in <code class="docutils literal notranslate"><span class="pre">autoload.psr4</span></code>.</p>
-<p>If your package name is <code class="docutils literal notranslate"><span class="pre">your-vendor/your-package</span></code>, the vendor namespace must
-be <code class="docutils literal notranslate"><span class="pre">YourVendor</span></code>. So you would write like the following:</p>
+<p>Choose a namespace prefix and map it to your source directory in <code class="docutils literal notranslate"><span class="pre">autoload.psr-4</span></code>. The namespace prefix is independent
+of the Composer package name.</p>
+<p>For a package named <code class="docutils literal notranslate"><span class="pre">your-vendor/your-package</span></code>, you could use the namespace <code class="docutils literal notranslate"><span class="pre">YourVendor\YourPackage</span></code> with the
+following mapping:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="s2">"autoload"</span><span class="o">:</span> <span class="p">{</span>
     <span class="s2">"psr-4"</span><span class="o">:</span> <span class="p">{</span>
         <span class="s2">"YourVendor</span><span class="se">\\</span><span class="s2">YourPackage</span><span class="se">\\</span><span class="s2">"</span><span class="o">:</span> <span class="s2">"src/"</span>
@@ -392,17 +390,16 @@ be <code class="docutils literal notranslate"><span class="pre">YourVendor</span
 </div>
 <p>This setting instructs Composer to autoload the source code for your package.</p>
 </section>
-<section id="choosing-license">
-<h3><a class="toc-backref" href="#id5" role="doc-backlink">Choosing License</a><a class="headerlink" href="#choosing-license" title="Link to this heading"></a></h3>
-<p>If you are not familiar with open source licenses, see <a class="reference external" href="https://choosealicense.com/">https://choosealicense.com/</a>.
-Many PHP packages, including CodeIgniter, use the MIT license.</p>
+<section id="choosing-a-license">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Choosing a License</a><a class="headerlink" href="#choosing-a-license" title="Link to this heading"></a></h3>
+<p>If you are not familiar with open source licenses, see <a class="reference external" href="https://choosealicense.com/">https://choosealicense.com/</a>. Many PHP packages, including
+CodeIgniter, use the MIT license.</p>
 </section>
 </section>
 <section id="preparing-development-tools">
 <h2><a class="toc-backref" href="#id6" role="doc-backlink">Preparing Development Tools</a><a class="headerlink" href="#preparing-development-tools" title="Link to this heading"></a></h2>
-<p>There are many tools that help ensure quality code. So you should use them.
-You can easily install and configure such tools with
-<a class="reference external" href="https://github.com/codeigniter4/devkit">CodeIgniter DevKit</a>.</p>
+<p>There are many tools that help ensure quality code. So you should use them. You can easily install and configure such
+tools with <a class="reference external" href="https://github.com/codeigniter4/devkit">CodeIgniter DevKit</a>.</p>
 <section id="installing-devkit">
 <h3><a class="toc-backref" href="#id7" role="doc-backlink">Installing DevKit</a><a class="headerlink" href="#installing-devkit" title="Link to this heading"></a></h3>
 <p>In the root of your package directory, run the following commands:</p>
@@ -411,17 +408,16 @@ You can easily install and configure such tools with
 <span class="go">composer require --dev codeigniter4/devkit</span>
 </pre></div>
 </div>
-<p>The DevKit installs various Composer packages that helps your development, and
-installs templates for them in <strong>vendor/codeigniter4/devkit/src/Template</strong>.
-Copy the files in it to your project root folder, and edit them for your needs.</p>
+<p>The DevKit installs various Composer packages that help your development, and installs templates for them in
+<strong>vendor/codeigniter4/devkit/src/Template</strong>. Copy the files from that directory to your project root folder, and edit
+them to suit your needs.</p>
 </section>
 <section id="configuring-coding-standards-fixer">
 <h3><a class="toc-backref" href="#id8" role="doc-backlink">Configuring Coding Standards Fixer</a><a class="headerlink" href="#configuring-coding-standards-fixer" title="Link to this heading"></a></h3>
 <p>DevKit provides Coding Standards Fixer with
-<a class="reference external" href="https://github.com/CodeIgniter/coding-standard">CodeIgniter Coding Standard</a>
-based on <a class="reference external" href="https://github.com/PHP-CS-Fixer/PHP-CS-Fixer">PHP-CS-Fixer</a>.</p>
-<p>Copy <strong>vendor/codeigniter4/devkit/src/Template/.php-cs-fixer.dist.php</strong> to your
-project root folder.</p>
+<a class="reference external" href="https://github.com/CodeIgniter/coding-standard">CodeIgniter Coding Standard</a> based on
+<a class="reference external" href="https://github.com/PHP-CS-Fixer/PHP-CS-Fixer">PHP-CS-Fixer</a>.</p>
+<p>Copy <strong>vendor/codeigniter4/devkit/src/Template/.php-cs-fixer.dist.php</strong> to your project root folder.</p>
 <p>Create the <strong>build</strong> folder for the cache file:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">your</span><span class="o">-</span><span class="nx">package</span><span class="o">-</span><span class="nx">name</span><span class="o">/</span>
 <span class="nx">├──</span> <span class="o">.</span><span class="nx">php</span><span class="o">-</span><span class="nx">cs</span><span class="o">-</span><span class="nx">fixer</span><span class="o">.</span><span class="nx">dist</span><span class="o">.</span><span class="nx">php</span>
@@ -442,15 +438,12 @@ project root folder.</p>
      <span class="o">-&gt;</span><span class="na">exclude</span><span class="p">([</span>
 </pre></div>
 </div>
-<p>That’t it. Now you can run Coding Standards Fixer:</p>
+<p>That’s it. Now you can run Coding Standards Fixer:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">vendor/bin/php-cs-fixer fix --ansi --verbose --diff</span>
 </pre></div>
 </div>
-<p>If you add <code class="docutils literal notranslate"><span class="pre">scripts.cs-fix</span></code> in your <strong>composer.json</strong>, you can run it with
-<code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">cs-fix</span></code> command:</p>
+<p>If you add <code class="docutils literal notranslate"><span class="pre">scripts.cs-fix</span></code> in your <strong>composer.json</strong>, you can run it with the <code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">cs-fix</span></code> command:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="c1">// ...</span>
-    <span class="p">},</span>
     <span class="s2">"scripts"</span><span class="o">:</span> <span class="p">{</span>
         <span class="s2">"cs-fix"</span><span class="o">:</span> <span class="s2">"php-cs-fixer fix --ansi --verbose --diff"</span>
     <span class="p">}</span>
@@ -463,23 +456,20 @@ project root folder.</p>
 <h2><a class="toc-backref" href="#id9" role="doc-backlink">Config Files</a><a class="headerlink" href="#config-files" title="Link to this heading"></a></h2>
 <section id="allowing-users-to-override-settings">
 <h3><a class="toc-backref" href="#id10" role="doc-backlink">Allowing Users to Override Settings</a><a class="headerlink" href="#allowing-users-to-override-settings" title="Link to this heading"></a></h3>
-<p>If your package has a configuration file and you want users to be able to override
-the settings, use <a class="reference internal" href="../general/common_functions.html#config" title="config"><code class="xref php php-func docutils literal notranslate"><span class="pre">config()</span></code></a> with the short classname like <code class="docutils literal notranslate"><span class="pre">config('YourConfig')</span></code>
-to call the configuration file.</p>
-<p>Users can then override the package configuration by placing a configuration class
-with the same short classname in <strong>app/Config</strong> that extends the package Config
-class like <code class="docutils literal notranslate"><span class="pre">YourVendor\YourPackage\Config\YourConfig</span></code>.</p>
+<p>If your package has a configuration file and you want users to be able to override the settings, use
+<a class="reference internal" href="../general/common_functions.html#config" title="config"><code class="xref php php-func docutils literal notranslate"><span class="pre">config()</span></code></a> with the short classname like <code class="docutils literal notranslate"><span class="pre">config('YourConfig')</span></code> to retrieve the configuration object.</p>
+<p>Users can then override the package configuration by placing a configuration class with the same short classname in
+<strong>app/Config</strong> that extends the package Config class like <code class="docutils literal notranslate"><span class="pre">YourVendor\YourPackage\Config\YourConfig</span></code>.</p>
 </section>
 <section id="overriding-settings-in-app-config">
 <h3><a class="toc-backref" href="#id11" role="doc-backlink">Overriding Settings in app/Config</a><a class="headerlink" href="#overriding-settings-in-app-config" title="Link to this heading"></a></h3>
-<p>If you need to override or add to known configurations in the <strong>app/Config</strong> folder,
-you can use <a class="reference internal" href="../general/configuration.html#registrars"><span class="std std-ref">Implicit Registrars</span></a>.</p>
+<p>If you need to override or add to known configurations in the <strong>app/Config</strong> folder, you can use
+<a class="reference internal" href="../general/configuration.html#registrars"><span class="std std-ref">Implicit Registrars</span></a>.</p>
 </section>
 </section>
 <section id="references">
 <h2><a class="toc-backref" href="#id12" role="doc-backlink">References</a><a class="headerlink" href="#references" title="Link to this heading"></a></h2>
-<p>We have published some official packages. You can use these packages as references
-when creating your own packages:</p>
+<p>We have published some official packages. You can use these packages as references when creating your own packages:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/codeigniter4/shield">https://github.com/codeigniter4/shield</a></p></li>
 <li><p><a class="reference external" href="https://github.com/codeigniter4/settings">https://github.com/codeigniter4/settings</a></p></li>
@@ -501,7 +491,7 @@ when creating your own packages:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 

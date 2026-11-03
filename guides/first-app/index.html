@@ -313,15 +313,13 @@
 </nav>
 <section id="overview">
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
-<p>This tutorial is intended to introduce you to the CodeIgniter4 framework
-and the basic principles of MVC architecture. It will show you how a
-basic CodeIgniter application is constructed in a step-by-step fashion.</p>
-<p>If you are not familiar with PHP, we recommend that you check out
-the <a class="reference external" href="https://www.w3schools.com/php/default.asp">W3Schools PHP Tutorial</a> before continuing.</p>
-<p>In this tutorial, you will be creating a <strong>basic news application</strong>. You
-will begin by writing the code that can load static pages. Next, you
-will create a news section that reads news items from a database.
-Finally, you’ll add a form to create news items in the database.</p>
+<p>This tutorial is intended to introduce you to the CodeIgniter4 framework and the basic principles of MVC architecture.
+It will show you how a basic CodeIgniter application is constructed in a step-by-step fashion.</p>
+<p>If you are not familiar with PHP, we recommend that you check out the
+<a class="reference external" href="https://www.w3schools.com/php/default.asp">W3Schools PHP Tutorial</a> before continuing.</p>
+<p>In this tutorial, you will be creating a <strong>basic news application</strong>. You will begin by writing the code that can load
+static pages. Next, you will create a news section that reads news items from a database. Finally, you’ll add a form to
+create news items in the database.</p>
 <p>This tutorial will primarily focus on:</p>
 <ul class="simple">
 <li><p>Model-View-Controller basics</p></li>
@@ -329,20 +327,16 @@ Finally, you’ll add a form to create news items in the database.</p>
 <li><p>Form validation</p></li>
 <li><p>Performing basic database queries using CodeIgniter’s Model</p></li>
 </ul>
-<p>The entire tutorial is split up over several pages, each explaining a
-small part of the functionality of the CodeIgniter framework. You’ll go
-through the following pages:</p>
+<p>The entire tutorial is split up over several pages, each explaining a small part of the functionality of the CodeIgniter
+framework. You’ll go through the following pages:</p>
 <ul class="simple">
-<li><p>Introduction, this page, which gives you an overview of what to
-expect and gets your default application downloaded and running.</p></li>
-<li><p><a class="reference internal" href="static_pages.html"><span class="doc">Static pages</span></a>, which will teach you the basics
-of controllers, views and routing.</p></li>
-<li><p><a class="reference internal" href="news_section.html"><span class="doc">News section</span></a>, where you’ll start using models
-and will be doing some basic database operations.</p></li>
-<li><p><a class="reference internal" href="create_news_items.html"><span class="doc">Create news items</span></a>, which will introduce
-more advanced database operations and form validation.</p></li>
-<li><p><a class="reference internal" href="conclusion.html"><span class="doc">Conclusion</span></a>, which will give you some pointers on
-further reading and other resources.</p></li>
+<li><p>Introduction, this page, which gives you an overview of what to expect and gets your default application downloaded
+and running.</p></li>
+<li><p><a class="reference internal" href="static_pages.html"><span class="doc">Static pages</span></a>, which will teach you the basics of controllers, views and routing.</p></li>
+<li><p><a class="reference internal" href="news_section.html"><span class="doc">News section</span></a>, where you’ll start using models and will be doing some basic database operations.</p></li>
+<li><p><a class="reference internal" href="create_news_items.html"><span class="doc">Create news items</span></a>, which will introduce more advanced database operations and form
+validation.</p></li>
+<li><p><a class="reference internal" href="conclusion.html"><span class="doc">Conclusion</span></a>, which will give you some pointers on further reading and other resources.</p></li>
 </ul>
 <p>Enjoy your exploration of the CodeIgniter framework.</p>
 <div class="toctree-wrapper compound">
@@ -352,36 +346,32 @@ further reading and other resources.</p></li>
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">Getting Up and Running</a><a class="headerlink" href="#getting-up-and-running" title="Link to this heading"></a></h2>
 <section id="installing-codeigniter">
 <h3><a class="toc-backref" href="#id4" role="doc-backlink">Installing CodeIgniter</a><a class="headerlink" href="#installing-codeigniter" title="Link to this heading"></a></h3>
-<p>You can download a release manually from the site, but for this tutorial we will
-use the recommended way and install the AppStarter package through Composer.
-From your command line type the following:</p>
+<p>You can download a release manually from the site, but for this tutorial we will use the recommended way and install the
+AppStarter package through Composer. From your command line, type the following:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">composer create-project codeigniter4/appstarter ci-news</span>
 </pre></div>
 </div>
-<p>This creates a new folder, <strong>ci-news</strong>, which contains your application code, with
-CodeIgniter installed in the vendor folder.</p>
+<p>This creates a new folder, <strong>ci-news</strong>, which contains your application code, with CodeIgniter installed in the vendor
+folder.</p>
 </section>
 <section id="setting-development-mode">
 <span id="id1"></span><h3><a class="toc-backref" href="#id5" role="doc-backlink">Setting Development Mode</a><a class="headerlink" href="#setting-development-mode" title="Link to this heading"></a></h3>
-<p>By default, CodeIgniter starts up in production mode. This is a safety feature
-to keep your site a bit more secure in case settings are messed up once it is live.
-So first let’s fix that. Copy or rename the <strong>env</strong> file to <strong>.env</strong>. Open it up.</p>
-<p>This file contains server-specific settings. This means you never will need to
-commit any sensitive information to your version control system. It includes
-some of the most common ones you want to enter already, though they are all commented
-out. So uncomment the line with <code class="docutils literal notranslate"><span class="pre">CI_ENVIRONMENT</span></code> on it, and change <code class="docutils literal notranslate"><span class="pre">production</span></code> to
-<code class="docutils literal notranslate"><span class="pre">development</span></code>:</p>
+<p>By default, CodeIgniter starts up in production mode. This is a safety feature to keep your site a bit more secure in
+case settings are messed up once it is live. So first let’s fix that. Copy or rename the <strong>env</strong> file to <strong>.env</strong>. Open
+it up.</p>
+<p>This file contains server-specific settings. This means you will never need to commit any sensitive information to your
+version control system. It includes some of the most common ones you want to enter already, though they are all
+commented out. So uncomment the line with <code class="docutils literal notranslate"><span class="pre">CI_ENVIRONMENT</span></code> on it, and change <code class="docutils literal notranslate"><span class="pre">production</span></code> to <code class="docutils literal notranslate"><span class="pre">development</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">CI_ENVIRONMENT</span> <span class="o">=</span> <span class="nx">development</span>
 </pre></div>
 </div>
 </section>
 <section id="running-development-server">
 <h3><a class="toc-backref" href="#id6" role="doc-backlink">Running Development Server</a><a class="headerlink" href="#running-development-server" title="Link to this heading"></a></h3>
-<p>With that out of the way it’s time to view your application in a browser. You can
-serve it through any server of your choice, Apache, nginx, etc, but CodeIgniter
-comes with a simple command that takes advantage of PHP’s built-in server to get
-you up and running fast on your development machines. Type the following on the
-command line from the root of your project:</p>
+<p>With that out of the way, it’s time to view your application in a browser. You can serve it through any server of your
+choice (Apache, nginx, etc.), but CodeIgniter comes with a simple command that takes advantage of PHP’s built-in server
+to get you up and running fast on your development machines. Type the following on the command line from the root of
+your project:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark serve</span>
 </pre></div>
 </div>
@@ -389,8 +379,8 @@ command line from the root of your project:</p>
 </section>
 <section id="the-welcome-page">
 <h2><a class="toc-backref" href="#id7" role="doc-backlink">The Welcome Page</a><a class="headerlink" href="#the-welcome-page" title="Link to this heading"></a></h2>
-<p>Now point your browser to the correct URL you will be greeted by a welcome screen.
-Try it now by heading to the following URL:</p>
+<p>Now point your browser to the correct URL and you will be greeted by a welcome screen. Try it now by heading to the
+following URL:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">http</span><span class="o">://</span><span class="nx">localhost</span><span class="o">:</span><span class="mi">8080</span>
 </pre></div>
 </div>
@@ -402,31 +392,29 @@ Try it now by heading to the following URL:</p>
 <h2><a class="toc-backref" href="#id8" role="doc-backlink">Debugging</a><a class="headerlink" href="#debugging" title="Link to this heading"></a></h2>
 <section id="debug-toolbar">
 <h3><a class="toc-backref" href="#id9" role="doc-backlink">Debug Toolbar</a><a class="headerlink" href="#debug-toolbar" title="Link to this heading"></a></h3>
-<p>Now that you’re in development mode, you’ll see the CodeIgniter flame on the right bottom of your application. Click it and you’ll see the debug toolbar.</p>
-<p>This toolbar contains a number of helpful items that you can reference during development.
-This will never show in production environments. Clicking any of the tabs along the bottom
-brings up additional information. Clicking the X on the right of the toolbar minimizes it
-to a small square with the CodeIgniter flame on it. If you click that the toolbar
+<p>Now that you’re in development mode, you’ll see the CodeIgniter flame at the bottom right of your application. Click it
+and you’ll see the debug toolbar.</p>
+<p>This toolbar contains a number of helpful items that you can reference during development. This will never show in
+production environments. Clicking any of the tabs along the bottom brings up additional information. Clicking the X on
+the right of the toolbar minimizes it to a small square with the CodeIgniter flame on it. If you click that, the toolbar
 will show again.</p>
 <img alt="../../_images/debugbar.png" src="../../_images/debugbar.png" />
 </section>
 <section id="error-pages">
 <h3><a class="toc-backref" href="#id10" role="doc-backlink">Error Pages</a><a class="headerlink" href="#error-pages" title="Link to this heading"></a></h3>
-<p>In addition to this, CodeIgniter has some helpful error pages when you hit exceptions or
-other errors in your program. Open up <strong>app/Controllers/Home.php</strong> and change some line
-to generate an error (removing a semi-colon or brace should do the trick!). You will be
-greeted by a screen looking something like this:</p>
+<p>In addition to this, CodeIgniter has some helpful error pages when you hit exceptions or other errors in your program.
+Open up <strong>app/Controllers/Home.php</strong> and change some line to generate an error (removing a semicolon or brace should do
+the trick!). You will be greeted by a screen looking something like this:</p>
 <img alt="../../_images/error.png" src="../../_images/error.png" />
 <p>There are a couple of things to note here:</p>
 <ol class="arabic simple">
-<li><p>Hovering over the red header at the top reveals a <strong>search</strong> link that will open up
-DuckDuckGo.com in a new tab and searching for the exception.</p></li>
-<li><p>Clicking the <strong>arguments</strong> link on any line in the Backtrace will expand a list of
-the arguments that were passed into that function call.</p></li>
+<li><p>Hovering over the red header at the top reveals a <strong>search</strong> link that will open up DuckDuckGo.com in a new tab and
+search for the exception.</p></li>
+<li><p>Clicking the <strong>arguments</strong> link on any line in the Backtrace will expand a list of the arguments that were passed
+into that function call.</p></li>
 </ol>
 <p>Everything else should be clear when you see it.</p>
-<p>Now that we know how to get started and how to debug a little, let’s get started building this
-small news application.</p>
+<p>Now that we know how to get started and how to debug a little, let’s start building this small news application.</p>
 </section>
 </section>
 </section>
@@ -443,7 +431,7 @@ small news application.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2026.
+      <span class="lastupdated">Last updated on Nov 03, 2026.
       </span></p>
   </div>
 
