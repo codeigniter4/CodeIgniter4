@@ -188,7 +188,7 @@ class UserController extends BaseController
 ```
 
 !!! warning "Warning"
-    When you use the `validate()` method, you should use the [getValidated()](../libraries/validation.md#getting-validated-data) method to get the validated data, because the `validate()` method uses the [Validation::withRequest()](../libraries/validation.md#withrequest) method internally, and it validates data from [$request->getJSON()](incomingrequest.md#getting-json-data) or [$request->getRawInput()](incomingrequest.md#retrieving-raw-data-put-patch-delete) or [$request->getVar()](incomingrequest.md#getting-data), and an attacker could change what data is validated.
+    When you use the `validate()` method, you should use the [getValidated()](../libraries/validation.md#getting-validated-data) method to get the validated data, because the `validate()` method uses the [Validation::withRequest()](../libraries/validation.md#withrequest) method internally, and it validates data from [$request->getJSON()](incomingrequest.md#getting-json-data) or [$request->getRawInput()](incomingrequest.md#retrieving-raw-data-put-patch-delete-query) or [$request->getVar()](incomingrequest.md#getting-data), and an attacker could change what data is validated.
 
 !!! note "Note"
     The [$this->validator->getValidated()](../libraries/validation.md#getting-validated-data) method can be used since v4.4.0.

@@ -136,7 +136,8 @@ class UserModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['name', 'email'];
+    protected $allowedFields          = ['name', 'email'];
+    protected array $insertOnlyFields = [];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -208,6 +209,45 @@ This array should be updated with the field names that can be set during `save()
 
 !!! note "Note"
     The [$primaryKey](#primarykey) field should never be an allowed field.
+
+#### $insertOnlyFields
+
+!!! success "Available from version 4.8.0"
+
+This array may contain fields that can be set during `insert()` and `insertBatch()` calls, but should be removed from `update()`, `updateBatch()`, and update-side `save()` calls.
+
+This is useful for values that should be created once and then left unchanged through normal Model writes, such as public IDs, external references, or generated slugs.
+
+```php
+<?php
+
+namespace App\Models;
+
+use CodeIgniter\Model;
+
+class UserModel extends Model
+{
+    protected $allowedFields = ['public_id', 'name', 'email'];
+
+    protected array $insertOnlyFields = ['public_id'];
+}
+```
+
+Fields listed here must also be listed in [$allowedFields](#allowedfields) when field protection is enabled. This is Model-level protection only. It does not create a database constraint, does not inspect previous database values, and does not intercept `replace()` or direct Query Builder writes. Calling `protect(false)` disables this protection.
+
+By default, insert-only fields are discarded from update data, the same way fields outside [$allowedFields](#allowedfields) are discarded. When [$throwOnDisallowedFields](#throwondisallowedfields) is enabled, submitting an insert-only field during an update operation throws a `DataException`.
+
+You may also change this setting with the `setInsertOnlyFields()` method.
+
+#### $throwOnDisallowedFields
+
+!!! success "Available from version 4.8.0"
+
+When `true`, the model throws a `DataException` instead of discarding fields that are not listed in [$allowedFields](#allowedfields) during `insert()`, `insertBatch()`, `update()`, `updateBatch()`, and `save()` calls.
+
+This is useful when you want to catch typos, stale form fields, or unexpected write payloads during development or in strict application code. It does not replace validation and does not inspect the database schema.
+
+You may also change this setting with the `throwOnDisallowedFields()` method.
 
 #### $allowEmptyInserts
 
@@ -356,20 +396,51 @@ class UserModel extends Model
 
 The following types are provided by default. Add a question mark at the beginning of the type to mark the field as nullable, i.e., `?int`, `?datetime`.
 
-| Type         | PHP Value Type | DB Column Type            |
-|--------------|----------------|---------------------------|
-| `int`        | int            | int type                  |
-| `float`      | float          | float (numeric) type      |
-| `bool`       | bool           | bool/int/string type      |
-| `int-bool`   | bool           | int type (1 or 0)         |
-| `array`      | array          | string type (serialized)  |
-| `csv`        | array          | string type (CSV)         |
-| `json`       | stdClass       | json/string type          |
-| `json-array` | array          | json/string type          |
-| `datetime`   | Time           | datetime type             |
-| `timestamp`  | Time           | int type (UNIX timestamp) |
-| `uri`        | URI            | string type               |
-| `enum`       | Enum           | string/int type           |
+| Type                   | PHP Value Type | DB Column Type            |
+|------------------------|----------------|---------------------------|
+| `int`                  | int            | int type                  |
+| `float`                | float          | float (numeric) type      |
+| `bool`                 | bool           | bool/int/string type      |
+| `int-bool`             | bool           | int type (1 or 0)         |
+| `array`                | array          | string type (serialized)  |
+| `csv`                  | array          | string type (CSV)         |
+| `json`                 | stdClass       | json/string type          |
+| `json-array`           | array          | json/string type          |
+| `datetime`             | Time           | datetime type             |
+| `timestamp`            | Time           | int type (UNIX timestamp) |
+| `uri`                  | URI            | string type               |
+| `enum`                 | Enum           | string/int type           |
+| `encrypted`            | string         | string/text type          |
+| `encrypted-json`       | stdClass       | string/text type          |
+| `encrypted-json-array` | array          | string/text type          |
+
+#### float
+
+Casting as `float` will convert the value to a float type in PHP. This is best used with database columns that are of a float or numeric type.
+
+You can also pass arguments to the `float` type to specify the number of decimal places to round to as well as the rounding mode (up, down, even, or odd).
+
+```php
+<?php
+
+namespace App\Models;
+
+use CodeIgniter\Model;
+
+class TransactionModel extends Model
+{
+    // ...
+    protected array $casts = [
+        'id'       => 'int',
+        'currency' => 'string',
+        'amount'   => 'float[2,even]',
+    ];
+    // ...
+}
+```
+
+!!! note "Note"
+    Prior to v4.8.0 the `float` type did not support any parameters. It simply converted the value to a float type in PHP without rounding.
 
 #### csv
 
@@ -415,6 +486,60 @@ Enum casting supports:
 
 - **Backed enums** (string or int) - The backing value is stored in the database
 - **Unit enums** - The case name is stored in the database as a string
+
+#### encrypted
+
+!!! success "Available from version 4.8.0"
+
+Casting as `encrypted` encrypts string values before they are stored and decrypts them when they are retrieved. It uses the [Encryption](../libraries/encryption.md) service, so you must configure an encryption key before using it. The configured key is required for both writing new values and reading stored values back. The `encrypted` type accepts string values. Use `?encrypted` for nullable values.
+
+```php
+<?php
+
+namespace App\Models;
+
+use CodeIgniter\Model;
+
+class UserModel extends Model
+{
+    protected $table = 'users';
+
+    protected $allowedFields = ['secret_note'];
+
+    protected array $casts = [
+        'secret_note' => 'encrypted',
+    ];
+}
+
+$userModel = model(UserModel::class);
+
+$id = $userModel->insert([
+    'secret_note' => 'Internal billing note',
+]);
+
+$user = $userModel->find($id);
+
+echo $user['secret_note']; // Internal billing note
+```
+
+The `encrypted-json` and `encrypted-json-array` types encode values as JSON before encryption and decode them after decryption. The `encrypted-json` type returns `stdClass` values, while `encrypted-json-array` returns arrays. Use `?encrypted-json` and `?encrypted-json-array` for nullable values. These values are still stored as encrypted text, not as queryable database JSON.
+
+Encrypted values are stored as Base64-encoded ciphertext. Use a `TEXT` column or a sufficiently large string column because the stored value is longer than the plain text value. Avoid narrow columns like `VARCHAR(255)` unless you have verified the maximum encrypted length for the values you will store.
+
+!!! warning "Warning"
+    Encrypted values cannot be searched, sorted, filtered, or checked for uniqueness by their plain text value in the database.
+
+!!! warning "Warning"
+    Do not use encrypted casting for passwords. Passwords should be hashed with PHP's password hashing functions.
+
+!!! note "Note"
+    Model validation and write callbacks receive the encrypted value because Model Field Casting converts values before they are stored. Validate the plain text value before passing it to the Model when validation must inspect the plain text.
+
+!!! note "Note"
+    If the stored value cannot be decrypted, an `EncryptionException` is thrown.
+
+!!! note "Note"
+    If you rotate encryption keys, values encrypted with a previous key can be decrypted when that key is configured in `previousKeys`. Save the value again to re-encrypt it with the current key. See [Rotating with the `key:rotate` Command](../libraries/encryption.md#rotating-with-the-keyrotate-command) for rotating keys.
 
 ### Custom Casting
 
@@ -889,6 +1014,87 @@ $model->save($job);
 !!! note "Note"
     If you find yourself working with Entities a lot, CodeIgniter provides a built-in [Entity class](entities.md) that provides several handy features that make developing Entities simpler.
 
+#### firstOrInsert()
+
+!!! success "Available from version 4.8.0"
+
+Finds the first row matching the given `$attributes`, or inserts a new row combining `$attributes` and `$values` when no match is found.
+
+Both parameters accept an array, a `stdClass` object, or an [Entity](entities.md):
+
+```php
+<?php
+
+// Find by email, or insert with additional data.
+$user = $userModel->firstOrInsert(
+    ['email' => 'john@example.com'],
+    ['name' => 'John Doe', 'country' => 'US'],
+);
+
+// The above will trigger:
+//
+// 1) First it tries to find the record:
+// SELECT * FROM `users` WHERE `email` = 'john@example.com' LIMIT 1;
+//
+// 2) If no result is found, it inserts a new record:
+// INSERT INTO `users` (`email`, `name`, `country`)
+// VALUES ('john@example.com', 'John Doe', 'US');
+//
+// 3) Then it returns the found or newly created entity/row,
+// or false if something went wrong
+```
+
+`$attributes` is used as the WHERE condition for the lookup. If no record is found, a new row is inserted using the merged result of `$attributes` and `$values`. The `$values` data is only applied during insertion and is ignored when a matching record already exists.
+
+```php
+<?php
+
+// All lookup attributes can be passed as an object or Entity.
+$attrs        = new \stdClass();
+$attrs->email = 'john@example.com';
+
+$user = $userModel->firstOrInsert($attrs, ['name' => 'John Doe', 'country' => 'US']);
+```
+
+The method returns the found or newly inserted row in the format defined by [$returnType](#returntype), or `false` on failure (e.g., validation error or database error when `DBDebug` is `false`).
+
+!!! note "Note"
+    A database **unique constraint** on the lookup column(s) is required for the method to be race-safe. Without it, two concurrent requests could both pass the initial lookup and attempt to insert, resulting in duplicate rows.
+
+    When a unique constraint is present, a concurrent insert is detected via `UniqueConstraintViolationException` and resolved automatically by performing a second lookup.
+
+#### withLockedRow()
+
+!!! success "Available from version 4.8.0"
+
+Reloads one row by primary key inside a transaction using [Lock for Update](../database/query_builder.md#lock-for-update), then runs the callback with the locked row and the current Model instance:
+
+```php
+<?php
+
+$result = $accountModel->withLockedRow($id, static function (object $account, $model): bool {
+    $account->balance -= 100;
+
+    if (! $model->save($account)) {
+        throw new \RuntimeException('Unable to save the account.');
+    }
+
+    return true;
+});
+```
+
+The method returns the callback return value. If the row is not found, the callback is not run and `null` is returned. If the transaction cannot begin or the transaction status fails without an exception, `false` is returned.
+
+Existing Model query constraints are applied to the locked lookup, so methods like `where()` and `withDeleted()` can be called before `withLockedRow()`.
+
+Returning `false` from the callback does not trigger a rollback. To explicitly roll back from the callback, throw an exception. Any exception thrown by the callback rolls back the transaction and is rethrown. Unsupported lock combinations throw the same database exceptions as `lockForUpdate()`.
+
+!!! important "Important"
+    The locked row is reloaded directly from the database, so Model find callbacks are not run for that lookup. Model methods called inside the callback, such as `save()` or `update()`, still follow the Model's callback setting.
+
+!!! note "Note"
+    Row locks are only useful when the database supports transactions and pessimistic locks. See [Lock for Update](../database/query_builder.md#lock-for-update) for driver support and limitations. If database transactions are disabled, this method follows the behavior of `transaction()` and runs the callback without starting a transaction.
+
 #### Saving Dates
 
 !!! success "Available from version 4.5.0"
@@ -1248,6 +1454,34 @@ class MyModel extends Model
 }
 ```
 
+If you prefer disallowed fields to raise an exception instead of being silently removed, enable throwing on disallowed fields:
+
+```php
+<?php
+
+$model->throwOnDisallowedFields()
+    ->insert($data);
+```
+
+When throwing on disallowed fields is enabled, operation fields such as the primary key passed to `update()` or the index passed to `updateBatch()` may still be used to locate rows.
+
+If some allowed fields should only be set during insert operations, list them in [$insertOnlyFields](#insertonlyfields):
+
+```php
+<?php
+
+namespace App\Models;
+
+use CodeIgniter\Model;
+
+class UserModel extends Model
+{
+    protected $allowedFields = ['public_id', 'name', 'email'];
+
+    protected array $insertOnlyFields = ['public_id'];
+}
+```
+
 Occasionally, you will find times where you need to be able to change these elements. This is often during testing, migrations, or seeds. In these cases, you can turn the protection on or off:
 
 ```php
@@ -1291,9 +1525,14 @@ $users = $userModel->asObject('User')->where('status', 'active')->findAll();
 
 ### Processing Large Amounts of Data
 
-Sometimes, you need to process large amounts of data and would run the risk of running out of memory. To make this simpler, you may use the `chunk()` method to get smaller chunks of data that you can then do your work on. The first parameter is the number of rows to retrieve in a single chunk. The second parameter is a Closure that will be called for each row of data.
+Sometimes, you need to process large amounts of data and would run the risk of running out of memory. This is best used during cron jobs, data exports, or other large tasks. To make this simpler, you can process the data in smaller, manageable pieces using the methods below.
 
-This is best used during cron jobs, data exports, or other large tasks.
+!!! note "Note"
+    The `chunk()`, `chunkRows()`, `chunkById()`, and `chunkRowsById()` methods do not trigger Model callbacks.
+
+#### chunk()
+
+You may use the `chunk()` method to get smaller chunks of data that you can then do your work on. The first parameter is the number of rows to retrieve in a single chunk. The second parameter is a Closure that will be called for each row of data.
 
 ```php
 <?php
@@ -1303,6 +1542,56 @@ $userModel->chunk(100, static function ($data) {
     // $data is a single row of data.
 });
 ```
+
+#### chunkRows()
+
+!!! success "Available from version 4.8.0"
+
+On the other hand, if you want the entire chunk to be passed to the Closure at once, you can use the `chunkRows()` method.
+
+```php
+<?php
+
+$userModel->chunkRows(100, static function ($rows) {
+    // do something.
+    // $rows is an array of rows representing chunk of 100 items.
+});
+```
+
+#### chunkById()
+
+!!! success "Available from version 4.8.0"
+
+If you need to update or delete rows while processing them, use `chunkById()`. This method retrieves each chunk ordered by the model's primary key instead of using an offset, so deleting or updating rows already processed will not cause later rows to be skipped.
+
+```php
+<?php
+
+$userModel->where('country', 'US')
+    ->chunkById(100, static function ($data) {
+        // do something.
+        // $data is a single row of data.
+    });
+```
+
+#### chunkRowsById()
+
+!!! success "Available from version 4.8.0"
+
+If you want the entire ID-based chunk to be passed to the Closure at once, use `chunkRowsById()`.
+
+```php
+<?php
+
+$userModel->where('country', 'US')
+    ->chunkRowsById(100, static function ($rows) {
+        // do something.
+        // $rows is an array of rows representing a chunk of 100 items.
+    });
+```
+
+!!! warning "Warning"
+    ID-based chunking needs the model to define a primary key, and that primary key must be selected. If you customize the selected columns, make sure the primary key is included. When using joins, the model primary key must remain available under its normal field name, and each primary key value must appear only once in the result set. Otherwise, rows may be skipped. These methods manage their own primary key ordering and cannot be used with `orderBy()`, `groupBy()`, `limit()`, `offset()` or `union()`. You should also avoid changing primary key values while processing chunks. Since these methods add their own `WHERE` condition to each chunk query, group any `orWhere()` conditions that should be evaluated together.
 
 ## Working with Query Builder
 

@@ -282,7 +282,7 @@ $config = new \Acme\Blog\Config\Blog();
 Config files are automatically discovered when you use the always-available `config()` function and pass a short classname to it.
 
 !!! note "Note"
-    We don't recommend you use the same short classname in modules. Modules that need to override or add to known configurations in **app/Config/** should use [Implicit Registrars](configuration.md#registrars).
+    We don't recommend you use the same short classname in modules. Modules that need to override or add to known configurations in **app/Config/** should use [Implicit Registrars](configuration.md#registrars). To contribute to *nested* configuration (filters, permission matrices, and so on) without clobbering existing values, use the [merge directives](configuration.md#controlling-how-values-are-merged).
 
 !!! note "Note"
     Prior to v4.4.0, `config()` found the file in **app/Config/** when there was a class with the same shortname, even if you specified a fully qualified class name like `config(\Acme\Blog\Config\Blog::class)`. This behavior was fixed in v4.4.0, and it now returns the specified instance.

@@ -6,6 +6,7 @@
 
 See all the changes.
 
+- [Version 4.8.0](v4.8.0.md)
 - [Version 4.7.7](v4.7.7.md)
 - [Version 4.7.6](v4.7.6.md)
 - [Version 4.7.5](v4.7.5.md)

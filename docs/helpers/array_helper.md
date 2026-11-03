@@ -14,17 +14,22 @@ helper('array');
 
 The following functions are available:
 
-#### dot_array_search(string $search, array $values)
+!!! note "Note"
+    Since v4.8.0, the dot-path helpers can read values from arrays or objects, including `Entity` objects. This applies to `dot_array_search()`, `dot_array_has()`, `dot_array_only()`, `dot_array_except()`, and `array_group_by()`.
+
+    `dot_array_set()` and `dot_array_unset()` still modify arrays only. `dot_array_only()` and `dot_array_except()` always return arrays. See their descriptions for how object values are handled.
+
+#### dot_array_search(string $search, array|object $values)
 
 - **Parameters**  
     - **$search** `string` The dot-notation string describing how to search the array
-    - **$values** `array` The array to search
+    - **$values** `array|object` The array or object to search
 
 - **Returns**: The value found within the array, or null
 
 - **Return type**: `mixed`
 
-This method allows you to use dot-notation to search through an array for a specific key, and allows the use of the `*` wildcard. Given the following array:
+This method allows you to use dot-notation to search through arrays and objects for a specific key or property, and allows the use of the `*` wildcard. Given the following array:
 
 ```php
 $data = [
@@ -77,6 +82,254 @@ $fooBar = dot_array_search('foo\.bar.baz', $data);
 !!! note "Note"
     Prior to v4.2.0, `dot_array_search('foo.bar.baz', ['foo' => ['bar' => 23]])` returned `23` due to a bug. v4.2.0 and later return `null`.
 
+#### dot_array_has(string $search, array|object $values): bool
+
+- **Parameters**  
+    - **$search** `string` The dot-notation string describing how to search the array
+    - **$values** `array|object` The array or object to check
+
+- **Returns**: `true` if the key exists, otherwise `false`
+
+- **Return type**: `bool`
+
+!!! success "Available from version 4.8.0"
+
+Checks if an array key exists using dot syntax. This method supports wildcard `*` in the same way as `dot_array_search()`.
+
+```php
+$data = [
+    'users' => [
+        ['id' => 1, 'name' => 'Jane'],
+        ['id' => 2, 'name' => 'John'],
+    ],
+];
+
+// Returns: true (all matched users have an "id" key)
+$hasIds = dot_array_has('users.*.id', $data);
+
+// If any user is missing "id", this would return false.
+
+// Returns: false
+$hasEmails = dot_array_has('users.*.email', $data);
+```
+
+#### dot_array_set(array &$array, string $search, mixed $value): void
+
+- **Parameters**  
+    - **$array** `array` The array to modify (passed by reference)
+    - **$search** `string` The dot-notation string describing where to set the value
+    - **$value** `mixed` The value to set
+
+- **Return type**: `void`
+
+!!! success "Available from version 4.8.0"
+
+Sets an array value using dot syntax. Missing path segments are created automatically. Wildcard `*` is supported with the same rule as `dot_array_has()`: you must specify a key right after `*`.
+
+```php
+$data = [];
+
+dot_array_set($data, 'user.profile.id', 123);
+dot_array_set($data, 'user.profile.name', 'John');
+
+$users = [
+    ['name' => 'Jane'],
+    ['name' => 'John'],
+];
+
+dot_array_set($users, '*.active', true);
+
+/*
+$data is now:
+[
+    'user' => [
+        'profile' => [
+            'id'   => 123,
+            'name' => 'John',
+        ],
+    ],
+]
+*/
+
+/*
+$users is now:
+[
+    ['name' => 'Jane', 'active' => true],
+    ['name' => 'John', 'active' => true],
+]
+*/
+```
+
+#### dot_array_unset(array &$array, string $search): bool
+
+- **Parameters**  
+    - **$array** `array` The array to modify (passed by reference)
+    - **$search** `string` The dot-notation string describing which key to remove
+
+- **Returns**: `true` if a key was removed, otherwise `false`
+
+- **Return type**: `bool`
+
+!!! success "Available from version 4.8.0"
+
+Removes array values using dot syntax. Wildcard `*` is supported. You can target specific keys like `users.*.id` or clear all keys under a path with `user.*`.
+
+```php
+$data = [
+    'user' => [
+        'profile' => [
+            'id'   => 123,
+            'name' => 'John',
+        ],
+    ],
+];
+
+// Returns: true
+$removed = dot_array_unset($data, 'user.profile.id');
+
+// Returns: false (path does not exist)
+$removedAgain = dot_array_unset($data, 'user.profile.id');
+
+$users = [
+    ['id' => 1, 'name' => 'Jane'],
+    ['id' => 2, 'name' => 'John'],
+];
+
+// Returns: true (removes "id" from all user rows)
+$removedIds = dot_array_unset($users, '*.id');
+
+// Returns: true (clears all keys under "user")
+$clearedUser = dot_array_unset($data, 'user.*');
+```
+
+#### dot_array_only(array|object $array, array|string $indexes): array
+
+- **Parameters**  
+    - **$array** `array|object` The source array or object
+    - **$indexes** `array|string` One key or a list of keys using dot notation
+
+- **Returns**: Nested array containing only the requested keys
+
+- **Return type**: `array`
+
+!!! success "Available from version 4.8.0"
+
+Gets only the specified keys using dot syntax while preserving nested structure.
+
+Wildcard `*` is supported. Unlike `dot_array_set()` and `dot_array_unset()`, this method also allows wildcard at the end (for example `user.*`).
+
+The result is always an array. If a selected value is an object, that object is kept as the value. If you select a value inside an object, the returned path is built with arrays:
+
+```php
+$user = (object) ['id' => 123, 'name' => 'John'];
+
+// Selecting the object itself keeps the object as the value.
+$whole = dot_array_only(['user' => $user], 'user');
+// ['user' => $user]
+
+// Selecting a value inside the object builds the path with arrays.
+$partial = dot_array_only(['user' => $user], 'user.id');
+// ['user' => ['id' => 123]]
+```
+
+```php
+$data = [
+    'user' => [
+        'id'    => 123,
+        'name'  => 'John',
+        'email' => 'john@example.com',
+    ],
+    'meta' => [
+        'request_id' => 'abc',
+    ],
+];
+
+$only = dot_array_only($data, ['user.id', 'meta.request_id']);
+/*
+$only:
+[
+    'user' => ['id' => 123],
+    'meta' => ['request_id' => 'abc'],
+]
+*/
+
+$userOnly = dot_array_only($data, 'user.*');
+/*
+$userOnly:
+[
+    'user' => [
+        'id'    => 123,
+        'name'  => 'John',
+        'email' => 'john@example.com',
+    ],
+]
+*/
+```
+
+#### dot_array_except(array|object $array, array|string $indexes): array
+
+- **Parameters**  
+    - **$array** `array|object` The source array or object
+    - **$indexes** `array|string` One key or a list of keys using dot notation
+
+- **Returns**: Nested array with the specified keys removed
+
+- **Return type**: `array`
+
+!!! success "Available from version 4.8.0"
+
+Gets all keys except the specified ones using dot syntax.
+
+Wildcard `*` is supported. Unlike `dot_array_set()` and `dot_array_unset()`, this method also allows wildcard at the end (for example `user.*`).
+
+The result is always an array. Object values that are not changed are kept as they are. If a key is removed from inside an object, that part of the result is returned as an array:
+
+```php
+$user = (object) ['id' => 123, 'name' => 'John'];
+
+// An untouched object is kept as it is.
+$untouched = dot_array_except(['user' => $user], 'meta.id');
+// ['user' => $user]
+
+// Removing a key from inside an object returns that part as an array.
+$partial = dot_array_except(['user' => $user], 'user.id');
+// ['user' => ['name' => 'John']]
+```
+
+```php
+$data = [
+    'user' => [
+        'id'    => 123,
+        'name'  => 'John',
+        'email' => 'john@example.com',
+    ],
+    'meta' => [
+        'request_id' => 'abc',
+    ],
+];
+
+$except = dot_array_except($data, ['user.email', 'meta.request_id']);
+/*
+$except:
+[
+    'user' => [
+        'id'   => 123,
+        'name' => 'John',
+    ],
+    'meta' => [],
+]
+*/
+
+$clearUser = dot_array_except($data, 'user.*');
+/*
+$clearUser:
+[
+    'user' => [],
+    'meta' => ['request_id' => 'abc'],
+]
+*/
+```
+
 #### array_deep_search($key, array $array)
 
 - **Parameters**  
@@ -87,7 +340,7 @@ $fooBar = dot_array_search('foo\.bar.baz', $data);
 
 - **Return type**: `mixed`
 
-Returns the value of an element with a key value in an array of uncertain depth.
+Returns the value of an element with a key value in an array of uncertain depth. Only nested arrays are searched, and object values are not traversed.
 
 #### array_sort_by_multiple_keys(array &$array, array $sortColumns)
 
@@ -188,7 +441,7 @@ In the same way, the method can also handle an array of objects. In the example 
 
 - **Returns**: The flattened array
 
-This function flattens a multidimensional array to a single key-value array by using dots as separators for the keys.
+This function flattens a multidimensional array to a single key-value array by using dots as separators for the keys. The source may be any `iterable`. Only nested arrays are flattened, and object values are kept as-is, as leaf values.
 
 ```php
 $arrayToFlatten = [
@@ -244,7 +497,7 @@ $flattened = array_flatten_with_dots($arrayToFlatten, 'foo_');
 
 - **Returns**: An array grouped by index values
 
-This function allows you to group data rows together by index values. The depth of the returned array equals the number of indexes passed as a parameter.
+This function allows you to group data rows together by index values. The depth of the returned array equals the number of indexes passed as a parameter. Data rows may be arrays or objects, and dot syntax can read nested array keys or object properties.
 
 The example shows some data (e.g., loaded from an API) with nested arrays.
 

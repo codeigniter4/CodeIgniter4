@@ -187,7 +187,7 @@ class Database extends Config
         'swapPre'  => '',
         'compress' => false,
         'encrypt'  => false,
-        'strictOn' => false,
+        'strictOn' => true,
         'failover' => [],
     ];
 
@@ -311,6 +311,7 @@ class Database extends Config
 | **swapPre** | A default table prefix that should be swapped with `DBPrefix`. This is useful for distributed applications where you might run manually written queries, and need the prefix to still be customizable by the end user. |
 | **schema** | (`Postgre` and `SQLSRV` only) The database schema. The default value varies by driver. |
 | **encrypt** | (`MySQLi` and `SQLSRV` only) Whether to use an encrypted connection. See [MySQLi encrypt](#encrypt) for `MySQLi` settings. `SQLSRV` driver accepts true/false. |
+| **trustServerCertificate** | (`SQLSRV` only) true/false (boolean) - Whether to trust the server certificate without validating it against a trusted certificate authority. |
 | **compress** | (`MySQLi` only) Whether to use client compression. |
 | **strictOn** | (`MySQLi` only) true/false (boolean) - Whether to force "Strict Mode" connections, good for ensuring strict SQL while developing an application. |
 | **port** | The database port number - Empty string `''` for default port (or dynamic port with `SQLSRV`). |
@@ -320,6 +321,7 @@ class Database extends Config
 | **numberNative** | (`MySQLi` only) true/false (boolean) - Whether to enable MYSQLI_OPT_INT_AND_FLOAT_NATIVE. |
 | **foundRows** | (`MySQLi` only) true/false (boolean) - Whether to enable MYSQLI_CLIENT_FOUND_ROWS. |
 | **dateFormat** | The default date/time formats as PHP's [DateTime format](https://www.php.net/manual/en/datetime.format.php), with the keys listed below the table. |
+| **timezone** | (`MySQLi`, `Postgre`, and `OCI8` only) The database session timezone, with the values listed below the table. |
 
 !!! note "Note"
     CodeIgniter doesn't support dots (`.`) in the table and column names. Since v4.5.0, database names with dots are supported.
@@ -336,6 +338,14 @@ The **dateFormat** array has the following keys:
 - `time` - time format
 
 This can be used since v4.5.0, and you can get the value, e.g., `$db->dateFormat['datetime']`. Currently, the database drivers do not use these values directly, but [Model](../models/model.md#saving-dates) uses them.
+
+The **timezone** setting accepts the following values:
+
+- `false` - Don't set session timezone (default, backward compatible)
+- `true` - Automatically sync with `App::$appTimezone`
+- `string` - Specific timezone offset (e.g., `'+05:30'`) or named timezone (e.g., `'America/New_York'`)
+
+Named timezones are automatically converted to offsets for database compatibility. See [timezone](#timezone) for details.
 
 !!! note "Note"
     Depending on what database driver you are using (`MySQLi`, `Postgre`, etc.), not all values will be needed. For example, when using `SQLite3` you will not need to supply a username or password, and the database name will be the path to your database file.
@@ -369,3 +379,16 @@ The MySQLi driver accepts an array with the following options:
 - `ssl_capath` - Path to a directory containing trusted CA certificates in PEM format
 - `ssl_cipher` - List of *allowed* ciphers to be used for the encryption, separated by colons (`:`)
 - `ssl_verify` - true/false (boolean) - Whether to verify the server certificate or not
+
+#### timezone
+
+!!! success "Available from version 4.8.0"
+
+Synchronizes the database session timezone with your application timezone to ensure consistent timestamps between model operations and database functions like `NOW()`.
+
+!!! note "Note"
+    Modern database environments usually have UTC set by default, so this option may not be needed in most cases.
+
+Accepts `false` (default, don't set), `true` (auto-sync with `App::$appTimezone`), or a timezone string (e.g., `'+05:30'` or `'America/New_York'`).
+
+Named timezones are automatically converted to offsets for compatibility.

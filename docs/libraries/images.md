@@ -80,7 +80,10 @@ This example would take the same image and first fix any mobile phone orientatio
 
 ### Image Quality
 
-`save()` can take an additional parameter `$quality` to alter the resulting image quality. Values range from 0 to 100, with 90 being the framework default. This parameter only applies to JPEG and WebP images, and will be ignored otherwise:
+`save()` can take an additional parameter `$quality` to alter the resulting image quality. Values range from 0 to 100, with 90 being the framework default. This parameter only applies to JPEG, WebP, and AVIF images, and will be ignored otherwise:
+
+!!! note "Note"
+    For AVIF images, it is suggested to set the `$quality` parameter to 52. See also <https://www.php.net/manual/en/function.imageavif.php>
 
 !!! note "Note"
     The parameter `$quality` for WebP can be used since v4.4.0.

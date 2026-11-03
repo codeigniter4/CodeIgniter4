@@ -120,6 +120,9 @@ This function determines the data type so that it can escape only string data. I
 $sql = 'INSERT INTO table (title) VALUES(' . $db->escape($title) . ')';
 ```
 
+!!! success "Available from version 4.8.0"
+    `$db->escape()` accepts PHP `BackedEnum` values and escapes their backing values.
+
 ### 2. $db->escapeString()
 
 This function escapes the data passed to it, regardless of type. Most of the time you'll use the above function rather than this one. Use the function like this:
@@ -174,6 +177,20 @@ SELECT * FROM some_table WHERE id IN (3,6) AND status = 'live' AND author = 'Ric
 
 The secondary benefit of using binds is that the values are automatically escaped, producing safer queries. You don't have to remember to manually escape data - the engine does it automatically for you.
 
+!!! success "Available from version 4.8.0"
+    Query bindings, prepared query values, and Query Builder bound values accept PHP `BackedEnum` values. CodeIgniter uses the enum backing value before escaping or passing the value to the database driver.
+
+```php
+<?php
+
+$db->table('users')->where('status', \UserStatus::Active)->get();
+
+$db->query(
+    'SELECT * FROM users WHERE status = ?',
+    [\UserStatus::Active],
+);
+```
+
 ### Named Bindings
 
 Instead of using the question mark to mark the location of the bound values, you can name the bindings, allowing the keys of the values passed in to match placeholders in the query:
@@ -197,9 +214,56 @@ $db->query($sql, [
 
 ## Handling Errors
 
-### $db->error()
+!!! note "Note"
+    It is strongly recommended to keep `DBDebug` set to `true` (the default). This ensures all query failures surface immediately as exceptions, preventing silent data corruption. Setting it to `false` is considered legacy behavior and may be deprecated in a future version.
 
-If you need to get the last error that has occurred, the `error()` method will return an array containing its code and message. Here's a quick example:
+### DBDebug Enabled (Recommended)
+
+When [DBDebug](configuration.md#description-of-values) is `true` (the default), any query failure throws a `DatabaseException` or one of its subclasses, which you can catch and handle:
+
+```php
+<?php
+
+use CodeIgniter\Database\Exceptions\ConstraintViolationException;
+use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\Exceptions\ForeignKeyConstraintViolationException;
+use CodeIgniter\Database\Exceptions\UniqueConstraintViolationException;
+
+try {
+    $db->table('users')->insert(['email' => 'duplicate@example.com']);
+} catch (UniqueConstraintViolationException $e) {
+    // Handle duplicate key violation.
+} catch (ForeignKeyConstraintViolationException $e) {
+    // Handle missing or referenced parent row.
+} catch (ConstraintViolationException $e) {
+    // Handle another known database constraint violation.
+} catch (DatabaseException $e) {
+    // Handle another database error.
+}
+```
+
+#### Constraint Violation Exceptions
+
+!!! success "Available from version 4.8.0"
+
+Database constraint violations are reported as `ConstraintViolationException` or one of its subclasses when CodeIgniter can identify the native driver error:
+
+- `UniqueConstraintViolationException`
+- `ForeignKeyConstraintViolationException`
+- `NotNullConstraintViolationException`
+- `CheckConstraintViolationException`
+
+These exceptions allow you to handle common integrity errors without inspecting raw driver-specific error codes. If a driver reports a constraint violation that CodeIgniter cannot safely classify more precisely, it throws the parent `ConstraintViolationException`.
+
+Some database engines report certain constraint failures with a generic integrity-constraint code. In those cases CodeIgniter uses the parent `ConstraintViolationException` rather than guessing the more specific subtype.
+
+### DBDebug Disabled
+
+When `DBDebug` is `false`, query and prepared query execution failures return `false` instead of throwing. Two methods are available to inspect what went wrong.
+
+#### $db->error()
+
+The `error()` method returns an array with `code` and `message` keys describing the last error. Error codes are driver-specific (an **int** for MySQLi, SQLite3, and OCI8; a SQLSTATE **string** for Postgre and SQLSRV):
 
 ```php
 <?php
@@ -208,6 +272,27 @@ if (! $db->simpleQuery('SELECT `example_field` FROM `example_table`')) {
     $error = $db->error(); // Has keys 'code' and 'message'
 }
 ```
+
+#### $db->getLastException()
+
+!!! success "Available from version 4.8.0"
+
+`getLastException()` returns the typed exception that would have been thrown had `DBDebug` been `true`. This is the recommended way to distinguish between failure types (e.g., a constraint violation vs. another database error) without enabling `DBDebug`:
+
+```php
+<?php
+
+use CodeIgniter\Database\Exceptions\UniqueConstraintViolationException;
+
+$inserted = $db->table('users')->insert(['email' => 'duplicate@example.com']);
+
+if (! $inserted && $db->getLastException() instanceof UniqueConstraintViolationException) {
+    // Handle duplicate key violation.
+}
+```
+
+!!! note "Note"
+    `getLastException()` is reset to `null` at the start of every query or prepared query execution. Inspect it immediately after the failed operation.
 
 ## Prepared Queries
 
@@ -280,6 +365,9 @@ $country = 'US';
 // Run the Query
 $results = $pQuery->execute($name, $email, $country);
 ```
+
+!!! success "Available from version 4.8.0"
+    Prepared query values accept PHP `BackedEnum` values and pass their backing values to the database driver.
 
 For queries of type "write", it returns true or false, indicating the success or failure of the query. For queries of type "read", it returns a standard [result set](results.md).
 

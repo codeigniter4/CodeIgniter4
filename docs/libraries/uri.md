@@ -84,9 +84,10 @@ The scheme is frequently 'http' or 'https', but any scheme is supported, includi
 <?php
 
 $uri = new \CodeIgniter\HTTP\URI('http://www.example.com/some/path');
-
 echo $uri->getScheme(); // 'http'
-$uri->setScheme('https');
+
+$uri = $uri->withScheme('https');
+echo $uri->getScheme(); // 'https'
 ```
 
 ### Authority
@@ -234,6 +235,71 @@ You can add a value to the query variables collection without destroying the exi
 $uri->addQuery('foo', 'bar');
 ```
 
+#### Changing Query Values Without Mutation
+
+!!! success "Available from version 4.8.0"
+
+The immutable query methods provide alternatives to the older mutable methods:
+
+| Mutable method    | Immutable alternative                |
+|-------------------|--------------------------------------|
+| `setQuery()`      | `withQuery()`                        |
+| `setQueryArray()` | `withQueryArray()`                   |
+| `addQuery()`      | `withQueryVar()` / `withQueryVars()` |
+| `stripQuery()`    | `withoutQueryVars()`                 |
+| `keepQuery()`     | `withOnlyQueryVars()`                |
+
+The `with*()` methods return a cloned URI instance and do not modify the original URI. The older mutable methods change the current URI instance.
+
+You can return a new URI instance with its query variables replaced by using the `withQuery()` and `withQueryArray()` methods:
+
+```php
+<?php
+
+$uri = new \CodeIgniter\HTTP\URI('https://example.com/users?q=bob&page=1');
+
+$page = $uri->withQuery('page=2');
+// https://example.com/users?page=2
+
+$filtered = $uri->withQueryArray([
+    'q'    => 'alice',
+    'role' => 'admin',
+]);
+// https://example.com/users?q=alice&role=admin
+```
+
+You can return a new URI instance with one or more query variables added or replaced by using the `withQueryVar()` and `withQueryVars()` methods. Existing query variables are preserved unless they are replaced:
+
+```php
+<?php
+
+$uri = new \CodeIgniter\HTTP\URI('https://example.com/users?q=bob&page=1');
+
+$nextPage = $uri->withQueryVar('page', 2);
+// https://example.com/users?q=bob&page=2
+
+$filtered = $uri->withQueryVars([
+    'q'    => 'alice',
+    'page' => 1,
+    'role' => 'admin',
+]);
+// https://example.com/users?q=alice&page=1&role=admin
+```
+
+You can return a new URI instance with query variables removed or filtered by using the `withoutQueryVars()` and `withOnlyQueryVars()` methods:
+
+```php
+<?php
+
+$uri = new \CodeIgniter\HTTP\URI('https://example.com/users?q=bob&page=1&role=admin');
+
+$withoutPage = $uri->withoutQueryVars('page');
+// https://example.com/users?q=bob&role=admin
+
+$onlyFilters = $uri->withOnlyQueryVars('q', 'role');
+// https://example.com/users?q=bob&role=admin
+```
+
 #### Filtering Query Values
 
 You can filter the query values returned by passing an options array to the `getQuery()` method, with either an *only* or an *except* key:
@@ -317,14 +383,13 @@ echo $uri->getSegment(3, 'foo');
 echo $uri->getSegment(4, 'bar');
 // will throw an exception
 echo $uri->getSegment(5, 'baz');
-// will print 'baz'
-echo $uri->setSilent()->getSegment(5, 'baz');
-// will print '' (empty string)
-echo $uri->setSilent()->getSegment(5);
 ```
 
 !!! note "Note"
     You can get the last +1 segment. When you try to get the last +2 or higher segment, an exception will be thrown by default. You can prevent exceptions from being thrown with the `setSilent()` method.
+
+    !!! danger "Deprecated since version 4.4.0"
+        `setSilent()` triggers a deprecation notice since v4.8.0 and will be removed in CodeIgniter 5.0.
 
 You can get a count of the total segments:
 
@@ -354,6 +419,9 @@ $segments = $uri->getSegments();
 ## Disable Throwing Exceptions
 
 By default, some methods of this class may throw an exception. If you want to disable it, you can set a special flag that will prevent throwing exceptions.
+
+!!! danger "Deprecated since version 4.4.0"
+    This method is deprecated and will be removed in a future version. It is recommended to handle exceptions properly instead of disabling them.
 
 ```php
 <?php

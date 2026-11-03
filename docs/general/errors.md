@@ -258,6 +258,26 @@ throw new \CodeIgniter\Database\Exceptions\DatabaseException();
 
 This provides an exit code of 8.
 
+### UniqueConstraintViolationException
+
+!!! success "Available from version 4.8.0"
+
+`UniqueConstraintViolationException` extends `DatabaseException` and is thrown when a query fails due to a duplicate key or unique constraint violation. It is supported by all database drivers.
+
+```php
+<?php
+
+use CodeIgniter\Database\Exceptions\UniqueConstraintViolationException;
+
+try {
+    $db->table('users')->insert(['email' => 'duplicate@example.com']);
+} catch (UniqueConstraintViolationException $e) {
+    // Handle duplicate key violation
+}
+```
+
+See [Constraint Violation Exceptions](../database/queries.md#constraint-violation-exceptions) for full usage details.
+
 ### RedirectException
 
 !!! note "Note"

@@ -311,6 +311,174 @@ class Registrar
 
 Registrar methods must always return an array, with keys corresponding to the properties of the target config file. Existing values are merged, and Registrar properties have overwrite priority.
 
+By default this merge is **shallow** (top-level only). Arrays are combined with `array_merge()`, so a nested array under a top-level key *replaces* the existing nested array rather than merging into it. In the following example the `key2` subtree from the config is replaced entirely, dropping `val2` and `val3`:
+
+```php
+<?php
+
+// app/Config/Example.php
+
+namespace Config;
+
+use CodeIgniter\Config\BaseConfig;
+
+class Example extends BaseConfig
+{
+    public array $arrayNested = [
+        'key1' => 'val1',
+        'key2' => ['val2' => 'subVal2', 'val3' => 'subVal3'],
+    ];
+}
+
+// Modules/MyModule/Config/Registrar.php - plain array (shallow merge)
+
+namespace MyModule\Config;
+
+class Registrar
+{
+    public static function Example(): array
+    {
+        return ['arrayNested' => ['key2' => ['val4' => 'subVal4']]];
+    }
+}
+
+// Result - the nested array under "key2" is replaced wholesale, so
+// "val2" and "val3" are silently dropped:
+//
+// 'arrayNested' => [
+//     'key1' => 'val1',
+//     'key2' => ['val4' => 'subVal4'],
+// ]
+```
+
+#### Controlling how values are merged
+
+!!! success "Available from version 4.8.0"
+
+When a registrar needs finer control than the shallow default, it can return a `CodeIgniter\Config\Merge` directive as the value of a property. Merge directives are explicit instructions to either keep merging into a value, replace it, or add items to a list.
+
+The two directives that control whole values are:
+
+- `Merge::replace($value)` - discard the existing value and use `$value`. Accepts **any type** (scalar, `null`, or array - e.g. `['a', 'b']` becomes `['c']`, or `Merge::replace('redis')`).
+- `Merge::byKey($value)` - deep-merge by key: **string keys recurse, integer keys append, and scalar leaves are replaced**. The name is deliberately not `recursive` to avoid confusion with PHP's `array_merge_recursive()`, which collects scalar values into arrays instead of replacing them.
+
+Use `Merge::byKey()` when you want to navigate into nested configuration and preserve sibling keys:
+
+```php
+<?php
+
+// Modules/MyModule/Config/Registrar.php - opt into a deep merge with Merge::byKey()
+
+namespace MyModule\Config;
+
+use CodeIgniter\Config\Merge;
+
+class Registrar
+{
+    public static function Example(): array
+    {
+        return [
+            'arrayNested' => Merge::byKey([
+                'key2' => ['val4' => 'subVal4'],
+            ]),
+        ];
+    }
+}
+
+// Result - the sibling keys are preserved:
+//
+// 'arrayNested' => [
+//     'key1' => 'val1',
+//     'key2' => ['val2' => 'subVal2', 'val3' => 'subVal3', 'val4' => 'subVal4'],
+// ]
+```
+
+!!! important "Important"
+    Inside `Merge::byKey()`, plain arrays are still merged by key. Use `Merge::replace()` when you want to stop merging at that key and overwrite the value. For example, `'after' => []` leaves an existing `after` list unchanged, while `'after' => Merge::replace([])` clears it.
+
+The following registrar adds a filter to `globals['before']` while hard-resetting `globals['after']`, leaving any other `globals` keys untouched:
+
+```php
+<?php
+
+// Modules/MyModule/Config/Registrar.php - nested directives inside Merge::byKey()
+
+namespace MyModule\Config;
+
+use CodeIgniter\Config\Merge;
+
+class Registrar
+{
+    public static function Filters(): array
+    {
+        return [
+            'globals' => Merge::byKey([
+                'before' => Merge::append(['blogFilter']), // add to the existing list
+                'after'  => Merge::replace([]),            // hard reset, plain [] would keep merging
+            ]),
+        ];
+    }
+
+    // Scalar replace also works at the property root:
+    public static function Cache(): array
+    {
+        return ['handler' => Merge::replace('redis')];
+    }
+}
+```
+
+The *list* strategies add items to a list and control where they land. They are useful where order matters, such as the filter lists in `Config\Filters`:
+
+- `Merge::append($value)` - add items to the **end** of the list (e.g. `['a', 'b']` becomes `['a', 'b', 'c']`).
+- `Merge::prepend($value)` - add items to the **front** of the list (e.g. `['a', 'b']` becomes `['c', 'a', 'b']`).
+- `Merge::before($anchor, $value)` - insert items immediately **before** the first element equal to `$anchor`.
+- `Merge::after($anchor, $value)` - insert items immediately **after** the first element equal to `$anchor`.
+
+All four de-duplicate, so the directives never *introduce* a duplicate value: a value already in the list is not added again, and duplicate payload values are collapsed (e.g. `Merge::append(['x', 'x'])` adds `x` once). Duplicates that already exist in the current list are left as-is. They differ only in how they treat a value that is *already present*:
+
+- `append()` / `prepend()` leave an already-present value **where it is** (they only add values that are missing).
+- `before()` / `after()` **move** an already-present value to the anchor position - but only when the anchor is in the list. If the anchor is missing they fall back to `append()` / `prepend()` respectively, and do **not** relocate a value that is already present.
+
+The anchor is matched strictly against the **direct elements** of the list; the list strategies act on a single list level and never recurse. To reach a list that is nested under other keys (such as `globals['before']`), navigate to it with `Merge::byKey()` and place the list directive at that key:
+
+```php
+<?php
+
+// Modules/MyModule/Config/Registrar.php - order filters relative to existing ones
+
+namespace MyModule\Config;
+
+use CodeIgniter\Config\Merge;
+
+class Registrar
+{
+    public static function Filters(): array
+    {
+        return [
+            'globals' => Merge::byKey([
+                // Run "auth" immediately after "csrf" in the before-list.
+                'before' => Merge::after('csrf', ['auth']),
+                // Run "honeypot" first in the after-list.
+                'after' => Merge::prepend(['honeypot']),
+            ]),
+        ];
+    }
+}
+
+// Given a base of:
+//   'before' => ['csrf', 'invalidchars'],
+//   'after'  => ['toolbar'],
+// the result is:
+//   'before' => ['csrf', 'auth', 'invalidchars'],
+//   'after'  => ['honeypot', 'toolbar'],
+```
+
+!!! important "Important"
+    Merge directives are interpreted only when used as the **value of a config property** returned by a registrar, and recursively **inside** `Merge::byKey()`. The payloads of the `replace()`, `append()`, `prepend()`, `before()`, and `after()` strategies are taken literally and are **not** scanned for nested directives - for nested control, wrap the property in `Merge::byKey()` and place the directives at its keys.
+
+!!! note "Note"
+    Merge directives sharpen a *single* registrar's intent; they do not add an explicit priority mechanism between registrars. Registrars are still applied in discovery order, and an item's final position follows from that order *plus* the strategy: with `append()` an earlier registrar's items sit ahead of a later one's, while with `prepend()`, `before()`, and `after()` a later registrar's items land **nearer the front or the anchor** than an earlier one's. For example, `after('csrf', ['a'])` followed by `after('csrf', ['b'])` from a second registrar yields `['csrf', 'b', 'a']`. As always, **.env** values take priority over registrars.
+
 ### Explicit Registrars
 
 Explicit Registrars can only change the Config class properties in which they are registered.
@@ -420,7 +588,7 @@ Config\App#6 (12) (
     public 'CSPEnabled' -> boolean false
 )
 
-Config Caching: Disabled
+Config caching: disabled
 ```
 
 You can see if Config Caching is enabled or not.

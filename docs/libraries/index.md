@@ -10,6 +10,7 @@
 - [File Collections](file_collections.md)
 - [Honeypot Class](honeypot.md)
 - [Image Manipulation Class](images.md)
+- [Atomic Locks](locks.md)
 - [Pagination](pagination.md)
 - [Publisher](publisher.md)
 - [Security](security.md)

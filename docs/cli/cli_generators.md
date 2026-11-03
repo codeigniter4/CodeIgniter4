@@ -8,9 +8,13 @@ All built-in generators reside under the `Generators` group when listed using `p
 
 ```console
 php spark help <generator_command>
+php spark <generator_command> --help
 ```
 
 where `<generator_command>` will be replaced with the command to check.
+
+!!! note "Note"
+    The single-letter option shortcuts listed below (`-n`, `-s`, `-f`) are available since v4.8.0.
 
 !!! note "Note"
     Do you need to have the generated code in a subfolder? If you want to create a controller class to reside in the `Admin` subfolder of the main `Controllers` folder, you will just need to prepend the subfolder to the class name, like this: `php spark make:controller admin/login`. This command will create the `Login` controller in the `Controllers/Admin` subfolder with a namespace of `App\Controllers\Admin`.
@@ -43,8 +47,8 @@ make:cell <name> [options]
 
 #### Options:
 
-- `--namespace`: Set the root namespace. Defaults to the value of `APP_NAMESPACE`.
-- `--force`: Set this flag to overwrite existing files on destination.
+- `--namespace` (`-n`): Set the root namespace. Defaults to the value of `APP_NAMESPACE`.
+- `--force` (`-f`): Set this flag to overwrite existing files on destination.
 
 ### make:command
 
@@ -62,12 +66,15 @@ make:command <name> [options]
 
 #### Options:
 
-- `--command`: The command name to run in spark. Defaults to `command:name`.
-- `--group`: The group/namespace of the command. Defaults to `App` for basic commands, and `Generators` for generator commands.
-- `--type`: The type of command, whether a `basic` command or a `generator` command. Defaults to `basic`.
-- `--namespace`: Set the root namespace. Defaults to the value of `APP_NAMESPACE`.
-- `--suffix`: Append the component suffix to the generated class name.
-- `--force`: Set this flag to overwrite existing files on destination.
+- `--command` (`-c`): The command name to run in spark. Defaults to `command:name`.
+- `--type` (`-t`): The type of command, whether a `basic` command or a `generator` command. Defaults to `basic`.
+- `--group` (`-g`): The group of the command. Defaults to `App` for basic commands, and `Generators` for generator commands.
+- `--namespace` (`-n`): Set the root namespace. Defaults to the value of `APP_NAMESPACE`.
+- `--suffix` (`-s`): Append the component suffix to the generated class name.
+- `--force` (`-f`): Set this flag to overwrite existing files on destination.
+
+!!! note "Note"
+    Since v4.8.0, the generated class is a [modern command](cli_modern_commands.md): a `basic` command extends `AbstractCommand`, and a `generator` command extends [AbstractGeneratorCommand](cli_modern_generators.md).
 
 ### make:config
 
@@ -85,9 +92,9 @@ make:config <name> [options]
 
 #### Options:
 
-- `--namespace`: Set the root namespace. Defaults to the value of `APP_NAMESPACE`.
-- `--suffix`: Append the component suffix to the generated class name.
-- `--force`: Set this flag to overwrite existing files on destination.
+- `--namespace` (`-n`): Set the root namespace. Defaults to the value of `APP_NAMESPACE`.
+- `--suffix` (`-s`): Append the component suffix to the generated class name.
+- `--force` (`-f`): Set this flag to overwrite existing files on destination.
 
 ### make:controller
 
@@ -105,11 +112,11 @@ make:controller <name> [options]
 
 #### Options:
 
-- `--bare`: Extends from `CodeIgniter\Controller` instead of `BaseController`.
-- `--restful`: Extends from a RESTful resource. Choices are `controller` and `presenter`. Defaults to `controller`.
-- `--namespace`: Set the root namespace. Defaults to the value of `APP_NAMESPACE`.
-- `--suffix`: Append the component suffix to the generated class name.
-- `--force`: Set this flag to overwrite existing files on destination.
+- `--bare` (`-b`): Extends from `CodeIgniter\Controller` instead of `BaseController`.
+- `--restful` (`-r`): Extends from a RESTful resource. Choices are `controller` and `presenter`. Defaults to `controller`.
+- `--namespace` (`-n`): Set the root namespace. Defaults to the value of `APP_NAMESPACE`.
+- `--suffix` (`-s`): Append the component suffix to the generated class name.
+- `--force` (`-f`): Set this flag to overwrite existing files on destination.
 
 !!! note "Note"
     If you use `--suffix`, the generated controller name will be like `ProductController`. That violates the Controller naming convention when using [Auto Routing](../incoming/controllers.md#auto-routing-improved) (Controller class names MUST start with an uppercase letter and ONLY the first character can be uppercase). So `--suffix` can be used when you use [Defined Routes](../incoming/routing.md#setting-routing-rules).
@@ -130,9 +137,9 @@ make:entity <name> [options]
 
 #### Options:
 
-- `--namespace`: Set the root namespace. Defaults to the value of `APP_NAMESPACE`.
-- `--suffix`: Append the component suffix to the generated class name.
-- `--force`: Set this flag to overwrite existing files on destination.
+- `--namespace` (`-n`): Set the root namespace. Defaults to the value of `APP_NAMESPACE`.
+- `--suffix` (`-s`): Append the component suffix to the generated class name.
+- `--force` (`-f`): Set this flag to overwrite existing files on destination.
 
 ### make:filter
 
@@ -150,9 +157,9 @@ make:filter <name> [options]
 
 #### Options:
 
-- `--namespace`: Set the root namespace. Defaults to the value of `APP_NAMESPACE`.
-- `--suffix`: Append the component suffix to the generated class name.
-- `--force`: Set this flag to overwrite existing files on destination.
+- `--namespace` (`-n`): Set the root namespace. Defaults to the value of `APP_NAMESPACE`.
+- `--suffix` (`-s`): Append the component suffix to the generated class name.
+- `--force` (`-f`): Set this flag to overwrite existing files on destination.
 
 ### make:model
 
@@ -170,12 +177,32 @@ make:model <name> [options]
 
 #### Options:
 
-- `--dbgroup`: Database group to use. Defaults to `default`.
-- `--return`: Set the return type from `array`, `object`, or `entity`. Defaults to `array`.
-- `--table`: Supply a different table name. Defaults to the pluralized class name.
-- `--namespace`: Set the root namespace. Defaults to the value of `APP_NAMESPACE`.
-- `--suffix`: Append the component suffix to the generated class name.
-- `--force`: Set this flag to overwrite existing files on destination.
+- `--table` (`-t`): Supply a different table name. Defaults to the pluralized class name.
+- `--dbgroup` (`-g`): Database group to use. Defaults to `default`.
+- `--return` (`-r`): Set the return type from `array`, `object`, or `entity`. Defaults to `array`.
+- `--namespace` (`-n`): Set the root namespace. Defaults to the value of `APP_NAMESPACE`.
+- `--suffix` (`-s`): Append the component suffix to the generated class name.
+- `--force` (`-f`): Set this flag to overwrite existing files on destination.
+
+### make:request
+
+Creates a new FormRequest file.
+
+#### Usage:
+
+```
+make:request <name> [options]
+```
+
+#### Argument:
+
+- `name`: The name of the FormRequest class. **[REQUIRED]**
+
+#### Options:
+
+- `--namespace` (`-n`): Set the root namespace. Defaults to the value of `APP_NAMESPACE`.
+- `--suffix` (`-s`): Append the component suffix to the generated class name.
+- `--force` (`-f`): Set this flag to overwrite existing files on destination.
 
 ### make:seeder
 
@@ -193,9 +220,9 @@ make:seeder <name> [options]
 
 #### Options:
 
-- `--namespace`: Set the root namespace. Defaults to the value of `APP_NAMESPACE`.
-- `--suffix`: Append the component suffix to the generated class name.
-- `--force`: Set this flag to overwrite existing files on destination.
+- `--namespace` (`-n`): Set the root namespace. Defaults to the value of `APP_NAMESPACE`.
+- `--suffix` (`-s`): Append the component suffix to the generated class name.
+- `--force` (`-f`): Set this flag to overwrite existing files on destination.
 
 ### make:test
 
@@ -215,8 +242,8 @@ make:test <name> [options]
 
 #### Options:
 
-- `--namespace`: Set the root namespace. Defaults to `Tests`.
-- `--force`: Set this flag to overwrite existing files on destination.
+- `--namespace` (`-n`): Set the root namespace. Defaults to `Tests`.
+- `--force` (`-f`): Set this flag to overwrite existing files on destination.
 
 ### make:transformer
 
@@ -234,9 +261,9 @@ make:transformer <name> [options]
 
 #### Options:
 
-- `--namespace`: Set the root namespace. Defaults to the value of `APP_NAMESPACE`.
-- `--suffix`: Append the component suffix to the generated class name.
-- `--force`: Set this flag to overwrite existing files on destination.
+- `--namespace` (`-n`): Set the root namespace. Defaults to the value of `APP_NAMESPACE`.
+- `--suffix` (`-s`): Append the component suffix to the generated class name.
+- `--force` (`-f`): Set this flag to overwrite existing files on destination.
 
 ### make:migration
 
@@ -254,12 +281,14 @@ make:migration <name> [options]
 
 #### Options:
 
-- `--session`: Generate a migration file for database sessions.
-- `--table`: Set the table name to use for database sessions. Defaults to `ci_sessions`.
-- `--dbgroup`: Set the database group for database sessions. Defaults to `default` group.
-- `--namespace`: Set the root namespace. Defaults to the value of `APP_NAMESPACE`.
-- `--suffix`: Append the component suffix to the generated class name.
-- `--force`: Set this flag to overwrite existing files on destination.
+- `--session`: Generate a migration file for database sessions. The `name` argument is ignored.
+- `--table` (`-t`): Set the table name to use for database sessions. Defaults to `ci_sessions`.
+- `--dbgroup` (`-g`): Set the database group for database sessions. Defaults to `default` group.
+- `--namespace` (`-n`): Set the root namespace. Defaults to the value of `APP_NAMESPACE`.
+- `--suffix` (`-s`): Append the component suffix to the generated class name.
+
+!!! note "Note"
+    `make:migration` has no `--force` option, since the timestamped file name only collides with an existing file when the same name is generated twice within one second.
 
 ### make:validation
 
@@ -277,9 +306,9 @@ make:validation <name> [options]
 
 #### Options:
 
-- `--namespace`: Set the root namespace. Defaults to the value of `APP_NAMESPACE`.
-- `--suffix`: Append the component suffix to the generated class name.
-- `--force`: Set this flag to overwrite existing files on destination.
+- `--namespace` (`-n`): Set the root namespace. Defaults to the value of `APP_NAMESPACE`.
+- `--suffix` (`-s`): Append the component suffix to the generated class name.
+- `--force` (`-f`): Set this flag to overwrite existing files on destination.
 
 ## Scaffolding a Complete Set of Stock Code
 
@@ -302,9 +331,15 @@ will create the following files:
 
 To include an `Entity` class in the scaffolded files, just add `--return entity` to the command and it will be passed to the model generator.
 
+!!! note "Note"
+    Since v4.8.0, `make:scaffold` accepts the `-b`, `-t`, `-g`, `-n`, `-s`, and `-f` shortcuts. `--restful` and `--return` have no shortcut here, since both use `-r` in their own commands. When the class name is omitted on an interactive run, it is asked for once and reused for every generated file.
+
 ## GeneratorTrait
 
-All generator commands must use the `GeneratorTrait` to fully utilize its methods that are used in code generation.
+!!! danger "Deprecated since version 4.8.0"
+    `GeneratorTrait` is the legacy way of building generator commands, tied to the deprecated `BaseCommand`. New generator commands should extend `AbstractGeneratorCommand` instead. See [Modern Generator Commands](cli_modern_generators.md).
+
+Legacy generator commands use the `GeneratorTrait` to fully utilize its methods that are used in code generation.
 
 ## Declaring the Location of a Custom Generator Command Template
 

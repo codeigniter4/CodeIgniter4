@@ -214,6 +214,25 @@ The `getVar()` method will pull from `$_REQUEST`, so it will return any data fro
 !!! note "Note"
     If the incoming request has a `Content-Type` header set to `application/json`, the `getVar()` method returns the JSON data instead of `$_REQUEST` data.
 
+### Typed Request Input
+
+!!! success "Available from version 4.8.0"
+
+`input()` returns a `CodeIgniter\HTTP\RequestInput` object. Use it to read values from a specific part of the request with typed fallback helpers:
+
+```php
+$page      = $request->input()->get()->integer('page', 1);
+$remember  = $request->input()->post()->boolean('remember', false);
+$name      = $request->input()->json()->string('name');
+$published = $request->input()->raw()->boolean('published', false);
+```
+
+`input()->get()` reads query-string parameters. `input()->post()` reads POST body parameters. `input()->json()` reads JSON request body parameters. `input()->raw()` reads raw input parameters, like `getRawInput()`.
+
+These methods keep GET, POST, JSON, and raw data separate. They do not combine multiple request sources for you.
+
+These methods do not validate input. They are fallback-friendly helpers for reading raw request data. Use Validation or [Form Requests](form_requests.md#form-requests) when input must satisfy application rules before it is consumed.
+
 ### Getting JSON Data
 
 You can grab the contents of `php://input` as a JSON stream with `getJSON()`.
@@ -271,7 +290,7 @@ $data = $request->getJsonVar('fizz', true);
 !!! note "Note"
     See the documentation for `dot_array_search()` in the `Array` helper for more information on "dot" notation.
 
-### Retrieving Raw Data (PUT, PATCH, DELETE)
+### Retrieving Raw Data (PUT, PATCH, DELETE, QUERY)
 
 Finally, you can grab the contents of `php://input` as a raw stream with `getRawInput()`:
 
@@ -343,7 +362,7 @@ Filtering a POST variable would look like this:
 $email = $request->getPost('email', FILTER_SANITIZE_EMAIL);
 ```
 
-All of the methods mentioned above support the filter type passed in as the second parameter, with the exception of `getJSON()` and `getRawInput()`.
+All of the methods mentioned above support the filter type passed in as the second parameter, with the exception of `getJSON()` and `getRawInput()`. The typed input helpers returned by `input()` do not accept filter parameters.
 
 ## Retrieving Headers
 
@@ -606,6 +625,11 @@ The same rule applies here: to retrieve the parameters with filtering, set the s
 
 $request->getGet(['field1', 'field2'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 ```
+
+#### input()
+
+- **Returns**: A typed input data selector.
+- **Return type**: `CodeIgniter\HTTP\RequestInput`
 
 #### getPost([$index = null[, $filter = null[, $flags = null]]])
 

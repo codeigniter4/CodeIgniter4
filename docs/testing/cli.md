@@ -20,12 +20,12 @@ You can replace the `InputOutput` class with `MockInputOutput` during test execu
 Gets the output.
 
 - If you call it like `$io->getOutput()`, it returns the whole output string.
-- If you specify `0` or a positive number, it returns the output array item. Each item has the output of a `CLI::fwrite()` call.
+- If you specify `0` or a positive number, it returns the output array item. Each item has the output of one write, such as a `CLI::write()` or `CLI::beep()` call.
 - If you specify a negative number `-n`, it returns the last `n`-th item of the output array.
 
 ##### getOutputs(): array
 
-Returns the output array. Each item has the output of a `CLI::fwrite()` call.
+Returns the output array. Each item has the output of one write.
 
 ### How to Use
 
@@ -52,26 +52,50 @@ final class DbTableTest extends CIUnitTestCase
 
     public function testDbTable(): void
     {
-        // Set MockInputOutput to CLI.
         $io = new MockInputOutput();
         CLI::setInputOutput($io);
 
-        // User will input "a" (invalid value) and "0".
-        $io->setInputs(['a', '0']);
+        $io->setInputs(['a', '1']);
 
         command('db:table');
 
-        // Get the whole output string.
         $output = $io->getOutput();
 
-        $expected = 'Which table do you want to see? [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]: a';
+        $expected = 'Please select correctly.';
         $this->assertStringContainsString($expected, $output);
 
-        $expected = 'Data of Table "db_migrations":';
+        $expected = 'Data of "db_migrations" table:';
         $this->assertStringContainsString($expected, $output);
 
-        // Remove MockInputOutput.
         CLI::resetInputOutput();
+    }
+}
+```
+
+#### Running a Modern Command Against an Output
+
+!!! success "Available from version 4.8.0"
+
+A modern command can also be run directly against an `Output` built on the mock, which leaves the `CLI` class untouched once `run()` returns:
+
+```php
+<?php
+
+use App\Commands\AppReport;
+use CodeIgniter\CLI\Output;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Mock\MockInputOutput;
+
+final class AppReportTest extends CIUnitTestCase
+{
+    public function testReport(): void
+    {
+        $io = new MockInputOutput();
+
+        $exitCode = (new AppReport(service('commands')))->run([], [], new Output($io));
+
+        $this->assertSame(EXIT_SUCCESS, $exitCode);
+        $this->assertStringContainsString('2 rows.', $io->getOutput());
     }
 }
 ```

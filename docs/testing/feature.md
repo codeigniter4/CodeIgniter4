@@ -40,7 +40,7 @@ class FooTest extends CIUnitTestCase
 
 Essentially, feature tests simply allow you to call an endpoint on your application and get the results back. To do this, you use the `call()` method.
 
-1.  The first parameter is the HTTP method to use (most frequently either `GET` or `POST`).
+1.  The first parameter is the uppercase HTTP method to use (most frequently either `GET` or `POST`).
 
 2.  The second parameter is the URI path on your site to test.
 
@@ -54,7 +54,7 @@ Essentially, feature tests simply allow you to call an endpoint on your applicat
 $result = $this->call('GET', '/');
 
 // Submit a form
-$result = $this->call('post', 'contact', [
+$result = $this->call('POST', 'contact', [
     'name'  => 'Fred Flintstone',
     'email' => 'flintyfred@example.com',
 ]);
@@ -71,6 +71,7 @@ $this->put($path, $params);
 $this->patch($path, $params);
 $this->delete($path, $params);
 $this->options($path, $params);
+$this->query($path, $params);
 ```
 
 ### Setting Different Routes
@@ -85,7 +86,7 @@ $routes = [
 $result = $this->withRoutes($routes)->get('users');
 ```
 
-Each of the "routes" is a 3-element array containing the HTTP verb (or "add" for all), the URI to match, and the routing destination.
+Each of the "routes" is a 3-element array containing the uppercase HTTP verb (or "add" for all), the URI to match, and the routing destination.
 
 ### Setting Session Values
 
@@ -117,6 +118,19 @@ $headers = [
 $result = $this->withHeaders($headers)->post('users');
 ```
 
+### Testing File Uploads
+
+Use `withFiles()` to attach uploaded files to the next feature request. Create each file with `CodeIgniter\Test\Mock\MockUploadedFile`, passing an existing local file path and the name that the client would send:
+
+```php
+use CodeIgniter\Test\Mock\MockUploadedFile;
+
+$file = new MockUploadedFile($path, 'photo.jpg', 'image/jpeg');
+$result = $this->withFiles(['photo' => $file])->post('photos', ['title' => 'Portrait']);
+```
+
+The route can access the file through `$request->getFile('photo')` and use upload validation, `move()`, or `store()`. `withFiles()` sets the request's `Content-Type` to `multipart/form-data` and clears the attached files after the request. Moving or storing the file moves the local source file, so create a new file object for each upload request.
+
 ### Bypassing Events
 
 Events are handy to use in your application, but can be problematic during testing, especially events that are used to send out emails. You can tell the system to skip any event handling with the `skipEvents()` method:
@@ -130,6 +144,8 @@ $result = $this->skipEvents()->post('users', $userInfo);
 You can set the format of your request's body using the `withBodyFormat()` method. Currently, this supports either `json` or `xml`. This is useful when testing JSON or XML APIs so that you can set the request in the form that the controller will expect.
 
 This will take the parameters passed into `call()`, `post()`, `get()`... and assign them to the body of the request in the given format.
+
+For example, use `withBodyFormat('json')->query()` to test a QUERY request with a JSON body.
 
 This will also set the `Content-Type` header for your request accordingly.
 

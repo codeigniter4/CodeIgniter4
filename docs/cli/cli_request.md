@@ -44,9 +44,30 @@ Returns the value of a specific command line argument deemed to be an option:
 ```php
 <?php
 
-// command line: php index.php users 21 profile --foo bar
-echo $request->getOption('foo');      // bar
-echo $request->getOption('notthere'); // null
+// command line: php index.php users 21 profile --foo bar --option baz --option qux
+
+echo $request->getOption('foo');       // bar
+echo $request->getOption('not-there'); // null
+echo $request->getOption('option');    // qux
+```
+
+!!! note "Note"
+    Starting in v4.8.0, if the option you are trying to access is an array, this method will return the last value in the array. Use `getRawOption()` to get the full array of values for that option.
+
+### getRawOption($key)
+
+!!! success "Available from version 4.8.0"
+
+Similar to `getOption()`, but returns the full array of values for the option if it is an array:
+
+```php
+<?php
+
+// command line: php index.php users 21 profile --foo bar --option baz --option qux
+
+echo $request->getRawOption('foo');         // bar
+echo $request->getRawOption('not-there');   // null
+var_dump($request->getRawOption('option')); // array(2) { [0]=> string(3) "baz" [1]=> string(3) "qux" }
 ```
 
 ### getOptionString()

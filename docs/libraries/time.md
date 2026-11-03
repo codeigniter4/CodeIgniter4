@@ -622,6 +622,71 @@ $time1->isAfter($time2); // false
 $time2->isAfter($time1); // true
 ```
 
+#### between()
+
+!!! success "Available from version 4.8.0"
+
+Determines if the current instance is between two other times. By default, the start and end bounds are included. Pass `false` as the third `$inclusive` argument to exclude both bounds:
+
+```php
+<?php
+
+use CodeIgniter\I18n\Time;
+
+$time = Time::parse('2024-01-01 12:30:00', 'UTC');
+
+$time->between('2024-01-01 12:00:00', '2024-01-01 13:00:00');        // true
+$time->between('2024-01-01 13:00:00', '2024-01-01 12:00:00');        // true
+$time->between('2024-01-01 13:00:00', '2024-01-01 14:00:00', true, 'Europe/Warsaw'); // true
+$time->between('2024-01-01 12:30:00', '2024-01-01 13:00:00', false); // false
+```
+
+Like other comparison methods, the values can be `Time` instances, `DateTimeInterface` instances, or strings that `DateTime` can parse. String values may use a timezone string as the fourth parameter. Otherwise, they are parsed using the current instance's timezone. If `$start` is after `$end`, the arguments are swapped automatically.
+
+#### min()
+
+!!! success "Available from version 4.8.0"
+
+Returns the earlier of the current instance and the provided time:
+
+```php
+<?php
+
+use CodeIgniter\I18n\Time;
+
+$time1 = Time::parse('2024-01-01 12:00:00', 'UTC');
+$time2 = Time::parse('2024-01-01 13:00:00', 'UTC');
+
+$time1->min($time2);                // 2024-01-01 12:00:00 UTC
+$time2->min('2024-01-01 12:30:00'); // 2024-01-01 12:30:00 UTC
+$time2->min('2024-01-01 13:00:00', 'Europe/Warsaw'); // 2024-01-01 12:00:00 UTC
+$time1->min();                      // earlier of $time1 and now
+```
+
+If `null` is provided, it compares against `Time::now()` in the current instance's timezone. String values may use a timezone string as the second parameter. Otherwise, they are parsed using the current instance's timezone. If both times are equal, the current instance is returned.
+
+#### max()
+
+!!! success "Available from version 4.8.0"
+
+Returns the later of the current instance and the provided time:
+
+```php
+<?php
+
+use CodeIgniter\I18n\Time;
+
+$time1 = Time::parse('2024-01-01 12:00:00', 'UTC');
+$time2 = Time::parse('2024-01-01 13:00:00', 'UTC');
+
+$time1->max($time2);                // 2024-01-01 13:00:00 UTC
+$time1->max('2024-01-01 12:30:00'); // 2024-01-01 12:30:00 UTC
+$time1->max('2024-01-01 13:00:00', 'Europe/Warsaw'); // 2024-01-01 12:00:00 UTC
+$time2->max();                      // later of $time2 and now
+```
+
+If `null` is provided, it compares against `Time::now()` in the current instance's timezone. String values may use a timezone string as the second parameter. Otherwise, they are parsed using the current instance's timezone. If both times are equal, the current instance is returned.
+
 #### isPast()
 
 !!! success "Available from version 4.7.0"
