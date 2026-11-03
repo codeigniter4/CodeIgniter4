@@ -525,11 +525,9 @@ final class FiltersTest extends CIUnitTestCase
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
         $filters       = $this->createFilters($filtersConfig);
 
-        $this->assertNotContains($appConfig, $locator->tokenized);
-        $this->assertNotContains($systemConfig, $locator->tokenized);
-
-        // Any other file is still checked and included.
-        $this->assertContains($testConfig, $locator->tokenized);
+        // No discovered file is read and tokenized, the main configs are skipped
+        // by path and the others are simply included.
+        $this->assertSame([], $locator->tokenized);
 
         $configFilters = $this->getPrivateProperty($filters, 'config');
         $this->assertContains('test-customfilter', array_keys($configFilters->aliases));
