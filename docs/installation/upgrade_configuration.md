@@ -25,6 +25,7 @@
 
 Path: **application/config/site.php**:
 
+<!-- lint-ignore -->
 ```php
 <?php
 

@@ -31,6 +31,7 @@
 
 Path: **application/config/routes.php**:
 
+<!-- lint-ignore -->
 ```php
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');

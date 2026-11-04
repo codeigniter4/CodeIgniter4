@@ -1147,6 +1147,7 @@ The behavior is the same as the `union()` method. However, all results will be r
 
 Query grouping allows you to create groups of **WHERE** clauses by enclosing them in parentheses. This will allow you to create queries with complex **WHERE** clauses. Nested groups are supported. Example:
 
+<!-- lint-ignore -->
 ```php
 <?php
 

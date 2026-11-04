@@ -19,6 +19,7 @@ You have to change your file uploading code to match the new methods.
 
 ### CodeIgniter Version 3.x
 
+<!-- lint-ignore -->
 ```php
 <?php
 

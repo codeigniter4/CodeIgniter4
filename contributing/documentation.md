@@ -153,14 +153,18 @@ Open the **app/Config/Filters.php** file and update the `$methods` property like
 
 ## Code Blocks
 
-Fence a code block with three backticks and the name of its language.
-PHP samples have no opening tag, and the highlighter expects that:
+Fence a code block with three backticks and the name of its language:
 
 ````markdown
 ```php
+<?php
+
 $pager = service('pager');
 ```
 ````
+
+A PHP sample that starts with `<?php` and parses is checked by `composer cs`, and `composer cs-fix` rewrites it in place.
+To skip a sample, such as CodeIgniter 3 code, put `<!-- lint-ignore -->` on the line above its fence.
 
 ### CLI Command
 

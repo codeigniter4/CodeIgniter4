@@ -4,11 +4,13 @@ on:
   push:
     paths:
       - '**.php'
+      - 'docs/**.md'
       - 'spark'
       - '.github/workflows/test-coding-standards.yml'
   pull_request:
     paths:
       - '**.php'
+      - 'docs/**.md'
       - 'spark'
       - '.github/workflows/test-coding-standards.yml'
 
