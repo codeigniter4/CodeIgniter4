@@ -148,7 +148,7 @@ The `$persistentServices` array controls which services survive between requests
 |----|----|
 | `autoloader` | PSR-4 autoloading configuration. Safe to persist as class maps don't change. |
 | `locator` | File locator for finding framework files. Caches file paths for performance. |
-| `exceptions` | Exception handler. Stateless, safe to reuse. |
+| `exceptions` | Exception handler. Its request state is cleared before each request. |
 | `commands` | CLI commands registry. Only used during worker startup. |
 | `codeigniter` | Main application instance. Orchestrates the request/response cycle. |
 | `superglobals` | Superglobals wrapper. Properly isolated per request internally. |
@@ -248,6 +248,12 @@ Worker Mode can make debugging more challenging since the process persists acros
 - **Restart workers after code changes** - workers don't auto-reload modified files
 - **Check logs** in **writable/logs/** for connection and state-related issues
 - **Use logging liberally** to trace request flow across the persistent process
+
+### Error Handling
+
+When a request ends with an uncaught exception, such as a `PageNotFoundException`, the exception handler displays the error and returns to the worker loop, which cleans up after the request as usual. The worker does not restart.
+
+If you use a custom exception handler (see [Custom Exception Handlers](../general/errors.md#custom-exception-handlers)), do not call `exit()` in it. In Worker Mode, `exit()` ends the worker script, and FrankenPHP has to boot a new one.
 
 ### Session and Cache Handlers
 

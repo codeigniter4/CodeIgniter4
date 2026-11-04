@@ -15,6 +15,7 @@ namespace CodeIgniter\Debug;
 
 use Closure;
 use CodeIgniter\API\ResponseTrait;
+use CodeIgniter\Boot;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
@@ -91,7 +92,7 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
 
                 $this->respond($data, $statusCode)->send();
 
-                if (ENVIRONMENT !== 'testing') {
+                if ($this->shouldExit()) {
                     // @codeCoverageIgnoreStart
                     exit($exitCode);
                     // @codeCoverageIgnoreEnd
@@ -122,11 +123,22 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
         // Displays the HTML or CLI error code.
         $this->render($exception, $statusCode, $viewFile);
 
-        if (ENVIRONMENT !== 'testing') {
+        if ($this->shouldExit()) {
             // @codeCoverageIgnoreStart
             exit($exitCode);
             // @codeCoverageIgnoreEnd
         }
+    }
+
+    /**
+     * Whether to end the script after the error is displayed.
+     *
+     * In worker mode, the worker loop must keep running, so the
+     * handler returns and the worker cleans up after the request.
+     */
+    private function shouldExit(): bool
+    {
+        return ENVIRONMENT !== 'testing' && ! Boot::isWorkerMode();
     }
 
     /**

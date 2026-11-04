@@ -31,6 +31,11 @@ use Config\Services;
 class Boot
 {
     /**
+     * Whether the application was booted by `bootWorker()`.
+     */
+    private static bool $workerMode = false;
+
+    /**
      * Used by `public/index.php`
      *
      * Context
@@ -87,6 +92,8 @@ class Boot
      */
     public static function bootWorker(Paths $paths): CodeIgniter
     {
+        self::$workerMode = true;
+
         static::definePathConstants($paths);
         if (! defined('APP_NAMESPACE')) {
             static::loadConstants();
@@ -107,6 +114,16 @@ class Boot
         static::autoloadHelpers();
 
         return Boot::initializeCodeIgniter();
+    }
+
+    /**
+     * Whether the application runs in FrankenPHP worker mode.
+     *
+     * @internal
+     */
+    public static function isWorkerMode(): bool
+    {
+        return self::$workerMode;
     }
 
     /**

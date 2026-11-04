@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Debug;
 
 use CodeIgniter\API\ResponseTrait;
+use CodeIgniter\Boot;
 use CodeIgniter\Exceptions\HasExitCodeInterface;
 use CodeIgniter\Exceptions\HTTPExceptionInterface;
 use CodeIgniter\Exceptions\PageNotFoundException;
@@ -69,7 +70,7 @@ class Exceptions
     /**
      * The outgoing response.
      *
-     * @var ResponseInterface
+     * @var ResponseInterface|null
      */
     protected $response;
 
@@ -174,13 +175,31 @@ class Exceptions
             if (! str_contains($this->request->getHeaderLine('accept'), 'text/html')) {
                 $this->respond(ENVIRONMENT === 'development' ? $this->collectVars($exception, $statusCode) : '', $statusCode)->send();
 
-                exit($exitCode);
+                if (! Boot::isWorkerMode()) {
+                    exit($exitCode);
+                }
+
+                return;
             }
         }
 
         $this->render($exception, $statusCode);
 
-        exit($exitCode);
+        if (! Boot::isWorkerMode()) {
+            exit($exitCode);
+        }
+    }
+
+    /**
+     * Clears the state of the previous request in worker mode.
+     *
+     * @internal
+     */
+    public function resetForWorkerMode(): void
+    {
+        $this->exceptionCaughtByExceptionHandler = null;
+        $this->request                           = null;
+        $this->response                          = null;
     }
 
     /**
