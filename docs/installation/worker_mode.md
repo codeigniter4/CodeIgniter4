@@ -52,7 +52,7 @@ The key challenge in Worker Mode is preventing state from leaking between reques
 Most services are destroyed and recreated for each request. Only services listed in `$persistentServices` survive between requests.
 
 **Factories Reset**  
-All Factories (Models, Config instances) are reset between requests, ensuring fresh instances without stale data.
+Factories are reset between requests to ensure fresh instances without stale data (such as Models and Cells), while stateless components listed in `$persistentFactories` (by default `config`) survive between requests to avoid repeated file location, parsing, and instantiation.
 
 **Superglobals Isolation**  
 Request data (`$_GET`, `$_POST`, `$_SERVER`, etc.) is properly isolated per request through the Superglobals service.
@@ -137,6 +137,7 @@ All worker mode configuration is managed through the **app/Config/WorkerMode.php
 | Option | Type | Description |
 |----|----|----|
 | **$persistentServices** | array | Services that persist across requests and are not reset. Services not in this list are destroyed after each request to prevent state leakage. Default: `['autoloader', 'locator', 'exceptions', 'commands', 'codeigniter', 'superglobals', 'routes', 'cache']` |
+| **$persistentFactories** | array | Factory components that persist across requests and are not reset. Default: `['config']` |
 | **$resetEventListeners** | array | Event names whose listeners are removed between requests. Use this when you register event listeners inside other event callbacks rather than at the top level of **Config/Events.php**, which would cause them to accumulate across requests. Default: `[]` |
 | **$forceGarbageCollection** | bool | Whether to force garbage collection after each request. `true` (default, recommended): Prevents memory leaks. `false`: Relies on PHP's automatic garbage collection. |
 
@@ -157,6 +158,18 @@ The `$persistentServices` array controls which services survive between requests
 
 !!! warning "Warning"
     Adding services to `$persistentServices` without understanding their state management can cause data leakage between requests. Only persist services that are truly stateless or manage their own request isolation.
+
+### Persistent Factories
+
+!!! success "Available from version 4.7.7"
+
+The `$persistentFactories` array controls which factory components survive between requests.
+
+By default, `'config'` is retained across requests:
+
+- Configuration objects (subclasses of `BaseConfig`) represent immutable application and environment settings.
+- Retaining them eliminates repetitive file location searches, class existence checks, environment parsing, and instantiation on every request.
+- Factory components not listed (such as `'models'` and `'cells'`) are reset between requests to prevent state leakage.
 
 ### Reset Event Listeners
 

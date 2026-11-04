@@ -17,6 +17,7 @@ use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\Database;
+use Config\WorkerMode;
 use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\Attributes\Group;
 use ReflectionClass;
@@ -525,5 +526,91 @@ final class FactoriesTest extends CIUnitTestCase
         $config = Factories::get('config', 'NonexistentClass');
 
         $this->assertNull($config);
+    }
+
+    public function testResetExcept(): void
+    {
+        $config = Factories::config('App');
+        $model  = Factories::models(UserModel::class);
+
+        $this->assertSame($config, Factories::get('config', 'App'));
+        $this->assertSame($model, Factories::get('models', UserModel::class));
+
+        Factories::resetExcept(['config']);
+
+        $this->assertSame($config, Factories::get('config', 'App'));
+        $this->assertNotSame($model, Factories::models(UserModel::class));
+    }
+
+    public function testResetExceptCaseInsensitive(): void
+    {
+        $config = Factories::config('App');
+        $model  = Factories::models(UserModel::class);
+
+        Factories::resetExcept(['CONFIG']);
+
+        $this->assertSame($config, Factories::get('config', 'App'));
+        $this->assertNotSame($model, Factories::models(UserModel::class));
+    }
+
+    public function testResetExceptEmptyArrayResetsAll(): void
+    {
+        $config = Factories::config('App');
+        $model  = Factories::models(UserModel::class);
+
+        Factories::resetExcept([]);
+
+        $this->assertNotSame($config, Factories::config('App'));
+        $this->assertNotSame($model, Factories::models(UserModel::class));
+    }
+
+    public function testResetForWorkerModeWithConfig(): void
+    {
+        $workerConfig                      = new WorkerMode();
+        $workerConfig->persistentFactories = ['config'];
+
+        $config = Factories::config('App');
+        $model  = Factories::models(UserModel::class);
+
+        Factories::resetForWorkerMode($workerConfig);
+
+        $this->assertSame($config, Factories::get('config', 'App'));
+        $this->assertNotSame($model, Factories::models(UserModel::class));
+    }
+
+    public function testResetForWorkerModeDefault(): void
+    {
+        $config = Factories::config('App');
+        $model  = Factories::models(UserModel::class);
+
+        Factories::resetForWorkerMode();
+
+        $this->assertSame($config, Factories::get('config', 'App'));
+        $this->assertNotSame($model, Factories::models(UserModel::class));
+    }
+
+    public function testStateIsolationSequentialCycles(): void
+    {
+        $workerConfig = new WorkerMode();
+
+        // Cycle 1
+        $config1 = Factories::config('App');
+        $model1  = Factories::models(UserModel::class);
+        $model1->allowCallbacks(false);
+        $this->assertFalse($this->getPrivateProperty($model1, 'tempAllowCallbacks'));
+
+        // End of Cycle 1 cleanup
+        Factories::resetForWorkerMode($workerConfig);
+
+        // Cycle 2
+        $config2 = Factories::config('App');
+        $model2  = Factories::models(UserModel::class);
+
+        // Config is retained across cycles
+        $this->assertSame($config1, $config2);
+
+        // Model is fresh and not polluted by cycle 1 state
+        $this->assertNotSame($model1, $model2);
+        $this->assertTrue($this->getPrivateProperty($model2, 'tempAllowCallbacks'));
     }
 }

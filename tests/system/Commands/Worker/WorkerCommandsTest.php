@@ -165,6 +165,7 @@ final class WorkerCommandsTest extends CIUnitTestCase
         $this->assertStringContainsString('frankenphp_handle_request', (string) $content);
         $this->assertStringContainsString('DatabaseConfig::reconnectForWorkerMode', (string) $content);
         $this->assertStringContainsString('DatabaseConfig::cleanupForWorkerMode', (string) $content);
+        $this->assertStringContainsString('Factories::resetForWorkerMode', (string) $content);
     }
 
     public function testWorkerInstallCreatesValidCaddyfile(): void

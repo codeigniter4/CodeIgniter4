@@ -17,6 +17,7 @@ use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Model;
+use Config\WorkerMode;
 
 /**
  * Factories for creating instances.
@@ -467,6 +468,55 @@ final class Factories
         self::$aliases   = [];
         self::$instances = [];
         self::$updated   = [];
+    }
+
+    /**
+     * Resets the static arrays for all components except the specified ones.
+     *
+     * @param list<string> $components Component names to keep
+     */
+    public static function resetExcept(array $components): void
+    {
+        $components = array_map(strtolower(...), $components);
+
+        foreach (array_keys(self::$options) as $component) {
+            if (! in_array($component, $components, true)) {
+                unset(self::$options[$component]);
+            }
+        }
+
+        foreach (array_keys(self::$aliases) as $component) {
+            if (! in_array($component, $components, true)) {
+                unset(self::$aliases[$component]);
+            }
+        }
+
+        foreach (array_keys(self::$instances) as $component) {
+            if (! in_array($component, $components, true)) {
+                unset(self::$instances[$component]);
+            }
+        }
+
+        foreach (array_keys(self::$updated) as $component) {
+            if (! in_array($component, $components, true)) {
+                unset(self::$updated[$component]);
+            }
+        }
+    }
+
+    /**
+     * Resets factories for Worker Mode.
+     *
+     * Preserves only persistent factory components defined in WorkerMode config.
+     *
+     * Called at the END of each request to clean up state.
+     */
+    public static function resetForWorkerMode(?WorkerMode $config = null): void
+    {
+        $config ??= self::config(WorkerMode::class);
+        $persistentFactories = $config instanceof WorkerMode ? $config->persistentFactories : ['config'];
+
+        self::resetExcept($persistentFactories);
     }
 
     /**

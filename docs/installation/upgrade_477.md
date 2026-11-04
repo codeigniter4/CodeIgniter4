@@ -8,6 +8,14 @@ Please refer to the upgrade instructions corresponding to your installation meth
 
 ## Mandatory File Changes
 
+### Worker Mode
+
+If you are using Worker Mode, you should update **public/frankenphp-worker.php** after upgrading to benefit from stateless config retention between requests. The easiest way is to re-run the install command:
+
+```console
+php spark worker:install --force
+```
+
 ## Breaking Changes
 
 ## Breaking Enhancements
@@ -25,10 +33,11 @@ The following files received significant changes (including deprecations or visu
 
 #### Config
 
-- @TODO
+- **app/Config/WorkerMode.php**
+    - `Config\WorkerMode::$persistentFactories` has been added, with a default value set to `['config']`. See [Worker Mode](worker_mode.md#persistent-factories) for details.
 
 ### All Changes
 
 This is a list of all files in the **project space** that received changes; many will be simple comments or formatting that have no effect on the runtime:
 
-- @TODO
+- **app/Config/WorkerMode.php**

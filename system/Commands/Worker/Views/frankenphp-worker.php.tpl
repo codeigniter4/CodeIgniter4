@@ -118,8 +118,8 @@ while (frankenphp_handle_request($handler)) {
     // Cleanup connections with uncommitted transactions
     DatabaseConfig::cleanupForWorkerMode();
 
-    // Reset factories
-    Factories::reset();
+    // Reset factories except persistent ones
+    Factories::resetForWorkerMode($workerConfig);
 
     // Reset services except persistent ones
     Services::resetForWorkerMode($workerConfig);

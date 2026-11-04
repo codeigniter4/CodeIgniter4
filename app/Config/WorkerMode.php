@@ -41,6 +41,22 @@ class WorkerMode
     ];
 
     /**
+     * Persistent Factory Components
+     *
+     * List of factory component names that should persist across requests.
+     * Configuration instances ('config') are stateless and safe to retain,
+     * avoiding repeated file location, parsing, and instantiation.
+     *
+     * Components not in this list (such as 'models' or 'cells') will be reset
+     * between requests to prevent state leakage.
+     *
+     * @var list<string>
+     */
+    public array $persistentFactories = [
+        'config',
+    ];
+
+    /**
      * Reset Event Listeners
      *
      * List of event names whose listeners should be removed between requests.
