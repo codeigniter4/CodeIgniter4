@@ -206,7 +206,8 @@ class Security implements SecurityInterface
         }
 
         $this->request      = service('request');
-        $this->hashInCookie = $this->request->getCookie($this->cookieName);
+        $hashInCookie       = $this->request->getCookie($this->cookieName);
+        $this->hashInCookie = is_string($hashInCookie) ? $hashInCookie : null;
 
         $this->restoreHash();
         if ($this->hash === null) {
