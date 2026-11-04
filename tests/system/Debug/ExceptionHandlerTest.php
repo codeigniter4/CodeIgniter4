@@ -173,8 +173,8 @@ final class ExceptionHandlerTest extends CIUnitTestCase
      * The handler can only exit outside the testing environment, so it
      * runs in a separate process with the production environment.
      */
-    #[DataProvider('provideHandleWebExceptionExitsOutsideWorkerMode')]
-    public function testHandleWebExceptionExitsOutsideWorkerMode(
+    #[DataProvider('provideHandleWebExceptionExitBehavior')]
+    public function testHandleWebExceptionExitBehavior(
         string $accept,
         bool $workerMode,
         string $expectedOutput,
@@ -228,7 +228,7 @@ final class ExceptionHandlerTest extends CIUnitTestCase
     /**
      * @return iterable<string, array{string, bool, string, int}>
      */
-    public static function provideHandleWebExceptionExitsOutsideWorkerMode(): iterable
+    public static function provideHandleWebExceptionExitBehavior(): iterable
     {
         yield 'non-HTML, worker mode' => ['application/json', true, '""', 0];
 
