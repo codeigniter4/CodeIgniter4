@@ -19,10 +19,11 @@ settings:
       - label: '4.8' # @todo change value whenever the next minor version is changed
         base_branch: ['^4\.8$']
       - label: github_actions
-        files: ['.github/workflows/*']
+        files:
+          all: ['.github/workflows/*', '.github/*.yml']
       - label: documentation
         files:
-          all: ['docs/**']
+          all: ['docs/**', 'mkdocs.yml']
       - label: testing
         files:
           all: ['tests/**']
@@ -34,6 +35,7 @@ settings:
         title: ['^refactor(\([^)]*\))?: ']
   conflicts-notifier:
     label: stale
+    sweep: true
     message: |-
       :wave: Hi, @{{user}}!
 
