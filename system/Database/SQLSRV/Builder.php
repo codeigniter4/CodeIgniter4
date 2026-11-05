@@ -685,7 +685,7 @@ class Builder extends BaseBuilder
             $constraints = $this->QBOptions['constraints'] ?? [];
 
             $tableIdentity = $this->QBOptions['tableIdentity'] ?? '';
-            $sql           = "SELECT name from syscolumns where id = Object_ID('" . $table . "') and colstat = 1";
+            $sql           = 'SELECT name from syscolumns where id = Object_ID(' . $this->db->escape($table) . ') and colstat = 1';
             if (($query = $this->db->query($sql)) === false) {
                 throw new DatabaseException('Failed to get table identity');
             }
