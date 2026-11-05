@@ -489,7 +489,7 @@ class Connection extends BaseConnection
             $sql = 'SELECT LASTVAL() AS ins_id';
         } elseif ($table !== null) {
             if ($column !== null && $v >= '8.0') {
-                $sql   = "SELECT pg_get_serial_sequence('{$table}', '{$column}') AS seq";
+                $sql   = 'SELECT pg_get_serial_sequence(' . $this->escape($table) . ', ' . $this->escape($column) . ') AS seq';
                 $query = $this->query($sql);
                 $query = $query->getRow();
                 $seq   = $query->seq;
@@ -498,7 +498,7 @@ class Connection extends BaseConnection
                 $seq = $table;
             }
 
-            $sql = "SELECT CURRVAL('{$seq}') AS ins_id";
+            $sql = 'SELECT CURRVAL(' . $this->escape($seq) . ') AS ins_id';
         } else {
             return pg_last_oid($this->resultID);
         }
