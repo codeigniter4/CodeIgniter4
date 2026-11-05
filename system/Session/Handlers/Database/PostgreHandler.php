@@ -70,9 +70,11 @@ class PostgreHandler extends DatabaseHandler
      */
     protected function lockSession(string $sessionID): bool
     {
-        $arg = "hashtext('{$sessionID}')" . ($this->matchIP ? ", hashtext('{$this->ipAddress}')" : '');
-        if ($this->db->simpleQuery("SELECT pg_advisory_lock({$arg})") !== false) {
-            $this->lock = $arg;
+        $sql   = 'SELECT pg_advisory_lock(hashtext(?)' . ($this->matchIP ? ', hashtext(?)' : '') . ')';
+        $binds = $this->matchIP ? [$sessionID, $this->ipAddress] : [$sessionID];
+
+        if ($this->db->query($sql, $binds) !== false) {
+            $this->lock = $sessionID;
 
             return true;
         }
@@ -85,11 +87,15 @@ class PostgreHandler extends DatabaseHandler
      */
     protected function releaseLock(): bool
     {
-        if (! $this->lock) {
+        if ($this->lock === false) {
             return true;
         }
 
-        if ($this->db->simpleQuery("SELECT pg_advisory_unlock({$this->lock})") !== false) {
+        $sessionID = is_string($this->lock) ? $this->lock : (string) $this->sessionID;
+        $sql       = 'SELECT pg_advisory_unlock(hashtext(?)' . ($this->matchIP ? ', hashtext(?)' : '') . ')';
+        $binds     = $this->matchIP ? [$sessionID, $this->ipAddress] : [$sessionID];
+
+        if ($this->db->query($sql, $binds) !== false) {
             $this->lock = false;
 
             return true;
