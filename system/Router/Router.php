@@ -455,7 +455,7 @@ class Router implements RouterInterface
             // PCRE call for static routes.
             $isRegex = strpbrk($routeKey, '()[]?*+{}^$\\.|#') !== false;
 
-            if (! $isRegex) {
+            if (! $isRegex && ! str_ends_with($uri, "\n")) {
                 if ($routeKey !== $uri) {
                     continue;
                 }
