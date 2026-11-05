@@ -20,12 +20,26 @@ use Exception;
 use Predis\Client;
 use Predis\Collection\Iterator\Keyspace;
 use Predis\Response\Status;
+use Throwable;
 
 /**
  * Predis cache handler
  */
 class PredisHandler extends BaseHandler
 {
+    /**
+     * Lua script to conditionally execute HMSET and EXPIREAT in a single round trip.
+     * Prevents EXPIREAT from mutating TTL or expiring keys when HMSET fails (e.g. WRONGTYPE).
+     */
+    private const SAVE_SCRIPT = <<<'LUA'
+        local res = redis.pcall('HMSET', KEYS[1], '__ci_type', ARGV[2], '__ci_value', ARGV[3])
+        if type(res) == 'table' and res.err then
+            return 0
+        end
+        redis.call('EXPIREAT', KEYS[1], ARGV[1])
+        return 1
+        LUA;
+
     /**
      * Default config
      *
@@ -121,14 +135,27 @@ class PredisHandler extends BaseHandler
         $fields = ['__ci_type' => $dataType, '__ci_value' => $value];
 
         if ($ttl !== 0) {
-            // Send HMSET and EXPIREAT in a single round trip.
             $expiresAt = Time::now()->getTimestamp() + $ttl;
-            $results   = $this->redis->pipeline(static function ($pipe) use ($key, $fields, $expiresAt): void {
-                $pipe->hmset($key, $fields);
-                $pipe->expireat($key, $expiresAt);
-            });
 
-            return is_array($results) && ($results[0] ?? null) instanceof Status;
+            try {
+                return (bool) $this->redis->eval(
+                    self::SAVE_SCRIPT,
+                    1,
+                    $key,
+                    (string) $expiresAt,
+                    $dataType,
+                    (string) $value,
+                );
+            } catch (Throwable) {
+                // If EVAL is unsupported or blocked, fallback to sequential execution.
+                if (! $this->redis->hmset($key, $fields) instanceof Status) {
+                    return false;
+                }
+
+                $this->redis->expireat($key, $expiresAt);
+
+                return true;
+            }
         }
 
         return $this->redis->hmset($key, $fields) instanceof Status;

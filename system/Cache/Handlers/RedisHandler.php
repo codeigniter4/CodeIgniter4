@@ -18,12 +18,26 @@ use CodeIgniter\I18n\Time;
 use Config\Cache;
 use Redis;
 use RedisException;
+use Throwable;
 
 /**
  * Redis cache handler
  */
 class RedisHandler extends BaseHandler
 {
+    /**
+     * Lua script to conditionally execute HMSET and EXPIREAT in a single round trip.
+     * Prevents EXPIREAT from mutating TTL or expiring keys when HMSET fails (e.g. WRONGTYPE).
+     */
+    private const SAVE_SCRIPT = <<<'LUA'
+        local res = redis.pcall('HMSET', KEYS[1], '__ci_type', ARGV[2], '__ci_value', ARGV[3])
+        if type(res) == 'table' and res.err then
+            return 0
+        end
+        redis.call('EXPIREAT', KEYS[1], ARGV[1])
+        return 1
+        LUA;
+
     /**
      * Default config
      *
@@ -137,18 +151,22 @@ class RedisHandler extends BaseHandler
         $fields = ['__ci_type' => $dataType, '__ci_value' => $value];
 
         if ($ttl !== 0) {
-            // Send HMSET and EXPIREAT in a single round trip.
-            $pipeline = $this->redis->multi(Redis::PIPELINE);
+            $expiresAt = Time::now()->getTimestamp() + $ttl;
 
-            if ($pipeline === false) {
-                return false;
+            try {
+                return (bool) $this->redis->eval(
+                    self::SAVE_SCRIPT,
+                    [$key, $expiresAt, $dataType, (string) $value],
+                    1,
+                );
+            } catch (Throwable) {
+                // If EVAL is unsupported or blocked, fallback to sequential execution.
+                if (! $this->redis->hMset($key, $fields)) {
+                    return false;
+                }
+
+                return $this->redis->expireAt($key, $expiresAt);
             }
-
-            $pipeline->hMset($key, $fields);
-            $pipeline->expireAt($key, Time::now()->getTimestamp() + $ttl);
-            $results = $pipeline->exec();
-
-            return is_array($results) && (bool) ($results[0] ?? false);
         }
 
         return (bool) $this->redis->hMset($key, $fields);
