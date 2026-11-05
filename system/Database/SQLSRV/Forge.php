@@ -195,7 +195,8 @@ class Forge extends BaseForge
                 }
             }
 
-            $fullTable = $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table);
+            $fullTable        = $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table);
+            $escapedFullTable = $this->db->escape($fullTable);
 
             // Drop default constraints
             $fields = implode(',', $this->db->escape((array) $columnNamesToDrop));
@@ -203,9 +204,9 @@ class Forge extends BaseForge
             $sql = <<<SQL
                 SELECT name
                 FROM sys.default_constraints
-                WHERE parent_object_id = OBJECT_ID('{$fullTable}')
+                WHERE parent_object_id = OBJECT_ID(N{$escapedFullTable})
                 AND parent_column_id IN (
-                SELECT column_id FROM sys.columns WHERE name IN ({$fields}) AND object_id = OBJECT_ID(N'{$fullTable}')
+                SELECT column_id FROM sys.columns WHERE name IN ({$fields}) AND object_id = OBJECT_ID(N{$escapedFullTable})
                 )
                 SQL;
 
@@ -244,8 +245,9 @@ class Forge extends BaseForge
             }
 
             if (($field['default'] ?? '') !== '') {
-                $fullTable = $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table);
-                $colName   = $field['name']; // bare, for sys.columns lookup
+                $fullTable        = $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table);
+                $escapedFullTable = $this->db->escape($fullTable);
+                $escapedColName   = $this->db->escape($field['name']);
 
                 // find the existing default constraint name for this column
                 $findSql = <<<SQL
@@ -254,8 +256,8 @@ class Forge extends BaseForge
                     JOIN sys.columns c
                         ON dc.parent_object_id = c.object_id
                         AND dc.parent_column_id = c.column_id
-                    WHERE dc.parent_object_id = OBJECT_ID(N'{$fullTable}')
-                        AND c.name = N'{$colName}';
+                    WHERE dc.parent_object_id = OBJECT_ID(N{$escapedFullTable})
+                        AND c.name = N{$escapedColName};
                     SQL;
 
                 $toDrop = $this->db->query($findSql)->getRowArray();
