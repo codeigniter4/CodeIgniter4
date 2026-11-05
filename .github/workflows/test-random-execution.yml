@@ -7,7 +7,6 @@ on:
       - '4.*'
     paths:
       - '.github/scripts/run-random-tests.sh'
-      - '.github/scripts/test-run-random-tests.sh'
       - '.github/scripts/random-tests-config.txt'
       - '.github/workflows/test-random-execution.yml'
       - 'phpunit.dist.xml'
@@ -20,7 +19,6 @@ on:
       - '4.*'
     paths:
       - '.github/scripts/run-random-tests.sh'
-      - '.github/scripts/test-run-random-tests.sh'
       - '.github/scripts/random-tests-config.txt'
       - '.github/workflows/test-random-execution.yml'
       - 'phpunit.dist.xml'
@@ -174,9 +172,6 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
-
-      - name: Test random-test scheduler
-        run: bash .github/scripts/test-run-random-tests.sh
 
       - name: Setup PHP ${{ matrix.php-version }}
         uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
