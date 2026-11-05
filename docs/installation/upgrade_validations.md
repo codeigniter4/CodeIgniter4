@@ -79,6 +79,7 @@ Path: **application/views**:
 
 Path: **application/controllers**:
 
+<!-- lint-ignore -->
 ```php
 <?php
 

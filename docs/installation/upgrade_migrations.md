@@ -41,6 +41,7 @@ php spark migrate
 
 Path: **application/migrations**:
 
+<!-- lint-ignore -->
 ```php
 <?php
 

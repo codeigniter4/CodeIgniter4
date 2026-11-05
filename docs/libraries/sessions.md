@@ -220,6 +220,7 @@ $session->push('hobbies', [
 
 Just as with any other variable, unsetting a value in `$_SESSION` can be done through `unset()`:
 
+<!-- lint-ignore -->
 ```php
 <?php
 

@@ -33,6 +33,7 @@ After that, you have to insert a `use` statement below the namespace definition 
 
 Path: **application/controllers**:
 
+<!-- lint-ignore -->
 ```php
 <?php
 
