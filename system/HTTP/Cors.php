@@ -240,9 +240,23 @@ class Cors
             return false;
         }
 
-        return ! ($this->config['exposedHeaders'] !== [] && (! $response->hasHeader('Access-Control-Expose-Headers') || ! str_contains(
-            $response->getHeaderLine('Access-Control-Expose-Headers'),
-            implode(', ', $this->config['exposedHeaders']),
-        )));
+        if ($this->config['exposedHeaders'] !== []) {
+            if (! $response->hasHeader('Access-Control-Expose-Headers')) {
+                return false;
+            }
+
+            $exposedHeaders = array_map(
+                strtolower(...),
+                array_map(trim(...), explode(',', $response->getHeaderLine('Access-Control-Expose-Headers'))),
+            );
+
+            foreach ($this->config['exposedHeaders'] as $header) {
+                if (! in_array(strtolower($header), $exposedHeaders, true)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }
