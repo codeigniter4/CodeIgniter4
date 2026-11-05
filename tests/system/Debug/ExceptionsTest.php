@@ -205,4 +205,17 @@ final class ExceptionsTest extends CIUnitTestCase
 
         $this->assertSame('/var/www/CodeIgniter4/app/Controllers/Home.php', $newTrace[0]['file']);
     }
+
+    public function testResetForWorkerModeClearsPreviousRequestState(): void
+    {
+        $this->setPrivateProperty($this->exception, 'exceptionCaughtByExceptionHandler', new RuntimeException('Previous request'));
+        $this->setPrivateProperty($this->exception, 'request', service('request'));
+        $this->setPrivateProperty($this->exception, 'response', service('response'));
+
+        $this->exception->resetForWorkerMode();
+
+        $this->assertNull($this->getPrivateProperty($this->exception, 'exceptionCaughtByExceptionHandler'));
+        $this->assertNull($this->getPrivateProperty($this->exception, 'request'));
+        $this->assertNull($this->getPrivateProperty($this->exception, 'response'));
+    }
 }

@@ -22,6 +22,7 @@ use CodeIgniter\Test\IniTestTrait;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\Exceptions as ExceptionsConfig;
 use Config\Services;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 
@@ -166,6 +167,76 @@ final class ExceptionHandlerTest extends CIUnitTestCase
         );
 
         $this->resetStreamFilterBuffer();
+    }
+
+    /**
+     * The handler can only exit outside the testing environment, so it
+     * runs in a separate process with the production environment.
+     */
+    #[DataProvider('provideHandleWebExceptionExitBehavior')]
+    public function testHandleWebExceptionExitBehavior(
+        string $accept,
+        bool $workerMode,
+        string $expectedOutput,
+        int $expectedStatus,
+    ): void {
+        $escapedHomePath  = var_export(HOMEPATH, true);
+        $escapedBootstrap = var_export(SYSTEMPATH . 'util_bootstrap.php', true);
+        $escapedAccept    = var_export($accept, true);
+        $escapedWorker    = var_export($workerMode, true);
+
+        $code = <<<PHP
+            chdir({$escapedHomePath});
+            define('ENVIRONMENT', 'production');
+            require {$escapedBootstrap};
+
+            use CodeIgniter\\Boot;
+            use CodeIgniter\\Debug\\ExceptionHandler;
+            use CodeIgniter\\Exceptions\\PageNotFoundException;
+            use Config\\Exceptions as ExceptionsConfig;
+
+            (new \\ReflectionProperty(Boot::class, 'workerMode'))->setValue(null, {$escapedWorker});
+
+            \$request = service('incomingrequest', null, false);
+            \$request->setHeader('accept', {$escapedAccept});
+
+            (new ExceptionHandler(new ExceptionsConfig()))->handle(
+                PageNotFoundException::forPageNotFound(),
+                \$request,
+                service('response'),
+                404,
+                EXIT_UNKNOWN_FILE,
+            );
+
+            echo 'HANDLER RETURNED';
+            PHP;
+
+        $cmd = sprintf('%s -r %s 2>&1', escapeshellarg(PHP_BINARY), escapeshellarg($code));
+        exec($cmd, $output, $status);
+        $output = implode(PHP_EOL, $output);
+
+        $this->assertSame($expectedStatus, $status, $output);
+        $this->assertStringContainsString($expectedOutput, $output);
+
+        if ($workerMode) {
+            $this->assertStringEndsWith('HANDLER RETURNED', $output);
+        } else {
+            $this->assertStringNotContainsString('HANDLER RETURNED', $output);
+        }
+    }
+
+    /**
+     * @return iterable<string, array{string, bool, string, int}>
+     */
+    public static function provideHandleWebExceptionExitBehavior(): iterable
+    {
+        yield 'non-HTML, worker mode' => ['application/json', true, '""', 0];
+
+        yield 'non-HTML, traditional' => ['application/json', false, '""', EXIT_UNKNOWN_FILE];
+
+        yield 'HTML, worker mode' => ['text/html', true, '<title>404 - Page Not Found</title>', 0];
+
+        yield 'HTML, traditional' => ['text/html', false, '<title>404 - Page Not Found</title>', EXIT_UNKNOWN_FILE];
     }
 
     public function testMaskSensitiveData(): void
