@@ -411,6 +411,15 @@ final class ConsoleTest extends CIUnitTestCase
         $this->assertStringContainsString('serve [options]', $this->getStreamFilterBuffer());
     }
 
+    public function testHelpOptionStripsArgumentsMeantForTargetCommand(): void
+    {
+        $this->initializeConsole('env', 'production', '--help');
+        $exitCode = (new Console())->run();
+
+        $this->assertSame(EXIT_SUCCESS, $exitCode);
+        $this->assertStringContainsString('env [options] [--] [<environment>]', $this->getStreamFilterBuffer());
+    }
+
     public function testHelpArgumentAndHelpOptionCombined(): void
     {
         $this->initializeConsole('help', '--help');

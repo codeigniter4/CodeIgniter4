@@ -128,7 +128,7 @@ class Console
             if ($arguments === []) {
                 $arguments = ['help', self::DEFAULT_COMMAND];
             } elseif ($arguments[0] !== 'help') {
-                array_unshift($arguments, 'help');
+                $arguments = ['help', $arguments[0]];
             }
 
             // Options supplied alongside --help were meant for the target command,
