@@ -51,6 +51,7 @@ Windows has no PCNTL extension and no Unix signals. Since v4.8.0, `SignalTrait` 
 - To map the event to your own method, use `2` as the key: `$this->registerSignals([], [2 => 'handleInterrupt']);`.
 - `withSignalsBlocked()` runs the operation, but cannot block anything. The event does not stop the process by itself once a handler is registered, so a critical section is still completed. Your handler runs when the event arrives.
 - Pause and resume (`SIGTSTP` / `SIGCONT`), and every other signal, do not exist on Windows.
+- PHP only accepts the handler in a console. When a command runs inside a web request, for example through `command()` in a controller, `registerSignals()` does nothing.
 
 !!! important "Important"
     Once a handler is registered, Ctrl+C and Ctrl+Break no longer end the process. Your command must check `shouldTerminate()` and return, as on Unix.
