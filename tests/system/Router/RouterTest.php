@@ -1031,4 +1031,59 @@ final class RouterTest extends CIUnitTestCase
         $this->assertLogContains('error', 'Failed to instantiate route attribute "' . Filter::class . '" on "\Tests\Support\Router\Controllers\InvalidAttributeController::invalidMultipleFilters()":');
         $this->assertLogContains('error', 'must be of type string');
     }
+
+    public function testStaticRoutesMatchControllerClosureAndNumericKey(): void
+    {
+        $collection = clone $this->collection;
+        $collection->resetRoutes();
+        $collection->get('about-us', 'Home::about');
+        $collection->get('contact_page', static fn (): string => 'contact-page-content');
+        $collection->get('123', 'Home::numericRoute');
+
+        $router = new Router($collection, $this->request);
+
+        $router->handle('about-us');
+        $this->assertSame('\Home', $router->controllerName());
+        $this->assertSame('about', $router->methodName());
+        $this->assertSame([], $router->params());
+
+        $router->handle('contact_page');
+        $controller = $router->controllerName();
+        $this->assertInstanceOf(Closure::class, $controller);
+        $this->assertSame('contact-page-content', $controller());
+        $this->assertSame([], $router->params());
+
+        $router->handle('123');
+        $this->assertSame('\Home', $router->controllerName());
+        $this->assertSame('numericRoute', $router->methodName());
+        $this->assertSame([], $router->params());
+    }
+
+    public function testStaticRouteDoesNotMatchAdditionalSegments(): void
+    {
+        $collection = clone $this->collection;
+        $collection->resetRoutes();
+        $collection->get('about-us', 'Home::about');
+
+        $router = new Router($collection, $this->request);
+
+        $this->expectException(PageNotFoundException::class);
+
+        $router->handle('about-us/team');
+    }
+
+    public function testEarlierDynamicRouteTakesPrecedenceOverLaterStaticRoute(): void
+    {
+        $collection = clone $this->collection;
+        $collection->resetRoutes();
+        $collection->get('items/(:segment)', 'Items::detail/$1');
+        $collection->get('items/new', 'Items::new');
+
+        $router = new Router($collection, $this->request);
+        $router->handle('items/new');
+
+        $this->assertSame('\Items', $router->controllerName());
+        $this->assertSame('detail', $router->methodName());
+        $this->assertSame(['new'], $router->params());
+    }
 }
