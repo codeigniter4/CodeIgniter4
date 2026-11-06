@@ -13,3 +13,4 @@ CodeIgniter ships with a number of tools to help you test and debug your applica
 - [Benchmarking](benchmark.md)
 - [Debugging Your Application](debugging.md)
 - [Session Testing](session_testing.md)
+- [Testing Packages](packages.md)
