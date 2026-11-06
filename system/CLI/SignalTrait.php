@@ -108,7 +108,12 @@ trait SignalTrait
      */
     protected function isWindowsCtrlHandlerAvailable(): bool
     {
-        return is_windows() && function_exists('sapi_windows_set_ctrl_handler');
+        // Every Windows build defines the function, but PHP throws an Error when
+        // it is called outside a console SAPI (`cli`, `cli-server`), for example
+        // by a command run through `command()` from a web request.
+        return is_windows()
+            && str_starts_with(PHP_SAPI, 'cli')
+            && function_exists('sapi_windows_set_ctrl_handler');
     }
 
     /**
@@ -117,9 +122,12 @@ trait SignalTrait
      * Wraps `sapi_windows_set_ctrl_handler()` so it can be replaced in tests,
      * as the function is only available on Windows.
      *
-     * @param callable(int): void $handler
+     * Removing a handler leaves PHP holding the callable it was given. Passing
+     * `null` with `$add` set to `false` afterwards releases it.
+     *
+     * @param (callable(int): void)|null $handler
      */
-    protected function setWindowsCtrlHandler(callable $handler, bool $add): bool
+    protected function setWindowsCtrlHandler(?callable $handler, bool $add): bool
     {
         // Static analysis on other platforms does not know the function.
         /** @psalm-suppress UndefinedFunction */
@@ -197,7 +205,9 @@ trait SignalTrait
             return;
         }
 
-        if ($this->setWindowsCtrlHandler([$this, 'handleWindowsCtrlEvent'], true)) {
+        // PHP resolves a callable stored by the native API in the scope it interrupts,
+        // where the protected method may not be accessible. A Closure is bound already.
+        if ($this->setWindowsCtrlHandler($this->handleWindowsCtrlEvent(...), true)) {
             $this->windowsCtrlHandlerRegistered = true;
             $this->registeredSignals[]          = self::INTERRUPT_SIGNAL;
         } else {
@@ -416,7 +426,11 @@ trait SignalTrait
     protected function unregisterSignals(): void
     {
         if ($this->windowsCtrlHandlerRegistered) {
-            $this->setWindowsCtrlHandler([$this, 'handleWindowsCtrlEvent'], false);
+            // Detaching needs a callable, which PHP then keeps, along with this object.
+            // Passing null afterwards releases it and leaves Ctrl+C at its default.
+            if ($this->setWindowsCtrlHandler($this->handleWindowsCtrlEvent(...), false)) {
+                $this->setWindowsCtrlHandler(null, false);
+            }
 
             $this->windowsCtrlHandlerRegistered = false;
             $this->registeredSignals            = [];
