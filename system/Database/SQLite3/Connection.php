@@ -366,8 +366,8 @@ class Connection extends BaseConnection
         $parts     = explode('.', $table);
         $tableName = array_pop($parts);
         $schema    = array_pop($parts);
-        $pragma    = ($schema === null ? '' : $this->escapeIdentifiers($schema) . '.')
-            . 'foreign_key_list(' . $this->escapeIdentifiers($tableName) . ')';
+        $pragma    = ($schema === null || $schema === '' ? '' : $this->escapeIdentifier($schema) . '.')
+            . 'foreign_key_list(' . $this->escape($tableName) . ')';
 
         $query   = $this->query('PRAGMA ' . $pragma)->getResult();
         $indexes = [];
