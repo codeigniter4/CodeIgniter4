@@ -27,8 +27,9 @@ class SignalCommandWindows extends SignalCommand
 
     /**
      * The handler the command tried to add (`true`) or remove (`false`), in order.
+     * A `null` handler releases the callable PHP keeps after a removal.
      *
-     * @var list<array{handler: callable, add: bool}>
+     * @var list<array{handler: (callable(int): void)|null, add: bool}>
      */
     public array $ctrlHandlerCalls = [];
 
@@ -47,7 +48,7 @@ class SignalCommandWindows extends SignalCommand
         return true;
     }
 
-    protected function setWindowsCtrlHandler(callable $handler, bool $add): bool
+    protected function setWindowsCtrlHandler(?callable $handler, bool $add): bool
     {
         $this->ctrlHandlerCalls[] = ['handler' => $handler, 'add' => $add];
 

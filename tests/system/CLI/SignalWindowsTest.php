@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\CLI;
 
+use Closure;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use PHPUnit\Framework\Attributes\Group;
@@ -59,6 +60,21 @@ final class SignalWindowsTest extends CIUnitTestCase
         $this->assertTrue($this->command->ctrlHandlerCalls[0]['add']);
         $this->assertTrue($this->command->testHasSignals());
         $this->assertSame([self::SIGINT_NUMBER], $this->command->testGetSignals());
+    }
+
+    public function testTheCtrlHandlerCanBeCalledFromAnyScope(): void
+    {
+        $this->command->testRegisterSignals([]);
+
+        // PHP calls the handler from whichever scope it interrupts. A callable
+        // array naming the protected method would not be accessible from here.
+        $handler = $this->command->ctrlHandlerCalls[0]['handler'];
+
+        $this->assertInstanceOf(Closure::class, $handler);
+
+        $handler(0);
+
+        $this->assertTrue($this->command->testShouldTerminate());
     }
 
     public function testRegisterWithTheInterruptSignal(): void
@@ -148,12 +164,31 @@ final class SignalWindowsTest extends CIUnitTestCase
         $this->command->testRegisterSignals([], [self::SIGINT_NUMBER => 'testCustomHandler']);
         $this->command->testUnregisterSignals();
 
-        $this->assertCount(2, $this->command->ctrlHandlerCalls);
+        $this->assertCount(3, $this->command->ctrlHandlerCalls);
+
+        // The handler is detached...
         $this->assertFalse($this->command->ctrlHandlerCalls[1]['add']);
-        $this->assertSame($this->command->ctrlHandlerCalls[0]['handler'], $this->command->ctrlHandlerCalls[1]['handler']);
+        $this->assertInstanceOf(Closure::class, $this->command->ctrlHandlerCalls[1]['handler']);
+
+        // ...then PHP is told to drop the callable it keeps, which would retain the command.
+        $this->assertFalse($this->command->ctrlHandlerCalls[2]['add']);
+        $this->assertNull($this->command->ctrlHandlerCalls[2]['handler']);
+
         $this->assertFalse($this->command->testHasSignals());
         $this->assertSame([], $this->command->testGetSignals());
         $this->assertSame(0, $this->command->testGetProcessState()['explicit_mappings']);
+    }
+
+    public function testUnregisterDoesNotReleaseTheCallableWhenRemovalFails(): void
+    {
+        $this->command->testRegisterSignals([]);
+
+        $this->command->ctrlHandlerSucceeds = false;
+        $this->command->testUnregisterSignals();
+
+        $this->assertCount(2, $this->command->ctrlHandlerCalls);
+        $this->assertFalse($this->command->ctrlHandlerCalls[1]['add']);
+        $this->assertNotNull($this->command->ctrlHandlerCalls[1]['handler']);
     }
 
     public function testUnregisterWithoutRegisteringDoesNothing(): void
@@ -169,8 +204,8 @@ final class SignalWindowsTest extends CIUnitTestCase
         $this->command->testUnregisterSignals();
         $this->command->testRegisterSignals([]);
 
-        $this->assertCount(3, $this->command->ctrlHandlerCalls);
-        $this->assertTrue($this->command->ctrlHandlerCalls[2]['add']);
+        $this->assertCount(4, $this->command->ctrlHandlerCalls);
+        $this->assertTrue($this->command->ctrlHandlerCalls[3]['add']);
         $this->assertTrue($this->command->testHasSignals());
     }
 
