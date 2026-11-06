@@ -780,3 +780,62 @@ For scalar values (strings, integers, floats, booleans, null), the Entity uses d
 #### Objects and Arrays
 
 For objects and arrays, the Entity JSON-encodes and normalizes the values for comparison. This means that modifications to nested structures, object properties, array elements, nested entities (using `toRawArray()`), enums (`BackedEnum` and `UnitEnum`), datetime objects (`DateTimeInterface`), collections (`Traversable`), value objects with `__toString()`, and objects implementing `JsonSerializable` or `toArray()` will be properly detected.
+
+### Merging Attributes During Injection
+
+!!! success "Available from version 4.8.0"
+
+By default, your entity can contain the initial state of the attributes. When working with objects, you can rely on the fact that all the necessary properties are available. However, after receiving the object from the database, you may find that the entity is not complete and some properties are missing.
+
+Suppose there is no `isBanned` field in the table, and the `profile` property is virtual and filled in another way.
+
+With the `$mergeAttributesOnInject = false` you will get errors because by default properties are overwritten in `injectRawData()`.
+
+```php
+<?php
+class User extends Entity {
+    protected $attributes = [
+        'id' => null,
+        'role' => 'user',
+        'isBanned' => '0',
+        'profile' => null,
+    ];
+    public function __construct(?array $data = null)
+    {
+        parent::__construct($data);
+        $this->attributes['profile'] = new Profile();
+    }
+}
+
+// Manual user creation
+$user = new User([...]);
+
+// The values are exactly there
+echo $user->isBanned;                        // '0'
+echo $user->toArray()['isBanned'];           // '0'
+var_dump($user->profile instanceof Profile); // true
+
+// Getting the user from the database
+$user2 = model(UserModel::class)->find(1);
+
+// The values will be empty
+echo $user2->isBanned;                        // null
+echo $user2->toArray()['isBanned'];           // Undefined
+var_dump($user2->profile instanceof Profile); // false
+```
+
+To change the behavior, toggle the `$mergeAttributesOnInject = true` flag. As a result, you will get the expected list of attributes.
+
+```php
+<?php
+
+// Getting the user from the database
+$user2 = model(UserModel::class)->find(1);
+
+echo $user2->isBanned;                        // '0'
+echo $user2->toArray()['isBanned'];           // '0'
+var_dump($user2->profile instanceof Profile); // true
+```
+
+!!! note "Note"
+    The flag does not matter if you have not defined the keys in `$attributes`.
