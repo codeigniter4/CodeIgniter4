@@ -25,4 +25,13 @@ class SignalCommandNoPcntl extends SignalCommand
     {
         return false;
     }
+
+    /**
+     * Override to simulate no Windows console control handler either,
+     * so that no native handler is installed when this runs on Windows.
+     */
+    protected function isWindowsCtrlHandlerAvailable(): bool
+    {
+        return false;
+    }
 }
