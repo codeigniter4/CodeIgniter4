@@ -363,7 +363,13 @@ class Connection extends BaseConnection
             return [];
         }
 
-        $query   = $this->query("PRAGMA foreign_key_list({$table})")->getResult();
+        $parts     = explode('.', $table);
+        $tableName = array_pop($parts);
+        $schema    = array_pop($parts);
+        $pragma    = ($schema === null || $schema === '' ? '' : $this->escapeIdentifier($schema) . '.')
+            . 'foreign_key_list(' . $this->escape($tableName) . ')';
+
+        $query   = $this->query('PRAGMA ' . $pragma)->getResult();
         $indexes = [];
 
         foreach ($query as $row) {
