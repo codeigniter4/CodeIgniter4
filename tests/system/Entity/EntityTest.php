@@ -1660,6 +1660,7 @@ final class EntityTest extends CIUnitTestCase
     {
         $entity = new class () extends Entity {
             protected bool $mergeAttributesOnInject = false;
+
             // The "user" attribute is not for DB
             // The "_secure" attribute is hidden
             protected $attributes = [
@@ -1684,26 +1685,26 @@ final class EntityTest extends CIUnitTestCase
 
         $entity->injectRawData([
             // Missing "type", "user" attributes
-            'limit'   => 15,
-            '_secure' => 'Normal',
-            'extra'   => 'undefined',
+            'limit'            => 15,
+            '_secure'          => 'Normal',
+            'extra'            => 'undefined',
             'DB_PAYLOAD_FIELD' => 'PayloadData',
         ]);
         $this->assertSame(
             [
-                'limit'   => 15,
-                '_secure' => 'Normal',
-                'extra'   => 'undefined',
+                'limit'            => 15,
+                '_secure'          => 'Normal',
+                'extra'            => 'undefined',
                 'DB_PAYLOAD_FIELD' => 'PayloadData',
             ],
             $entity->toRawArray(),
         );
         $this->assertSame(
             [
-                'limit' => 15,
-                'extra' => 'undefined',
+                'limit'   => 15,
+                'extra'   => 'undefined',
                 'payload' => 'PayloadData',
-                'votes' => null,
+                'votes'   => null,
                 'reports' => null,
             ],
             $entity->toArray(),
@@ -1714,6 +1715,7 @@ final class EntityTest extends CIUnitTestCase
     {
         $entity = new class () extends Entity {
             protected bool $mergeAttributesOnInject = true;
+
             // The "user" attribute is not for DB
             // The "_secure" attribute is hidden
             protected $attributes = [
@@ -1738,32 +1740,32 @@ final class EntityTest extends CIUnitTestCase
 
         $entity->injectRawData([
             // Missing "type", "user" attributes
-            'limit'   => 15,
-            '_secure' => 'Normal',
-            'extra'   => 'undefined',
+            'limit'            => 15,
+            '_secure'          => 'Normal',
+            'extra'            => 'undefined',
             'DB_PAYLOAD_FIELD' => 'PayloadData',
         ]);
         $this->assertSame(
             [
-                'type'    => 'Normal',
-                'limit'   => 15,
-                'user'    => 'John',
-                '_secure' => 'Normal',
-                'reports' => 0,
-                'extra'   => 'undefined',
+                'type'             => 'Normal',
+                'limit'            => 15,
+                'user'             => 'John',
+                '_secure'          => 'Normal',
+                'reports'          => 0,
+                'extra'            => 'undefined',
                 'DB_PAYLOAD_FIELD' => 'PayloadData',
             ],
             $entity->toRawArray(),
         );
         $this->assertSame(
             [
-                'type'  => 'Normal',
-                'limit' => 15,
-                'user'  => 'John',
+                'type'    => 'Normal',
+                'limit'   => 15,
+                'user'    => 'John',
                 'reports' => null,
-                'extra' => 'undefined',
+                'extra'   => 'undefined',
                 'payload' => 'PayloadData',
-                'votes' => null,
+                'votes'   => null,
             ],
             $entity->toArray(),
         );
