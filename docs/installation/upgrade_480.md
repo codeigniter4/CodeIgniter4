@@ -144,6 +144,10 @@ public function handle($level, $message, array $context = []): bool
 
 The context array may contain the CI global context data under the `HandlerInterface::GLOBAL_CONTEXT_KEY` (`'_ci_context'`) key when `$logGlobalContext` is enabled in `Config\Logger`.
 
+### Entity
+
+If you redefine the Entity base class or modify the `injectRawData()` method, you need to add a new `$mergeAttributesOnInject` property. See [Merging Attributes During Injection](../models/entities.md#merging-attributes-during-injection).
+
 ## Project Files
 
 Some files in the **project space** (root, app, public, writable) received updates. Due to these files being outside of the **system** scope they will not be changed without your intervention.
@@ -157,39 +161,39 @@ The following files received significant changes (including deprecations or visu
 
 #### Config
 
-- **app/Config/Filters.php**  
+- **app/Config/Filters.php**
     - Added a new filter named `requestid` that adds a unique request ID to each request in the application's context.
 
-- **app/Config/Generators.php**  
+- **app/Config/Generators.php**
     - `Config\Generators::$views` added entries for `make:request`, `make:test`, and `make:transformer`, and dropped the stale `session:migration` entry.
 
-- **app/Config/Logger.php**  
+- **app/Config/Logger.php**
     - `Config\Logger::$handlers` added a new key `stopChainOnFailure` to the `FileHandler` and `ErrorlogHandler` settings.
 
-- **app/Config/Mimes.php**  
+- **app/Config/Mimes.php**
     - `Config\Mimes::$mimes` added a new key `md` for Markdown files.
 
-- **app/Config/Routing.php**  
+- **app/Config/Routing.php**
     - `Config\Routing::$placeholderSamples` was added to provide sample values for custom route placeholders so the `spark routes` command can resolve their filters.
 
-- **app/Config/Security.php**  
+- **app/Config/Security.php**
     - `Config\Security::$csrfFetchMetadata` and `Config\Security::$csrfFetchMetadataRejectSameSite` were added for Fetch Metadata based CSRF protection.
 
 #### Error Views
 
-- **app/Views/errors/cli/error_exception.php**  
+- **app/Views/errors/cli/error_exception.php**
     - Shows the backtrace also when the command runs with `-v`.
 
-- **app/Views/errors/html/debug.css**  
+- **app/Views/errors/html/debug.css**
     - Added styles for the **Copy Details** button.
 
-- **app/Views/errors/html/debug.js**  
+- **app/Views/errors/html/debug.js**
     - Added clipboard handling for the **Copy Details** button.
 
-- **app/Views/errors/html/error_exception.php**  
+- **app/Views/errors/html/error_exception.php**
     - Added a **Copy Details** button to detailed HTML exception pages.
 
-- **app/Views/errors/html/error_report.php**  
+- **app/Views/errors/html/error_report.php**
     - Added a Markdown error report partial used by the **Copy Details** button.
 
 ### All Changes
