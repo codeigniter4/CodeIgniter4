@@ -404,6 +404,29 @@ class Autoloader
             }
         }
 
+        // Check config for $composerPackages.
+        $only    = $composerPackages['only'] ?? [];
+        $exclude = $composerPackages['exclude'] ?? [];
+
+        if ($only !== [] && $exclude !== []) {
+            throw new ConfigException('Cannot use "only" and "exclude" at the same time in "Config\Modules::$composerPackages".');
+        }
+
+        // When no package filtering is configured (the default), all PSR-4 prefixes
+        // from Composer can be added directly without expensive InstalledVersions scanning.
+        if ($only === [] && $exclude === []) {
+            $newPaths = [];
+
+            foreach ($namespacePaths as $namespace => $srcPaths) {
+                // Composer stores namespaces with trailing slash. We don't.
+                $newPaths[rtrim($namespace, '\\ ')] = $srcPaths;
+            }
+
+            $this->addNamespace($newPaths);
+
+            return;
+        }
+
         if (! method_exists(InstalledVersions::class, 'getAllRawData')) { // @phpstan-ignore function.alreadyNarrowedType
             throw new RuntimeException(
                 'Your Composer version is too old.'
@@ -411,6 +434,7 @@ class Autoloader
                 . ' and remove your vendor/ directory, and run `composer update`.',
             );
         }
+
         // This method requires Composer 2.0.14 or later.
         $allData     = InstalledVersions::getAllRawData();
         $packageList = [];
@@ -419,15 +443,9 @@ class Autoloader
             $packageList = array_merge($packageList, $list['versions']);
         }
 
-        // Check config for $composerPackages.
-        $only    = $composerPackages['only'] ?? [];
-        $exclude = $composerPackages['exclude'] ?? [];
-        if ($only !== [] && $exclude !== []) {
-            throw new ConfigException('Cannot use "only" and "exclude" at the same time in "Config\Modules::$composerPackages".');
-        }
-
         // Get install paths of packages to add namespace for auto-discovery.
         $installPaths = [];
+
         if ($only !== []) {
             foreach ($packageList as $packageName => $data) {
                 if (in_array($packageName, $only, true) && isset($data['install_path'])) {

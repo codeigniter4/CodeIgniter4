@@ -417,6 +417,26 @@ final class AutoloaderTest extends CIUnitTestCase
         $this->assertArrayNotHasKey('Laminas\\Escaper', $namespaces);
     }
 
+    public function testComposerPackagesDefaultLoadsAllNamespacesDirectly(): void
+    {
+        $config                      = new Autoload();
+        $config->psr4                = [];
+        $modules                     = new Modules();
+        $modules->discoverInComposer = true;
+        $modules->composerPackages   = [];
+
+        $loader = new Autoloader();
+        $loader->initialize($config, $modules);
+
+        $namespaces = $loader->getNamespace();
+
+        $this->assertArrayHasKey('Laminas\Escaper', $namespaces);
+        $this->assertArrayHasKey('Psr\Log', $namespaces);
+        $this->assertArrayNotHasKey('CodeIgniter', $namespaces);
+        $this->assertArrayNotHasKey(APP_NAMESPACE, $namespaces);
+        $this->assertArrayNotHasKey('Config', $namespaces);
+    }
+
     public function testAutoloaderLoadsNonClassFiles(): void
     {
         $config          = new Autoload();
