@@ -17,6 +17,7 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -68,14 +69,14 @@ final class FileMovingTest extends CIUnitTestCase
                 'name'     => $finalFilename . '.txt',
                 'type'     => 'text/plain',
                 'size'     => 124,
-                'tmp_name' => '/tmp/fileA.txt',
+                'tmp_name' => sys_get_temp_dir() . '/fileA.txt',
                 'error'    => 0,
             ],
             'userfile2' => [
                 'name'     => 'fileA.txt',
                 'type'     => 'text/csv',
                 'size'     => 248,
-                'tmp_name' => '/tmp/fileB.txt',
+                'tmp_name' => sys_get_temp_dir() . '/fileB.txt',
                 'error'    => 0,
             ],
         ]);
@@ -108,7 +109,7 @@ final class FileMovingTest extends CIUnitTestCase
                 'name'     => '../../public/shell.php',
                 'type'     => 'text/plain',
                 'size'     => 124,
-                'tmp_name' => '/tmp/fileA.txt',
+                'tmp_name' => sys_get_temp_dir() . '/fileA.txt',
                 'error'    => 0,
             ],
         ]);
@@ -133,6 +134,141 @@ final class FileMovingTest extends CIUnitTestCase
         $this->assertFalse($this->root->hasChild('public/shell.php'));
     }
 
+    /**
+     * On Windows these names may resolve to a different file or an NTFS stream.
+     */
+    #[DataProvider('provideMoveRejectsUnsafeDefaultNameOnWindows')]
+    public function testMoveRejectsUnsafeDefaultNameOnWindows(string $clientName): void
+    {
+        is_windows(true);
+
+        service('superglobals')->setFilesArray([
+            'userfile' => [
+                'name'     => $clientName,
+                'type'     => 'text/plain',
+                'size'     => 124,
+                'tmp_name' => sys_get_temp_dir() . '/fileA.txt',
+                'error'    => 0,
+            ],
+        ]);
+
+        $file = (new FileCollection())->getFile('userfile');
+        $this->assertInstanceOf(UploadedFile::class, $file);
+
+        try {
+            $file->move($this->destination);
+            $this->fail('HTTPException was not thrown.');
+        } catch (HTTPException $e) {
+            $this->assertSame(lang('HTTP.invalidFileName'), $e->getMessage());
+        }
+
+        $this->assertFalse($file->hasMoved());
+        $this->assertSame($clientName, $file->getName());
+        $this->assertSame([], array_values(array_diff(scandir($this->destination), ['.', '..', 'index.html'])));
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function provideMoveRejectsUnsafeDefaultNameOnWindows(): iterable
+    {
+        yield 'single period' => ['shell.php.'];
+
+        yield 'double period' => ['shell.php..'];
+
+        yield 'triple period' => ['shell.php...'];
+
+        yield 'space then periods' => ['shell.php ..'];
+
+        yield 'period then space' => ['shell.php. '];
+
+        yield 'trailing space' => ['shell.php '];
+
+        yield 'periods only' => ['..'];
+
+        yield 'NTFS stream' => ['shell.php:stream'];
+
+        yield 'NTFS stream in text file' => ['notes.txt:metadata'];
+    }
+
+    #[DataProvider('provideMoveKeepsWindowsUnsafeDefaultNameOutsideWindows')]
+    public function testMoveKeepsWindowsUnsafeDefaultNameOutsideWindows(string $clientName): void
+    {
+        is_windows(false);
+
+        service('superglobals')->setFilesArray([
+            'userfile' => [
+                'name'     => $clientName,
+                'type'     => 'text/plain',
+                'size'     => 124,
+                'tmp_name' => sys_get_temp_dir() . '/fileA.txt',
+                'error'    => 0,
+            ],
+        ]);
+
+        $file = (new FileCollection())->getFile('userfile');
+        $this->assertInstanceOf(UploadedFile::class, $file);
+
+        $this->assertTrue($file->move($this->destination));
+        $this->assertSame($clientName, $file->getName());
+        $this->assertTrue($this->root->hasChild('destination/' . $clientName));
+    }
+
+    /**
+     * A trailing space is not covered here: vfsStream trims trailing whitespace from paths.
+     *
+     * @return iterable<string, array{string}>
+     */
+    public static function provideMoveKeepsWindowsUnsafeDefaultNameOutsideWindows(): iterable
+    {
+        yield 'trailing periods' => ['notes.txt..'];
+
+        yield 'colon' => ['meeting 10:30.txt'];
+    }
+
+    public function testMoveAcceptsDefaultNameWithInnerPeriodsAndSpaces(): void
+    {
+        is_windows(true);
+
+        service('superglobals')->setFilesArray([
+            'userfile' => [
+                'name'     => 'my file.v1..final.txt',
+                'type'     => 'text/plain',
+                'size'     => 124,
+                'tmp_name' => sys_get_temp_dir() . '/fileA.txt',
+                'error'    => 0,
+            ],
+        ]);
+
+        $file = (new FileCollection())->getFile('userfile');
+        $this->assertInstanceOf(UploadedFile::class, $file);
+
+        $this->assertTrue($file->move($this->destination));
+        $this->assertSame('my file.v1..final.txt', $file->getName());
+        $this->assertTrue($this->root->hasChild('destination/my file.v1..final.txt'));
+    }
+
+    public function testMoveDoesNotRejectCallerSuppliedName(): void
+    {
+        is_windows(true);
+
+        service('superglobals')->setFilesArray([
+            'userfile' => [
+                'name'     => 'shell.php..',
+                'type'     => 'text/plain',
+                'size'     => 124,
+                'tmp_name' => sys_get_temp_dir() . '/fileA.txt',
+                'error'    => 0,
+            ],
+        ]);
+
+        $file = (new FileCollection())->getFile('userfile');
+        $this->assertInstanceOf(UploadedFile::class, $file);
+
+        $this->assertTrue($file->move($this->destination, 'avatar.txt'));
+        $this->assertSame('avatar.txt', $file->getName());
+    }
+
     public function testMoveOverwriting(): void
     {
         $finalFilename = 'file_with_delimiters_underscore';
@@ -141,21 +277,21 @@ final class FileMovingTest extends CIUnitTestCase
                 'name'     => $finalFilename . '.txt',
                 'type'     => 'text/plain',
                 'size'     => 124,
-                'tmp_name' => '/tmp/fileA.txt',
+                'tmp_name' => sys_get_temp_dir() . '/fileA.txt',
                 'error'    => 0,
             ],
             'userfile2' => [
                 'name'     => $finalFilename . '.txt',
                 'type'     => 'text/csv',
                 'size'     => 248,
-                'tmp_name' => '/tmp/fileB.txt',
+                'tmp_name' => sys_get_temp_dir() . '/fileB.txt',
                 'error'    => 0,
             ],
             'userfile3' => [
                 'name'     => $finalFilename . '.txt',
                 'type'     => 'text/csv',
                 'size'     => 248,
-                'tmp_name' => '/tmp/fileC.txt',
+                'tmp_name' => sys_get_temp_dir() . '/fileC.txt',
                 'error'    => 0,
             ],
         ]);
@@ -191,7 +327,7 @@ final class FileMovingTest extends CIUnitTestCase
                 'name'     => $finalFilename . '.txt',
                 'type'     => 'text/plain',
                 'size'     => 124,
-                'tmp_name' => '/tmp/fileA.txt',
+                'tmp_name' => sys_get_temp_dir() . '/fileA.txt',
                 'error'    => 0,
             ],
         ]);
@@ -224,7 +360,7 @@ final class FileMovingTest extends CIUnitTestCase
                 'name'     => $finalFilename . '.txt',
                 'type'     => 'text/plain',
                 'size'     => 124,
-                'tmp_name' => '/tmp/fileA.txt',
+                'tmp_name' => sys_get_temp_dir() . '/fileA.txt',
                 'error'    => 0,
             ],
         ]);
@@ -233,19 +369,29 @@ final class FileMovingTest extends CIUnitTestCase
 
         $this->assertTrue($collection->hasFile('userfile1'));
 
-        $destination = $this->destination;
-        // Create the destination if not exists
-        if (! is_dir($destination)) {
-            mkdir($destination, 0777, true);
-        }
-
         $file = $collection->getFile('userfile1');
 
         $this->assertInstanceOf(UploadedFile::class, $file);
 
-        $path = $file->store($destination, $file->getName());
+        $folderName = 'file-moving-test-' . bin2hex(random_bytes(4));
+        $directory  = WRITEPATH . 'uploads/' . $folderName;
 
-        $this->assertSame($destination . '/fileA.txt', $path);
+        try {
+            $path = $file->store($folderName, $file->getName());
+
+            $this->assertSame($folderName . '/fileA.txt', $path);
+            $this->assertFileExists($directory . '/fileA.txt');
+        } finally {
+            if (is_file($directory . '/fileA.txt')) {
+                unlink($directory . '/fileA.txt');
+            }
+            if (is_file($directory . '/index.html')) {
+                unlink($directory . '/index.html');
+            }
+            if (is_dir($directory)) {
+                rmdir($directory);
+            }
+        }
     }
 
     public function testAlreadyMoved(): void
@@ -256,7 +402,7 @@ final class FileMovingTest extends CIUnitTestCase
                 'name'     => $finalFilename . '.txt',
                 'type'     => 'text/plain',
                 'size'     => 124,
-                'tmp_name' => '/tmp/fileA.txt',
+                'tmp_name' => sys_get_temp_dir() . '/fileA.txt',
                 'error'    => 0,
             ],
         ]);
@@ -286,7 +432,7 @@ final class FileMovingTest extends CIUnitTestCase
                 'name'     => 'someFile.txt',
                 'type'     => 'text/plain',
                 'size'     => 124,
-                'tmp_name' => '/tmp/myTempFile.txt',
+                'tmp_name' => sys_get_temp_dir() . '/myTempFile.txt',
                 'error'    => UPLOAD_ERR_INI_SIZE,
             ],
         ]);
@@ -308,7 +454,7 @@ final class FileMovingTest extends CIUnitTestCase
                 'name'     => 'someFile.txt',
                 'type'     => 'text/plain',
                 'size'     => 124,
-                'tmp_name' => '/tmp/myTempFile.txt',
+                'tmp_name' => sys_get_temp_dir() . '/myTempFile.txt',
                 'error'    => 0,
             ],
         ]);
@@ -335,7 +481,7 @@ final class FileMovingTest extends CIUnitTestCase
                 'name'     => 'fileA.txt',
                 'type'     => 'text/plain',
                 'size'     => 124,
-                'tmp_name' => '/tmp/fileA.txt',
+                'tmp_name' => sys_get_temp_dir() . '/fileA.txt',
                 'error'    => 0,
             ],
         ]);

@@ -141,6 +141,11 @@ class UploadedFile extends File implements UploadedFileInterface
         if ($name === null) {
             helper('security');
             $name = sanitize_filename($this->getName());
+
+            // Windows may store these names under a different filename or in an NTFS stream.
+            if (is_windows() && (rtrim($name, '. ') !== $name || str_contains($name, ':'))) {
+                throw HTTPException::forInvalidFileName();
+            }
         }
         $destination = $overwrite ? $targetPath . $name : $this->getDestination($targetPath . $name);
 
