@@ -96,7 +96,7 @@ class OpenSSLHandler extends BaseHandler
         $encryptKey = \hash_hkdf($this->digest, $key, 0, $this->encryptKeyInfo);
 
         // basic encryption
-        $iv = ($ivSize = \openssl_cipher_iv_length($this->cipher)) ? \openssl_random_pseudo_bytes($ivSize) : null;
+        $iv = ($ivSize = \openssl_cipher_iv_length($this->cipher)) ? random_bytes($ivSize) : null;
 
         $data = \openssl_encrypt($data, $this->cipher, $encryptKey, OPENSSL_RAW_DATA, $iv);
 
