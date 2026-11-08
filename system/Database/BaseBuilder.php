@@ -3422,7 +3422,21 @@ class BaseBuilder
             $this->isLiteralStr = $this->db->escapeChar !== '"' ? ['"', "'"] : ["'"];
         }
 
-        return in_array($str[0], $this->isLiteralStr, true);
+        $len = strlen($str);
+        if ($len < 2) {
+            return false;
+        }
+
+        $quote = $str[0];
+        if (! in_array($quote, $this->isLiteralStr, true) || $str[$len - 1] !== $quote) {
+            return false;
+        }
+
+        $pattern = $quote === "'"
+            ? '/^\'(?:[^\'\\\\]|\\\\.|\'\')*\'$/s'
+            : '/^"(?:[^"\\\\]|\\\\.|"")*"$/s';
+
+        return preg_match($pattern, $str) === 1;
     }
 
     /**
