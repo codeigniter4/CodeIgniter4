@@ -448,7 +448,7 @@ echo $clientPath; // dir/file.txt, or dir/sub_dir/file.txt
     Do not let user input directly decide the destination directory. The `$targetPath` argument of `move()` and the `$folderName` argument of `store()` are never sanitized, so an attacker-controlled value containing `../` can move the uploaded file outside the intended directory. Use directories controlled by your application.
 
     Filenames are only sanitized by default: `move()` sanitizes the client-provided name when the `$name` argument is omitted, and `store()` generates a random name when `$fileName` is omitted. A caller-supplied `$name` or `$fileName` is NOT sanitized, so if you pass one, generate it yourself or sanitize it with `sanitize_filename`.
-    On Windows, sanitizing a client-provided name does not remove trailing periods or spaces or prevent NTFS alternate data streams. Use a generated name if you need to pass an explicit filename.
+    On Windows, `move()` and `store()` reject names ending in a period or space or containing a colon, whether the name was supplied by the caller or chosen by default. Sanitization alone does not remove these forms. Use a generated name when possible.
 
     Sanitizing a client-provided filename does not make it safe to keep in a web-accessible directory where scripts can execute. Some web servers select a handler from any extension in a filename, including an extension before the final one. Keep uploads outside the public directory with `store()` when possible. If they must be public, disable script execution in the upload directory and pass `$file->getRandomName()` as the second argument to `move()`.
 
@@ -462,7 +462,7 @@ Each file can be moved to its new location with the aptly named `move()` method.
 $file->move(WRITEPATH . 'uploads');
 ```
 
-By default, the client-provided filename is sanitized and used. On Windows, an `HTTPException` is thrown if the sanitized name ends with a period or a space, or contains a colon. Such names may be stored under a different filename or in an NTFS alternate data stream. Use a generated filename if the client-provided name is rejected.
+By default, the client-provided filename is sanitized and used. On Windows, an `HTTPException` is thrown if the name to be stored ends with a period or a space, or contains a colon. This also applies when you pass a name explicitly. Such names may be stored under a different filename or in an NTFS alternate data stream. Use a generated filename if the client-provided name is rejected.
 
 #### with New Filename
 
@@ -505,7 +505,7 @@ Moving an uploaded file can fail, with an `HTTPException`, under several circums
 
 - the file has already been moved
 - the file did not upload successfully
-- on Windows, the `$name` argument is omitted and the sanitized client-provided filename ends with a period or a space, or contains a colon
+- on Windows, the filename ends with a period or a space, or contains a colon
 - the file move operation fails (e.g., improper permissions)
 
 ### Store Files
@@ -538,4 +538,5 @@ Moving an uploaded file can fail, with an `HTTPException`, under several circums
 
 - the file has already been moved
 - the file did not upload successfully
+- on Windows, the supplied filename ends with a period or a space, or contains a colon
 - the file move operation fails (e.g., improper permissions)

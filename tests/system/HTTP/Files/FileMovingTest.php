@@ -184,6 +184,8 @@ final class FileMovingTest extends CIUnitTestCase
 
         yield 'trailing space' => ['shell.php '];
 
+        yield 'two trailing spaces' => ['shell.php  '];
+
         yield 'periods only' => ['..'];
 
         yield 'NTFS stream' => ['shell.php:stream'];
@@ -248,7 +250,7 @@ final class FileMovingTest extends CIUnitTestCase
         $this->assertTrue($this->root->hasChild('destination/my file.v1..final.txt'));
     }
 
-    public function testMoveDoesNotRejectCallerSuppliedName(): void
+    public function testMoveAcceptsSafeCallerSuppliedName(): void
     {
         is_windows(true);
 
@@ -266,6 +268,34 @@ final class FileMovingTest extends CIUnitTestCase
         $this->assertInstanceOf(UploadedFile::class, $file);
 
         $this->assertTrue($file->move($this->destination, 'avatar.txt'));
+        $this->assertSame('avatar.txt', $file->getName());
+    }
+
+    public function testMoveRejectsUnsafeCallerSuppliedNameOnWindows(): void
+    {
+        is_windows(true);
+
+        service('superglobals')->setFilesArray([
+            'userfile' => [
+                'name'     => 'avatar.txt',
+                'type'     => 'text/plain',
+                'size'     => 124,
+                'tmp_name' => sys_get_temp_dir() . '/fileA.txt',
+                'error'    => 0,
+            ],
+        ]);
+
+        $file = (new FileCollection())->getFile('userfile');
+        $this->assertInstanceOf(UploadedFile::class, $file);
+
+        try {
+            $file->move($this->destination, 'shell.php..');
+            $this->fail('HTTPException was not thrown.');
+        } catch (HTTPException $e) {
+            $this->assertSame(lang('HTTP.invalidFileName'), $e->getMessage());
+        }
+
+        $this->assertFalse($file->hasMoved());
         $this->assertSame('avatar.txt', $file->getName());
     }
 
@@ -377,13 +407,13 @@ final class FileMovingTest extends CIUnitTestCase
         $directory  = WRITEPATH . 'uploads/' . $folderName;
 
         try {
-            $path = $file->store($folderName, $file->getName());
+            $path = $file->store($folderName, 'stored-file.txt');
 
-            $this->assertSame($folderName . '/fileA.txt', $path);
-            $this->assertFileExists($directory . '/fileA.txt');
+            $this->assertSame($folderName . '/stored-file.txt', $path);
+            $this->assertFileExists($directory . '/stored-file.txt');
         } finally {
-            if (is_file($directory . '/fileA.txt')) {
-                unlink($directory . '/fileA.txt');
+            if (is_file($directory . '/stored-file.txt')) {
+                unlink($directory . '/stored-file.txt');
             }
             if (is_file($directory . '/index.html')) {
                 unlink($directory . '/index.html');
@@ -392,6 +422,62 @@ final class FileMovingTest extends CIUnitTestCase
                 rmdir($directory);
             }
         }
+    }
+
+    #[DataProvider('provideStoreRejectsUnsafeExplicitNameOnWindows')]
+    public function testStoreRejectsUnsafeExplicitNameOnWindows(string $clientName): void
+    {
+        is_windows(true);
+
+        service('superglobals')->setFilesArray([
+            'userfile' => [
+                'name'     => $clientName,
+                'type'     => 'text/plain',
+                'size'     => 124,
+                'tmp_name' => sys_get_temp_dir() . '/fileA.txt',
+                'error'    => 0,
+            ],
+        ]);
+
+        $file = (new FileCollection())->getFile('userfile');
+        $this->assertInstanceOf(UploadedFile::class, $file);
+
+        $folderName = 'file-moving-test-' . bin2hex(random_bytes(4));
+        $directory  = WRITEPATH . 'uploads/' . $folderName;
+
+        try {
+            try {
+                $file->store($folderName, $file->getName());
+                $this->fail('HTTPException was not thrown.');
+            } catch (HTTPException $e) {
+                $this->assertSame(lang('HTTP.invalidFileName'), $e->getMessage());
+            }
+
+            $this->assertFalse($file->hasMoved());
+            $this->assertSame($clientName, $file->getName());
+            $this->assertFileDoesNotExist($directory . '/shell.php');
+        } finally {
+            foreach (['shell.php..', 'shell.php  ', 'shell.php:stream', 'shell.php', 'index.html'] as $name) {
+                if (is_file($directory . '/' . $name)) {
+                    unlink($directory . '/' . $name);
+                }
+            }
+            if (is_dir($directory)) {
+                rmdir($directory);
+            }
+        }
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function provideStoreRejectsUnsafeExplicitNameOnWindows(): iterable
+    {
+        yield 'trailing periods' => ['shell.php..'];
+
+        yield 'two trailing spaces' => ['shell.php  '];
+
+        yield 'NTFS stream' => ['shell.php:stream'];
     }
 
     public function testAlreadyMoved(): void
