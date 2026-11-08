@@ -123,4 +123,20 @@ final class CheckPhpIniTest extends CIUnitTestCase
             $output,
         );
     }
+
+    public function testRunWebEscapesHtml(): void
+    {
+        self::$iniGetAllReturn = [
+            'default_charset' => [
+                'global_value' => '<script>alert("xss")</script>',
+                'local_value'  => '<img src=x onerror=alert(1)>',
+            ],
+        ];
+
+        $output = CheckPhpIni::run(false);
+
+        $this->assertStringNotContainsString('<script>alert("xss")</script>', $output);
+        $this->assertStringNotContainsString('<img src=x onerror=alert(1)>', $output);
+        $this->assertStringContainsString('&lt;script&gt;alert(&quot;xss&quot;)&lt;/script&gt;', $output);
+    }
 }

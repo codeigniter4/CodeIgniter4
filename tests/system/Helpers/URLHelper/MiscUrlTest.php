@@ -126,6 +126,41 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->assertSame(site_url('/'), previous_url());
     }
 
+    #[Group('SeparateProcess')]
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testPreviousURLRejectsProtocolRelativeReferer(): void
+    {
+        $untrustedUri = '//evil.com/phishing';
+
+        service('superglobals')->setServer('HTTP_REFERER', $untrustedUri);
+
+        $this->config->baseURL = 'http://example.com/public';
+
+        $uri = 'http://example.com/public';
+        $this->createRequest($uri);
+
+        $this->assertSame(site_url('/'), previous_url());
+    }
+
+    #[Group('SeparateProcess')]
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testPreviousURLAllowsConfiguredAllowedHostnames(): void
+    {
+        $allowedUri = 'http://sub.example.com/dashboard';
+
+        service('superglobals')->setServer('HTTP_REFERER', $allowedUri);
+
+        $this->config->baseURL          = 'http://example.com/public';
+        $this->config->allowedHostnames = ['sub.example.com'];
+
+        $uri = 'http://example.com/public';
+        $this->createRequest($uri);
+
+        $this->assertSame($allowedUri, previous_url());
+    }
+
     // Test index_page
 
     public function testIndexPage(): void

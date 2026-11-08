@@ -90,4 +90,38 @@ final class OrderTest extends CIUnitTestCase
         $this->assertStringNotContainsString("ORDER BY ' OR 1=1 -- ASC", $compiled);
         $this->assertStringContainsString('"' . "' OR 1=1 --" . '" ASC', $compiled);
     }
+
+    public function testOrderAllowsValidQuotedLiteral(): void
+    {
+        $builder = new BaseBuilder('user', $this->db);
+
+        $builder->orderBy("'active'", 'asc');
+
+        $expectedSQL = 'SELECT * FROM "user" ORDER BY \'active\' ASC';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    public function testOrderAllowsPositionalNumericLiteral(): void
+    {
+        $builder = new BaseBuilder('user', $this->db);
+
+        $builder->orderBy('1', 'desc');
+
+        $expectedSQL = 'SELECT * FROM "user" ORDER BY 1 DESC';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    public function testOrderProtectsIdentifierWithUnescapedInternalQuote(): void
+    {
+        $builder = new BaseBuilder('user', $this->db);
+
+        $builder->orderBy("'foo' OR 'bar'", 'asc');
+
+        $compiled = str_replace("\n", ' ', $builder->getCompiledSelect());
+
+        $this->assertStringNotContainsString("ORDER BY 'foo' OR 'bar' ASC", $compiled);
+        $this->assertStringContainsString('"' . "'foo' OR 'bar'" . '" ASC', $compiled);
+    }
 }

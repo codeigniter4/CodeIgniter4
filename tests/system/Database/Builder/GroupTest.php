@@ -468,4 +468,27 @@ final class GroupTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
+
+    public function testGroupByProtectsIdentifierWhenInputStartsWithQuote(): void
+    {
+        $builder = new BaseBuilder('user', $this->db);
+
+        $builder->select('name')->groupBy("' OR 1=1 --");
+
+        $compiled = str_replace("\n", ' ', $builder->getCompiledSelect());
+
+        $this->assertStringNotContainsString("GROUP BY ' OR 1=1 --", $compiled);
+        $this->assertStringContainsString('GROUP BY "' . "' OR 1=1 --" . '"', $compiled);
+    }
+
+    public function testGroupByAllowsValidQuotedLiteral(): void
+    {
+        $builder = new BaseBuilder('user', $this->db);
+
+        $builder->select('name')->groupBy("'category'");
+
+        $compiled = str_replace("\n", ' ', $builder->getCompiledSelect());
+
+        $this->assertSame('SELECT "name" FROM "user" GROUP BY \'category\'', $compiled);
+    }
 }
