@@ -88,7 +88,8 @@ class CheckPhpIni
         $tbody = [];
 
         foreach ($output as $directive => $values) {
-            $current        = $values['current'];
+            $current        = htmlspecialchars($values['current'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+            $directiveEsc   = htmlspecialchars($directive, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
             $notRecommended = false;
 
             if ($values['recommended'] !== '') {
@@ -96,7 +97,7 @@ class CheckPhpIni
                     $notRecommended = true;
                 }
 
-                if ($values['current'] === '') {
+                if ($current === '') {
                     $current = 'n/a';
                 }
 
@@ -106,21 +107,21 @@ class CheckPhpIni
             }
 
             $directive = $notRecommended
-                ? '<span style="color: red">' . $directive . '</span>'
-                : $directive;
+                ? '<span style="color: red">' . $directiveEsc . '</span>'
+                : $directiveEsc;
 
             $tbody[] = [
                 $directive,
-                $values['global'],
+                htmlspecialchars($values['global'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'),
                 $current,
-                $values['recommended'],
-                $values['remark'],
+                htmlspecialchars($values['recommended'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'),
+                htmlspecialchars($values['remark'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'),
             ];
         }
 
         $table = new Table();
         $table->setTemplate(['table_open' => '<table border="1" cellpadding="4" cellspacing="0">']);
-        $table->setHeading($thead);
+        $table->setHeading(array_map(static fn (string $th): string => htmlspecialchars($th, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), $thead));
 
         return '<pre>' . $table->generate($tbody) . '</pre>';
     }

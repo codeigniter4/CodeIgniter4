@@ -78,4 +78,16 @@ final class OrderTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
+
+    public function testOrderProtectsIdentifierWhenInputStartsWithQuote(): void
+    {
+        $builder = new BaseBuilder('user', $this->db);
+
+        $builder->orderBy("' OR 1=1 --", 'asc');
+
+        $compiled = str_replace("\n", ' ', $builder->getCompiledSelect());
+
+        $this->assertStringNotContainsString("ORDER BY ' OR 1=1 -- ASC", $compiled);
+        $this->assertStringContainsString('"' . "' OR 1=1 --" . '" ASC', $compiled);
+    }
 }
