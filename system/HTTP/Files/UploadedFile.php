@@ -165,7 +165,7 @@ class UploadedFile extends File implements UploadedFileInterface
             throw HTTPException::forMoveFailed(basename($this->path), $targetPath, $message);
         }
 
-        @chmod($destination, 0666 & ~umask());
+        @chmod($destination, 0644 & ~umask());
 
         // Success, so store our new information
         $this->path = $targetPath;
@@ -183,11 +183,13 @@ class UploadedFile extends File implements UploadedFileInterface
     protected function setPath(string $path): string
     {
         if (! is_dir($path)) {
-            mkdir($path, 0777, true);
+            mkdir($path, 0755, true);
             // create the index.html file
             if (! is_file($path . 'index.html')) {
                 $file = fopen($path . 'index.html', 'x+b');
-                fclose($file);
+                if (is_resource($file)) {
+                    fclose($file);
+                }
             }
         }
 
