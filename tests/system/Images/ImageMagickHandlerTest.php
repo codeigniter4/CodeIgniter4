@@ -408,6 +408,59 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
         $this->assertSame(IMAGETYPE_PNG, exif_imagetype($this->root . 'ci-logo.png'));
     }
 
+    public function testSaveWithoutExtension(): void
+    {
+        $this->handler->withFile($this->origin . 'ci-logo.jpeg');
+        $this->handler->resize(100, 100);
+        $target = $this->root . 'ci-logo-no-ext';
+        $this->handler->save($target);
+
+        $this->assertFileExists($target);
+        $this->assertSame(IMAGETYPE_JPEG, exif_imagetype($target));
+    }
+
+    public function testSaveWithUnsupportedExtension(): void
+    {
+        $this->handler->withFile($this->origin . 'ci-logo.jpeg');
+        $this->handler->resize(100, 100);
+        $target = $this->root . 'ci-logo.tmp';
+        $this->handler->save($target);
+
+        $this->assertFileExists($target);
+        $this->assertSame(IMAGETYPE_JPEG, exif_imagetype($target));
+    }
+
+    public function testSaveWithoutExtensionAfterConvert(): void
+    {
+        $this->handler->withFile($this->origin . 'ci-logo.jpeg');
+        $this->handler->convert(IMAGETYPE_PNG);
+        $target = $this->root . 'ci-logo-converted-no-ext';
+        $this->handler->save($target);
+
+        $this->assertFileExists($target);
+        $this->assertSame(IMAGETYPE_PNG, exif_imagetype($target));
+    }
+
+    public function testSaveWithUnsupportedExtensionAfterConvert(): void
+    {
+        $this->handler->withFile($this->origin . 'ci-logo.jpeg');
+        $this->handler->convert(IMAGETYPE_PNG);
+        $target = $this->root . 'ci-logo-converted.unsupported';
+        $this->handler->save($target);
+
+        $this->assertFileExists($target);
+        $this->assertSame(IMAGETYPE_PNG, exif_imagetype($target));
+    }
+
+    public function testSaveFailedThrowsImageException(): void
+    {
+        $this->expectException(ImageException::class);
+        $this->expectExceptionMessage('Unable to save the image. Please make sure the image and file directory are writable.');
+
+        $this->handler->withFile($this->origin . 'ci-logo.jpeg');
+        $this->handler->save('/non_existent_directory_xyz/ci-logo.jpg');
+    }
+
     public function testImageReorientLandscape(): void
     {
         for ($i = 0; $i <= 8; $i++) {
