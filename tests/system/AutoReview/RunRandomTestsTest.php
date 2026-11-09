@@ -29,15 +29,23 @@ use RecursiveIteratorIterator;
 final class RunRandomTestsTest extends TestCase
 {
     private string $project;
+    private string $timeoutCommand;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        if (PHP_OS_FAMILY === 'Windows') {
+        if (is_windows()) {
             $this->markTestSkipped('The random test runner requires Bash and GNU coreutils.');
         }
 
+        exec('command -v timeout || command -v gtimeout', $output, $exitCode);
+
+        if ($exitCode !== 0) {
+            $this->markTestSkipped('The random test runner test requires timeout or gtimeout.');
+        }
+
+        $this->timeoutCommand = $output[0];
         $this->project = sys_get_temp_dir() . '/ci4-random-tests-' . bin2hex(random_bytes(4));
 
         foreach (['.github/scripts', 'vendor/bin', 'tests/system/First', 'tests/system/Second'] as $directory) {
@@ -78,7 +86,8 @@ final class RunRandomTestsTest extends TestCase
     {
         // Bound the command so a scheduler regression fails instead of hanging PHPUnit.
         exec(sprintf(
-            'GITHUB_ACTIONS=true timeout --kill-after=1s 5s bash %s --max-jobs %d --repeat 2 --timeout 0 2>&1',
+            '%s --kill-after=1s 5s bash %s --max-jobs %d --repeat 2 --timeout 0 2>&1',
+            escapeshellarg($this->timeoutCommand),
             escapeshellarg($this->project . '/.github/scripts/run-random-tests.sh'),
             $maxJobs,
         ), $output, $exitCode);
