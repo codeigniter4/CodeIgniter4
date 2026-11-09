@@ -63,9 +63,10 @@ return [
     'disallowedAction' => 'The action you requested is not allowed.',
 
     // Uploaded file moving
-    'alreadyMoved' => 'The uploaded file has already been moved.',
-    'invalidFile'  => 'The original file is not a valid file.',
-    'moveFailed'   => 'Could not move file "{0}" to "{1}". Reason: {2}',
+    'alreadyMoved'    => 'The uploaded file has already been moved.',
+    'invalidFile'     => 'The original file is not a valid file.',
+    'invalidFileName' => 'The uploaded filename is invalid.',
+    'moveFailed'      => 'Could not move file "{0}" to "{1}". Reason: {2}',
 
     'uploadErrOk'        => 'The file uploaded with success.',
     'uploadErrIniSize'   => 'The file "%s" exceeds your upload_max_filesize ini directive.',
