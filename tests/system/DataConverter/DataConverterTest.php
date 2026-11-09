@@ -797,6 +797,35 @@ final class DataConverterTest extends CIUnitTestCase
         $this->assertInstanceOf(Time::class, $obj->updated_at);
     }
 
+    public function testReconstructPlainObject(): void
+    {
+        $types = [
+            'id'     => 'int',
+            'status' => 'int',
+        ];
+        $converter = $this->createDataConverter($types, [], null, null);
+
+        $plainClass = new class () {
+            public int $id;
+            public int $status;
+            public string $name;
+        };
+
+        $dbData = [
+            'id'     => '123',
+            'status' => '1',
+            'name'   => 'Alice',
+        ];
+
+        /** @var object{id: int, status: int, name: string} $obj */
+        $obj = $converter->reconstruct($plainClass::class, $dbData);
+
+        $this->assertInstanceOf($plainClass::class, $obj);
+        $this->assertSame(123, $obj->id);
+        $this->assertSame(1, $obj->status);
+        $this->assertSame('Alice', $obj->name);
+    }
+
     public function testExtract(): void
     {
         $types = [

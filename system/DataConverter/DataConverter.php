@@ -141,13 +141,13 @@ final readonly class DataConverter
             return $classObj;
         }
 
-        $classSet = Closure::bind(function ($key, $value): void {
-            $this->{$key} = $value;
+        $classSet = Closure::bind(function (array $data): void {
+            foreach ($data as $key => $value) {
+                $this->{$key} = $value;
+            }
         }, $classObj, $classname);
 
-        foreach ($phpData as $key => $value) {
-            $classSet($key, $value);
-        }
+        $classSet($phpData);
 
         return $classObj;
     }
