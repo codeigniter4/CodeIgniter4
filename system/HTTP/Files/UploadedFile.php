@@ -119,7 +119,8 @@ class UploadedFile extends File implements UploadedFileInterface
      *                                untrusted input: a value containing "../" can move the file outside the intended
      *                                directory. Use a path controlled by your application.
      * @param string|null $name       The name to rename the file to. When null, the client-provided name is used and sanitized.
-     *                                A caller-supplied name is NOT sanitized.
+     *                                A caller-supplied name is NOT sanitized. On Windows, names that may resolve to a
+     *                                different file or an NTFS stream are rejected in either case.
      * @param bool        $overwrite  State for indicating whether to overwrite the previously generated file with the same
      *                                name or not.
      *
@@ -141,6 +142,11 @@ class UploadedFile extends File implements UploadedFileInterface
         if ($name === null) {
             helper('security');
             $name = sanitize_filename($this->getName());
+        }
+
+        // Windows may store these names under a different filename or in an NTFS stream.
+        if (is_windows() && (rtrim($name, '. ') !== $name || str_contains($name, ':'))) {
+            throw HTTPException::forInvalidFileName();
         }
         $destination = $overwrite ? $targetPath . $name : $this->getDestination($targetPath . $name);
 
@@ -353,6 +359,7 @@ class UploadedFile extends File implements UploadedFileInterface
      *                                it from untrusted input: a value containing "../" can move the file outside the
      *                                uploads directory.
      * @param string|null $fileName   the name to rename the file to. A caller-supplied name is NOT sanitized.
+     *                                On Windows, names that may resolve to a different file or an NTFS stream are rejected.
      *
      * @return string file full path
      */

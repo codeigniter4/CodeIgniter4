@@ -32,6 +32,7 @@ You can find more information on those methods in [Using CodeIgniter's Model](..
 
 Path: **application/models**:
 
+<!-- lint-ignore -->
 ```php
 <?php
 

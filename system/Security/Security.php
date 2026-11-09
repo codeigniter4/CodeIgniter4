@@ -99,7 +99,8 @@ class Security implements SecurityInterface
             $this->configureSession();
         }
 
-        $this->hashInCookie = service('request')->getCookie($this->cookieName);
+        $hashInCookie       = service('request')->getCookie($this->cookieName);
+        $this->hashInCookie = is_string($hashInCookie) ? $hashInCookie : null;
 
         $this->restoreHash();
 

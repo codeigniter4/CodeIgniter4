@@ -30,6 +30,8 @@ final class SecurityHelperTest extends CIUnitTestCase
     {
         parent::setUp();
 
+        $this->resetServices();
+
         helper('security');
     }
 

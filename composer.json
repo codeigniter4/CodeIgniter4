@@ -17,7 +17,7 @@
         "psr/log": "^3.0"
     },
     "require-dev": {
-        "boundwize/structarmed": "^0.20",
+        "boundwize/structarmed": "^0.21",
         "codeigniter/phpstan-codeigniter": "^2.1",
         "fakerphp/faker": "^1.24",
         "kint-php/kint": "^6.1",
@@ -104,13 +104,15 @@
             "Composer\\Config::disableProcessTimeout",
             "utils/vendor/bin/php-cs-fixer check --ansi --verbose --diff --config=.php-cs-fixer.no-header.php",
             "utils/vendor/bin/php-cs-fixer check --ansi --verbose --diff --config=.php-cs-fixer.tests.php",
-            "utils/vendor/bin/php-cs-fixer check --ansi --verbose --diff"
+            "utils/vendor/bin/php-cs-fixer check --ansi --verbose --diff",
+            "@php admin/lint-docs-samples.php"
         ],
         "cs-fix": [
             "Composer\\Config::disableProcessTimeout",
             "utils/vendor/bin/php-cs-fixer fix --ansi --verbose --diff --config=.php-cs-fixer.no-header.php",
             "utils/vendor/bin/php-cs-fixer fix --ansi --verbose --diff --config=.php-cs-fixer.tests.php",
-            "utils/vendor/bin/php-cs-fixer fix --ansi --verbose --diff"
+            "utils/vendor/bin/php-cs-fixer fix --ansi --verbose --diff",
+            "@php admin/lint-docs-samples.php --fix"
         ],
         "phpstan:baseline": [
             "phpstan analyse --ansi --generate-baseline=utils/phpstan-baseline/loader.neon",

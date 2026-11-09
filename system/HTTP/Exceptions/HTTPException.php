@@ -209,6 +209,14 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 
     /**
      * For Uploaded file move
+     */
+    public static function forInvalidFileName(): static
+    {
+        return new static(lang('HTTP.invalidFileName'));
+    }
+
+    /**
+     * For Uploaded file move
      *
      * @return HTTPException
      */

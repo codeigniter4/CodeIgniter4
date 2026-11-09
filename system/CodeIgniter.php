@@ -196,6 +196,10 @@ class CodeIgniter
         $this->totalTime = 0;
 
         $this->resetKintForWorkerMode();
+
+        if (Services::has('exceptions')) {
+            Services::exceptions()->resetForWorkerMode();
+        }
     }
 
     /**

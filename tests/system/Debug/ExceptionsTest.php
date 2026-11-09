@@ -104,4 +104,17 @@ final class ExceptionsTest extends CIUnitTestCase
         $this->assertSame([500, EXIT_DATABASE], $determineCodes(new DatabaseException('This.')));
         $this->assertSame([403, EXIT_CONFIG], $determineCodes(HoneypotException::isBot()));
     }
+
+    public function testResetForWorkerModeClearsPreviousRequestState(): void
+    {
+        $this->setPrivateProperty($this->exception, 'exceptionCaughtByExceptionHandler', new RuntimeException('Previous request'));
+        $this->setPrivateProperty($this->exception, 'request', service('request'));
+        $this->setPrivateProperty($this->exception, 'response', service('response'));
+
+        $this->exception->resetForWorkerMode();
+
+        $this->assertNull($this->getPrivateProperty($this->exception, 'exceptionCaughtByExceptionHandler'));
+        $this->assertNull($this->getPrivateProperty($this->exception, 'request'));
+        $this->assertNull($this->getPrivateProperty($this->exception, 'response'));
+    }
 }

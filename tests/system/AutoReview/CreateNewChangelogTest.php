@@ -120,6 +120,7 @@ final class CreateNewChangelogTest extends TestCase
             );
         } finally {
             exec("git restore -- {$trackedPathArgs}");
+            exec("git restore -- {$generatedPathArgs} 2>/dev/null");
             exec("git clean -f -- {$generatedPathArgs}");
         }
     }

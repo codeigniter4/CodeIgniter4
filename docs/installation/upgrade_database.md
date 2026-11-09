@@ -38,6 +38,7 @@
 
 ### CodeIgniter Version 3.x
 
+<!-- lint-ignore -->
 ```php
 <?php
 

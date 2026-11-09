@@ -28,7 +28,7 @@ Files
 Filters
 Format
 HTTP
-# Helpers
+Helpers
 Honeypot
 HotReloader
 # I18n

@@ -18,6 +18,7 @@ use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Debug\Timer;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -1326,6 +1327,23 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertNull(RichRenderer::$js_nonce);
         $this->assertNull(RichRenderer::$css_nonce);
         $this->assertTrue(RichRenderer::$needs_pre_render);
+    }
+
+    public function testResetForWorkerModeClearsExceptionsState(): void
+    {
+        $this->resetServices();
+
+        $exceptions = Services::exceptions();
+        $this->setPrivateProperty($exceptions, 'exceptionCaughtByExceptionHandler', new RuntimeException('Previous request'));
+        $this->setPrivateProperty($exceptions, 'request', service('request'));
+        $this->setPrivateProperty($exceptions, 'response', service('response'));
+
+        $codeigniter = new MockCodeIgniter(new App());
+        $codeigniter->resetForWorkerMode();
+
+        $this->assertNull($this->getPrivateProperty($exceptions, 'exceptionCaughtByExceptionHandler'));
+        $this->assertNull($this->getPrivateProperty($exceptions, 'request'));
+        $this->assertNull($this->getPrivateProperty($exceptions, 'response'));
     }
 
     public function testGatherOutputCalledOnceWhenControllerReturnsResponse(): void

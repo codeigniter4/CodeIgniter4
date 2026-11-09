@@ -41,14 +41,14 @@ class Exceptions
     /**
      * The request.
      *
-     * @var CLIRequest|IncomingRequest
+     * @var CLIRequest|IncomingRequest|null
      */
     protected $request;
 
     /**
      * The outgoing response.
      *
-     * @var ResponseInterface
+     * @var ResponseInterface|null
      */
     protected $response;
 
@@ -117,6 +117,18 @@ class Exceptions
 
         $handler = $this->config->handler($statusCode, $exception);
         $handler->handle($exception, $this->request, $this->response, $statusCode, $exitCode);
+    }
+
+    /**
+     * Clears the state of the previous request in worker mode.
+     *
+     * @internal
+     */
+    public function resetForWorkerMode(): void
+    {
+        $this->exceptionCaughtByExceptionHandler = null;
+        $this->request                           = null;
+        $this->response                          = null;
     }
 
     /**

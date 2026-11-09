@@ -638,4 +638,17 @@ final class SecurityTest extends CIUnitTestCase
 
         yield 'invalid_form_data' => [self::createIncomingRequest()->setBody('csrf_test_name[]=invalid')];
     }
+
+    public function testConstructorHandlesArrayCookieWithoutTypeError(): void
+    {
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'GET')
+            ->setCookie('csrf_cookie_name', ['malicious' => 'array']);
+
+        $config   = new SecurityConfig();
+        $security = new Security($config);
+
+        $this->assertIsString($security->getHash());
+        $this->assertSame(32, strlen($security->getHash()));
+    }
 }

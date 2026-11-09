@@ -15,6 +15,7 @@ namespace CodeIgniter\Debug;
 
 use Closure;
 use CodeIgniter\API\ResponseTrait;
+use CodeIgniter\Boot;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\CLIRequest;
@@ -92,8 +93,10 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
 
                 $this->respond($data, $statusCode)->send();
 
-                if (! service('environment')->isTesting()) {
-                    exit($exitCode); // @codeCoverageIgnore
+                if ($this->shouldExit()) {
+                    // @codeCoverageIgnoreStart
+                    exit($exitCode);
+                    // @codeCoverageIgnoreEnd
                 }
 
                 return;
@@ -125,9 +128,22 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
             CLI::redirectToStderr(fn () => $this->render($exception, $statusCode, $viewFile));
         }
 
-        if (! service('environment')->isTesting()) {
-            exit($exitCode); // @codeCoverageIgnore
+        if ($this->shouldExit()) {
+            // @codeCoverageIgnoreStart
+            exit($exitCode);
+            // @codeCoverageIgnoreEnd
         }
+    }
+
+    /**
+     * Whether to end the script after the error is displayed.
+     *
+     * In worker mode, the worker loop must keep running, so the
+     * handler returns and the worker cleans up after the request.
+     */
+    private function shouldExit(): bool
+    {
+        return ! service('environment')->isTesting() && ! Boot::isWorkerMode();
     }
 
     /**
