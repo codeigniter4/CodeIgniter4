@@ -211,7 +211,7 @@ final class FileMovingTest extends CIUnitTestCase
         $file = (new FileCollection())->getFile('userfile');
         $this->assertInstanceOf(UploadedFile::class, $file);
 
-        $this->assertTrue($file->move($this->destination));
+        $this->assertSame($file, $file->move($this->destination));
         $this->assertSame($clientName, $file->getName());
         $this->assertTrue($this->root->hasChild('destination/' . $clientName));
     }
@@ -245,7 +245,7 @@ final class FileMovingTest extends CIUnitTestCase
         $file = (new FileCollection())->getFile('userfile');
         $this->assertInstanceOf(UploadedFile::class, $file);
 
-        $this->assertTrue($file->move($this->destination));
+        $this->assertSame($file, $file->move($this->destination));
         $this->assertSame('my file.v1..final.txt', $file->getName());
         $this->assertTrue($this->root->hasChild('destination/my file.v1..final.txt'));
     }
@@ -267,7 +267,7 @@ final class FileMovingTest extends CIUnitTestCase
         $file = (new FileCollection())->getFile('userfile');
         $this->assertInstanceOf(UploadedFile::class, $file);
 
-        $this->assertTrue($file->move($this->destination, 'avatar.txt'));
+        $this->assertSame($file, $file->move($this->destination, 'avatar.txt'));
         $this->assertSame('avatar.txt', $file->getName());
     }
 
