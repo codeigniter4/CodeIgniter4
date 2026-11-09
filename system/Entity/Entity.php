@@ -127,7 +127,7 @@ class Entity implements JsonSerializable
     protected ?DataCaster $dataCaster = null;
 
     /**
-     * Merge the input data (from the Database) with the initial attributes.
+     * Merge the raw input data with the initial attributes.
      */
     protected bool $mergeAttributesOnInject = false;
 
