@@ -46,7 +46,7 @@ final class RunRandomTestsTest extends TestCase
         }
 
         $this->timeoutCommand = $output[0];
-        $this->project = sys_get_temp_dir() . '/ci4-random-tests-' . bin2hex(random_bytes(4));
+        $this->project        = sys_get_temp_dir() . '/ci4-random-tests-' . bin2hex(random_bytes(4));
 
         foreach (['.github/scripts', 'vendor/bin', 'tests/system/First', 'tests/system/Second'] as $directory) {
             mkdir($this->project . '/' . $directory, 0777, true);
