@@ -99,7 +99,22 @@ if (! function_exists('previous_url')) {
         }
 
         // Otherwise, grab a sanitized version from $_SERVER.
-        $referer ??= request()->getServer('HTTP_REFERER', FILTER_SANITIZE_URL) ?? site_url('/');
+        if (empty($referer)) {
+            $referer = request()->getServer('HTTP_REFERER', FILTER_SANITIZE_URL);
+
+            if ($referer !== null && $referer !== false && $referer !== '') {
+                $host         = parse_url($referer, PHP_URL_HOST);
+                $config       = config(App::class);
+                $baseHost     = parse_url($config->baseURL, PHP_URL_HOST);
+                $allowedHosts = array_filter(array_merge([$baseHost], $config->allowedHostnames ?? []));
+
+                if ($host === null || ! in_array(strtolower($host), array_map('strtolower', $allowedHosts), true)) {
+                    $referer = site_url('/');
+                }
+            } else {
+                $referer = site_url('/');
+            }
+        }
 
         return $returnObject ? new URI($referer) : $referer;
     }
