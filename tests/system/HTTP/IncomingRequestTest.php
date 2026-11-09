@@ -1340,5 +1340,49 @@ final class IncomingRequestTest extends CIUnitTestCase
         $request->getIPAddress();
     }
 
+    public function testGetIPAddressThruProxyIgnoresSpoofedIPInChain(): void
+    {
+        $realClientIP = '203.0.113.195';
+        $spoofedIP    = '1.1.1.1';
+
+        // When behind a reverse proxy that appends the client IP,
+        // a forged header will appear before the real client IP.
+        service('superglobals')
+            ->setServer('HTTP_X_FORWARDED_FOR', $spoofedIP . ', ' . $realClientIP)
+            ->setServer('REMOTE_ADDR', '10.0.1.200');
+
+        $config           = new App();
+        $config->proxyIPs = ['10.0.1.200' => 'X-Forwarded-For'];
+        Factories::injectMock('config', App::class, $config);
+
+        $request = new Request();
+        $request->populateHeaders();
+
+        $this->assertSame($realClientIP, $request->getIPAddress());
+    }
+
+    public function testGetIPAddressThruMultipleTrustedProxiesInChain(): void
+    {
+        $realClientIP        = '203.0.113.195';
+        $intermediateProxyIP = '192.168.1.1';
+        $spoofedIP           = '1.1.1.1';
+
+        service('superglobals')
+            ->setServer('HTTP_X_FORWARDED_FOR', $spoofedIP . ', ' . $realClientIP . ', ' . $intermediateProxyIP)
+            ->setServer('REMOTE_ADDR', '10.0.1.200');
+
+        $config           = new App();
+        $config->proxyIPs = [
+            '10.0.1.200'  => 'X-Forwarded-For',
+            '192.168.1.1' => 'X-Forwarded-For',
+        ];
+        Factories::injectMock('config', App::class, $config);
+
+        $request = new Request();
+        $request->populateHeaders();
+
+        $this->assertSame($realClientIP, $request->getIPAddress());
+    }
+
     // @TODO getIPAddress should have more testing, to 100% code coverage
 }

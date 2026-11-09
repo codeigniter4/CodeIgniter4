@@ -113,23 +113,54 @@ trait RequestTrait
             new FormatRules(),
             'valid_ip',
         ];
-        $spoof     = null;
         $headerObj = $this->header($header);
 
-        if ($headerObj !== null) {
-            $spoof = $headerObj->getValue();
+        if ($headerObj === null) {
+            return null;
+        }
 
-            // Some proxies typically list the whole chain of IP
-            // addresses through which the client has reached us.
-            // e.g. client_ip, proxy_ip1, proxy_ip2, etc.
-            sscanf($spoof, '%[^,]', $spoof);
+        $rawHeader = $headerObj->getValue();
 
-            if (! $ipValidator($spoof)) {
-                $spoof = null;
+        if (! is_string($rawHeader) || $rawHeader === '') {
+            return null;
+        }
+
+        $ips = array_map('trim', explode(',', $rawHeader));
+
+        // Traverse the proxy chain from right to left (most recent proxy to earliest).
+        // Skip any intermediate proxies that are in the trusted proxy list.
+        // The first untrusted IP from the right is the actual client IP.
+        $proxyIPs = $this->config->proxyIPs ?? [];
+
+        for ($i = count($ips) - 1; $i >= 0; $i--) {
+            $ip = $ips[$i];
+
+            if (! $ipValidator($ip)) {
+                continue;
+            }
+
+            $isTrusted = false;
+
+            foreach (array_keys($proxyIPs) as $proxyIP) {
+                if ($this->checkIPAgainstProxy($ip, (string) $proxyIP)) {
+                    $isTrusted = true;
+                    break;
+                }
+            }
+
+            if (! $isTrusted) {
+                return $ip;
             }
         }
 
-        return $spoof;
+        // If all IPs in the chain matched trusted proxies, return the earliest valid IP.
+        foreach ($ips as $ip) {
+            if ($ipValidator($ip)) {
+                return $ip;
+            }
+        }
+
+        return null;
     }
 
     /**
