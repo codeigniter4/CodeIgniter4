@@ -785,56 +785,68 @@ For objects and arrays, the Entity JSON-encodes and normalizes the values for co
 
 !!! success "Available from version 4.8.0"
 
-By default, your entity can contain the initial state of the attributes. When working with objects, you can rely on the fact that all the necessary properties are available. However, after receiving the object from the database, you may find that the entity is not complete and some properties are missing.
+Your entity can have the initial state and contains all the necessary keys in the `$attributes`. When working with objects, you can rely on the fact that all properties are available. However, attributes missing from the query result are dropped, so reading them later fails or returns `null`.
 
-Suppose there is no `isBanned` field in the table, and the `profile` property is virtual and filled in another way.
+Suppose there is no `isBanned` field in the table and the `profile` property is virtual and filled in another way.
 
-With the `$mergeAttributesOnInject = false` you will get errors because by default properties are overwritten in `injectRawData()`.
+By default, with the `$mergeAttributesOnInject = false` you will get errors because by initialized properties are overwritten in `injectRawData()`.
 
 ```php
 <?php
 class User extends Entity {
     protected $attributes = [
-        'id' => null,
-        'role' => 'user',
+        'id'       => null,
+        'role'     => 'user',
         'isBanned' => '0',
-        'profile' => null,
+        'profile'  => null,
     ];
     public function __construct(?array $data = null)
     {
         parent::__construct($data);
-        $this->attributes['profile'] = new Profile();
+        $this->attributes['profile'] = new \stdClass();
     }
 }
 
 // Manual user creation
 $user = new User([...]);
 
-// The values are exactly there
-echo $user->isBanned;                        // '0'
-echo $user->toArray()['isBanned'];           // '0'
-var_dump($user->profile instanceof Profile); // true
+// The initial values are exactly there
+var_dump(
+    $user->isBanned,                    // '0'
+    $user->toArray()['isBanned'],       // '0'
+    $user->profile instanceof \stdClass // true
+);
 
-// Getting the user from the database
-$user2 = model(UserModel::class)->find(1);
+// The result does not contain these values: "isBanned", "profile"
+$user2 = model(UserModel::class)->find(10);
+// or manually
+$user2 = (new User())->injectRawData([
+    'id'   => 10,
+    'role' => 'user',
+]);
 
-// The values will be empty
-echo $user2->isBanned;                        // null
-echo $user2->toArray()['isBanned'];           // Undefined
-var_dump($user2->profile instanceof Profile); // false
+var_dump(
+    $user2->isBanned,                                // null
+    array_key_exists('isBanned', $user2->toArray()), // false
+    $user2->profile instanceof \stdClass             // false
+);
 ```
 
-To change the behavior, toggle the `$mergeAttributesOnInject = true` flag. As a result, you will get the expected list of attributes.
+Setting the `$mergeAttributesOnInject = true` flag changes the behavior — it keeps the defaults from `$attributes`.
 
+<!-- lint-ignore -->
 ```php
 <?php
+$user = (new User())->injectRawData([
+    'id'   => 15,
+    'role' => 'user',
+]);
 
-// Getting the user from the database
-$user2 = model(UserModel::class)->find(1);
-
-echo $user2->isBanned;                        // '0'
-echo $user2->toArray()['isBanned'];           // '0'
-var_dump($user2->profile instanceof Profile); // true
+var_dump(
+    $user->isBanned,                    // '0'
+    $user->toArray()['isBanned'],       // '0'
+    $user->profile instanceof \stdClass // true
+);
 ```
 
 !!! note "Note"
