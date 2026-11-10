@@ -717,8 +717,12 @@ if (! function_exists('excerpt')) {
         if (isset($phrase)) {
             $phrasePosition = mb_stripos($text, $phrase);
             $phraseLength   = mb_strlen($phrase);
+
+            if ($phrasePosition === false) {
+                return excerpt($text, null, $radius, $ellipsis);
+            }
         } else {
-            $phrasePosition = $radius / 2;
+            $phrasePosition = (int) ($radius / 2);
             $phraseLength   = 1;
         }
 
