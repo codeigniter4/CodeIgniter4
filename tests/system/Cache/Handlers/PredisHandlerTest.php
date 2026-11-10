@@ -162,6 +162,23 @@ final class PredisHandlerTest extends AbstractHandlerTestCase
         $this->assertSame(0, $this->handler->deleteMatching('user_1_info*'));
     }
 
+    public function testIncrementAndDecrement(): void
+    {
+        $this->handler->save('counter', 100);
+
+        foreach (range(1, 10) as $step) {
+            $this->handler->increment('counter', $step);
+        }
+
+        $this->assertSame(155, $this->handler->get('counter'));
+
+        $this->handler->decrement('counter', 20);
+        $this->assertSame(135, $this->handler->get('counter'));
+
+        $this->handler->increment('counter', 5);
+        $this->assertSame(140, $this->handler->get('counter'));
+    }
+
     public function testClean(): void
     {
         $this->handler->save(self::$key1, 1);
