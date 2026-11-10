@@ -144,10 +144,6 @@ public function handle($level, $message, array $context = []): bool
 
 The context array may contain the CI global context data under the `HandlerInterface::GLOBAL_CONTEXT_KEY` (`'_ci_context'`) key when `$logGlobalContext` is enabled in `Config\Logger`.
 
-### Entity
-
-If you redefine the Entity base class or modify the `injectRawData()` method, you need to add a new `$mergeAttributesOnInject` property. See [Merging Attributes During Injection](../models/entities.md#merging-attributes-during-injection).
-
 ## Project Files
 
 Some files in the **project space** (root, app, public, writable) received updates. Due to these files being outside of the **system** scope they will not be changed without your intervention.
