@@ -22,6 +22,8 @@ use Config\Database;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
+use Tests\Support\Entity\Member;
+use Tests\Support\Entity\MemberStrict;
 use Tests\Support\Entity\User;
 use Tests\Support\Entity\UUID;
 use Tests\Support\Models\EventModel;
@@ -678,6 +680,133 @@ final class UpdateModelTest extends LiveModelTestCase
 
         $this->assertTrue($result);
         $this->assertNotSame($updateAtBefore, $updateAtAfter);
+    }
+
+    /**
+     * @param array<string, mixed> $selectedMember
+     * @param array<string, mixed> $updatedMember
+     */
+    #[DataProvider('provideUpdateOnlyChangedAndMergeAttributesOnInjectFlags')]
+    public function testUpdateOnlyChangedAndMergeAttributesOnInjectFlags(UserModel $model, array $selectedMember, array $updatedMember): void
+    {
+        $member = $model->select('`id`, `name`, \'new property\' as `virtual`')->withDeleted()->find(1);
+        $this->assertInstanceOf(Member::class, $member);
+        $this->assertSame($selectedMember, $member->toRawArray());
+
+        $this->assertSame('new property', $member->virtual);
+
+        $member->name = 'Truman Burbank';
+        $result       = $model->update(1, $member);
+
+        $this->assertTrue($result);
+
+        $memberSilentOverwrite = $model->withDeleted()->find(1);
+
+        $this->assertSame($updatedMember, $memberSilentOverwrite->toRawArray());
+    }
+
+    /**
+     * @return iterable<string, array{0: UserModel, 1: array<string, mixed>, 2: array<string, mixed>}>
+     */
+    public static function provideUpdateOnlyChangedAndMergeAttributesOnInjectFlags(): iterable
+    {
+        yield 'updateOnlyChanged=true and mergeAttributesOnInject=false' => [
+            new class () extends UserModel {
+                protected $returnType             = Member::class;
+                protected bool $updateOnlyChanged = true;
+            },
+            [
+                'id'      => 1,
+                'name'    => 'Derek Jones',
+                'virtual' => 'new property',
+            ],
+            [
+                'id'         => 1,
+                'name'       => 'Truman Burbank',
+                'email'      => 'derek@world.com',
+                'country'    => 'US',
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+        ];
+
+        yield 'updateOnlyChanged=true and mergeAttributesOnInject=true' => [
+            new class () extends UserModel {
+                protected $returnType             = MemberStrict::class;
+                protected bool $updateOnlyChanged = true;
+            },
+            [
+                'id'         => 1,
+                'name'       => 'Derek Jones',
+                'email'      => 'unknown',
+                'country'    => 'unknown',
+                'created_at' => 'unknown',
+                'updated_at' => 'unknown',
+                'deleted_at' => 'unknown',
+                'profile'    => 'profile',
+                'virtual'    => 'new property',
+            ],
+            [
+                'id'         => 1,
+                'name'       => 'Truman Burbank',
+                'email'      => 'derek@world.com',
+                'country'    => 'US',
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'profile'    => 'profile',
+            ],
+        ];
+
+        yield 'updateOnlyChanged=false and mergeAttributesOnInject=false' => [
+            new class () extends UserModel {
+                protected $returnType             = Member::class;
+                protected bool $updateOnlyChanged = false;
+            },
+            [
+                'id'      => 1,
+                'name'    => 'Derek Jones',
+                'virtual' => 'new property',
+            ],
+            [
+                'id'         => 1,
+                'name'       => 'Truman Burbank',
+                'email'      => 'derek@world.com',
+                'country'    => 'US',
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+            ],
+        ];
+
+        yield 'updateOnlyChanged=false and mergeAttributesOnInject=true' => [
+            new class () extends UserModel {
+                protected $returnType             = MemberStrict::class;
+                protected bool $updateOnlyChanged = false;
+            },
+            [
+                'id'         => 1,
+                'name'       => 'Derek Jones',
+                'email'      => 'unknown',
+                'country'    => 'unknown',
+                'created_at' => 'unknown',
+                'updated_at' => 'unknown',
+                'deleted_at' => 'unknown',
+                'profile'    => 'profile',
+                'virtual'    => 'new property',
+            ],
+            [
+                'id'         => 1,
+                'name'       => 'Truman Burbank',
+                'email'      => 'unknown',
+                'country'    => 'unknown',
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => 'unknown',
+                'profile'    => 'profile',
+            ],
+        ];
     }
 
     public function testUpdateBatchWithCasts(): void
