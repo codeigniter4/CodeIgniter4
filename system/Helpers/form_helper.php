@@ -295,14 +295,14 @@ if (! function_exists('form_dropdown')) {
         if ($selected === []) {
             $superglobals = service('superglobals');
             if (is_array($data)) {
-                $postValue = $superglobals->post($data['name'] ?? '');
+                $postValue = $superglobals->post(preg_replace('/\[\]$/', '', $data['name'] ?? ''));
                 if (isset($data['name']) && $postValue !== null) {
-                    $selected = [$postValue];
+                    $selected = is_array($postValue) ? $postValue : [$postValue];
                 }
             } else {
-                $postValue = $superglobals->post($data);
+                $postValue = $superglobals->post(preg_replace('/\[\]$/', '', $data));
                 if ($postValue !== null) {
-                    $selected = [$postValue];
+                    $selected = is_array($postValue) ? $postValue : [$postValue];
                 }
             }
         }
