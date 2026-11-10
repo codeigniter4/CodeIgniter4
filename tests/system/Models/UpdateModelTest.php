@@ -689,7 +689,10 @@ final class UpdateModelTest extends LiveModelTestCase
     #[DataProvider('provideUpdateOnlyChangedAndMergeAttributesOnInjectFlags')]
     public function testUpdateOnlyChangedAndMergeAttributesOnInjectFlags(UserModel $model, array $selectedMember, array $updatedMember): void
     {
-        $member = $model->select('`id`, `name`, \'new property\' as `virtual`')->withDeleted()->find(1);
+        $member = $model->select('id, name')
+            ->select('\'new property\' AS ' . $model->db->escapeIdentifier('virtual'), false)
+            ->withDeleted()->find(1);
+
         $this->assertInstanceOf(Member::class, $member);
         $this->assertSame($selectedMember, $member->toRawArray());
 
@@ -699,7 +702,6 @@ final class UpdateModelTest extends LiveModelTestCase
         $result       = $model->update(1, $member);
 
         $this->assertTrue($result);
-
         $memberSilentOverwrite = $model->withDeleted()->find(1);
 
         $this->assertSame($updatedMember, $memberSilentOverwrite->toRawArray());
@@ -714,6 +716,9 @@ final class UpdateModelTest extends LiveModelTestCase
             new class () extends UserModel {
                 protected $returnType             = Member::class;
                 protected bool $updateOnlyChanged = true;
+                protected array $casts            = [
+                    'id' => '?int',
+                ];
             },
             [
                 'id'      => 1,
@@ -735,15 +740,18 @@ final class UpdateModelTest extends LiveModelTestCase
             new class () extends UserModel {
                 protected $returnType             = MemberStrict::class;
                 protected bool $updateOnlyChanged = true;
+                protected array $casts            = [
+                    'id' => '?int',
+                ];
             },
             [
                 'id'         => 1,
                 'name'       => 'Derek Jones',
                 'email'      => 'unknown',
                 'country'    => 'unknown',
-                'created_at' => 'unknown',
-                'updated_at' => 'unknown',
-                'deleted_at' => 'unknown',
+                'created_at' => '2026-11-10 14:50:00',
+                'updated_at' => '2026-11-10 14:50:00',
+                'deleted_at' => '2026-11-10 14:50:00',
                 'profile'    => 'profile',
                 'virtual'    => 'new property',
             ],
@@ -763,6 +771,9 @@ final class UpdateModelTest extends LiveModelTestCase
             new class () extends UserModel {
                 protected $returnType             = Member::class;
                 protected bool $updateOnlyChanged = false;
+                protected array $casts            = [
+                    'id' => '?int',
+                ];
             },
             [
                 'id'      => 1,
@@ -784,15 +795,18 @@ final class UpdateModelTest extends LiveModelTestCase
             new class () extends UserModel {
                 protected $returnType             = MemberStrict::class;
                 protected bool $updateOnlyChanged = false;
+                protected array $casts            = [
+                    'id' => '?int',
+                ];
             },
             [
                 'id'         => 1,
                 'name'       => 'Derek Jones',
                 'email'      => 'unknown',
                 'country'    => 'unknown',
-                'created_at' => 'unknown',
-                'updated_at' => 'unknown',
-                'deleted_at' => 'unknown',
+                'created_at' => '2026-11-10 14:50:00',
+                'updated_at' => '2026-11-10 14:50:00',
+                'deleted_at' => '2026-11-10 14:50:00',
                 'profile'    => 'profile',
                 'virtual'    => 'new property',
             ],
@@ -803,7 +817,7 @@ final class UpdateModelTest extends LiveModelTestCase
                 'country'    => 'unknown',
                 'created_at' => null,
                 'updated_at' => null,
-                'deleted_at' => 'unknown',
+                'deleted_at' => '2026-11-10 14:50:00',
                 'profile'    => 'profile',
             ],
         ];
