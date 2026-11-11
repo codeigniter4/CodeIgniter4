@@ -890,4 +890,141 @@ final class HTMLHelperTest extends CIUnitTestCase
 
         $this->assertSame($expected, $object);
     }
+
+    public function testVideoEscaping(): void
+    {
+        $src     = 'http://example.com/test.mp4" onerror="alert(1)';
+        $message = '<script>alert(1)</script>';
+
+        $html = video($src, $message, 'controls');
+
+        $this->assertStringNotContainsString('onerror="alert(1)', $html);
+        $this->assertStringNotContainsString('<script>', $html);
+        $this->assertStringContainsString('src="' . _esc_attr($src) . '"', $html);
+        $this->assertStringContainsString('&lt;script&gt;alert(1)&lt;/script&gt;', $html);
+
+        $relative = video('test.mp4" onerror="alert(1)');
+        $this->assertStringNotContainsString('onerror="alert(1)', $relative);
+
+        $withArray = video([source('test.mp4', 'video/mp4')], '<script>alert(1)</script>');
+        $this->assertStringNotContainsString('<script>', $withArray);
+        $this->assertStringContainsString('&lt;script&gt;alert(1)&lt;/script&gt;', $withArray);
+    }
+
+    public function testAudioEscaping(): void
+    {
+        $src     = 'http://example.com/test.mp3" onerror="alert(1)';
+        $message = '<script>alert(1)</script>';
+
+        $html = audio($src, $message, 'controls');
+
+        $this->assertStringNotContainsString('onerror="alert(1)', $html);
+        $this->assertStringNotContainsString('<script>', $html);
+        $this->assertStringContainsString('src="' . _esc_attr($src) . '"', $html);
+        $this->assertStringContainsString('&lt;script&gt;alert(1)&lt;/script&gt;', $html);
+
+        $relative = audio('test.mp3" onerror="alert(1)');
+        $this->assertStringNotContainsString('onerror="alert(1)', $relative);
+    }
+
+    public function testMediaEscaping(): void
+    {
+        $sources = [
+            source('http://example.com/test.mp4" onerror="alert(1)', 'video/mp4" onload="alert(1)'),
+        ];
+        $message = '<script>alert(1)</script>';
+
+        $html = _media('video', $sources, $message);
+
+        $this->assertStringNotContainsString('<script>', $html);
+        $this->assertStringContainsString('&lt;script&gt;alert(1)&lt;/script&gt;', $html);
+        $this->assertStringNotContainsString('onerror="alert(1)', $html);
+    }
+
+    public function testSourceEscaping(): void
+    {
+        $src  = 'http://example.com/test.mp4" onerror="alert(1)';
+        $type = 'video/mp4" onload="alert(1)';
+
+        $html = source($src, $type);
+
+        $this->assertStringNotContainsString('onerror="alert(1)', $html);
+        $this->assertStringNotContainsString('onload="alert(1)', $html);
+        $this->assertStringContainsString('src="' . _esc_attr($src) . '"', $html);
+        $this->assertStringContainsString('type="' . _esc_attr($type) . '"', $html);
+        $this->assertSame('<source src="http://example.com/test.mp4&quot; onerror=&quot;alert(1)" type="video/mp4&quot; onload=&quot;alert(1)">', $html);
+    }
+
+    public function testTrackEscaping(): void
+    {
+        $src         = 'subtitles.vtt" onerror="alert(1)';
+        $kind        = 'subtitles" onfocus="alert(1)';
+        $srcLanguage = 'en" onclick="alert(1)';
+        $label       = 'English" onmouseover="alert(1)';
+
+        $html = track($src, $kind, $srcLanguage, $label);
+
+        $this->assertStringNotContainsString('onerror="alert(1)', $html);
+        $this->assertStringNotContainsString('onfocus="alert(1)', $html);
+        $this->assertStringNotContainsString('onclick="alert(1)', $html);
+        $this->assertStringNotContainsString('onmouseover="alert(1)', $html);
+        $this->assertStringContainsString('src="' . _esc_attr($src) . '"', $html);
+        $this->assertStringContainsString('kind="' . _esc_attr($kind) . '"', $html);
+        $this->assertStringContainsString('srclang="' . _esc_attr($srcLanguage) . '"', $html);
+        $this->assertStringContainsString('label="' . _esc_attr($label) . '"', $html);
+    }
+
+    public function testObjectEscaping(): void
+    {
+        $data = 'http://example.com/movie.swf" onerror="alert(1)';
+
+        $html = object($data);
+
+        $this->assertStringNotContainsString('onerror="alert(1)', $html);
+        $this->assertStringContainsString('data="' . _esc_attr($data) . '"', $html);
+    }
+
+    public function testParamEscaping(): void
+    {
+        $name  = 'foo" onclick="alert(1)';
+        $value = 'bar" onerror="alert(1)';
+        $type  = 'ref" onfocus="alert(1)';
+
+        $html = param($name, $value, $type);
+
+        $this->assertStringNotContainsString('onclick="alert(1)', $html);
+        $this->assertStringNotContainsString('onerror="alert(1)', $html);
+        $this->assertStringNotContainsString('onfocus="alert(1)', $html);
+        $this->assertStringContainsString('name="' . _esc_attr($name) . '"', $html);
+        $this->assertStringContainsString('value="' . _esc_attr($value) . '"', $html);
+        $this->assertStringContainsString('type="' . _esc_attr($type) . '"', $html);
+    }
+
+    public function testEmbedEscaping(): void
+    {
+        $src  = 'http://example.com/movie.mov" onerror="alert(1)';
+        $type = 'video/quicktime" onload="alert(1)';
+
+        $html = embed($src, $type);
+
+        $this->assertStringNotContainsString('onerror="alert(1)', $html);
+        $this->assertStringNotContainsString('onload="alert(1)', $html);
+        $this->assertStringContainsString('src="' . _esc_attr($src) . '"', $html);
+        $this->assertStringContainsString('type="' . _esc_attr($type) . '"', $html);
+    }
+
+    public function testEscAttrFunctionLiteralOutput(): void
+    {
+        $this->assertSame(
+            'http://example.com/test.mp4?a=1&amp;b=2',
+            _esc_attr('http://example.com/test.mp4?a=1&b=2'),
+        );
+        $this->assertSame(
+            'foo&quot;bar&#039;&lt;baz&gt;',
+            _esc_attr('foo"bar\'<baz>'),
+        );
+
+        // ENT_SUBSTITUTE replaces invalid UTF-8 instead of returning an empty string.
+        $this->assertSame("\u{FFFD}", _esc_attr("\xFF"));
+    }
 }
