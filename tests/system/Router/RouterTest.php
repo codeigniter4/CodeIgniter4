@@ -1038,7 +1038,7 @@ final class RouterTest extends CIUnitTestCase
     /**
      * @param list<string> $expectedParams
      */
-    #[DataProvider('provideMultipleSegmentsParamTruePlaceholders')]
+    #[DataProvider('provideMultipleSegmentsParamTrueWithManyPlaceholders')]
     public function testMultipleSegmentsParamTrueWithManyPlaceholders(
         string $route,
         string $handler,
@@ -1063,7 +1063,7 @@ final class RouterTest extends CIUnitTestCase
     /**
      * @return iterable<string, array{string, string, string, list<string>}>
      */
-    public static function provideMultipleSegmentsParamTruePlaceholders(): iterable
+    public static function provideMultipleSegmentsParamTrueWithManyPlaceholders(): iterable
     {
         $nineSegments = implode('/', array_fill(0, 9, '(:segment)'));
         $tenSegments  = implode('/', array_fill(0, 10, '(:segment)'));
