@@ -1622,8 +1622,17 @@ class RouteCollection implements RouteCollectionInterface
         $controllers = [];
 
         if ($verb === '*') {
-            foreach ($this->defaultHTTPMethods as $tmpVerb) {
-                foreach ($this->routes[$tmpVerb] as $route) {
+            // Routes added via `add()` or `map()` are stored in the `*` bucket,
+            // so it must be iterated as well.
+            $verbs = [...$this->defaultHTTPMethods, '*'];
+
+            foreach ($verbs as $tmpVerb) {
+                foreach ($this->routes[$tmpVerb] ?? [] as $routeKey => $route) {
+                    // A redirect has no controller to register.
+                    if (! isset($route['handler']) || $this->isRedirect($routeKey)) {
+                        continue;
+                    }
+
                     $controller = $this->getControllerName($route['handler']);
                     if ($controller !== null) {
                         $controllers[] = $controller;

@@ -2032,6 +2032,30 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($expects, $routes);
     }
 
+    public function testGetRegisteredControllersReturnsControllerByAddMethodWithWildcardVerb(): void
+    {
+        $collection = $this->getCollector();
+        $collection->get('test', '\App\Controllers\Hello::get');
+        $collection->add('hello', '\App\Controllers\Test::hello');
+        $collection->add('feed', static function (): void {
+        });
+        $collection->map([
+            'mapped'    => '\App\Controllers\Mapped::index',
+            'duplicate' => '\App\Controllers\Test::anotherMethod',
+        ]);
+        $collection->addRedirect('old-route', 'new-route');
+        $collection->get('from', 'to', ['redirect' => 301]);
+
+        $routes = $collection->getRegisteredControllers('*');
+
+        $expects = [
+            '\App\Controllers\Hello',
+            '\App\Controllers\Test',
+            '\App\Controllers\Mapped',
+        ];
+        $this->assertSame($expects, $routes);
+    }
+
     public function testGetRegisteredControllersDoesNotReturnClosures(): void
     {
         $collection = $this->getCollector();
