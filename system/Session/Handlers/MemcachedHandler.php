@@ -267,7 +267,7 @@ class MemcachedHandler extends BaseHandler
     {
         $lockKey = $this->keyPrefix . $sessionID . ':lock';
 
-        // PHP 7 reuses the SessionHandler object on regeneration,
+        // PHP reuses the SessionHandler object on regeneration,
         // so we need to check here if the lock key is for the
         // correct session ID.
         if ($this->lockKey === $lockKey) {
