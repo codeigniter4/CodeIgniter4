@@ -46,6 +46,8 @@ final class ArrayHelperDotKeyExistsTest extends CIUnitTestCase
         $this->assertFalse(ArrayHelper::dotKeyExists('contacts.friends.0.nonexistent', $this->array));
         $this->assertFalse(ArrayHelper::dotKeyExists('contacts.friends.1.name', $this->array));
         $this->assertFalse(ArrayHelper::dotKeyExists('0', []));
+        $this->assertTrue(ArrayHelper::dotKeyExists('0', ['0' => 'value']));
+        $this->assertTrue(ArrayHelper::dotKeyExists('0', ['0' => null]));
         $this->assertFalse(ArrayHelper::dotKeyExists('contacts.friends.0.name.sub', $this->array));
         $this->assertFalse(ArrayHelper::dotKeyExists('contacts.friends.1.age.sub', $this->array));
     }
@@ -80,5 +82,6 @@ final class ArrayHelperDotKeyExistsTest extends CIUnitTestCase
         $this->assertFalse(ArrayHelper::dotKeyExists('contacts.*.1.name', $this->array));
         $this->assertFalse(ArrayHelper::dotKeyExists('contacts.friends.*.age.sub', $this->array));
         $this->assertFalse(ArrayHelper::dotKeyExists('contacts.friends.1.age.*.sub', $this->array));
+        $this->assertFalse(ArrayHelper::dotKeyExists('*.name', [['name' => 'Fred'], 'not-an-array']));
     }
 }
