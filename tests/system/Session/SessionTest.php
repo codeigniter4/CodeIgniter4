@@ -694,4 +694,17 @@ final class SessionTest extends CIUnitTestCase
         $this->assertCount(1, $cookies);
         $this->assertSame(0, $cookies[0]->getExpiresTimestamp());
     }
+
+    public function testStartUnsetsInvalidSessionCookieInSuperglobalsAndRequest(): void
+    {
+        service('superglobals')->setCookie('ci_session', 'invalid-session-id!');
+
+        $this->assertSame('invalid-session-id!', service('request')->getCookie('ci_session'));
+
+        $session = $this->getInstance();
+        $session->start();
+
+        $this->assertNull(service('superglobals')->cookie('ci_session'));
+        $this->assertNull(service('request')->getCookie('ci_session'));
+    }
 }

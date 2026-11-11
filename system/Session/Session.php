@@ -108,16 +108,19 @@ class Session implements SessionInterface
         $this->setSaveHandler();
 
         // Sanitize the cookie, because apparently PHP doesn't do that for userspace handlers
-        $cookie = service('superglobals')->cookie($this->config->cookieName);
+        $superglobals = service('superglobals');
+        $cookie       = $superglobals->cookie($this->config->cookieName);
 
         if (isset($cookie) && (! is_string($cookie) || preg_match('#\A' . $this->sidRegexp . '\z#', $cookie) !== 1)) {
-            service('superglobals')->unsetCookie($this->config->cookieName);
+            $superglobals->unsetCookie($this->config->cookieName);
+            service('request')->setGlobal('cookie', $superglobals->getCookieArray());
+            $cookie = null;
         }
 
         $this->startSession();
 
         // Is session ID auto-regeneration configured? (ignoring ajax requests)
-        $requestedWith = service('superglobals')->server('HTTP_X_REQUESTED_WITH');
+        $requestedWith = $superglobals->server('HTTP_X_REQUESTED_WITH');
         if (($requestedWith === null || strtolower($requestedWith) !== 'xmlhttprequest')
             && ($regenerateTime = $this->config->timeToUpdate) > 0
         ) {
