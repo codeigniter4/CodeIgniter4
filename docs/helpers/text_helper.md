@@ -489,7 +489,7 @@ this_string_is_e&hellip;ak_my_design.jpg
 
 This function will extract `$radius` number of characters before and after the central `$phrase` with an ellipsis before and after.
 
-The first parameter is the text to extract an excerpt from, and the second is the central word or phrase to count before and after. The third parameter is the number of characters to count before and after the central phrase. If no phrase is passed, the excerpt will include the first `$radius` characters with the ellipsis at the end.
+The first parameter is the text to extract an excerpt from, and the second is the central word or phrase to count before and after. The third parameter is the number of characters to count before and after the central phrase. If no phrase is passed, or if the phrase is not found in the text, the excerpt will include the first `$radius` characters with the ellipsis at the end.
 
 Example:
 
