@@ -565,7 +565,7 @@ class Router implements RouterInterface
      */
     private function replaceBackReferences(string $input, array $matches): string
     {
-        $pattern = '/\$([1-' . count($matches) . '])/u';
+        $pattern = '/\$([1-9][0-9]*)/u';
 
         return preg_replace_callback(
             $pattern,

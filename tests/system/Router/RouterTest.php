@@ -1009,6 +1009,26 @@ final class RouterTest extends CIUnitTestCase
         $this->assertSame(['123/456'], $router->params());
     }
 
+    public function testMultipleSegmentsParamTrueWithTenPlaceholders(): void
+    {
+        $routingConfig                           = new Routing();
+        $routingConfig->multipleSegmentsOneParam = true;
+        Factories::injectMock('config', Routing::class, $routingConfig);
+
+        $this->createRouteCollection($routingConfig);
+        $this->collection->get(
+            '(:segment)/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)',
+            'Catalog::lookup/$1/$2/$3/$4/$5/$6/$7/$8/$9/$10',
+        );
+        $router = new Router($this->collection, $this->request);
+
+        $router->handle('a/b/c/d/e/f/g/h/i/j');
+
+        $this->assertSame('\Catalog', $router->controllerName());
+        $this->assertSame('lookup', $router->methodName());
+        $this->assertSame(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], $router->params());
+    }
+
     public function testLogsRouteAttributeInstantiationFailureWithContext(): void
     {
         $collection = clone $this->collection;
