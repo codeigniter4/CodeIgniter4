@@ -976,6 +976,9 @@ final class RouterTest extends CIUnitTestCase
             ['post/(:num)', 'article/(:num)', 'alias', '/article/1', 'post/1', 'alias'],
             ['post/(:num)/comment/(:any)', 'article/(:num)/(:any)', 'post/$1/comment/$2', '/article/1/2', 'post/1/comment/2', 'alias'],
             ['post/(:segment)/comment/(:any)', 'article/(:num)/(:any)', 'alias', '/article/1/2', 'post/1/comment/2', 'alias'],
+            ['posts', '{locale}/articles', 'posts', '/en/articles', 'posts', 'alias'],
+            ['{locale}/posts', '{locale}/articles', '{locale}/posts', '/en/articles', 'en/posts', 'alias'],
+            ['{locale}/posts', '{locale}/articles', 'alias', '/en/articles', 'en/posts', 'alias'],
         ];
     }
 

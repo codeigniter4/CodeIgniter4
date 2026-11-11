@@ -457,20 +457,6 @@ class Router implements RouterInterface
 
             // Does the RegEx match?
             if (preg_match('#^' . $routeKey . '$#u', $uri, $matches)) {
-                // Is this route supposed to redirect to another?
-                if ($this->collection->isRedirect($routeKey)) {
-                    // replacing matched route groups with references: post/([0-9]+) -> post/$1
-                    $redirectTo = preg_replace_callback('/(\([^\(]+\))/', static function (): string {
-                        static $i = 1;
-
-                        return '$' . $i++;
-                    }, is_array($handler) ? key($handler) : $handler);
-
-                    throw new RedirectException(
-                        preg_replace('#\A' . $routeKey . '\z#u', $redirectTo, $uri),
-                        $this->collection->getRedirectCode($routeKey),
-                    );
-                }
                 // Store our locale so CodeIgniter object can
                 // assign it to the Request.
                 if (str_contains($matchedKey, '{locale}')) {
@@ -489,6 +475,25 @@ class Router implements RouterInterface
 
                     $this->detectedLocale = $matched['locale'];
                     unset($matched);
+                }
+
+                // Is this route supposed to redirect to another?
+                if ($this->collection->isRedirect($matchedKey)) {
+                    // replacing matched route groups with references: post/([0-9]+) -> post/$1
+                    $redirectTo = preg_replace_callback('/(\([^\(]+\))/', static function (): string {
+                        static $i = 1;
+
+                        return '$' . $i++;
+                    }, is_array($handler) ? key($handler) : $handler);
+
+                    if (str_contains($matchedKey, '{locale}')) {
+                        $redirectTo = str_replace('{locale}', $this->detectedLocale, $redirectTo);
+                    }
+
+                    throw new RedirectException(
+                        preg_replace('#\A' . $routeKey . '\z#u', $redirectTo, $uri),
+                        $this->collection->getRedirectCode($matchedKey),
+                    );
                 }
 
                 // Are we using Closures? If so, then we need
