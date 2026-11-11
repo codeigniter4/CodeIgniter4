@@ -128,4 +128,48 @@ final class MemcachedHandlerTest extends CIUnitTestCase
         $handler = $this->getInstance();
         $this->assertSame(1, $handler->gc(3600));
     }
+
+    public function testReopenAndReadWithSameHandlerInstance(): void
+    {
+        $handler = $this->getInstance();
+        $handler->open($this->sessionSavePath, $this->sessionName);
+
+        $sessionId = '666666b43phsnnf8if6bo33b635e4448';
+
+        $this->assertSame('', $handler->read($sessionId));
+
+        $data = '__ci_last_regenerate|i:1664607454;key|s:5:"value";';
+        $this->assertTrue($handler->write($sessionId, $data));
+        $this->assertTrue($handler->close());
+
+        // Reopen with the same handler instance (e.g. session_write_close() + session_start())
+        $this->assertTrue($handler->open($this->sessionSavePath, $this->sessionName));
+        $this->assertSame($data, $handler->read($sessionId));
+        $this->assertTrue($handler->close());
+    }
+
+    public function testRegenerateSessionIdWithSameHandlerInstance(): void
+    {
+        $handler = $this->getInstance();
+        $handler->open($this->sessionSavePath, $this->sessionName);
+
+        $oldSessionId = '777777b43phsnnf8if6bo33b635e4449';
+        $newSessionId = '888888b43phsnnf8if6bo33b635e4450';
+
+        $this->assertSame('', $handler->read($oldSessionId));
+
+        $data = '__ci_last_regenerate|i:1664607454;role|s:5:"admin";';
+        $this->assertTrue($handler->write($oldSessionId, $data));
+        $this->assertTrue($handler->close());
+
+        // PHP reuses the same SessionHandler object on regeneration
+        $this->assertTrue($handler->open($this->sessionSavePath, $this->sessionName));
+        $this->assertSame('', $handler->read($newSessionId));
+        $this->assertTrue($handler->write($newSessionId, $data));
+        $this->assertTrue($handler->close());
+
+        $this->assertTrue($handler->open($this->sessionSavePath, $this->sessionName));
+        $this->assertSame($data, $handler->read($newSessionId));
+        $this->assertTrue($handler->close());
+    }
 }
