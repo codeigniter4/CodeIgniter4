@@ -132,7 +132,7 @@ jobs:
           - '8.4'
           - '8.5'
         include:
-        - php-version: '8.5'
+        - php-version: '8.6'
           composer-option: '--ignore-platform-req=php'
 
     uses: ./.github/workflows/reusable-phpunit-test.yml # @TODO Extract to codeigniter4/.github repo
