@@ -958,6 +958,7 @@ final class RouterTest extends CIUnitTestCase
 
         $this->expectException(RedirectException::class);
         $this->expectExceptionMessage($expectedPath);
+        $this->expectExceptionCode(302);
 
         $router = new Router($collection, $this->request);
         $router->handle($url);
@@ -979,7 +980,27 @@ final class RouterTest extends CIUnitTestCase
             ['posts', '{locale}/articles', 'posts', '/en/articles', 'posts', 'alias'],
             ['{locale}/posts', '{locale}/articles', '{locale}/posts', '/en/articles', 'en/posts', 'alias'],
             ['{locale}/posts', '{locale}/articles', 'alias', '/en/articles', 'en/posts', 'alias'],
+            ['{locale}/post/(:num)', '{locale}/article/(:num)', '{locale}/post/$1', '/en/article/1', 'en/post/1', 'alias'],
+            ['{locale}/post/(:num)', '{locale}/article/(:num)', 'alias', '/en/article/1', 'en/post/1', 'alias'],
         ];
+    }
+
+    public function testRedirectRouteWithUnsupportedLocale(): void
+    {
+        $config                   = config(App::class);
+        $config->supportedLocales = ['en'];
+
+        $collection = clone $this->collection;
+        $collection->resetRoutes();
+        $collection->useSupportedLocalesOnly(true);
+
+        $collection->get('{locale}/posts', 'Controller::method');
+        $collection->addRedirect('{locale}/articles', '{locale}/posts');
+
+        $this->expectException(PageNotFoundException::class);
+
+        $router = new Router($collection, $this->request);
+        $router->handle('/fr/articles');
     }
 
     public function testRoutePlaceholderAnyWithMultipleSegmentsParamFalse(): void
