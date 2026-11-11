@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Cache\Exceptions\CacheException;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
 use FilesystemIterator;
@@ -74,6 +75,34 @@ class FileHandler extends BaseHandler
 
     public function initialize(): void
     {
+    }
+
+    /**
+     * Validates a cache key, ensuring it contains no directory traversal sequences
+     * or path separators, regardless of the configured reservedCharacters setting.
+     *
+     * @param mixed  $key    The key to validate
+     * @param string $prefix Optional prefix to include in length calculations
+     *
+     * @throws InvalidArgumentException When $key is not valid or contains path separators
+     */
+    public static function validateKey($key, $prefix = ''): string
+    {
+        if (! is_string($key)) {
+            throw new InvalidArgumentException('Cache key must be a string');
+        }
+
+        $target = $prefix . $key;
+
+        if (
+            $target === ''
+            || strpbrk($target, "/\\:\0") !== false
+            || trim($target, '. ') === ''
+        ) {
+            throw new InvalidArgumentException('Cache key cannot contain directory separators or traversal sequences.');
+        }
+
+        return parent::validateKey($key, $prefix);
     }
 
     public function get(string $key): mixed

@@ -16,6 +16,7 @@ namespace CodeIgniter\Cache\Handlers;
 use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\Cache\Exceptions\CacheException;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -503,5 +504,74 @@ final class FileHandlerTest extends AbstractHandlerTestCase
     public function testReconnect(): void
     {
         $this->assertTrue($this->handler->reconnect());
+    }
+
+    #[DataProvider('provideValidateKeyRejectsTraversalAndSeparatorsEvenWithEmptyReservedCharacters')]
+    public function testValidateKeyRejectsTraversalAndSeparatorsEvenWithEmptyReservedCharacters(string $key): void
+    {
+        $config                     = config('Cache');
+        $originalReservedCharacters = $config->reservedCharacters;
+
+        // Multi-store setups often empty this setting to share keys between
+        // handlers, which must not weaken the file handler's own validation.
+        $config->reservedCharacters = '';
+
+        try {
+            $this->expectException(InvalidArgumentException::class);
+            $this->expectExceptionMessage('Cache key cannot contain directory separators or traversal sequences.');
+
+            FileHandler::validateKey($key);
+        } finally {
+            $config->reservedCharacters = $originalReservedCharacters;
+        }
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function provideValidateKeyRejectsTraversalAndSeparatorsEvenWithEmptyReservedCharacters(): iterable
+    {
+        yield 'parent traversal only' => ['..'];
+
+        yield 'current directory only' => ['.'];
+
+        yield 'multiple dots' => ['...'];
+
+        yield 'dots with trailing space' => ['.. '];
+
+        yield 'parent directory' => ['../evil'];
+
+        yield 'nested traversal' => ['sub/../../evil'];
+
+        yield 'forward slash separator' => ['sub/key'];
+
+        yield 'backslash separator' => ['sub\\key'];
+
+        yield 'null byte' => ["sub\0key"];
+
+        yield 'colon character' => ['test:stream'];
+
+        yield 'drive letter' => ['C:file'];
+
+        yield 'spaces and dots' => [' . '];
+    }
+
+    public function testValidateKeyRejectsTraversalInPrefix(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Cache key cannot contain directory separators or traversal sequences.');
+
+        FileHandler::validateKey('valid_key', '../');
+    }
+
+    public function testValidateKeySuccess(): void
+    {
+        $this->assertSame('valid_key', FileHandler::validateKey('valid_key'));
+        $this->assertSame('foo..json', FileHandler::validateKey('foo..json'));
+        $this->assertSame('user..settings', FileHandler::validateKey('user..settings'));
+        $this->assertSame('..item', FileHandler::validateKey('..item'));
+        $this->assertSame('..item', FileHandler::validateKey('item', '..'));
+        $this->assertSame('item..', FileHandler::validateKey('item..'));
+        $this->assertSame('..foo', FileHandler::validateKey('..foo'));
     }
 }
