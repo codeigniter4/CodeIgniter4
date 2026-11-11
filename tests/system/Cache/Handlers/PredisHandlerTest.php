@@ -172,10 +172,10 @@ final class PredisHandlerTest extends AbstractHandlerTestCase
 
         $this->assertSame(155, $this->handler->get('counter'));
 
-        $this->handler->decrement('counter', 20);
+        $this->assertSame(135, $this->handler->decrement('counter', 20));
         $this->assertSame(135, $this->handler->get('counter'));
 
-        $this->handler->increment('counter', 5);
+        $this->assertSame(140, $this->handler->increment('counter', 5));
         $this->assertSame(140, $this->handler->get('counter'));
     }
 
