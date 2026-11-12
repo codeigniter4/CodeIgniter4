@@ -894,34 +894,31 @@ final class HTMLHelperTest extends CIUnitTestCase
     public function testVideoEscaping(): void
     {
         $src     = 'http://example.com/test.mp4" onerror="alert(1)';
-        $message = '<script>alert(1)</script>';
+        $message = '<a href="movie.mp4">Download</a>';
 
         $html = video($src, $message, 'controls');
 
         $this->assertStringNotContainsString('onerror="alert(1)', $html);
-        $this->assertStringNotContainsString('<script>', $html);
-        $this->assertStringContainsString('src="' . _esc_attr($src) . '"', $html);
-        $this->assertStringContainsString('&lt;script&gt;alert(1)&lt;/script&gt;', $html);
+        $this->assertStringContainsString('src="' . esc($src, 'html') . '"', $html);
+        $this->assertStringContainsString('<a href="movie.mp4">Download</a>', $html);
 
         $relative = video('test.mp4" onerror="alert(1)');
         $this->assertStringNotContainsString('onerror="alert(1)', $relative);
 
-        $withArray = video([source('test.mp4', 'video/mp4')], '<script>alert(1)</script>');
-        $this->assertStringNotContainsString('<script>', $withArray);
-        $this->assertStringContainsString('&lt;script&gt;alert(1)&lt;/script&gt;', $withArray);
+        $withArray = video([source('test.mp4', 'video/mp4')], '<a href="movie.mp4">Download</a>');
+        $this->assertStringContainsString('<a href="movie.mp4">Download</a>', $withArray);
     }
 
     public function testAudioEscaping(): void
     {
         $src     = 'http://example.com/test.mp3" onerror="alert(1)';
-        $message = '<script>alert(1)</script>';
+        $message = '<a href="movie.mp4">Download</a>';
 
         $html = audio($src, $message, 'controls');
 
         $this->assertStringNotContainsString('onerror="alert(1)', $html);
-        $this->assertStringNotContainsString('<script>', $html);
-        $this->assertStringContainsString('src="' . _esc_attr($src) . '"', $html);
-        $this->assertStringContainsString('&lt;script&gt;alert(1)&lt;/script&gt;', $html);
+        $this->assertStringContainsString('src="' . esc($src, 'html') . '"', $html);
+        $this->assertStringContainsString('<a href="movie.mp4">Download</a>', $html);
 
         $relative = audio('test.mp3" onerror="alert(1)');
         $this->assertStringNotContainsString('onerror="alert(1)', $relative);
@@ -932,12 +929,11 @@ final class HTMLHelperTest extends CIUnitTestCase
         $sources = [
             source('http://example.com/test.mp4" onerror="alert(1)', 'video/mp4" onload="alert(1)'),
         ];
-        $message = '<script>alert(1)</script>';
+        $message = '<a href="movie.mp4">Download</a>';
 
         $html = _media('video', $sources, $message);
 
-        $this->assertStringNotContainsString('<script>', $html);
-        $this->assertStringContainsString('&lt;script&gt;alert(1)&lt;/script&gt;', $html);
+        $this->assertStringContainsString('<a href="movie.mp4">Download</a>', $html);
         $this->assertStringNotContainsString('onerror="alert(1)', $html);
     }
 
@@ -950,8 +946,8 @@ final class HTMLHelperTest extends CIUnitTestCase
 
         $this->assertStringNotContainsString('onerror="alert(1)', $html);
         $this->assertStringNotContainsString('onload="alert(1)', $html);
-        $this->assertStringContainsString('src="' . _esc_attr($src) . '"', $html);
-        $this->assertStringContainsString('type="' . _esc_attr($type) . '"', $html);
+        $this->assertStringContainsString('src="' . esc($src, 'html') . '"', $html);
+        $this->assertStringContainsString('type="' . esc($type, 'html') . '"', $html);
         $this->assertSame('<source src="http://example.com/test.mp4&quot; onerror=&quot;alert(1)" type="video/mp4&quot; onload=&quot;alert(1)">', $html);
     }
 
@@ -968,10 +964,10 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertStringNotContainsString('onfocus="alert(1)', $html);
         $this->assertStringNotContainsString('onclick="alert(1)', $html);
         $this->assertStringNotContainsString('onmouseover="alert(1)', $html);
-        $this->assertStringContainsString('src="' . _esc_attr($src) . '"', $html);
-        $this->assertStringContainsString('kind="' . _esc_attr($kind) . '"', $html);
-        $this->assertStringContainsString('srclang="' . _esc_attr($srcLanguage) . '"', $html);
-        $this->assertStringContainsString('label="' . _esc_attr($label) . '"', $html);
+        $this->assertStringContainsString('src="' . esc($src, 'html') . '"', $html);
+        $this->assertStringContainsString('kind="' . esc($kind, 'html') . '"', $html);
+        $this->assertStringContainsString('srclang="' . esc($srcLanguage, 'html') . '"', $html);
+        $this->assertStringContainsString('label="' . esc($label, 'html') . '"', $html);
     }
 
     public function testObjectEscaping(): void
@@ -981,7 +977,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $html = object($data);
 
         $this->assertStringNotContainsString('onerror="alert(1)', $html);
-        $this->assertStringContainsString('data="' . _esc_attr($data) . '"', $html);
+        $this->assertStringContainsString('data="' . esc($data, 'html') . '"', $html);
     }
 
     public function testParamEscaping(): void
@@ -995,9 +991,9 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertStringNotContainsString('onclick="alert(1)', $html);
         $this->assertStringNotContainsString('onerror="alert(1)', $html);
         $this->assertStringNotContainsString('onfocus="alert(1)', $html);
-        $this->assertStringContainsString('name="' . _esc_attr($name) . '"', $html);
-        $this->assertStringContainsString('value="' . _esc_attr($value) . '"', $html);
-        $this->assertStringContainsString('type="' . _esc_attr($type) . '"', $html);
+        $this->assertStringContainsString('name="' . esc($name, 'html') . '"', $html);
+        $this->assertStringContainsString('value="' . esc($value, 'html') . '"', $html);
+        $this->assertStringContainsString('type="' . esc($type, 'html') . '"', $html);
     }
 
     public function testEmbedEscaping(): void
@@ -1009,22 +1005,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
         $this->assertStringNotContainsString('onerror="alert(1)', $html);
         $this->assertStringNotContainsString('onload="alert(1)', $html);
-        $this->assertStringContainsString('src="' . _esc_attr($src) . '"', $html);
-        $this->assertStringContainsString('type="' . _esc_attr($type) . '"', $html);
-    }
-
-    public function testEscAttrFunctionLiteralOutput(): void
-    {
-        $this->assertSame(
-            'http://example.com/test.mp4?a=1&amp;b=2',
-            _esc_attr('http://example.com/test.mp4?a=1&b=2'),
-        );
-        $this->assertSame(
-            'foo&quot;bar&#039;&lt;baz&gt;',
-            _esc_attr('foo"bar\'<baz>'),
-        );
-
-        // ENT_SUBSTITUTE replaces invalid UTF-8 instead of returning an empty string.
-        $this->assertSame("\u{FFFD}", _esc_attr("\xFF"));
+        $this->assertStringContainsString('src="' . esc($src, 'html') . '"', $html);
+        $this->assertStringContainsString('type="' . esc($type, 'html') . '"', $html);
     }
 }

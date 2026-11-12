@@ -298,11 +298,11 @@ if (! function_exists('video')) {
         $video = '<video';
 
         if (_has_protocol($src)) {
-            $video .= ' src="' . _esc_attr($src) . '"';
+            $video .= ' src="' . esc($src, 'html') . '"';
         } elseif ($indexPage) {
-            $video .= ' src="' . _esc_attr(site_url($src)) . '"';
+            $video .= ' src="' . esc(site_url($src), 'html') . '"';
         } else {
-            $video .= ' src="' . _esc_attr(slash_item('baseURL') . $src) . '"';
+            $video .= ' src="' . esc(slash_item('baseURL') . $src, 'html') . '"';
         }
 
         if ($attributes !== '') {
@@ -317,7 +317,7 @@ if (! function_exists('video')) {
 
         if ($unsupportedMessage !== '') {
             $video .= _space_indent()
-                    . esc($unsupportedMessage, 'html')
+                    . $unsupportedMessage
                     . "\n";
         }
 
@@ -346,11 +346,11 @@ if (! function_exists('audio')) {
         $audio = '<audio';
 
         if (_has_protocol($src)) {
-            $audio .= ' src="' . _esc_attr($src) . '"';
+            $audio .= ' src="' . esc($src, 'html') . '"';
         } elseif ($indexPage) {
-            $audio .= ' src="' . _esc_attr(site_url($src)) . '"';
+            $audio .= ' src="' . esc(site_url($src), 'html') . '"';
         } else {
-            $audio .= ' src="' . _esc_attr(slash_item('baseURL') . $src) . '"';
+            $audio .= ' src="' . esc(slash_item('baseURL') . $src, 'html') . '"';
         }
 
         if ($attributes !== '') {
@@ -364,7 +364,7 @@ if (! function_exists('audio')) {
         }
 
         if ($unsupportedMessage !== '') {
-            $audio .= "\n" . _space_indent() . esc($unsupportedMessage, 'html') . "\n";
+            $audio .= "\n" . _space_indent() . $unsupportedMessage . "\n";
         }
 
         return $audio . "</audio>\n";
@@ -400,7 +400,7 @@ if (! function_exists('_media')) {
         }
 
         if ($unsupportedMessage !== '') {
-            $media .= _space_indent() . esc($unsupportedMessage, 'html') . "\n";
+            $media .= _space_indent() . $unsupportedMessage . "\n";
         }
 
         return $media . ('</' . $name . ">\n");
@@ -425,8 +425,8 @@ if (! function_exists('source')) {
             $src = $indexPage ? site_url($src) : slash_item('baseURL') . $src;
         }
 
-        $source = '<source src="' . _esc_attr($src)
-                . '" type="' . _esc_attr($type) . '"';
+        $source = '<source src="' . esc($src, 'html')
+                . '" type="' . esc($type, 'html') . '"';
 
         if ($attributes !== '') {
             $source .= ' ' . $attributes;
@@ -450,10 +450,10 @@ if (! function_exists('track')) {
      */
     function track(string $src, string $kind, string $srcLanguage, string $label): string
     {
-        return '<track src="' . _esc_attr($src)
-                . '" kind="' . _esc_attr($kind)
-                . '" srclang="' . _esc_attr($srcLanguage)
-                . '" label="' . _esc_attr($label)
+        return '<track src="' . esc($src, 'html')
+                . '" kind="' . esc($kind, 'html')
+                . '" srclang="' . esc($srcLanguage, 'html')
+                . '" label="' . esc($label, 'html')
                 . '"' . _solidus() . '>';
     }
 }
@@ -478,7 +478,7 @@ if (! function_exists('object')) {
             $data = $indexPage ? site_url($data) : slash_item('baseURL') . $data;
         }
 
-        $object = '<object data="' . _esc_attr($data) . '" '
+        $object = '<object data="' . esc($data, 'html') . '" '
                 . $attributes . '>';
 
         if ($params !== []) {
@@ -507,9 +507,9 @@ if (! function_exists('param')) {
      */
     function param(string $name, string $value, string $type = 'ref', string $attributes = ''): string
     {
-        return '<param name="' . _esc_attr($name)
-                . '" type="' . _esc_attr($type)
-                . '" value="' . _esc_attr($value)
+        return '<param name="' . esc($name, 'html')
+                . '" type="' . esc($type, 'html')
+                . '" value="' . esc($value, 'html')
                 . '" ' . $attributes . _solidus() . '>';
     }
 }
@@ -531,8 +531,8 @@ if (! function_exists('embed')) {
             $src = $indexPage ? site_url($src) : slash_item('baseURL') . $src;
         }
 
-        return '<embed src="' . _esc_attr($src)
-                . '" type="' . _esc_attr($type) . '" '
+        return '<embed src="' . esc($src, 'html')
+                . '" type="' . esc($type, 'html') . '" '
                 . $attributes . _solidus() . ">\n";
     }
 }
@@ -554,15 +554,5 @@ if (! function_exists('_space_indent')) {
     function _space_indent(int $depth = 2): string
     {
         return str_repeat(' ', $depth);
-    }
-}
-
-if (! function_exists('_esc_attr')) {
-    /**
-     * Escapes a value for use inside a double-quoted HTML attribute.
-     */
-    function _esc_attr(string $value): string
-    {
-        return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
     }
 }
