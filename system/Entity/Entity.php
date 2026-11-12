@@ -230,6 +230,20 @@ class Entity implements JsonSerializable
      */
     public function toRawArray(bool $onlyChanged = false, bool $recursive = false): array
     {
+        // Date attributes that were assigned at runtime are mutated to
+        // Time instances when they are set (see __set()), while the same
+        // attributes hold plain strings when the entity is populated
+        // from the database (see injectRawData()). The raw value of a
+        // date attribute is its string representation, so normalize any
+        // Time instances back to strings to keep the output consistent.
+        $attributes = $this->attributes;
+
+        foreach ($attributes as $key => $value) {
+            if ($value instanceof Time && in_array($key, $this->dates, true)) {
+                $attributes[$key] = (string) $value;
+            }
+        }
+
         $convert = static function ($value) use (&$convert, $recursive) {
             if (! $recursive) {
                 return $value;
@@ -260,14 +274,14 @@ class Entity implements JsonSerializable
         // When returning everything
         if (! $onlyChanged) {
             return $recursive
-                ? array_map($convert, $this->attributes)
-                : $this->attributes;
+                ? array_map($convert, $attributes)
+                : $attributes;
         }
 
         // When filtering by changed values only
         $return = [];
 
-        foreach ($this->attributes as $key => $value) {
+        foreach ($attributes as $key => $value) {
             // Special handling for arrays of entities in recursive mode
             // Skip hasChanged() and do per-entity comparison directly
             if ($recursive && is_array($value) && $this->containsOnlyEntities($value)) {

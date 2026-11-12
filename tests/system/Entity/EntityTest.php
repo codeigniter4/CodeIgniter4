@@ -80,6 +80,29 @@ final class EntityTest extends CIUnitTestCase
         $this->assertSame($expected, $entity->toRawArray());
     }
 
+    public function testToRawArrayReturnsStringForAssignedDateAttribute(): void
+    {
+        $entity = new class () extends Entity {
+            protected $dates = ['created_at', 'updated_at', 'deleted_at'];
+        };
+
+        // Simulate an entity fetched from the database.
+        $entity->injectRawData([
+            'created_at' => '2023-12-07 04:00:48',
+            'updated_at' => '2023-12-07 04:00:48',
+            'deleted_at' => null,
+        ]);
+
+        $entity->updated_at = '2023-12-12 12:12:12';
+
+        // The raw value must stay the assigned string, not a Time instance.
+        $this->assertSame('2023-12-12 12:12:12', $entity->toRawArray()['updated_at']);
+
+        // Retrieval still mutates the value into a Time instance.
+        $this->assertInstanceOf(Time::class, $entity->updated_at);
+        $this->assertSame('2023-12-12 12:12:12', $entity->updated_at->format('Y-m-d H:i:s'));
+    }
+
     public function testSetGetAttributesMethod(): void
     {
         $entity = new class () extends Entity {
