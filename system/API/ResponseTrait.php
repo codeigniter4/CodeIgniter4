@@ -416,13 +416,15 @@ trait ResponseTrait
                 ];
             } else {
                 // Query Builder, we need to handle pagination manually
-                // The page is clamped to the available range so that the offset
-                // cannot overflow the int type when a huge page is requested.
                 $total      = (clone $resource)->countAllResults();
                 $totalPages = (int) ceil($total / $perPage);
-                $page       = max(1, min($page, max(1, $totalPages)));
-                $offset     = ($page - 1) * $perPage;
-                $data       = $resource->limit($perPage, $offset)->get()->getResultArray();
+
+                if ($total === 0 || $page > $totalPages) {
+                    $data = [];
+                } else {
+                    $offset = ($page - 1) * $perPage;
+                    $data   = $resource->limit($perPage, $offset)->get()->getResultArray();
+                }
 
                 $meta = [
                     'page'       => $page,
