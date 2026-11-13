@@ -180,16 +180,34 @@ final class SignalWindowsTest extends CIUnitTestCase
         $this->assertSame(0, $this->command->testGetProcessState()['explicit_mappings']);
     }
 
-    public function testUnregisterDoesNotReleaseTheCallableWhenRemovalFails(): void
+    public function testUnregisterKeepsTheStateWhenRemovalFails(): void
     {
-        $this->command->testRegisterSignals([]);
+        $this->command->testRegisterSignals([], [self::SIGINT_NUMBER => 'testCustomHandler']);
 
         $this->command->ctrlHandlerSucceeds = false;
         $this->command->testUnregisterSignals();
 
+        // The callable is not released, as the handler may still be installed.
         $this->assertCount(2, $this->command->ctrlHandlerCalls);
         $this->assertFalse($this->command->ctrlHandlerCalls[1]['add']);
         $this->assertNotNull($this->command->ctrlHandlerCalls[1]['handler']);
+
+        // The command still reports the handler as registered.
+        $this->assertTrue($this->command->testHasSignals());
+        $this->assertSame([self::SIGINT_NUMBER], $this->command->testGetSignals());
+        $this->assertSame(1, $this->command->testGetProcessState()['explicit_mappings']);
+
+        // So removal can be retried.
+        $this->command->ctrlHandlerSucceeds = true;
+        $this->command->testUnregisterSignals();
+
+        $this->assertCount(4, $this->command->ctrlHandlerCalls);
+        $this->assertFalse($this->command->ctrlHandlerCalls[2]['add']);
+        $this->assertNotNull($this->command->ctrlHandlerCalls[2]['handler']);
+        $this->assertFalse($this->command->ctrlHandlerCalls[3]['add']);
+        $this->assertNull($this->command->ctrlHandlerCalls[3]['handler']);
+        $this->assertFalse($this->command->testHasSignals());
+        $this->assertSame([], $this->command->testGetSignals());
     }
 
     public function testUnregisterWithoutRegisteringDoesNothing(): void

@@ -430,9 +430,12 @@ trait SignalTrait
         if ($this->windowsCtrlHandlerRegistered) {
             // Detaching needs a callable, which PHP then keeps, along with this object.
             // Passing null afterwards releases it and leaves Ctrl+C at its default.
-            if ($this->setWindowsCtrlHandler($this->handleWindowsCtrlEvent(...), false)) {
-                $this->setWindowsCtrlHandler(null, false);
+            if (! $this->setWindowsCtrlHandler($this->handleWindowsCtrlEvent(...), false)) {
+                // The handler may still be installed: keep the state so removal can be retried.
+                return;
             }
+
+            $this->setWindowsCtrlHandler(null, false);
 
             $this->windowsCtrlHandlerRegistered = false;
             $this->registeredSignals            = [];
