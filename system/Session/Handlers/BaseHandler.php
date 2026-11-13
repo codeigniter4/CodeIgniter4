@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Session\Handlers;
 
+use CodeIgniter\Cookie\Cookie;
 use Config\Cookie as CookieConfig;
 use Config\Session as SessionConfig;
 use Psr\Log\LoggerAwareTrait;
@@ -71,6 +72,13 @@ abstract class BaseHandler implements SessionHandlerInterface
     protected $cookieSecure = false;
 
     /**
+     * Cookie SameSite setting.
+     *
+     * @var ''|'Lax'|'None'|'Strict'
+     */
+    protected string $cookieSameSite = '';
+
+    /**
      * Cookie name to use.
      *
      * @var string
@@ -116,9 +124,10 @@ abstract class BaseHandler implements SessionHandlerInterface
         $cookie = config(CookieConfig::class);
 
         // Session cookies have no prefix.
-        $this->cookieDomain = $cookie->domain;
-        $this->cookiePath   = $cookie->path;
-        $this->cookieSecure = $cookie->secure;
+        $this->cookieDomain   = $cookie->domain;
+        $this->cookiePath     = $cookie->path;
+        $this->cookieSecure   = $cookie->secure;
+        $this->cookieSameSite = $cookie->samesite;
 
         $this->ipAddress = $ipAddress;
     }
@@ -129,10 +138,21 @@ abstract class BaseHandler implements SessionHandlerInterface
      */
     protected function destroyCookie(): bool
     {
+        $samesite = $this->cookieSameSite === ''
+            ? Cookie::SAMESITE_LAX
+            : ucfirst(strtolower($this->cookieSameSite));
+
         return setcookie(
             $this->cookieName,
             '',
-            ['expires' => 1, 'path' => $this->cookiePath, 'domain' => $this->cookieDomain, 'secure' => $this->cookieSecure, 'httponly' => true],
+            [
+                'expires'  => 1,
+                'path'     => $this->cookiePath,
+                'domain'   => $this->cookieDomain,
+                'secure'   => $this->cookieSecure,
+                'httponly' => true,
+                'samesite' => $samesite,
+            ],
         );
     }
 
