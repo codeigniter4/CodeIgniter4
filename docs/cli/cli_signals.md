@@ -507,7 +507,7 @@ $this->registerSignals(
 ```
 
 !!! note "Note"
-    On Unix, requires the PCNTL extension. On Windows, only Ctrl+C and Ctrl+Break are handled, as `SIGINT` (`2`). See [Windows](#windows).
+    On Unix, registration requires the PCNTL extension. On Windows, only Ctrl+C and Ctrl+Break are handled, as `SIGINT` (`2`). See [Windows](#windows).
 
 #### isRunning()
 
