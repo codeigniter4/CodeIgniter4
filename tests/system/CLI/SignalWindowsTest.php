@@ -17,6 +17,7 @@ use Closure;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RequiresOperatingSystem;
 use Tests\Support\Commands\Legacy\SignalCommandNoPcntl;
 use Tests\Support\Commands\Legacy\SignalCommandWindows;
 
@@ -245,5 +246,15 @@ final class SignalWindowsTest extends CIUnitTestCase
         $command->testRegisterSignals([]);
 
         $this->assertFalse($command->testHasSignals());
+    }
+
+    #[RequiresOperatingSystem('Linux|Darwin')]
+    public function testSetCtrlHandlerFailsWithoutTheNativeFunction(): void
+    {
+        // Called directly, without checking isWindowsCtrlHandlerAvailable() first.
+        $command = new SignalCommandNoPcntl(service('logger'), service('commands'));
+
+        $this->assertFalse($command->testSetWindowsCtrlHandler(static function (int $event): void {}, true));
+        $this->assertFalse($command->testSetWindowsCtrlHandler(null, false));
     }
 }

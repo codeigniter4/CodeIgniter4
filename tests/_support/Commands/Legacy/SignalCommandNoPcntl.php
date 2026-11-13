@@ -34,4 +34,14 @@ class SignalCommandNoPcntl extends SignalCommand
     {
         return false;
     }
+
+    /**
+     * Calls the native wrapper directly, bypassing the availability check.
+     *
+     * @param (callable(int): void)|null $handler
+     */
+    public function testSetWindowsCtrlHandler(?callable $handler, bool $add): bool
+    {
+        return $this->setWindowsCtrlHandler($handler, $add);
+    }
 }
