@@ -18,11 +18,20 @@ use Closure;
 /**
  * Signal Trait
  *
- * Provides PCNTL signal handling capabilities for CLI commands.
- * Requires the PCNTL extension (Unix only).
+ * Provides signal handling capabilities for CLI commands.
+ *
+ * On Unix it requires the PCNTL extension. On Windows, where PCNTL does not
+ * exist, only Ctrl+C and Ctrl+Break are supported, through
+ * `sapi_windows_set_ctrl_handler()`. Both are reported as SIGINT (2).
  */
 trait SignalTrait
 {
+    /**
+     * The number of SIGINT on every platform that defines it. The SIG*
+     * constants come from the PCNTL extension, which Windows does not have.
+     */
+    private const INTERRUPT_SIGNAL = 2;
+
     /**
      * Whether the process should continue running (false = termination requested).
      */
@@ -46,6 +55,11 @@ trait SignalTrait
      * @var array<int, string>
      */
     private array $signalMethodMap = [];
+
+    /**
+     * Whether the Windows console control handler is registered.
+     */
+    private bool $windowsCtrlHandlerRegistered = false;
 
     /**
      * Cached result of PCNTL extension availability.
@@ -87,7 +101,45 @@ trait SignalTrait
     }
 
     /**
+     * Check if the Windows console control handler is available.
+     *
+     * It is the Windows counterpart of PCNTL.
+     */
+    protected function isWindowsCtrlHandlerAvailable(): bool
+    {
+        // Every Windows build defines the function, but PHP throws an Error when
+        // it is called outside a console SAPI (`cli`, `cli-server`), for example
+        // by a command run through `command()` from a web request.
+        return is_windows()
+            && str_starts_with(PHP_SAPI, 'cli')
+            && function_exists('sapi_windows_set_ctrl_handler');
+    }
+
+    /**
+     * Add or remove the Windows console control handler.
+     *
+     * Wraps `sapi_windows_set_ctrl_handler()` so it can be replaced in tests,
+     * as the function is only available on Windows.
+     *
+     * Removing a handler leaves PHP holding the callable it was given. Passing
+     * `null` with `$add` set to `false` afterwards releases it.
+     *
+     * @param (callable(int): void)|null $handler
+     */
+    protected function setWindowsCtrlHandler(?callable $handler, bool $add): bool
+    {
+        if (! function_exists('sapi_windows_set_ctrl_handler')) {
+            return false;
+        }
+
+        return sapi_windows_set_ctrl_handler($handler, $add); // @codeCoverageIgnore
+    }
+
+    /**
      * Register signal handlers.
+     *
+     * On Windows the SIG* constants are not available, so call it without
+     * arguments or pass `2`. Any other signal is ignored.
      *
      * @param list<int>          $signals   List of signals to handle
      * @param array<int, string> $methodMap Optional signal-to-method mapping
@@ -97,6 +149,10 @@ trait SignalTrait
         array $methodMap = [],
     ): void {
         if (! $this->isPcntlAvailable()) {
+            if ($this->isWindowsCtrlHandlerAvailable()) {
+                $this->registerWindowsCtrlHandler($signals, $methodMap);
+            }
+
             return;
         }
 
@@ -129,6 +185,48 @@ trait SignalTrait
                 CLI::write(lang('CLI.signals.failedSignal', [$signal]), 'red');
             }
         }
+    }
+
+    /**
+     * Register the Windows console control handler.
+     *
+     * @param list<int>          $signals   List of signals to handle
+     * @param array<int, string> $methodMap Optional signal-to-method mapping
+     */
+    private function registerWindowsCtrlHandler(array $signals, array $methodMap): void
+    {
+        if ($signals !== [] && ! in_array(self::INTERRUPT_SIGNAL, $signals, true)) {
+            return;
+        }
+
+        $this->signalMethodMap = $methodMap;
+
+        if ($this->windowsCtrlHandlerRegistered) {
+            return;
+        }
+
+        // PHP resolves a callable stored by the native API in the scope it interrupts,
+        // where the protected method may not be accessible. A Closure is bound already.
+        if ($this->setWindowsCtrlHandler($this->handleWindowsCtrlEvent(...), true)) {
+            $this->windowsCtrlHandlerRegistered = true;
+            $this->registeredSignals[]          = self::INTERRUPT_SIGNAL;
+        } else {
+            CLI::write(lang('CLI.signals.failedSignal', [$this->getSignalName(self::INTERRUPT_SIGNAL)]), 'red');
+        }
+    }
+
+    /**
+     * Handle a Windows console control event.
+     *
+     * Windows hands the handler no signal number, so the event is reported as SIGINT.
+     * Like on Unix, the process is no longer stopped by the event, and the command
+     * is expected to check `shouldTerminate()` and exit by itself.
+     */
+    protected function handleWindowsCtrlEvent(int $event): void
+    {
+        $this->callCustomHandler(self::INTERRUPT_SIGNAL);
+
+        $this->running = false;
     }
 
     /**
@@ -302,6 +400,11 @@ trait SignalTrait
      */
     protected function getSignalName(int $signal): string
     {
+        // The SIG* constants come from PCNTL, which Windows does not have.
+        if (! $this->isPcntlAvailable()) {
+            return $signal === self::INTERRUPT_SIGNAL ? 'SIGINT' : "Signal {$signal}";
+        }
+
         return match ($signal) {
             SIGTERM => 'SIGTERM',
             SIGINT  => 'SIGINT',
@@ -322,6 +425,23 @@ trait SignalTrait
      */
     protected function unregisterSignals(): void
     {
+        if ($this->windowsCtrlHandlerRegistered) {
+            // Detaching needs a callable, which PHP then keeps, along with this object.
+            // Passing null afterwards releases it and leaves Ctrl+C at its default.
+            if (! $this->setWindowsCtrlHandler($this->handleWindowsCtrlEvent(...), false)) {
+                // The handler may still be installed: keep the state so removal can be retried.
+                return;
+            }
+
+            $this->setWindowsCtrlHandler(null, false);
+
+            $this->windowsCtrlHandlerRegistered = false;
+            $this->registeredSignals            = [];
+            $this->signalMethodMap              = [];
+
+            return;
+        }
+
         if (! $this->isPcntlAvailable()) {
             return;
         }

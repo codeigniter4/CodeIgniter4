@@ -25,4 +25,23 @@ class SignalCommandNoPcntl extends SignalCommand
     {
         return false;
     }
+
+    /**
+     * Override to simulate no Windows console control handler either,
+     * so that no native handler is installed when this runs on Windows.
+     */
+    protected function isWindowsCtrlHandlerAvailable(): bool
+    {
+        return false;
+    }
+
+    /**
+     * Calls the native wrapper directly, bypassing the availability check.
+     *
+     * @param (callable(int): void)|null $handler
+     */
+    public function testSetWindowsCtrlHandler(?callable $handler, bool $add): bool
+    {
+        return $this->setWindowsCtrlHandler($handler, $add);
+    }
 }
