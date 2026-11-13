@@ -452,8 +452,15 @@ class Forge extends BaseForge
      */
     protected function _dropKeyAsConstraint(string $table, string $constraintName): string
     {
-        return "SELECT CONSTRAINT_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
-                WHERE TABLE_NAME= '" . trim($table, '"') . "'
-                AND CONSTRAINT_NAME = '" . trim($constraintName, '"') . "'";
+        return sprintf(
+            <<<'SQL'
+                SELECT CONSTRAINT_NAME
+                FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+                WHERE TABLE_NAME = %s
+                    AND CONSTRAINT_NAME = %s
+                SQL,
+            $this->db->escape(trim($table, '"')),
+            $this->db->escape(trim($constraintName, '"')),
+        );
     }
 }
