@@ -333,6 +333,36 @@ final class AlterTableTest extends CIUnitTestCase
         $forge->dropTable('bandit_fk', true);
     }
 
+    public function testDropIndexesWithSpecialIndexName(): void
+    {
+        $this->createTable('special_table');
+        $this->db->query("CREATE INDEX `special'index` ON `special_table`(`name`)");
+
+        $result = $this->table
+            ->fromTable('special_table')
+            ->dropColumn('email')
+            ->run();
+
+        $this->assertTrue($result);
+        $this->forge->dropTable('special_table', true);
+        $this->forge->dropTable('special_table_fk', true);
+    }
+
+    public function testDropIndexesWithParenthesesInIndexName(): void
+    {
+        $this->createTable('special_table');
+        $this->db->query('CREATE INDEX `special(index)` ON `special_table`(`email`)');
+
+        $result = $this->table
+            ->fromTable('special_table')
+            ->dropColumn('email')
+            ->run();
+
+        $this->assertTrue($result);
+        $this->forge->dropTable('special_table', true);
+        $this->forge->dropTable('special_table_fk', true);
+    }
+
     protected function createTable(string $tableName = 'foo'): void
     {
         // Create support table for foreign keys
