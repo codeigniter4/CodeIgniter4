@@ -780,3 +780,86 @@ For scalar values (strings, integers, floats, booleans, null), the Entity uses d
 #### Objects and Arrays
 
 For objects and arrays, the Entity JSON-encodes and normalizes the values for comparison. This means that modifications to nested structures, object properties, array elements, nested entities (using `toRawArray()`), enums (`BackedEnum` and `UnitEnum`), datetime objects (`DateTimeInterface`), collections (`Traversable`), value objects with `__toString()`, and objects implementing `JsonSerializable` or `toArray()` will be properly detected.
+
+## Merging Attributes During Injection
+
+!!! success "Available from version 4.8.0"
+
+When a model loads a row into an entity, it calls `injectRawData()` with the selected columns. By default, this replaces the entity's attributes. In the example below, loading only `id` and `role` would drop both the `isBanned` default and the `profile` object created by the constructor.
+
+Set `$mergeAttributesOnInject` to `true` on your entity class to keep existing values for keys the row omits. For keys the row supplies, the incoming value takes precedence, including `null`. The entity also accepts incoming keys that were never declared in `$attributes`.
+
+```php
+<?php
+
+namespace App\Entities;
+
+use CodeIgniter\Entity\Entity;
+use stdClass;
+
+class User extends Entity
+{
+    protected $attributes = [
+        'id'       => null,
+        'role'     => 'user',
+        'isBanned' => '0',
+        'profile'  => null,
+    ];
+    public function __construct(?array $data = null)
+    {
+        parent::__construct($data);
+        $this->attributes['profile'] = new stdClass();
+    }
+}
+
+// $mergeAttributesOnInject = false
+// 1. Manual user creation
+$user = new User();
+
+// The initial values are exactly there
+var_dump(
+    $user->role,                        // 'user'
+    $user->isBanned,                    // '0'
+    $user->toArray()['isBanned'],       // '0'
+    $user->profile instanceof stdClass, // true
+    $user->hasChanged(),                // true
+);
+
+// 2. The result does not contain these values: "isBanned", "profile"
+$user2 = model(UserModel::class)->select('`id`, `role`')->find(10);
+// or manually
+$user2 = (new User())->injectRawData([
+    'id'   => 10,
+    'role' => 'admin',
+]);
+
+var_dump(
+    $user2->role,                                    // 'admin'
+    $user2->isBanned,                                // null
+    array_key_exists('isBanned', $user2->toArray()), // false
+    $user2->profile instanceof stdClass,            // false
+    $user2->hasChanged(),                            // false
+);
+
+// $mergeAttributesOnInject = true
+$user3 = (new User())->injectRawData([
+    'id'   => 15,
+    'role' => 'admin',
+]);
+
+var_dump(
+    $user3->role,                         // 'admin'
+    $user3->isBanned,                     // '0'
+    $user3->toArray()['isBanned'],        // '0'
+    $user3->profile instanceof stdClass, // true
+    $user3->hasChanged(),                  // false
+);
+```
+
+The direct call to `injectRawData()` illustrates what happens when a model configured to return `User` entities loads a row containing only `id` and `role`. The entity keeps the `isBanned` default and the `profile` object. It records the merged attributes as its original state, so `hasChanged()` returns `false` immediately after loading, even though the incoming role differs from the default.
+
+### Updating a Partially Loaded Entity
+
+An attribute retained after loading may differ from the value stored in the database. For example, suppose the `isBanned` column contains `'1'`. If the query selects only `id` and `role`, the loaded entity retains its default of `'0'` for `isBanned`.
+
+With [`$updateOnlyChanged`](model.md#updateonlychanged) enabled (the default), changing `role` and updating the entity leaves the stored `isBanned` value alone. With `$updateOnlyChanged` disabled, the same update can also write `'0'` to `isBanned` if the field is in [`$allowedFields`](model.md#allowedfields). To update just the role, pass `['role' => $newRole]` to the model's `update()` method.
