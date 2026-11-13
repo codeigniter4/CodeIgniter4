@@ -30,6 +30,13 @@ final readonly class DataConverter
     private DataCaster $dataCaster;
 
     /**
+     * List of field names defined in $types.
+     *
+     * @var list<string>
+     */
+    private array $typeFields;
+
+    /**
      * @param array<string, class-string> $castHandlers Custom convert handlers
      *
      * @internal
@@ -62,6 +69,7 @@ final readonly class DataConverter
         private Closure|string|null $extractor = null,
     ) {
         $this->dataCaster = new DataCaster($castHandlers, $types, $this->helper);
+        $this->typeFields = array_keys($types);
     }
 
     /**
@@ -75,7 +83,7 @@ final readonly class DataConverter
      */
     public function fromDataSource(array $data): array
     {
-        foreach (array_keys($this->types) as $field) {
+        foreach ($this->typeFields as $field) {
             if (array_key_exists($field, $data)) {
                 $data[$field] = $this->dataCaster->castAs($data[$field], $field, 'get');
             }
@@ -95,7 +103,7 @@ final readonly class DataConverter
      */
     public function toDataSource(array $phpData): array
     {
-        foreach (array_keys($this->types) as $field) {
+        foreach ($this->typeFields as $field) {
             if (array_key_exists($field, $phpData)) {
                 $phpData[$field] = $this->dataCaster->castAs($phpData[$field], $field, 'set');
             }
