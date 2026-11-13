@@ -453,19 +453,31 @@ final class TextHelperTest extends CIUnitTestCase
     public function testExcerptPhraseNotFound(): void
     {
         $result = ' Once upon a time, a framework had no tests. It sad  So some nice people began to write tests. The more time that went on, the happier it became. ...';
-        $this->assertSame($result, excerpt($this->longString, 'nonexistent'));
+        $this->assertSame(
+            $result,
+            excerpt($this->longString, 'nonexistent'),
+        );
 
         $multibyteResult = ' Давным-давно во фреймворке не было тестов. Это печ льно. И вот несколько хороших людей начали писать тесты. Чем больше времени проходило, тем ...';
-        $this->assertSame($multibyteResult, excerpt($this->mbLongString, 'несуществующее'));
+        $this->assertSame(
+            $multibyteResult,
+            excerpt($this->mbLongString, 'несуществующее'),
+        );
     }
 
     public function testExcerptOddRadius(): void
     {
         $result = ' Once upon a time, a framework had no tests. It sad  So some nice people began to write tests. The more time that went on, the happier it became. ...';
-        $this->assertSame($result, excerpt($this->longString, null, 101));
+        $this->assertSame(
+            $result,
+            excerpt($this->longString, null, 101),
+        );
 
         $multibyteResult = ' Давным-давно во фреймворке не было тестов. Это печ льно. И вот несколько хороших людей начали писать тесты. Чем больше времени проходило, тем ...';
-        $this->assertSame($multibyteResult, excerpt($this->mbLongString, null, 101));
+        $this->assertSame(
+            $multibyteResult,
+            excerpt($this->mbLongString, null, 101),
+        );
     }
 
     public function testAlternator(): void
