@@ -86,7 +86,7 @@ This example would take the same image and first fix any mobile phone orientatio
     The parameter `$quality` for WebP can be used since v4.4.0.
 
 !!! note "Note"
-    When using ImageMagick, the target path passed to `save()` determines the output format by its extension. ImageMagick may also interpret explicit format prefixes like `jpg:filename.png`. If the target path is based on user input, validate it against the formats your application allows, including any format prefix or extension.
+    When using ImageMagick, the target path passed to `save()` determines the output format by its extension. If the target has no extension or an unsupported extension, the handler falls back to the image's `$imageType`. ImageMagick may also interpret explicit format prefixes like `jpg:filename.png`. If the target path is based on user input, validate it against the formats your application allows, including any format prefix or extension.
 
 ```php
 <?php
@@ -192,7 +192,7 @@ convert(int $imageType)
     ```
 
 !!! note "Note"
-    ImageMagick already saves files in the type indicated by their extension, ignoring `$imageType`.
+    When using ImageMagick, a supported target filename extension determines the output format and takes precedence over `$imageType`. If the target has no extension or an unsupported extension, the handler uses `$imageType` instead.
 
 ### Fitting Images
 

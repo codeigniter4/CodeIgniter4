@@ -321,9 +321,20 @@ class ImageMagickHandler extends BaseHandler
         $this->resource->setImageCompressionQuality($quality);
 
         $extension = pathinfo($target, PATHINFO_EXTENSION);
-        $this->resource->setImageFormat($extension);
 
         try {
+            $formats = Imagick::queryFormats();
+
+            if ($extension !== '' && in_array(strtoupper($extension), $formats, true)) {
+                $this->resource->setImageFormat($extension);
+            } elseif ($this->image()->imageType !== 0) {
+                $format = image_type_to_extension($this->image()->imageType, false);
+
+                if ($format !== false && in_array(strtoupper($format), $formats, true)) {
+                    $this->resource->setImageFormat($format);
+                }
+            }
+
             $result = $this->resource->writeImage($target);
 
             chmod($target, $this->filePermissions);
