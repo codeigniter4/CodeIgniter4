@@ -129,8 +129,10 @@ trait SignalTrait
      */
     protected function setWindowsCtrlHandler(?callable $handler, bool $add): bool
     {
-        // Static analysis on other platforms does not know the function.
-        /** @psalm-suppress UndefinedFunction */
+        if (! function_exists('sapi_windows_set_ctrl_handler')) {
+            return false;
+        }
+
         return sapi_windows_set_ctrl_handler($handler, $add); // @codeCoverageIgnore
     }
 
