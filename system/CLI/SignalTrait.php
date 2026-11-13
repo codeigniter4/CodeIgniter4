@@ -29,7 +29,6 @@ trait SignalTrait
     /**
      * The number of SIGINT on every platform that defines it. The SIG*
      * constants come from the PCNTL extension, which Windows does not have.
-     * Ctrl+C and Ctrl+Break are reported to handlers as this value.
      */
     private const INTERRUPT_SIGNAL = 2;
 
@@ -104,7 +103,7 @@ trait SignalTrait
     /**
      * Check if the Windows console control handler is available.
      *
-     * It is the Windows counterpart of PCNTL, and handles Ctrl+C and Ctrl+Break.
+     * It is the Windows counterpart of PCNTL.
      */
     protected function isWindowsCtrlHandlerAvailable(): bool
     {
@@ -139,9 +138,8 @@ trait SignalTrait
     /**
      * Register signal handlers.
      *
-     * On Windows only Ctrl+C and Ctrl+Break can be handled. They are reported
-     * as SIGINT (2), and the SIG* constants are not available there, so call it
-     * without arguments or pass `2`. Any other signal is ignored.
+     * On Windows the SIG* constants are not available, so call it without
+     * arguments or pass `2`. Any other signal is ignored.
      *
      * @param list<int>          $signals   List of signals to handle
      * @param array<int, string> $methodMap Optional signal-to-method mapping
@@ -190,7 +188,7 @@ trait SignalTrait
     }
 
     /**
-     * Register the handler for Ctrl+C and Ctrl+Break on Windows.
+     * Register the Windows console control handler.
      *
      * @param list<int>          $signals   List of signals to handle
      * @param array<int, string> $methodMap Optional signal-to-method mapping
@@ -218,7 +216,7 @@ trait SignalTrait
     }
 
     /**
-     * Handle a Windows console control event (Ctrl+C or Ctrl+Break).
+     * Handle a Windows console control event.
      *
      * Windows hands the handler no signal number, so the event is reported as SIGINT.
      * Like on Unix, the process is no longer stopped by the event, and the command
