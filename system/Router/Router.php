@@ -477,7 +477,6 @@ class Router implements RouterInterface
                     unset($matched);
                 }
 
-                // Is this route supposed to redirect to another?
                 if ($this->collection->isRedirect($matchedKey)) {
                     // replacing matched route groups with references: post/([0-9]+) -> post/$1
                     $redirectTo = preg_replace_callback('/(\([^\(]+\))/', static function (): string {
