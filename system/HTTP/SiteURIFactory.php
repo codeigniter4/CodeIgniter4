@@ -160,7 +160,7 @@ final readonly class SiteURIFactory
         if (trim($path, '/') === '' && str_starts_with($query, '/')) {
             $parts    = explode('?', $query, 2);
             $path     = $parts[0];
-            $newQuery = $query[1] ?? '';
+            $newQuery = $parts[1] ?? '';
 
             $this->superglobals->setServer('QUERY_STRING', $newQuery);
         } else {
