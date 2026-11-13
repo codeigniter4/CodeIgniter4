@@ -1062,6 +1062,13 @@ final class RouterTest extends CIUnitTestCase
             'a/b/c/d/e/f/g/h/i/j',
             ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', ''],
         ];
+
+        yield 'single capture with out-of-range multi-digit reference' => [
+            'product/(:segment)',
+            'Catalog::lookup/$10',
+            'product/foo',
+            [''],
+        ];
     }
 
     public function testLogsRouteAttributeInstantiationFailureWithContext(): void
