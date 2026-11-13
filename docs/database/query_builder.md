@@ -729,6 +729,18 @@ $builder->groupBy(['title', 'date']);
 // Produces: GROUP BY title, date
 ```
 
+!!! warning "Warning"
+    The first parameter is treated as a field name or SQL expression, not as a value. Identifier protection does not prevent SQL injection here, because expressions such as subqueries and function calls are passed through unchanged. Never pass user-supplied data to `groupBy()` without validating it against a list of allowed columns.
+
+    ```php
+    <?php
+
+    $allowed = ['title', 'date', 'category'];
+    $group   = in_array($group, $allowed, true) ? $group : 'title';
+
+    $builder->groupBy($group);
+    ```
+
 #### $builder->distinct()
 
 Adds the **DISTINCT** keyword to a query:
@@ -1019,6 +1031,18 @@ $builder->orderBy('title', 'DESC');
 $builder->orderBy('name', 'ASC');
 // Produces: ORDER BY `title` DESC, `name` ASC
 ```
+
+!!! warning "Warning"
+    The first parameter is treated as a field name or SQL expression, not as a value. Identifier protection does not prevent SQL injection here, because expressions such as subqueries and function calls are passed through unchanged. Never pass user-supplied data, such as a sort column from the query string, to `orderBy()` without validating it against a list of allowed columns.
+
+    ```php
+    <?php
+
+    $allowed = ['title', 'name', 'created_at'];
+    $sort    = in_array($sort, $allowed, true) ? $sort : 'created_at';
+
+    $builder->orderBy($sort, $direction === 'asc' ? 'ASC' : 'DESC');
+    ```
 
 If you choose the `RANDOM` direction option, then the first parameter will be ignored, unless you specify a numeric seed value.
 
