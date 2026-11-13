@@ -461,6 +461,13 @@ echo form_dropdown('shirts', $options, 'large', $js);
 
 If the array passed as `$options` is a multidimensional array, then `form_dropdown()` will produce an &lt;optgroup> with the array key as the label.
 
+##### Automatic Selection from POST
+
+If no value is passed to `$selected` (or if it is an empty array), `form_dropdown()` and `form_multiselect()` will attempt to infer the selected option(s) directly from the current request's `$_POST` data using the field name (trailing `[]` brackets are automatically stripped).
+
+!!! note "Note"
+    This fallback only inspects `$_POST` from the current request. It does not restore old input after a redirect with `redirect()->withInput()`. To restore submitted values after a redirect, pass `set_value()` or `old()` to `$selected` explicitly.
+
 #### form_multiselect([$name = ''[, $options = [][, $selected = [][, $extra = '']]]])
 
 - **Parameters**  
@@ -475,7 +482,25 @@ If the array passed as `$options` is a multidimensional array, then `form_dropdo
 
 Lets you create a standard multiselect field. The first parameter will contain the name of the field, the second parameter will contain an associative array of options, and the third parameter will contain the value or values you wish to be selected.
 
-The parameter usage is identical to using `form_dropdown()` above, except, of course, that the name of the field will need to use POST array syntax, e.g., foo[].
+The parameter usage is identical to using `form_dropdown()` above, except, of course, that the name of the field will need to use POST array syntax, e.g., `shirts[]`.
+
+If `$selected` is omitted, selections are automatically inferred from `$_POST['shirts']`:
+
+```php
+<?php
+
+// If $_POST['shirts'] contains ['small', 'large']:
+echo form_multiselect('shirts[]', $options);
+/*
+ * Would produce:
+ * <select name="shirts[]" multiple="multiple">
+ *     <option value="small" selected="selected">Small Shirt</option>
+ *     <option value="med">Medium Shirt</option>
+ *     <option value="large" selected="selected">Large Shirt</option>
+ *     <option value="xlarge">Extra Large Shirt</option>
+ * </select>
+ */
+```
 
 #### form_fieldset([$legend_text = ''[, $attributes = []]])
 
