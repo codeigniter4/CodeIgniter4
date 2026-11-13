@@ -146,7 +146,9 @@ final class ArrayHelper
         $currentArray = $array;
 
         // Grab the current index
-        while (($currentIndex = array_shift($indexes)) !== null) {
+        while ($indexes !== []) {
+            $currentIndex = array_shift($indexes);
+
             if ($currentIndex === '*') {
                 $currentIndex = array_shift($indexes);
 
