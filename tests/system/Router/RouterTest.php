@@ -949,27 +949,28 @@ final class RouterTest extends CIUnitTestCase
         string $url,
         string $expectedPath,
         string $alias,
+        int $status = 302,
     ): void {
         $collection = clone $this->collection;
         $collection->resetRoutes();
 
         $collection->get($route, 'Controller::method', ['as' => $alias]);
-        $collection->addRedirect($redirectFrom, $redirectTo);
+        $collection->addRedirect($redirectFrom, $redirectTo, $status);
 
         $this->expectException(RedirectException::class);
         $this->expectExceptionMessage($expectedPath);
-        $this->expectExceptionCode(302);
+        $this->expectExceptionCode($status);
 
         $router = new Router($collection, $this->request);
         $router->handle($url);
     }
 
     /**
-     * @return iterable<int, array{string, string, string, string, string, string}>
+     * @return iterable<int, array{string, string, string, string, string, string, 6?: int}>
      */
     public static function provideRedirectRoute(): iterable
     {
-        // [$route, $redirectFrom, $redirectTo, $url, $expectedPath, $alias]
+        // [$route, $redirectFrom, $redirectTo, $url, $expectedPath, $alias, $status]
         return [
             ['posts', 'articles', 'posts', '/articles', 'posts', 'alias'],
             ['posts', 'articles', 'alias', '/articles', 'posts', 'alias'],
@@ -979,6 +980,7 @@ final class RouterTest extends CIUnitTestCase
             ['post/(:segment)/comment/(:any)', 'article/(:num)/(:any)', 'alias', '/article/1/2', 'post/1/comment/2', 'alias'],
             ['posts', '{locale}/articles', 'posts', '/en/articles', 'posts', 'alias'],
             ['{locale}/posts', '{locale}/articles', '{locale}/posts', '/en/articles', 'en/posts', 'alias'],
+            ['{locale}/posts', '{locale}/articles', '{locale}/posts', '/en/articles', 'en/posts', 'alias', 301],
             ['{locale}/posts', '{locale}/articles', 'alias', '/en/articles', 'en/posts', 'alias'],
             ['{locale}/post/(:num)', '{locale}/article/(:num)', '{locale}/post/$1', '/en/article/1', 'en/post/1', 'alias'],
             ['{locale}/post/(:num)', '{locale}/article/(:num)', 'alias', '/en/article/1', 'en/post/1', 'alias'],
