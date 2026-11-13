@@ -1021,6 +1021,9 @@ $routes->get('product/(:any)', 'Catalog::productLookup/$1');
 
 will match **product/123**, **product/123/456**, **product/123/456/789** and so on. And if the URI is **product/123/456**, `123/456` will be passed to the first parameter of the `Catalog::productLookup()` method.
 
+!!! note "Note"
+    When this option is enabled, consecutive digits in back-references (such as `$10`) are treated as a single reference rather than `$1` followed by `0`. If a back-reference does not have a matching captured group, it resolves to an empty string (`''`).
+
 ## Auto Routing (Improved)
 
 !!! success "Available from version 4.2.0"
