@@ -37,21 +37,24 @@ These signals are handled directly by the kernel and will terminate or suspend y
 Signal handling requires:
 
 - **Unix-based system** (Linux, macOS, BSD) - see [Windows](#windows) for Windows
-- **PCNTL extension** - for signal registration and handling
-- **POSIX extension** - required for pause/resume functionality (SIGTSTP/SIGCONT)
+- **PCNTL extension** (Unix only) - for signal registration and handling
+- **POSIX extension** (Unix only) - required for pause/resume functionality (SIGTSTP/SIGCONT)
 
 !!! note "Note"
     On systems without these extensions, the SignalTrait will gracefully degrade and disable signal handling.
 
 ### Windows
 
-Windows has no PCNTL extension and no Unix signals. Since v4.8.0, `SignalTrait` handles the one thing Windows can deliver to a PHP script: the console control events produced by **Ctrl+C** and **Ctrl+Break**. They are handled through PHP's `sapi_windows_set_ctrl_handler()` and reported to your command as `SIGINT` (`2`), so `isRunning()`, `shouldTerminate()`, custom handlers, and `onInterruption()` work as they do on Unix.
+!!! success "Available from version 4.8.0"
+    Ctrl+C and Ctrl+Break are handled on Windows.
+
+Windows has no PCNTL extension and no Unix signals. `SignalTrait` handles the one thing Windows can deliver to a PHP script: the console control events produced by **Ctrl+C** and **Ctrl+Break**. They are handled through PHP's `sapi_windows_set_ctrl_handler()` and reported to your command as `SIGINT` (`2`), so `isRunning()`, `shouldTerminate()`, custom handlers, and `onInterruption()` work as they do on Unix.
 
 - Call `registerSignals()` without arguments. The `SIG*` constants come from the PCNTL extension, which is not available on Windows. If you pass a list, it must contain `2`. Every other signal is ignored.
 - To map the event to your own method, use `2` as the key: `$this->registerSignals([], [2 => 'handleInterrupt']);`.
-- `withSignalsBlocked()` runs the operation, but cannot block anything. The event does not stop the process by itself once a handler is registered, so a critical section is still completed. Your handler runs when the event arrives.
+- `withSignalsBlocked()` runs the operation without blocking console events. Your handler can run during the operation, as soon as the event arrives.
 - Pause and resume (`SIGTSTP` / `SIGCONT`), and every other signal, do not exist on Windows.
-- PHP only accepts the handler in a console. When a command runs inside a web request, for example through `command()` in a controller, `registerSignals()` does nothing.
+- Windows console control handling is available when PHP runs under `cli` or `cli-server`. On other SAPIs, for example when a command runs through `command()` in a controller, `registerSignals()` does nothing.
 
 !!! important "Important"
     Once a handler is registered, Ctrl+C and Ctrl+Break no longer end the process. Your command must check `shouldTerminate()` and return, as on Unix.
@@ -504,7 +507,7 @@ $this->registerSignals(
 ```
 
 !!! note "Note"
-    Requires the PCNTL extension. On Windows, only Ctrl+C and Ctrl+Break are handled, as `SIGINT` (`2`). See [Windows](#windows).
+    On Unix, requires the PCNTL extension. On Windows, only Ctrl+C and Ctrl+Break are handled, as `SIGINT` (`2`). See [Windows](#windows).
 
 #### isRunning()
 
