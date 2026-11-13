@@ -785,15 +785,17 @@ For objects and arrays, the Entity JSON-encodes and normalizes the values for co
 
 !!! success "Available from version 4.8.0"
 
-Your entity can have the initial state and contains all the necessary keys in the `$attributes`. When working with objects, you can rely on the fact that all properties are available. However, attributes missing from the query result are dropped, so reading them later fails or returns `null`.
+When a model loads a row into an entity, it calls `injectRawData()` with the selected columns. By default, this replaces the entity's attributes. In the example below, loading only `id` and `role` would drop both the `isBanned` default and the `profile` object created by the constructor.
 
-Suppose there is no `isBanned` field in the table and the `profile` property is virtual and filled in another way.
+Set `$mergeAttributesOnInject` to `true` on your entity class to keep existing values for keys the row omits. For keys the row supplies, the incoming value takes precedence, including `null`. The entity also accepts incoming keys that were never declared in `$attributes`.
 
-By default, with the `$mergeAttributesOnInject = false` you will get errors because by initialized properties are overwritten in `injectRawData()`.
-
-<!-- lint-ignore -->
 ```php
 <?php
+
+namespace App\Entities;
+
+use CodeIgniter\Entity\Entity;
+use stdClass;
 
 class User extends Entity
 {
@@ -806,60 +808,58 @@ class User extends Entity
     public function __construct(?array $data = null)
     {
         parent::__construct($data);
-        $this->attributes['profile'] = new \stdClass();
+        $this->attributes['profile'] = new stdClass();
     }
 }
 
-// Manual user creation
+// $mergeAttributesOnInject = false
+// 1. Manual user creation
 $user = new User();
 
 // The initial values are exactly there
 var_dump(
+    $user->role,                        // 'user'
     $user->isBanned,                    // '0'
     $user->toArray()['isBanned'],       // '0'
     $user->profile instanceof stdClass, // true
     $user->hasChanged(),                // true
 );
 
-// The result does not contain these values: "isBanned", "profile"
+// 2. The result does not contain these values: "isBanned", "profile"
 $user2 = model(UserModel::class)->select('`id`, `role`')->find(10);
 // or manually
 $user2 = (new User())->injectRawData([
     'id'   => 10,
-    'role' => 'user',
+    'role' => 'admin',
 ]);
 
 var_dump(
+    $user2->role,                                    // 'admin'
     $user2->isBanned,                                // null
     array_key_exists('isBanned', $user2->toArray()), // false
-    $user2->profile instanceof \stdClass,            // false
+    $user2->profile instanceof stdClass,            // false
     $user2->hasChanged(),                            // false
 );
-```
 
-Setting the `$mergeAttributesOnInject = true` flag changes the behavior — it keeps the defaults from `$attributes`.
-After `injectRawData()`, the entire merged state becomes the entity's original state, including retained defaults. Consequently, `hasChanged()` returns `false` immediately after injection, even if an injected value differs from the default declared in `$attributes`.
-
-<!-- lint-ignore -->
-```php
-<?php
-$user = (new User())->injectRawData([
+// $mergeAttributesOnInject = true
+$user3 = (new User())->injectRawData([
     'id'   => 15,
-    'role' => 'user',
+    'role' => 'admin',
 ]);
 
 var_dump(
-    $user->isBanned,                     // '0'
-    $user->toArray()['isBanned'],        // '0'
-    $user->profile instanceof \stdClass, // true
-    $user->hasChanged()                  // false
+    $user3->role,                         // 'admin'
+    $user3->isBanned,                     // '0'
+    $user3->toArray()['isBanned'],        // '0'
+    $user3->profile instanceof stdClass, // true
+    $user3->hasChanged(),                  // false
 );
 ```
 
-!!! note "Note"
-    The flag does not matter if you have not defined the keys in `$attributes`.
+The direct call to `injectRawData()` illustrates what happens when a model configured to return `User` entities loads a row containing only `id` and `role`. The entity keeps the `isBanned` default and the `profile` object. It records the merged attributes as its original state, so `hasChanged()` returns `false` immediately after loading, even though the incoming role differs from the default.
 
-Enabling this option also affects saving partially loaded entities. Suppose the entity defines `'isBanned' => '0'`, but the database row contains `'isBanned' = '1'`. If the model selects only `id` and `name`, the hydrated entity retains the default `'isBanned' = '0'`. With `Model::$updateOnlyChanged = false` and `isBanned` included in `$allowedFields`, changing `name` and saving this entity also overwrites the database `isBanned` with `'0'`, even though that column was never selected.
+### Updating a Partially Loaded Entity
 
-In both cases, all additional keys that are passed in will still be accessible on the
-entity object, even if they are not listed in `$attributes`.
+An attribute retained after loading may differ from the value stored in the database. For example, suppose the `isBanned` column contains `'1'`. If the query selects only `id` and `role`, the loaded entity retains its default of `'0'` for `isBanned`.
+
+With [`$updateOnlyChanged`](model.md#updateonlychanged) enabled (the default), changing `role` and updating the entity leaves the stored `isBanned` value alone. With `$updateOnlyChanged` disabled, the same update can also write `'0'` to `isBanned` if the field is in [`$allowedFields`](model.md#allowedfields). To update just the role, pass `['role' => $newRole]` to the model's `update()` method.
