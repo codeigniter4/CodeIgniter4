@@ -293,16 +293,14 @@ if (! function_exists('form_dropdown')) {
 
         // If no selected state was submitted we will attempt to set it automatically
         if ($selected === []) {
-            $superglobals = service('superglobals');
-            if (is_array($data)) {
-                $postValue = $superglobals->post($data['name'] ?? '');
-                if (isset($data['name']) && $postValue !== null) {
-                    $selected = [$postValue];
-                }
-            } else {
-                $postValue = $superglobals->post($data);
+            $name = is_array($data) ? ($data['name'] ?? '') : $data;
+            $name = str_ends_with($name, '[]') ? substr($name, 0, -2) : $name;
+
+            if ($name !== '') {
+                $postValue = service('superglobals')->post($name);
+
                 if ($postValue !== null) {
-                    $selected = [$postValue];
+                    $selected = is_array($postValue) ? $postValue : [$postValue];
                 }
             }
         }
