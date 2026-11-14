@@ -44,7 +44,7 @@ For more info, please see the [Security Library](../libraries/security.md) docum
 
 - **Return type**: `string`
 
-This is a security function that will strip image tags from a string. It leaves the image URL as plain text.
+This function replaces image tags with their `src` values and removes tags without `src`. It does not sanitize HTML or escape the returned values. Use appropriate escaping when displaying the result as text.
 
 Example:
 
