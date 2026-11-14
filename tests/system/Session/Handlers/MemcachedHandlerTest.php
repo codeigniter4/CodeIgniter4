@@ -231,4 +231,31 @@ final class MemcachedHandlerTest extends CIUnitTestCase
         $this->assertSame($newData, $handler2->read($newSessionId));
         $this->assertTrue($handler2->close());
     }
+
+    public function testReadDifferentSessionIdsWithoutCloseReleasesPreviousLock(): void
+    {
+        $handler = $this->getInstance();
+        $handler->open($this->sessionSavePath, $this->sessionName);
+
+        $firstSessionId  = $this->generateSessionId('bbbbbb');
+        $secondSessionId = $this->generateSessionId('cccccc');
+
+        $firstData = '__ci_last_regenerate|i:1664607454;user|s:5:"alice";';
+        $this->assertSame('', $handler->read($firstSessionId));
+        $this->assertTrue($handler->write($firstSessionId, $firstData));
+        $this->assertTrue($handler->close());
+
+        // Read two different session IDs on the same handler without closing between them
+        $this->assertTrue($handler->open($this->sessionSavePath, $this->sessionName));
+        $this->assertSame($firstData, $handler->read($firstSessionId));
+        $this->assertSame('', $handler->read($secondSessionId));
+
+        // Another handler should be able to acquire the lock for the first session ID
+        $handler2 = $this->getInstance();
+        $this->assertTrue($handler2->open($this->sessionSavePath, $this->sessionName));
+        $this->assertSame($firstData, $handler2->read($firstSessionId));
+        $this->assertTrue($handler2->close());
+
+        $this->assertTrue($handler->close());
+    }
 }
