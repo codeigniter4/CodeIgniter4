@@ -1008,4 +1008,18 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertStringContainsString('src="' . esc($src, 'html') . '"', $html);
         $this->assertStringContainsString('type="' . esc($type, 'html') . '"', $html);
     }
+
+    public function testMediaEscapingEncodesAmpersandOnce(): void
+    {
+        $src     = 'http://example.com/test.mp4?a=1&b=2';
+        $escaped = 'src="http://example.com/test.mp4?a=1&amp;b=2"';
+
+        $html = video($src);
+        $this->assertStringContainsString($escaped, $html);
+        $this->assertStringNotContainsString('&amp;amp;', $html);
+
+        $media = _media('video', [source($src, 'video/mp4')]);
+        $this->assertStringContainsString($escaped, $media);
+        $this->assertStringNotContainsString('&amp;amp;', $media);
+    }
 }
