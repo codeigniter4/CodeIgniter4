@@ -146,12 +146,18 @@ final class ArrayHelper
         $currentArray = $array;
 
         // Grab the current index
-        while ($currentIndex = array_shift($indexes)) {
+        while ($indexes !== []) {
+            $currentIndex = array_shift($indexes);
+
             if ($currentIndex === '*') {
                 $currentIndex = array_shift($indexes);
 
+                if (! is_array($currentArray)) {
+                    return false;
+                }
+
                 foreach ($currentArray as $item) {
-                    if (! array_key_exists($currentIndex, $item)) {
+                    if (! is_array($item) || ! array_key_exists($currentIndex, $item)) {
                         return false;
                     }
                 }
@@ -166,7 +172,7 @@ final class ArrayHelper
                 continue;
             }
 
-            if (! array_key_exists($currentIndex, $currentArray)) {
+            if (! is_array($currentArray) || ! array_key_exists($currentIndex, $currentArray)) {
                 return false;
             }
 
