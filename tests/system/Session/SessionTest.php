@@ -694,4 +694,37 @@ final class SessionTest extends CIUnitTestCase
         $this->assertCount(1, $cookies);
         $this->assertSame(0, $cookies[0]->getExpiresTimestamp());
     }
+
+    public function testStartUnsetsInvalidSessionCookieInSuperglobalsAndRequest(): void
+    {
+        service('superglobals')->setCookie('ci_session', 'invalid-session-id!');
+
+        $this->assertSame('invalid-session-id!', service('request')->getCookie('ci_session'));
+
+        $session = $this->getInstance();
+        $session->start();
+
+        $this->assertNull(service('superglobals')->cookie('ci_session'));
+        $this->assertNull(service('request')->getCookie('ci_session'));
+    }
+
+    public function testStartScopesInvalidSessionCookieRemovalToSessionCookie(): void
+    {
+        $superglobals = service('superglobals');
+        $superglobals->setCookie('ci_session', 'invalid-session-id!');
+        $superglobals->setCookie('other_cookie', 'initial-value');
+
+        $request = service('request');
+        $this->assertSame('initial-value', $request->getCookie('other_cookie'));
+
+        $superglobals->setCookie('other_cookie', 'updated-value');
+
+        $session = $this->getInstance();
+        $session->start();
+
+        $this->assertNull($superglobals->cookie('ci_session'));
+        $this->assertNull($request->getCookie('ci_session'));
+        $this->assertSame('initial-value', $request->getCookie('other_cookie'));
+        $this->assertSame('updated-value', $superglobals->cookie('other_cookie'));
+    }
 }
