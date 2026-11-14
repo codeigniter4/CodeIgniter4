@@ -154,19 +154,27 @@ class RedisHandler extends BaseHandler
             $expiresAt = Time::now()->getTimestamp() + $ttl;
 
             try {
-                return (bool) $this->redis->eval(
+                $result = $this->redis->eval(
                     self::SAVE_SCRIPT,
                     [$key, $expiresAt, $dataType, (string) $value],
                     1,
                 );
+
+                // phpredis returns false when EVAL is unavailable (e.g. disabled via
+                // rename-command). Integer 0 means HMSET failed inside the script and
+                // must not trigger the fallback.
+                if ($result !== false) {
+                    return (bool) $result;
+                }
             } catch (Throwable) {
                 // If EVAL is unsupported or blocked, fallback to sequential execution.
-                if (! $this->redis->hMset($key, $fields)) {
-                    return false;
-                }
-
-                return $this->redis->expireAt($key, $expiresAt);
             }
+
+            if (! $this->redis->hMset($key, $fields)) {
+                return false;
+            }
+
+            return $this->redis->expireAt($key, $expiresAt);
         }
 
         return (bool) $this->redis->hMset($key, $fields);

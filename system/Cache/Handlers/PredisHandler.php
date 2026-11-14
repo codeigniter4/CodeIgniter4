@@ -28,14 +28,12 @@ use Throwable;
 class PredisHandler extends BaseHandler
 {
     /**
-     * Lua script to conditionally execute HMSET and EXPIREAT in a single round trip.
-     * Prevents EXPIREAT from mutating TTL or expiring keys when HMSET fails (e.g. WRONGTYPE).
+     * Lua script to execute HMSET and EXPIREAT in a single round trip.
+     * An HMSET error (e.g. WRONGTYPE) aborts the script before EXPIREAT runs and
+     * is propagated to the client as an exception reply.
      */
     private const SAVE_SCRIPT = <<<'LUA'
-        local res = redis.pcall('HMSET', KEYS[1], '__ci_type', ARGV[2], '__ci_value', ARGV[3])
-        if type(res) == 'table' and res.err then
-            return 0
-        end
+        redis.call('HMSET', KEYS[1], '__ci_type', ARGV[2], '__ci_value', ARGV[3])
         redis.call('EXPIREAT', KEYS[1], ARGV[1])
         return 1
         LUA;

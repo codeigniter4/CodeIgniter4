@@ -286,4 +286,52 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
             $this->setPrivateProperty($this->handler, 'redis', $originalRedis);
         }
     }
+
+    public function testSaveFallbackWhenEvalReturnsFalse(): void
+    {
+        /** @var Redis $originalRedis */
+        $originalRedis = $this->getPrivateProperty($this->handler, 'redis');
+
+        $failingRedis = $this->createMock(Redis::class);
+        $failingRedis->expects($this->once())
+            ->method('eval')
+            ->willReturn(false);
+        $failingRedis->expects($this->once())
+            ->method('hMset')
+            ->willReturn(true);
+        $failingRedis->expects($this->once())
+            ->method('expireAt')
+            ->willReturn(true);
+
+        try {
+            $this->setPrivateProperty($this->handler, 'redis', $failingRedis);
+
+            $this->assertTrue($this->handler->save(self::$key1, 'fallback_value', 120));
+        } finally {
+            $this->setPrivateProperty($this->handler, 'redis', $originalRedis);
+        }
+    }
+
+    public function testSaveDoesNotFallbackWhenScriptReportsHmsetFailure(): void
+    {
+        /** @var Redis $originalRedis */
+        $originalRedis = $this->getPrivateProperty($this->handler, 'redis');
+
+        $failingRedis = $this->createMock(Redis::class);
+        $failingRedis->expects($this->once())
+            ->method('eval')
+            ->willReturn(0);
+        $failingRedis->expects($this->never())
+            ->method('hMset');
+        $failingRedis->expects($this->never())
+            ->method('expireAt');
+
+        try {
+            $this->setPrivateProperty($this->handler, 'redis', $failingRedis);
+
+            $this->assertFalse($this->handler->save(self::$key1, 'new_value', 60));
+        } finally {
+            $this->setPrivateProperty($this->handler, 'redis', $originalRedis);
+        }
+    }
 }

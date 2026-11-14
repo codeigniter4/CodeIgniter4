@@ -19,6 +19,7 @@ use CodeIgniter\I18n\Time;
 use Config\Cache;
 use PHPUnit\Framework\Attributes\Group;
 use Predis\Client;
+use Predis\Response\ServerException;
 use RuntimeException;
 
 /**
@@ -199,7 +200,7 @@ final class PredisHandlerTest extends AbstractHandlerTestCase
         $this->assertSame('value', $this->handler->get(self::$key1));
     }
 
-    public function testSaveFailsOnNonHashKeyPreservingValueAndTtl(): void
+    public function testSaveThrowsServerExceptionOnNonHashKeyPreservingValueAndTtl(): void
     {
         /** @var Client $redis */
         $redis = $this->getPrivateProperty($this->handler, 'redis');
@@ -208,7 +209,12 @@ final class PredisHandlerTest extends AbstractHandlerTestCase
         $redis->set($prefixedKey, 'raw_string_value');
         $redis->expire($prefixedKey, 300);
 
-        $this->assertFalse($this->handler->save('non_hash_key', 'new_value', 60));
+        try {
+            $this->handler->save('non_hash_key', 'new_value', 60);
+            $this->fail('Predis\Response\ServerException was not thrown for a non-hash key.');
+        } catch (ServerException $e) {
+            $this->assertSame('WRONGTYPE', $e->getErrorType());
+        }
 
         $this->assertSame('raw_string_value', $redis->get($prefixedKey));
         $this->assertGreaterThan(250, $redis->ttl($prefixedKey));
