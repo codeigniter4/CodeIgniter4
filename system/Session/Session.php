@@ -113,7 +113,17 @@ class Session implements SessionInterface
 
         if (isset($cookie) && (! is_string($cookie) || preg_match('#\A' . $this->sidRegexp . '\z#', $cookie) !== 1)) {
             $superglobals->unsetCookie($this->config->cookieName);
-            service('request')->setGlobal('cookie', $superglobals->getCookieArray());
+
+            $request        = service('request');
+            $requestCookies = $request->getCookie();
+
+            if (is_array($requestCookies) && array_key_exists($this->config->cookieName, $requestCookies)) {
+                $superglobalsCookies = $superglobals->getCookieArray();
+                unset($requestCookies[$this->config->cookieName]);
+                $request->setGlobal('cookie', $requestCookies);
+                $superglobals->setCookieArray($superglobalsCookies);
+            }
+
             $cookie = null;
         }
 
