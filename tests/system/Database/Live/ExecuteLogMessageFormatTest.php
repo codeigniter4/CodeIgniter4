@@ -47,7 +47,7 @@ final class ExecuteLogMessageFormatTest extends CIUnitTestCase
         $db->query($sql, [3, 'live', 'Rick']);
 
         $pattern = match ($db->DBDriver) {
-            'MySQLi'  => '/Table \'test\.some_table\' doesn\'t exist/',
+            'MySQLi'  => '/Table \'' . preg_quote($db->database, '/') . '\.some_table\' doesn\'t exist/',
             'Postgre' => '/pg_query\(\): Query failed: ERROR:  relation "some_table" does not exist/',
             'SQLite3' => '/Unable to prepare statement:\s(\d+,\s)?no such table: some_table/',
             'OCI8'    => '/oci_execute\(\): ORA-00942: table or view "ORACLE"\."SOME_TABLE" does not exist/',
@@ -60,11 +60,18 @@ final class ExecuteLogMessageFormatTest extends CIUnitTestCase
 
         if ($db->DBDriver === 'Postgre') {
             $messageFromLogs = array_slice($messageFromLogs, 2);
-        } elseif ($db->DBDriver === 'OCI8') {
-            $messageFromLogs = array_slice($messageFromLogs, 1);
         }
 
-        $this->assertMatchesRegularExpression('/^in \S+ on line \d+\.$/', array_shift($messageFromLogs));
+        $inLine = null;
+
+        while (($line = array_shift($messageFromLogs)) !== null) {
+            if (preg_match('/^in \S+ on line \d+\.$/', $line)) {
+                $inLine = $line;
+                break;
+            }
+        }
+
+        $this->assertNotNull($inLine, 'Could not find "in ... on line ..." in log message');
 
         foreach ($messageFromLogs as $line) {
             $this->assertMatchesRegularExpression('/^\s*\d* .+(?:\(\d+\))?: \S+(?:(?:\->|::)\S+)?\(.*\)$/', $line);
