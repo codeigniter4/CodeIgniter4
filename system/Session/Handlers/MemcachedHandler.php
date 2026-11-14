@@ -270,6 +270,10 @@ class MemcachedHandler extends BaseHandler
             return $this->memcached->replace($this->lockKey, Time::now()->getTimestamp(), 300);
         }
 
+        if (isset($this->lockKey) && ! $this->releaseLock()) {
+            return false;
+        }
+
         $attempt = 0;
 
         do {
