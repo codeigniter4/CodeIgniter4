@@ -709,16 +709,20 @@ if (! function_exists('excerpt')) {
      * @param int    $radius   The amount of characters returned around the phrase.
      * @param string $ellipsis Ending that will be appended
      *
-     * If no $phrase is passed, will generate an excerpt of $radius characters
-     * from the beginning of $text.
+     * If no $phrase is passed or $phrase is not found, will generate an excerpt
+     * of $radius characters from the beginning of $text.
      */
     function excerpt(string $text, ?string $phrase = null, int $radius = 100, string $ellipsis = '...'): string
     {
         if (isset($phrase)) {
             $phrasePosition = mb_stripos($text, $phrase);
             $phraseLength   = mb_strlen($phrase);
+
+            if ($phrasePosition === false) {
+                return excerpt($text, null, $radius, $ellipsis);
+            }
         } else {
-            $phrasePosition = $radius / 2;
+            $phrasePosition = intdiv($radius, 2);
             $phraseLength   = 1;
         }
 
