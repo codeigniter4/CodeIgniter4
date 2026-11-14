@@ -538,6 +538,7 @@ class Router implements RouterInterface
                 }
 
                 if (config(Routing::class)->multipleSegmentsOneParam === false) {
+                    // $handler is the replacement, so its `$1` back-references are expanded here.
                     $segments = explode('/', preg_replace('#\A' . $routeKey . '\z#u', $handler, $uri));
                 } else {
                     if (str_contains($methodAndParams, '/')) {
