@@ -547,7 +547,7 @@ venv/bin/pip install -r docs/requirements.txt
    rm -rf site/
    ```
 
-2. Build the site, the llms files and the anchor aliases:
+2. Build the site and the llms files:
 
    ```bash
    SITE_URL=https://codeigniter.com/user_guide/ venv/bin/mkdocs build --strict
@@ -555,10 +555,6 @@ venv/bin/pip install -r docs/requirements.txt
 
    ```bash
    venv/bin/python admin/llms.py
-   ```
-
-   ```bash
-   venv/bin/python admin/anchors.py
    ```
 
 3. Switch to the **userguide** repository and create the branch `release-$VERSION`.

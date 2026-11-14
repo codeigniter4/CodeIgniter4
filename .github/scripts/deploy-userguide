@@ -37,7 +37,6 @@ export NO_MKDOCS_2_WARNING=1
 export SITE_URL=https://codeigniter.com/user_guide/
 mkdocs build --strict
 python admin/llms.py
-python admin/anchors.py
 
 # Prepare the target
 cd $TARGET
