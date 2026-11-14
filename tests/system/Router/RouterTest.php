@@ -1158,4 +1158,52 @@ final class RouterTest extends CIUnitTestCase
         $this->assertSame('\Docs', $router->controllerName());
         $this->assertSame('anchor', $router->methodName());
     }
+
+    public function testStaticRouteMatchesUriEndingWithNewline(): void
+    {
+        $config                    = config(App::class);
+        $permittedURIChars         = $config->permittedURIChars;
+        $config->permittedURIChars = '';
+
+        $collection = clone $this->collection;
+        $collection->resetRoutes();
+        $collection->get('about-us', 'Home::about');
+
+        $router = new Router($collection, $this->request);
+
+        try {
+            // `handle()` decodes `%0A` to LF, and the `$` anchor also matches
+            // before a trailing newline.
+            $router->handle('about-us%0A');
+
+            $this->assertSame('\Home', $router->controllerName());
+            $this->assertSame('about', $router->methodName());
+            $this->assertSame([], $router->params());
+        } finally {
+            $config->permittedURIChars = $permittedURIChars;
+        }
+    }
+
+    public function testStaticRouteDoesNotMatchUriEndingWithCarriageReturnAndNewline(): void
+    {
+        $config                    = config(App::class);
+        $permittedURIChars         = $config->permittedURIChars;
+        $config->permittedURIChars = '';
+
+        $collection = clone $this->collection;
+        $collection->resetRoutes();
+        $collection->get('about-us', 'Home::about');
+
+        $router = new Router($collection, $this->request);
+
+        try {
+            $this->expectException(PageNotFoundException::class);
+
+            // The `$` anchor does not match before CRLF, so the guard must not
+            // be widened to a substring check.
+            $router->handle('about-us%0D%0A');
+        } finally {
+            $config->permittedURIChars = $permittedURIChars;
+        }
+    }
 }

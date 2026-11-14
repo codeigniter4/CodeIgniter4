@@ -450,10 +450,13 @@ class Router implements RouterInterface
 
             $matchedKey = $routeKey;
 
-            // `#` is the pattern delimiter used below, so it must be treated as a metacharacter.
+            // A key without PCRE metacharacters, including the `#` delimiter
+            // used below, can be compared as a plain string.
             $isRegex = strpbrk($routeKey, '()[]?*+{}^$\\.|#') !== false;
 
-            if (! $isRegex) {
+            // `$` also matches before a trailing newline, so the plain
+            // comparison is only safe when the URI does not end with LF.
+            if (! $isRegex && ! str_ends_with($uri, "\n")) {
                 if ($routeKey !== $uri) {
                     continue;
                 }
@@ -465,8 +468,7 @@ class Router implements RouterInterface
                     $routeKey = str_replace('{locale}', '[^/]+', $routeKey);
                 }
 
-                // Does the RegEx match?
-                if (! preg_match('#^' . $routeKey . '$#u', $uri, $matches)) {
+                if (preg_match('#^' . $routeKey . '$#u', $uri, $matches) !== 1) {
                     continue;
                 }
             }
