@@ -440,7 +440,6 @@ class Router implements RouterInterface
             ? $uri
             : trim($uri, '/ ');
 
-        // Loop through the route array looking for wildcards
         foreach ($routes as $routeKey => $handler) {
             $routeKey = $routeKey === '/'
                 ? $routeKey
@@ -463,7 +462,6 @@ class Router implements RouterInterface
 
                 $matches = [$uri];
             } else {
-                // Are we dealing with a locale?
                 if (str_contains($routeKey, '{locale}')) {
                     $routeKey = str_replace('{locale}', '[^/]+', $routeKey);
                 }
@@ -493,7 +491,6 @@ class Router implements RouterInterface
                 unset($matched);
             }
 
-            // Is this route supposed to redirect to another?
             if ($this->collection->isRedirect($matchedKey)) {
                 // replacing matched route groups with references: post/([0-9]+) -> post/$1
                 $redirectTo = preg_replace_callback('/(\([^\(]+\))/', static function (): string {
@@ -512,13 +509,9 @@ class Router implements RouterInterface
                 );
             }
 
-            // Are we using Closures? If so, then we need
-            // to collect the params into an array
-            // so it can be passed to the controller method later.
             if (! is_string($handler) && is_callable($handler)) {
                 $this->controller = $handler;
 
-                // Remove the original string from the matches array
                 array_shift($matches);
 
                 $this->params = $matches;
@@ -535,19 +528,16 @@ class Router implements RouterInterface
                 $methodAndParams = '';
             }
 
-            // Checks `/` in controller name
             if (str_contains($controller, '/')) {
                 throw RouterException::forInvalidControllerName($handler);
             }
 
             if (str_contains($handler, '$') && str_contains($routeKey, '(')) {
-                // Checks dynamic controller
                 if (str_contains($controller, '$')) {
                     throw RouterException::forDynamicController($handler);
                 }
 
                 if (config(Routing::class)->multipleSegmentsOneParam === false) {
-                    // Using back-references
                     $segments = explode('/', preg_replace('#\A' . $routeKey . '\z#u', $handler, $uri));
                 } else {
                     if (str_contains($methodAndParams, '/')) {
