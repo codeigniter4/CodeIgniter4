@@ -18,6 +18,8 @@ use CodeIgniter\CLI\CLI;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
 use PHPUnit\Framework\Attributes\Group;
+use Predis\Client;
+use RuntimeException;
 
 /**
  * @internal
@@ -195,5 +197,53 @@ final class PredisHandlerTest extends AbstractHandlerTestCase
         $this->assertTrue($this->handler->reconnect());
 
         $this->assertSame('value', $this->handler->get(self::$key1));
+    }
+
+    public function testSaveFailsOnNonHashKeyPreservingValueAndTtl(): void
+    {
+        /** @var Client $redis */
+        $redis = $this->getPrivateProperty($this->handler, 'redis');
+
+        $prefixedKey = $this->config->prefix . 'non_hash_key';
+        $redis->set($prefixedKey, 'raw_string_value');
+        $redis->expire($prefixedKey, 300);
+
+        $this->assertFalse($this->handler->save('non_hash_key', 'new_value', 60));
+
+        $this->assertSame('raw_string_value', $redis->get($prefixedKey));
+        $this->assertGreaterThan(250, $redis->ttl($prefixedKey));
+
+        // Handler remains usable for subsequent operations
+        $this->assertTrue($this->handler->save(self::$key1, 'usable_value'));
+        $this->assertSame('usable_value', $this->handler->get(self::$key1));
+
+        $redis->del([$prefixedKey]);
+    }
+
+    public function testSaveFallbackWhenEvalThrowsException(): void
+    {
+        /** @var Client $originalClient */
+        $originalClient = $this->getPrivateProperty($this->handler, 'redis');
+
+        $failingClient = new class ($originalClient->getConnection()->getParameters()) extends Client {
+            /**
+             * @param string $script
+             * @param int    $numkeys
+             * @param mixed  ...$arguments
+             */
+            public function eval($script, $numkeys, ...$arguments): never
+            {
+                throw new RuntimeException('ERR unknown command EVAL');
+            }
+        };
+
+        try {
+            $this->setPrivateProperty($this->handler, 'redis', $failingClient);
+
+            $this->assertTrue($this->handler->save(self::$key1, 'fallback_value', 120));
+            $this->assertSame('fallback_value', $this->handler->get(self::$key1));
+        } finally {
+            $this->setPrivateProperty($this->handler, 'redis', $originalClient);
+        }
     }
 }

@@ -19,6 +19,8 @@ use CodeIgniter\I18n\Time;
 use Config\Cache;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use Redis;
+use RedisException;
 
 /**
  * @internal
@@ -237,5 +239,51 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
         $this->assertTrue($this->handler->reconnect());
 
         $this->assertSame('value', $this->handler->get(self::$key1));
+    }
+
+    public function testSaveFailsOnNonHashKeyPreservingValueAndTtl(): void
+    {
+        /** @var Redis $redis */
+        $redis = $this->getPrivateProperty($this->handler, 'redis');
+
+        $prefixedKey = $this->config->prefix . 'non_hash_key';
+        $redis->set($prefixedKey, 'raw_string_value');
+        $redis->expire($prefixedKey, 300);
+
+        $this->assertFalse($this->handler->save('non_hash_key', 'new_value', 60));
+
+        $this->assertSame('raw_string_value', $redis->get($prefixedKey));
+        $this->assertGreaterThan(250, $redis->ttl($prefixedKey));
+
+        // Handler remains usable for subsequent operations
+        $this->assertTrue($this->handler->save(self::$key1, 'usable_value'));
+        $this->assertSame('usable_value', $this->handler->get(self::$key1));
+
+        $redis->del($prefixedKey);
+    }
+
+    public function testSaveFallbackWhenEvalThrowsException(): void
+    {
+        /** @var Redis $originalRedis */
+        $originalRedis = $this->getPrivateProperty($this->handler, 'redis');
+
+        $failingRedis = $this->createMock(Redis::class);
+        $failingRedis->expects($this->once())
+            ->method('eval')
+            ->willThrowException(new RedisException('ERR unknown command EVAL'));
+        $failingRedis->expects($this->once())
+            ->method('hMset')
+            ->willReturn(true);
+        $failingRedis->expects($this->once())
+            ->method('expireAt')
+            ->willReturn(true);
+
+        try {
+            $this->setPrivateProperty($this->handler, 'redis', $failingRedis);
+
+            $this->assertTrue($this->handler->save(self::$key1, 'fallback_value', 120));
+        } finally {
+            $this->setPrivateProperty($this->handler, 'redis', $originalRedis);
+        }
     }
 }

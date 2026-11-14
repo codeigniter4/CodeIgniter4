@@ -20,12 +20,26 @@ use Exception;
 use Predis\Client;
 use Predis\Collection\Iterator\Keyspace;
 use Predis\Response\Status;
+use Throwable;
 
 /**
  * Predis cache handler
  */
 class PredisHandler extends BaseHandler
 {
+    /**
+     * Lua script to conditionally execute HMSET and EXPIREAT in a single round trip.
+     * Prevents EXPIREAT from mutating TTL or expiring keys when HMSET fails (e.g. WRONGTYPE).
+     */
+    private const SAVE_SCRIPT = <<<'LUA'
+        local res = redis.pcall('HMSET', KEYS[1], '__ci_type', ARGV[2], '__ci_value', ARGV[3])
+        if type(res) == 'table' and res.err then
+            return 0
+        end
+        redis.call('EXPIREAT', KEYS[1], ARGV[1])
+        return 1
+        LUA;
+
     /**
      * Default config
      *
@@ -118,15 +132,33 @@ class PredisHandler extends BaseHandler
                 return false;
         }
 
-        if (! $this->redis->hmset($key, ['__ci_type' => $dataType, '__ci_value' => $value]) instanceof Status) {
-            return false;
-        }
+        $fields = ['__ci_type' => $dataType, '__ci_value' => $value];
 
         if ($ttl !== 0) {
-            $this->redis->expireat($key, Time::now()->getTimestamp() + $ttl);
+            $expiresAt = Time::now()->getTimestamp() + $ttl;
+
+            try {
+                return (bool) $this->redis->eval(
+                    self::SAVE_SCRIPT,
+                    1,
+                    $key,
+                    (string) $expiresAt,
+                    $dataType,
+                    (string) $value,
+                );
+            } catch (Throwable) {
+                // If EVAL is unsupported or blocked, fallback to sequential execution.
+                if (! $this->redis->hmset($key, $fields) instanceof Status) {
+                    return false;
+                }
+
+                $this->redis->expireat($key, $expiresAt);
+
+                return true;
+            }
         }
 
-        return true;
+        return $this->redis->hmset($key, $fields) instanceof Status;
     }
 
     public function delete(string $key): bool
