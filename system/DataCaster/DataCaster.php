@@ -45,6 +45,13 @@ final class DataCaster
     private array $types = [];
 
     /**
+     * Cache of compiled type cast rules.
+     *
+     * @var array<string, array{0: class-string<CastInterface|EntityCastInterface>, 1: list<string>}>
+     */
+    private array $compiledTypes = [];
+
+    /**
      * Convert handlers.
      *
      * @var cast_handlers [type => classname]
@@ -109,7 +116,10 @@ final class DataCaster
      */
     public function setTypes(array $types): static
     {
-        $this->types = $types;
+        if ($this->types !== $types) {
+            $this->types         = $types;
+            $this->compiledTypes = [];
+        }
 
         return $this;
     }
@@ -130,29 +140,44 @@ final class DataCaster
         }
 
         // If the type is not defined, return as it is.
-        if (! isset($this->types[$field])) {
+        $type = $this->types[$field] ?? null;
+
+        if ($type === null) {
             return $value;
         }
 
-        $type = $this->types[$field];
+        if ($value === null) {
+            if (str_starts_with($type, '?')) {
+                return null;
+            }
 
+            if ($this->strict) {
+                throw new InvalidArgumentException(
+                    'Field "' . $field . '" is not nullable, but null was passed.',
+                );
+            }
+        }
+
+        $this->compiledTypes[$type] ??= $this->compileType($field, $type);
+
+        [$handler, $params] = $this->compiledTypes[$type];
+
+        return $handler::$method($value, $params, $this->helper);
+    }
+
+    /**
+     * Compiles and validates a cast type rule.
+     *
+     * @return array{0: class-string<CastInterface|EntityCastInterface>, 1: list<string>} [handler, params]
+     */
+    private function compileType(string $field, string $type): array
+    {
         $isNullable = false;
 
         // Is nullable?
         if (str_starts_with($type, '?')) {
             $isNullable = true;
-
-            if ($value === null) {
-                return null;
-            }
-
-            $type = substr($type, 1);
-        } elseif ($value === null) {
-            if ($this->strict) {
-                $message = 'Field "' . $field . '" is not nullable, but null was passed.';
-
-                throw new InvalidArgumentException($message);
-            }
+            $type       = substr($type, 1);
         }
 
         // In order not to create a separate handler for the
@@ -192,6 +217,6 @@ final class DataCaster
             throw CastException::forInvalidInterface($handler);
         }
 
-        return $handler::$method($value, $params, $this->helper);
+        return [$handler, $params];
     }
 }
