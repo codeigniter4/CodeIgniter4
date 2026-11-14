@@ -18,6 +18,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\TestLogger;
 use Config\Logger as LoggerConfig;
 use Config\Session as SessionConfig;
+use Memcached;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 
@@ -32,6 +33,11 @@ final class MemcachedHandlerTest extends CIUnitTestCase
     private string $sessionName     = 'ci_session';
     private string $sessionSavePath = '127.0.0.1:11211';
     private string $userIpAddress   = '127.0.0.1';
+
+    /**
+     * @var list<string>
+     */
+    private array $sessionIds = [];
 
     /**
      * @param array<string, bool|int|string|null> $options Replace values for `Config\Session`.
@@ -62,9 +68,32 @@ final class MemcachedHandlerTest extends CIUnitTestCase
 
     protected function tearDown(): void
     {
+        if ($this->sessionIds !== []) {
+            $memcached = new Memcached();
+            $memcached->setOption(Memcached::OPT_BINARY_PROTOCOL, true);
+            $memcached->addServer('127.0.0.1', 11211);
+
+            $prefix = 'ci_session:' . $this->sessionName . ':';
+
+            foreach ($this->sessionIds as $sessionId) {
+                $memcached->delete($prefix . $sessionId);
+                $memcached->delete($prefix . $sessionId . ':lock');
+            }
+
+            $this->sessionIds = [];
+        }
+
         parent::tearDown();
 
         MemcachedHandler::resetPersistentConnections();
+    }
+
+    private function generateSessionId(string $prefix): string
+    {
+        $sessionId          = $prefix . bin2hex(random_bytes(13));
+        $this->sessionIds[] = $sessionId;
+
+        return $sessionId;
     }
 
     public function testConstructorThrowsWithEmptySavePath(): void
@@ -127,5 +156,106 @@ final class MemcachedHandlerTest extends CIUnitTestCase
     {
         $handler = $this->getInstance();
         $this->assertSame(1, $handler->gc(3600));
+    }
+
+    public function testReopenAndReadWithSameHandlerInstance(): void
+    {
+        $handler = $this->getInstance();
+        $handler->open($this->sessionSavePath, $this->sessionName);
+
+        $sessionId = $this->generateSessionId('666666');
+
+        $this->assertSame('', $handler->read($sessionId));
+
+        $data = '__ci_last_regenerate|i:1664607454;key|s:5:"value";';
+        $this->assertTrue($handler->write($sessionId, $data));
+        $this->assertTrue($handler->close());
+
+        // Reopen with the same handler instance (e.g. session_write_close() + session_start())
+        $this->assertTrue($handler->open($this->sessionSavePath, $this->sessionName));
+        $this->assertSame($data, $handler->read($sessionId));
+        $this->assertTrue($handler->close());
+    }
+
+    public function testRegenerateSessionIdWithSameHandlerInstance(): void
+    {
+        $handler = $this->getInstance();
+        $handler->open($this->sessionSavePath, $this->sessionName);
+
+        $oldSessionId = $this->generateSessionId('777777');
+        $newSessionId = $this->generateSessionId('888888');
+
+        $this->assertSame('', $handler->read($oldSessionId));
+
+        $data = '__ci_last_regenerate|i:1664607454;role|s:5:"admin";';
+        $this->assertTrue($handler->write($oldSessionId, $data));
+        $this->assertTrue($handler->close());
+
+        // PHP reuses the same SessionHandler object on regeneration
+        $this->assertTrue($handler->open($this->sessionSavePath, $this->sessionName));
+        $this->assertSame('', $handler->read($newSessionId));
+        $this->assertTrue($handler->write($newSessionId, $data));
+        $this->assertTrue($handler->close());
+
+        $this->assertTrue($handler->open($this->sessionSavePath, $this->sessionName));
+        $this->assertSame($data, $handler->read($newSessionId));
+        $this->assertTrue($handler->close());
+    }
+
+    public function testRegenerateSessionIdWriteWithoutClose(): void
+    {
+        $handler = $this->getInstance();
+        $handler->open($this->sessionSavePath, $this->sessionName);
+
+        $oldSessionId = $this->generateSessionId('999999');
+        $newSessionId = $this->generateSessionId('aaaaaa');
+
+        $this->assertSame('', $handler->read($oldSessionId));
+
+        $oldData = '__ci_last_regenerate|i:1664607454;role|s:5:"guest";';
+        $this->assertTrue($handler->write($oldSessionId, $oldData));
+
+        // During PHP session_regenerate_id(), write() is called with the new ID
+        // while the lock for the old session ID is still held.
+        $newData = '__ci_last_regenerate|i:1664607500;role|s:5:"admin";';
+        $this->assertTrue($handler->write($newSessionId, $newData));
+        $this->assertTrue($handler->close());
+
+        // Verify the old lock was released and the new session data is readable
+        $handler2 = $this->getInstance();
+        $this->assertTrue($handler2->open($this->sessionSavePath, $this->sessionName));
+        $this->assertSame($oldData, $handler2->read($oldSessionId));
+        $this->assertTrue($handler2->close());
+
+        $this->assertTrue($handler2->open($this->sessionSavePath, $this->sessionName));
+        $this->assertSame($newData, $handler2->read($newSessionId));
+        $this->assertTrue($handler2->close());
+    }
+
+    public function testReadDifferentSessionIdsWithoutCloseReleasesPreviousLock(): void
+    {
+        $handler = $this->getInstance();
+        $handler->open($this->sessionSavePath, $this->sessionName);
+
+        $firstSessionId  = $this->generateSessionId('bbbbbb');
+        $secondSessionId = $this->generateSessionId('cccccc');
+
+        $firstData = '__ci_last_regenerate|i:1664607454;user|s:5:"alice";';
+        $this->assertSame('', $handler->read($firstSessionId));
+        $this->assertTrue($handler->write($firstSessionId, $firstData));
+        $this->assertTrue($handler->close());
+
+        // Read two different session IDs on the same handler without closing between them
+        $this->assertTrue($handler->open($this->sessionSavePath, $this->sessionName));
+        $this->assertSame($firstData, $handler->read($firstSessionId));
+        $this->assertSame('', $handler->read($secondSessionId));
+
+        // Another handler should be able to acquire the lock for the first session ID
+        $handler2 = $this->getInstance();
+        $this->assertTrue($handler2->open($this->sessionSavePath, $this->sessionName));
+        $this->assertSame($firstData, $handler2->read($firstSessionId));
+        $this->assertTrue($handler2->close());
+
+        $this->assertTrue($handler->close());
     }
 }
