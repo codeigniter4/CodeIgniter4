@@ -799,6 +799,102 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame(3, $responseBody['meta']['totalPages']);
     }
 
+    public function testPaginateWithQueryBuilderOutOfRangePage(): void
+    {
+        // Mock the database and builder
+        $db = $this->createStub(BaseConnection::class);
+
+        $builder = $this->getMockBuilder(BaseBuilder::class)
+            ->setConstructorArgs(['test_table', $db])
+            ->onlyMethods(['countAllResults', 'limit', 'get'])
+            ->getMock();
+
+        // Mock the query builder chain
+        $builder->method('countAllResults')->willReturn(50);
+        $builder->expects($this->never())
+            ->method('limit');
+        $builder->expects($this->never())
+            ->method('get');
+
+        $controller = $this->makeController('/api/items?page=4');
+        $this->request->setGlobal('get', ['page' => '4']);
+
+        $this->invoke($controller, 'paginate', [$builder, 20]);
+
+        $responseBody = json_decode($this->response->getBody(), true);
+
+        $this->assertSame([], $responseBody['data']);
+        $this->assertSame(4, $responseBody['meta']['page']);
+        $this->assertSame(20, $responseBody['meta']['perPage']);
+        $this->assertSame(50, $responseBody['meta']['total']);
+        $this->assertSame(3, $responseBody['meta']['totalPages']);
+        $this->assertStringContainsString('page=4', (string) $responseBody['links']['self']);
+        $this->assertNull($responseBody['links']['next']);
+        $this->assertStringContainsString('page=3', (string) $responseBody['links']['prev']);
+    }
+
+    public function testPaginateWithQueryBuilderPageOverflow(): void
+    {
+        // Mock the database and builder
+        $db = $this->createStub(BaseConnection::class);
+
+        $builder = $this->getMockBuilder(BaseBuilder::class)
+            ->setConstructorArgs(['test_table', $db])
+            ->onlyMethods(['countAllResults', 'limit', 'get'])
+            ->getMock();
+
+        // Mock the query builder chain
+        $builder->method('countAllResults')->willReturn(50);
+        $builder->expects($this->never())
+            ->method('limit');
+        $builder->expects($this->never())
+            ->method('get');
+
+        $controller = $this->makeController('/api/items?page=' . PHP_INT_MAX);
+        $this->request->setGlobal('get', ['page' => (string) PHP_INT_MAX]);
+
+        $this->invoke($controller, 'paginate', [$builder, 20]);
+
+        $responseBody = json_decode($this->response->getBody(), true);
+
+        $this->assertSame(PHP_INT_MAX, $responseBody['meta']['page']);
+        $this->assertSame(20, $responseBody['meta']['perPage']);
+        $this->assertSame(50, $responseBody['meta']['total']);
+        $this->assertSame(3, $responseBody['meta']['totalPages']);
+        $this->assertSame([], $responseBody['data']);
+        $this->assertNull($responseBody['links']['next']);
+    }
+
+    public function testPaginateWithQueryBuilderZeroResultsPageOverflow(): void
+    {
+        // Mock the database and builder
+        $db = $this->createStub(BaseConnection::class);
+
+        $builder = $this->getMockBuilder(BaseBuilder::class)
+            ->setConstructorArgs(['test_table', $db])
+            ->onlyMethods(['countAllResults', 'limit', 'get'])
+            ->getMock();
+
+        // Mock the query builder chain
+        $builder->method('countAllResults')->willReturn(0);
+        $builder->expects($this->never())
+            ->method('limit');
+        $builder->expects($this->never())
+            ->method('get');
+
+        $controller = $this->makeController('/api/items?page=' . PHP_INT_MAX);
+        $this->request->setGlobal('get', ['page' => (string) PHP_INT_MAX]);
+
+        $this->invoke($controller, 'paginate', [$builder, 20]);
+
+        $responseBody = json_decode($this->response->getBody(), true);
+
+        $this->assertSame(PHP_INT_MAX, $responseBody['meta']['page']);
+        $this->assertSame(0, $responseBody['meta']['total']);
+        $this->assertSame(0, $responseBody['meta']['totalPages']);
+        $this->assertSame([], $responseBody['data']);
+    }
+
     public function testPaginateWithCustomPerPage(): void
     {
         $data = [
