@@ -17,6 +17,7 @@ use CodeIgniter\Database\Query;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use PHPUnit\Framework\Attributes\Group;
+use RuntimeException;
 
 /**
  * @internal
@@ -45,5 +46,24 @@ final class PretendTest extends CIUnitTestCase
             ->get();
 
         $this->assertInstanceOf(Query::class, $result);
+    }
+
+    public function testPrepareResetsPretendWhenClosureThrowsException(): void
+    {
+        $this->db->pretend(false);
+
+        $invoked = false;
+
+        try {
+            $this->db->prepare(static function () use (&$invoked): never {
+                $invoked = true;
+
+                throw new RuntimeException('Error in prepare closure');
+            });
+        } catch (RuntimeException) {
+        }
+
+        $this->assertTrue($invoked);
+        $this->assertFalse($this->db->pretend);
     }
 }
