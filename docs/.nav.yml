@@ -329,6 +329,7 @@ nav:
       - testing/benchmark.md
       - testing/debugging.md
       - "Session Testing": testing/session_testing.md
+      - testing/packages.md
   - "Command Line Usage":
       - cli/index.md
       - cli/cli_overview.md

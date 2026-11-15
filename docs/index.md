@@ -171,6 +171,7 @@
     - [Benchmarking](testing/benchmark.md)
     - [Debugging Your Application](testing/debugging.md)
     - [Session Testing](testing/session_testing.md)
+    - [Testing Packages](testing/packages.md)
 
 - [Command Line Usage](cli/index.md)
     - [CLI Overview](cli/cli_overview.md)
