@@ -11,7 +11,6 @@ on:
     paths:
       - 'docs/**'
       - 'mkdocs.yml'
-      - 'admin/anchors.py'
       - 'admin/llms.py'
       - '.github/workflows/deploy-userguide-latest.yml'
   workflow_dispatch:
@@ -73,7 +72,6 @@ jobs:
               cd "${name}"
               SITE_URL="${BASE_URL}/${name}/" mkdocs build --strict
               python admin/llms.py
-              python admin/anchors.py
             )
 
             mv "${name}/site" "pages/${name}"
