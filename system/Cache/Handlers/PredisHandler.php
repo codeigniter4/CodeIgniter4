@@ -155,14 +155,14 @@ class PredisHandler extends BaseHandler
     {
         $key = static::validateKey($key);
 
-        return $this->redis->hincrby($key, 'data', $offset);
+        return $this->redis->hincrby($key, '__ci_value', $offset);
     }
 
     public function decrement(string $key, int $offset = 1): int
     {
         $key = static::validateKey($key);
 
-        return $this->redis->hincrby($key, 'data', -$offset);
+        return $this->redis->hincrby($key, '__ci_value', -$offset);
     }
 
     public function clean(): bool
