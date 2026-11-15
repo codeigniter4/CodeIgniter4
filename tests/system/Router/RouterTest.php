@@ -1095,6 +1095,13 @@ final class RouterTest extends CIUnitTestCase
             'product/foo',
             [''],
         ];
+
+        yield 'reference $0 resolves to entire matched path' => [
+            $nineSegments,
+            'Catalog::lookup/$0/$1',
+            'a/b/c/d/e/f/g/h/i',
+            ['a/b/c/d/e/f/g/h/i', 'a'],
+        ];
     }
 
     public function testLogsRouteAttributeInstantiationFailureWithContext(): void
