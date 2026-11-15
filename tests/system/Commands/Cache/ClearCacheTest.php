@@ -111,6 +111,16 @@ final class ClearCacheTest extends CIUnitTestCase
         $this->assertStringContainsString('Cache cleared.', $this->getStreamFilterBuffer());
     }
 
+    public function testClearCacheRemovesHiddenEntries(): void
+    {
+        cache()->save('.hidden', 'bar');
+        $this->assertSame('bar', cache('.hidden'));
+
+        command('cache:clear');
+
+        $this->assertNull(cache('.hidden'));
+    }
+
     public function testClearCacheDiscardsSharedLocatorCache(): void
     {
         $handler = $this->getIsolatedCacheHandler();

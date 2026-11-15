@@ -72,7 +72,7 @@ $key = 'search_' . hash('sha256', $userInput);
 
 This is an array of settings specific to the **File** handler to determine how it should save the cache files.
 
-Cache files whose names start with a dot are not fully supported by the File handler: `getCacheInfo()` does not report them, `deleteMatching()` wildcard patterns do not match them, and `clean()` / `cache:clear` do not delete them. Avoid keys and prefixes that produce a leading dot.
+Dot-leading cache keys are supported by the File handler: they are reported by `getCacheInfo()`, matched by `deleteMatching()`, and removed by `clean()` / `cache:clear`. The `.htaccess` protection file is never deleted by `deleteMatching()`, and the protection files (`.htaccess`, `index.html`, `index.htm`, `index.php`, `web.config`) are kept by `clean()`; any other dot-leading file in the cache directory is affected. See the notes below `deleteMatching()`, `clean()` and `getCacheInfo()`.
 
 ### $memcached
 
@@ -203,7 +203,7 @@ This method will delete multiple items from the cache store at once by matching 
     This method is only implemented for the File, Redis and Predis handlers. Due to limitations, it couldn't be implemented for the Memcached and Wincache handlers.
 
 !!! note "Note"
-    With the File handler, the pattern is matched against cache file names only and cannot match files in subdirectories. A pattern containing a forward slash (`/`) therefore never matches.
+    With the File handler, the pattern is matched against cache file names only and cannot match files in subdirectories. A pattern containing a forward slash (`/`) therefore never matches. A cache entry whose key begins with a period (a dot-leading file name) is matched by patterns like any other entry, but the `.htaccess` protection file is never deleted. Any other dot-leading file in the cache directory (for example `.gitignore` or `.env`) is matched as well.
 
 Example:
 
@@ -278,6 +278,9 @@ Example:
 $cache->clean();
 ```
 
+!!! note "Note"
+    The File handler also deletes cache entries whose key begins with a period, while the `.htaccess`, `index.html`, `index.htm`, `index.php` and `web.config` files are kept. Any other dot-leading file in the cache directory or its subdirectories (for example `.gitignore`, `.env` or `.user.ini`) is deleted as well.
+
 #### getCacheInfo()
 
 - **Returns**: Information on the entire cache database
@@ -295,6 +298,9 @@ var_dump($cache->getCacheInfo());
 
 !!! note "Note"
     The information returned and the structure of the data are dependent on which adapter is being used.
+
+!!! note "Note"
+    The File handler also reports dot-leading files in the cache directory, including the `.htaccess` protection file.
 
 #### getMetadata(string $key)
 

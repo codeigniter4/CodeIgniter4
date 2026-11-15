@@ -327,22 +327,115 @@ final class FileHandlerTest extends AbstractHandlerTestCase
         }
     }
 
-    public function testDeleteMatchingWildcardDoesNotMatchHiddenFiles(): void
+    public function testDeleteMatchingWildcardMatchesHiddenEntries(): void
     {
-        $hidden = $this->config->file['storePath'] . '/.hidden';
+        $this->assertTrue($this->handler->save('.hidden', 'value'));
+        $this->assertTrue($this->handler->save(self::$key1, 'value'));
 
-        $this->assertNotFalse(file_put_contents($hidden, 'data'));
+        $this->assertSame(2, $this->handler->deleteMatching('*'));
+        $this->assertNull($this->handler->get('.hidden'));
+        $this->assertNull($this->handler->get(self::$key1));
+    }
+
+    public function testDeleteMatchingMatchesExplicitDotPattern(): void
+    {
+        $this->assertTrue($this->handler->save('.hidden', 'value'));
+        $this->assertTrue($this->handler->save(self::$key1, 'value'));
+
+        $this->assertSame(1, $this->handler->deleteMatching('.hid*'));
+        $this->assertNull($this->handler->get('.hidden'));
+        $this->assertSame('value', $this->handler->get(self::$key1));
+    }
+
+    #[DataProvider('provideDeleteMatchingDoesNotDeleteHtaccess')]
+    public function testDeleteMatchingDoesNotDeleteHtaccess(string $protectionFile): void
+    {
+        $path = $this->config->file['storePath'] . DIRECTORY_SEPARATOR . $protectionFile;
 
         try {
-            $this->assertTrue($this->handler->save(self::$key1, 'value'));
+            $this->assertNotFalse(file_put_contents($path, 'Deny from all'));
+            $this->assertTrue($this->handler->save('.hidden', 'value'));
 
             $this->assertSame(1, $this->handler->deleteMatching('*'));
-            $this->assertFileExists($hidden);
+            $this->assertFileExists($path);
+            $this->assertNull($this->handler->get('.hidden'));
         } finally {
-            if (is_file($hidden)) {
-                unlink($hidden);
+            if (is_file($path)) {
+                unlink($path);
             }
         }
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function provideDeleteMatchingDoesNotDeleteHtaccess(): iterable
+    {
+        yield 'lowercase' => ['.htaccess'];
+
+        yield 'uppercase' => ['.HTACCESS'];
+
+        yield 'mixed case' => ['.HtAccess'];
+    }
+
+    public function testCleanDeletesHiddenEntries(): void
+    {
+        $path = $this->config->file['storePath'] . DIRECTORY_SEPARATOR . '.hidden';
+
+        $this->assertTrue($this->handler->save('.hidden', 'value'));
+        $this->assertFileExists($path);
+
+        $this->assertTrue($this->handler->clean());
+        $this->assertFileDoesNotExist($path);
+        $this->assertNull($this->handler->get('.hidden'));
+    }
+
+    public function testCleanKeepsProtectionFiles(): void
+    {
+        $protectionFiles = ['.htaccess', 'index.html', 'index.htm', 'index.php', 'web.config'];
+
+        try {
+            foreach ($protectionFiles as $protectionFile) {
+                $this->assertNotFalse(
+                    file_put_contents(
+                        $this->config->file['storePath'] . DIRECTORY_SEPARATOR . $protectionFile,
+                        '',
+                    ),
+                );
+            }
+
+            $this->assertTrue($this->handler->save(self::$key1, 'value'));
+            $this->assertTrue($this->handler->save('.hidden', 'value'));
+
+            $this->assertTrue($this->handler->clean());
+            $this->assertNull($this->handler->get(self::$key1));
+            $this->assertNull($this->handler->get('.hidden'));
+
+            foreach ($protectionFiles as $protectionFile) {
+                $this->assertFileExists($this->config->file['storePath'] . DIRECTORY_SEPARATOR . $protectionFile);
+            }
+        } finally {
+            foreach ($protectionFiles as $protectionFile) {
+                $path = $this->config->file['storePath'] . DIRECTORY_SEPARATOR . $protectionFile;
+
+                if (is_file($path)) {
+                    unlink($path);
+                }
+            }
+        }
+    }
+
+    public function testGetCacheInfoReportsHiddenEntries(): void
+    {
+        $this->assertTrue($this->handler->save('.hidden', 'value'));
+
+        $info = $this->handler->getCacheInfo();
+
+        $this->assertArrayHasKey('.hidden', $info);
+        $this->assertSame('.hidden', $info['.hidden']['name']);
+        $this->assertArrayHasKey('server_path', $info['.hidden']);
+        $this->assertArrayNotHasKey('.', $info);
+        $this->assertArrayNotHasKey('..', $info);
     }
 
     public function testIncrement(): void
