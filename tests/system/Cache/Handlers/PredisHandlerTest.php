@@ -20,7 +20,7 @@ use Config\Cache;
 use PHPUnit\Framework\Attributes\Group;
 use Predis\Client;
 use Predis\Response\ServerException;
-use RuntimeException;
+use Throwable;
 
 /**
  * @internal
@@ -205,25 +205,54 @@ final class PredisHandlerTest extends AbstractHandlerTestCase
         /** @var Client $redis */
         $redis = $this->getPrivateProperty($this->handler, 'redis');
 
+        $originalClient = $redis;
+        $prefix         = $this->config->prefix;
+
+        $spy = new class ($originalClient->getConnection()->getParameters(), ['prefix' => $prefix]) extends Client {
+            /**
+             * @var list<string>
+             */
+            public array $commands = [];
+
+            /**
+             * @param string                   $commandID
+             * @param array<int|string, mixed> $arguments
+             */
+            public function __call($commandID, $arguments)
+            {
+                $this->commands[] = strtolower($commandID);
+
+                return parent::__call($commandID, $arguments);
+            }
+        };
+
         $prefixedKey = $this->config->prefix . 'non_hash_key';
         $redis->set($prefixedKey, 'raw_string_value');
         $redis->expire($prefixedKey, 300);
 
         try {
-            $this->handler->save('non_hash_key', 'new_value', 60);
-            $this->fail('Predis\Response\ServerException was not thrown for a non-hash key.');
-        } catch (ServerException $e) {
-            $this->assertSame('WRONGTYPE', $e->getErrorType());
+            $this->setPrivateProperty($this->handler, 'redis', $spy);
+
+            try {
+                $this->handler->save('non_hash_key', 'new_value', 60);
+                $this->fail('Predis\Response\ServerException was not thrown for a non-hash key.');
+            } catch (ServerException $e) {
+                $this->assertSame('WRONGTYPE', $e->getErrorType());
+            }
+
+            // The Lua script must be the only command attempted.
+            $this->assertSame(['eval'], $spy->commands);
+
+            $this->assertSame('raw_string_value', $redis->get($prefixedKey));
+            $this->assertGreaterThan(250, $redis->ttl($prefixedKey));
+
+            // Handler remains usable for subsequent operations
+            $this->assertTrue($this->handler->save(self::$key1, 'usable_value'));
+            $this->assertSame('usable_value', $this->handler->get(self::$key1));
+        } finally {
+            $this->setPrivateProperty($this->handler, 'redis', $originalClient);
+            $redis->del([$prefixedKey]);
         }
-
-        $this->assertSame('raw_string_value', $redis->get($prefixedKey));
-        $this->assertGreaterThan(250, $redis->ttl($prefixedKey));
-
-        // Handler remains usable for subsequent operations
-        $this->assertTrue($this->handler->save(self::$key1, 'usable_value'));
-        $this->assertSame('usable_value', $this->handler->get(self::$key1));
-
-        $redis->del([$prefixedKey]);
     }
 
     public function testSaveFallbackWhenEvalThrowsException(): void
@@ -231,25 +260,156 @@ final class PredisHandlerTest extends AbstractHandlerTestCase
         /** @var Client $originalClient */
         $originalClient = $this->getPrivateProperty($this->handler, 'redis');
 
-        $failingClient = new class ($originalClient->getConnection()->getParameters()) extends Client {
+        $prefix = $this->config->prefix;
+
+        $failingClient = new class ($originalClient->getConnection()->getParameters(), ['prefix' => $prefix]) extends Client {
             /**
-             * @param string $script
-             * @param int    $numkeys
-             * @param mixed  ...$arguments
+             * @var list<string>
              */
-            public function eval($script, $numkeys, ...$arguments): never
+            public array $commands = [];
+
+            public ?Throwable $evalException = null;
+
+            /**
+             * @param string                   $commandID
+             * @param array<int|string, mixed> $arguments
+             */
+            public function __call($commandID, $arguments)
             {
-                throw new RuntimeException('ERR unknown command EVAL');
+                $this->commands[] = strtolower($commandID);
+
+                if (strtolower($commandID) === 'eval' && $this->evalException instanceof Throwable) {
+                    throw $this->evalException;
+                }
+
+                return parent::__call($commandID, $arguments);
             }
         };
+
+        $failingClient->evalException = new ServerException("ERR unknown command 'EVAL', with args beginning with: 'local res = redis.pcall(...)");
 
         try {
             $this->setPrivateProperty($this->handler, 'redis', $failingClient);
 
             $this->assertTrue($this->handler->save(self::$key1, 'fallback_value', 120));
+            $this->assertSame(['eval', 'hmset', 'expireat'], $failingClient->commands);
+
             $this->assertSame('fallback_value', $this->handler->get(self::$key1));
         } finally {
             $this->setPrivateProperty($this->handler, 'redis', $originalClient);
+        }
+    }
+
+    public function testSaveFallsBackWhenEvalIsDeniedByAcl(): void
+    {
+        /** @var Client $originalClient */
+        $originalClient = $this->getPrivateProperty($this->handler, 'redis');
+
+        $prefix = $this->config->prefix;
+
+        $failingClient = new class ($originalClient->getConnection()->getParameters(), ['prefix' => $prefix]) extends Client {
+            /**
+             * @var list<string>
+             */
+            public array $commands = [];
+
+            public ?Throwable $evalException = null;
+
+            /**
+             * @param string                   $commandID
+             * @param array<int|string, mixed> $arguments
+             */
+            public function __call($commandID, $arguments)
+            {
+                $this->commands[] = strtolower($commandID);
+
+                if (strtolower($commandID) === 'eval' && $this->evalException instanceof Throwable) {
+                    throw $this->evalException;
+                }
+
+                return parent::__call($commandID, $arguments);
+            }
+        };
+
+        $failingClient->evalException = new ServerException("NOPERM this user has no permissions to run the 'eval' command");
+
+        try {
+            $this->setPrivateProperty($this->handler, 'redis', $failingClient);
+
+            $this->assertTrue($this->handler->save(self::$key1, 'acl_fallback_value', 120));
+            $this->assertSame(['eval', 'hmset', 'expireat'], $failingClient->commands);
+
+            $this->assertSame('acl_fallback_value', $this->handler->get(self::$key1));
+        } finally {
+            $this->setPrivateProperty($this->handler, 'redis', $originalClient);
+        }
+    }
+
+    public function testSaveRethrowsWhenHmsetIsDeniedInsideScript(): void
+    {
+        /** @var Client $originalClient */
+        $originalClient = $this->getPrivateProperty($this->handler, 'redis');
+
+        $prefix = $this->config->prefix;
+
+        $failingClient = new class ($originalClient->getConnection()->getParameters(), ['prefix' => $prefix]) extends Client {
+            /**
+             * @var list<string>
+             */
+            public array $commands = [];
+
+            public ?Throwable $evalException = null;
+
+            /**
+             * @param string                   $commandID
+             * @param array<int|string, mixed> $arguments
+             */
+            public function __call($commandID, $arguments)
+            {
+                $this->commands[] = strtolower($commandID);
+
+                if (strtolower($commandID) === 'eval' && $this->evalException instanceof Throwable) {
+                    throw $this->evalException;
+                }
+
+                return parent::__call($commandID, $arguments);
+            }
+        };
+
+        $failingClient->evalException = new ServerException("NOPERM this user has no permissions to run the 'hmset' command");
+
+        try {
+            $this->setPrivateProperty($this->handler, 'redis', $failingClient);
+
+            try {
+                $this->handler->save(self::$key1, 'denied_value', 120);
+                $this->fail('Predis\Response\ServerException was not thrown when HMSET is denied inside the script.');
+            } catch (ServerException $e) {
+                $this->assertStringContainsString('NOPERM', $e->getMessage());
+            }
+
+            // Only the script ran: no sequential fallback was attempted.
+            $this->assertSame(['eval'], $failingClient->commands);
+        } finally {
+            $this->setPrivateProperty($this->handler, 'redis', $originalClient);
+        }
+    }
+
+    public function testSaveUsesConfiguredPrefixInScript(): void
+    {
+        $config         = new Cache();
+        $config->prefix = 'ci4_';
+        $handler        = CacheFactory::getHandler($config, 'predis');
+
+        try {
+            $this->assertTrue($handler->save('prefixed_key', 'prefixed_value', 120));
+            $this->assertSame('prefixed_value', $handler->get('prefixed_key'));
+
+            $metadata = $handler->getMetaData('prefixed_key');
+            $this->assertNotNull($metadata);
+            $this->assertNotNull($metadata['expire']);
+        } finally {
+            $handler->clean();
         }
     }
 }

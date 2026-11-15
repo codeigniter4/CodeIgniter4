@@ -262,6 +262,36 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
         $redis->del($prefixedKey);
     }
 
+    public function testSaveIgnoresStaleLastErrorOnSuccessfulEval(): void
+    {
+        /** @var Redis $originalRedis */
+        $originalRedis = $this->getPrivateProperty($this->handler, 'redis');
+
+        $failingRedis = $this->createMock(Redis::class);
+        $failingRedis->expects($this->once())
+            ->method('clearLastError')
+            ->willReturn(true);
+        $failingRedis->expects($this->once())
+            ->method('eval')
+            ->willReturn(1);
+        // A message left behind by an earlier command on the same connection must not be read.
+        $failingRedis->expects($this->never())
+            ->method('getLastError')
+            ->willReturn("ERR unknown command 'EVAL', with args beginning with: 'local res = redis.pcall(...)");
+        $failingRedis->expects($this->never())
+            ->method('hMset');
+        $failingRedis->expects($this->never())
+            ->method('expireAt');
+
+        try {
+            $this->setPrivateProperty($this->handler, 'redis', $failingRedis);
+
+            $this->assertTrue($this->handler->save(self::$key1, 'stale_error_value', 120));
+        } finally {
+            $this->setPrivateProperty($this->handler, 'redis', $originalRedis);
+        }
+    }
+
     public function testSaveFallbackWhenEvalThrowsException(): void
     {
         /** @var Redis $originalRedis */
@@ -269,8 +299,11 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
 
         $failingRedis = $this->createMock(Redis::class);
         $failingRedis->expects($this->once())
+            ->method('clearLastError')
+            ->willReturn(true);
+        $failingRedis->expects($this->once())
             ->method('eval')
-            ->willThrowException(new RedisException('ERR unknown command EVAL'));
+            ->willThrowException(new RedisException("ERR unknown command 'EVAL', with args beginning with: 'local res = redis.pcall(...)"));
         $failingRedis->expects($this->once())
             ->method('hMset')
             ->willReturn(true);
@@ -294,8 +327,14 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
 
         $failingRedis = $this->createMock(Redis::class);
         $failingRedis->expects($this->once())
+            ->method('clearLastError')
+            ->willReturn(true);
+        $failingRedis->expects($this->once())
             ->method('eval')
             ->willReturn(false);
+        $failingRedis->expects($this->once())
+            ->method('getLastError')
+            ->willReturn("ERR unknown command 'EVAL', with args beginning with: 'local res = redis.pcall(...)");
         $failingRedis->expects($this->once())
             ->method('hMset')
             ->willReturn(true);
@@ -312,15 +351,21 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
         }
     }
 
-    public function testSaveDoesNotFallbackWhenScriptReportsHmsetFailure(): void
+    public function testSaveReturnsFalseWithoutFallbackWhenScriptReportsHmsetError(): void
     {
         /** @var Redis $originalRedis */
         $originalRedis = $this->getPrivateProperty($this->handler, 'redis');
 
         $failingRedis = $this->createMock(Redis::class);
         $failingRedis->expects($this->once())
+            ->method('clearLastError')
+            ->willReturn(true);
+        $failingRedis->expects($this->once())
             ->method('eval')
-            ->willReturn(0);
+            ->willReturn(false);
+        $failingRedis->expects($this->once())
+            ->method('getLastError')
+            ->willReturn('WRONGTYPE Operation against a key holding the wrong kind of value');
         $failingRedis->expects($this->never())
             ->method('hMset');
         $failingRedis->expects($this->never())
@@ -330,6 +375,150 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
             $this->setPrivateProperty($this->handler, 'redis', $failingRedis);
 
             $this->assertFalse($this->handler->save(self::$key1, 'new_value', 60));
+        } finally {
+            $this->setPrivateProperty($this->handler, 'redis', $originalRedis);
+        }
+    }
+
+    public function testSaveReturnsFalseWithoutFallbackWhenEvalFailsWithoutError(): void
+    {
+        /** @var Redis $originalRedis */
+        $originalRedis = $this->getPrivateProperty($this->handler, 'redis');
+
+        $failingRedis = $this->createMock(Redis::class);
+        $failingRedis->expects($this->once())
+            ->method('clearLastError')
+            ->willReturn(true);
+        $failingRedis->expects($this->once())
+            ->method('eval')
+            ->willReturn(false);
+        $failingRedis->expects($this->once())
+            ->method('getLastError')
+            ->willReturn(null);
+        $failingRedis->expects($this->never())
+            ->method('hMset');
+        $failingRedis->expects($this->never())
+            ->method('expireAt');
+
+        try {
+            $this->setPrivateProperty($this->handler, 'redis', $failingRedis);
+
+            $this->assertFalse($this->handler->save(self::$key1, 'new_value', 60));
+        } finally {
+            $this->setPrivateProperty($this->handler, 'redis', $originalRedis);
+        }
+    }
+
+    public function testSaveReturnsFalseWithoutFallbackWhenHmsetIsDeniedInsideScript(): void
+    {
+        /** @var Redis $originalRedis */
+        $originalRedis = $this->getPrivateProperty($this->handler, 'redis');
+
+        $failingRedis = $this->createMock(Redis::class);
+        $failingRedis->expects($this->once())
+            ->method('clearLastError')
+            ->willReturn(true);
+        $failingRedis->expects($this->once())
+            ->method('eval')
+            ->willReturn(false);
+        $failingRedis->expects($this->once())
+            ->method('getLastError')
+            ->willReturn("NOPERM this user has no permissions to run the 'hmset' command");
+        $failingRedis->expects($this->never())
+            ->method('hMset');
+        $failingRedis->expects($this->never())
+            ->method('expireAt');
+
+        try {
+            $this->setPrivateProperty($this->handler, 'redis', $failingRedis);
+
+            $this->assertFalse($this->handler->save(self::$key1, 'new_value', 60));
+        } finally {
+            $this->setPrivateProperty($this->handler, 'redis', $originalRedis);
+        }
+    }
+
+    public function testSaveRethrowsRedisExceptionFromEval(): void
+    {
+        /** @var Redis $originalRedis */
+        $originalRedis = $this->getPrivateProperty($this->handler, 'redis');
+
+        $failingRedis = $this->createMock(Redis::class);
+        $failingRedis->expects($this->once())
+            ->method('clearLastError')
+            ->willReturn(true);
+        $failingRedis->expects($this->once())
+            ->method('eval')
+            ->willThrowException(new RedisException('WRONGTYPE Operation against a key holding the wrong kind of value'));
+        $failingRedis->expects($this->never())
+            ->method('hMset');
+        $failingRedis->expects($this->never())
+            ->method('expireAt');
+
+        $this->expectException(RedisException::class);
+        $this->expectExceptionMessage('WRONGTYPE');
+
+        try {
+            $this->setPrivateProperty($this->handler, 'redis', $failingRedis);
+
+            $this->handler->save(self::$key1, 'new_value', 60);
+        } finally {
+            $this->setPrivateProperty($this->handler, 'redis', $originalRedis);
+        }
+    }
+
+    public function testSaveRethrowsWhenHmsetIsDeniedInsideScript(): void
+    {
+        /** @var Redis $originalRedis */
+        $originalRedis = $this->getPrivateProperty($this->handler, 'redis');
+
+        $failingRedis = $this->createMock(Redis::class);
+        $failingRedis->expects($this->once())
+            ->method('clearLastError')
+            ->willReturn(true);
+        $failingRedis->expects($this->once())
+            ->method('eval')
+            ->willThrowException(new RedisException("NOPERM this user has no permissions to run the 'hmset' command"));
+        $failingRedis->expects($this->never())
+            ->method('hMset');
+        $failingRedis->expects($this->never())
+            ->method('expireAt');
+
+        $this->expectException(RedisException::class);
+        $this->expectExceptionMessage('NOPERM');
+
+        try {
+            $this->setPrivateProperty($this->handler, 'redis', $failingRedis);
+
+            $this->handler->save(self::$key1, 'new_value', 60);
+        } finally {
+            $this->setPrivateProperty($this->handler, 'redis', $originalRedis);
+        }
+    }
+
+    public function testSaveFallsBackWhenEvalIsDeniedByAcl(): void
+    {
+        /** @var Redis $originalRedis */
+        $originalRedis = $this->getPrivateProperty($this->handler, 'redis');
+
+        $failingRedis = $this->createMock(Redis::class);
+        $failingRedis->expects($this->once())
+            ->method('clearLastError')
+            ->willReturn(true);
+        $failingRedis->expects($this->once())
+            ->method('eval')
+            ->willThrowException(new RedisException("NOPERM this user has no permissions to run the 'eval' command"));
+        $failingRedis->expects($this->once())
+            ->method('hMset')
+            ->willReturn(true);
+        $failingRedis->expects($this->once())
+            ->method('expireAt')
+            ->willReturn(true);
+
+        try {
+            $this->setPrivateProperty($this->handler, 'redis', $failingRedis);
+
+            $this->assertTrue($this->handler->save(self::$key1, 'fallback_value', 120));
         } finally {
             $this->setPrivateProperty($this->handler, 'redis', $originalRedis);
         }

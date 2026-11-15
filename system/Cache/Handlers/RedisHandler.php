@@ -18,7 +18,6 @@ use CodeIgniter\I18n\Time;
 use Config\Cache;
 use Redis;
 use RedisException;
-use Throwable;
 
 /**
  * Redis cache handler
@@ -26,13 +25,21 @@ use Throwable;
 class RedisHandler extends BaseHandler
 {
     /**
-     * Lua script to conditionally execute HMSET and EXPIREAT in a single round trip.
-     * Prevents EXPIREAT from mutating TTL or expiring keys when HMSET fails (e.g. WRONGTYPE).
+     * Lua script to execute HMSET and EXPIREAT in a single round trip.
+     *
+     * The pcall error reply is returned to the client, so a failing HMSET never
+     * runs EXPIREAT and the original error message and type are preserved:
+     * clients that throw on error replies raise RedisException, phpredis exposes
+     * the message through Redis::getLastError().
+     *
+     * If HMSET succeeds and EXPIREAT is rejected, the hash is stored without a
+     * TTL, exactly as with the previous sequential implementation (Redis does
+     * not roll back script effects).
      */
     private const SAVE_SCRIPT = <<<'LUA'
         local res = redis.pcall('HMSET', KEYS[1], '__ci_type', ARGV[2], '__ci_value', ARGV[3])
         if type(res) == 'table' and res.err then
-            return 0
+            return res
         end
         redis.call('EXPIREAT', KEYS[1], ARGV[1])
         return 1
@@ -150,34 +157,63 @@ class RedisHandler extends BaseHandler
 
         $fields = ['__ci_type' => $dataType, '__ci_value' => $value];
 
-        if ($ttl !== 0) {
-            $expiresAt = Time::now()->getTimestamp() + $ttl;
-
-            try {
-                $result = $this->redis->eval(
-                    self::SAVE_SCRIPT,
-                    [$key, $expiresAt, $dataType, (string) $value],
-                    1,
-                );
-
-                // phpredis returns false when EVAL is unavailable (e.g. disabled via
-                // rename-command). Integer 0 means HMSET failed inside the script and
-                // must not trigger the fallback.
-                if ($result !== false) {
-                    return (bool) $result;
-                }
-            } catch (Throwable) {
-                // If EVAL is unsupported or blocked, fallback to sequential execution.
-            }
-
-            if (! $this->redis->hMset($key, $fields)) {
-                return false;
-            }
-
-            return $this->redis->expireAt($key, $expiresAt);
+        if ($ttl === 0) {
+            return (bool) $this->redis->hMset($key, $fields);
         }
 
-        return (bool) $this->redis->hMset($key, $fields);
+        $expiresAt = Time::now()->getTimestamp() + $ttl;
+
+        $shouldFallback = false;
+
+        $this->redis->clearLastError();
+
+        try {
+            $result = $this->redis->eval(
+                self::SAVE_SCRIPT,
+                [$key, (string) $expiresAt, $dataType, (string) $value],
+                1,
+            );
+
+            if ($result !== false) {
+                return (bool) $result;
+            }
+
+            // phpredis reports server errors as false and keeps the message in getLastError().
+            $error = $this->redis->getLastError();
+
+            $shouldFallback = is_string($error) && self::isEvalUnavailable($error);
+        } catch (RedisException $e) {
+            if (! self::isEvalUnavailable($e->getMessage())) {
+                throw $e;
+            }
+
+            $shouldFallback = true;
+        }
+
+        if (! $shouldFallback) {
+            return false;
+        }
+
+        // EVAL is unavailable (renamed command or ACL denial): run both commands sequentially.
+        if (! $this->redis->hMset($key, $fields)) {
+            return false;
+        }
+
+        $this->redis->expireAt($key, $expiresAt);
+
+        return true;
+    }
+
+    /**
+     * Checks whether the message only means that the EVAL command itself is not
+     * available to this client, either because it was renamed or because ACL denies it.
+     *
+     * Keep the patterns in sync with PredisHandler::isEvalUnavailable().
+     */
+    private static function isEvalUnavailable(string $message): bool
+    {
+        return preg_match("/unknown command [`']?eval\\b/i", $message) === 1
+            || preg_match("/no permissions to run the [`']eval[`'] command/i", $message) === 1;
     }
 
     public function delete(string $key): bool
