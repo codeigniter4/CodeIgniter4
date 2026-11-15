@@ -70,7 +70,9 @@ class PostgreHandler extends DatabaseHandler
      */
     protected function lockSession(string $sessionID): bool
     {
-        $arg = "hashtext('{$sessionID}')" . ($this->matchIP ? ", hashtext('{$this->ipAddress}')" : '');
+        $arg = 'hashtext(' . $this->db->escape($sessionID) . ')'
+            . ($this->matchIP ? ', hashtext(' . $this->db->escape($this->ipAddress) . ')' : '');
+
         if ($this->db->simpleQuery("SELECT pg_advisory_lock({$arg})") !== false) {
             $this->lock = $arg;
 
