@@ -10,6 +10,12 @@ Please refer to the upgrade instructions corresponding to your installation meth
 
 ## Breaking Changes
 
+### File Cache Rejects Directory Separators and Dot-Only Prefixes
+
+For security reasons, `FileHandler::validateKey()` now rejects `/`, `\` and null bytes in the cache item file name, independently of the `Config\Cache::$reservedCharacters` setting. A cache key can no longer point outside the cache directory when that setting is relaxed.
+
+With the default configuration most applications are unaffected, because `/`, `\` and `:` are already reserved characters. Applications that emptied `$reservedCharacters` to share one key namespace between handlers and used directory separators in File cache keys now get an `InvalidArgumentException`. Build keys from identifiers with a controlled format, or hash the input, instead of relaxing `$reservedCharacters`. See [Caching](../libraries/caching.md). A `$prefix` that consists only of dots and spaces is rejected as well, because it would make every cache file a hidden file that `getCacheInfo()` does not report, `deleteMatching()` does not remove and `clean()` does not delete.
+
 ## Breaking Enhancements
 
 ## Project Files

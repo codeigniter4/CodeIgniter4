@@ -46,11 +46,27 @@ In the case that the first choice `$handler` is not available, this is the next 
 
 If you have more than one application using the same cache storage, you can add a custom prefix string here that is prepended to all key names.
 
+The File handler rejects a prefix that consists only of dots and spaces. Such a prefix would turn every cache file into a hidden file, which `getCacheInfo()` does not report, `deleteMatching()` does not remove and `clean()` does not delete. A prefix that merely starts with a dot, such as `.app`, is still accepted for backward compatibility, even though it also produces hidden files.
+
 ### $ttl
 
 The default number of seconds to save items when none is specified.
 
 WARNING: This is not used by framework handlers where 60 seconds is hard-coded, but may be useful to projects and modules. This will replace the hard-coded value in a future release.
+
+### $reservedCharacters
+
+A string of characters that are not allowed in cache keys or tags. Handlers throw an `InvalidArgumentException` when a key contains one of them. The default, `{}()/\@:`, is required for PSR-6 compliance.
+
+Relaxing `$reservedCharacters` relaxes key validation for every cache handler. The File handler still rejects `/`, `\` and null bytes in the resulting file name, so a cache key cannot point outside the cache directory. The characters left in `$reservedCharacters` still keep keys from being interpreted differently by a handler or by the file system.
+
+On Windows, keep `:` reserved: it separates an NTFS alternate data stream, so a key such as `file:stream` refers to a stream of a file in the cache directory rather than to a new cache item.
+
+Do not use unvalidated user input directly as a cache key. Build keys from identifiers with a controlled format, or hash the input:
+
+```php
+$key = 'search_' . hash('sha256', $userInput);
+```
 
 ### $file
 
@@ -310,7 +326,7 @@ var_dump($cache->getMetadata('my_cached_item'));
 
 - **Return type**: `string`
 
-This method is used by handler methods to check that keys are valid. It will throw an `InvalidArgumentException` for non-strings, invalid characters, and empty lengths.
+This method is used by handler methods to check that keys are valid. It will throw an `InvalidArgumentException` for non-strings, invalid characters, and empty lengths. The File handler additionally rejects `/`, `\` and null bytes in the resulting file name, even when `Config\Cache::$reservedCharacters` is relaxed. It also rejects a prefix that consists only of dots and spaces.
 
 Example:
 

@@ -78,31 +78,42 @@ class FileHandler extends BaseHandler
     }
 
     /**
-     * Validates a cache key, ensuring it contains no directory traversal sequences
-     * or path separators, regardless of the configured reservedCharacters setting.
+     * Validates a cache key and returns the file name the item is stored under.
+     *
+     * The file name must not contain a directory separator or a null byte, so a
+     * cache item can never be written outside the cache directory, even when
+     * `Config\Cache::$reservedCharacters` is relaxed. Other characters are left
+     * to the configured reserved characters, because rejecting characters that
+     * are valid in file names on some platforms would break existing keys.
+     *
+     * A prefix made only of dots and spaces is rejected as well, because it
+     * would turn every cache file into a hidden file that `getCacheInfo()` does
+     * not report, `deleteMatching()` does not remove and
+     * `clean()` does not delete.
      *
      * @param mixed  $key    The key to validate
      * @param string $prefix Optional prefix to include in length calculations
      *
-     * @throws InvalidArgumentException When $key is not valid or contains path separators
+     * @throws InvalidArgumentException When $key is not valid, the resulting
+     *                                  file name contains a directory separator
+     *                                  or a null byte, or $prefix consists only
+     *                                  of dots and spaces
      */
     public static function validateKey($key, $prefix = ''): string
     {
-        if (! is_string($key)) {
-            throw new InvalidArgumentException('Cache key must be a string');
+        // Parent validation also hashes keys that exceed MAX_KEY_LENGTH, so
+        // validate the returned file name and not the raw key.
+        $key = parent::validateKey($key, $prefix);
+
+        if ($prefix !== '' && trim($prefix, '. ') === '') {
+            throw new InvalidArgumentException('Cache key prefix cannot consist only of dots and spaces.');
         }
 
-        $target = $prefix . $key;
-
-        if (
-            $target === ''
-            || strpbrk($target, "/\\:\0") !== false
-            || trim($target, '. ') === ''
-        ) {
-            throw new InvalidArgumentException('Cache key cannot contain directory separators or traversal sequences.');
+        if (strpbrk($key, '/\\') !== false || str_contains($key, "\0")) {
+            throw new InvalidArgumentException('Cache key cannot contain directory separators or null bytes.');
         }
 
-        return parent::validateKey($key, $prefix);
+        return $key;
     }
 
     public function get(string $key): mixed
