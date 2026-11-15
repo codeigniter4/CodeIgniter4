@@ -165,6 +165,18 @@ final class ArrayHelper
                     return false;
                 }
 
+                if (count($indexes) === 1) {
+                    $nextIndex = $indexes[0];
+
+                    foreach ($currentArray as $item) {
+                        if (! is_array($item) || ! array_key_exists($nextIndex, $item)) {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                }
+
                 foreach ($currentArray as $item) {
                     if (! is_array($item) || ! self::checkDotKeyExists($indexes, $item)) {
                         return false;
