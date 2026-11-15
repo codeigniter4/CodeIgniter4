@@ -3,7 +3,7 @@ includes:
 
 parameters:
     phpVersion:
-        min: 80200
+        min: 80300
         max: 80599
     tmpDir: build/phpstan
     level: 6

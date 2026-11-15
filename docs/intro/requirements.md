@@ -2,7 +2,7 @@
 
 ## PHP and Required Extensions
 
-[PHP](https://www.php.net/) version 8.2 or newer is required, with the following PHP extensions enabled:
+[PHP](https://www.php.net/) version 8.3 or newer is required, with the following PHP extensions enabled:
 
 - [intl](https://www.php.net/manual/en/intl.requirements.php)
 - [mbstring](https://www.php.net/manual/en/mbstring.installation.php)
@@ -11,8 +11,9 @@
     - The end of life date for PHP 7.4 was November 28, 2022.
     - The end of life date for PHP 8.0 was November 26, 2023.
     - The end of life date for PHP 8.1 was December 31, 2025.
-    - **If you are still using a PHP version below 8.2, you should upgrade immediately.**
-    - The end of life date for PHP 8.2 will be December 31, 2026.
+    - The end of life date for PHP 8.2 was December 31, 2026.
+    - **If you are still using a PHP version below 8.3, you should upgrade immediately**.
+    - The end of life date for PHP 8.3 will be December 31, 2027.
 
 !!! note "Note"
     - PHP 8.5 requires CodeIgniter 4.7.0 or later.

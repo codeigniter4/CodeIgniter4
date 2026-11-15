@@ -10,7 +10,7 @@ applyTo: "docs/**/*.md"
   trailing spaces that end a line as a hard line break.
 - Add a new page to the page's folder `index.md` and run
   `php admin/update-docs-nav.php` to add it to `docs/.nav.yml`.
-- Keep PHP examples compatible with PHP 8.2 and verify signatures and behavior
+- Keep PHP examples compatible with PHP 8.3 and verify signatures and behavior
   against the current framework code.
 - Distinguish new behavior from existing behavior and document defaults
   precisely.

@@ -51,7 +51,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
         with:
-          php-version: '8.2'
+          php-version: '8.3'
           extensions: intl
           coverage: none
 
@@ -69,9 +69,9 @@ jobs:
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ${{ steps.composer-cache.outputs.COMPOSER_CACHE_FILES_DIR }}
-          key: composer-php-8.2-${{ hashFiles('**/composer.json') }}
+          key: composer-php-8.3-${{ hashFiles('**/composer.json') }}
           restore-keys: |
-            composer-php-8.2-
+            composer-php-8.3-
             composer-
 
       - name: Create PHPStan result cache directory
