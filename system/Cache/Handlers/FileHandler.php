@@ -86,28 +86,18 @@ class FileHandler extends BaseHandler
      * to the configured reserved characters, because rejecting characters that
      * are valid in file names on some platforms would break existing keys.
      *
-     * A prefix made only of dots and spaces is rejected as well, because it
-     * would turn every cache file into a hidden file that `getCacheInfo()` does
-     * not report, `deleteMatching()` does not remove and
-     * `clean()` does not delete.
-     *
      * @param mixed  $key    The key to validate
      * @param string $prefix Optional prefix to include in length calculations
      *
-     * @throws InvalidArgumentException When $key is not valid, the resulting
+     * @throws InvalidArgumentException When $key is not valid or the resulting
      *                                  file name contains a directory separator
-     *                                  or a null byte, or $prefix consists only
-     *                                  of dots and spaces
+     *                                  or a null byte
      */
     public static function validateKey($key, $prefix = ''): string
     {
         // Parent validation also hashes keys that exceed MAX_KEY_LENGTH, so
         // validate the returned file name and not the raw key.
         $key = parent::validateKey($key, $prefix);
-
-        if ($prefix !== '' && trim($prefix, '. ') === '') {
-            throw new InvalidArgumentException('Cache key prefix cannot consist only of dots and spaces.');
-        }
 
         if (strpbrk($key, '/\\') !== false || str_contains($key, "\0")) {
             throw new InvalidArgumentException('Cache key cannot contain directory separators or null bytes.');

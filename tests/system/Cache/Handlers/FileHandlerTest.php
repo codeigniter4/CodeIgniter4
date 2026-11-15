@@ -572,42 +572,7 @@ final class FileHandlerTest extends AbstractHandlerTestCase
 
         yield 'backslash zero prefix' => ['key', '\\0'];
 
-        // trim() strips the leading and trailing dots only, so the remaining
-        // backslashes make this prefix pass the dot-only check.
         yield 'escaped traversal in prefix' => ['key', '..\\\\..\\\\'];
-    }
-
-    #[DataProvider('provideValidateKeyRejectsDotOnlyPrefix')]
-    public function testValidateKeyRejectsDotOnlyPrefix(string $key, string $prefix): void
-    {
-        config('Cache')->reservedCharacters = '';
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Cache key prefix cannot consist only of dots and spaces.');
-
-        FileHandler::validateKey($key, $prefix);
-    }
-
-    /**
-     * @return iterable<string, array{string, string}>
-     */
-    public static function provideValidateKeyRejectsDotOnlyPrefix(): iterable
-    {
-        yield 'dot' => ['key', '.'];
-
-        yield 'two dots' => ['key', '..'];
-
-        yield 'three dots' => ['key', '...'];
-
-        yield 'two dots and a space' => ['key', '.. '];
-
-        yield 'spaces around a dot' => ['key', ' . '];
-
-        yield 'space only' => ['key', ' '];
-
-        yield 'spaces only' => ['key', '   '];
-
-        yield 'prefix with dots and plain key' => ['item', '..'];
     }
 
     #[DataProvider('provideValidateKeyAcceptsHarmlessNames')]
@@ -648,6 +613,20 @@ final class FileHandlerTest extends AbstractHandlerTestCase
         yield 'colon character' => ['test:stream', '', 'test:stream'];
 
         yield 'drive letter' => ['C:file', '', 'C:file'];
+
+        yield 'dot prefix' => ['key', '.', '.key'];
+
+        yield 'two dots prefix' => ['item', '..', '..item'];
+
+        yield 'three dots prefix' => ['key', '...', '...key'];
+
+        yield 'two dots and a space prefix' => ['key', '.. ', '.. key'];
+
+        yield 'spaces around a dot prefix' => ['key', ' . ', ' . key'];
+
+        yield 'space only prefix' => ['key', ' ', ' key'];
+
+        yield 'spaces only prefix' => ['key', '   ', '   key'];
 
         yield 'dot but not dot-only prefix' => ['key', '.app', '.appkey'];
 
@@ -702,15 +681,13 @@ final class FileHandlerTest extends AbstractHandlerTestCase
         FileHandler::validateKey(str_repeat('a', 300), '../');
     }
 
-    public function testValidateKeyRejectsDotOnlyPrefixOfHashedKey(): void
+    public function testValidateKeyHashesLongKeyWithDotPrefix(): void
     {
         config('Cache')->reservedCharacters = '';
 
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Cache key prefix cannot consist only of dots and spaces.');
+        $key = str_repeat('a', 300);
 
-        // Hashing the key must not bypass the prefix check.
-        FileHandler::validateKey(str_repeat('a', 300), '.');
+        $this->assertSame('.' . md5($key), FileHandler::validateKey($key, '.'));
     }
 
     public function testValidateKeyRejectsEmptyKey(): void
@@ -821,18 +798,19 @@ final class FileHandlerTest extends AbstractHandlerTestCase
         $this->handler->save('../evil', 'value');
     }
 
-    public function testDotOnlyPrefixFromConfigIsRejectedByPublicApi(): void
+    public function testDotPrefixFromConfigIsHandledSafelyByPublicApi(): void
     {
+        config('Cache')->reservedCharacters = '';
+
         $config                    = new Cache();
         $config->prefix            = '..';
         $config->file['storePath'] = $this->config->file['storePath'];
 
         $handler = CacheFactory::getHandler($config, 'file');
 
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Cache key prefix cannot consist only of dots and spaces.');
-
-        $handler->save('key', 'value');
+        $this->assertTrue($handler->save('key', 'value'));
+        $this->assertSame('value', $handler->get('key'));
+        $this->assertTrue($handler->delete('key'));
     }
 
     /**

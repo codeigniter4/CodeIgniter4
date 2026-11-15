@@ -46,8 +46,6 @@ In the case that the first choice `$handler` is not available, this is the next 
 
 If you have more than one application using the same cache storage, you can add a custom prefix string here that is prepended to all key names.
 
-The File handler rejects a prefix that consists only of dots and spaces. Such a prefix would turn every cache file into a hidden file, which `getCacheInfo()` does not report, `deleteMatching()` does not remove and `clean()` does not delete. A prefix that merely starts with a dot, such as `.app`, is still accepted for backward compatibility, even though it also produces hidden files.
-
 ### $ttl
 
 The default number of seconds to save items when none is specified.
@@ -326,7 +324,7 @@ var_dump($cache->getMetadata('my_cached_item'));
 
 - **Return type**: `string`
 
-This method is used by handler methods to check that keys are valid. It will throw an `InvalidArgumentException` for non-strings, invalid characters, and empty lengths. The File handler additionally rejects `/`, `\` and null bytes in the resulting file name, even when `Config\Cache::$reservedCharacters` is relaxed. It also rejects a prefix that consists only of dots and spaces.
+This method is used by handler methods to check that keys are valid. It will throw an `InvalidArgumentException` for non-strings, invalid characters, and empty lengths. The File handler additionally rejects `/`, `\` and null bytes in the resulting file name, even when `Config\Cache::$reservedCharacters` is relaxed.
 
 Example:
 
