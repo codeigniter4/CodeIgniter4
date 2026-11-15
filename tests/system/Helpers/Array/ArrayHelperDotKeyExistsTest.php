@@ -43,7 +43,13 @@ final class ArrayHelperDotKeyExistsTest extends CIUnitTestCase
         $this->assertTrue(ArrayHelper::dotKeyExists('contacts.friends', $this->array));
         $this->assertFalse(ArrayHelper::dotKeyExists('not.friends', $this->array));
         $this->assertTrue(ArrayHelper::dotKeyExists('contacts.friends.0.name', $this->array));
+        $this->assertFalse(ArrayHelper::dotKeyExists('contacts.friends.0.nonexistent', $this->array));
         $this->assertFalse(ArrayHelper::dotKeyExists('contacts.friends.1.name', $this->array));
+        $this->assertFalse(ArrayHelper::dotKeyExists('0', []));
+        $this->assertTrue(ArrayHelper::dotKeyExists('0', ['0' => 'value']));
+        $this->assertTrue(ArrayHelper::dotKeyExists('0', ['0' => null]));
+        $this->assertFalse(ArrayHelper::dotKeyExists('contacts.friends.0.name.sub', $this->array));
+        $this->assertFalse(ArrayHelper::dotKeyExists('contacts.friends.1.age.sub', $this->array));
     }
 
     public function testDotKeyExistsWithEndingWildCard(): void
@@ -72,6 +78,36 @@ final class ArrayHelperDotKeyExistsTest extends CIUnitTestCase
         $this->assertTrue(ArrayHelper::dotKeyExists('contacts.*.0.age', $this->array));
         $this->assertTrue(ArrayHelper::dotKeyExists('contacts.*.1.age', $this->array));
         $this->assertTrue(ArrayHelper::dotKeyExists('contacts.*.0.name', $this->array));
+        $this->assertFalse(ArrayHelper::dotKeyExists('contacts.*.0.nonexistent', $this->array));
         $this->assertFalse(ArrayHelper::dotKeyExists('contacts.*.1.name', $this->array));
+        $this->assertFalse(ArrayHelper::dotKeyExists('contacts.friends.*.age.sub', $this->array));
+        $this->assertFalse(ArrayHelper::dotKeyExists('contacts.friends.1.age.*.sub', $this->array));
+        $this->assertFalse(ArrayHelper::dotKeyExists('*.name', [['name' => 'Fred'], 'not-an-array']));
+        $this->assertFalse(ArrayHelper::dotKeyExists('*.name', []));
+    }
+
+    public function testDotKeyExistsWithZeroIndexAfterWildCard(): void
+    {
+        $array = [
+            'users' => [
+                ['contacts' => [['email' => 'alice@example.com']]],
+                ['contacts' => [['email' => 'bob@example.com']]],
+            ],
+        ];
+
+        $this->assertTrue(ArrayHelper::dotKeyExists('users.*.contacts.0.email', $array));
+        $this->assertTrue(ArrayHelper::dotKeyExists('users.*.contacts.*.email', $array));
+        $this->assertFalse(ArrayHelper::dotKeyExists('users.*.contacts.0.nonexistent', $array));
+        $this->assertFalse(ArrayHelper::dotKeyExists('users.*.contacts.1.email', $array));
+
+        $arrayWithMissingKey = [
+            'users' => [
+                ['contacts' => [['email' => 'alice@example.com']]],
+                ['contacts' => [['name' => 'Bob']]],
+            ],
+        ];
+
+        $this->assertFalse(ArrayHelper::dotKeyExists('users.*.contacts.0.email', $arrayWithMissingKey));
+        $this->assertFalse(ArrayHelper::dotKeyExists('users.*.contacts.*.email', $arrayWithMissingKey));
     }
 }

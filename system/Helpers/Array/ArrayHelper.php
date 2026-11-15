@@ -143,30 +143,50 @@ final class ArrayHelper
             return false;
         }
 
-        $currentArray = $array;
+        return self::checkDotKeyExists($indexes, $array);
+    }
 
+    /**
+     * Recursively check if the key exists in the array with wildcards.
+     *
+     * @used-by dotKeyExists()
+     *
+     * @param list<string>            $indexes
+     * @param array<array-key, mixed> $currentArray
+     */
+    private static function checkDotKeyExists(array $indexes, array $currentArray): bool
+    {
         // Grab the current index
-        while ($currentIndex = array_shift($indexes)) {
+        while ($indexes !== []) {
+            $currentIndex = array_shift($indexes);
+
             if ($currentIndex === '*') {
-                $currentIndex = array_shift($indexes);
+                if (! is_array($currentArray) || $currentArray === []) {
+                    return false;
+                }
+
+                if (count($indexes) === 1) {
+                    $nextIndex = $indexes[0];
+
+                    foreach ($currentArray as $item) {
+                        if (! is_array($item) || ! array_key_exists($nextIndex, $item)) {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                }
 
                 foreach ($currentArray as $item) {
-                    if (! array_key_exists($currentIndex, $item)) {
+                    if (! is_array($item) || ! self::checkDotKeyExists($indexes, $item)) {
                         return false;
                     }
                 }
 
-                // If indexes is empty, all elements are checked.
-                if ($indexes === []) {
-                    return true;
-                }
-
-                $currentArray = self::dotSearch('*.' . $currentIndex, $currentArray);
-
-                continue;
+                return true;
             }
 
-            if (! array_key_exists($currentIndex, $currentArray)) {
+            if (! is_array($currentArray) || ! array_key_exists($currentIndex, $currentArray)) {
                 return false;
             }
 
