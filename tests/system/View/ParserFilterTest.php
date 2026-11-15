@@ -182,19 +182,9 @@ final class ParserFilterTest extends CIUnitTestCase
 
         $template = '{ value1|highlight_code }';
 
-        // PHP 8.3 changes the output.
-        if (PHP_VERSION_ID >= 80300) {
-            $expected = <<<'EOF'
-                <pre><code style="color: #000000"><span style="color: #0000BB">Sincerely ?&gt;</span></code></pre>
-                EOF;
-        } else {
-            $expected = <<<'EOF'
-                <code><span style="color: #000000">
-                <span style="color: #0000BB">Sincerely&nbsp;</span>
-                </span>
-                </code>
-                EOF;
-        }
+        $expected = <<<'EOF'
+            <pre><code style="color: #000000"><span style="color: #0000BB">Sincerely ?&gt;</span></code></pre>
+            EOF;
 
         $this->assertSame($expected, $parser->renderString($template));
     }
