@@ -27,6 +27,7 @@ use Rector\DeadCode\Rector\Property\RemoveDefaultValueFromAssignedPropertyRector
 use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
 use Rector\Php71\Rector\FuncCall\RemoveExtraParametersRector;
 use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
+use Rector\Php83\Rector\ClassConst\AddTypeToConstRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\YieldDataProviderRector;
 use Rector\PHPUnit\CodeQuality\Rector\StmtsAwareInterface\DeclareStrictTypesTestsRector;
 use Rector\Privatization\Rector\Class_\FinalizeTestCaseClassRector;
@@ -84,6 +85,7 @@ return RectorConfig::configure()
         __DIR__ . '/tests/system/View/Views',
 
         YieldDataProviderRector::class,
+        AddTypeToConstRector::class,
 
         RemoveUnusedPrivateMethodRector::class => [
             // private method called via getPrivateMethodInvoker
