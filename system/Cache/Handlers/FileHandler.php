@@ -162,8 +162,12 @@ class FileHandler extends BaseHandler
         $deleted = 0;
 
         foreach ($iterator as $file) {
-            // FNM_PERIOD keeps glob() semantics: wildcards don't match a leading dot.
-            if (! fnmatch($pattern, $file->getFilename(), FNM_PERIOD)) {
+            $filename = $file->getFilename();
+
+            // A dot-leading file name is a legal cache entry, so wildcards must
+            // match it. `.htaccess` protects the cache directory and is never a
+            // cache entry, so it must never be deleted.
+            if (strcasecmp($filename, '.htaccess') === 0 || ! fnmatch($pattern, $filename)) {
                 continue;
             }
 
@@ -202,12 +206,12 @@ class FileHandler extends BaseHandler
 
     public function clean(): bool
     {
-        return delete_files($this->path, false, true);
+        return delete_files($this->path, htdocs: true, hidden: true);
     }
 
     public function getCacheInfo(): array
     {
-        return get_dir_file_info($this->path);
+        return get_dir_file_info($this->path, hidden: true);
     }
 
     public function getMetaData(string $key): ?array
