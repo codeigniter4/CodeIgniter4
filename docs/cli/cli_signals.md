@@ -45,17 +45,21 @@ Signal handling requires:
 
 ## Using the SignalTrait
 
-The `SignalTrait` provides a comprehensive signal handling system for CLI commands. To use it, simply add the trait to your command class and register signals in your command's `run()` method:
+The `SignalTrait` provides a comprehensive signal handling system for CLI commands. To use it, simply add the trait to your command class and register signals in your command's `execute()` method:
 
 ```php
 <?php
 
-use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\Attributes\Command;
+use CodeIgniter\CLI\SignalTrait;
 
-class SampleCommand extends BaseCommand
+#[Command(name: 'app:sample', description: 'Sample command.', group: 'App')]
+class SampleCommand extends AbstractCommand
 {
-    public function run(array $params): int
+    use SignalTrait;
+
+    protected function execute(array $arguments, array $options): int
     {
         // Register basic termination signals
         $this->registerSignals();
@@ -68,7 +72,7 @@ class SampleCommand extends BaseCommand
             sleep(3);
         }
 
-        CLI::write('Command terminated gracefully', 'green');
+        $this->getOutput()->write('Command terminated gracefully', 'green');
 
         return EXIT_SUCCESS;
     }
@@ -77,6 +81,9 @@ class SampleCommand extends BaseCommand
 
 This registers three termination signals that will set the `$running` state to `false` when received.
 
+!!! note "Note"
+    The trait also works with legacy `BaseCommand` classes. There, register the signals in `run()` and write with `CLI::write()`.
+
 ### Custom Signal Handlers
 
 You can map signals to custom methods for specific behavior:
@@ -84,12 +91,16 @@ You can map signals to custom methods for specific behavior:
 ```php
 <?php
 
-use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\Attributes\Command;
+use CodeIgniter\CLI\SignalTrait;
 
-class SampleCommand extends BaseCommand
+#[Command(name: 'app:sample', description: 'Sample command.', group: 'App')]
+class SampleCommand extends AbstractCommand
 {
-    public function run(array $params): int
+    use SignalTrait;
+
+    protected function execute(array $arguments, array $options): int
     {
         // Register signals with custom handlers
         $this->registerSignals(
@@ -113,25 +124,25 @@ class SampleCommand extends BaseCommand
 
     protected function onGracefulShutdown(int $signal): void
     {
-        CLI::write('Received SIGTERM - shutting down gracefully...', 'yellow');
+        $this->getOutput()->write('Received SIGTERM - shutting down gracefully...', 'yellow');
     }
 
     protected function onInterrupt(int $signal): void
     {
-        CLI::write('Received SIGINT - stopping!', 'red');
+        $this->getOutput()->write('Received SIGINT - stopping!', 'red');
     }
 
     protected function onToggleDebug(int $signal): void
     {
         // Custom debug mode
         $this->debugMode = ! $this->debugMode;
-        CLI::write('Debug mode: ' . ($this->debugMode ? 'ON' : 'OFF'), 'blue');
+        $this->getOutput()->write('Debug mode: ' . ($this->debugMode ? 'ON' : 'OFF'), 'blue');
     }
 
     protected function onStatusReport(int $signal): void
     {
         $state = $this->getProcessState();
-        CLI::write('Status: ' . json_encode($state, JSON_PRETTY_PRINT), 'cyan');
+        $this->getOutput()->write('Status: ' . json_encode($state, JSON_PRETTY_PRINT), 'cyan');
     }
 }
 ```
@@ -143,12 +154,16 @@ For signals without explicit mappings, you can implement a generic `onInterrupti
 ```php
 <?php
 
-use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\Attributes\Command;
+use CodeIgniter\CLI\SignalTrait;
 
-class SampleCommand extends BaseCommand
+#[Command(name: 'app:sample', description: 'Sample command.', group: 'App')]
+class SampleCommand extends AbstractCommand
 {
-    public function run(array $params): int
+    use SignalTrait;
+
+    protected function execute(array $arguments, array $options): int
     {
         // Register signals without explicit mappings
         $this->registerSignals([SIGTERM, SIGINT, SIGHUP, SIGUSR1]);
@@ -167,27 +182,29 @@ class SampleCommand extends BaseCommand
     protected function onInterruption(int $signal): void
     {
         $signalName = $this->getSignalName($signal);
-        CLI::write("Received {$signalName} - handling generically", 'yellow');
+
+        $output = $this->getOutput();
+        $output->write("Received {$signalName} - handling generically", 'yellow');
 
         switch ($signal) {
             case SIGTERM:
-                CLI::write('Graceful shutdown requested', 'green');
+                $output->write('Graceful shutdown requested', 'green');
                 break;
 
             case SIGINT:
-                CLI::write('Immediate shutdown requested', 'red');
+                $output->write('Immediate shutdown requested', 'red');
                 break;
 
             case SIGHUP:
-                CLI::write('Configuration reload requested', 'blue');
+                $output->write('Configuration reload requested', 'blue');
                 break;
 
             case SIGUSR1:
-                CLI::write('User signal 1 received', 'cyan');
+                $output->write('User signal 1 received', 'cyan');
                 break;
 
             default:
-                CLI::write('Unknown signal received', 'light_gray');
+                $output->write('Unknown signal received', 'light_gray');
                 break;
         }
     }
@@ -201,16 +218,20 @@ Some operations should never be interrupted (database transactions, file operati
 ```php
 <?php
 
-use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\Output;
+use CodeIgniter\CLI\SignalTrait;
 
-class SampleCommand extends \BaseCommand
+class SampleCommand extends AbstractCommand
 {
+    use SignalTrait;
+
     // ...
-    private function processOrder(array $orderData): void
+    private function processOrder(array $orderData, Output $output): void
     {
         // Critical section - no interruptions allowed
-        $result = $this->withSignalsBlocked(function () use ($orderData) {
-            CLI::write('Starting critical transaction - signals blocked', 'yellow');
+        $result = $this->withSignalsBlocked(function () use ($orderData, $output) {
+            $output->write('Starting critical transaction - signals blocked', 'yellow');
 
             // Start database transaction
             $this->db->transStart();
@@ -228,7 +249,7 @@ class SampleCommand extends \BaseCommand
                 // Commit transaction
                 $this->db->transCommit();
 
-                CLI::write('Transaction completed successfully', 'green');
+                $output->write('Transaction completed successfully', 'green');
 
                 return $orderId;
             } catch (\Exception $e) {
@@ -239,8 +260,8 @@ class SampleCommand extends \BaseCommand
             }
         });
 
-        CLI::write('Critical section complete - signals restored', 'cyan');
-        CLI::write("Order {$result} processed successfully", 'green');
+        $output->write('Critical section complete - signals restored', 'cyan');
+        $output->write("Order {$result} processed successfully", 'green');
     }
 }
 ```
@@ -254,13 +275,17 @@ The SignalTrait supports proper Unix job control with custom handlers:
 ```php
 <?php
 
-use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\Attributes\Command;
+use CodeIgniter\CLI\SignalTrait;
 use CodeIgniter\I18n\Time;
 
-class SampleCommand extends BaseCommand
+#[Command(name: 'app:sample', description: 'Sample command.', group: 'App')]
+class SampleCommand extends AbstractCommand
 {
-    public function run(array $params): int
+    use SignalTrait;
+
+    protected function execute(array $arguments, array $options): int
     {
         // Register pause/resume signals with custom handlers
         $this->registerSignals(
@@ -281,7 +306,9 @@ class SampleCommand extends BaseCommand
 
     protected function onPause(int $signal): void
     {
-        CLI::write('Pausing - saving current date...', 'yellow');
+        $output = $this->getOutput();
+
+        $output->write('Pausing - saving current date...', 'yellow');
 
         // Save current timestamp
         $state = [
@@ -290,12 +317,14 @@ class SampleCommand extends BaseCommand
 
         file_put_contents(WRITEPATH . 'app_state.json', json_encode($state));
 
-        CLI::write('State saved. Process will now suspend.', 'green');
+        $output->write('State saved. Process will now suspend.', 'green');
     }
 
     protected function onResume(int $signal): void
     {
-        CLI::write('Resuming - restoring...', 'green');
+        $output = $this->getOutput();
+
+        $output->write('Resuming - restoring...', 'green');
 
         $file = WRITEPATH . 'app_state.json';
 
@@ -304,10 +333,10 @@ class SampleCommand extends BaseCommand
             $state = json_decode(file_get_contents($file), true);
             $date  = Time::createFromTimestamp($state['timestamp'])->format('Y-m-d H:i:s');
 
-            CLI::write('Restored from ' . $date, 'cyan');
+            $output->write('Restored from ' . $date, 'cyan');
         }
 
-        CLI::write('Resuming normal operation...', 'green');
+        $output->write('Resuming normal operation...', 'green');
     }
 }
 ```
@@ -342,11 +371,11 @@ kill -CONT $PID   # Resume - may lose terminal control
 
 When you manually send `kill -CONT` from a different terminal:
 
-**Expected behavior:**  
+**Expected behavior:**
 
 - Process resumes and custom handlers execute
 
-**Side effects:**  
+**Side effects:**
 
 - Process loses foreground terminal control
 - Ctrl+C and Ctrl+Z may stop working
@@ -413,36 +442,39 @@ Use `getProcessState()` to debug signal issues:
 ```php
 <?php
 
-use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\SignalTrait;
 
-class SampleCommand extends BaseCommand
+class SampleCommand extends AbstractCommand
 {
+    use SignalTrait;
+
     // ...
 
     protected function debugProcessState(): void
     {
-        $state = $this->getProcessState();
+        $state  = $this->getProcessState();
+        $output = $this->getOutput();
 
-        CLI::write('=== PROCESS DEBUG INFO ===', 'yellow');
-        CLI::write('PID: ' . $state['pid'], 'cyan');
-        CLI::write('Running: ' . ($state['running'] ? 'YES' : 'NO'), 'cyan');
-        CLI::write('PCNTL Available: ' . ($state['pcntl_available'] ? 'YES' : 'NO'), 'cyan');
-        CLI::write('Signals Registered: ' . $state['registered_signals'], 'cyan');
-        CLI::write('Signal Names: ' . implode(', ', $state['registered_signals_names']), 'cyan');
-        CLI::write('Explicit Mappings: ' . $state['explicit_mappings'], 'cyan');
-        CLI::write('Signals Blocked: ' . ($state['signals_blocked'] ? 'YES' : 'NO'), 'cyan');
-        CLI::write('Memory Usage: ' . $state['memory_usage_mb'] . ' MB', 'cyan');
-        CLI::write('Peak Memory: ' . $state['memory_peak_mb'] . ' MB', 'cyan');
+        $output->write('=== PROCESS DEBUG INFO ===', 'yellow');
+        $output->write('PID: ' . $state['pid'], 'cyan');
+        $output->write('Running: ' . ($state['running'] ? 'YES' : 'NO'), 'cyan');
+        $output->write('PCNTL Available: ' . ($state['pcntl_available'] ? 'YES' : 'NO'), 'cyan');
+        $output->write('Signals Registered: ' . $state['registered_signals'], 'cyan');
+        $output->write('Signal Names: ' . implode(', ', $state['registered_signals_names']), 'cyan');
+        $output->write('Explicit Mappings: ' . $state['explicit_mappings'], 'cyan');
+        $output->write('Signals Blocked: ' . ($state['signals_blocked'] ? 'YES' : 'NO'), 'cyan');
+        $output->write('Memory Usage: ' . $state['memory_usage_mb'] . ' MB', 'cyan');
+        $output->write('Peak Memory: ' . $state['memory_peak_mb'] . ' MB', 'cyan');
 
         // POSIX info (if available)
         if (isset($state['session_id'])) {
-            CLI::write('Session ID: ' . $state['session_id'], 'cyan');
-            CLI::write('Process Group: ' . $state['process_group'], 'cyan');
-            CLI::write('Has Terminal: ' . ($state['has_controlling_terminal'] ? 'YES' : 'NO'), 'cyan');
+            $output->write('Session ID: ' . $state['session_id'], 'cyan');
+            $output->write('Process Group: ' . $state['process_group'], 'cyan');
+            $output->write('Has Terminal: ' . ($state['has_controlling_terminal'] ? 'YES' : 'NO'), 'cyan');
         }
 
-        CLI::write('========================', 'yellow');
+        $output->write('========================', 'yellow');
     }
 }
 ```
@@ -463,7 +495,7 @@ This returns comprehensive information including:
 
 #### registerSignals($signals = [SIGTERM, SIGINT, SIGHUP, SIGQUIT], $methodMap = [])
 
-- **Parameters**  
+- **Parameters**
     - **$signals** `array` List of signals to handle
     - **$methodMap** `array` Optional signal-to-method mapping
 
@@ -503,8 +535,6 @@ Check if the process should continue running (not terminated).
 ```php
 <?php
 
-use CodeIgniter\CLI\CLI;
-
 // Main application loop
 while ($this->isRunning()) {
     // Process work items
@@ -514,7 +544,7 @@ while ($this->isRunning()) {
     usleep(100000); // 0.1 seconds
 }
 
-CLI::write('Process terminated gracefully.');
+$this->getOutput()->write('Process terminated gracefully.');
 ```
 
 #### shouldTerminate()
@@ -527,11 +557,9 @@ Check if termination has been requested (opposite of `isRunning()`).
 ```php
 <?php
 
-use CodeIgniter\CLI\CLI;
-
 // Check for termination before expensive operations
 if ($this->shouldTerminate()) {
-    CLI::write('Termination requested, skipping file processing.');
+    $this->getOutput()->write('Termination requested, skipping file processing.');
 
     return;
 }
@@ -540,7 +568,7 @@ if ($this->shouldTerminate()) {
 foreach ($largeDataSet as $item) {
     // Check periodically during long operations
     if ($this->shouldTerminate()) {
-        CLI::write('Termination requested during processing.');
+        $this->getOutput()->write('Termination requested during processing.');
         break;
     }
 
@@ -557,11 +585,9 @@ Manually request process termination.
 ```php
 <?php
 
-use CodeIgniter\CLI\CLI;
-
 // Request termination based on conditions
 if ($errorCount > $this->maxErrors) {
-    CLI::write("Too many errors ({$errorCount}), requesting termination.", 'red');
+    $this->getOutput()->write("Too many errors ({$errorCount}), requesting termination.", 'red');
     $this->requestTermination();
 
     return;
@@ -576,7 +602,7 @@ Reset all states - useful for testing or restart scenarios.
 
 #### withSignalsBlocked($operation)
 
-- **Parameters**  
+- **Parameters**
     - **$operation** `callable` The critical operation to execute without interruption
 
 - **Returns**: The result of the operation
@@ -597,7 +623,7 @@ Check if signals are currently blocked.
 
 #### mapSignal($signal, $method)
 
-- **Parameters**  
+- **Parameters**
     - **$signal** `int` Signal constant
     - **$method** `string` Method name to call for this signal
 
@@ -608,14 +634,16 @@ Add or update signal-to-method mapping at runtime.
 ```php
 <?php
 
-use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\SignalTrait;
 
-class SampleCommand extends BaseCommand
+#[Command(name: 'app:sample', description: 'Sample command.', group: 'App')]
+class SampleCommand extends AbstractCommand
 {
     use SignalTrait;
-    public function run(array $params): int
+
+    protected function execute(array $arguments, array $options): int
     {
         // Register signals first
         $this->registerSignals([SIGTERM, SIGINT, SIGUSR1, SIGUSR2]);
@@ -628,13 +656,13 @@ class SampleCommand extends BaseCommand
     // Custom signal handlers
     public function handleReload(int $signal): void
     {
-        CLI::write('Received reload signal, reloading configuration...');
+        $this->getOutput()->write('Received reload signal, reloading configuration...');
         $this->reloadConfig();
     }
 
     public function handleStatusDump(int $signal): void
     {
-        CLI::write('=== Process Status ===');
+        $this->getOutput()->write('=== Process Status ===');
         $this->printStatus($this->getProcessState());
     }
 }
@@ -642,7 +670,7 @@ class SampleCommand extends BaseCommand
 
 #### getSignalName($signal)
 
-- **Parameters**  
+- **Parameters**
     - **$signal** `int` Signal constant
 
 - **Returns**: Human-readable signal name
@@ -654,15 +682,16 @@ Get human-readable name for a signal constant.
 ```php
 <?php
 
-use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\SignalTrait;
 
-class SampleCommand extends BaseCommand
+#[Command(name: 'app:sample', description: 'Sample command.', group: 'App')]
+class SampleCommand extends AbstractCommand
 {
     use SignalTrait;
 
-    public function run(array $params): int
+    protected function execute(array $arguments, array $options): int
     {
         // ...
     }
@@ -671,7 +700,7 @@ class SampleCommand extends BaseCommand
     public function onInterruption(int $signal): void
     {
         $signalName = $this->getSignalName($signal);
-        CLI::write("Received signal: {$signalName} ({$signal})", 'yellow');
+        $this->getOutput()->write("Received signal: {$signalName} ({$signal})", 'yellow');
     }
 }
 ```
@@ -700,15 +729,16 @@ Get comprehensive process state information including process ID, memory usage, 
 ```php
 <?php
 
-use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\AbstractCommand;
+use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\SignalTrait;
 
-class SampleCommand extends BaseCommand
+#[Command(name: 'app:sample', description: 'Sample command.', group: 'App')]
+class SampleCommand extends AbstractCommand
 {
     use SignalTrait;
 
-    public function run(array $params): int
+    protected function execute(array $arguments, array $options): int
     {
         // ...
     }
@@ -716,15 +746,16 @@ class SampleCommand extends BaseCommand
     // Debug process state
     public function debugProcessState(): void
     {
-        $state = $this->getProcessState();
+        $state  = $this->getProcessState();
+        $output = $this->getOutput();
 
-        CLI::write('=== Process Debug Information ===');
-        CLI::write("PID: {$state['pid']}");
-        CLI::write('Running: ' . ($state['running'] ? 'Yes' : 'No'));
-        CLI::write("Memory Usage: {$state['memory_usage_mb']} MB");
-        CLI::write("Peak Memory: {$state['memory_peak_mb']} MB");
-        CLI::write('Registered Signals: ' . implode(', ', $state['registered_signals_names']));
-        CLI::write('Signals Blocked: ' . ($state['signals_blocked'] ? 'Yes' : 'No'));
+        $output->write('=== Process Debug Information ===');
+        $output->write("PID: {$state['pid']}");
+        $output->write('Running: ' . ($state['running'] ? 'Yes' : 'No'));
+        $output->write("Memory Usage: {$state['memory_usage_mb']} MB");
+        $output->write("Peak Memory: {$state['memory_peak_mb']} MB");
+        $output->write('Registered Signals: ' . implode(', ', $state['registered_signals_names']));
+        $output->write('Signals Blocked: ' . ($state['signals_blocked'] ? 'Yes' : 'No'));
     }
 }
 ```
