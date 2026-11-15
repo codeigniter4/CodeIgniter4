@@ -199,14 +199,21 @@ class Forge extends BaseForge
      */
     protected function _dropKeyAsConstraint(string $table, string $constraintName): string
     {
-        return "SELECT con.conname
-               FROM pg_catalog.pg_constraint con
+        return sprintf(
+            <<<'SQL'
+                SELECT con.conname
+                FROM pg_catalog.pg_constraint con
                 INNER JOIN pg_catalog.pg_class rel
-                           ON rel.oid = con.conrelid
+                    ON rel.oid = con.conrelid
                 INNER JOIN pg_catalog.pg_namespace nsp
-                           ON nsp.oid = connamespace
-               WHERE nsp.nspname = '{$this->db->schema}'
-                     AND rel.relname = '" . trim($table, '"') . "'
-                     AND con.conname = '" . trim($constraintName, '"') . "'";
+                    ON nsp.oid = connamespace
+                WHERE nsp.nspname = %s
+                    AND rel.relname = %s
+                    AND con.conname = %s
+                SQL,
+            $this->db->escape($this->db->schema),
+            $this->db->escape(trim($table, '"')),
+            $this->db->escape(trim($constraintName, '"')),
+        );
     }
 }

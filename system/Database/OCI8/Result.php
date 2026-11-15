@@ -36,7 +36,7 @@ class Result extends BaseResult
 
     public function getFieldData(): array
     {
-        return array_map(fn ($fieldIndex) => (object) [
+        return array_map(fn ($fieldIndex): stdClass => (object) [
             'name'       => oci_field_name($this->resultID, $fieldIndex),
             'type'       => oci_field_type($this->resultID, $fieldIndex),
             'max_length' => oci_field_size($this->resultID, $fieldIndex),

@@ -4,6 +4,32 @@ CodeIgniter 4 is a mature open-source PHP framework. Framework production
 code lives in `system/`; its tests mirror that structure under
 `tests/system/`.
 
+## Before opening a pull request
+
+Do not open a pull request unless the applicable pre-submission requirements
+in [CONTRIBUTING.md](CONTRIBUTING.md) and
+[Sending a Pull Request](contributing/pull_request.md) are met.
+
+- A human contributor must have reviewed and understood the complete diff
+  and taken responsibility for the submission. Agent review and passing
+  checks do not replace this human review.
+- Verify the target branch, commit signing, relevant tests, and required
+  documentation. Follow the focused validation policy below. Do not run
+  the full CI matrix locally.
+- Remind the user of the applicable open pull request limit before
+  submission. Check the contributor's open pull requests, including
+  drafts, when possible. If the limit or a maintainer-approved exemption
+  cannot be verified, clearly tell the user rather than claiming it has
+  been checked.
+- If a requirement is unmet or cannot be verified, do not open the pull
+  request. Tell the user which requirements remain unmet or unverified
+  and what is needed before submission. Continue preparing the changes
+  and completing any checks that can be performed. An unverified PR
+  limit or exemption alone does not block submission; a known limit
+  violation without an exemption does.
+- Report the checks performed, their results, and any validation left
+  to CI. Do not claim that checks passed unless they were actually run.
+
 ## Before making changes
 
 Consult the relevant sections of:

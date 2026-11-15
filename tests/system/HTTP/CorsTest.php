@@ -566,4 +566,67 @@ final class CorsTest extends CIUnitTestCase
             $cors->hasResponseHeaders($request, $response),
         );
     }
+
+    public function testHasResponseHeadersReturnsFalseWhenExposedHeaderIsSubstringOfExistingHeader(): void
+    {
+        $config                   = $this->getDefaultConfig();
+        $config['allowedOrigins'] = ['http://localhost:8080'];
+        $config['allowedMethods'] = ['GET'];
+        $config['exposedHeaders'] = ['X-Custom'];
+        $cors                     = $this->createCors($config);
+
+        $request = $this->createRequest()
+            ->withMethod('GET')
+            ->setHeader('Origin', 'http://localhost:8080');
+
+        $response = service('redirectresponse', null, false);
+        $response->setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+        $response->setHeader('Access-Control-Expose-Headers', 'X-Custom-Header');
+
+        $this->assertFalse(
+            $cors->hasResponseHeaders($request, $response),
+        );
+    }
+
+    public function testHasResponseHeadersWithExposedHeadersInDifferentOrder(): void
+    {
+        $config                   = $this->getDefaultConfig();
+        $config['allowedOrigins'] = ['http://localhost:8080'];
+        $config['allowedMethods'] = ['GET'];
+        $config['exposedHeaders'] = ['X-Header-One', 'X-Header-Two'];
+        $cors                     = $this->createCors($config);
+
+        $request = $this->createRequest()
+            ->withMethod('GET')
+            ->setHeader('Origin', 'http://localhost:8080');
+
+        $response = service('redirectresponse', null, false);
+        $response->setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+        $response->setHeader('Access-Control-Expose-Headers', 'X-Header-Two, X-Header-One');
+
+        $this->assertTrue(
+            $cors->hasResponseHeaders($request, $response),
+        );
+    }
+
+    public function testHasResponseHeadersWithExposedHeadersCaseInsensitive(): void
+    {
+        $config                   = $this->getDefaultConfig();
+        $config['allowedOrigins'] = ['http://localhost:8080'];
+        $config['allowedMethods'] = ['GET'];
+        $config['exposedHeaders'] = ['X-Custom-Header'];
+        $cors                     = $this->createCors($config);
+
+        $request = $this->createRequest()
+            ->withMethod('GET')
+            ->setHeader('Origin', 'http://localhost:8080');
+
+        $response = service('redirectresponse', null, false);
+        $response->setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+        $response->setHeader('Access-Control-Expose-Headers', 'x-custom-header');
+
+        $this->assertTrue(
+            $cors->hasResponseHeaders($request, $response),
+        );
+    }
 }

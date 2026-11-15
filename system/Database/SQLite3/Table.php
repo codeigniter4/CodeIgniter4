@@ -496,7 +496,7 @@ class Table
                 continue;
             }
 
-            $this->db->query("DROP INDEX IF EXISTS '{$name}'");
+            $this->db->query('DROP INDEX IF EXISTS ' . $this->db->escapeIdentifier($name));
         }
     }
 }

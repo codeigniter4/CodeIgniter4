@@ -588,6 +588,36 @@ final class FormHelperTest extends CIUnitTestCase
         service('superglobals')->unsetPost('cars');
     }
 
+    public function testFormDropdownInferredArray(): void
+    {
+        $options = [
+            'Swedish Cars' => [
+                'volvo' => 'Volvo',
+                'saab'  => 'Saab',
+            ],
+            'German Cars' => [
+                'mercedes' => 'Mercedes',
+                'audi'     => 'Audi',
+            ],
+        ];
+        $expected = <<<EOH
+            <select name="cars" multiple="multiple">
+            <optgroup label="Swedish Cars">
+            <option value="volvo" selected="selected">Volvo</option>
+            <option value="saab">Saab</option>
+            </optgroup>
+            <optgroup label="German Cars">
+            <option value="mercedes">Mercedes</option>
+            <option value="audi" selected="selected">Audi</option>
+            </optgroup>
+            </select>\n
+            EOH;
+        service('superglobals')->setPost('cars', ['volvo', 'audi']);
+        $this->assertSame($expected, form_dropdown('cars', $options));
+        $this->assertSame($expected, form_dropdown(['name' => 'cars'], $options));
+        service('superglobals')->unsetPost('cars');
+    }
+
     public function testFormDropdownWithSelectedAttribute(): void
     {
         $expected = <<<'EOH'
@@ -682,6 +712,29 @@ final class FormHelperTest extends CIUnitTestCase
         ];
 
         $this->assertSame($expected, form_multiselect($data));
+    }
+
+    public function testFormMultiselectInferred(): void
+    {
+        $expected = <<<EOH
+            <select name="shirts[]"  multiple="multiple">
+            <option value="small">Small Shirt</option>
+            <option value="med" selected="selected">Medium Shirt</option>
+            <option value="large" selected="selected">Large Shirt</option>
+            <option value="xlarge">Extra Large Shirt</option>
+            </select>\n
+            EOH;
+        $options = [
+            'small'  => 'Small Shirt',
+            'med'    => 'Medium Shirt',
+            'large'  => 'Large Shirt',
+            'xlarge' => 'Extra Large Shirt',
+        ];
+
+        service('superglobals')->setPost('shirts', ['med', 'large']);
+        $this->assertSame($expected, form_multiselect('shirts[]', $options));
+        $this->assertSame($expected, form_multiselect(['name' => 'shirts[]', 'options' => $options]));
+        service('superglobals')->unsetPost('shirts');
     }
 
     public function testFormFieldset(): void

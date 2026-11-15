@@ -208,6 +208,122 @@ final class SecurityHelperTest extends CIUnitTestCase
         $this->assertSame('http://example.com/spacer.gif', strip_image_tags('http://example.com/spacer.gif'));
 
         $this->assertSame('http://example.com/spacer.gif', strip_image_tags('<img src="http://example.com/spacer.gif" alt="Who needs CSS when you have a spacer.gif?" />'));
+        $this->assertSame('http://example.com/spacer.gif', strip_image_tags('<img src=\'http://example.com/spacer.gif\' alt="test" />'));
+        $this->assertSame('http://example.com/spacer.gif', strip_image_tags('<img src=http://example.com/spacer.gif alt="test" />'));
+        $this->assertSame('http://example.com/spacer.gif', strip_image_tags('<img src  =  "http://example.com/spacer.gif" />'));
+        $this->assertSame('http://example.com/test.png', strip_image_tags('<img class="my-class" id="my-img" src="http://example.com/test.png">'));
+        $this->assertSame('http://example.com/test.jpg', strip_image_tags('<img alt="test\'s photo" src="http://example.com/test.jpg">'));
+        $this->assertSame('http://example.com/test.jpg', strip_image_tags('<img alt=\'test "quoted" photo\' src=\'http://example.com/test.jpg\'>'));
+
+        // Empty src or tags without src should be stripped
+        $this->assertSame('', strip_image_tags('<img src="" onerror="alert(1)">'));
+        $this->assertSame('', strip_image_tags('<img src=\'\' onerror=\'alert(1)\'>'));
+        $this->assertSame('', strip_image_tags('<img onerror="alert(1)">'));
+        $this->assertSame('', strip_image_tags('<img alt="no image">'));
+        $this->assertSame('Hello  World', strip_image_tags('Hello <img> World'));
+        $this->assertSame('Hello  World', strip_image_tags('Hello <img/> World'));
+        $this->assertSame('Hello  World', strip_image_tags('Hello <img > World'));
+
+        // Multiline img tag
+        $this->assertSame('http://example.com/test.png', strip_image_tags("<img\n  class=\"foo\"\n  src=\"http://example.com/test.png\"\n  alt=\"bar\">"));
+
+        // Intervening text between multiple img tags must not be swallowed
+        $this->assertSame('Text1  Text2 bar.jpg Text3', strip_image_tags('Text1 <img alt="foo"> Text2 <img src="bar.jpg"> Text3'));
+        $this->assertSame('Start 1.jpg Middle 2.jpg End', strip_image_tags('Start <img src="1.jpg"> Middle <img src="2.jpg"> End'));
+
+        // Attribute injection and quote handling
+        $this->assertSame('test', strip_image_tags('<img src="test" onmouseover="alert(1)">'));
+        $this->assertSame('test', strip_image_tags('<img src=\'test\' onmouseover=\'alert(1)\'>'));
+        $this->assertSame('test', strip_image_tags('<img src=\'test\' onmouseover="alert(1)">'));
+        $this->assertSame('test', strip_image_tags('<img src="test" onmouseover=\'alert(1)\'>'));
+
+        // Nested img tag bypass
+        $this->assertSame('x', strip_image_tags('<im<img>g src=x onerror=alert(1)>'));
+        $this->assertSame('x', strip_image_tags('<im<im<img>g>g src=x onerror=alert(1)>'));
+
+        // Only actual src attribute should be matched, not attributes ending with src (e.g. data-src)
+        $this->assertSame('', strip_image_tags('<img data-src="http://example.com/fake.gif">'));
+        $this->assertSame('http://example.com/real.gif', strip_image_tags('<img data-src="http://example.com/fake.gif" src="http://example.com/real.gif">'));
+        $this->assertSame('http://example.com/real.gif', strip_image_tags('<img src="http://example.com/real.gif" data-src="http://example.com/fake.gif">'));
+    }
+
+    public function testStripImageTagsGreaterThanSignInsideQuotedAttribute(): void
+    {
+        $this->assertSame('photo.jpg', strip_image_tags('<img alt="><svg onload=alert(1)>" src="photo.jpg">'));
+        $this->assertSame('photo.jpg', strip_image_tags("<img alt='><svg onload=alert(1)>' src='photo.jpg'>"));
+        $this->assertSame('photo.jpg', strip_image_tags('<img src="photo.jpg" alt="><svg onload=alert(1)>">'));
+        $this->assertSame('', strip_image_tags('<img alt="><svg onload=alert(1)>">'));
+        $this->assertSame('Before photo.jpg After', strip_image_tags('Before <img alt="a>b" src="photo.jpg"> After'));
+    }
+
+    public function testStripImageTagsNestedTags(): void
+    {
+        $this->assertSame('x', strip_image_tags('<im<img>g src=x onerror=alert(1)>'));
+        $this->assertSame('x', strip_image_tags('<im<im<img>g>g src=x onerror=alert(1)>'));
+        $this->assertStringNotContainsString('<img', strip_image_tags('<im<img>g src=x onerror=alert(1)>'));
+        $this->assertStringNotContainsString('onerror', strip_image_tags('<im<img>g src=x onerror=alert(1)>'));
+    }
+
+    public function testStripImageTagsIgnoresDataSrcAttribute(): void
+    {
+        $this->assertSame('real.gif', strip_image_tags('<img data-src="fake.gif" src="real.gif">'));
+        $this->assertSame('real.gif', strip_image_tags('<img src="real.gif" data-src="fake.gif">'));
+        $this->assertSame('', strip_image_tags('<img data-src="fake.gif">'));
+    }
+
+    public function testStripImageTagsWithoutSrcAttribute(): void
+    {
+        $this->assertSame('', strip_image_tags('<img>'));
+        $this->assertSame('', strip_image_tags('<img alt="test">'));
+        $this->assertSame('', strip_image_tags('<IMG ALT="test">'));
+    }
+
+    public function testStripImageTagsIsCaseInsensitive(): void
+    {
+        $this->assertSame('photo.jpg', strip_image_tags('<IMG SRC="photo.jpg">'));
+    }
+
+    public function testStripImageTagsFallbackWhenPcreFails(): void
+    {
+        $oldBacktrack = ini_get('pcre.backtrack_limit');
+        $oldJit       = ini_get('pcre.jit');
+
+        try {
+            // Force PCRE failure: JIT does not honour backtrack_limit.
+            ini_set('pcre.jit', '0');
+            ini_set('pcre.backtrack_limit', '1');
+
+            // Make sure PCRE really fails for this input, so the fallback is exercised.
+            // This also keeps the test independent of the test order: a pattern
+            // already compiled and JIT-cached by earlier tests still honours
+            // backtrack_limit once JIT is disabled, and the assertion below turns
+            // any silent PCRE success into an explicit failure.
+            $input  = '<img src="photo.jpg" onerror="alert(1)">';
+            $result = strip_image_tags($input);
+
+            $this->assertStringNotContainsString('<img', $result);
+            $this->assertStringContainsString('&lt;img', $result);
+
+            $result = strip_image_tags('Hello <img alt="a>b" onerror=alert(1)> World');
+
+            $this->assertSame('Hello &lt;img alt="a>b" onerror=alert(1)> World', $result);
+        } finally {
+            ini_set('pcre.backtrack_limit', (string) $oldBacktrack);
+            ini_set('pcre.jit', (string) $oldJit);
+        }
+    }
+
+    public function testStripImageTagsExceedingIterationLimitEscapesPrefix(): void
+    {
+        $input = str_repeat('<im', 26)
+            . '<img>'
+            . str_repeat('g>', 25)
+            . 'g src=x onerror=alert(1)>';
+
+        $output = strip_image_tags($input);
+
+        $this->assertStringNotContainsString('<img', $output);
+        $this->assertStringContainsString('&lt;img', $output);
     }
 
     public function testEncodePhpTags(): void

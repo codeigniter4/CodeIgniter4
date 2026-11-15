@@ -665,7 +665,10 @@ cleanup_finished_pids() {
             active+=("$pid")
         fi
     done
-    bg_pids=("${active[@]:-}")
+    bg_pids=()
+    if [[ ${#active[@]} -gt 0 ]]; then
+        bg_pids=("${active[@]}")
+    fi
 }
 
 spawn_limited_job() {

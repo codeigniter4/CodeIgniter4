@@ -12,6 +12,8 @@ specifically interested in at any point in time. Join the discussion for those i
 if you want to take the lead on one of them.
 
 - [Contributor Covenant Code of Conduct](../CODE_OF_CONDUCT.md)
+- [Responsibility for Contributions](../CONTRIBUTING.md#responsibility-for-contributions)
+- [Open Pull Request Limit](../CONTRIBUTING.md#open-pull-request-limit)
 - [Reporting a Bug](./bug_report.md)
 - [Sending a Pull Request](./pull_request.md)
 - [Configuring Upstream and Rebasing](./workflow.md#configuring-upstream-and-rebasing)

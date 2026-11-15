@@ -2,6 +2,10 @@
 
 ## Contributions
 
+Before opening a pull request, read
+[Responsibility for Contributions](../CONTRIBUTING.md#responsibility-for-contributions)
+and the [Open Pull Request Limit](../CONTRIBUTING.md#open-pull-request-limit).
+
 We expect the following in all Pull Requests (PRs).
 - PRs must be sent to the [appropriate branch](#branching)
 - All git commits must be [GPG-signed](#signing)

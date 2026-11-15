@@ -258,6 +258,73 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
         $this->assertSame(['code' => 'good'], $_GET);
     }
 
+    public function testRequestURIWithQueryBasedRoutingAndQueryParameters(): void
+    {
+        // /index.php?/ci/woot?code=good#pos
+        service('superglobals')
+            ->setServer('REQUEST_URI', '/index.php?/ci/woot?code=good')
+            ->setServer('SCRIPT_NAME', '/index.php')
+            ->setGet('/ci/woot?code', 'good');
+
+        $factory = $this->createSiteURIFactory(service('superglobals')->getServerArray());
+
+        $expected = 'ci/woot';
+        $this->assertSame($expected, $factory->detectRoutePath('REQUEST_URI'));
+        $this->assertSame('code=good', $_SERVER['QUERY_STRING']); // @phpstan-ignore codeigniter.superglobalsOffsetAccess (checks the live superglobal, not the snapshot service)
+        $this->assertSame(['code' => 'good'], $_GET);
+    }
+
+    public function testRequestURIWithQueryBasedRoutingWithoutAdditionalQuery(): void
+    {
+        // /index.php?/ci/woot
+        service('superglobals')
+            ->setServer('REQUEST_URI', '/index.php?/ci/woot')
+            ->setServer('SCRIPT_NAME', '/index.php')
+            ->setGet('/ci/woot', '');
+
+        $factory = $this->createSiteURIFactory(service('superglobals')->getServerArray());
+
+        $expected = 'ci/woot';
+        $this->assertSame($expected, $factory->detectRoutePath('REQUEST_URI'));
+        $this->assertSame('', $_SERVER['QUERY_STRING']); // @phpstan-ignore codeigniter.superglobalsOffsetAccess (checks the live superglobal, not the snapshot service)
+        $this->assertSame([], $_GET);
+    }
+
+    public function testRequestURIWithQueryBasedRoutingPreservesSubsequentQuestionMarks(): void
+    {
+        // /index.php?/ci/woot?redirect=/a?b=1
+        service('superglobals')
+            ->setServer('REQUEST_URI', '/index.php?/ci/woot?redirect=/a?b=1')
+            ->setServer('SCRIPT_NAME', '/index.php')
+            ->setGet('/ci/woot?redirect', '/a?b=1');
+
+        $factory = $this->createSiteURIFactory(service('superglobals')->getServerArray());
+
+        $expected = 'ci/woot';
+        $this->assertSame($expected, $factory->detectRoutePath('REQUEST_URI'));
+        // Only the first '?' separates the path from the query string, so the
+        // remaining question marks must be kept inside the query string.
+        $this->assertSame('redirect=/a?b=1', $_SERVER['QUERY_STRING']); // @phpstan-ignore codeigniter.superglobalsOffsetAccess (checks the live superglobal, not the snapshot service)
+        $this->assertSame(['redirect' => '/a?b=1'], $_GET);
+    }
+
+    public function testRequestURIWithQueryBasedRoutingWithTrailingQuestionMark(): void
+    {
+        // /index.php?/ci/woot?
+        service('superglobals')
+            ->setServer('REQUEST_URI', '/index.php?/ci/woot?')
+            ->setServer('SCRIPT_NAME', '/index.php')
+            ->setGet('/ci/woot?', '');
+
+        $factory = $this->createSiteURIFactory(service('superglobals')->getServerArray());
+
+        $expected = 'ci/woot';
+        $this->assertSame($expected, $factory->detectRoutePath('REQUEST_URI'));
+        // A trailing '?' keeps an empty query string, not the '?' itself.
+        $this->assertSame('', $_SERVER['QUERY_STRING']); // @phpstan-ignore codeigniter.superglobalsOffsetAccess (checks the live superglobal, not the snapshot service)
+        $this->assertSame([], $_GET);
+    }
+
     public function testQueryStringRefreshesRequestWithoutOverwritingCustomValues(): void
     {
         if (! $this->effectiveRequestOrderIncludesGet()) {
