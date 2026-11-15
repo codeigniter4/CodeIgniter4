@@ -215,13 +215,28 @@ final class MemcachedHandlerTest extends CIUnitTestCase
         $oldData = '__ci_last_regenerate|i:1664607454;role|s:5:"guest";';
         $this->assertTrue($handler->write($oldSessionId, $oldData));
 
-        // During PHP session_regenerate_id(), write() is called with the new ID
-        // while the lock for the old session ID is still held.
+        $memcached = $this->getPrivateProperty($handler, 'memcached');
+        $this->assertInstanceOf(Memcached::class, $memcached);
+
+        $prefix = 'ci_session:' . $this->sessionName . ':';
+        $memcached->get($prefix . $oldSessionId . ':lock');
+        $this->assertSame(Memcached::RES_SUCCESS, $memcached->getResultCode());
+
+        // Exercise write() with a different session ID without closing the handler.
         $newData = '__ci_last_regenerate|i:1664607500;role|s:5:"admin";';
         $this->assertTrue($handler->write($newSessionId, $newData));
-        $this->assertTrue($handler->close());
 
-        // Verify the old lock was released and the new session data is readable
+        $this->assertFalse($memcached->get($prefix . $oldSessionId . ':lock'));
+        $this->assertSame(Memcached::RES_NOTFOUND, $memcached->getResultCode());
+
+        $memcached->get($prefix . $newSessionId . ':lock');
+        $this->assertSame(Memcached::RES_SUCCESS, $memcached->getResultCode());
+
+        $this->assertTrue($handler->close());
+        $this->assertFalse($memcached->get($prefix . $newSessionId . ':lock'));
+        $this->assertSame(Memcached::RES_NOTFOUND, $memcached->getResultCode());
+
+        // Verify that both session IDs retain their respective data.
         $handler2 = $this->getInstance();
         $this->assertTrue($handler2->open($this->sessionSavePath, $this->sessionName));
         $this->assertSame($oldData, $handler2->read($oldSessionId));
