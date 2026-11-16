@@ -70,6 +70,8 @@ $key = 'search_' . hash('sha256', $userInput);
 
 This is an array of settings specific to the **File** handler to determine how it should save the cache files.
 
+Cache files whose names start with a dot are not fully supported by the File handler: `getCacheInfo()` does not report them, `deleteMatching()` wildcard patterns do not match them, and `clean()` / `cache:clear` do not delete them. Avoid keys and prefixes that produce a leading dot.
+
 ### $memcached
 
 This is an array of servers that will be used when using the **Memcached** handler.
