@@ -24,7 +24,7 @@ class Member extends Entity
         'country'    => 'unknown',
         'created_at' => '2026-11-10 14:50:00',
         'updated_at' => '2026-11-10 14:50:00',
-        'deleted_at' => '2026-11-10 14:50:00',
+        'deleted_at' => null,
 
         // The property is not stored in the database
         'profile' => 'unknown',

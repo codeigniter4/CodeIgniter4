@@ -837,7 +837,7 @@ var_dump(
     $user2->role,                                    // 'admin'
     $user2->isBanned,                                // null
     array_key_exists('isBanned', $user2->toArray()), // false
-    $user2->profile instanceof stdClass,            // false
+    $user2->profile instanceof stdClass,             // false
     $user2->hasChanged(),                            // false
 );
 
@@ -848,11 +848,11 @@ $user3 = (new User())->injectRawData([
 ]);
 
 var_dump(
-    $user3->role,                         // 'admin'
-    $user3->isBanned,                     // '0'
-    $user3->toArray()['isBanned'],        // '0'
+    $user3->role,                        // 'admin'
+    $user3->isBanned,                    // '0'
+    $user3->toArray()['isBanned'],       // '0'
     $user3->profile instanceof stdClass, // true
-    $user3->hasChanged(),                  // false
+    $user3->hasChanged(),                // false
 );
 ```
 
