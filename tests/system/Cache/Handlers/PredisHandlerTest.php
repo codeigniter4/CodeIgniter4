@@ -385,7 +385,57 @@ final class PredisHandlerTest extends AbstractHandlerTestCase
                 $this->handler->save(self::$key1, 'denied_value', 120);
                 $this->fail('Predis\Response\ServerException was not thrown when HMSET is denied inside the script.');
             } catch (ServerException $e) {
-                $this->assertStringContainsString('NOPERM', $e->getMessage());
+                $this->assertStringContainsString("no permissions to run the 'hmset' command", $e->getMessage());
+            }
+
+            // Only the script ran: no sequential fallback was attempted.
+            $this->assertSame(['eval'], $failingClient->commands);
+        } finally {
+            $this->setPrivateProperty($this->handler, 'redis', $originalClient);
+        }
+    }
+
+    public function testSaveRethrowsWhenExpireatIsDeniedInsideScript(): void
+    {
+        /** @var Client $originalClient */
+        $originalClient = $this->getPrivateProperty($this->handler, 'redis');
+
+        $prefix = $this->config->prefix;
+
+        $failingClient = new class ($originalClient->getConnection()->getParameters(), ['prefix' => $prefix]) extends Client {
+            /**
+             * @var list<string>
+             */
+            public array $commands = [];
+
+            public ?Throwable $evalException = null;
+
+            /**
+             * @param string                   $commandID
+             * @param array<int|string, mixed> $arguments
+             */
+            public function __call($commandID, $arguments)
+            {
+                $this->commands[] = strtolower($commandID);
+
+                if (strtolower($commandID) === 'eval' && $this->evalException instanceof Throwable) {
+                    throw $this->evalException;
+                }
+
+                return parent::__call($commandID, $arguments);
+            }
+        };
+
+        $failingClient->evalException = new ServerException("ERR ACL failure in script: User foo has no permissions to run the 'expireat' command");
+
+        try {
+            $this->setPrivateProperty($this->handler, 'redis', $failingClient);
+
+            try {
+                $this->handler->save(self::$key1, 'denied_value', 120);
+                $this->fail('Predis\\Response\\ServerException was not thrown when EXPIREAT is denied inside the script.');
+            } catch (ServerException $e) {
+                $this->assertStringContainsString("no permissions to run the 'expireat' command", $e->getMessage());
             }
 
             // Only the script ran: no sequential fallback was attempted.
@@ -412,4 +462,16 @@ final class PredisHandlerTest extends AbstractHandlerTestCase
             $handler->clean();
         }
     }
+
+
+    public function testSaveScriptUsesPcallForDataCommands(): void
+    {
+        $reflection = new \ReflectionClass(\CodeIgniter\Cache\Handlers\PredisHandler::class);
+        $script = $reflection->getConstant('SAVE_SCRIPT');
+        $this->assertStringContainsString("redis.pcall('HMSET'", $script);
+        $this->assertStringContainsString("redis.pcall('EXPIREAT'", $script);
+        $this->assertStringNotContainsString("redis.call('HMSET'", $script);
+        $this->assertStringNotContainsString("redis.call('EXPIREAT'", $script);
+    }
+
 }

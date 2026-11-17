@@ -409,7 +409,7 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
         }
     }
 
-    public function testSaveReturnsFalseWithoutFallbackWhenHmsetIsDeniedInsideScript(): void
+    public function testSaveThrowsWithoutFallbackWhenHmsetIsDeniedInsideScript(): void
     {
         /** @var Redis $originalRedis */
         $originalRedis = $this->getPrivateProperty($this->handler, 'redis');
@@ -429,10 +429,45 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
         $failingRedis->expects($this->never())
             ->method('expireAt');
 
+        $this->expectException(RedisException::class);
+        $this->expectExceptionMessage("no permissions to run the 'hmset' command");
+
         try {
             $this->setPrivateProperty($this->handler, 'redis', $failingRedis);
 
-            $this->assertFalse($this->handler->save(self::$key1, 'new_value', 60));
+            $this->handler->save(self::$key1, 'new_value', 60);
+        } finally {
+            $this->setPrivateProperty($this->handler, 'redis', $originalRedis);
+        }
+    }
+
+    public function testSaveThrowsWithoutFallbackWhenExpireatIsDeniedInsideScript(): void
+    {
+        /** @var Redis $originalRedis */
+        $originalRedis = $this->getPrivateProperty($this->handler, 'redis');
+
+        $failingRedis = $this->createMock(Redis::class);
+        $failingRedis->expects($this->once())
+            ->method('clearLastError')
+            ->willReturn(true);
+        $failingRedis->expects($this->once())
+            ->method('eval')
+            ->willReturn(false);
+        $failingRedis->expects($this->once())
+            ->method('getLastError')
+            ->willReturn("NOPERM this user has no permissions to run the 'expireat' command");
+        $failingRedis->expects($this->never())
+            ->method('hMset');
+        $failingRedis->expects($this->never())
+            ->method('expireAt');
+
+        $this->expectException(RedisException::class);
+        $this->expectExceptionMessage("no permissions to run the 'expireat' command");
+
+        try {
+            $this->setPrivateProperty($this->handler, 'redis', $failingRedis);
+
+            $this->handler->save(self::$key1, 'new_value', 60);
         } finally {
             $this->setPrivateProperty($this->handler, 'redis', $originalRedis);
         }
@@ -523,4 +558,78 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
             $this->setPrivateProperty($this->handler, 'redis', $originalRedis);
         }
     }
+
+    public function testSaveThrowsWhenAclFailureInScriptReturnedAsFalse(): void
+    {
+        /** @var Redis $originalRedis */
+        $originalRedis = $this->getPrivateProperty($this->handler, 'redis');
+
+        $failingRedis = $this->createMock(Redis::class);
+        $failingRedis->expects($this->once())
+            ->method('clearLastError')
+            ->willReturn(true);
+        $failingRedis->expects($this->once())
+            ->method('eval')
+            ->willReturn(false);
+        $failingRedis->expects($this->once())
+            ->method('getLastError')
+            ->willReturn("ERR ACL failure in script: No permissions to access a key");
+        $failingRedis->expects($this->never())
+            ->method('hMset');
+        $failingRedis->expects($this->never())
+            ->method('expireAt');
+
+        $this->expectException(RedisException::class);
+        $this->expectExceptionMessage('ACL failure in script');
+
+        try {
+            $this->setPrivateProperty($this->handler, 'redis', $failingRedis);
+
+            $this->handler->save(self::$key1, 'new_value', 60);
+        } finally {
+            $this->setPrivateProperty($this->handler, 'redis', $originalRedis);
+        }
+    }
+
+    public function testSaveFallsBackWhenEvalDeniedByAclReturnedAsFalse(): void
+    {
+        /** @var Redis $originalRedis */
+        $originalRedis = $this->getPrivateProperty($this->handler, 'redis');
+
+        $failingRedis = $this->createMock(Redis::class);
+        $failingRedis->expects($this->once())
+            ->method('clearLastError')
+            ->willReturn(true);
+        $failingRedis->expects($this->once())
+            ->method('eval')
+            ->willReturn(false);
+        $failingRedis->expects($this->once())
+            ->method('getLastError')
+            ->willReturn("NOPERM this user has no permissions to run the 'eval' command");
+        $failingRedis->expects($this->once())
+            ->method('hMset')
+            ->willReturn(true);
+        $failingRedis->expects($this->once())
+            ->method('expireAt')
+            ->willReturn(true);
+
+        try {
+            $this->setPrivateProperty($this->handler, 'redis', $failingRedis);
+
+            $this->assertTrue($this->handler->save(self::$key1, 'fallback_value', 120));
+        } finally {
+            $this->setPrivateProperty($this->handler, 'redis', $originalRedis);
+        }
+    }
+
+    public function testSaveScriptUsesPcallForDataCommands(): void
+    {
+        $reflection = new \ReflectionClass(\CodeIgniter\Cache\Handlers\RedisHandler::class);
+        $script = $reflection->getConstant('SAVE_SCRIPT');
+        $this->assertStringContainsString("redis.pcall('HMSET'", $script);
+        $this->assertStringContainsString("redis.pcall('EXPIREAT'", $script);
+        $this->assertStringNotContainsString("redis.call('HMSET'", $script);
+        $this->assertStringNotContainsString("redis.call('EXPIREAT'", $script);
+    }
+
 }

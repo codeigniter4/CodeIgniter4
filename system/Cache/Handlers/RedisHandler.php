@@ -27,10 +27,12 @@ class RedisHandler extends BaseHandler
     /**
      * Lua script to execute HMSET and EXPIREAT in a single round trip.
      *
-     * The pcall error reply is returned to the client, so a failing HMSET never
-     * runs EXPIREAT and the original error message and type are preserved:
-     * clients that throw on error replies raise RedisException, phpredis exposes
-     * the message through Redis::getLastError().
+     * Both commands run through pcall and their error reply is returned as-is,
+     * so a failing HMSET never runs EXPIREAT and the original error message and
+     * type are preserved. phpredis exposes the message through
+     * Redis::getLastError(); save() rethrows a permission error as
+     * RedisException, as the sequential implementation did, and keeps reporting
+     * any other error (e.g. WRONGTYPE) as false.
      *
      * If HMSET succeeds and EXPIREAT is rejected, the hash is stored without a
      * TTL, exactly as with the previous sequential implementation (Redis does
@@ -41,7 +43,10 @@ class RedisHandler extends BaseHandler
         if type(res) == 'table' and res.err then
             return res
         end
-        redis.call('EXPIREAT', KEYS[1], ARGV[1])
+        local exp = redis.pcall('EXPIREAT', KEYS[1], ARGV[1])
+        if type(exp) == 'table' and exp.err then
+            return exp
+        end
         return 1
         LUA;
 
@@ -181,7 +186,15 @@ class RedisHandler extends BaseHandler
             // phpredis reports server errors as false and keeps the message in getLastError().
             $error = $this->redis->getLastError();
 
-            $shouldFallback = is_string($error) && self::isEvalUnavailable($error);
+            if (is_string($error)) {
+                if (self::isEvalUnavailable($error)) {
+                    $shouldFallback = true;
+                } elseif (self::isDataCommandPermissionError($error)) {
+                    // HMSET or EXPIREAT was denied by an ACL: the script itself ran,
+                    // so keep throwing exactly like the sequential implementation did.
+                    throw new RedisException($error);
+                }
+            }
         } catch (RedisException $e) {
             if (! self::isEvalUnavailable($e->getMessage())) {
                 throw $e;
@@ -214,6 +227,23 @@ class RedisHandler extends BaseHandler
     {
         return preg_match("/unknown command [`']?eval\\b/i", $message) === 1
             || preg_match("/no permissions to run the [`']eval[`'] command/i", $message) === 1;
+    }
+
+    /**
+     * Checks whether the message means that a data command executed inside the
+     * save script was denied by an ACL.
+     *
+     * EVAL availability was already checked, so the denied command can only be
+     * HMSET or EXPIREAT. Redis reports it either as a command level denial or as
+     * an ACL failure while running the script.
+     *
+     * Predis throws for every error reply, so this mapping only exists for the
+     * phpredis false plus getLastError() path.
+     */
+    private static function isDataCommandPermissionError(string $message): bool
+    {
+        return preg_match("/no permissions to run the [`']?[a-z]+[`'] command/i", $message) === 1
+            || preg_match('/ACL failure in script/i', $message) === 1;
     }
 
     public function delete(string $key): bool

@@ -30,9 +30,11 @@ class PredisHandler extends BaseHandler
     /**
      * Lua script to execute HMSET and EXPIREAT in a single round trip.
      *
-     * The pcall error reply is returned to the client, so an HMSET error (e.g.
-     * WRONGTYPE) never runs EXPIREAT, keeps its original error type, and is not
-     * retried by the sequential fallback in save().
+     * Both commands run through pcall and their error reply is returned as-is,
+     * so an HMSET error (e.g. WRONGTYPE) stops the script before EXPIREAT and
+     * every error keeps its original type and message. Predis raises
+     * ServerException for such a reply, which save() only swallows when it is
+     * about EVAL itself, so an ACL denial is never retried sequentially.
      *
      * If HMSET succeeds and EXPIREAT is rejected, the hash is stored without a
      * TTL, exactly as with the previous sequential implementation (Redis does
@@ -43,7 +45,10 @@ class PredisHandler extends BaseHandler
         if type(res) == 'table' and res.err then
             return res
         end
-        redis.call('EXPIREAT', KEYS[1], ARGV[1])
+        local exp = redis.pcall('EXPIREAT', KEYS[1], ARGV[1])
+        if type(exp) == 'table' and exp.err then
+            return exp
+        end
         return 1
         LUA;
 
