@@ -863,3 +863,5 @@ The direct call to `injectRawData()` illustrates what happens when a model confi
 An attribute retained after loading may differ from the value stored in the database. For example, suppose the `isBanned` column contains `'1'`. If the query selects only `id` and `role`, the loaded entity retains its default of `'0'` for `isBanned`.
 
 With [`$updateOnlyChanged`](model.md#updateonlychanged) enabled (the default), changing `role` and updating the entity leaves the stored `isBanned` value alone. With `$updateOnlyChanged` disabled, the same update can also write `'0'` to `isBanned` if the field is in [`$allowedFields`](model.md#allowedfields). To update just the role, pass `['role' => $newRole]` to the model's `update()` method.
+
+When `$skipValidation = false` and [`$cleanValidationRules = false`](model.md#cleanvalidationrules), `BaseModel::transformDataToArray()` extracts all attributes regardless of `$updateOnlyChanged`. Retained defaults can therefore overwrite omitted database columns even with `$updateOnlyChanged = true`.

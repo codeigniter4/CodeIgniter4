@@ -691,7 +691,7 @@ final class UpdateModelTest extends LiveModelTestCase
     {
         $member = $model->select('id, name')
             ->select('\'new property\' AS ' . $model->db->escapeIdentifier('virtual'), false)
-            ->withDeleted()->find(1);
+            ->find(1);
 
         $this->assertInstanceOf(Member::class, $member);
         $this->assertSame($selectedMember, $member->toRawArray());
@@ -702,7 +702,7 @@ final class UpdateModelTest extends LiveModelTestCase
         $result       = $model->update(1, $member);
 
         $this->assertTrue($result);
-        $memberSilentOverwrite = $model->withDeleted()->find(1);
+        $memberSilentOverwrite = $model->find(1);
 
         $this->assertSame($updatedMember, $memberSilentOverwrite->toRawArray());
     }
@@ -797,6 +797,43 @@ final class UpdateModelTest extends LiveModelTestCase
                 protected bool $updateOnlyChanged = false;
                 protected array $casts            = [
                     'id' => '?int',
+                ];
+            },
+            [
+                'id'         => 1,
+                'name'       => 'Derek Jones',
+                'email'      => 'unknown',
+                'country'    => 'unknown',
+                'created_at' => '2026-11-10 14:50:00',
+                'updated_at' => '2026-11-10 14:50:00',
+                'deleted_at' => null,
+                'profile'    => 'profile',
+                'virtual'    => 'new property',
+            ],
+            [
+                'id'         => 1,
+                'name'       => 'Truman Burbank',
+                'email'      => 'unknown',
+                'country'    => 'unknown',
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
+                'profile'    => 'profile',
+            ],
+        ];
+
+        yield 'An exceptional case: updateOnlyChanged=true and mergeAttributesOnInject=true with cleanValidationRules=false' => [
+            new class () extends UserModel {
+                protected $returnType             = MemberStrict::class;
+                protected bool $updateOnlyChanged = true;
+                protected array $casts            = [
+                    'id' => '?int',
+                ];
+                protected $skipValidation       = false;
+                protected $cleanValidationRules = false;
+                protected $validationRules      = [
+                    'id'   => 'integer',
+                    'name' => 'string',
                 ];
             },
             [
