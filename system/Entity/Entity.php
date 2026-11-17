@@ -127,6 +127,11 @@ class Entity implements JsonSerializable
     protected ?DataCaster $dataCaster = null;
 
     /**
+     * Merge the raw input data with the initial attributes.
+     */
+    protected bool $mergeAttributesOnInject = false;
+
+    /**
      * Holds info whenever properties have to be casted.
      */
     private bool $_cast = true;
@@ -504,7 +509,11 @@ class Entity implements JsonSerializable
      */
     public function injectRawData(array $data)
     {
-        $this->attributes = $data;
+        if ($this->mergeAttributesOnInject) {
+            $this->attributes = array_merge($this->attributes, $data);
+        } else {
+            $this->attributes = $data;
+        }
 
         $this->syncOriginal();
 

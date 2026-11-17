@@ -1656,6 +1656,121 @@ final class EntityTest extends CIUnitTestCase
         $this->assertSame('12345', $entity->first);
     }
 
+    public function testMergeAttributesOnInjectIsFalse(): void
+    {
+        $entity = new class () extends Entity {
+            protected bool $mergeAttributesOnInject = false;
+
+            // The "user" attribute is not for DB
+            // The "_secure" attribute is hidden
+            protected $attributes = [
+                'type'    => 'Normal',
+                'limit'   => 10,
+                'user'    => 'John',
+                '_secure' => 'High',
+                'reports' => 0,
+            ];
+            protected $original = [
+                'type'    => 'None',
+                'limit'   => 0,
+                'user'    => null,
+                '_secure' => 'Low',
+            ];
+            protected $datamap = [
+                'payload' => 'DB_PAYLOAD_FIELD',
+                'votes'   => 'DB_VOTES_FIELD',
+                'reports' => 'DB_REPORTS_FIELD',
+            ];
+        };
+
+        $entity->injectRawData([
+            // Missing "type", "user" attributes
+            'limit'            => 15,
+            '_secure'          => 'Normal',
+            'extra'            => 'undefined',
+            'DB_PAYLOAD_FIELD' => 'PayloadData',
+        ]);
+        $this->assertSame(
+            [
+                'limit'            => 15,
+                '_secure'          => 'Normal',
+                'extra'            => 'undefined',
+                'DB_PAYLOAD_FIELD' => 'PayloadData',
+            ],
+            $entity->toRawArray(),
+        );
+        $this->assertSame(
+            [
+                'limit'   => 15,
+                'extra'   => 'undefined',
+                'payload' => 'PayloadData',
+                'votes'   => null,
+                'reports' => null,
+            ],
+            $entity->toArray(),
+        );
+    }
+
+    public function testMergeAttributesOnInjectIsTrue(): void
+    {
+        $entity = new class () extends Entity {
+            protected bool $mergeAttributesOnInject = true;
+
+            // The "user" attribute is not for DB
+            // The "_secure" attribute is hidden
+            protected $attributes = [
+                'type'    => 'Normal',
+                'limit'   => 10,
+                'user'    => 'John',
+                '_secure' => 'High',
+                'reports' => 0,
+            ];
+            protected $original = [
+                'type'    => 'None',
+                'limit'   => 0,
+                'user'    => null,
+                '_secure' => 'Low',
+            ];
+            protected $datamap = [
+                'payload' => 'DB_PAYLOAD_FIELD',
+                'votes'   => 'DB_VOTES_FIELD',
+                'reports' => 'DB_REPORTS_FIELD',
+            ];
+        };
+
+        $entity->injectRawData([
+            // Missing "type", "user" attributes
+            'limit'            => 15,
+            '_secure'          => 'Normal',
+            'extra'            => 'undefined',
+            'DB_PAYLOAD_FIELD' => 'PayloadData',
+        ]);
+        $this->assertSame(
+            [
+                'type'             => 'Normal',
+                'limit'            => 15,
+                'user'             => 'John',
+                '_secure'          => 'Normal',
+                'reports'          => 0,
+                'extra'            => 'undefined',
+                'DB_PAYLOAD_FIELD' => 'PayloadData',
+            ],
+            $entity->toRawArray(),
+        );
+        $this->assertSame(
+            [
+                'type'    => 'Normal',
+                'limit'   => 15,
+                'user'    => 'John',
+                'reports' => null,
+                'extra'   => 'undefined',
+                'payload' => 'PayloadData',
+                'votes'   => null,
+            ],
+            $entity->toArray(),
+        );
+    }
+
     private function getEntity(): object
     {
         return new class () extends Entity {
