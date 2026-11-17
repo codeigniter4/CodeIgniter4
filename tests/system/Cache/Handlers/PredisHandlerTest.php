@@ -20,6 +20,7 @@ use Config\Cache;
 use PHPUnit\Framework\Attributes\Group;
 use Predis\Client;
 use Predis\Response\ServerException;
+use ReflectionClass;
 use Throwable;
 
 /**
@@ -463,15 +464,13 @@ final class PredisHandlerTest extends AbstractHandlerTestCase
         }
     }
 
-
     public function testSaveScriptUsesPcallForDataCommands(): void
     {
-        $reflection = new \ReflectionClass(\CodeIgniter\Cache\Handlers\PredisHandler::class);
-        $script = $reflection->getConstant('SAVE_SCRIPT');
-        $this->assertStringContainsString("redis.pcall('HMSET'", $script);
-        $this->assertStringContainsString("redis.pcall('EXPIREAT'", $script);
-        $this->assertStringNotContainsString("redis.call('HMSET'", $script);
-        $this->assertStringNotContainsString("redis.call('EXPIREAT'", $script);
+        $reflection = new ReflectionClass(PredisHandler::class);
+        $script     = $reflection->getConstant('SAVE_SCRIPT');
+        $this->assertStringContainsString("redis.pcall('HMSET'", (string) $script);
+        $this->assertStringContainsString("redis.pcall('EXPIREAT'", (string) $script);
+        $this->assertStringNotContainsString("redis.call('HMSET'", (string) $script);
+        $this->assertStringNotContainsString("redis.call('EXPIREAT'", (string) $script);
     }
-
 }

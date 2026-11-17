@@ -21,6 +21,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Redis;
 use RedisException;
+use ReflectionClass;
 
 /**
  * @internal
@@ -573,7 +574,7 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
             ->willReturn(false);
         $failingRedis->expects($this->once())
             ->method('getLastError')
-            ->willReturn("ERR ACL failure in script: No permissions to access a key");
+            ->willReturn('ERR ACL failure in script: No permissions to access a key');
         $failingRedis->expects($this->never())
             ->method('hMset');
         $failingRedis->expects($this->never())
@@ -624,12 +625,11 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
 
     public function testSaveScriptUsesPcallForDataCommands(): void
     {
-        $reflection = new \ReflectionClass(\CodeIgniter\Cache\Handlers\RedisHandler::class);
-        $script = $reflection->getConstant('SAVE_SCRIPT');
-        $this->assertStringContainsString("redis.pcall('HMSET'", $script);
-        $this->assertStringContainsString("redis.pcall('EXPIREAT'", $script);
-        $this->assertStringNotContainsString("redis.call('HMSET'", $script);
-        $this->assertStringNotContainsString("redis.call('EXPIREAT'", $script);
+        $reflection = new ReflectionClass(RedisHandler::class);
+        $script     = $reflection->getConstant('SAVE_SCRIPT');
+        $this->assertStringContainsString("redis.pcall('HMSET'", (string) $script);
+        $this->assertStringContainsString("redis.pcall('EXPIREAT'", (string) $script);
+        $this->assertStringNotContainsString("redis.call('HMSET'", (string) $script);
+        $this->assertStringNotContainsString("redis.call('EXPIREAT'", (string) $script);
     }
-
 }
