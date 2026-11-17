@@ -416,15 +416,24 @@ trait ResponseTrait
                 ];
             } else {
                 // Query Builder, we need to handle pagination manually
-                $offset = ($page - 1) * $perPage;
-                $total  = (clone $resource)->countAllResults();
-                $data   = $resource->limit($perPage, $offset)->get()->getResultArray();
+                $total = (int) (clone $resource)->countAllResults();
+
+                if ($perPage > 0) {
+                    $totalPages = (int) ceil($total / $perPage);
+
+                    $offset = $page > $totalPages ? $total : ($page - 1) * $perPage;
+                } else {
+                    $totalPages = 0;
+                    $offset     = 0;
+                }
+
+                $data = $resource->limit($perPage, $offset)->get()->getResultArray();
 
                 $meta = [
                     'page'       => $page,
                     'perPage'    => $perPage,
                     'total'      => $total,
-                    'totalPages' => (int) ceil($total / $perPage),
+                    'totalPages' => $totalPages,
                 ];
             }
 
