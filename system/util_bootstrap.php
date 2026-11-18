@@ -65,8 +65,8 @@ if (is_dir($paths->testsDirectory . '/_support/') && ! defined('SUPPORTPATH')) {
 }
 
 if (is_dir(HOMEPATH . 'vendor/')) {
-    define('VENDORPATH', realpath(HOMEPATH . 'vendor/') . DIRECTORY_SEPARATOR);
-    define('COMPOSER_PATH', (string) realpath(HOMEPATH . 'vendor/autoload.php'));
+    defined('VENDORPATH')    || define('VENDORPATH', realpath(HOMEPATH . 'vendor/') . DIRECTORY_SEPARATOR);
+    defined('COMPOSER_PATH') || define('COMPOSER_PATH', (string) realpath(HOMEPATH . 'vendor/autoload.php'));
 }
 
 /*
