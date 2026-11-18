@@ -24,7 +24,7 @@ use Config\WorkerMode;
  *---------------------------------------------------------------
  */
 
-$minPhpVersion = '8.2';
+$minPhpVersion = '8.3';
 if (version_compare(PHP_VERSION, $minPhpVersion, '<')) {
     http_response_code(503);
     exit("PHP {$minPhpVersion}+ required. Current: " . PHP_VERSION);

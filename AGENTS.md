@@ -93,7 +93,7 @@ compatibility policy applies to what the latest tagged release ships.
 
 ### All base branches
 
-- Production code must run on PHP 8.2. Do not require a newer PHP version,
+- Production code must run on PHP 8.3. Do not require a newer PHP version,
   even when a newer version is installed locally.
 - Signatures, properties, constants, default values, exceptions, side
   effects, configuration, and generated project files are all
@@ -116,7 +116,7 @@ compatibility policy applies to what the latest tagged release ships.
   intentional compatibility constraints. Do not remove an exclusion without
   dedicated justification and tests.
 - Every new class property must have a native type declaration. Use the
-  most precise type supported by PHP 8.2; use `mixed` only when the
+  most precise type supported by PHP 8.3; use `mixed` only when the
   property intentionally accepts unrelated types.
 - Do not add or change a type on an existing public or protected property
   mechanically. Property types affect inheritance and must follow the
