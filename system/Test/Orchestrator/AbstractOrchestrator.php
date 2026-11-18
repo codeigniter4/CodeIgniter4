@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Test\Orchestrator;
 
+use CodeIgniter\Config\DotEnv;
 use CodeIgniter\Exceptions\RuntimeException;
 use FilesystemIterator;
 use RecursiveDirectoryIterator;
@@ -28,10 +29,17 @@ abstract class AbstractOrchestrator
      */
     private const KILL_GRACE_PERIOD = 2.0;
 
+    private const BUILT_MARKER = '.orchestrator-built';
+
+    private bool $console = false;
+
     /**
-     * Absolute path of the skeleton, suffixed with `ORCHESTRATOR_TEST_TOKEN`, or else a valid `TEST_TOKEN`, so parallel runs do not collide.
+     * Absolute path of the skeleton, which is `getSkeletonPath()` followed by:
+     *
+     * - `.console` after `bootConsole()`
+     * - `-` and `ORCHESTRATOR_TEST_TOKEN`, or else a valid `TEST_TOKEN`, so parallel runs do not collide
      */
-    public function getPath(): string
+    final public function getPath(): string
     {
         $token = getenv('ORCHESTRATOR_TEST_TOKEN');
 
@@ -47,8 +55,9 @@ abstract class AbstractOrchestrator
         }
 
         return sprintf(
-            '%s/build/orchestrator%s',
-            rtrim($this->getPackageRoot(), '\\/'),
+            '%s%s%s',
+            rtrim($this->getSkeletonPath(), '\\/'),
+            $this->console ? '.console' : '',
             is_string($token) && $token !== '' ? '-' . $token : '',
         );
     }
@@ -64,12 +73,14 @@ abstract class AbstractOrchestrator
         require_once $framework . '/system/Helpers/filesystem_helper.php';
 
         $this->ensureUnlinkedAncestors();
+        $this->removePath($path . '/' . self::BUILT_MARKER);
         $this->removePath($path);
 
-        foreach (['app', 'public', 'writable'] as $directory) {
+        foreach (['app', 'public'] as $directory) {
             directory_mirror($framework . '/' . $directory, $path . '/' . $directory);
         }
 
+        $this->mirrorWritable($framework . '/writable', $path . '/writable');
         $this->failUnless(copy($framework . '/spark', $path . '/spark'), 'copy spark');
         $this->writeAutoloader();
         $this->writeEnv();
@@ -80,6 +91,8 @@ abstract class AbstractOrchestrator
 
         $this->pointPathsAtTheFramework();
         $this->afterBuild();
+
+        $this->failUnless(touch($path . '/' . self::BUILT_MARKER), 'mark the build complete');
     }
 
     /**
@@ -89,9 +102,51 @@ abstract class AbstractOrchestrator
      */
     final public function boot(): void
     {
-        $this->build();
+        if ($this->console) {
+            throw new RuntimeException('Cannot call boot() after bootConsole().');
+        }
 
-        $path      = realpath($this->getPath()) . DIRECTORY_SEPARATOR;
+        $this->build();
+        $this->defineConstants();
+
+        require $this->getFrameworkPath() . '/system/Test/bootstrap.php';
+    }
+
+    /**
+     * Boots the framework in this process through **system/util_bootstrap.php** against its own skeleton.
+     *
+     * `getEnv()` and `afterBuild()` run only when the skeleton is incomplete or `$rebuild` is true.
+     */
+    final public function bootConsole(bool $rebuild = false): void
+    {
+        $this->console = true;
+
+        if ($rebuild || ! is_file($this->getPath() . '/' . self::BUILT_MARKER)) {
+            $this->build();
+        }
+
+        require_once $this->getFrameworkPath() . '/system/Config/DotEnv.php';
+        (new DotEnv($this->getPath()))->load();
+
+        $this->defineConstants();
+
+        require $this->getFrameworkPath() . '/system/util_bootstrap.php';
+    }
+
+    /**
+     * Path constants of the built skeleton and the package, keyed by name.
+     *
+     * @return array<string, string>
+     */
+    public function getPathConstants(): array
+    {
+        $path = $this->getRealRoot();
+
+        if ($path === '') {
+            throw new RuntimeException('Cannot read the path constants before the orchestrated application is built.');
+        }
+
+        $path .= DIRECTORY_SEPARATOR;
         $testPath  = rtrim($this->getPackageRoot(), '\\/') . '/tests' . DIRECTORY_SEPARATOR;
         $constants = [
             'HOMEPATH'   => $path,
@@ -104,13 +159,7 @@ abstract class AbstractOrchestrator
             $constants['SUPPORTPATH'] = $testPath . '_support' . DIRECTORY_SEPARATOR;
         }
 
-        foreach ($constants as $name => $value) {
-            if (! defined($name)) {
-                define($name, $value);
-            }
-        }
-
-        require $this->getFrameworkPath() . '/system/Test/bootstrap.php';
+        return $constants;
     }
 
     /**
@@ -207,9 +256,25 @@ abstract class AbstractOrchestrator
     }
 
     /**
+     * Absolute path of the framework that the skeleton is copied from.
+     */
+    public function getFrameworkPath(): string
+    {
+        return dirname(__DIR__, 3);
+    }
+
+    /**
      * Absolute path of the package under test, the directory holding its `vendor/autoload.php`.
      */
     abstract protected function getPackageRoot(): string;
+
+    /**
+     * Absolute path of the skeleton before the suffixes added by `getPath()`.
+     */
+    protected function getSkeletonPath(): string
+    {
+        return rtrim($this->getPackageRoot(), '\\/') . '/build/orchestrator';
+    }
 
     /**
      * Absolute paths of directories mirrored onto the skeleton, in order, after the framework files.
@@ -238,12 +303,13 @@ abstract class AbstractOrchestrator
     {
     }
 
-    /**
-     * Absolute path of the framework that the skeleton is copied from.
-     */
-    protected function getFrameworkPath(): string
+    private function defineConstants(): void
     {
-        return dirname(__DIR__, 3);
+        foreach ($this->getPathConstants() as $name => $value) {
+            if (! defined($name)) {
+                define($name, $value);
+            }
+        }
     }
 
     private function isValidToken(string $token): bool
@@ -395,6 +461,33 @@ abstract class AbstractOrchestrator
         return [$exitCode, $timedOut];
     }
 
+    private function mirrorWritable(string $origin, string $target): void
+    {
+        $this->failUnless(is_dir($target) || mkdir($target, 0755, true), 'create writable');
+
+        foreach (['index.html', '.htaccess'] as $file) {
+            if (is_file($origin . '/' . $file)) {
+                $this->failUnless(copy($origin . '/' . $file, $target . '/' . $file), sprintf('copy writable/%s', $file));
+            }
+        }
+
+        $entries = scandir($origin);
+
+        $this->failUnless($entries !== false, 'read writable');
+
+        foreach (array_diff($entries, ['.', '..']) as $directory) {
+            if (! is_file($origin . '/' . $directory . '/index.html')) {
+                continue;
+            }
+
+            $this->failUnless(mkdir($target . '/' . $directory, 0755), sprintf('create writable/%s', $directory));
+            $this->failUnless(
+                copy($origin . '/' . $directory . '/index.html', $target . '/' . $directory . '/index.html'),
+                sprintf('copy writable/%s/index.html', $directory),
+            );
+        }
+    }
+
     private function pointPathsAtTheFramework(): void
     {
         $paths    = $this->getPath() . '/app/Config/Paths.php';
@@ -405,7 +498,7 @@ abstract class AbstractOrchestrator
         $rewritten = str_replace(
             "__DIR__ . '/../../system'",
             var_export($this->getFrameworkPath() . '/system', true),
-            (string) $contents,
+            $contents,
             $count,
         );
 
@@ -446,6 +539,9 @@ abstract class AbstractOrchestrator
         $this->failUnless(write_file($this->getPath() . '/.env', $contents), 'write .env');
     }
 
+    /**
+     * @phpstan-assert true $succeeded
+     */
     private function failUnless(bool $succeeded, string $step): void
     {
         if (! $succeeded) {
