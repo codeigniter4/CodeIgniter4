@@ -15,15 +15,17 @@ You can access models within your classes by creating a new instance or using th
 ```php
 <?php
 
+use App\Models\UserModel;
+
 // Create a new class manually.
-$userModel = new \App\Models\UserModel();
+$userModel = new UserModel();
 
 // Create a shared instance of the model.
 $userModel = model('UserModel');
 // or
 $userModel = model('App\Models\UserModel');
 // or
-$userModel = model(\App\Models\UserModel::class);
+$userModel = model(UserModel::class);
 
 // Create a new class with the model() function.
 $userModel = model('UserModel', false);
@@ -859,12 +861,13 @@ A very simple model to work with this might look like:
 
 namespace App\Models;
 
+use App\Entities\Job;
 use CodeIgniter\Model;
 
 class JobModel extends Model
 {
     protected $table         = 'jobs';
-    protected $returnType    = \App\Entities\Job::class;
+    protected $returnType    = Job::class;
     protected $allowedFields = [
         'name', 'description',
     ];

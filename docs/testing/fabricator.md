@@ -90,6 +90,7 @@ Sometimes the default return of a formatter is not enough. Faker providers allow
 namespace App\Models;
 
 use Faker\Generator;
+use Faker\Provider\Image;
 
 class UserModel
 {
@@ -101,7 +102,7 @@ class UserModel
             'first'  => $faker->firstName(),
             'email'  => $faker->email(),
             'phone'  => $faker->phoneNumber(),
-            'avatar' => \Faker\Provider\Image::imageUrl(800, 400),
+            'avatar' => Image::imageUrl(800, 400),
             'login'  => config('Auth')->allowRemembering ? date('Y-m-d') : null,
         ];
 

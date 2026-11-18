@@ -25,8 +25,10 @@ By using the `new` keyword to create an instance:
 ```php
 <?php
 
+use Config\Pager;
+
 // Creating new configuration object by hand
-$config = new \Config\Pager();
+$config = new Pager();
 ```
 
 #### config()
@@ -36,12 +38,14 @@ By using the `config()` function:
 ```php
 <?php
 
+use Config\Pager;
+
 // Get shared instance with config function
 $config = config('Pager');
 
 // Access config class with namespace
 $config = config('Config\\Pager');
-$config = config(\Config\Pager::class);
+$config = config(Pager::class);
 
 // Creating a new object with config function
 $config = config('Pager', false);

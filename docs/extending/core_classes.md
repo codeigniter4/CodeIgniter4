@@ -83,6 +83,7 @@ Then you would add the `routes` service in **app/Config/Services.php** to load y
 
 namespace Config;
 
+use App\Libraries\RouteCollection;
 use CodeIgniter\Config\BaseService;
 
 class Services extends BaseService
@@ -93,7 +94,7 @@ class Services extends BaseService
             return static::getSharedInstance('routes');
         }
 
-        return new \App\Libraries\RouteCollection(static::locator(), config(Modules::class), config(Routing::class));
+        return new RouteCollection(static::locator(), config(Modules::class), config(Routing::class));
     }
 
     // ...

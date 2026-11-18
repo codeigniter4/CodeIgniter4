@@ -53,6 +53,7 @@ Create the model first at **app/Models/UserModel.php** so that we can interact w
 
 namespace App\Models;
 
+use App\Entities\User;
 use CodeIgniter\Model;
 
 class UserModel extends Model
@@ -61,7 +62,7 @@ class UserModel extends Model
     protected $allowedFields = [
         'username', 'email', 'password',
     ];
-    protected $returnType    = \App\Entities\User::class;
+    protected $returnType    = User::class;
     protected $useTimestamps = true;
 }
 ```
@@ -82,6 +83,8 @@ Now that all of the pieces are in place, you would work with the Entity class as
 ```php
 <?php
 
+use App\Entities\User;
+
 $user = $userModel->find($id);
 
 // Display
@@ -98,7 +101,7 @@ if (! isset($user->username)) {
 $userModel->save($user);
 
 // Create
-$user           = new \App\Entities\User();
+$user           = new User();
 $user->username = 'foo';
 $user->email    = 'foo@example.com';
 $userModel->save($user);
@@ -121,9 +124,11 @@ The Entity class also provides a method, `fill()`, that allows you to shove an a
 ```php
 <?php
 
+use App\Entities\User;
+
 $data = $this->request->getPost();
 
-$user = new \App\Entities\User();
+$user = new User();
 $user->fill($data);
 $userModel->save($user);
 ```
@@ -133,9 +138,11 @@ You can also pass the data in the constructor and the data will be passed throug
 ```php
 <?php
 
+use App\Entities\User;
+
 $data = $this->request->getPost();
 
-$user = new \App\Entities\User($data);
+$user = new User($data);
 $userModel->save($user);
 ```
 
@@ -356,7 +363,9 @@ Now, when any of those properties are set, they will be converted to a Time inst
 ```php
 <?php
 
-$user = new \App\Entities\User();
+use App\Entities\User;
+
+$user = new User();
 
 // Converted to Time instance
 $user->created_at = 'April 15, 2017 10:30:00';
@@ -693,7 +702,9 @@ You can check if an Entity attribute has changed since it was created. The only 
 ```php
 <?php
 
-$user = new \App\Entities\User();
+use App\Entities\User;
+
+$user = new User();
 $user->hasChanged('name'); // false
 
 $user->name = 'Fred';

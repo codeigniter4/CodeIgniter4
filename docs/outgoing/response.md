@@ -432,7 +432,7 @@ Sets the `Last-Modified` header. The `$date` argument can be either a string or 
 <?php
 
 $response->setLastModified(date('D, d M Y H:i:s'));
-$response->setLastModified(\DateTime::createFromFormat('!U', $timestamp));
+$response->setLastModified(DateTime::createFromFormat('!U', $timestamp));
 ```
 
 #### send(): Response

@@ -121,7 +121,7 @@ If you want to log an Exception or an Error, you can use the key 'exception', wi
 
 try {
     // Something throws error here
-} catch (\Exception $e) {
+} catch (Exception $e) {
     log_message('error', '[ERROR] {exception}', ['exception' => $e]);
 }
 ```

@@ -12,7 +12,9 @@ Load the Forge Class as follows:
 ```php
 <?php
 
-$forge = \Config\Database::forge();
+use Config\Database;
+
+$forge = Database::forge();
 ```
 
 You can also pass another database group name to the DB Forge loader, in case the database you want to manage isn't the default one:
@@ -20,7 +22,9 @@ You can also pass another database group name to the DB Forge loader, in case th
 ```php
 <?php
 
-$this->myforge = \Config\Database::forge('other_db');
+use Config\Database;
+
+$this->myforge = Database::forge('other_db');
 ```
 
 In the above example, we're passing the name of a different database group to connect to as the first parameter.

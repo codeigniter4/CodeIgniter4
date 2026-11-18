@@ -110,11 +110,12 @@ The `$aliases` array is used to associate a simple name with one or more fully-q
 namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Filters\CSRF;
 
 class Filters extends BaseConfig
 {
     public array $aliases = [
-        'csrf' => \CodeIgniter\Filters\CSRF::class,
+        'csrf' => CSRF::class,
     ];
 
     // ...
@@ -132,14 +133,16 @@ You can combine multiple filters into one alias, making complex sets of filters 
 
 namespace Config;
 
+use App\Filters\ApiAuth;
+use App\Filters\Negotiate;
 use CodeIgniter\Config\BaseConfig;
 
 class Filters extends BaseConfig
 {
     public array $aliases = [
         'api-prep' => [
-            \App\Filters\Negotiate::class,
-            \App\Filters\ApiAuth::class,
+            Negotiate::class,
+            ApiAuth::class,
         ],
     ];
 
@@ -481,13 +484,14 @@ If you want to customize the headers, extend `CodeIgniter\Filters\SecureHeaders`
 
 namespace Config;
 
+use App\Filters\SecureHeaders;
 use CodeIgniter\Config\BaseConfig;
 
 class Filters extends BaseConfig
 {
     public array $aliases = [
         // ...
-        'secureheaders' => \App\Filters\SecureHeaders::class,
+        'secureheaders' => SecureHeaders::class,
     ];
 
     // ...

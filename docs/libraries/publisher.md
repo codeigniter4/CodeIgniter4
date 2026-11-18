@@ -9,7 +9,9 @@ Because Publisher instances are specific to their source and destination, this l
 ```php
 <?php
 
-$publisher = new \CodeIgniter\Publisher\Publisher();
+use CodeIgniter\Publisher\Publisher;
+
+$publisher = new Publisher();
 ```
 
 ## Concept and Usage
@@ -30,7 +32,9 @@ Access `Publisher` directly by instantiating a new instance of the class:
 ```php
 <?php
 
-$publisher = new \CodeIgniter\Publisher\Publisher();
+use CodeIgniter\Publisher\Publisher;
+
+$publisher = new Publisher();
 ```
 
 By default, the source and destination will be set to `ROOTPATH` and `FCPATH`, respectively, giving `Publisher` easy access to take any file from your project and make it web-accessible. Alternatively, you may pass a new source or source and destination into the constructor:

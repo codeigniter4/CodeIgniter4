@@ -113,10 +113,12 @@ The first is `config()`, which returns an instance of a Config class. The only r
 ```php
 <?php
 
+use CodeIgniter\Config\Factories;
+
 $appConfig = config('App');
 
 // The code above is the same as the code below.
-$appConfig = \CodeIgniter\Config\Factories::config('App');
+$appConfig = Factories::config('App');
 ```
 
 ### model()
@@ -126,10 +128,12 @@ The second function, `model()`, returns an instance of a Model class. The only r
 ```php
 <?php
 
+use CodeIgniter\Config\Factories;
+
 $user = model('UserModel');
 
 // The code above is the same as the code below.
-$user = \CodeIgniter\Config\Factories::models('UserModel');
+$user = Factories::models('UserModel');
 ```
 
 ## Defining Classname to be Loaded
