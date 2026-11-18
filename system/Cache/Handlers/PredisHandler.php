@@ -19,6 +19,7 @@ use Config\Cache;
 use Exception;
 use Predis\Client;
 use Predis\Collection\Iterator\Keyspace;
+use Predis\Response\ServerException;
 use Predis\Response\Status;
 
 /**
@@ -26,6 +27,31 @@ use Predis\Response\Status;
  */
 class PredisHandler extends BaseHandler
 {
+    /**
+     * Lua script to execute HMSET and EXPIREAT in a single round trip.
+     *
+     * Both commands run through pcall and their error reply is returned as-is,
+     * so an HMSET error (e.g. WRONGTYPE) stops the script before EXPIREAT and
+     * every error keeps its original type and message. Predis raises
+     * ServerException for such a reply, which save() only swallows when it is
+     * about EVAL itself, so an ACL denial is never retried sequentially.
+     *
+     * If HMSET succeeds and EXPIREAT is rejected, the hash is stored without a
+     * TTL, exactly as with the previous sequential implementation (Redis does
+     * not roll back script effects).
+     */
+    private const SAVE_SCRIPT = <<<'LUA'
+        local res = redis.pcall('HMSET', KEYS[1], '__ci_type', ARGV[2], '__ci_value', ARGV[3])
+        if type(res) == 'table' and res.err then
+            return res
+        end
+        local exp = redis.pcall('EXPIREAT', KEYS[1], ARGV[1])
+        if type(exp) == 'table' and exp.err then
+            return exp
+        end
+        return 1
+        LUA;
+
     /**
      * Default config
      *
@@ -118,15 +144,49 @@ class PredisHandler extends BaseHandler
                 return false;
         }
 
-        if (! $this->redis->hmset($key, ['__ci_type' => $dataType, '__ci_value' => $value]) instanceof Status) {
+        $fields = ['__ci_type' => $dataType, '__ci_value' => $value];
+
+        if ($ttl === 0) {
+            return $this->redis->hmset($key, $fields) instanceof Status;
+        }
+
+        $expiresAt = Time::now()->getTimestamp() + $ttl;
+
+        try {
+            return (bool) $this->redis->eval(
+                self::SAVE_SCRIPT,
+                1,
+                $key,
+                (string) $expiresAt,
+                $dataType,
+                (string) $value,
+            );
+        } catch (ServerException $e) {
+            if (! self::isEvalUnavailable($e->getMessage())) {
+                throw $e;
+            }
+        }
+
+        // EVAL is unavailable (renamed command or ACL denial): run both commands sequentially.
+        if (! $this->redis->hmset($key, $fields) instanceof Status) {
             return false;
         }
 
-        if ($ttl !== 0) {
-            $this->redis->expireat($key, Time::now()->getTimestamp() + $ttl);
-        }
+        $this->redis->expireat($key, $expiresAt);
 
         return true;
+    }
+
+    /**
+     * Checks whether the exception only means that the EVAL command itself is not
+     * available to this client, either because it was renamed or because ACL denies it.
+     *
+     * Keep the patterns in sync with RedisHandler::isEvalUnavailable().
+     */
+    private static function isEvalUnavailable(string $message): bool
+    {
+        return preg_match("/unknown command [`']?eval\\b/i", $message) === 1
+            || preg_match("/no permissions to run the [`']eval[`'] command/i", $message) === 1;
     }
 
     public function delete(string $key): bool

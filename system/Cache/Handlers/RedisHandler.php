@@ -25,6 +25,32 @@ use RedisException;
 class RedisHandler extends BaseHandler
 {
     /**
+     * Lua script to execute HMSET and EXPIREAT in a single round trip.
+     *
+     * Both commands run through pcall and their error reply is returned as-is,
+     * so a failing HMSET never runs EXPIREAT and the original error message and
+     * type are preserved. phpredis exposes the message through
+     * Redis::getLastError(); save() rethrows a permission error as
+     * RedisException, as the sequential implementation did, and keeps reporting
+     * any other error (e.g. WRONGTYPE) as false.
+     *
+     * If HMSET succeeds and EXPIREAT is rejected, the hash is stored without a
+     * TTL, exactly as with the previous sequential implementation (Redis does
+     * not roll back script effects).
+     */
+    private const SAVE_SCRIPT = <<<'LUA'
+        local res = redis.pcall('HMSET', KEYS[1], '__ci_type', ARGV[2], '__ci_value', ARGV[3])
+        if type(res) == 'table' and res.err then
+            return res
+        end
+        local exp = redis.pcall('EXPIREAT', KEYS[1], ARGV[1])
+        if type(exp) == 'table' and exp.err then
+            return exp
+        end
+        return 1
+        LUA;
+
+    /**
      * Default config
      *
      * @var array{
@@ -134,15 +160,90 @@ class RedisHandler extends BaseHandler
                 return false;
         }
 
-        if (! $this->redis->hMset($key, ['__ci_type' => $dataType, '__ci_value' => $value])) {
+        $fields = ['__ci_type' => $dataType, '__ci_value' => $value];
+
+        if ($ttl === 0) {
+            return (bool) $this->redis->hMset($key, $fields);
+        }
+
+        $expiresAt = Time::now()->getTimestamp() + $ttl;
+
+        $shouldFallback = false;
+
+        $this->redis->clearLastError();
+
+        try {
+            $result = $this->redis->eval(
+                self::SAVE_SCRIPT,
+                [$key, (string) $expiresAt, $dataType, (string) $value],
+                1,
+            );
+
+            if ($result !== false) {
+                return (bool) $result;
+            }
+
+            // phpredis reports server errors as false and keeps the message in getLastError().
+            $error = $this->redis->getLastError();
+
+            if (is_string($error)) {
+                if (self::isEvalUnavailable($error)) {
+                    $shouldFallback = true;
+                } elseif (self::isDataCommandPermissionError($error)) {
+                    // HMSET or EXPIREAT was denied by an ACL: the script itself ran,
+                    // so keep throwing exactly like the sequential implementation did.
+                    throw new RedisException($error);
+                }
+            }
+        } catch (RedisException $e) {
+            if (! self::isEvalUnavailable($e->getMessage())) {
+                throw $e;
+            }
+
+            $shouldFallback = true;
+        }
+
+        if (! $shouldFallback) {
             return false;
         }
 
-        if ($ttl !== 0) {
-            $this->redis->expireAt($key, Time::now()->getTimestamp() + $ttl);
+        // EVAL is unavailable (renamed command or ACL denial): run both commands sequentially.
+        if (! $this->redis->hMset($key, $fields)) {
+            return false;
         }
 
+        $this->redis->expireAt($key, $expiresAt);
+
         return true;
+    }
+
+    /**
+     * Checks whether the message only means that the EVAL command itself is not
+     * available to this client, either because it was renamed or because ACL denies it.
+     *
+     * Keep the patterns in sync with PredisHandler::isEvalUnavailable().
+     */
+    private static function isEvalUnavailable(string $message): bool
+    {
+        return preg_match("/unknown command [`']?eval\\b/i", $message) === 1
+            || preg_match("/no permissions to run the [`']eval[`'] command/i", $message) === 1;
+    }
+
+    /**
+     * Checks whether the message means that a data command executed inside the
+     * save script was denied by an ACL.
+     *
+     * EVAL availability was already checked, so the denied command can only be
+     * HMSET or EXPIREAT. Redis reports it either as a command level denial or as
+     * an ACL failure while running the script.
+     *
+     * Predis throws for every error reply, so this mapping only exists for the
+     * phpredis false plus getLastError() path.
+     */
+    private static function isDataCommandPermissionError(string $message): bool
+    {
+        return preg_match("/no permissions to run the [`']?[a-z]+[`'] command/i", $message) === 1
+            || preg_match('/ACL failure in script/i', $message) === 1;
     }
 
     public function delete(string $key): bool
