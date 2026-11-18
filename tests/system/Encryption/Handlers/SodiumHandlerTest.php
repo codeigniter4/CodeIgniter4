@@ -18,6 +18,7 @@ use CodeIgniter\Encryption\Exceptions\EncryptionException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
 use PHPUnit\Framework\Attributes\Group;
+use Tests\Support\Encryption\WithoutEncryptionEnvTrait;
 
 /**
  * @internal
@@ -25,8 +26,24 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class SodiumHandlerTest extends CIUnitTestCase
 {
+    use WithoutEncryptionEnvTrait;
+
     private Encryption $encryption;
     private EncryptionConfig $config;
+
+    public static function setUpBeforeClass(): void
+    {
+        parent::setUpBeforeClass();
+
+        self::setUpBeforeClassWithoutEncryptionEnv();
+    }
+
+    public static function tearDownAfterClass(): void
+    {
+        parent::tearDownAfterClass();
+
+        self::tearDownAfterClassWithoutEncryptionEnv();
+    }
 
     protected function setUp(): void
     {
