@@ -176,7 +176,7 @@ When working with other libraries that provide a DateTime instance, you can use 
 
 use CodeIgniter\I18n\Time;
 
-$dt   = new \DateTime('now');
+$dt   = new DateTime('now');
 $time = Time::createFromInstance($dt, 'en_US');
 ```
 
@@ -666,7 +666,7 @@ use CodeIgniter\I18n\Time;
 $time = Time::parse('March 10, 2017', 'America/Chicago');
 
 $diff = $time->difference(Time::now());
-$diff = $time->difference(new \DateTime('July 4, 1975', 'America/Chicago'));
+$diff = $time->difference(new DateTime('July 4, 1975', 'America/Chicago'));
 $diff = $time->difference('July 4, 1975 13:32:05', 'America/Chicago');
 ```
 

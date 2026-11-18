@@ -12,7 +12,9 @@ The following code loads and initializes the database class based on your [confi
 ```php
 <?php
 
-$db = \Config\Database::connect();
+use Config\Database;
+
+$db = Database::connect();
 ```
 
 Once loaded, the class is ready to be used as described below.

@@ -11,7 +11,9 @@ The Table class is not provided as a service, and should be instantiated "normal
 ```php
 <?php
 
-$table = new \CodeIgniter\View\Table();
+use CodeIgniter\View\Table;
+
+$table = new Table();
 ```
 
 ### Examples
@@ -21,7 +23,9 @@ Here is an example showing how you can create a table from a multi-dimensional a
 ```php
 <?php
 
-$table = new \CodeIgniter\View\Table();
+use CodeIgniter\View\Table;
+
+$table = new Table();
 
 $data = [
     ['Name', 'Color', 'Size'],
@@ -38,7 +42,9 @@ Here is an example of a table created from a database query result. The table cl
 ```php
 <?php
 
-$table = new \CodeIgniter\View\Table();
+use CodeIgniter\View\Table;
+
+$table = new Table();
 
 $query = $db->query('SELECT * FROM my_table');
 
@@ -50,7 +56,9 @@ Here is an example showing how you might create a table using discrete parameter
 ```php
 <?php
 
-$table = new \CodeIgniter\View\Table();
+use CodeIgniter\View\Table;
+
+$table = new Table();
 
 $table->setHeading('Name', 'Color', 'Size');
 
@@ -66,7 +74,9 @@ Here is the same example, except instead of individual parameters, arrays are us
 ```php
 <?php
 
-$table = new \CodeIgniter\View\Table();
+use CodeIgniter\View\Table;
+
+$table = new Table();
 
 $table->setHeading(['Name', 'Color', 'Size']);
 
@@ -142,11 +152,13 @@ You can also set defaults for these by passing an array of template settings to 
 ```php
 <?php
 
+use CodeIgniter\View\Table;
+
 $customSettings = [
     'table_open' => '<table border="1" cellpadding="2" cellspacing="1" class="mytable">',
 ];
 
-$table = new \CodeIgniter\View\Table($customSettings);
+$table = new Table($customSettings);
 ```
 
 ### Synchronizing Rows with Headings
@@ -160,7 +172,9 @@ If a data row contains a key that is not present in the heading, its value is fi
 ```php
 <?php
 
-$table = new \CodeIgniter\View\Table();
+use CodeIgniter\View\Table;
+
+$table = new Table();
 
 $table->setHeading(['name' => 'Name', 'color' => 'Color', 'size' => 'Size'])
     ->setSyncRowsWithHeading(true)
@@ -208,6 +222,8 @@ Using an array as input to `generate()` produces the same result:
 ```php
 <?php
 
+use CodeIgniter\View\Table;
+
 $data = [
     [
         'color' => 'Blue',
@@ -224,7 +240,7 @@ $data = [
     ],
 ];
 
-$table = new \CodeIgniter\View\Table();
+$table = new Table();
 
 $table->setHeading(['name' => 'Name', 'color' => 'Color', 'size' => 'Size'])
     ->setSyncRowsWithHeading(true);
@@ -245,7 +261,9 @@ Allows you to specify a native PHP function or a valid function array object to 
 ```php
 <?php
 
-$table = new \CodeIgniter\View\Table();
+use CodeIgniter\View\Table;
+
+$table = new Table();
 
 $table->setHeading('Name', 'Color', 'Size');
 $table->addRow('Fred', '<strong>Blue</strong>', 'Small');
@@ -457,7 +475,9 @@ Example:
 ```php
 <?php
 
-$table = new \CodeIgniter\View\Table();
+use CodeIgniter\View\Table;
+
+$table = new Table();
 
 $table->setCaption('Preferences')
     ->setHeading('Name', 'Color', 'Size')

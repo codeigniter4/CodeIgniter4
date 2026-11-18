@@ -356,7 +356,7 @@ You can check that a file was actually uploaded via HTTP with no errors by calli
 <?php
 
 if (! $file->isValid()) {
-    throw new \RuntimeException($file->getErrorString() . '(' . $file->getError() . ')');
+    throw new RuntimeException($file->getErrorString() . '(' . $file->getError() . ')');
 }
 ```
 

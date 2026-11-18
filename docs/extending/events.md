@@ -25,13 +25,14 @@ In this example, whenever the `pre_system` event is executed, an instance of `My
 ```php
 <?php
 
+use App\Libraries\User;
 use CodeIgniter\Events\Events;
 
 // Call a standalone function
 Events::on('pre_system', 'some_function');
 
 // Call on an instance method
-$user = new \App\Libraries\User();
+$user = new User();
 Events::on('pre_system', [$user, 'someMethod']);
 
 // Call on a static method
@@ -81,7 +82,9 @@ The Events library also makes it simple for you to create events in your own cod
 ```php
 <?php
 
-\CodeIgniter\Events\Events::trigger('some_event');
+use CodeIgniter\Events\Events;
+
+Events::trigger('some_event');
 ```
 
 You can pass any number of arguments to the subscribers by adding them as additional parameters. Subscribers will be given the arguments in the same order as defined:

@@ -85,13 +85,14 @@ We don't necessarily need to throttle every page on the site. For many web appli
 
 namespace Config;
 
+use App\Filters\Throttle;
 use CodeIgniter\Config\BaseConfig;
 
 class Filters extends BaseConfig
 {
     public $aliases = [
         // ...
-        'throttle' => \App\Filters\Throttle::class,
+        'throttle' => Throttle::class,
     ];
 
     // ...

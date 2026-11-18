@@ -519,7 +519,9 @@ You can specify a filter classname for the filter value:
 ```php
 <?php
 
-$routes->get('admin', ' AdminController::index', ['filter' => \App\Filters\SomeFilter::class]);
+use App\Filters\SomeFilter;
+
+$routes->get('admin', ' AdminController::index', ['filter' => SomeFilter::class]);
 ```
 
 #### Multiple Filters
@@ -534,7 +536,9 @@ You can specify an array for the filter value:
 ```php
 <?php
 
-$routes->get('admin', ' AdminController::index', ['filter' => ['admin-auth', \App\Filters\SomeFilter::class]]);
+use App\Filters\SomeFilter;
+
+$routes->get('admin', ' AdminController::index', ['filter' => ['admin-auth', SomeFilter::class]]);
 ```
 
 ##### Filter Arguments
@@ -1237,8 +1241,10 @@ CodeIgniter 4 provides a simple way to access the current route's controller and
 ```php
 <?php
 
+use CodeIgniter\Router\Router;
+
 // Get the router instance.
-/** @var \CodeIgniter\Router\Router $router */
+/** @var Router $router */
 $router = service('router');
 
 // Retrieve the fully qualified class name of the controller handling the current request.
@@ -1262,8 +1268,10 @@ This method returns a list of filters that are currently active for the route be
 ```php
 <?php
 
+use CodeIgniter\Router\Router;
+
 // Get the router instance.
-/** @var \CodeIgniter\Router\Router $router */
+/** @var Router $router */
 $router  = service('router');
 $filters = $router->getFilters();
 
@@ -1280,8 +1288,10 @@ When we're defining routes, they may have optional parameters: `filter`, `namesp
 ```php
 <?php
 
+use CodeIgniter\Router\Router;
+
 // Get the router instance.
-/** @var \CodeIgniter\Router\Router $router */
+/** @var Router $router */
 $router  = service('router');
 $options = $router->getMatchedRouteOptions();
 

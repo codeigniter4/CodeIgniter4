@@ -119,8 +119,10 @@ Permits you to generate an XML file from a query result. The first parameter exp
 ```php
 <?php
 
+use Config\Database;
+
 $db     = db_connect();
-$dbutil = \Config\Database::utils();
+$dbutil = Database::utils();
 
 $query = $db->query('SELECT * FROM mytable');
 

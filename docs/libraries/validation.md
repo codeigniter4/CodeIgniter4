@@ -245,6 +245,11 @@ If you want to use traditional rules, you need to change the rule classes in **a
 
 namespace Config;
 
+use CodeIgniter\Validation\CreditCardRules;
+use CodeIgniter\Validation\FileRules;
+use CodeIgniter\Validation\FormatRules;
+use CodeIgniter\Validation\Rules;
+
 // ...
 
 class Validation extends BaseConfig
@@ -252,10 +257,10 @@ class Validation extends BaseConfig
     // ...
 
     public array $ruleSets = [
-        \CodeIgniter\Validation\CreditCardRules::class,
-        \CodeIgniter\Validation\FileRules::class,
-        \CodeIgniter\Validation\FormatRules::class,
-        \CodeIgniter\Validation\Rules::class,
+        CreditCardRules::class,
+        FileRules::class,
+        FormatRules::class,
+        Rules::class,
     ];
 
     // ...

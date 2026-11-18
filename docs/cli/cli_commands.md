@@ -82,6 +82,7 @@ namespace App\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\CodeIgniter;
 
 class AppInfo extends BaseCommand
 {
@@ -90,7 +91,7 @@ class AppInfo extends BaseCommand
     public function run(array $params)
     {
         CLI::write('PHP Version: ' . CLI::color(PHP_VERSION, 'yellow'));
-        CLI::write('CI Version: ' . CLI::color(\CodeIgniter\CodeIgniter::CI_VERSION, 'yellow'));
+        CLI::write('CI Version: ' . CLI::color(CodeIgniter::CI_VERSION, 'yellow'));
         CLI::write('APPPATH: ' . CLI::color(APPPATH, 'yellow'));
         CLI::write('SYSTEMPATH: ' . CLI::color(SYSTEMPATH, 'yellow'));
         CLI::write('ROOTPATH: ' . CLI::color(ROOTPATH, 'yellow'));
@@ -146,7 +147,7 @@ A convenience method to maintain a consistent and clear error output to the CLI:
 
 try {
     // ...
-} catch (\Exception $e) {
+} catch (Exception $e) {
     $this->showError($e);
 }
 ```

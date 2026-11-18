@@ -51,9 +51,11 @@ You can also pass a string to `getResult()` that represents a class to instantia
 ```php
 <?php
 
+use App\Entities\User;
+
 $query = $db->query('SELECT * FROM users;');
 
-foreach ($query->getResult(\App\Entities\User::class) as $user) {
+foreach ($query->getResult(User::class) as $user) {
     echo $user->name;          // access attributes
     echo $user->reverseName(); // or methods defined on the 'User' class
 }
@@ -110,8 +112,10 @@ You can also add a second string parameter, which is the name of a class to inst
 ```php
 <?php
 
+use App\Entities\User;
+
 $query = $db->query('SELECT * FROM users LIMIT 1;');
-$row   = $query->getRow(0, \App\Entities\User::class);
+$row   = $query->getRow(0, User::class);
 
 echo $row->name;           // access attributes
 echo $row->reverse_name(); // or methods defined on the 'User' class
@@ -181,11 +185,13 @@ For use with MySQLi, you may set MySQLi's result mode to `MYSQLI_USE_RESULT` for
 ```php
 <?php
 
+use CodeIgniter\Files\File;
+
 $db->resultMode = MYSQLI_USE_RESULT; // for unbuffered results
 
 $query = $db->query('YOUR QUERY');
 
-$file = new \CodeIgniter\Files\File(WRITEPATH . 'data.csv');
+$file = new File(WRITEPATH . 'data.csv');
 
 $csv = $file->openFile('w');
 
@@ -260,9 +266,11 @@ Example:
 ```php
 <?php
 
+use App\Entities\User;
+
 $query = $db->query('YOUR QUERY');
 
-$rows = $query->getCustomResultObject(\App\Entities\User::class);
+$rows = $query->getCustomResultObject(User::class);
 
 foreach ($rows as $row) {
     echo $row->id;
@@ -280,9 +288,11 @@ Example:
 ```php
 <?php
 
+use App\Entities\User;
+
 $query = $db->query('YOUR QUERY');
 
-$row = $query->getCustomRowObject(0, \App\Entities\User::class);
+$row = $query->getCustomRowObject(0, User::class);
 
 if (isset($row)) {
     echo $row->email;              // access attributes
@@ -297,7 +307,9 @@ Example:
 ```php
 <?php
 
-$row = $query->getRow(0, \App\Entities\User::class);
+use App\Entities\User;
+
+$row = $query->getRow(0, User::class);
 ```
 
 ## Result Helper Methods

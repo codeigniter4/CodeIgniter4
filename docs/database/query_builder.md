@@ -30,7 +30,9 @@ The Query Builder is loaded through the `table()` method on the database connect
 ```php
 <?php
 
-$db      = \Config\Database::connect();
+use Config\Database;
+
+$db      = Database::connect();
 $builder = $db->table('users');
 ```
 

@@ -114,12 +114,14 @@ Next, you need to define the class that is used to format the array of data. Thi
 namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Format\JSONFormatter;
+use CodeIgniter\Format\XMLFormatter;
 
 class Format extends BaseConfig
 {
     public $formatters = [
-        'application/json' => \CodeIgniter\Format\JSONFormatter::class,
-        'application/xml'  => \CodeIgniter\Format\XMLFormatter::class,
+        'application/json' => JSONFormatter::class,
+        'application/xml'  => XMLFormatter::class,
     ];
 
     // ...

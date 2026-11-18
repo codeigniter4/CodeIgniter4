@@ -558,6 +558,8 @@ Example:
 
 namespace App\Controllers;
 
+use CodeIgniter\Exceptions\PageNotFoundException;
+
 class Products extends BaseController
 {
     public function _remap($method, ...$params)
@@ -568,7 +570,7 @@ class Products extends BaseController
             return $this->{$method}(...$params);
         }
 
-        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        throw PageNotFoundException::forPageNotFound();
     }
 }
 ```

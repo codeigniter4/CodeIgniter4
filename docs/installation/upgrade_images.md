@@ -43,7 +43,9 @@ $this->image_lib->resize();
 ```php
 <?php
 
-$image = \Config\Services::image();
+use Config\Services;
+
+$image = Services::image();
 
 $image
     ->withFile('/path/to/image/mypic.jpg')

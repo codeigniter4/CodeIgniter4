@@ -124,12 +124,14 @@ The key should be as random as possible, and it **must not** be a regular text s
 ```php
 <?php
 
+use CodeIgniter\Encryption\Encryption;
+
 // $key will be assigned a 32-byte (256-bit) random key
-$key = \CodeIgniter\Encryption\Encryption::createKey();
+$key = Encryption::createKey();
 
 // for the SodiumHandler, you can use either:
 $key = sodium_crypto_secretbox_keygen();
-$key = \CodeIgniter\Encryption\Encryption::createKey(SODIUM_CRYPTO_SECRETBOX_KEYBYTES);
+$key = Encryption::createKey(SODIUM_CRYPTO_SECRETBOX_KEYBYTES);
 ```
 
 The key can be stored in **app/Config/Encryption.php**, or you can design a storage mechanism of your own and pass the key dynamically when encrypting/decrypting.
@@ -158,8 +160,10 @@ You'll notice that the `createKey()` method outputs binary data, which is hard t
 ```php
 <?php
 
+use CodeIgniter\Encryption\Encryption;
+
 // Get a hex-encoded representation of the key:
-$encoded = bin2hex(\CodeIgniter\Encryption\Encryption::createKey(32));
+$encoded = bin2hex(Encryption::createKey(32));
 
 // Put the same value with hex2bin(),
 // so that it is still passed as binary to the library:
@@ -307,8 +311,10 @@ Instead of (or in addition to) using `Services` as described in [Using the Encry
 ```php
 <?php
 
+use CodeIgniter\Encryption\Encryption;
+
 // create an Encryption instance
-$encryption = new \CodeIgniter\Encryption\Encryption();
+$encryption = new Encryption();
 
 // reconfigure an instance with different settings
 $encrypter = $encryption->initialize($config);

@@ -201,9 +201,13 @@ Some operations should never be interrupted (database transactions, file operati
 ```php
 <?php
 
-use CodeIgniter\CLI\CLI;
+namespace App\Commands;
 
-class SampleCommand extends \BaseCommand
+use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\CLI;
+use Exception;
+
+class SampleCommand extends BaseCommand
 {
     // ...
     private function processOrder(array $orderData): void
@@ -231,7 +235,7 @@ class SampleCommand extends \BaseCommand
                 CLI::write('Transaction completed successfully', 'green');
 
                 return $orderId;
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 // Rollback on error
                 $this->db->transRollback();
 
@@ -342,11 +346,11 @@ kill -CONT $PID   # Resume - may lose terminal control
 
 When you manually send `kill -CONT` from a different terminal:
 
-**Expected behavior:**  
+**Expected behavior:**
 
 - Process resumes and custom handlers execute
 
-**Side effects:**  
+**Side effects:**
 
 - Process loses foreground terminal control
 - Ctrl+C and Ctrl+Z may stop working
@@ -463,7 +467,7 @@ This returns comprehensive information including:
 
 #### registerSignals($signals = [SIGTERM, SIGINT, SIGHUP, SIGQUIT], $methodMap = [])
 
-- **Parameters**  
+- **Parameters**
     - **$signals** `array` List of signals to handle
     - **$methodMap** `array` Optional signal-to-method mapping
 
@@ -576,7 +580,7 @@ Reset all states - useful for testing or restart scenarios.
 
 #### withSignalsBlocked($operation)
 
-- **Parameters**  
+- **Parameters**
     - **$operation** `callable` The critical operation to execute without interruption
 
 - **Returns**: The result of the operation
@@ -597,7 +601,7 @@ Check if signals are currently blocked.
 
 #### mapSignal($signal, $method)
 
-- **Parameters**  
+- **Parameters**
     - **$signal** `int` Signal constant
     - **$method** `string` Method name to call for this signal
 
@@ -642,7 +646,7 @@ class SampleCommand extends BaseCommand
 
 #### getSignalName($signal)
 
-- **Parameters**  
+- **Parameters**
     - **$signal** `int` Signal constant
 
 - **Returns**: Human-readable signal name
