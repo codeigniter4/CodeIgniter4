@@ -171,7 +171,7 @@ class Services extends BaseService
 {
     // ...
 
-    public static function routes()
+    public static function routes(): \CodeIgniter\Router\RouteCollection
     {
         return new MyRouteCollection(static::locator(), config('Modules'));
     }
@@ -196,9 +196,9 @@ class Services extends BaseService
 {
     // ...
 
-    public static function renderer($viewPath = APPPATH . 'views/')
+    public static function renderer(string $viewPath = APPPATH . 'views/'): View
     {
-        return new View($viewPath);
+        return new View(config('View'), $viewPath);
     }
 }
 ```
@@ -229,7 +229,7 @@ class Services extends BaseService
 {
     // ...
 
-    public static function routes($getShared = true)
+    public static function routes(bool $getShared = true): \CodeIgniter\Router\RouteCollection
     {
         if ($getShared) {
             return static::getSharedInstance('routes');
@@ -261,9 +261,9 @@ use CodeIgniter\Config\BaseService;
 
 class Services extends BaseService
 {
-    public static function postManager()
+    public static function postManager(): \Blog\Libraries\PostManager
     {
-        // ...
+        return new \Blog\Libraries\PostManager();
     }
 }
 ```

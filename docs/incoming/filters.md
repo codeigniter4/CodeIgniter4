@@ -114,6 +114,9 @@ use CodeIgniter\Filters\CSRF;
 
 class Filters extends BaseConfig
 {
+    /**
+     * @var array<string, class-string|list<class-string>>
+     */
     public array $aliases = [
         'csrf' => CSRF::class,
     ];
@@ -139,6 +142,9 @@ use CodeIgniter\Config\BaseConfig;
 
 class Filters extends BaseConfig
 {
+    /**
+     * @var array<string, class-string|list<class-string>>
+     */
     public array $aliases = [
         'api-prep' => [
             Negotiate::class,
@@ -175,6 +181,9 @@ use CodeIgniter\Config\BaseConfig;
 class Filters extends BaseConfig
 {
     // ...
+    /**
+     * @var array{before: list<string>, after: list<string>}
+     */
     public array $required = [
         'before' => [
             'forcehttps', // Force Global Secure Requests
@@ -210,6 +219,12 @@ class Filters extends BaseConfig
 {
     // ...
 
+    /**
+     * @var array{
+     *     before: array<string, array{except: list<string>|string}>|list<string>,
+     *     after: array<string, array{except: list<string>|string}>|list<string>
+     * }
+     */
     public array $globals = [
         'before' => [
             'csrf',
@@ -238,6 +253,12 @@ class Filters extends BaseConfig
 {
     // ...
 
+    /**
+     * @var array{
+     *     before: array<string, array{except: list<string>|string}>|list<string>,
+     *     after: array<string, array{except: list<string>|string}>|list<string>
+     * }
+     */
     public array $globals = [
         'before' => [
             'csrf' => ['except' => 'api/*'],
@@ -267,6 +288,12 @@ class Filters extends BaseConfig
 {
     // ...
 
+    /**
+     * @var array{
+     *     before: array<string, array{except: list<string>|string}>|list<string>,
+     *     after: array<string, array{except: list<string>|string}>|list<string>
+     * }
+     */
     public array $globals = [
         'before' => [
             'csrf' => ['except' => ['foo/*', 'bar/*']],
@@ -296,6 +323,9 @@ class Filters extends BaseConfig
 {
     // ...
 
+    /**
+     * @var array<string, list<string>>
+     */
     public array $methods = [
         'POST' => ['invalidchars', 'csrf'],
         'GET'  => ['csrf'],
@@ -328,6 +358,9 @@ class Filters extends BaseConfig
 {
     // ...
 
+    /**
+     * @var array<string, array<string, list<string>>>
+     */
     public array $filters = [
         'foo' => ['before' => ['admin/*'], 'after' => ['users/*']],
         'bar' => ['before' => ['api/*', 'admin/*']],
@@ -357,7 +390,10 @@ class Filters extends BaseConfig
 {
     // ...
 
-    public $filters = [
+    /**
+     * @var array<string, array<string, list<string>>>
+     */
+    public array $filters = [
         'group:admin,superadmin'  => ['before' => ['admin/*']],
         'permission:users.manage' => ['before' => ['admin/users/*']],
     ];
@@ -489,6 +525,9 @@ use CodeIgniter\Config\BaseConfig;
 
 class Filters extends BaseConfig
 {
+    /**
+     * @var array<string, class-string|list<class-string>>
+     */
     public array $aliases = [
         // ...
         'secureheaders' => SecureHeaders::class,

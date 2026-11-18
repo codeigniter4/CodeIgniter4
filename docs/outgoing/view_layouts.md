@@ -92,7 +92,7 @@ namespace App\Controllers;
 
 class MyController extends BaseController
 {
-    public function index()
+    public function index(): string
     {
         return view('some_view');
     }

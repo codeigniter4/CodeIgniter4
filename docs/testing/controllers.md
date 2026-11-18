@@ -41,7 +41,7 @@ class ForumControllerTest extends CIUnitTestCase
     use ControllerTestTrait;
     use DatabaseTestTrait;
 
-    public function testShowCategories()
+    public function testShowCategories(): void
     {
         $result = $this->withUri('http://example.com/categories')
             ->controller(ForumController::class)
@@ -256,7 +256,7 @@ final class FooFilterTest extends CIUnitTestCase
 {
     use FilterTestTrait;
 
-    protected function testFilterFailsOnAdminRoute()
+    protected function testFilterFailsOnAdminRoute(): void
     {
         $this->filtersConfig->globals['before'] = ['admin-only-filter'];
 
@@ -317,7 +317,7 @@ final class FooFilterTest extends CIUnitTestCase
 {
     use FilterTestTrait;
 
-    protected function testUnauthorizedAccessRedirects()
+    protected function testUnauthorizedAccessRedirects(): void
     {
         $caller = $this->getFilterCaller('permission', 'before');
         $result = $caller('MayEditWidgets');

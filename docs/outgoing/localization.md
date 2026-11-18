@@ -79,6 +79,9 @@ class App extends BaseConfig
 {
     // ...
 
+    /**
+     * @var list<string>
+     */
     public array $supportedLocales = ['en', 'es', 'fr-FR'];
 
     // ...
@@ -130,6 +133,9 @@ class App extends BaseConfig
 {
     // ...
 
+    /**
+     * @var list<string>
+     */
     public array $supportedLocales = ['en', 'es', 'fr-FR'];
 
     // ...
@@ -162,7 +168,7 @@ namespace App\Controllers;
 
 class UserController extends BaseController
 {
-    public function index()
+    public function index(): void
     {
         $locale = $this->request->getLocale();
     }

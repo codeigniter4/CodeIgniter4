@@ -48,7 +48,7 @@ use CodeIgniter\Config\BaseConfig;
 
 class Site extends BaseConfig
 {
-    public $siteName  = 'My Great Site';
-    public $siteEmail = 'webmaster@example.com';
+    public string $siteName  = 'My Great Site';
+    public string $siteEmail = 'webmaster@example.com';
 }
 ```

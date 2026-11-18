@@ -48,10 +48,12 @@ Preferences are set by passing an array of preference values to the email initia
 ```php
 <?php
 
-$config['protocol'] = 'sendmail';
-$config['mailPath'] = '/usr/sbin/sendmail';
-$config['charset']  = 'iso-8859-1';
-$config['wordWrap'] = true;
+$config = [
+    'protocol' => 'sendmail',
+    'mailPath' => '/usr/sbin/sendmail',
+    'charset'  => 'iso-8859-1',
+    'wordWrap' => true,
+];
 
 $email->initialize($config);
 ```

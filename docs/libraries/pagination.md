@@ -27,7 +27,7 @@ use App\Models\UserModel;
 
 class UserController extends BaseController
 {
-    public function index()
+    public function index(): string
     {
         $model = model(UserModel::class);
 
@@ -76,7 +76,7 @@ class UserModel extends Model
 {
     // ...
 
-    public function banned()
+    public function banned(): static
     {
         $this->builder()->where('ban', 1);
 
@@ -114,6 +114,9 @@ class NewsModel extends Model
 
     // ...
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getPagination(?int $perPage = null): array
     {
         $this->builder()
@@ -169,7 +172,7 @@ use App\Models\UserModel;
 
 class UserController extends BaseController
 {
-    public function index()
+    public function index(): void
     {
         $userModel = model(UserModel::class);
         $pageModel = model(PageModel::class);
@@ -228,7 +231,7 @@ namespace App\Controllers;
 
 class UserController extends BaseController
 {
-    public function index()
+    public function index(): string
     {
         // ...
 
@@ -320,7 +323,10 @@ use CodeIgniter\Config\BaseConfig;
 
 class Pager extends BaseConfig
 {
-    public $templates = [
+    /**
+     * @var array<string, string>
+     */
+    public array $templates = [
         'default_full'   => 'CodeIgniter\Pager\Views\default_full',
         'default_simple' => 'CodeIgniter\Pager\Views\default_simple',
     ];
@@ -354,7 +360,10 @@ use CodeIgniter\Config\BaseConfig;
 
 class Pager extends BaseConfig
 {
-    public $templates = [
+    /**
+     * @var array<string, string>
+     */
+    public array $templates = [
         'default_full'   => 'CodeIgniter\Pager\Views\default_full',
         'default_simple' => 'CodeIgniter\Pager\Views\default_simple',
         'front_full'     => 'App\Views\Pagers\foundation_full',

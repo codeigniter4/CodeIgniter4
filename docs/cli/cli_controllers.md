@@ -20,7 +20,7 @@ use CodeIgniter\Controller;
 
 class Tools extends Controller
 {
-    public function message($to = 'World')
+    public function message(string $to = 'World'): string
     {
         return "Hello {$to}!" . PHP_EOL;
     }

@@ -51,7 +51,7 @@ abstract class BaseController extends Controller
     // ...
 
     /**
-     * @var \CodeIgniter\Session\Session;
+     * @var \CodeIgniter\Session\Session
      */
     protected $session;
 

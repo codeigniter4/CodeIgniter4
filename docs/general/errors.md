@@ -115,6 +115,9 @@ use CodeIgniter\Config\BaseConfig;
 class Exceptions extends BaseConfig
 {
     // ...
+    /**
+     * @var list<int>
+     */
     public array $ignoreCodes = [404];
     // ...
 }
@@ -170,7 +173,7 @@ class Logger extends BaseConfig
 {
     // ...
     // This must contain the log level (5 for LogLevel::WARNING) corresponding to $deprecationLogLevel.
-    public $threshold = (ENVIRONMENT === 'production') ? 4 : 9;
+    public int $threshold = (ENVIRONMENT === 'production') ? 4 : 9;
     // ...
 }
 ```

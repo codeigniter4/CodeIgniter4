@@ -13,12 +13,13 @@ namespace App\Controllers;
 
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Controller;
+use CodeIgniter\HTTP\ResponseInterface;
 
 class Users extends Controller
 {
     use ResponseTrait;
 
-    public function createUser()
+    public function createUser(): ResponseInterface
     {
         $model = new UserModel();
         $user  = $model->save($this->request->getPost());
@@ -92,7 +93,10 @@ use CodeIgniter\Config\BaseConfig;
 
 class Format extends BaseConfig
 {
-    public $supportedResponseFormats = [
+    /**
+     * @var list<string>
+     */
+    public array $supportedResponseFormats = [
         'application/json',
         'application/xml',
     ];
@@ -119,7 +123,10 @@ use CodeIgniter\Format\XMLFormatter;
 
 class Format extends BaseConfig
 {
-    public $formatters = [
+    /**
+     * @var array<string, class-string>
+     */
+    public array $formatters = [
         'application/json' => JSONFormatter::class,
         'application/xml'  => XMLFormatter::class,
     ];
@@ -413,12 +420,13 @@ When returning paginated results from an API endpoint, you can use the `paginate
 use App\Controllers\BaseController;
 use App\Models\UserModel;
 use CodeIgniter\API\ResponseTrait;
+use CodeIgniter\HTTP\ResponseInterface;
 
 class UserController extends BaseController
 {
     use ResponseTrait;
 
-    public function index()
+    public function index(): ResponseInterface
     {
         $model = model(UserModel::class)
             ->where('active', 1);
@@ -469,12 +477,13 @@ You can also pass it a Builder instance instead of a Model, as long as the Build
 
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
+use CodeIgniter\HTTP\ResponseInterface;
 
 class UserController extends BaseController
 {
     use ResponseTrait;
 
-    public function index()
+    public function index(): ResponseInterface
     {
         $builder = db_connect()
             ->table('users')
@@ -507,12 +516,13 @@ use App\Controllers\BaseController;
 use App\Models\UserModel;
 use App\Transformers\UserTransformer;
 use CodeIgniter\API\ResponseTrait;
+use CodeIgniter\HTTP\ResponseInterface;
 
 class UserController extends BaseController
 {
     use ResponseTrait;
 
-    public function index()
+    public function index(): ResponseInterface
     {
         $model = model(UserModel::class);
 

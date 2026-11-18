@@ -147,7 +147,7 @@ use CodeIgniter\Config\BaseConfig;
 
 class Encryption extends BaseConfig
 {
-    public $key = 'YOUR KEY';
+    public string $key = 'YOUR KEY';
 
     // ...
 }
@@ -238,6 +238,9 @@ class Encryption extends BaseConfig
 {
     public string $key = 'hex2bin:your_new_encryption_key_in_hex';
 
+    /**
+     * @var list<string>|string
+     */
     public array|string $previousKeys = [
         'hex2bin:your_old_encryption_key_in_hex',
         'hex2bin:another_old_key_if_needed',

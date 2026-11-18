@@ -83,7 +83,7 @@ Make sure you use the appstarter installation. If using manual installation, you
 class preload
 {
     /**
-     * @var array Paths to preload.
+     * @var list<array<string, mixed>> Paths to preload.
      */
     private array $paths = [
         [

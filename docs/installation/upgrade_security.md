@@ -27,7 +27,13 @@
     {
         // ...
 
-        public $globals = [
+        /**
+         * @var array{
+         *     before?: array<string, array{except: list<string>|string}>|list<string>,
+         *     after?: array<string, array{except: list<string>|string}>|list<string>
+         * }
+         */
+        public array $globals = [
             'before' => [
                 // 'honeypot',
                 'csrf',

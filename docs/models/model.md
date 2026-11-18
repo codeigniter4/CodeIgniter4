@@ -834,18 +834,20 @@ namespace App\Entities;
 
 class Job
 {
-    protected $id;
-    protected $name;
-    protected $description;
+    protected int $id;
+    protected string $name;
+    protected string $description;
 
-    public function __get($key)
+    public function __get(string $key): mixed
     {
         if (property_exists($this, $key)) {
             return $this->{$key};
         }
+
+        return null;
     }
 
-    public function __set($key, $value)
+    public function __set(string $key, mixed $value): void
     {
         if (property_exists($this, $key)) {
             $this->{$key} = $value;
@@ -1129,7 +1131,7 @@ if ($model->save($data) === false) {
 This returns an array with the field names and their associated errors that can be used to either show all of the errors at the top of the form, or to display them individually:
 
 ```php
-<?php if (! empty($errors)): ?>
+<?php if ($errors !== []): ?>
     <div class="alert alert-danger">
     <?php foreach ($errors as $field => $error): ?>
         <p><?= esc($error) ?></p>
@@ -1401,7 +1403,12 @@ class MyModel extends Model
 {
     // ...
 
-    protected function hashPassword(array $data)
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @return array<string, mixed>
+     */
+    protected function hashPassword(array $data): array
     {
         if (! isset($data['data']['password'])) {
             return $data;
@@ -1510,7 +1517,12 @@ class MyModel extends Model
 
     // ...
 
-    protected function checkCache(array $data)
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @return array<string, mixed>
+     */
+    protected function checkCache(array $data): array
     {
         // Check if the requested item is already in our cache
         if (isset($data['id']) && $item = $this->getCachedItem($data['id'])) {
@@ -1520,7 +1532,7 @@ class MyModel extends Model
             return $data;
         }
 
-        // ...
+        return $data;
     }
 }
 ```
@@ -1538,6 +1550,9 @@ use CodeIgniter\Database\ConnectionInterface;
 
 class UserModel
 {
+    /**
+     * @var ConnectionInterface
+     */
     protected $db;
 
     public function __construct(ConnectionInterface $db)

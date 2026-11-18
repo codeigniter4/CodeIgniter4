@@ -19,6 +19,9 @@ class Filters extends BaseConfig
 {
     // ...
 
+    /**
+     * @var array<string, list<string>>
+     */
     public array $methods = [
         'POST' => ['csrf'],
     ];
@@ -118,7 +121,7 @@ class News extends BaseController
 {
     // ...
 
-    public function new()
+    public function new(): string
     {
         helper('form');
 
@@ -155,7 +158,7 @@ class News extends BaseController
 {
     // ...
 
-    public function create()
+    public function create(): string
     {
         helper('form');
 

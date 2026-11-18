@@ -50,7 +50,7 @@ namespace App\Controllers;
 
 class Blog extends BaseController
 {
-    public function index()
+    public function index(): string
     {
         return view('blog_view');
     }
@@ -86,7 +86,7 @@ use CodeIgniter\Controller;
 
 class Page extends Controller
 {
-    public function index()
+    public function index(): string
     {
         $data = [
             'page_title' => 'Your title',
@@ -212,10 +212,12 @@ namespace App\Controllers;
 
 class Blog extends BaseController
 {
-    public function index()
+    public function index(): string
     {
-        $data['title']   = 'My Real Title';
-        $data['heading'] = 'My Real Heading';
+        $data = [
+            'title'   => 'My Real Title',
+            'heading' => 'My Real Heading',
+        ];
 
         return view('blog_view', $data);
     }
@@ -268,7 +270,7 @@ namespace App\Controllers;
 
 class Blog extends BaseController
 {
-    public function index()
+    public function index(): string
     {
         $data = [
             'todo_list' => ['Clean House', 'Call Mom', 'Run Errands'],

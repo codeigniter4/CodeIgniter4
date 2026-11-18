@@ -9,7 +9,9 @@ The following example shows a common usage pattern within your controllers.
 ```php
 <?php
 
-if (! $foo = cache('foo')) {
+$foo = cache('foo');
+
+if ($foo === null) {
     echo 'Saving to the cache!<br>';
     $foo = 'foobarbaz!';
 
@@ -367,7 +369,10 @@ class Cache extends BaseConfig
 {
     // ...
 
-    public $memcached = [
+    /**
+     * @var array{host?: string, port?: int, weight?: int, raw?: bool}
+     */
+    public array $memcached = [
         'host'   => '127.0.0.1',
         'port'   => 11211,
         'weight' => 1,
@@ -403,7 +408,18 @@ class Cache extends BaseConfig
 {
     // ...
 
-    public $redis = [
+    /**
+     * @var array{
+     *     host?: string,
+     *     password?: string|null,
+     *     port?: int,
+     *     timeout?: int,
+     *     async?: bool,
+     *     persistent?: bool,
+     *     database?: int
+     * }
+     */
+    public array $redis = [
         'host'       => '127.0.0.1',
         'password'   => null,
         'port'       => 6379,

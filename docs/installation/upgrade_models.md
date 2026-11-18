@@ -67,7 +67,7 @@ class NewsModel extends Model
     // Sets the table name.
     protected $table = 'news';
 
-    public function setNews($title, $slug, $text)
+    public function setNews(string $title, string $slug, string $text): mixed
     {
         $data = [
             'title' => $title,
@@ -100,7 +100,7 @@ class NewsModel extends Model
     // Sets the field names to allow to insert/update.
     protected $allowedFields = ['title', 'slug', 'text'];
 
-    public function setNews($title, $slug, $text)
+    public function setNews(string $title, string $slug, string $text): mixed
     {
         $data = [
             'title' => $title,

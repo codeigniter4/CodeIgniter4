@@ -41,7 +41,7 @@ use CodeIgniter\Test\DatabaseTestCase;
 
 class MyDatabaseTest extends DatabaseTestCase
 {
-    public function testBadRow()
+    public function testBadRow(): void
     {
         // ...
     }
@@ -60,7 +60,7 @@ class MyDatabaseTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
-    public function testBadRow()
+    public function testBadRow(): void
     {
         // ...
     }

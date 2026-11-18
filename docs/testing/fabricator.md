@@ -96,7 +96,10 @@ class UserModel
 {
     // ...
 
-    public function fake(Generator &$faker)
+    /**
+     * @return array<string, mixed>|object
+     */
+    public function fake(Generator &$faker): array|object
     {
         return [
             'first'  => $faker->firstName(),
@@ -136,9 +139,12 @@ use Faker\Generator;
 
 class UserFabricator extends UserModel
 {
-    public function fake(Generator &$faker)
+    /**
+     * @return array<string, mixed>|object
+     */
+    public function fake(Generator &$faker): array|object
     {
-        // ...
+        return [];
     }
 }
 ```
@@ -177,9 +183,15 @@ use Faker\Generator;
 
 class UserModel
 {
+    /**
+     * @var string
+     */
     protected $table = 'users';
 
-    public function fake(Generator &$faker)
+    /**
+     * @return array<string, mixed>|object
+     */
+    public function fake(Generator &$faker): array|object
     {
         return [
             'first'    => $faker->firstName(),
@@ -396,9 +408,15 @@ use Faker\Generator;
 
 class UserModel
 {
+    /**
+     * @var string
+     */
     protected $table = 'users';
 
-    public function fake(Generator &$faker)
+    /**
+     * @return array<string, mixed>|object
+     */
+    public function fake(Generator &$faker): array|object
     {
         return [
             'first'    => $faker->firstName(),

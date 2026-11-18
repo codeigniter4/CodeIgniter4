@@ -321,6 +321,9 @@ use CodeIgniter\Config\BaseConfig;
 
 class Generators extends BaseConfig
 {
+    /**
+     * @var array<string, array<string, string>|string>
+     */
     public array $views = [
         // ..
         'make:awesome-command' => 'App\Commands\Generators\Views\awesomecommand.tpl.php',

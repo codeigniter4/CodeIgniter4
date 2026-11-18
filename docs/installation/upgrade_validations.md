@@ -148,7 +148,7 @@ use CodeIgniter\Controller;
 
 class Form extends Controller
 {
-    public function index()
+    public function index(): string
     {
         helper('form');
 

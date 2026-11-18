@@ -89,8 +89,8 @@ use CodeIgniter\Config\BaseConfig;
 
 class CustomClass extends BaseConfig
 {
-    public $siteName  = 'My Great Site';
-    public $siteEmail = 'webmaster@example.com';
+    public string $siteName  = 'My Great Site';
+    public string $siteEmail = 'webmaster@example.com';
     // ...
 }
 ```
@@ -302,6 +302,9 @@ namespace CodeIgniter\Shield\Config;
 
 class Registrar
 {
+    /**
+     * @return array<string, array<string, string>>
+     */
     public static function Pager(): array
     {
         return [
@@ -326,7 +329,7 @@ A configuration file can also specify any number of registrars explicitly. This 
 
 namespace Config;
 
-// ...
+use CodeIgniter\Config\BaseConfig;
 
 class MyConfig extends BaseConfig
 {
@@ -370,6 +373,9 @@ namespace App\Models;
 
 class RegionalSales
 {
+    /**
+     * @return array<string, int>
+     */
     public static function MySalesConfig(): array
     {
         return [

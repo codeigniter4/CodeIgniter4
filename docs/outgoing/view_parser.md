@@ -43,7 +43,7 @@ Alternatively, if you are not using the `Parser` class as your default renderer,
 
 use CodeIgniter\View\Parser;
 
-$parser = new Parser();
+$parser = new Parser(config('View'));
 ```
 
 Then you can use any of the three standard rendering methods that it provides: `render()`, `setVar()` and `setData()`. You will also be able to specify delimiters directly through the `setDelimiters()` method.

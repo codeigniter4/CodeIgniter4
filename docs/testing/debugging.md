@@ -88,7 +88,10 @@ use CodeIgniter\Debug\Toolbar\Collectors\Views;
 
 class Toolbar extends BaseConfig
 {
-    public $collectors = [
+    /**
+     * @var list<class-string>
+     */
+    public array $collectors = [
         Timers::class,
         Database::class,
         Logs::class,
@@ -179,6 +182,8 @@ The `formatTimelineData()` method must return an array of arrays formatted in a 
 
 ```php
 <?php
+
+$data = [];
 
 $data[] = [
     'name'      => '',     // Name displayed on the left of the timeline
