@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Cache\Exceptions\CacheException;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
 use FilesystemIterator;
@@ -74,6 +75,35 @@ class FileHandler extends BaseHandler
 
     public function initialize(): void
     {
+    }
+
+    /**
+     * Validates a cache key and returns the file name the item is stored under.
+     *
+     * The file name must not contain a directory separator or a null byte, so a
+     * cache item can never be written outside the cache directory, even when
+     * `Config\Cache::$reservedCharacters` is relaxed. Other characters are left
+     * to the configured reserved characters, because rejecting characters that
+     * are valid in file names on some platforms would break existing keys.
+     *
+     * @param mixed  $key    The key to validate
+     * @param string $prefix Optional prefix to include in length calculations
+     *
+     * @throws InvalidArgumentException When $key is not valid or the resulting
+     *                                  file name contains a directory separator
+     *                                  or a null byte
+     */
+    public static function validateKey($key, $prefix = ''): string
+    {
+        // Parent validation also hashes keys that exceed MAX_KEY_LENGTH, so
+        // validate the returned file name and not the raw key.
+        $key = parent::validateKey($key, $prefix);
+
+        if (strpbrk($key, '/\\') !== false || str_contains($key, "\0")) {
+            throw new InvalidArgumentException('Cache key cannot contain directory separators or null bytes.');
+        }
+
+        return $key;
     }
 
     public function get(string $key): mixed
