@@ -221,11 +221,7 @@ class MemcachedHandler extends BaseHandler
     public function close(): bool
     {
         if (isset($this->memcached)) {
-            if (isset($this->lockKey)) {
-                $this->memcached->delete($this->lockKey);
-            }
-
-            return true;
+            return ! isset($this->lockKey) || $this->releaseLock();
         }
 
         return false;
@@ -265,11 +261,19 @@ class MemcachedHandler extends BaseHandler
      */
     protected function lockSession(string $sessionID): bool
     {
-        if (isset($this->lockKey)) {
+        $lockKey = $this->keyPrefix . $sessionID . ':lock';
+
+        // PHP reuses the SessionHandler object on regeneration,
+        // so we need to check here if the lock key is for the
+        // correct session ID.
+        if ($this->lockKey === $lockKey) {
             return $this->memcached->replace($this->lockKey, Time::now()->getTimestamp(), 300);
         }
 
-        $lockKey = $this->keyPrefix . $sessionID . ':lock';
+        if (isset($this->lockKey) && ! $this->releaseLock()) {
+            return false;
+        }
+
         $attempt = 0;
 
         do {
