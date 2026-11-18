@@ -244,13 +244,15 @@ Config\SimpleConfig.address.city = "Berlin"
 Config\SimpleConfig.address.country = "Germany"
 ```
 
-If this was referring to a SimpleConfig configuration object, the above example would be treated as:
+If `Config\SimpleConfig` has that `$address` property set up as an array, it would contain:
 
 ```php
 <?php
 
-$address['city']    = 'Berlin';
-$address['country'] = 'Germany';
+$address = [
+    'city'    => 'Berlin',
+    'country' => 'Germany',
+];
 ```
 
 Any other elements of the `$address` property would be unchanged.

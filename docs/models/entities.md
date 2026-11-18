@@ -688,6 +688,8 @@ class SomeHandler extends BaseCast
          *   string(6) "param3"
          * }
          */
+
+        return $value;
     }
 }
 ```

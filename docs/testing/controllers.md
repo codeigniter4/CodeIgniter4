@@ -320,7 +320,7 @@ final class FooFilterTest extends CIUnitTestCase
     protected function testUnauthorizedAccessRedirects(): void
     {
         $caller = $this->getFilterCaller('permission', 'before');
-        $result = $caller('MayEditWidgets');
+        $result = $caller(['MayEditWidgets']);
 
         $this->assertInstanceOf('CodeIgniter\HTTP\RedirectResponse', $result);
     }

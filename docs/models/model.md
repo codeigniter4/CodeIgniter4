@@ -86,6 +86,8 @@ class UserModel extends UserAuthModel
     /**
      * Called during initialization. Appends
      * our custom field to the module's model.
+     *
+     * @return void
      */
     protected function initialize()
     {
@@ -587,6 +589,8 @@ class SomeHandler extends BaseCast
          *   string(6) "param3"
          * }
          */
+
+        return $value;
     }
 }
 ```
@@ -1028,7 +1032,7 @@ The other way to set the validation rules for fields is by using functions:
 
 #### setValidationRule($field, $fieldRules)
 
-- **Parameters**  
+- **Parameters**
     - **$field** `string`
     - **$fieldRules** `array`
 
@@ -1047,7 +1051,7 @@ $model->setValidationRule($fieldName, $fieldRules);
 
 #### setValidationRules($validationRules)
 
-- **Parameters**  
+- **Parameters**
     - **$validationRules** `array`
 
 This function will set the validation rules.
@@ -1073,7 +1077,7 @@ The other way to set the validation messages for fields is by using functions:
 
 #### setValidationMessage($field, $fieldMessages)
 
-- **Parameters**  
+- **Parameters**
     - **$field** `string`
     - **$fieldMessages** `array`
 
@@ -1093,7 +1097,7 @@ $model->setValidationMessage($fieldName, $fieldValidationMessage);
 
 #### setValidationMessages($validationMessages)
 
-- **Parameters**  
+- **Parameters**
     - **$validationMessages** `array`
 
 This function will set the field messages.

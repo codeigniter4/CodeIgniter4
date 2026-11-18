@@ -1047,9 +1047,12 @@ By default, the system will look within **system/Language/en/Validation.php** fo
 
 class MyRules
 {
+    /**
+     * @param-out string|null $error
+     */
     public function even(mixed $value, ?string &$error = null): bool
     {
-        if ((int) $value % 2 !== 0) {
+        if (is_int($value) && $value % 2 !== 0) {
             $error = lang('myerrors.evenError');
 
             return false;

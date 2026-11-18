@@ -192,11 +192,13 @@ use CodeIgniter\Config\BaseConfig;
 
 class Encryption extends BaseConfig
 {
-    // In Encryption, you may use
+    /**
+     * @var string
+     */
     public $key = 'hex2bin:<your-hex-encoded-key>';
+
     // or
-    public $key = 'base64:<your-base64-encoded-key>';
-    // ...
+    // public $key = 'base64:<your-base64-encoded-key>';
 }
 ```
 
@@ -333,7 +335,7 @@ Remember that `$config` must be an instance of the `Config\Encryption` class.
 
 #### createKey([$length = 32])
 
-- **Parameters**  
+- **Parameters**
     - **$length** `int` Output length
 
 - **Returns**: A pseudo-random cryptographic key with the specified length, or `false` on failure
@@ -344,7 +346,7 @@ Creates a cryptographic key by fetching random data from the operating system's 
 
 #### initialize([Encryption $config = null])
 
-- **Parameters**  
+- **Parameters**
     - Config\Encryption `$config` Configuration parameters
 
 - **Returns**: `CodeIgniter\Encryption\EncrypterInterface` instance
@@ -369,7 +371,7 @@ Please refer to the [Configuring the Library](#configuring-the-library) section 
 
 #### encrypt($data[, $params = null])
 
-- **Parameters**  
+- **Parameters**
     - **$data** `string` Data to encrypt
     - **$params** `array|string|null` Configuration parameters (key)
 
@@ -399,7 +401,7 @@ $ciphertext = $encrypter->encrypt('My secret message', ['blockSize' => 32]);
 
 #### decrypt($data[, $params = null])
 
-- **Parameters**  
+- **Parameters**
     - **$data** `string` Data to decrypt
     - **$params** `array|string|null` Configuration parameters (key)
 

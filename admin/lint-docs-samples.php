@@ -24,8 +24,10 @@ declare(strict_types=1);
  * configuration at the project root unless --phpstan-config is given, and
  * each error is reported against its page and line. The samples that are
  * excluded, and the errors that are ignored, are listed in admin/docs-phpstan-baseline.php.
+ * With --generate-baseline, the errors that remain after its hand-written
+ * ignores are written to that file instead of being reported.
  *
- * Usage: php admin/lint-docs-samples.php [--fix | --phpstan [--phpstan-config=<file>]] [--docs=<directory>]
+ * Usage: php admin/lint-docs-samples.php [--fix | --phpstan [--phpstan-config=<file>] | --generate-baseline] [--docs=<directory>]
  */
 
 /**
@@ -118,7 +120,7 @@ function remove_directory(string $directory): void
  * @param list<array{page: string, start: int}> $found
  * @param array<int, string>                    $files
  */
-function analyse_with_phpstan(string $root, string $work, array $found, array $files, ?string $config): int
+function analyse_with_phpstan(string $root, string $work, array $found, array $files, ?string $config, bool $generate): int
 {
     foreach (['phpstan.neon', 'phpstan.neon.dist', 'phpstan.dist.neon'] as $name) {
         if ($config === null && is_file($root . '/' . $name)) {
@@ -154,19 +156,34 @@ function analyse_with_phpstan(string $root, string $work, array $found, array $f
         return $resolved;
     };
 
-    /** @var array{excludePaths: list<string>, ignoreErrors: list<array{identifier: string, paths?: list<string>}>} $exceptions */
-    $exceptions   = require __DIR__ . '/docs-phpstan-baseline.php';
-    $ignoreErrors = [];
+    $baselineFile = __DIR__ . '/docs-phpstan-baseline.php';
 
-    foreach ($exceptions['ignoreErrors'] as $ignore) {
+    /**
+     * @var array{
+     *   ignoreErrors: list<array{identifier: string, message?: string, paths?: list<string>}>,
+     *   baseline: array{
+     *     excludePaths: list<string>,
+     *     ignoreErrors: list<array{identifier: string, paths: list<string>}>
+     *   }
+     * } $exceptions
+     */
+    $exceptions   = require $baselineFile;
+    $excludePaths = $generate ? [] : $exceptions['baseline']['excludePaths'];
+    $ignoreErrors = $generate
+        ? $exceptions['ignoreErrors']
+        : [...$exceptions['ignoreErrors'], ...($exceptions['baseline']['ignoreErrors'])];
+
+    $validIgnoreErrors = [];
+
+    foreach ($ignoreErrors as $ignore) {
         if (! isset($ignore['paths'])) {
-            $ignoreErrors[] = $ignore;
+            $validIgnoreErrors[] = $ignore;
 
             continue;
         }
 
         if (($ignore['paths'] = $expand($ignore['paths'])) !== []) {
-            $ignoreErrors[] = $ignore;
+            $validIgnoreErrors[] = $ignore;
         }
     }
 
@@ -174,19 +191,24 @@ function analyse_with_phpstan(string $root, string $work, array $found, array $f
         "includes:\n    - %s\n\nparameters: %s\n",
         $config,
         json_encode([
-            'excludePaths' => ['analyse' => $expand($exceptions['excludePaths'])],
-            'ignoreErrors' => $ignoreErrors,
+            'excludePaths' => ['analyse' => $expand($excludePaths)],
+            'ignoreErrors' => $validIgnoreErrors,
         ], JSON_UNESCAPED_SLASHES),
     ));
 
     exec(sprintf(
-        'cd %s && %s %s analyse --configuration=%s --ansi --no-progress --memory-limit=1G %s 2>&1',
+        'cd %s && %s %s analyse --configuration=%s %s --no-progress --memory-limit=1G %s 2>&1',
         escapeshellarg($root),
         escapeshellarg(PHP_BINARY),
         escapeshellarg($root . '/vendor/bin/phpstan'),
         escapeshellarg($work . '/phpstan.neon'),
+        $generate ? '--error-format=json' : '--ansi',
         escapeshellarg($work),
     ), $output, $status);
+
+    if ($generate) {
+        return write_baseline($baselineFile, $output, $found, $files, $root);
+    }
 
     $pages = [];
 
@@ -200,13 +222,121 @@ function analyse_with_phpstan(string $root, string $work, array $found, array $f
     echo strtr(implode("\n", $output), $pages), "\n";
 
     foreach (array_unique($unmatched) as $entry) {
-        printf("\n%s is listed in admin/docs-phpstan-baseline.php, but it matches no PHP sample.\n", $entry);
+        printf("* %s is listed in admin/docs-phpstan-baseline.php, but it matches no PHP sample.\n", $entry);
+    }
+
+    if ($unmatched !== []) {
+        echo "\nRun `php admin/lint-docs-samples.php --generate-baseline` to update the baseline.\n";
     }
 
     return $status !== 0 ? $status : ($unmatched === [] ? 0 : 1);
 }
 
-$options = getopt('', ['fix', 'phpstan', 'phpstan-config:', 'docs::']);
+/**
+ * @param list<string>                          $output
+ * @param list<array{page: string, start: int}> $found
+ * @param array<int, string>                    $files
+ */
+function write_baseline(string $file, array $output, array $found, array $files, string $root): int
+{
+    $json   = array_values(array_filter($output, static fn (string $line): bool => str_starts_with($line, '{')));
+    $result = json_decode($json[0] ?? '', true);
+
+    if (! is_array($result) || ! isset($result['files'])) {
+        fwrite(STDERR, implode("\n", $output) . "\n");
+
+        return 2;
+    }
+
+    $fences = [];
+
+    foreach ($found as $id => $sample) {
+        $fences[$files[$id]] = substr($sample['page'], strlen($root) + 1) . ':' . $sample['start'];
+    }
+
+    $excluded = [];
+    $ignored  = [];
+
+    foreach ($result['files'] as $path => $report) {
+        $fence = $fences[preg_replace('/ \(in context of .*\)$/', '', $path)] ?? null;
+
+        foreach ($report['messages'] as $message) {
+            if ($fence === null) {
+                continue;
+            }
+
+            if (($message['ignorable'] ?? true) === false || ! isset($message['identifier'])) {
+                $excluded[$fence] = true;
+            } else {
+                $ignored[$message['identifier']][$fence] = true;
+            }
+        }
+    }
+
+    $excludePaths = array_keys($excluded);
+    $ignoreErrors = [];
+
+    sort($excludePaths, SORT_NATURAL);
+    ksort($ignored);
+
+    foreach ($ignored as $identifier => $paths) {
+        $paths = array_values(array_diff(array_keys($paths), $excludePaths));
+
+        sort($paths, SORT_NATURAL);
+
+        if ($paths !== []) {
+            $ignoreErrors[] = ['identifier' => $identifier, 'paths' => $paths];
+        }
+    }
+
+    $baseline = preg_replace('/^(\s*)\d+ => /m', '$1', var_export(
+        ['excludePaths' => $excludePaths, 'ignoreErrors' => $ignoreErrors],
+        true,
+    ));
+
+    $text   = (string) file_get_contents($file);
+    $marker = '    // Everything below is @autogenerated by --generate-baseline.';
+    $start  = strpos($text, $marker);
+
+    if ($start === false) {
+        fwrite(STDERR, sprintf("%s has no line \"%s\".\n", $file, trim($marker)));
+
+        return 2;
+    }
+
+    file_put_contents($file, substr($text, 0, $start) . $marker . "\n    'baseline' => " . $baseline . ",\n];\n");
+
+    exec(sprintf(
+        '%s %s fix %s --config=%s --using-cache=no --quiet 2>&1',
+        escapeshellarg(PHP_BINARY),
+        escapeshellarg($root . '/utils/vendor/bin/php-cs-fixer'),
+        escapeshellarg($file),
+        escapeshellarg($root . '/.php-cs-fixer.dist.php'),
+    ), $fixer, $status);
+
+    if ($status !== 0) {
+        fwrite(STDERR, implode("\n", $fixer) . "\n");
+
+        return 2;
+    }
+
+    foreach ($result['errors'] ?? [] as $error) {
+        if (! str_ends_with($error, 'cannot be ignored, use excludePaths instead.')) {
+            printf("\033[31m%s\033[0m\n", $error);
+        }
+    }
+
+    printf(
+        "\033[32mBaseline written to %s: %d samples excluded, %d errors ignored.\033[0m\n",
+        substr($file, strlen($root) + 1),
+        count($excluded),
+        array_sum(array_map('count', $ignored)),
+    );
+
+    return 0;
+}
+
+$options = getopt('', ['fix', 'phpstan', 'generate-baseline', 'phpstan-config:', 'docs::']);
 $fix     = isset($options['fix']);
 $root    = dirname(__DIR__);
 $docs    = rtrim(is_string($options['docs'] ?? null) ? $options['docs'] : $root . '/docs', '/');
@@ -222,7 +352,7 @@ foreach (docs_pages($docs) as $page) {
     }
 }
 
-$phpstan = isset($options['phpstan']);
+$phpstan = isset($options['phpstan']) || isset($options['generate-baseline']);
 $work    = $phpstan ? $root . '/build/docs-samples' : sys_get_temp_dir() . '/docs-samples-' . getmypid();
 
 if (is_dir($work)) {
@@ -254,6 +384,7 @@ if ($phpstan) {
         $found,
         $files,
         is_string($options['phpstan-config'] ?? null) ? $options['phpstan-config'] : null,
+        isset($options['generate-baseline']),
     );
 
     remove_directory($work);

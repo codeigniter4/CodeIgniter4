@@ -627,6 +627,8 @@ class SampleCommand extends BaseCommand
         // Map signals to specific methods at runtime
         $this->mapSignal(SIGUSR1, 'handleReload');
         $this->mapSignal(SIGUSR2, 'handleStatusDump');
+
+        return EXIT_SUCCESS;
     }
 
     // Custom signal handlers
@@ -669,6 +671,8 @@ class SampleCommand extends BaseCommand
     public function run(array $params): int
     {
         // ...
+
+        return EXIT_SUCCESS;
     }
 
     // Log signal information
@@ -715,6 +719,8 @@ class SampleCommand extends BaseCommand
     public function run(array $params): int
     {
         // ...
+
+        return EXIT_SUCCESS;
     }
 
     // Debug process state

@@ -168,8 +168,10 @@ it in place. To skip a sample, such as CodeIgniter 3 code, put `<!-- lint-ignore
 
 These are also analysed by PHPStan, with the configuration at the root of the project,
 when you run `php admin/lint-docs-samples.php --phpstan`. Each error is reported against its page and line.
-A sample that PHPStan cannot analyse, or an error that a sample cannot avoid, is listed in
-**admin/docs-phpstan-baseline.php**, by page or by the line of the opening fence of the sample.
+An error that a sample cannot avoid is recorded in **admin/docs-phpstan-baseline.php**, by the line of the
+opening fence of the sample. After you change a sample, run `php admin/lint-docs-samples.php --generate-baseline`
+to rewrite that part of the file, and commit the result. The pull request fails when the file is out of date.
+The general ignores at the top of the file, which apply to every sample, are written by hand.
 
 ### CLI Command
 
