@@ -171,6 +171,7 @@ use Attribute;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Router\Attributes\RouteAttributeInterface;
+use Override;
 
 /**
  * Custom Header Attribute
@@ -197,6 +198,7 @@ class AddHeader implements RouteAttributeInterface
      * Called before the controller method executes.
      * Return null to continue to the controller.
      */
+    #[Override]
     public function before(RequestInterface $request): RequestInterface|ResponseInterface|null
     {
         // We don't need to do anything before the controller runs
@@ -207,6 +209,7 @@ class AddHeader implements RouteAttributeInterface
      * Called after the controller method executes.
      * Add the custom header to the response.
      */
+    #[Override]
     public function after(RequestInterface $request, ResponseInterface $response): ?ResponseInterface
     {
         $response->setHeader($this->name, $this->value);

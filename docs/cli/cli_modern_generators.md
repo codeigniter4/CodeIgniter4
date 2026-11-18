@@ -121,11 +121,13 @@ use CodeIgniter\CLI\AbstractGeneratorCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Attributes\GeneratorCommand;
 use CodeIgniter\CLI\Input\Option;
+use Override;
 
 #[Command(name: 'make:widget', description: 'Generates a new widget class.', group: 'Generators')]
 #[GeneratorCommand(component: 'Widget', template: 'widget.tpl.php', directory: 'Widgets')]
 class WidgetGenerator extends AbstractGeneratorCommand
 {
+    #[Override]
     protected function configure(): void
     {
         // Registers the required "name" argument.
@@ -139,12 +141,14 @@ class WidgetGenerator extends AbstractGeneratorCommand
         ));
     }
 
+    #[Override]
     protected function getReplacements(string $class): array
     {
         // Replaces the {table} placeholder in the template.
         return ['{table}' => (string) $this->getValidatedOption('table')];
     }
 
+    #[Override]
     protected function getTemplateData(string $class): array
     {
         // Available as a plain $sortable variable inside the template.
@@ -167,17 +171,20 @@ namespace App\Commands;
 use CodeIgniter\CLI\AbstractGeneratorCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Attributes\GeneratorCommand;
+use Override;
 
 #[Command(name: 'make:widget', description: 'Generates a new widget class.', group: 'Generators')]
 #[GeneratorCommand(component: 'Widget', template: 'widget.tpl.php', directory: 'Widgets')]
 class WidgetGenerator extends AbstractGeneratorCommand
 {
+    #[Override]
     protected function provideGeneratorOptions(): void
     {
         // No --suffix: suffixing is not optional for this generator.
         $this->addNamespaceOption()->addForceOption();
     }
 
+    #[Override]
     protected function shouldAppendSuffix(): bool
     {
         // The "Widget" suffix is always appended.
@@ -257,6 +264,7 @@ namespace App\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\GeneratorTrait;
+use Override;
 
 class WidgetGenerator extends BaseCommand
 {
@@ -273,6 +281,7 @@ class WidgetGenerator extends BaseCommand
         '--force'     => 'Force overwrite existing file.',
     ];
 
+    #[Override]
     public function run(array $params)
     {
         $this->component = 'Widget';

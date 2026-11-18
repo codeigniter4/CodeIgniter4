@@ -32,9 +32,11 @@ This will be the first migration for a new site which has a blog. All migrations
 namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
+use Override;
 
 class AddBlog extends Migration
 {
+    #[Override]
     public function up()
     {
         $this->forge->addField([
@@ -57,6 +59,7 @@ class AddBlog extends Migration
         $this->forge->createTable('blog');
     }
 
+    #[Override]
     public function down()
     {
         $this->forge->dropTable('blog');
@@ -81,9 +84,11 @@ When your tables include Foreign Keys, migrations can often cause problems as yo
 namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
+use Override;
 
 class AddBlog extends Migration
 {
+    #[Override]
     public function up()
     {
         $this->db->disableForeignKeyChecks();
@@ -109,16 +114,19 @@ You can ensure that migrations are run only against the proper group by setting 
 namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
+use Override;
 
 class AddBlog extends Migration
 {
     protected $DBGroup = 'alternate_db_group';
 
+    #[Override]
     public function up()
     {
         // ...
     }
 
+    #[Override]
     public function down()
     {
         // ...

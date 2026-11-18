@@ -29,11 +29,13 @@ namespace App\Database;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Override;
 
 class MyTests extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -41,6 +43,7 @@ class MyTests extends CIUnitTestCase
         // Do something here....
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

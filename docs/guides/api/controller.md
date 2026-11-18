@@ -94,9 +94,11 @@ Edit the Book transformer at **app/Transformers/BookTransformer.php**. This one 
 namespace App\Transformers;
 
 use CodeIgniter\API\BaseTransformer;
+use Override;
 
 class BookTransformer extends BaseTransformer
 {
+    #[Override]
     public function toArray(mixed $resource): array
     {
         return [

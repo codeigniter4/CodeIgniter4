@@ -365,6 +365,7 @@ use CodeIgniter\Debug\BaseExceptionHandler;
 use CodeIgniter\Debug\ExceptionHandlerInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Override;
 use Throwable;
 
 class MyExceptionHandler extends BaseExceptionHandler implements ExceptionHandlerInterface
@@ -372,6 +373,7 @@ class MyExceptionHandler extends BaseExceptionHandler implements ExceptionHandle
     // You can override the view path.
     protected ?string $viewPath = APPPATH . 'Views/exception/';
 
+    #[Override]
     public function handle(
         Throwable $exception,
         RequestInterface $request,

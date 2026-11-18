@@ -12,9 +12,11 @@ The following example shows a common usage pattern for transformers in your appl
 namespace App\Transformers;
 
 use CodeIgniter\API\BaseTransformer;
+use Override;
 
 class UserTransformer extends BaseTransformer
 {
+    #[Override]
     public function toArray(mixed $resource): array
     {
         return [
@@ -47,9 +49,11 @@ To create a transformer, extend the `BaseTransformer` class and implement the `t
 namespace App\Transformers;
 
 use CodeIgniter\API\BaseTransformer;
+use Override;
 
 class UserTransformer extends BaseTransformer
 {
+    #[Override]
     public function toArray(mixed $resource): array
     {
         return [
@@ -161,9 +165,11 @@ The transformer automatically supports field filtering through the `fields` quer
 namespace App\Transformers;
 
 use CodeIgniter\API\BaseTransformer;
+use Override;
 
 class UserTransformer extends BaseTransformer
 {
+    #[Override]
     public function toArray(mixed $resource): array
     {
         return [
@@ -199,9 +205,11 @@ By default, clients can request any field defined in your `toArray()` method. Yo
 namespace App\Transformers;
 
 use CodeIgniter\API\BaseTransformer;
+use Override;
 
 class UserTransformer extends BaseTransformer
 {
+    #[Override]
     public function toArray(mixed $resource): array
     {
         return [
@@ -213,6 +221,7 @@ class UserTransformer extends BaseTransformer
         ];
     }
 
+    #[Override]
     protected function getAllowedFields(): ?array
     {
         // Only these fields can be requested
@@ -237,12 +246,14 @@ To opt a transformer into this, declare its resource type via the `$resourceType
 namespace App\Transformers;
 
 use CodeIgniter\API\BaseTransformer;
+use Override;
 
 class PostTransformer extends BaseTransformer
 {
     // Enables ?fields[posts]=... for this resource type.
     protected ?string $resourceType = 'posts';
 
+    #[Override]
     public function toArray(mixed $resource): array
     {
         return [
@@ -296,9 +307,11 @@ To support including related resources, create methods prefixed with `include` f
 namespace App\Transformers;
 
 use CodeIgniter\API\BaseTransformer;
+use Override;
 
 class UserTransformer extends BaseTransformer
 {
+    #[Override]
     public function toArray(mixed $resource): array
     {
         return [
@@ -366,9 +379,11 @@ namespace App\Transformers;
 use App\Transformers\CommentTransformer;
 use App\Transformers\PostTransformer;
 use CodeIgniter\API\BaseTransformer;
+use Override;
 
 class UserTransformer extends BaseTransformer
 {
+    #[Override]
     public function toArray(mixed $resource): array
     {
         return [
@@ -378,6 +393,7 @@ class UserTransformer extends BaseTransformer
         ];
     }
 
+    #[Override]
     protected function getAllowedIncludes(): ?array
     {
         // Only these relationships can be included
@@ -417,9 +433,11 @@ If you want to disable all includes, return an empty array:
 namespace App\Transformers;
 
 use CodeIgniter\API\BaseTransformer;
+use Override;
 
 class UserTransformer extends BaseTransformer
 {
+    #[Override]
     public function toArray(mixed $resource): array
     {
         return [
@@ -429,6 +447,7 @@ class UserTransformer extends BaseTransformer
         ];
     }
 
+    #[Override]
     protected function getAllowedIncludes(): ?array
     {
         // Return empty array to disable all includes
@@ -552,9 +571,11 @@ If you don't pass a resource to `transform()`, it will use the data from your `t
 namespace App\Transformers;
 
 use CodeIgniter\API\BaseTransformer;
+use Override;
 
 class StaticDataTransformer extends BaseTransformer
 {
+    #[Override]
     public function toArray(mixed $resource): array
     {
         return [
@@ -611,9 +632,11 @@ This abstract method must be implemented by child classes to define the structur
 namespace App\Transformers;
 
 use CodeIgniter\API\BaseTransformer;
+use Override;
 
 class ProductTransformer extends BaseTransformer
 {
+    #[Override]
     public function toArray(mixed $resource): array
     {
         return [
@@ -702,9 +725,11 @@ Override this method to restrict which fields can be requested via the `fields` 
 namespace App\Transformers;
 
 use CodeIgniter\API\BaseTransformer;
+use Override;
 
 class UserTransformer extends BaseTransformer
 {
+    #[Override]
     public function toArray(mixed $resource): array
     {
         return [
@@ -715,6 +740,7 @@ class UserTransformer extends BaseTransformer
         ];
     }
 
+    #[Override]
     protected function getAllowedFields(): ?array
     {
         // Clients can only request id, name, and created_at
@@ -737,9 +763,11 @@ Override this method to restrict which related resources can be included via the
 namespace App\Transformers;
 
 use CodeIgniter\API\BaseTransformer;
+use Override;
 
 class UserTransformer extends BaseTransformer
 {
+    #[Override]
     public function toArray(mixed $resource): array
     {
         return [
@@ -749,6 +777,7 @@ class UserTransformer extends BaseTransformer
         ];
     }
 
+    #[Override]
     protected function getAllowedIncludes(): ?array
     {
         // Only 'posts' can be included via ?include=posts

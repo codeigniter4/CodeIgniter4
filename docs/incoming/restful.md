@@ -121,12 +121,14 @@ Extend it, overriding the `modelName` and `format` properties, and then implemen
 namespace App\Controllers;
 
 use CodeIgniter\RESTful\ResourceController;
+use Override;
 
 class Photos extends ResourceController
 {
     protected $modelName = 'App\Models\Photos';
     protected $format    = 'json';
 
+    #[Override]
     public function index()
     {
         return $this->respond($this->model->findAll());
@@ -259,11 +261,13 @@ Extend it, overriding the `modelName` property, and then implement those methods
 namespace App\Controllers;
 
 use CodeIgniter\RESTful\ResourcePresenter;
+use Override;
 
 class Photos extends ResourcePresenter
 {
     protected $modelName = 'App\Models\Photos';
 
+    #[Override]
     public function index()
     {
         return view('templates/list', $this->model->findAll());

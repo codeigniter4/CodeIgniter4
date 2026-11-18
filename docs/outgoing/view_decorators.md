@@ -18,9 +18,11 @@ Creating your own view decorators requires creating a new class that implements 
 namespace App\Views\Decorators;
 
 use CodeIgniter\View\ViewDecoratorInterface;
+use Override;
 
 class MyDecorator implements ViewDecoratorInterface
 {
+    #[Override]
     public static function decorate(string $html): string
     {
         // Modify the output here

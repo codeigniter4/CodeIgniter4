@@ -113,9 +113,11 @@ If you implement any of these special functions, make sure you run their parent 
 namespace App\Models;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use Override;
 
 final class UserModelTest extends CIUnitTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp(); // Do not forget
@@ -413,10 +415,12 @@ namespace Tests;
 use App\Models\UserModel;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Test\CIUnitTestCase;
+use Override;
 use Tests\Support\Mock\MockUserModel;
 
 final class SomeTest extends CIUnitTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -443,9 +447,11 @@ namespace Tests;
 
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\CIUnitTestCase;
+use Override;
 
 final class TimeDependentCodeTest extends CIUnitTestCase
 {
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

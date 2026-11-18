@@ -88,9 +88,11 @@ Path: **app/Database/Migrations**:
 namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
+use Override;
 
 class AddBlog extends Migration
 {
+    #[Override]
     public function up()
     {
         $this->forge->addField([
@@ -113,6 +115,7 @@ class AddBlog extends Migration
         $this->forge->createTable('blog');
     }
 
+    #[Override]
     public function down()
     {
         $this->forge->dropTable('blog');
