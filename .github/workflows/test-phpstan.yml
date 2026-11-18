@@ -15,6 +15,9 @@ on:
       - composer.json
       - phpstan.dist.neon
       - phpstan-baseline.php
+      - 'docs/**'
+      - 'admin/lint-docs-samples.php'
+      - 'admin/docs-phpstan-baseline.php'
       - '.github/workflows/test-phpstan.yml'
 
   push:
@@ -29,6 +32,9 @@ on:
       - composer.json
       - phpstan.dist.neon
       - phpstan-baseline.php
+      - 'docs/**'
+      - 'admin/lint-docs-samples.php'
+      - 'admin/docs-phpstan-baseline.php'
       - '.github/workflows/test-phpstan.yml'
 
 concurrency:
@@ -89,3 +95,6 @@ jobs:
 
       - name: Run static analysis
         run: composer phpstan:check
+
+      - name: Run static analysis on the user guide samples
+        run: php admin/lint-docs-samples.php --phpstan

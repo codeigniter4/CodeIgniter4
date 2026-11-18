@@ -163,8 +163,13 @@ $pager = service('pager');
 ```
 ````
 
-A PHP sample that starts with `<?php` and parses is checked by `composer cs`, and `composer cs-fix` rewrites it in place.
-To skip a sample, such as CodeIgniter 3 code, put `<!-- lint-ignore -->` on the line above its fence.
+A PHP sample that starts with `<?php` and parses is checked by `composer cs`, and `composer cs-fix` rewrites
+it in place. To skip a sample, such as CodeIgniter 3 code, put `<!-- lint-ignore -->` on the line above its fence.
+
+These are also analysed by PHPStan, with the configuration at the root of the project,
+when you run `php admin/lint-docs-samples.php --phpstan`. Each error is reported against its page and line.
+A sample that PHPStan cannot analyse, or an error that a sample cannot avoid, is listed in
+**admin/docs-phpstan-baseline.php**, by page or by the line of the opening fence of the sample.
 
 ### CLI Command
 

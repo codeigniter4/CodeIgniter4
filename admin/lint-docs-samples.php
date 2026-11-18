@@ -20,7 +20,12 @@ declare(strict_types=1);
  * rewritten in place. Otherwise, nothing is changed, and the script exits
  * with 1 when a sample needs fixing.
  *
- * Usage: php admin/lint-docs-samples.php [--fix] [--docs=<directory>]
+ * With --phpstan, the samples are analysed by PHPStan instead, using the
+ * configuration at the project root unless --phpstan-config is given, and
+ * each error is reported against its page and line. The samples that are
+ * excluded, and the errors that are ignored, are listed in admin/docs-phpstan-baseline.php.
+ *
+ * Usage: php admin/lint-docs-samples.php [--fix | --phpstan [--phpstan-config=<file>]] [--docs=<directory>]
  */
 
 /**
@@ -103,13 +108,105 @@ function find_samples(array $lines): array
 function remove_directory(string $directory): void
 {
     foreach (glob($directory . '/*') ?: [] as $file) {
-        unlink($file);
+        is_dir($file) ? remove_directory($file) : unlink($file);
     }
 
     rmdir($directory);
 }
 
-$options = getopt('', ['fix', 'docs::']);
+/**
+ * @param list<array{page: string, start: int}> $found
+ * @param array<int, string>                    $files
+ */
+function analyse_with_phpstan(string $root, string $work, array $found, array $files, ?string $config): int
+{
+    foreach (['phpstan.neon', 'phpstan.neon.dist', 'phpstan.dist.neon'] as $name) {
+        if ($config === null && is_file($root . '/' . $name)) {
+            $config = $root . '/' . $name;
+        }
+    }
+
+    $pageSamples  = [];
+    $fenceSamples = [];
+
+    foreach ($found as $id => $sample) {
+        $page = substr($sample['page'], strlen($root) + 1);
+
+        $pageSamples[$page][]                         = $files[$id];
+        $fenceSamples[$page . ':' . $sample['start']] = $files[$id];
+    }
+
+    $unmatched = [];
+
+    $expand = static function (array $entries) use ($pageSamples, $fenceSamples, &$unmatched): array {
+        $resolved = [];
+
+        foreach ($entries as $entry) {
+            $samples = isset($fenceSamples[$entry]) ? [$fenceSamples[$entry]] : ($pageSamples[$entry] ?? []);
+
+            if ($samples === []) {
+                $unmatched[] = $entry;
+            }
+
+            array_push($resolved, ...$samples);
+        }
+
+        return $resolved;
+    };
+
+    /** @var array{excludePaths: list<string>, ignoreErrors: list<array{identifier: string, paths?: list<string>}>} $exceptions */
+    $exceptions   = require __DIR__ . '/docs-phpstan-baseline.php';
+    $ignoreErrors = [];
+
+    foreach ($exceptions['ignoreErrors'] as $ignore) {
+        if (! isset($ignore['paths'])) {
+            $ignoreErrors[] = $ignore;
+
+            continue;
+        }
+
+        if (($ignore['paths'] = $expand($ignore['paths'])) !== []) {
+            $ignoreErrors[] = $ignore;
+        }
+    }
+
+    file_put_contents($work . '/phpstan.neon', sprintf(
+        "includes:\n    - %s\n\nparameters: %s\n",
+        $config,
+        json_encode([
+            'excludePaths' => ['analyse' => $expand($exceptions['excludePaths'])],
+            'ignoreErrors' => $ignoreErrors,
+        ], JSON_UNESCAPED_SLASHES),
+    ));
+
+    exec(sprintf(
+        'cd %s && %s %s analyse --configuration=%s --ansi --no-progress --memory-limit=1G %s 2>&1',
+        escapeshellarg($root),
+        escapeshellarg(PHP_BINARY),
+        escapeshellarg($root . '/vendor/bin/phpstan'),
+        escapeshellarg($work . '/phpstan.neon'),
+        escapeshellarg($work),
+    ), $output, $status);
+
+    $pages = [];
+
+    foreach ($found as $id => $sample) {
+        $page = substr($sample['page'], strlen($root) + 1);
+
+        $pages[$files[$id]]                            = $sample['page'];
+        $pages[substr($files[$id], strlen($work) + 1)] = $page;
+    }
+
+    echo strtr(implode("\n", $output), $pages), "\n";
+
+    foreach (array_unique($unmatched) as $entry) {
+        printf("\n%s is listed in admin/docs-phpstan-baseline.php, but it matches no PHP sample.\n", $entry);
+    }
+
+    return $status !== 0 ? $status : ($unmatched === [] ? 0 : 1);
+}
+
+$options = getopt('', ['fix', 'phpstan', 'phpstan-config:', 'docs::']);
 $fix     = isset($options['fix']);
 $root    = dirname(__DIR__);
 $docs    = rtrim(is_string($options['docs'] ?? null) ? $options['docs'] : $root . '/docs', '/');
@@ -125,12 +222,43 @@ foreach (docs_pages($docs) as $page) {
     }
 }
 
-$work = sys_get_temp_dir() . '/docs-samples-' . getmypid();
-mkdir($work);
+$phpstan = isset($options['phpstan']);
+$work    = $phpstan ? $root . '/build/docs-samples' : sys_get_temp_dir() . '/docs-samples-' . getmypid();
+
+if (is_dir($work)) {
+    remove_directory($work);
+}
+
+mkdir($work, 0777, true);
 
 foreach ($found as $id => $sample) {
-    $files[$id] = sprintf('%s/%05d.php', $work, $id);
-    file_put_contents($files[$id], $sample['code']);
+    if (! $phpstan) {
+        $files[$id] = sprintf('%s/%05d.php', $work, $id);
+        file_put_contents($files[$id], $sample['code']);
+
+        continue;
+    }
+
+    // Padding after the opening tag keeps the lines of the sample on the lines of its page.
+    $files[$id] = sprintf('%s/%s@%d.php', $work, substr($sample['page'], strlen($root) + 1), $sample['start']);
+    $padded     = preg_replace('/^<\?php\n/', '<?php' . str_repeat("\n", $sample['start'] + 1), $sample['code'], 1);
+
+    is_dir(dirname($files[$id])) || mkdir(dirname($files[$id]), 0777, true);
+    file_put_contents($files[$id], $padded);
+}
+
+if ($phpstan) {
+    $status = analyse_with_phpstan(
+        $root,
+        $work,
+        $found,
+        $files,
+        is_string($options['phpstan-config'] ?? null) ? $options['phpstan-config'] : null,
+    );
+
+    remove_directory($work);
+
+    exit($status);
 }
 
 $command = sprintf(
