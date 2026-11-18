@@ -427,12 +427,7 @@ final class ExceptionHandlerTest extends CIUnitTestCase
         $highlightFile = self::getPrivateMethodInvoker($this->handler, 'highlightFile');
         $result        = $highlightFile(SUPPORTPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Hello.php', 16);
 
-        $resultFile = match (true) {
-            PHP_VERSION_ID < 80300 => 'highlightFile_pre_80300.html',
-            default                => 'highlightFile.html',
-        };
-
-        $expected = file_get_contents(SUPPORTPATH . 'Debug' . DIRECTORY_SEPARATOR . $resultFile);
+        $expected = file_get_contents(SUPPORTPATH . 'Debug' . DIRECTORY_SEPARATOR . 'highlightFile.html');
 
         $this->assertSame($expected, $result);
 

@@ -162,7 +162,7 @@ See [Contribution CSS](./css.md).
 
 ### Compatibility
 
-CodeIgniter4 requires [PHP 8.2](https://php.net/releases/8_2_0.php).
+CodeIgniter4 requires [PHP 8.3](https://php.net/releases/8_3_0.php).
 
 ### Backwards Compatibility
 

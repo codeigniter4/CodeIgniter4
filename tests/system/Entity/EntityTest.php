@@ -2812,8 +2812,8 @@ final class EntityTest extends CIUnitTestCase
         $emailClass = new class () {
             public static function create(string $email): object
             {
-                return new class ($email) {
-                    public function __construct(private readonly string $email)
+                return new readonly class ($email) {
+                    public function __construct(private string $email)
                     {
                     }
 

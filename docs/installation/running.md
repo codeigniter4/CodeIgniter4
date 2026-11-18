@@ -105,7 +105,7 @@ The local development server can be customized with three command line options:
 - You can also choose a specific version of PHP to use, with the `--php` CLI option, with its value set to the path of the PHP executable you want to use:
 
     ```console
-    php spark serve --php /usr/bin/php8.2
+    php spark serve --php /usr/bin/php8.3
     ```
 
 ## Worker Mode with FrankenPHP
@@ -399,7 +399,7 @@ See [Handling Multiple Environments](../general/environments.md#apache).
 
 ## Hosting with nginx
 
-nginx is the second most widely used HTTP server for web hosting. Here you can find an example configuration using PHP 8.2 FPM (unix sockets) under Ubuntu Server.
+nginx is the second most widely used HTTP server for web hosting. Here you can find an example configuration using PHP 8.3 FPM (unix sockets) under Ubuntu Server.
 
 ### default.conf
 
@@ -423,7 +423,7 @@ server {
         include snippets/fastcgi-php.conf;
 
         # With php-fpm:
-    fastcgi_pass unix:/run/php/php8.2-fpm.sock;
+    fastcgi_pass unix:/run/php/php8.3-fpm.sock;
         # With php-cgi:
         # fastcgi_pass 127.0.0.1:9000;
     }

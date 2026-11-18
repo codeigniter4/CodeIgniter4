@@ -3,7 +3,7 @@
 Composer can be used in two ways to install CodeIgniter4 on your system.
 
 !!! important "Important"
-    CodeIgniter4 requires Composer 2.0.14 or later.
+    CodeIgniter4 requires Composer 2.0.14 or later. If you are running CodeIgniter4 on PHP `8.6`, you must use Composer 2.11.1 or later to ensure compatibility.
 
 !!! note "Note"
     If you are not familiar with Composer, we recommend you read [Basic usage](https://getcomposer.org/doc/01-basic-usage.md) first.
