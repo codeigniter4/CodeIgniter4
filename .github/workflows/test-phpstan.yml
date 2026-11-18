@@ -96,10 +96,7 @@ jobs:
       - name: Run static analysis
         run: composer phpstan:check
 
-      - name: Run static analysis on the user guide samples
-        run: php admin/lint-docs-samples.php --phpstan
-
       - name: Check that the baseline of the user guide samples is up to date
         run: |
-          php admin/lint-docs-samples.php --generate-baseline
+          composer phpstan:docs-baseline
           git diff --exit-code admin/docs-phpstan-baseline.php

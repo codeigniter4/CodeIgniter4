@@ -191,18 +191,19 @@ function analyse_with_phpstan(string $root, string $work, array $found, array $f
         "includes:\n    - %s\n\nparameters: %s\n",
         $config,
         json_encode([
+            'tmpDir'       => $root . '/build/phpstan-docs',
             'excludePaths' => ['analyse' => $expand($excludePaths)],
             'ignoreErrors' => $validIgnoreErrors,
         ], JSON_UNESCAPED_SLASHES),
     ));
 
     exec(sprintf(
-        'cd %s && %s %s analyse --configuration=%s %s --no-progress --memory-limit=1G %s 2>&1',
+        'cd %s && %s %s analyse --configuration=%s %s --memory-limit=1G %s 2>&1',
         escapeshellarg($root),
         escapeshellarg(PHP_BINARY),
         escapeshellarg($root . '/vendor/bin/phpstan'),
         escapeshellarg($work . '/phpstan.neon'),
-        $generate ? '--error-format=json' : '--ansi',
+        $generate ? '--error-format=json --no-progress' : '--ansi --verbose',
         escapeshellarg($work),
     ), $output, $status);
 
