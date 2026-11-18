@@ -17,6 +17,7 @@ use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Input\Argument;
 use CodeIgniter\Security\CheckPhpIni;
+use Override;
 
 /**
  * Check php.ini values.
@@ -28,6 +29,7 @@ use CodeIgniter\Security\CheckPhpIni;
 )]
 final class PhpIniCheck extends AbstractCommand
 {
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -39,6 +41,7 @@ final class PhpIniCheck extends AbstractCommand
             ->addUsage('phpini:check opcache');
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $section = $arguments['section'];

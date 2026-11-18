@@ -15,6 +15,7 @@ namespace CodeIgniter\HTTP\Files;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Mimes;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -23,6 +24,7 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class FileCollectionTest extends CIUnitTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

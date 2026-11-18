@@ -19,6 +19,7 @@ use CodeIgniter\Database\SQLite3\Connection as SQLite3Connection;
 use CodeIgniter\Database\SQLSRV\Connection as SQLSRVConnection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Enum\RoleEnum;
@@ -32,6 +33,7 @@ final class BaseQueryTest extends CIUnitTestCase
 {
     protected $db;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -381,6 +383,7 @@ final class BaseQueryTest extends CIUnitTestCase
     public function testNamedBindsAreNotReplacedInsideBackslashEscapedValues(): void
     {
         $db = new class ([]) extends MockConnection {
+            #[Override]
             protected function _escapeString(string $str): string
             {
                 return addslashes($str);
@@ -404,6 +407,7 @@ final class BaseQueryTest extends CIUnitTestCase
         // Emulates standard_conforming_strings = on, where only E'...'
         // strings use backslash escapes.
         $db = new class ([]) extends PostgreConnection {
+            #[Override]
             protected function _escapeString(string $str): string
             {
                 return $str;
@@ -460,6 +464,7 @@ final class BaseQueryTest extends CIUnitTestCase
         // Emulates standard_conforming_strings = off, where a backslash
         // escapes inside '...' strings but never inside "..." identifiers.
         $db = new class ([]) extends PostgreConnection {
+            #[Override]
             protected function _escapeString(string $str): string
             {
                 return addcslashes($str, "\\'");
@@ -663,6 +668,7 @@ final class BaseQueryTest extends CIUnitTestCase
     public function testNamedBindsWithPostgreMultibyteCharsets(string $charset, string $char, string $suffix): void
     {
         $db = new class (['charset' => $charset]) extends PostgreConnection {
+            #[Override]
             protected function _escapeString(string $str): string
             {
                 return $str;
@@ -995,6 +1001,7 @@ final class BaseQueryTest extends CIUnitTestCase
     private function createBackslashEscapingMySQLiConnection(string $charset): MySQLiConnection
     {
         return new class (['charset' => $charset]) extends MySQLiConnection {
+            #[Override]
             protected function _escapeString(string $str): string
             {
                 return addcslashes($str, "\\'");

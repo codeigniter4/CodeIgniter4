@@ -20,6 +20,7 @@ use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 use Config\App;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
@@ -35,6 +36,7 @@ final class FormRequestTest extends CIUnitTestCase
 {
     private MockCodeIgniter $codeigniter;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -51,6 +53,7 @@ final class FormRequestTest extends CIUnitTestCase
         $this->codeigniter = new MockCodeIgniter(new App());
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();
@@ -80,6 +83,7 @@ final class FormRequestTest extends CIUnitTestCase
     private function makeFormRequest(IncomingRequest $request): FormRequest
     {
         return new class ($request) extends FormRequest {
+            #[Override]
             public function rules(): array
             {
                 return [
@@ -139,6 +143,7 @@ final class FormRequestTest extends CIUnitTestCase
         $this->expectExceptionMessage('requires an IncomingRequest instance, got CodeIgniter\HTTP\CLIRequest.');
 
         new class () extends FormRequest {
+            #[Override]
             public function rules(): array
             {
                 return [];
@@ -197,6 +202,7 @@ final class FormRequestTest extends CIUnitTestCase
         ]);
 
         $formRequest = new class ($this->makeRequest()) extends FormRequest {
+            #[Override]
             public function rules(): array
             {
                 return [
@@ -226,6 +232,7 @@ final class FormRequestTest extends CIUnitTestCase
         service('superglobals')->setServer('CONTENT_TYPE', 'application/json');
 
         $formRequest = new class ($this->makeRequest('{"note":null}')) extends FormRequest {
+            #[Override]
             public function rules(): array
             {
                 return ['note' => 'permit_empty'];
@@ -263,11 +270,13 @@ final class FormRequestTest extends CIUnitTestCase
         $formRequest = new class ($this->makeRequest()) extends FormRequest {
             public static bool $prepareCalled = false;
 
+            #[Override]
             public function rules(): array
             {
                 return ['title' => 'required|min_length[3]'];
             }
 
+            #[Override]
             protected function prepareForValidation(array $data): array
             {
                 self::$prepareCalled = true;
@@ -319,6 +328,7 @@ final class FormRequestTest extends CIUnitTestCase
         service('superglobals')->setServer('CONTENT_TYPE', 'application/json');
 
         $formRequest = new class ($this->makeRequest('{}')) extends FormRequest {
+            #[Override]
             public function rules(): array
             {
                 return ['title' => 'required'];
@@ -424,6 +434,7 @@ final class FormRequestTest extends CIUnitTestCase
              */
             public array $preparedData = [];
 
+            #[Override]
             public function rules(): array
             {
                 return [
@@ -432,6 +443,7 @@ final class FormRequestTest extends CIUnitTestCase
                 ];
             }
 
+            #[Override]
             protected function prepareForValidation(array $data): array
             {
                 $this->prepareCount++;
@@ -440,6 +452,7 @@ final class FormRequestTest extends CIUnitTestCase
                 return $data;
             }
 
+            #[Override]
             protected function failedValidation(array $errors, array $preparedData): ResponseInterface
             {
                 $this->preparedData = $preparedData;
@@ -463,6 +476,7 @@ final class FormRequestTest extends CIUnitTestCase
         service('superglobals')->setPost('title', ' Hello World ');
 
         $formRequest = new class ($this->makeRequest()) extends FormRequest {
+            #[Override]
             public function rules(): array
             {
                 return [
@@ -471,6 +485,7 @@ final class FormRequestTest extends CIUnitTestCase
                 ];
             }
 
+            #[Override]
             protected function prepareForValidation(array $data): array
             {
                 $data['title'] = trim($data['title'] ?? '');
@@ -494,6 +509,7 @@ final class FormRequestTest extends CIUnitTestCase
         service('superglobals')->setGet('title', ' Hello World ');
 
         $formRequest = new class ($this->makeRequest()) extends FormRequest {
+            #[Override]
             public function rules(): array
             {
                 return [
@@ -502,6 +518,7 @@ final class FormRequestTest extends CIUnitTestCase
                 ];
             }
 
+            #[Override]
             protected function prepareForValidation(array $data): array
             {
                 $data['title'] = trim($data['title'] ?? '');
@@ -526,6 +543,7 @@ final class FormRequestTest extends CIUnitTestCase
         service('superglobals')->setPost('title', ' Hello World ');
 
         $formRequest = new class ($this->makeRequest()) extends FormRequest {
+            #[Override]
             public function rules(): array
             {
                 return [
@@ -534,6 +552,7 @@ final class FormRequestTest extends CIUnitTestCase
                 ];
             }
 
+            #[Override]
             protected function prepareForValidation(array $data): array
             {
                 $data['title'] = trim($data['title'] ?? '');
@@ -555,11 +574,13 @@ final class FormRequestTest extends CIUnitTestCase
     public function testResolveRequestReturns403WhenUnauthorized(): void
     {
         $formRequest = new class ($this->makeRequest()) extends FormRequest {
+            #[Override]
             public function rules(): array
             {
                 return [];
             }
 
+            #[Override]
             public function isAuthorized(): bool
             {
                 return false;
@@ -581,11 +602,13 @@ final class FormRequestTest extends CIUnitTestCase
              */
             public static array $order = [];
 
+            #[Override]
             public function rules(): array
             {
                 return ['title' => 'required'];
             }
 
+            #[Override]
             public function isAuthorized(): bool
             {
                 self::$order[] = 'authorize';
@@ -593,6 +616,7 @@ final class FormRequestTest extends CIUnitTestCase
                 return false;
             }
 
+            #[Override]
             protected function prepareForValidation(array $data): array
             {
                 self::$order[] = 'prepare';
@@ -615,11 +639,13 @@ final class FormRequestTest extends CIUnitTestCase
     {
         // No POST data at all - but validationData() supplies its own.
         $formRequest = new class ($this->makeRequest()) extends FormRequest {
+            #[Override]
             public function rules(): array
             {
                 return ['title' => 'required|min_length[3]'];
             }
 
+            #[Override]
             protected function validationData(): array
             {
                 return ['title' => 'Injected Title'];
@@ -636,11 +662,13 @@ final class FormRequestTest extends CIUnitTestCase
         $formRequest = new class ($this->makeRequest()) extends FormRequest {
             public static bool $called = false;
 
+            #[Override]
             public function rules(): array
             {
                 return ['title' => 'required'];
             }
 
+            #[Override]
             protected function failedValidation(array $errors, array $preparedData): ResponseInterface
             {
                 self::$called = true;
@@ -660,16 +688,19 @@ final class FormRequestTest extends CIUnitTestCase
         $formRequest = new class ($this->makeRequest()) extends FormRequest {
             public static bool $called = false;
 
+            #[Override]
             public function rules(): array
             {
                 return [];
             }
 
+            #[Override]
             public function isAuthorized(): bool
             {
                 return false;
             }
 
+            #[Override]
             protected function failedAuthorization(): ResponseInterface
             {
                 self::$called = true;

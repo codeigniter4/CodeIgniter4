@@ -17,6 +17,7 @@ use Closure;
 use CodeIgniter\Config\DotEnv;
 use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Test\CIUnitTestCase;
+use Override;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -33,6 +34,7 @@ final class AbstractOrchestratorTest extends CIUnitTestCase
     private static string $buildPath;
     private static OrchestratorStub $orchestrator;
 
+    #[Override]
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
@@ -48,6 +50,7 @@ final class AbstractOrchestratorTest extends CIUnitTestCase
         self::$orchestrator->build();
     }
 
+    #[Override]
     public static function tearDownAfterClass(): void
     {
         self::$orchestrator->clean();

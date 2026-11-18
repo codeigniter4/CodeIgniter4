@@ -14,12 +14,14 @@ declare(strict_types=1);
 namespace CodeIgniter\Entity\Cast;
 
 use CodeIgniter\HTTP\URI;
+use Override;
 
 /**
  * @extends BaseCast<URI, string|URI>
  */
 class URICast extends BaseCast
 {
+    #[Override]
     public static function get($value, array $params = []): URI
     {
         return $value instanceof URI ? $value : new URI($value);

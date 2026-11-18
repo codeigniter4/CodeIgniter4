@@ -22,6 +22,7 @@ use CodeIgniter\Log\Handlers\FileHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use org\bovigo\vfs\vfsStream;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use ReflectionMethod;
 use ReflectionNamedType;
@@ -35,6 +36,7 @@ use Tests\Support\Log\Handlers\TestHandler;
 #[Group('Others')]
 final class LoggerTest extends CIUnitTestCase
 {
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();
@@ -247,6 +249,7 @@ final class LoggerTest extends CIUnitTestCase
 
         $logger->log('debug', 'Test message {value}', [
             'value' => new class () implements Stringable {
+                #[Override]
                 public function __toString(): string
                 {
                     return 'stringable';

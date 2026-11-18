@@ -18,6 +18,7 @@ class CustomEnvHookConfig extends BaseConfig
     public string $name   = 'default';
     public string $hooked = 'default';
 
+    #[Override]
     protected function getEnvValue(string $property, string $prefix, string $shortPrefix)
     {
         if ($property === 'hooked') {

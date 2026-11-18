@@ -24,6 +24,7 @@ use Config\App;
 use Config\Modules;
 use Config\Routing;
 use Config\Services;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
@@ -40,6 +41,7 @@ final class RedirectResponseTest extends CIUnitTestCase
     private MockIncomingRequest $request;
     private App $config;
 
+    #[Override]
     #[WithoutErrorHandler]
     protected function setUp(): void
     {

@@ -17,6 +17,7 @@ use CodeIgniter\CLI\AbstractGeneratorCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Attributes\GeneratorCommand;
 use Config\Generators;
+use Override;
 
 #[Command(name: 'make:cell', description: 'Generates a new Controlled Cell file and its view.', group: 'Generators')]
 #[GeneratorCommand(
@@ -27,16 +28,19 @@ use Config\Generators;
 )]
 class CellGenerator extends AbstractGeneratorCommand
 {
+    #[Override]
     protected function provideGeneratorOptions(): void
     {
         $this->addNamespaceOption()->addForceOption();
     }
 
+    #[Override]
     protected function shouldAppendSuffix(): bool
     {
         return true;
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $views = config(Generators::class)->views[$this->getName()] ?? [];

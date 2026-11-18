@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Entity\Cast;
 
+use Override;
+
 /**
  * DB column: int (0/1) <--> Class property: bool
  *
@@ -20,11 +22,13 @@ namespace CodeIgniter\Entity\Cast;
  */
 final class IntBoolCast extends BaseCast
 {
+    #[Override]
     public static function get($value, array $params = []): bool
     {
         return (bool) $value;
     }
 
+    #[Override]
     public static function set($value, array $params = []): int
     {
         return (int) $value;

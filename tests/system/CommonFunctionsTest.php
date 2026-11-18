@@ -44,6 +44,7 @@ use Config\Session as SessionConfig;
 use Exception;
 use InvalidArgumentException;
 use Kint;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -63,6 +64,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
     private ?App $config = null;
     private IncomingRequest $request;
 
+    #[Override]
     protected function setUp(): void
     {
         unset($_ENV['foo']);

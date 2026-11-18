@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\AutoReview;
 
+use Override;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
@@ -27,6 +28,7 @@ final class UpdateUpgradeGuideTest extends TestCase
     private string $nextVersion;
     private string $upgradePath;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

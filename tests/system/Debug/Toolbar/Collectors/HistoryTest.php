@@ -16,6 +16,7 @@ namespace CodeIgniter\Debug\Toolbar\Collectors;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use DateTime;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -30,6 +31,7 @@ final class HistoryTest extends CIUnitTestCase
 
     private float $time;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -37,6 +39,7 @@ final class HistoryTest extends CIUnitTestCase
         $this->time = (float) sprintf('%.6F', microtime(true));
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         command('debugbar:clear');

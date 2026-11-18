@@ -15,6 +15,7 @@ namespace CodeIgniter\Commands\Housekeeping;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
+use Override;
 
 /**
  * Clears all debugbar JSON files.
@@ -22,6 +23,7 @@ use CodeIgniter\CLI\Attributes\Command;
 #[Command(name: 'debugbar:clear', description: 'Clears all debugbar JSON files.', group: 'Housekeeping')]
 class ClearDebugbar extends AbstractCommand
 {
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         helper('filesystem');

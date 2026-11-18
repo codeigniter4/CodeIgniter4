@@ -17,6 +17,7 @@ use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Input\Option;
 use CodeIgniter\CLI\SignalTrait;
+use Override;
 
 /**
  * Does a rollback followed by a latest to refresh the current state of the database.
@@ -30,6 +31,7 @@ class MigrateRefresh extends AbstractCommand
 {
     use SignalTrait;
 
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -58,6 +60,7 @@ class MigrateRefresh extends AbstractCommand
             ));
     }
 
+    #[Override]
     protected function interact(array &$arguments, array &$options): void
     {
         if (! service('environment')->isProduction()) {
@@ -73,6 +76,7 @@ class MigrateRefresh extends AbstractCommand
         }
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         if (service('environment')->isProduction() && $options['force'] === false) {

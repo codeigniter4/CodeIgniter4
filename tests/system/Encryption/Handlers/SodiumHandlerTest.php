@@ -17,6 +17,7 @@ use CodeIgniter\Encryption\Encryption;
 use CodeIgniter\Encryption\Exceptions\EncryptionException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -28,6 +29,7 @@ final class SodiumHandlerTest extends CIUnitTestCase
     private Encryption $encryption;
     private EncryptionConfig $config;
 
+    #[Override]
     protected function setUp(): void
     {
         if (! extension_loaded('sodium')) {

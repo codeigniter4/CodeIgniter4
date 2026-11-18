@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\SQLite3;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Forge as BaseForge;
+use Override;
 
 /**
  * Forge for SQLite3
@@ -59,6 +60,7 @@ class Forge extends BaseForge
         }
     }
 
+    #[Override]
     public function createDatabase(string $dbName, bool $ifNotExists = false): bool
     {
         // In SQLite, a database is created when you connect to the database.
@@ -71,6 +73,7 @@ class Forge extends BaseForge
      *
      * @throws DatabaseException
      */
+    #[Override]
     public function dropDatabase(string $dbName): bool
     {
         // In SQLite, a database is dropped when we delete a file
@@ -107,6 +110,7 @@ class Forge extends BaseForge
      *
      * @throws DatabaseException
      */
+    #[Override]
     public function dropColumn(string $table, $columnNames): bool
     {
         $columns = is_array($columnNames) ? $columnNames : array_map(trim(...), explode(',', $columnNames));
@@ -127,6 +131,7 @@ class Forge extends BaseForge
         return $result;
     }
 
+    #[Override]
     protected function _alterTable(string $alterType, string $table, $processedFields)
     {
         switch ($alterType) {
@@ -165,6 +170,7 @@ class Forge extends BaseForge
     /**
      * Process column
      */
+    #[Override]
     protected function _processColumn(array $processedField): string
     {
         if ($processedField['type'] === 'TEXT' && str_starts_with($processedField['length'], "('")) {
@@ -185,6 +191,7 @@ class Forge extends BaseForge
      *
      * Performs a data type mapping between different databases.
      */
+    #[Override]
     protected function _attributeType(array &$attributes)
     {
         switch (strtoupper($attributes['TYPE'])) {
@@ -205,6 +212,7 @@ class Forge extends BaseForge
     /**
      * Field attribute AUTO_INCREMENT
      */
+    #[Override]
     protected function _attributeAutoIncrement(array &$attributes, array &$field)
     {
         if (
@@ -226,6 +234,7 @@ class Forge extends BaseForge
      *
      * @throws DatabaseException
      */
+    #[Override]
     public function dropForeignKey(string $table, string $foreignName): bool
     {
         // If this version of SQLite doesn't support it, we're done here
@@ -245,6 +254,7 @@ class Forge extends BaseForge
     /**
      * Drop Primary Key
      */
+    #[Override]
     public function dropPrimaryKey(string $table, string $keyName = ''): bool
     {
         $sqlTable = new Table($this->db, $this);
@@ -254,6 +264,7 @@ class Forge extends BaseForge
             ->run();
     }
 
+    #[Override]
     public function addForeignKey($fieldName = '', string $tableName = '', $tableField = '', string $onUpdate = '', string $onDelete = '', string $fkName = ''): BaseForge
     {
         if ($fkName === '') {
@@ -268,6 +279,7 @@ class Forge extends BaseForge
      *
      * @param bool $asQuery When true recreates table with key, else partial SQL used with CREATE TABLE
      */
+    #[Override]
     protected function _processPrimaryKeys(string $table, bool $asQuery = false): string
     {
         if ($asQuery === false) {
@@ -288,6 +300,7 @@ class Forge extends BaseForge
      *
      * @param bool $asQuery When true recreates table with key, else partial SQL used with CREATE TABLE
      */
+    #[Override]
     protected function _processForeignKeys(string $table, bool $asQuery = false): array
     {
         if ($asQuery === false) {

@@ -18,6 +18,7 @@ use CodeIgniter\Database\SQLSRV\Connection;
 use CodeIgniter\Database\SQLSRV\Forge;
 use CodeIgniter\Database\SQLSRV\Result;
 use CodeIgniter\Test\CIUnitTestCase;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -43,6 +44,7 @@ final class SQLSRVForgeTest extends CIUnitTestCase
                 $this->pretend    = true;
             }
 
+            #[Override]
             public function initialize(): void
             {
             }
@@ -50,11 +52,13 @@ final class SQLSRVForgeTest extends CIUnitTestCase
             /**
              * @param array<array-key, mixed>|string|null $binds
              */
+            #[Override]
             public function query(string $sql, $binds = null, bool $setEscapeFlags = true, string $queryClass = ''): ResultInterface
             {
                 $this->queries[] = $sql;
 
                 return new class ($this->connID, $this->resultID) extends Result {
+                    #[Override]
                     public function getRowArray(int $n = 0): array
                     {
                         return ['constraint_name' => 'df_test'];
@@ -96,6 +100,7 @@ final class SQLSRVForgeTest extends CIUnitTestCase
                 $this->pretend    = true;
             }
 
+            #[Override]
             public function initialize(): void
             {
             }
@@ -103,11 +108,13 @@ final class SQLSRVForgeTest extends CIUnitTestCase
             /**
              * @param array<array-key, mixed>|string|null $binds
              */
+            #[Override]
             public function query(string $sql, $binds = null, bool $setEscapeFlags = true, string $queryClass = ''): ResultInterface
             {
                 $this->queries[] = $sql;
 
                 return new class ($this->connID, $this->resultID) extends Result {
+                    #[Override]
                     public function getResultArray(): array
                     {
                         return [];

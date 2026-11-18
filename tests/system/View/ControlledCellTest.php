@@ -17,6 +17,7 @@ use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Cells\Cell;
 use CodeIgniter\View\Exceptions\ViewException;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\View\Cells\AdditionCell;
 use Tests\Support\View\Cells\AwesomeCell;
@@ -73,6 +74,7 @@ final class ControlledCellTest extends CIUnitTestCase
     public function testCellDataCannotReplaceIncludedView(): void
     {
         $cell = new class () extends Cell {
+            #[Override]
             public function render(): string
             {
                 $directory = __DIR__ . '/../../_support/View/Cells/';

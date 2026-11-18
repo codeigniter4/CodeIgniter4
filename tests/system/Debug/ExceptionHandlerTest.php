@@ -27,6 +27,7 @@ use CodeIgniter\Test\StreamFilterTrait;
 use Config\App;
 use Config\Exceptions as ExceptionsConfig;
 use Config\Services;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
@@ -42,6 +43,7 @@ final class ExceptionHandlerTest extends CIUnitTestCase
 
     private ExceptionHandler $handler;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

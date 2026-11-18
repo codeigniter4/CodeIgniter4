@@ -18,6 +18,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\Database;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
@@ -32,6 +33,7 @@ final class ShowTableInfoTest extends CIUnitTestCase
 
     protected $seed = CITestSeeder::class;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -42,6 +44,7 @@ final class ShowTableInfoTest extends CIUnitTestCase
         CLI::init();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

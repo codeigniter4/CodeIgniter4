@@ -31,6 +31,7 @@ use CodeIgniter\Test\Mock\MockInputOutput;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\App;
 use Config\Services;
+use Override;
 use PHPUnit\Framework\Attributes\After;
 use PHPUnit\Framework\Attributes\Before;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -110,6 +111,7 @@ final class AbstractCommandTest extends CIUnitTestCase
         $this->expectExceptionMessageMatches('/^Command class ".*" is missing the CodeIgniter\\\\CLI\\\\Attributes\\\\Command attribute\.$/');
 
         new class (new Commands()) extends AbstractCommand {
+            #[Override]
             protected function execute(array $arguments, array $options): int
             {
                 return EXIT_SUCCESS;

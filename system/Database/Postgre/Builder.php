@@ -19,6 +19,7 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Query;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Exceptions\InvalidArgumentException;
+use Override;
 use TypeError;
 
 /**
@@ -53,6 +54,7 @@ class Builder extends BaseBuilder
      *
      * @return string
      */
+    #[Override]
     protected function compileIgnore(string $statement)
     {
         $sql = parent::compileIgnore($statement);
@@ -67,6 +69,7 @@ class Builder extends BaseBuilder
     /**
      * Compile the SELECT lock clause.
      */
+    #[Override]
     protected function compileSelectLock(): string
     {
         if ($this->QBSelectLock === null) {
@@ -90,6 +93,7 @@ class Builder extends BaseBuilder
      *
      * @return $this
      */
+    #[Override]
     public function orderBy(string $orderBy, string $direction = '', ?bool $escape = null)
     {
         $direction = strtoupper(trim($direction));
@@ -116,6 +120,7 @@ class Builder extends BaseBuilder
      * @param array<string, int>|list<string> $columns A list of columns or array of column => value pairs to increment.
      * @param int                             $value   The value to increment by if $columns is a list of column names.
      */
+    #[Override]
     public function incrementMany(array $columns, int $value = 1): bool
     {
         if ($columns === []) {
@@ -158,6 +163,7 @@ class Builder extends BaseBuilder
      * @param array<string, int>|list<string> $columns A list of columns or array of column => value pairs to decrement.
      * @param int                             $value   The value to decrement by if $columns is a list of column names.
      */
+    #[Override]
     public function decrementMany(array $columns, int $value = 1): bool
     {
         if ($columns === []) {
@@ -206,6 +212,7 @@ class Builder extends BaseBuilder
      *
      * @throws DatabaseException
      */
+    #[Override]
     public function replace(?array $set = null)
     {
         if ($set !== null) {
@@ -254,6 +261,7 @@ class Builder extends BaseBuilder
     /**
      * Generates a platform-specific insert string from the supplied data
      */
+    #[Override]
     protected function _insert(string $table, array $keys, array $unescapedKeys): string
     {
         return trim(sprintf('INSERT INTO %s (%s) VALUES (%s) %s', $table, implode(', ', $keys), implode(', ', $unescapedKeys), $this->compileIgnore('insert')));
@@ -262,6 +270,7 @@ class Builder extends BaseBuilder
     /**
      * Generates a platform-specific insert string from the supplied data.
      */
+    #[Override]
     protected function _insertBatch(string $table, array $keys, array $values): string
     {
         $sql = $this->QBOptions['sql'] ?? '';
@@ -293,6 +302,7 @@ class Builder extends BaseBuilder
      *
      * @throws DatabaseException
      */
+    #[Override]
     public function delete($where = '', ?int $limit = null, bool $resetData = true)
     {
         if ($limit !== null && $limit !== 0 || ($this->QBLimit !== false && $this->QBLimit !== 0)) {
@@ -305,6 +315,7 @@ class Builder extends BaseBuilder
     /**
      * Generates a platform-specific LIMIT clause.
      */
+    #[Override]
     protected function _limit(string $sql, bool $offsetIgnore = false): string
     {
         return $sql . ' LIMIT ' . $this->QBLimit . ($this->QBOffset ? " OFFSET {$this->QBOffset}" : '');
@@ -315,6 +326,7 @@ class Builder extends BaseBuilder
      *
      * @throws DatabaseException
      */
+    #[Override]
     protected function _update(string $table, array $values): string
     {
         if ($this->QBLimit !== false && $this->QBLimit !== 0) {
@@ -329,6 +341,7 @@ class Builder extends BaseBuilder
     /**
      * Generates a platform-specific delete string from the supplied data
      */
+    #[Override]
     protected function _delete(string $table): string
     {
         $this->QBLimit = false;
@@ -342,6 +355,7 @@ class Builder extends BaseBuilder
      * If the database does not support the truncate() command,
      * then this method maps to 'DELETE FROM table'
      */
+    #[Override]
     protected function _truncate(string $table): string
     {
         return 'TRUNCATE ' . $table . ' RESTART IDENTITY';
@@ -355,6 +369,7 @@ class Builder extends BaseBuilder
      *
      * @see https://www.postgresql.org/docs/9.2/static/functions-matching.html
      */
+    #[Override]
     protected function _like_statement(?string $prefix, string $column, ?string $not, string $bind, bool $insensitiveSearch = false): string
     {
         $op = $insensitiveSearch ? 'ILIKE' : 'LIKE';
@@ -369,6 +384,7 @@ class Builder extends BaseBuilder
      *
      * @return $this
      */
+    #[Override]
     public function join(RawSql|string $table, $cond, string $type = '', ?bool $escape = null)
     {
         if (! in_array('FULL OUTER', $this->joinTypes, true)) {
@@ -387,6 +403,7 @@ class Builder extends BaseBuilder
      * @param list<string>           $keys   QBKeys
      * @param list<list<int|string>> $values QBSet
      */
+    #[Override]
     protected function _updateBatch(string $table, array $keys, array $values): string
     {
         $sql = $this->QBOptions['sql'] ?? '';
@@ -558,6 +575,7 @@ class Builder extends BaseBuilder
      *
      * @throws DatabaseException
      */
+    #[Override]
     protected function _upsertBatch(string $table, array $keys, array $values): string
     {
         $sql = $this->QBOptions['sql'] ?? '';
@@ -652,6 +670,7 @@ class Builder extends BaseBuilder
     /**
      * Generates a platform-specific batch update string from the supplied data
      */
+    #[Override]
     protected function _deleteBatch(string $table, array $keys, array $values): string
     {
         $sql = $this->QBOptions['sql'] ?? '';

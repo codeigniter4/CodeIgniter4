@@ -20,6 +20,7 @@ use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 use Tests\Support\Database\Seeds\CITestSeeder;
@@ -36,6 +37,7 @@ final class ForgeTest extends CIUnitTestCase
     protected $seed    = CITestSeeder::class;
     private Forge $forge;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->forge = Database::forge($this->DBGroup);

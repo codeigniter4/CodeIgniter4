@@ -18,6 +18,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\TestLogger;
 use Config\Logger as LoggerConfig;
 use Config\Session as SessionConfig;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
@@ -62,6 +63,7 @@ final class RedisHandlerTest extends CIUnitTestCase
         return $handler;
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

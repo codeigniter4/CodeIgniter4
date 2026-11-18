@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\SQLSRV;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Forge as BaseForge;
+use Override;
 use Throwable;
 
 /**
@@ -102,6 +103,7 @@ class Forge extends BaseForge
         $this->dropIndexStr      = 'DROP INDEX %s ON ' . $this->db->escapeIdentifiers($this->db->schema) . '.%s';
     }
 
+    #[Override]
     public function createDatabase(string $dbName, bool $ifNotExists = false): bool
     {
         if ($ifNotExists) {
@@ -147,6 +149,7 @@ class Forge extends BaseForge
      *
      * @see https://stackoverflow.com/questions/7469130/cannot-drop-database-because-it-is-currently-in-use
      */
+    #[Override]
     public function dropDatabase(string $dbName): bool
     {
         try {
@@ -161,11 +164,13 @@ class Forge extends BaseForge
         return parent::dropDatabase($dbName);
     }
 
+    #[Override]
     protected function _createTableAttributes(array $attributes): string
     {
         return '';
     }
 
+    #[Override]
     protected function _alterTable(string $alterType, string $table, $processedFields)
     {
         // Handle DROP here
@@ -301,6 +306,7 @@ class Forge extends BaseForge
         return $this->db->simpleQuery($sql);
     }
 
+    #[Override]
     protected function _processIndexes(string $table, bool $asQuery = false): array
     {
         $sqls = [];
@@ -341,6 +347,7 @@ class Forge extends BaseForge
     /**
      * Process column
      */
+    #[Override]
     protected function _processColumn(array $processedField): string
     {
         return $this->db->escapeIdentifiers($processedField['name'])
@@ -356,6 +363,7 @@ class Forge extends BaseForge
     /**
      * Performs a data type mapping between different databases.
      */
+    #[Override]
     protected function _attributeType(array &$attributes)
     {
         // Reset field lengths for data types that don't support it
@@ -409,6 +417,7 @@ class Forge extends BaseForge
     /**
      * Field attribute AUTO_INCREMENT
      */
+    #[Override]
     protected function _attributeAutoIncrement(array &$attributes, array &$field)
     {
         if (($attributes['AUTO_INCREMENT'] ?? false) === true && str_contains(strtolower($field['type']), strtolower('INT'))) {
@@ -421,6 +430,7 @@ class Forge extends BaseForge
      *
      * @todo Support for cascade
      */
+    #[Override]
     protected function _dropTable(string $table, bool $ifExists, bool $cascade): string
     {
         $sql = 'DROP TABLE';
@@ -443,6 +453,7 @@ class Forge extends BaseForge
     /**
      * Constructs sql to check if key is a constraint.
      */
+    #[Override]
     protected function _dropKeyAsConstraint(string $table, string $constraintName): string
     {
         return sprintf(

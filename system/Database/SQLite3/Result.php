@@ -17,6 +17,7 @@ use Closure;
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Entity\Entity;
+use Override;
 use SQLite3;
 use SQLite3Result;
 use stdClass;
@@ -28,11 +29,13 @@ use stdClass;
  */
 class Result extends BaseResult
 {
+    #[Override]
     public function getFieldCount(): int
     {
         return $this->resultID->numColumns();
     }
 
+    #[Override]
     public function getFieldNames(): array
     {
         $fieldNames = [];
@@ -44,6 +47,7 @@ class Result extends BaseResult
         return $fieldNames;
     }
 
+    #[Override]
     public function getFieldData(): array
     {
         static $dataTypes = [
@@ -71,6 +75,7 @@ class Result extends BaseResult
         return $retVal;
     }
 
+    #[Override]
     public function freeResult()
     {
         if (is_object($this->resultID)) {
@@ -82,6 +87,7 @@ class Result extends BaseResult
     /**
      * @throws DatabaseException
      */
+    #[Override]
     public function dataSeek(int $n = 0)
     {
         if ($n !== 0) {
@@ -94,11 +100,13 @@ class Result extends BaseResult
     /**
      * @return array<string, mixed>|false
      */
+    #[Override]
     protected function fetchAssoc()
     {
         return $this->resultID->fetchArray(SQLITE3_ASSOC);
     }
 
+    #[Override]
     protected function fetchObject(string $className = stdClass::class)
     {
         // No native support for fetching rows as objects

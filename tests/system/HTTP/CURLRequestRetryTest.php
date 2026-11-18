@@ -21,6 +21,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCURLRequest;
 use Config\App;
 use Config\CURLRequest as ConfigCURLRequest;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -31,6 +32,7 @@ final class CURLRequestRetryTest extends CIUnitTestCase
 {
     private MockCURLRequest $request;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

@@ -15,6 +15,7 @@ namespace CodeIgniter\Security;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -38,6 +39,7 @@ final class CheckPhpIniTest extends CIUnitTestCase
      */
     public static ?array $iniGetAllReturn = null;
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

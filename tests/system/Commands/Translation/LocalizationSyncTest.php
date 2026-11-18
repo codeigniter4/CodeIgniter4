@@ -20,6 +20,7 @@ use CodeIgniter\Test\ReflectionHelper;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\App;
 use Locale;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -59,6 +60,7 @@ final class LocalizationSyncTest extends CIUnitTestCase
         ],
     ];
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -76,6 +78,7 @@ final class LocalizationSyncTest extends CIUnitTestCase
         $this->makeLanguageFiles();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

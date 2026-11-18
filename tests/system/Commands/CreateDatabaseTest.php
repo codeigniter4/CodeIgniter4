@@ -21,6 +21,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockInputOutput;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\Database;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -35,6 +36,7 @@ final class CreateDatabaseTest extends CIUnitTestCase
 
     private BaseConnection $connection;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->connection = Database::connect(null, false);
@@ -45,6 +47,7 @@ final class CreateDatabaseTest extends CIUnitTestCase
         $this->dropDatabase();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

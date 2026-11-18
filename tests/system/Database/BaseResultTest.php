@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Database;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 
@@ -53,6 +54,7 @@ final class BaseResultTest extends CIUnitTestCase
                 parent::__construct($connId, $resultId);
             }
 
+            #[Override]
             public function getFieldCount(): int
             {
                 return 0;
@@ -61,6 +63,7 @@ final class BaseResultTest extends CIUnitTestCase
             /**
              * @return list<string>
              */
+            #[Override]
             public function getFieldNames(): array
             {
                 return [];
@@ -69,15 +72,18 @@ final class BaseResultTest extends CIUnitTestCase
             /**
              * @return list<stdClass>
              */
+            #[Override]
             public function getFieldData(): array
             {
                 return [];
             }
 
+            #[Override]
             public function freeResult(): void
             {
             }
 
+            #[Override]
             public function dataSeek(int $n = 0): bool
             {
                 return true;
@@ -86,11 +92,13 @@ final class BaseResultTest extends CIUnitTestCase
             /**
              * @return array<string, mixed>|false|null
              */
+            #[Override]
             protected function fetchAssoc(): array|bool|null
             {
                 return false;
             }
 
+            #[Override]
             protected function fetchObject(string $className = stdClass::class)
             {
                 return false;

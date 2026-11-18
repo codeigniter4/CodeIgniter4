@@ -17,6 +17,7 @@ use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Input\Option;
 use CodeIgniter\CLI\Output;
+use Override;
 
 /**
  * Installs the files needed to run CodeIgniter 4 in FrankenPHP worker mode.
@@ -38,6 +39,7 @@ class WorkerInstall extends AbstractCommand
         'Caddyfile.tpl'             => 'Caddyfile',
     ];
 
+    #[Override]
     protected function configure(): void
     {
         $this->addOption(new Option(
@@ -47,6 +49,7 @@ class WorkerInstall extends AbstractCommand
         ));
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $force  = $options['force'] === true;

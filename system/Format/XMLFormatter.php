@@ -15,6 +15,7 @@ namespace CodeIgniter\Format;
 
 use CodeIgniter\Format\Exceptions\FormatException;
 use Config\Format;
+use Override;
 use SimpleXMLElement;
 use Stringable;
 
@@ -30,6 +31,7 @@ class XMLFormatter implements FormatterInterface
      *
      * @return false|non-empty-string
      */
+    #[Override]
     public function format($data)
     {
         $config = new Format();

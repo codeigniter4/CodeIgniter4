@@ -16,6 +16,7 @@ namespace CodeIgniter\Format;
 use CodeIgniter\Format\Exceptions\FormatException;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Test\CIUnitTestCase;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -26,6 +27,7 @@ final class FormatTest extends CIUnitTestCase
 {
     private Format $format;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->format = new Format(new \Config\Format());

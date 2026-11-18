@@ -20,6 +20,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use Config\Autoload;
 use Config\Modules;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
@@ -41,6 +42,7 @@ final class AutoloaderTest extends CIUnitTestCase
      */
     private Closure $classLoader;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -65,6 +67,7 @@ final class AutoloaderTest extends CIUnitTestCase
         $this->classLoader = self::getPrivateMethodInvoker($this->loader, 'loadInNamespace');
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

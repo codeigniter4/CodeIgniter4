@@ -17,6 +17,7 @@ use CodeIgniter\Files\Exceptions\FileException;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\I18n\Time;
 use Config\Mimes;
+use Override;
 use RuntimeException;
 use SplFileInfo;
 
@@ -61,6 +62,7 @@ class File extends SplFileInfo
      *
      * @throws RuntimeException if the file does not exist or an error occurs
      */
+    #[Override]
     public function getSize(): false|int
     {
         return $this->size ??= parent::getSize();

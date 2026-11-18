@@ -19,6 +19,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\TestLogger;
 use Config\Logger as LoggerConfig;
 use Config\Session as SessionConfig;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RequiresOperatingSystem;
 
@@ -36,6 +37,7 @@ final class FileHandlerTest extends CIUnitTestCase
     private string $originalSidBits;
     private string $originalSidLength;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -48,6 +50,7 @@ final class FileHandlerTest extends CIUnitTestCase
         mkdir($this->tempPath, 0700, true);
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

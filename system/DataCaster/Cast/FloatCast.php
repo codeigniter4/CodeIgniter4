@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\DataCaster\Cast;
 
 use CodeIgniter\DataCaster\Exceptions\CastException;
+use Override;
 
 /**
  * (PHP) [float --> float       ] --> (DB driver) --> (DB column) float
@@ -23,6 +24,7 @@ use CodeIgniter\DataCaster\Exceptions\CastException;
  */
 class FloatCast extends BaseCast
 {
+    #[Override]
     public static function get(
         mixed $value,
         array $params = [],

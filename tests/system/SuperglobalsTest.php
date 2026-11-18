@@ -15,6 +15,7 @@ namespace CodeIgniter;
 
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -27,6 +28,7 @@ final class SuperglobalsTest extends CIUnitTestCase
 {
     private Superglobals $superglobals;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

@@ -17,6 +17,7 @@ use Attribute;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Override;
 
 /**
  * Restrict Attribute
@@ -54,6 +55,7 @@ class Restrict implements RouteAttributeInterface
     ) {
     }
 
+    #[Override]
     public function before(RequestInterface $request): RequestInterface|ResponseInterface|null
     {
         $this->checkEnvironment();
@@ -63,6 +65,7 @@ class Restrict implements RouteAttributeInterface
         return null; // Continue normal execution
     }
 
+    #[Override]
     public function after(RequestInterface $request, ResponseInterface $response): ?ResponseInterface
     {
         return null; // No post-processing needed

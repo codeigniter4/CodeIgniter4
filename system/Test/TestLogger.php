@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Test;
 
 use CodeIgniter\Log\Logger;
+use Override;
 use Stringable;
 
 class TestLogger extends Logger
@@ -30,6 +31,7 @@ class TestLogger extends Logger
      * @param mixed  $level
      * @param string $message
      */
+    #[Override]
     public function log($level, string|Stringable $message, array $context = []): void
     {
         // While this requires duplicate work, we want to ensure

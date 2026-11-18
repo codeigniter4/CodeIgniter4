@@ -15,6 +15,7 @@ namespace CodeIgniter\DataCaster\Cast;
 
 use BackedEnum;
 use CodeIgniter\DataCaster\Exceptions\CastException;
+use Override;
 use ReflectionEnum;
 use UnitEnum;
 
@@ -28,6 +29,7 @@ use UnitEnum;
  */
 class EnumCast extends BaseCast
 {
+    #[Override]
     public static function get(
         mixed $value,
         array $params = [],
@@ -76,6 +78,7 @@ class EnumCast extends BaseCast
         return $enum;
     }
 
+    #[Override]
     public static function set(
         mixed $value,
         array $params = [],

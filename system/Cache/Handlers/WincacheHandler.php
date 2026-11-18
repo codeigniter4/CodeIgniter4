@@ -16,6 +16,7 @@ namespace CodeIgniter\Cache\Handlers;
 use CodeIgniter\Exceptions\BadMethodCallException;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
+use Override;
 
 /**
  * Cache handler for WinCache from Microsoft & IIS.
@@ -32,10 +33,12 @@ class WincacheHandler extends BaseHandler
         $this->prefix = $config->prefix;
     }
 
+    #[Override]
     public function initialize(): void
     {
     }
 
+    #[Override]
     public function get(string $key): mixed
     {
         $key     = static::validateKey($key, $this->prefix);
@@ -47,6 +50,7 @@ class WincacheHandler extends BaseHandler
         return $success ? $data : null;
     }
 
+    #[Override]
     public function save(string $key, mixed $value, int $ttl = 60): bool
     {
         $key = static::validateKey($key, $this->prefix);
@@ -54,6 +58,7 @@ class WincacheHandler extends BaseHandler
         return wincache_ucache_set($key, $value, $ttl);
     }
 
+    #[Override]
     public function delete(string $key): bool
     {
         $key = static::validateKey($key, $this->prefix);
@@ -61,11 +66,13 @@ class WincacheHandler extends BaseHandler
         return wincache_ucache_delete($key);
     }
 
+    #[Override]
     public function deleteMatching(string $pattern): never
     {
         throw new BadMethodCallException('The deleteMatching method is not implemented for Wincache. You must select File, Redis or Predis handlers to use it.');
     }
 
+    #[Override]
     public function increment(string $key, int $offset = 1): bool
     {
         $key = static::validateKey($key, $this->prefix);
@@ -75,6 +82,7 @@ class WincacheHandler extends BaseHandler
         return $result !== false;
     }
 
+    #[Override]
     public function decrement(string $key, int $offset = 1): bool
     {
         $key = static::validateKey($key, $this->prefix);
@@ -84,16 +92,19 @@ class WincacheHandler extends BaseHandler
         return $result !== false;
     }
 
+    #[Override]
     public function clean(): bool
     {
         return wincache_ucache_clear();
     }
 
+    #[Override]
     public function getCacheInfo(): array|false
     {
         return wincache_ucache_info(true);
     }
 
+    #[Override]
     public function getMetaData(string $key): ?array
     {
         $key = static::validateKey($key, $this->prefix);
@@ -114,6 +125,7 @@ class WincacheHandler extends BaseHandler
         return null;
     }
 
+    #[Override]
     public function isSupported(): bool
     {
         return extension_loaded('wincache') && ini_get('wincache.ucenabled');

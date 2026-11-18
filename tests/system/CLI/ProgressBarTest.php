@@ -16,6 +16,7 @@ namespace CodeIgniter\CLI;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockInputOutput;
+use Override;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -29,6 +30,7 @@ final class ProgressBarTest extends CIUnitTestCase
     private MockInputOutput $io;
     private ProgressBar $bar;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

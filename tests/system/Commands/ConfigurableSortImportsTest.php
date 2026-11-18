@@ -15,6 +15,7 @@ namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -25,6 +26,7 @@ final class ConfigurableSortImportsTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
+    #[Override]
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
@@ -32,6 +34,7 @@ final class ConfigurableSortImportsTest extends CIUnitTestCase
         service('superglobals')->unsetServer('CODEIGNITER_SCREAM_DEPRECATIONS');
     }
 
+    #[Override]
     public static function tearDownAfterClass(): void
     {
         parent::tearDownAfterClass();

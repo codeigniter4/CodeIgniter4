@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Models;
 
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use RuntimeException;
 use Tests\Support\Models\EventModel;
@@ -24,6 +25,7 @@ use Tests\Support\Models\UserModel;
 #[Group('DatabaseLive')]
 final class WithLockedRowModelTest extends LiveModelTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

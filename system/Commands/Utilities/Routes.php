@@ -27,6 +27,7 @@ use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Router\Router;
 use Config\Feature;
 use Config\Routing;
+use Override;
 
 /**
  * Lists all the routes. This will include any Routes files
@@ -39,6 +40,7 @@ class Routes extends AbstractCommand
     private SampleURIGenerator $uriGenerator;
     private FilterCollector $filterCollector;
 
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -54,6 +56,7 @@ class Routes extends AbstractCommand
             ));
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $sortByHandler = $options['sort-by-handler'] !== false;

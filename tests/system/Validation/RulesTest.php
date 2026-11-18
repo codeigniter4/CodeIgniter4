@@ -15,6 +15,7 @@ namespace CodeIgniter\Validation;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use ErrorException;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
@@ -51,6 +52,7 @@ class RulesTest extends CIUnitTestCase
         ],
     ];
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

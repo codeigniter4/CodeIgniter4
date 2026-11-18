@@ -17,6 +17,7 @@ use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockInputOutput;
 use CodeIgniter\Test\StreamFilterTrait;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RequiresOperatingSystem;
@@ -31,6 +32,7 @@ final class ClearLogsTest extends CIUnitTestCase
 
     private string $date;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -47,6 +49,7 @@ final class ClearLogsTest extends CIUnitTestCase
         $this->createDummyLogFiles();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         command('logs:clear --force');

@@ -23,6 +23,7 @@ use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -38,6 +39,7 @@ final class CorsTest extends CIUnitTestCase
     private Cors $cors;
     private ResponseInterface $response;
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

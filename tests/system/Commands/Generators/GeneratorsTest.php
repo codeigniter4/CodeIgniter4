@@ -15,6 +15,7 @@ namespace CodeIgniter\Commands\Generators;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -25,6 +26,7 @@ final class GeneratorsTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

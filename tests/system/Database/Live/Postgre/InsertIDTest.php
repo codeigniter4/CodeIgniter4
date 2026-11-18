@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\Live\Postgre;
 use CodeIgniter\Database\Postgre\Connection;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Database;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -24,6 +25,7 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('DatabaseLive')]
 final class InsertIDTest extends CIUnitTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

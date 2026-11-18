@@ -15,6 +15,7 @@ namespace CodeIgniter\View\Cells;
 
 use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\Traits\PropertiesTrait;
+use Override;
 use ReflectionClass;
 use Stringable;
 
@@ -126,6 +127,7 @@ class Cell implements Stringable
     /**
      * Provides capability to render on string casting.
      */
+    #[Override]
     public function __toString(): string
     {
         return $this->render();

@@ -19,6 +19,7 @@ use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -44,6 +45,7 @@ final class ConnectTest extends CIUnitTestCase
      */
     private array $tests = [];
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

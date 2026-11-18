@@ -16,6 +16,7 @@ namespace CodeIgniter\Autoloader;
 use CodeIgniter\Cache\FactoriesCache\FileVarExportHandler;
 use Config\Autoload;
 use Config\Modules;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Cache\IsolatedCacheTrait;
 
@@ -29,6 +30,7 @@ final class FileLocatorCachedTest extends FileLocatorTest
 
     private FileVarExportHandler $handler;
 
+    #[Override]
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
@@ -36,6 +38,7 @@ final class FileLocatorCachedTest extends FileLocatorTest
         self::setUpBeforeClassIsolatedCache();
     }
 
+    #[Override]
     public static function tearDownAfterClass(): void
     {
         self::tearDownAfterClassIsolatedCache();
@@ -43,6 +46,7 @@ final class FileLocatorCachedTest extends FileLocatorTest
         parent::tearDownAfterClass();
     }
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -71,6 +75,7 @@ final class FileLocatorCachedTest extends FileLocatorTest
         $this->locator = new FileLocatorCached($fileLocator, $this->handler);
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         $this->locator->__destruct();

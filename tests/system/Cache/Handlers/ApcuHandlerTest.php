@@ -18,6 +18,7 @@ use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 
@@ -28,6 +29,7 @@ use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 #[RequiresPhpExtension('apcu')]
 final class ApcuHandlerTest extends AbstractHandlerTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -39,6 +41,7 @@ final class ApcuHandlerTest extends AbstractHandlerTestCase
         $this->handler = CacheFactory::getHandler(new Cache(), 'apcu');
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         if (isset($this->handler)) {

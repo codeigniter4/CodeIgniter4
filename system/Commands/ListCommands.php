@@ -17,6 +17,7 @@ use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Input\Option;
 use CodeIgniter\CLI\Output;
+use Override;
 
 /**
  * Lists the available commands.
@@ -24,6 +25,7 @@ use CodeIgniter\CLI\Output;
 #[Command(name: 'list', description: 'Lists the available commands.', group: 'CodeIgniter')]
 class ListCommands extends AbstractCommand
 {
+    #[Override]
     protected function configure(): void
     {
         $this->addOption(new Option(
@@ -32,6 +34,7 @@ class ListCommands extends AbstractCommand
         ));
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $output = $this->getOutput();

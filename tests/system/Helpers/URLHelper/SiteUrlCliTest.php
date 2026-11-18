@@ -18,6 +18,7 @@ use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -35,6 +36,7 @@ final class SiteUrlCliTest extends CIUnitTestCase
 {
     private App $config;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -44,6 +46,7 @@ final class SiteUrlCliTest extends CIUnitTestCase
         $this->config = new App();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

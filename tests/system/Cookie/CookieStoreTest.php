@@ -16,6 +16,7 @@ namespace CodeIgniter\Cookie;
 use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\Test\CIUnitTestCase;
 use DateTimeImmutable;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -38,12 +39,14 @@ final class CookieStoreTest extends CIUnitTestCase
      */
     private array $defaults;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
         $this->defaults = Cookie::setDefaults();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         Cookie::setDefaults($this->defaults);

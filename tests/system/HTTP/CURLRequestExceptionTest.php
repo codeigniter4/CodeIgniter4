@@ -20,6 +20,7 @@ use CodeIgniter\Test\Mock\MockCURLRequest;
 use Config\App;
 use Config\CURLRequest as ConfigCURLRequest;
 use InvalidArgumentException;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Throwable;
@@ -286,6 +287,7 @@ final class CURLRequestExceptionTest extends CIUnitTestCase
         return new class ($app, $uri ?? new URI(), new Response(), $options) extends MockCURLRequest {
             private bool $failNextRequest = true;
 
+            #[Override]
             protected function sendRequest(array $curlOptions = []): string
             {
                 if ($this->failNextRequest) {

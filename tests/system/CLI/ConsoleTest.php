@@ -25,6 +25,7 @@ use CodeIgniter\Test\Mock\MockCLIConfig;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 use CodeIgniter\Test\Mock\MockInputOutput;
 use CodeIgniter\Test\StreamFilterTrait;
+use Override;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -40,6 +41,7 @@ final class ConsoleTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -55,6 +57,7 @@ final class ConsoleTest extends CIUnitTestCase
         $this->app->initialize();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

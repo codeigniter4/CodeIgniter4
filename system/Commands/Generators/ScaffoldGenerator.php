@@ -18,10 +18,12 @@ use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Input\Argument;
 use CodeIgniter\CLI\Input\Option;
 use CodeIgniter\CLI\PromptsForMissingInputInterface;
+use Override;
 
 #[Command(name: 'make:scaffold', description: 'Generates a complete set of scaffold files.', group: 'Generators')]
 class ScaffoldGenerator extends AbstractCommand implements PromptsForMissingInputInterface
 {
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -76,11 +78,13 @@ class ScaffoldGenerator extends AbstractCommand implements PromptsForMissingInpu
             ));
     }
 
+    #[Override]
     protected function getArgumentPromptLabels(): array
     {
         return ['name' => lang('CLI.generator.className.default')];
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $name   = [$arguments['name']];

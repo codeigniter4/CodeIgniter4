@@ -22,6 +22,7 @@ use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\Mock\MockInputOutput;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\Services;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
@@ -36,6 +37,7 @@ final class DatabaseCommandsTest extends CIUnitTestCase
     use DatabaseTestTrait;
     use StreamFilterTrait;
 
+    #[Override]
     protected function tearDown(): void
     {
         command('migrate:rollback');

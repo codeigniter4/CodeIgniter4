@@ -22,6 +22,7 @@ use CodeIgniter\Router\Exceptions\RouterException;
 use Config\App;
 use Config\Modules;
 use Config\Routing;
+use Override;
 
 /**
  * @todo Implement nested resource routing (See CakePHP)
@@ -383,6 +384,7 @@ class RouteCollection implements RouteCollectionInterface
         $this->didDiscover = true;
     }
 
+    #[Override]
     public function addPlaceholder($placeholder, ?string $pattern = null): RouteCollectionInterface
     {
         if (! is_array($placeholder)) {
@@ -406,6 +408,7 @@ class RouteCollection implements RouteCollectionInterface
         return $this->placeholders;
     }
 
+    #[Override]
     public function setDefaultNamespace(string $value): RouteCollectionInterface
     {
         $this->defaultNamespace = rtrim($value, '\\') . '\\';
@@ -413,6 +416,7 @@ class RouteCollection implements RouteCollectionInterface
         return $this;
     }
 
+    #[Override]
     public function setDefaultController(string $value): RouteCollectionInterface
     {
         $this->defaultController = $value;
@@ -420,6 +424,7 @@ class RouteCollection implements RouteCollectionInterface
         return $this;
     }
 
+    #[Override]
     public function setDefaultMethod(string $value): RouteCollectionInterface
     {
         $this->defaultMethod = $value;
@@ -427,6 +432,7 @@ class RouteCollection implements RouteCollectionInterface
         return $this;
     }
 
+    #[Override]
     public function setTranslateURIDashes(bool $value): RouteCollectionInterface
     {
         $this->translateURIDashes = $value;
@@ -434,6 +440,7 @@ class RouteCollection implements RouteCollectionInterface
         return $this;
     }
 
+    #[Override]
     public function setAutoRoute(bool $value): RouteCollectionInterface
     {
         $this->autoRoute = $value;
@@ -441,6 +448,7 @@ class RouteCollection implements RouteCollectionInterface
         return $this;
     }
 
+    #[Override]
     public function set404Override($callable = null): RouteCollectionInterface
     {
         $this->override404 = $callable;
@@ -448,6 +456,7 @@ class RouteCollection implements RouteCollectionInterface
         return $this;
     }
 
+    #[Override]
     public function get404Override()
     {
         return $this->override404;
@@ -466,31 +475,37 @@ class RouteCollection implements RouteCollectionInterface
         return $this;
     }
 
+    #[Override]
     public function getDefaultController(): string
     {
         return $this->defaultController;
     }
 
+    #[Override]
     public function getDefaultMethod(): string
     {
         return $this->defaultMethod;
     }
 
+    #[Override]
     public function getDefaultNamespace(): string
     {
         return $this->defaultNamespace;
     }
 
+    #[Override]
     public function shouldTranslateURIDashes(): bool
     {
         return $this->translateURIDashes;
     }
 
+    #[Override]
     public function shouldAutoRoute(): bool
     {
         return $this->autoRoute;
     }
 
+    #[Override]
     public function getRoutes(?string $verb = null, bool $includeWildcard = true): array
     {
         if ((string) $verb === '') {
@@ -531,6 +546,7 @@ class RouteCollection implements RouteCollectionInterface
         return $routes;
     }
 
+    #[Override]
     public function getRoutesOptions(?string $from = null, ?string $verb = null): array
     {
         $options = $this->loadRoutesOptions($verb);
@@ -538,11 +554,13 @@ class RouteCollection implements RouteCollectionInterface
         return ((string) $from !== '') ? $options[$from] ?? [] : $options;
     }
 
+    #[Override]
     public function getHTTPVerb(): string
     {
         return $this->HTTPVerb;
     }
 
+    #[Override]
     public function setHTTPVerb(string $verb)
     {
         if ($verb !== '*' && $verb === strtolower($verb)) {
@@ -579,6 +597,7 @@ class RouteCollection implements RouteCollectionInterface
         return $this;
     }
 
+    #[Override]
     public function add(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
         $this->create('*', $from, $to, $options);
@@ -618,6 +637,7 @@ class RouteCollection implements RouteCollectionInterface
         return $this;
     }
 
+    #[Override]
     public function isRedirect(string $routeKey): bool
     {
         if (isset($this->routes['*'][$routeKey]['redirect'])) {
@@ -635,6 +655,7 @@ class RouteCollection implements RouteCollectionInterface
         return false;
     }
 
+    #[Override]
     public function getRedirectCode(string $routeKey): int
     {
         if (isset($this->routes['*'][$routeKey]['redirect'])) {
@@ -1095,6 +1116,7 @@ class RouteCollection implements RouteCollectionInterface
         return $this;
     }
 
+    #[Override]
     public function reverseRoute(string $search, ...$params)
     {
         if ($search === '') {
@@ -1168,6 +1190,7 @@ class RouteCollection implements RouteCollectionInterface
         return strtr($route, ['{locale}' => service('request')->getLocale()]);
     }
 
+    #[Override]
     public function isFiltered(string $search, ?string $verb = null): bool
     {
         $options = $this->loadRoutesOptions($verb);
@@ -1175,6 +1198,7 @@ class RouteCollection implements RouteCollectionInterface
         return isset($options[$search]['filter']);
     }
 
+    #[Override]
     public function getFiltersForRoute(string $search, ?string $verb = null): array
     {
         $options = $this->loadRoutesOptions($verb);
@@ -1696,6 +1720,7 @@ class RouteCollection implements RouteCollectionInterface
         return $this;
     }
 
+    #[Override]
     public function shouldUseSupportedLocalesOnly(): bool
     {
         return $this->useSupportedLocalesOnly;

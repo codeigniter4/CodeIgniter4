@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live;
 
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -21,6 +22,7 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('DatabaseLive')]
 final class TransactionDBDebugFalseTest extends TransactionDBDebugTrueTest
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -28,6 +30,7 @@ final class TransactionDBDebugFalseTest extends TransactionDBDebugTrueTest
         $this->disableDBDebug();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();
@@ -35,6 +38,7 @@ final class TransactionDBDebugFalseTest extends TransactionDBDebugTrueTest
         $this->enableDBDebug();
     }
 
+    #[Override]
     public function testTransStartTransException(): void
     {
         $builder = $this->db->table('job');

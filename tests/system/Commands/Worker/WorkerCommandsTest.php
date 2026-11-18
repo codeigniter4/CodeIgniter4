@@ -17,6 +17,7 @@ use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockInputOutput;
 use CodeIgniter\Test\StreamFilterTrait;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -36,6 +37,7 @@ final class WorkerCommandsTest extends CIUnitTestCase
         'Caddyfile',
     ];
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

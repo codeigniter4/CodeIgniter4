@@ -17,6 +17,7 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Query;
 use CodeIgniter\I18n\Time;
 use Config\Toolbar;
+use Override;
 
 /**
  * Collector for the Database tab of the Debug Toolbar.
@@ -120,6 +121,7 @@ class Database extends BaseCollector
      *   query?: string,
      * }>
      */
+    #[Override]
     protected function formatTimelineData(): array
     {
         $data = [];
@@ -160,6 +162,7 @@ class Database extends BaseCollector
      *   qid: string
      * }>}
      */
+    #[Override]
     public function display(): array
     {
         return ['queries' => array_map(static function (array $query): array {
@@ -215,6 +218,7 @@ class Database extends BaseCollector
     /**
      * Gets the "badge" value for the button.
      */
+    #[Override]
     public function getBadgeValue(): int
     {
         return count(static::$queries);
@@ -225,6 +229,7 @@ class Database extends BaseCollector
      *
      * @return string The number of queries (in parentheses) or an empty string.
      */
+    #[Override]
     public function getTitleDetails(): string
     {
         $this->getConnections();
@@ -247,6 +252,7 @@ class Database extends BaseCollector
     /**
      * Does this collector have any data collected?
      */
+    #[Override]
     public function isEmpty(): bool
     {
         return static::$queries === [];
@@ -257,6 +263,7 @@ class Database extends BaseCollector
      *
      * Icon from https://icons8.com - 1em package
      */
+    #[Override]
     public function icon(): string
     {
         return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADMSURBVEhLY6A3YExLSwsA4nIycQDIDIhRWEBqamo/UNF/SjDQjF6ocZgAKPkRiFeEhoYyQ4WIBiA9QAuWAPEHqBAmgLqgHcolGQD1V4DMgHIxwbCxYD+QBqcKINseKo6eWrBioPrtQBq/BcgY5ht0cUIYbBg2AJKkRxCNWkDQgtFUNJwtABr+F6igE8olGQD114HMgHIxAVDyAhA/AlpSA8RYUwoeXAPVex5qHCbIyMgwBCkAuQJIY00huDBUz/mUlBQDqHGjgBjAwAAACexpph6oHSQAAAAASUVORK5CYII=';

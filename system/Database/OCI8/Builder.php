@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\OCI8;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\RawSql;
+use Override;
 use stdClass;
 
 /**
@@ -54,6 +55,7 @@ class Builder extends BaseBuilder
     /**
      * Generates a platform-specific insert string from the supplied data.
      */
+    #[Override]
     protected function _insertBatch(string $table, array $keys, array $values): string
     {
         $sql = $this->QBOptions['sql'] ?? '';
@@ -91,6 +93,7 @@ class Builder extends BaseBuilder
     /**
      * Generates a platform-specific replace string from the supplied data
      */
+    #[Override]
     protected function _replace(string $table, array $keys, array $values): string
     {
         $fieldNames = array_map(static fn ($columnName): string => trim($columnName, '"'), $keys);
@@ -138,6 +141,7 @@ class Builder extends BaseBuilder
      * If the database does not support the truncate() command,
      * then this method maps to 'DELETE FROM table'
      */
+    #[Override]
     protected function _truncate(string $table): string
     {
         return 'TRUNCATE TABLE ' . $table;
@@ -152,6 +156,7 @@ class Builder extends BaseBuilder
      *
      * @throws DatabaseException
      */
+    #[Override]
     public function delete($where = '', ?int $limit = null, bool $resetData = true)
     {
         if ($limit !== null && $limit !== 0) {
@@ -164,6 +169,7 @@ class Builder extends BaseBuilder
     /**
      * Generates a platform-specific delete string from the supplied data
      */
+    #[Override]
     protected function _delete(string $table): string
     {
         if ($this->QBLimit) {
@@ -177,6 +183,7 @@ class Builder extends BaseBuilder
     /**
      * Generates a platform-specific update string from the supplied data
      */
+    #[Override]
     protected function _update(string $table, array $values): string
     {
         $valStr = [];
@@ -197,6 +204,7 @@ class Builder extends BaseBuilder
     /**
      * Generates a platform-specific LIMIT clause.
      */
+    #[Override]
     protected function _limit(string $sql, bool $offsetIgnore = false): string
     {
         $offset = (int) ($offsetIgnore === false ? $this->QBOffset : 0);
@@ -212,6 +220,7 @@ class Builder extends BaseBuilder
     /**
      * Compile the SELECT lock clause.
      */
+    #[Override]
     protected function compileSelectLock(): string
     {
         if ($this->QBSelectLock === null) {
@@ -236,6 +245,7 @@ class Builder extends BaseBuilder
     /**
      * Ensures the current driver supports explaining Query Builder selects.
      */
+    #[Override]
     protected function assertExplainSupported(): never
     {
         throw new DatabaseException('OCI8 does not support explain().');
@@ -244,6 +254,7 @@ class Builder extends BaseBuilder
     /**
      * Generates a platform-specific batch update string from the supplied data
      */
+    #[Override]
     protected function _updateBatch(string $table, array $keys, array $values): string
     {
         $sql = $this->QBOptions['sql'] ?? '';
@@ -343,6 +354,7 @@ class Builder extends BaseBuilder
      *
      * @throws DatabaseException
      */
+    #[Override]
     protected function _upsertBatch(string $table, array $keys, array $values): string
     {
         $sql = $this->QBOptions['sql'] ?? '';
@@ -450,6 +462,7 @@ class Builder extends BaseBuilder
     /**
      * Generates a platform-specific batch update string from the supplied data
      */
+    #[Override]
     protected function _deleteBatch(string $table, array $keys, array $values): string
     {
         $sql = $this->QBOptions['sql'] ?? '';
@@ -529,6 +542,7 @@ class Builder extends BaseBuilder
     /**
      * Gets column names from a select query
      */
+    #[Override]
     protected function fieldsFromQuery(string $sql): array
     {
         return $this->db->query('SELECT * FROM (' . $sql . ') "_u_" WHERE ROWNUM = 1')->getFieldNames();

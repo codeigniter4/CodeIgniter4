@@ -15,6 +15,7 @@ namespace CodeIgniter\Commands\Utilities\Routes;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Routing;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -24,6 +25,7 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class SampleURIGeneratorTest extends CIUnitTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

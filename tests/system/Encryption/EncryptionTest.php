@@ -20,6 +20,7 @@ use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
 use Config\Services;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -30,6 +31,7 @@ final class EncryptionTest extends CIUnitTestCase
 {
     private Encryption $encryption;
 
+    #[Override]
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
@@ -45,6 +47,7 @@ final class EncryptionTest extends CIUnitTestCase
         }
     }
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -52,6 +55,7 @@ final class EncryptionTest extends CIUnitTestCase
         $this->encryption = new Encryption();
     }
 
+    #[Override]
     public static function tearDownAfterClass(): void
     {
         parent::tearDownAfterClass();

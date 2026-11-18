@@ -18,6 +18,7 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Exceptions\BadMethodCallException;
 use ErrorException;
 use OCILob;
+use Override;
 
 /**
  * Prepared query for OCI8
@@ -31,6 +32,7 @@ class PreparedQuery extends BasePreparedQuery
      */
     private ?string $lastInsertTableName = null;
 
+    #[Override]
     public function _prepare(string $sql, array $options = []): PreparedQuery
     {
         if (! $this->statement = oci_parse($this->db->connID, $this->parameterize($sql))) {
@@ -48,6 +50,7 @@ class PreparedQuery extends BasePreparedQuery
         return $this;
     }
 
+    #[Override]
     public function _execute(array $data): bool
     {
         if (! isset($this->statement)) {
@@ -100,11 +103,13 @@ class PreparedQuery extends BasePreparedQuery
     /**
      * @return resource|null
      */
+    #[Override]
     public function _getResult()
     {
         return $this->statement;
     }
 
+    #[Override]
     protected function _close(): bool
     {
         return oci_free_statement($this->statement);

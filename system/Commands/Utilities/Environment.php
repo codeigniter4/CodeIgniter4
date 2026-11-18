@@ -19,6 +19,7 @@ use CodeIgniter\CLI\Input\Argument;
 use CodeIgniter\CLI\Output;
 use CodeIgniter\Config\DotEnv;
 use Config\Paths;
+use Override;
 
 /**
  * Command to display the current environment,
@@ -38,6 +39,7 @@ class Environment extends AbstractCommand
         'development',
     ];
 
+    #[Override]
     protected function configure(): void
     {
         $this->addArgument(new Argument(
@@ -47,6 +49,7 @@ class Environment extends AbstractCommand
         ));
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $env = $arguments['environment'];

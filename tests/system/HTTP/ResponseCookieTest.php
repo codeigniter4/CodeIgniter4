@@ -19,6 +19,7 @@ use CodeIgniter\Cookie\CookieStore;
 use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cookie as CookieConfig;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -32,12 +33,14 @@ final class ResponseCookieTest extends CIUnitTestCase
      */
     private array $defaults;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
         $this->defaults = Cookie::setDefaults();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         Cookie::setDefaults($this->defaults);

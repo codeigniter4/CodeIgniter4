@@ -17,6 +17,7 @@ use CodeIgniter\Entity\Entity;
 use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Log\Exceptions\LogException;
 use CodeIgniter\Log\Handlers\HandlerInterface;
+use Override;
 use Psr\Log\LoggerInterface;
 use Stringable;
 use Throwable;
@@ -189,6 +190,7 @@ class Logger implements LoggerInterface
     /**
      * System is unusable.
      */
+    #[Override]
     public function emergency(string|Stringable $message, array $context = []): void
     {
         $this->log('emergency', $message, $context);
@@ -200,6 +202,7 @@ class Logger implements LoggerInterface
      * Example: Entire website down, database unavailable, etc. This should
      * trigger the SMS alerts and wake you up.
      */
+    #[Override]
     public function alert(string|Stringable $message, array $context = []): void
     {
         $this->log('alert', $message, $context);
@@ -210,6 +213,7 @@ class Logger implements LoggerInterface
      *
      * Example: Application component unavailable, unexpected exception.
      */
+    #[Override]
     public function critical(string|Stringable $message, array $context = []): void
     {
         $this->log('critical', $message, $context);
@@ -219,6 +223,7 @@ class Logger implements LoggerInterface
      * Runtime errors that do not require immediate action but should typically
      * be logged and monitored.
      */
+    #[Override]
     public function error(string|Stringable $message, array $context = []): void
     {
         $this->log('error', $message, $context);
@@ -230,6 +235,7 @@ class Logger implements LoggerInterface
      * Example: Use of deprecated APIs, poor use of an API, undesirable things
      * that are not necessarily wrong.
      */
+    #[Override]
     public function warning(string|Stringable $message, array $context = []): void
     {
         $this->log('warning', $message, $context);
@@ -238,6 +244,7 @@ class Logger implements LoggerInterface
     /**
      * Normal but significant events.
      */
+    #[Override]
     public function notice(string|Stringable $message, array $context = []): void
     {
         $this->log('notice', $message, $context);
@@ -248,6 +255,7 @@ class Logger implements LoggerInterface
      *
      * Example: User logs in, SQL logs.
      */
+    #[Override]
     public function info(string|Stringable $message, array $context = []): void
     {
         $this->log('info', $message, $context);
@@ -256,6 +264,7 @@ class Logger implements LoggerInterface
     /**
      * Detailed debug information.
      */
+    #[Override]
     public function debug(string|Stringable $message, array $context = []): void
     {
         $this->log('debug', $message, $context);
@@ -266,6 +275,7 @@ class Logger implements LoggerInterface
      *
      * @param mixed $level
      */
+    #[Override]
     public function log($level, string|Stringable $message, array $context = []): void
     {
         if (is_numeric($level)) {

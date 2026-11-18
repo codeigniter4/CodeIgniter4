@@ -23,6 +23,7 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\TableName;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use Config\Database;
+use Override;
 
 /**
  * Retrieves information on the selected table.
@@ -43,6 +44,7 @@ class ShowTableInfo extends AbstractCommand
 
     private string $dbPrefix;
 
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -91,6 +93,7 @@ class ShowTableInfo extends AbstractCommand
             ->addUsage('db:table my_table --limit-rows 5 --limit-field-value 10 --desc');
     }
 
+    #[Override]
     protected function interact(array &$arguments, array &$options): void
     {
         if ($this->hasUnboundOption('show', $options)) {
@@ -114,6 +117,7 @@ class ShowTableInfo extends AbstractCommand
         }
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $output = $this->getOutput();

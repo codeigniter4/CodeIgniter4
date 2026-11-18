@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Debug\Toolbar\Collectors;
 
+use Override;
+
 /**
  * Events collector
  */
@@ -56,6 +58,7 @@ class Events extends BaseCollector
      *
      * @return list<array{name: string, component: string, start: float, duration: float}>
      */
+    #[Override]
     protected function formatTimelineData(): array
     {
         $data = [];
@@ -79,6 +82,7 @@ class Events extends BaseCollector
      *
      * @return array{events: array<string, array{event: string, duration: string, count: int}>}
      */
+    #[Override]
     public function display(): array
     {
         $data = [
@@ -112,6 +116,7 @@ class Events extends BaseCollector
     /**
      * Gets the "badge" value for the button.
      */
+    #[Override]
     public function getBadgeValue(): int
     {
         return count(\CodeIgniter\Events\Events::getPerformanceLogs());
@@ -122,6 +127,7 @@ class Events extends BaseCollector
      *
      * Icon from https://icons8.com - 1em package
      */
+    #[Override]
     public function icon(): string
     {
         return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEASURBVEhL7ZXNDcIwDIVTsRBH1uDQDdquUA6IM1xgCA6MwJUN2hk6AQzAz0vl0ETUxC5VT3zSU5w81/mRMGZysixbFEVR0jSKNt8geQU9aRpFmp/keX6AbjZ5oB74vsaN5lSzA4tLSjpBFxsjeSuRy4d2mDdQTWU7YLbXTNN05mKyovj5KL6B7q3hoy3KwdZxBlT+Ipz+jPHrBqOIynZgcZonoukb/0ckiTHqNvDXtXEAaygRbaB9FvUTjRUHsIYS0QaSp+Dw6wT4hiTmYHOcYZsdLQ2CbXa4ftuuYR4x9vYZgdb4vsFYUdmABMYeukK9/SUme3KMFQ77+Yfzh8eYF8+orDuDWU5LAAAAAElFTkSuQmCC';

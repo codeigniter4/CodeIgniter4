@@ -17,6 +17,7 @@ use CodeIgniter\Cache\Exceptions\CacheException;
 use CodeIgniter\Cache\Handlers\DummyHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cache;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -28,6 +29,7 @@ final class CacheFactoryTest extends CIUnitTestCase
     private static string $directory = 'CacheFactory';
     private Cache $config;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -37,6 +39,7 @@ final class CacheFactoryTest extends CIUnitTestCase
         $this->config->file['storePath'] .= self::$directory;
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         if (is_dir($this->config->file['storePath'])) {

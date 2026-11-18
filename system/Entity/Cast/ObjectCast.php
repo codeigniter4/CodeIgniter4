@@ -13,11 +13,14 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Entity\Cast;
 
+use Override;
+
 /**
  * @extends BaseCast<object, mixed>
  */
 class ObjectCast extends BaseCast
 {
+    #[Override]
     public static function get($value, array $params = []): object
     {
         return (object) $value;

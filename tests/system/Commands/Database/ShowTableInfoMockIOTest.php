@@ -18,6 +18,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\Mock\MockInputOutput;
 use Config\Database;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -30,6 +31,7 @@ final class ShowTableInfoMockIOTest extends CIUnitTestCase
 
     protected $migrateOnce = true;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -42,6 +44,7 @@ final class ShowTableInfoMockIOTest extends CIUnitTestCase
         CLI::init();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

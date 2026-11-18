@@ -19,6 +19,7 @@ use CodeIgniter\I18n\Time;
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use Config\Services;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\Log\Handlers\TestHandler;
@@ -29,12 +30,14 @@ use Tests\Support\Log\Handlers\TestHandler;
 #[Group('Others')]
 final class RedirectExceptionTest extends TestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         Services::reset();
         Services::injectMock('logger', new Logger(new LoggerConfig()));
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

@@ -19,6 +19,7 @@ use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockInputOutput;
 use CodeIgniter\Test\StreamFilterTrait;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RequiresOperatingSystem;
@@ -36,6 +37,7 @@ final class GenerateKeyTest extends CIUnitTestCase
     private string $envPath;
     private string $backupEnvPath;
 
+    #[Override]
     #[WithoutErrorHandler]
     protected function setUp(): void
     {
@@ -54,6 +56,7 @@ final class GenerateKeyTest extends CIUnitTestCase
         $this->resetEnvironment();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         if (is_file($this->envPath)) {

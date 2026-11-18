@@ -17,6 +17,7 @@ use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Override;
 
 /**
  * Honeypot filter
@@ -31,6 +32,7 @@ class Honeypot implements FilterInterface
      *
      * @throws HoneypotException
      */
+    #[Override]
     public function before(RequestInterface $request, $arguments = null)
     {
         if (! $request instanceof IncomingRequest) {
@@ -49,6 +51,7 @@ class Honeypot implements FilterInterface
      *
      * @param list<string>|null $arguments
      */
+    #[Override]
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
         service('honeypot')->attachHoneypot($response);

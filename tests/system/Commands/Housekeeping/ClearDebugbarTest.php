@@ -16,6 +16,7 @@ namespace CodeIgniter\Commands\Housekeeping;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RequiresOperatingSystem;
 
@@ -29,6 +30,7 @@ final class ClearDebugbarTest extends CIUnitTestCase
 
     private int $time;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -42,6 +44,7 @@ final class ClearDebugbarTest extends CIUnitTestCase
         $this->createDummyDebugbarJson();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         command('debugbar:clear');

@@ -25,6 +25,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
 use CodeIgniter\Test\Mock\MockSecurity;
 use Config\Security as SecurityConfig;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -39,6 +40,7 @@ final class SecurityTest extends CIUnitTestCase
     private const CORRECT_CSRF_HASH = '8b9218a55906f9dcc1dc263dce7f005a';
     private const INVALID_CSRF_HASH = '8b9218a55906f9dcc1dc263dce7f005b';
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

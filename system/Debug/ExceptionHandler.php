@@ -24,6 +24,7 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Paths;
+use Override;
 use Throwable;
 
 final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHandlerInterface
@@ -45,6 +46,7 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
      *
      * @param CLIRequest|IncomingRequest $request
      */
+    #[Override]
     public function handle(
         Throwable $exception,
         RequestInterface $request,

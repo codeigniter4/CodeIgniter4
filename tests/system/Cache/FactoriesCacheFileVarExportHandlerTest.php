@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Cache;
 
 use CodeIgniter\Cache\FactoriesCache\FileVarExportHandler;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Cache\IsolatedCacheTrait;
 
@@ -25,6 +26,7 @@ final class FactoriesCacheFileVarExportHandlerTest extends AbstractFactoriesCach
 {
     use IsolatedCacheTrait;
 
+    #[Override]
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
@@ -32,6 +34,7 @@ final class FactoriesCacheFileVarExportHandlerTest extends AbstractFactoriesCach
         self::setUpBeforeClassIsolatedCache();
     }
 
+    #[Override]
     public static function tearDownAfterClass(): void
     {
         self::tearDownAfterClassIsolatedCache();
@@ -39,6 +42,7 @@ final class FactoriesCacheFileVarExportHandlerTest extends AbstractFactoriesCach
         parent::tearDownAfterClass();
     }
 
+    #[Override]
     protected function createFactoriesCache(): void
     {
         $this->handler = $this->getIsolatedCacheHandler();

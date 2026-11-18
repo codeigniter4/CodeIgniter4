@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Session\Handlers;
 
+use Override;
+
 /**
  * Session handler using static array for storage.
  * Intended only for use during testing.
@@ -30,6 +32,7 @@ class ArrayHandler extends BaseHandler
      * @param string $path The path where to store/retrieve the session.
      * @param string $name The session name.
      */
+    #[Override]
     public function open($path, $name): bool
     {
         return true;
@@ -40,6 +43,7 @@ class ArrayHandler extends BaseHandler
      *
      * @param string $id The session ID.
      */
+    #[Override]
     public function read($id): string
     {
         return '';
@@ -51,6 +55,7 @@ class ArrayHandler extends BaseHandler
      * @param string $id   The session ID.
      * @param string $data The encoded session data.
      */
+    #[Override]
     public function write($id, $data): bool
     {
         return true;
@@ -59,6 +64,7 @@ class ArrayHandler extends BaseHandler
     /**
      * Closes the current session.
      */
+    #[Override]
     public function close(): bool
     {
         return true;
@@ -69,6 +75,7 @@ class ArrayHandler extends BaseHandler
      *
      * @param string $id The session ID being destroyed.
      */
+    #[Override]
     public function destroy($id): bool
     {
         return true;
@@ -80,6 +87,7 @@ class ArrayHandler extends BaseHandler
      * @param int $max_lifetime Sessions that have not updated
      *                          for the last max_lifetime seconds will be removed.
      */
+    #[Override]
     public function gc(int $max_lifetime): int
     {
         return 1;

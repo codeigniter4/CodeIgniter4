@@ -14,10 +14,12 @@ declare(strict_types=1);
 namespace CodeIgniter\View;
 
 use CodeIgniter\Database\MySQLi\Result;
+use Override;
 
 // We need this for the _set_from_db_result() test
 class DBResultDummy extends Result
 {
+    #[Override]
     public function getFieldNames(): array
     {
         return [
@@ -29,6 +31,7 @@ class DBResultDummy extends Result
     /**
      * @return list<array<string, string>>
      */
+    #[Override]
     public function getResultArray(): array
     {
         return [

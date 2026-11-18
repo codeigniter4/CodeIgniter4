@@ -19,6 +19,7 @@ use CodeIgniter\Input\InputData;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -29,6 +30,7 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('SeparateProcess')]
 final class RequestInputTest extends CIUnitTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

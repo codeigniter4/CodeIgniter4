@@ -16,6 +16,7 @@ namespace CodeIgniter\Test\Mock;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -26,6 +27,7 @@ final class MockInputOutputTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

@@ -28,6 +28,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 use CodeIgniter\Test\Mock\MockResourceController;
 use Config\App;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -51,6 +52,7 @@ final class ResourceControllerTest extends CIUnitTestCase
 {
     private CodeIgniter $codeigniter;
 
+    #[Override]
     #[WithoutErrorHandler]
     protected function setUp(): void
     {
@@ -86,6 +88,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $response->pretend();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

@@ -33,6 +33,7 @@ use CodeIgniter\I18n\Time;
 use DateTimeInterface;
 use Exception;
 use JsonSerializable;
+use Override;
 use Traversable;
 use UnitEnum;
 
@@ -608,6 +609,7 @@ class Entity implements JsonSerializable
      *
      * @return array<string, mixed>
      */
+    #[Override]
     public function jsonSerialize(): array
     {
         return $this->toArray();

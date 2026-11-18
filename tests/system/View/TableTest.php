@@ -15,6 +15,7 @@ namespace CodeIgniter\View;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockTable;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\Attributes\Group;
@@ -30,6 +31,7 @@ final class TableTest extends CIUnitTestCase
     private string $styleTableOne = 'background:#F99;text-align:right;width:5em;';
     private string $styleTableTwo = 'background:cyan;color:white;text-align:right;width:5em;';
 
+    #[Override]
     protected function setUp(): void
     {
         $this->table = new MockTable();

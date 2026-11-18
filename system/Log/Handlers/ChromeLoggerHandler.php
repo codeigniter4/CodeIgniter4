@@ -15,6 +15,7 @@ namespace CodeIgniter\Log\Handlers;
 
 use CodeIgniter\HTTP\ResponseInterface;
 use JsonException;
+use Override;
 
 /**
  * Allows for logging items to the Chrome console for debugging.
@@ -103,6 +104,7 @@ class ChromeLoggerHandler extends BaseHandler
      * @param object|string        $message
      * @param array<string, mixed> $context
      */
+    #[Override]
     public function handle($level, $message, array $context = []): bool
     {
         $message = $this->format($message);

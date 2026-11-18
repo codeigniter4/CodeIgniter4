@@ -18,6 +18,7 @@ use CodeIgniter\Model;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\ReflectionHelper;
+use Override;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
@@ -38,6 +39,7 @@ abstract class LiveModelTestCase extends CIUnitTestCase
 
     protected $seed = CITestSeeder::class;
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

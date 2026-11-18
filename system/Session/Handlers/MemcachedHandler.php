@@ -18,6 +18,7 @@ use CodeIgniter\Session\Exceptions\SessionException;
 use CodeIgniter\Session\PersistsConnection;
 use Config\Session as SessionConfig;
 use Memcached;
+use Override;
 
 /**
  * Session handler using Memcached for persistence.
@@ -83,6 +84,7 @@ class MemcachedHandler extends BaseHandler
      * @param string $path The path where to store/retrieve the session.
      * @param string $name The session name.
      */
+    #[Override]
     public function open($path, $name): bool
     {
         if ($this->hasPersistentConnection()) {
@@ -160,6 +162,7 @@ class MemcachedHandler extends BaseHandler
      *
      * @param string $id The session ID.
      */
+    #[Override]
     public function read($id): false|string
     {
         if (isset($this->memcached) && $this->lockSession($id)) {
@@ -181,6 +184,7 @@ class MemcachedHandler extends BaseHandler
      * @param string $id   The session ID.
      * @param string $data The encoded session data.
      */
+    #[Override]
     public function write($id, $data): bool
     {
         if (! isset($this->memcached)) {
@@ -218,6 +222,7 @@ class MemcachedHandler extends BaseHandler
     /**
      * Closes the current session.
      */
+    #[Override]
     public function close(): bool
     {
         if (isset($this->memcached)) {
@@ -236,6 +241,7 @@ class MemcachedHandler extends BaseHandler
      *
      * @param string $id The session ID being destroyed.
      */
+    #[Override]
     public function destroy($id): bool
     {
         if (isset($this->memcached, $this->lockKey)) {
@@ -253,6 +259,7 @@ class MemcachedHandler extends BaseHandler
      * @param int $max_lifetime Sessions that have not updated
      *                          for the last max_lifetime seconds will be removed.
      */
+    #[Override]
     public function gc(int $max_lifetime): int
     {
         return 1;
@@ -263,6 +270,7 @@ class MemcachedHandler extends BaseHandler
      *
      * @param string $sessionID Session ID.
      */
+    #[Override]
     protected function lockSession(string $sessionID): bool
     {
         if (isset($this->lockKey)) {
@@ -307,6 +315,7 @@ class MemcachedHandler extends BaseHandler
     /**
      * Releases a previously acquired lock.
      */
+    #[Override]
     protected function releaseLock(): bool
     {
         if (isset($this->memcached, $this->lockKey) && $this->lock) {

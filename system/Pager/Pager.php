@@ -18,6 +18,7 @@ use CodeIgniter\HTTP\URI;
 use CodeIgniter\Pager\Exceptions\PagerException;
 use CodeIgniter\View\RendererInterface;
 use Config\Pager as PagerConfig;
+use Override;
 
 /**
  * Class Pager
@@ -87,6 +88,7 @@ class Pager implements PagerInterface
      *
      * @param string $template The output template alias to render.
      */
+    #[Override]
     public function links(string $group = 'default', string $template = 'default_full'): string
     {
         $this->ensureGroup($group);
@@ -97,6 +99,7 @@ class Pager implements PagerInterface
     /**
      * Creates simple Next/Previous links, instead of full pagination.
      */
+    #[Override]
     public function simpleLinks(string $group = 'default', string $template = 'default_simple'): string
     {
         $this->ensureGroup($group);
@@ -112,6 +115,7 @@ class Pager implements PagerInterface
      * @param int         $segment  (whether page number is provided by URI segment)
      * @param string|null $group    optional group (i.e. if we'd like to define custom path)
      */
+    #[Override]
     public function makeLinks(int $page, ?int $perPage, int $total, string $template = 'default_full', int $segment = 0, ?string $group = 'default'): string
     {
         $group = $group === '' ? 'default' : $group;
@@ -143,6 +147,7 @@ class Pager implements PagerInterface
      *
      * @return $this
      */
+    #[Override]
     public function store(string $group, int $page, ?int $perPage, int $total, int $segment = 0)
     {
         if ($segment !== 0) {
@@ -187,6 +192,7 @@ class Pager implements PagerInterface
      *
      * @return $this
      */
+    #[Override]
     public function setPath(string $path, string $group = 'default')
     {
         $this->ensureGroup($group);
@@ -209,6 +215,7 @@ class Pager implements PagerInterface
     /**
      * Returns the total number of pages.
      */
+    #[Override]
     public function getPageCount(string $group = 'default'): int
     {
         $this->ensureGroup($group);
@@ -219,6 +226,7 @@ class Pager implements PagerInterface
     /**
      * Returns the number of the current page of results.
      */
+    #[Override]
     public function getCurrentPage(string $group = 'default'): int
     {
         $this->ensureGroup($group);
@@ -231,6 +239,7 @@ class Pager implements PagerInterface
     /**
      * Tells whether this group of results has any more pages of results.
      */
+    #[Override]
     public function hasMore(string $group = 'default'): bool
     {
         $this->ensureGroup($group);
@@ -243,6 +252,7 @@ class Pager implements PagerInterface
      *
      * @return int|null
      */
+    #[Override]
     public function getLastPage(string $group = 'default')
     {
         $this->ensureGroup($group);
@@ -257,6 +267,7 @@ class Pager implements PagerInterface
     /**
      * Determines the first page # that should be shown.
      */
+    #[Override]
     public function getFirstPage(string $group = 'default'): int
     {
         $this->ensureGroup($group);
@@ -270,6 +281,7 @@ class Pager implements PagerInterface
      *
      * @return string|URI
      */
+    #[Override]
     public function getPageURI(?int $page = null, string $group = 'default', bool $returnObject = false)
     {
         $this->ensureGroup($group);
@@ -311,6 +323,7 @@ class Pager implements PagerInterface
      *
      * @return string|null
      */
+    #[Override]
     public function getNextPageURI(string $group = 'default', bool $returnObject = false)
     {
         $this->ensureGroup($group);
@@ -335,6 +348,7 @@ class Pager implements PagerInterface
      *
      * @return string|null
      */
+    #[Override]
     public function getPreviousPageURI(string $group = 'default', bool $returnObject = false)
     {
         $this->ensureGroup($group);
@@ -357,6 +371,7 @@ class Pager implements PagerInterface
     /**
      * Returns the number of results per page that should be shown.
      */
+    #[Override]
     public function getPerPage(string $group = 'default'): int
     {
         $this->ensureGroup($group);
@@ -364,6 +379,7 @@ class Pager implements PagerInterface
         return (int) $this->groups[$group]['perPage'];
     }
 
+    #[Override]
     public function getDetails(string $group = 'default'): array
     {
         if (! array_key_exists($group, $this->groups)) {

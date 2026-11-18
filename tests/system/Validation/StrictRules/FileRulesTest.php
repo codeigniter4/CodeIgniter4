@@ -18,6 +18,7 @@ use CodeIgniter\EnvironmentDetector;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Validation;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
@@ -55,6 +56,7 @@ class FileRulesTest extends CIUnitTestCase
         ],
     ];
 
+    #[Override]
     protected function setUp(): void
     {
         $this->resetServices();
@@ -154,6 +156,7 @@ class FileRulesTest extends CIUnitTestCase
         ]);
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

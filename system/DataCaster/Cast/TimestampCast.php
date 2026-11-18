@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\DataCaster\Cast;
 
 use CodeIgniter\I18n\Time;
+use Override;
 
 /**
  * (PHP) [Time --> int       ] --> (DB driver) --> (DB column) int
@@ -23,6 +24,7 @@ use CodeIgniter\I18n\Time;
  */
 class TimestampCast extends BaseCast
 {
+    #[Override]
     public static function get(
         mixed $value,
         array $params = [],
@@ -35,6 +37,7 @@ class TimestampCast extends BaseCast
         return Time::createFromTimestamp((int) $value, date_default_timezone_get());
     }
 
+    #[Override]
     public static function set(
         mixed $value,
         array $params = [],

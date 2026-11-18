@@ -16,6 +16,7 @@ namespace CodeIgniter\HTTP\Exceptions;
 use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\HTTP\ResponsableInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Override;
 
 /**
  * @internal
@@ -27,6 +28,7 @@ final class FormRequestException extends RuntimeException implements Responsable
         parent::__construct('FormRequest authorization or validation failed.');
     }
 
+    #[Override]
     public function getResponse(): ResponseInterface
     {
         return $this->response;

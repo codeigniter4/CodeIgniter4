@@ -16,6 +16,7 @@ namespace CodeIgniter\Config;
 use Closure;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use ReflectionClass;
 
@@ -33,6 +34,7 @@ final class MergeTest extends CIUnitTestCase
      */
     private Closure $applyMerge;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

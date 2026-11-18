@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Helpers;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -23,6 +24,7 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class InflectorHelperTest extends CIUnitTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

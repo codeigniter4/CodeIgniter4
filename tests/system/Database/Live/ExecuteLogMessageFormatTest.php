@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\Live;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\TestLogger;
 use Config\Database;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -24,6 +25,7 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('DatabaseLive')]
 final class ExecuteLogMessageFormatTest extends CIUnitTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -31,6 +33,7 @@ final class ExecuteLogMessageFormatTest extends CIUnitTestCase
         self::setPrivateProperty(TestLogger::class, 'op_logs', []);
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

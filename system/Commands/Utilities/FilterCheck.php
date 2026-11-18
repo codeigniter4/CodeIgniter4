@@ -19,6 +19,7 @@ use CodeIgniter\CLI\Input\Argument;
 use CodeIgniter\CLI\Output;
 use CodeIgniter\CLI\Table;
 use CodeIgniter\Commands\Utilities\Routes\FilterCollector;
+use Override;
 
 /**
  * Check filters for a route.
@@ -26,6 +27,7 @@ use CodeIgniter\Commands\Utilities\Routes\FilterCollector;
 #[Command(name: 'filter:check', description: 'Check filters for a route.', group: 'CodeIgniter')]
 class FilterCheck extends AbstractCommand
 {
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -41,6 +43,7 @@ class FilterCheck extends AbstractCommand
             ));
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $method = $arguments['method'];

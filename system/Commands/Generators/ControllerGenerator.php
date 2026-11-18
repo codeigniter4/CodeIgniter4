@@ -20,6 +20,7 @@ use CodeIgniter\CLI\Input\Option;
 use CodeIgniter\Controller;
 use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\RESTful\ResourcePresenter;
+use Override;
 
 #[Command(name: 'make:controller', description: 'Generates a new controller file.', group: 'Generators')]
 #[GeneratorCommand(
@@ -30,6 +31,7 @@ use CodeIgniter\RESTful\ResourcePresenter;
 )]
 class ControllerGenerator extends AbstractGeneratorCommand
 {
+    #[Override]
     protected function configure(): void
     {
         parent::configure();
@@ -49,6 +51,7 @@ class ControllerGenerator extends AbstractGeneratorCommand
             ));
     }
 
+    #[Override]
     protected function interact(array &$arguments, array &$options): void
     {
         $type = $this->getUnboundOption('restful', $options);
@@ -63,6 +66,7 @@ class ControllerGenerator extends AbstractGeneratorCommand
         );
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $type = $this->getResourceType();
@@ -76,6 +80,7 @@ class ControllerGenerator extends AbstractGeneratorCommand
         return $this->generateClass();
     }
 
+    #[Override]
     protected function getReplacements(string $class): array
     {
         $parent = $this->getParentClass();
@@ -83,6 +88,7 @@ class ControllerGenerator extends AbstractGeneratorCommand
         return ['{useStatement}' => $parent, '{extends}' => class_basename($parent)];
     }
 
+    #[Override]
     protected function getTemplateData(string $class): array
     {
         return ['type' => $this->getValidatedOption('bare') === true ? null : $this->getResourceType()];

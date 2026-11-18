@@ -18,6 +18,7 @@ use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockInputOutput;
 use CodeIgniter\Validation\ValidationInterface;
+use Override;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -32,6 +33,7 @@ final class PromptTest extends CIUnitTestCase
 {
     private MockInputOutput $io;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -41,6 +43,7 @@ final class PromptTest extends CIUnitTestCase
         $this->io = new MockInputOutput();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         CLI::reset();

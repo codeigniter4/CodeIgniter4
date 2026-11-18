@@ -18,6 +18,7 @@ use CodeIgniter\CLI\Commands;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockInputOutput;
 use CodeIgniter\Test\StreamFilterTrait;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -28,6 +29,7 @@ final class CellGeneratorTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -35,6 +37,7 @@ final class CellGeneratorTest extends CIUnitTestCase
         CLI::reset();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

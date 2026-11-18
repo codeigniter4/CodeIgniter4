@@ -20,6 +20,7 @@ use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
 use Config\Services;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 use Tests\Support\API\ChildTransformer;
@@ -31,6 +32,7 @@ use Tests\Support\API\ParentTransformer;
 #[Group('Others')]
 final class TransformerTest extends CIUnitTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -39,6 +41,7 @@ final class TransformerTest extends CIUnitTestCase
         Services::superglobals()->setGetArray([]);
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         Services::superglobals()->setGetArray([]);
@@ -73,6 +76,7 @@ final class TransformerTest extends CIUnitTestCase
     public function testConstructorWithNoRequest(): void
     {
         $transformer = new class () extends BaseTransformer {
+            #[Override]
             public function toArray(mixed $resource): array
             {
                 return ['id' => 1, 'name' => 'Test'];
@@ -89,6 +93,7 @@ final class TransformerTest extends CIUnitTestCase
         $request = $this->createMockRequest();
 
         $transformer = new class ($request) extends BaseTransformer {
+            #[Override]
             public function toArray(mixed $resource): array
             {
                 return ['id' => 1, 'name' => 'Test'];
@@ -105,6 +110,7 @@ final class TransformerTest extends CIUnitTestCase
         $request = $this->createMockRequest();
 
         $transformer = new class ($request) extends BaseTransformer {
+            #[Override]
             public function toArray(mixed $resource): array
             {
                 return ['id' => 1, 'name' => 'Test'];
@@ -127,6 +133,7 @@ final class TransformerTest extends CIUnitTestCase
         };
 
         $transformer = new class ($request) extends BaseTransformer {
+            #[Override]
             public function toArray(mixed $resource): array
             {
                 return $resource;
@@ -144,6 +151,7 @@ final class TransformerTest extends CIUnitTestCase
         $data    = ['id' => 1, 'name' => 'Test Array'];
 
         $transformer = new class ($request) extends BaseTransformer {
+            #[Override]
             public function toArray(mixed $resource): array
             {
                 return $resource;
@@ -163,6 +171,7 @@ final class TransformerTest extends CIUnitTestCase
         $object->name = 'Test Object';
 
         $transformer = new class ($request) extends BaseTransformer {
+            #[Override]
             public function toArray(mixed $resource): array
             {
                 return $resource;
@@ -184,6 +193,7 @@ final class TransformerTest extends CIUnitTestCase
         ];
 
         $transformer = new class ($request) extends BaseTransformer {
+            #[Override]
             public function toArray(mixed $resource): array
             {
                 return $resource;
@@ -203,6 +213,7 @@ final class TransformerTest extends CIUnitTestCase
         $request = $this->createMockRequest();
 
         $transformer = new class ($request) extends BaseTransformer {
+            #[Override]
             public function toArray(mixed $resource): array
             {
                 return $resource ?? [];
@@ -220,6 +231,7 @@ final class TransformerTest extends CIUnitTestCase
         $data    = ['id' => 1, 'name' => 'Test', 'email' => 'test@example.com'];
 
         $transformer = new class ($request) extends BaseTransformer {
+            #[Override]
             public function toArray(mixed $resource): array
             {
                 return $resource;
@@ -237,6 +249,7 @@ final class TransformerTest extends CIUnitTestCase
         $data    = ['id' => 1, 'name' => 'Test', 'email' => 'test@example.com'];
 
         $transformer = new class ($request) extends BaseTransformer {
+            #[Override]
             public function toArray(mixed $resource): array
             {
                 return $resource;
@@ -254,6 +267,7 @@ final class TransformerTest extends CIUnitTestCase
         $data    = ['id' => 1, 'name' => 'Test', 'email' => 'test@example.com'];
 
         $transformer = new class ($request) extends BaseTransformer {
+            #[Override]
             public function toArray(mixed $resource): array
             {
                 return $resource;
@@ -271,6 +285,7 @@ final class TransformerTest extends CIUnitTestCase
         $data    = ['id' => 1, 'name' => 'Test', 'email' => 'test@example.com', 'bio' => 'Bio'];
 
         $transformer = new class ($request) extends BaseTransformer {
+            #[Override]
             public function toArray(mixed $resource): array
             {
                 return $resource;
@@ -288,11 +303,13 @@ final class TransformerTest extends CIUnitTestCase
         $data    = ['id' => 1, 'name' => 'Test', 'email' => 'test@example.com'];
 
         $transformer = new class ($request) extends BaseTransformer {
+            #[Override]
             public function toArray(mixed $resource): array
             {
                 return $resource;
             }
 
+            #[Override]
             protected function getAllowedFields(): array
             {
                 return ['id', 'name', 'email'];
@@ -312,11 +329,13 @@ final class TransformerTest extends CIUnitTestCase
         $data    = ['id' => 1, 'name' => 'Test', 'email' => 'test@example.com'];
 
         $transformer = new class ($request) extends BaseTransformer {
+            #[Override]
             public function toArray(mixed $resource): array
             {
                 return $resource;
             }
 
+            #[Override]
             protected function getAllowedFields(): array
             {
                 return ['id', 'name', 'email'];
@@ -332,6 +351,7 @@ final class TransformerTest extends CIUnitTestCase
         $data    = ['id' => 1, 'name' => 'Test'];
 
         $transformer = new class ($request) extends BaseTransformer {
+            #[Override]
             public function toArray(mixed $resource): array
             {
                 return $resource;
@@ -358,6 +378,7 @@ final class TransformerTest extends CIUnitTestCase
         $data    = ['id' => 1, 'name' => 'Test'];
 
         $transformer = new class ($request) extends BaseTransformer {
+            #[Override]
             public function toArray(mixed $resource): array
             {
                 return $resource;
@@ -387,6 +408,7 @@ final class TransformerTest extends CIUnitTestCase
         $data    = ['id' => 1, 'name' => 'Test'];
 
         $transformer = new class ($request) extends BaseTransformer {
+            #[Override]
             public function toArray(mixed $resource): array
             {
                 return $resource;
@@ -425,6 +447,7 @@ final class TransformerTest extends CIUnitTestCase
         $data    = ['id' => 1, 'name' => 'Test'];
 
         $transformer = new class ($request) extends BaseTransformer {
+            #[Override]
             public function toArray(mixed $resource): array
             {
                 return $resource;
@@ -451,11 +474,13 @@ final class TransformerTest extends CIUnitTestCase
         $data    = ['id' => 1, 'name' => 'Test'];
 
         $transformer = new class ($request) extends BaseTransformer {
+            #[Override]
             public function toArray(mixed $resource): array
             {
                 return $resource;
             }
 
+            #[Override]
             protected function getAllowedIncludes(): array
             {
                 return [];
@@ -482,6 +507,7 @@ final class TransformerTest extends CIUnitTestCase
         $data    = ['id' => 1, 'name' => 'Test', 'email' => 'test@example.com'];
 
         $transformer = new class ($request) extends BaseTransformer {
+            #[Override]
             public function toArray(mixed $resource): array
             {
                 return $resource;
@@ -515,6 +541,7 @@ final class TransformerTest extends CIUnitTestCase
         ];
 
         $transformer = new class ($request) extends BaseTransformer {
+            #[Override]
             public function toArray(mixed $resource): array
             {
                 return $resource;
@@ -537,6 +564,7 @@ final class TransformerTest extends CIUnitTestCase
         ];
 
         $transformer = new class ($request) extends BaseTransformer {
+            #[Override]
             public function toArray(mixed $resource): array
             {
                 return $resource;
@@ -563,6 +591,7 @@ final class TransformerTest extends CIUnitTestCase
         $request = $this->createMockRequest('include=nonexistent');
 
         $transformer = new class ($request) extends BaseTransformer {
+            #[Override]
             public function toArray(mixed $resource): array
             {
                 return ['id' => $resource['id'], 'name' => $resource['name']];
@@ -581,6 +610,7 @@ final class TransformerTest extends CIUnitTestCase
         $request = $this->createMockRequest('include=invalid');
 
         $transformer = new class ($request) extends BaseTransformer {
+            #[Override]
             public function toArray(mixed $resource): array
             {
                 return ['id' => $resource['id'], 'name' => $resource['name']];
@@ -599,6 +629,7 @@ final class TransformerTest extends CIUnitTestCase
         $request = $this->createMockRequest('include=posts,invalid');
 
         $transformer = new class ($request) extends BaseTransformer {
+            #[Override]
             public function toArray(mixed $resource): array
             {
                 return ['id' => $resource['id'], 'name' => $resource['name']];
@@ -625,6 +656,7 @@ final class TransformerTest extends CIUnitTestCase
         $request = $this->createMockRequest('include=posts');
 
         $transformer = new class ($request) extends BaseTransformer {
+            #[Override]
             public function toArray(mixed $resource): array
             {
                 return ['id' => $resource['id'], 'name' => $resource['name']];
@@ -758,6 +790,7 @@ final class TransformerTest extends CIUnitTestCase
         Services::injectMock('request', $request);
 
         $throwingRoot = new class ($request) extends BaseTransformer {
+            #[Override]
             public function toArray(mixed $resource): array
             {
                 return $resource;
@@ -777,6 +810,7 @@ final class TransformerTest extends CIUnitTestCase
         Services::injectMock('request', $fieldsRequest);
 
         $nextRoot = new class ($fieldsRequest) extends BaseTransformer {
+            #[Override]
             public function toArray(mixed $resource): array
             {
                 return $resource;
@@ -909,11 +943,13 @@ final class TransformerTest extends CIUnitTestCase
         $transformer = new class ($request) extends BaseTransformer {
             protected ?string $resourceType = 'widget';
 
+            #[Override]
             public function toArray(mixed $resource): array
             {
                 return $resource;
             }
 
+            #[Override]
             protected function getAllowedFields(): array
             {
                 return ['id', 'name'];

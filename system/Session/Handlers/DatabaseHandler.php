@@ -18,6 +18,7 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\Database;
 use Config\Session as SessionConfig;
+use Override;
 
 /**
  * Base database session handler.
@@ -93,6 +94,7 @@ class DatabaseHandler extends BaseHandler
      * @param string $path The path where to store/retrieve the session
      * @param string $name The session name
      */
+    #[Override]
     public function open($path, $name): bool
     {
         if ($this->db->connID === false) {
@@ -107,6 +109,7 @@ class DatabaseHandler extends BaseHandler
      *
      * @param string $id The session ID
      */
+    #[Override]
     public function read($id): false|string
     {
         if ($this->lockSession($id) === false) {
@@ -173,6 +176,7 @@ class DatabaseHandler extends BaseHandler
      * @param string $id   The session ID.
      * @param string $data The encoded session data.
      */
+    #[Override]
     public function write($id, $data): bool
     {
         if ($this->lock === false) {
@@ -233,6 +237,7 @@ class DatabaseHandler extends BaseHandler
     /**
      * Closes the current session.
      */
+    #[Override]
     public function close(): bool
     {
         return ($this->lock && ! $this->releaseLock()) ? $this->fail() : true;
@@ -243,6 +248,7 @@ class DatabaseHandler extends BaseHandler
      *
      * @param string $id The session ID being destroyed.
      */
+    #[Override]
     public function destroy($id): bool
     {
         if ($this->lock) {
@@ -274,6 +280,7 @@ class DatabaseHandler extends BaseHandler
      *
      * @return false|int Returns the number of deleted sessions on success, or false on failure.
      */
+    #[Override]
     public function gc(int $max_lifetime): false|int
     {
         return $this->db->table($this->table)->where(
@@ -286,6 +293,7 @@ class DatabaseHandler extends BaseHandler
     /**
      * Releases the lock, if any.
      */
+    #[Override]
     protected function releaseLock(): bool
     {
         if (! $this->lock) {

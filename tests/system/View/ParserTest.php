@@ -19,6 +19,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Exceptions\ViewException;
 use Config\Services;
 use Config\View as ViewConfig;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use RuntimeException;
@@ -35,6 +36,7 @@ final class ParserTest extends CIUnitTestCase
     private ViewConfig $config;
     private Parser $parser;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -345,6 +347,7 @@ final class ParserTest extends CIUnitTestCase
             /**
              * @return array<string, mixed>
              */
+            #[Override]
             public function toArray(bool $onlyChanged = false, bool $cast = true, bool $recursive = false): array
             {
                 return [

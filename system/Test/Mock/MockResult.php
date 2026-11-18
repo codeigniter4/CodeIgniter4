@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Test\Mock;
 
 use CodeIgniter\Database\BaseResult;
+use Override;
 use stdClass;
 
 /**
@@ -21,6 +22,7 @@ use stdClass;
  */
 class MockResult extends BaseResult
 {
+    #[Override]
     public function getFieldCount(): int
     {
         return 0;
@@ -29,6 +31,7 @@ class MockResult extends BaseResult
     /**
      * @return array{}
      */
+    #[Override]
     public function getFieldNames(): array
     {
         return [];
@@ -37,11 +40,13 @@ class MockResult extends BaseResult
     /**
      * @return array{}
      */
+    #[Override]
     public function getFieldData(): array
     {
         return [];
     }
 
+    #[Override]
     public function freeResult()
     {
     }
@@ -49,6 +54,7 @@ class MockResult extends BaseResult
     /**
      * @return true
      */
+    #[Override]
     public function dataSeek(int $n = 0)
     {
         return true;
@@ -57,6 +63,7 @@ class MockResult extends BaseResult
     /**
      * @return array{}
      */
+    #[Override]
     protected function fetchAssoc()
     {
         return [];
@@ -65,11 +72,13 @@ class MockResult extends BaseResult
     /**
      * @return object
      */
+    #[Override]
     protected function fetchObject(string $className = stdClass::class)
     {
         return new $className();
     }
 
+    #[Override]
     public function getNumRows(): int
     {
         return 0;

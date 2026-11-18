@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\DataCaster\Cast;
 
+use Override;
+
 /**
  * Int Bool Cast
  *
@@ -23,6 +25,7 @@ namespace CodeIgniter\DataCaster\Cast;
  */
 final class IntBoolCast extends BaseCast
 {
+    #[Override]
     public static function get(
         mixed $value,
         array $params = [],
@@ -35,6 +38,7 @@ final class IntBoolCast extends BaseCast
         return (bool) $value;
     }
 
+    #[Override]
     public static function set(
         mixed $value,
         array $params = [],

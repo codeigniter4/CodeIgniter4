@@ -22,6 +22,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\Services;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Cache\IsolatedCacheTrait;
 
@@ -38,6 +39,7 @@ final class OptimizeTest extends CIUnitTestCase
     private string $file = WRITEPATH . 'cache/OptimizeTest_config';
     private FileVarExportHandler $handler;
 
+    #[Override]
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
@@ -45,6 +47,7 @@ final class OptimizeTest extends CIUnitTestCase
         self::setUpBeforeClassIsolatedCache();
     }
 
+    #[Override]
     public static function tearDownAfterClass(): void
     {
         self::tearDownAfterClassIsolatedCache();
@@ -52,6 +55,7 @@ final class OptimizeTest extends CIUnitTestCase
         parent::tearDownAfterClass();
     }
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -60,6 +64,7 @@ final class OptimizeTest extends CIUnitTestCase
         $this->handler->delete('FileLocatorCache');
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

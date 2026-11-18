@@ -16,6 +16,7 @@ namespace CodeIgniter\View;
 use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\View;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -28,6 +29,7 @@ final class ParserFilterTest extends CIUnitTestCase
     private string $viewsDir;
     private View $config;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

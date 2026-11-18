@@ -18,6 +18,7 @@ use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Override;
 use Psr\Log\LoggerInterface;
 
 abstract class BaseResource extends Controller
@@ -46,6 +47,7 @@ abstract class BaseResource extends Controller
      *
      * @return void
      */
+    #[Override]
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
         parent::initController($request, $response, $logger);

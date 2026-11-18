@@ -26,6 +26,7 @@ use CodeIgniter\Database\SQLite3\Connection as SQLite3Connection;
 use CodeIgniter\Database\SQLSRV\Connection as SQLSRVConnection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -353,6 +354,7 @@ final class ConstraintViolationExceptionTest extends CIUnitTestCase
                 parent::__construct($params);
             }
 
+            #[Override]
             public function getVersion(): string
             {
                 return $this->version;

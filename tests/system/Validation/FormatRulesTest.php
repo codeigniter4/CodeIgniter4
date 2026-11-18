@@ -15,6 +15,7 @@ namespace CodeIgniter\Validation;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Generator;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Validation\TestRules;
@@ -53,6 +54,7 @@ class FormatRulesTest extends CIUnitTestCase
         ],
     ];
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

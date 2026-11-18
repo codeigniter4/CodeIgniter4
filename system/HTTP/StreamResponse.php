@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP;
 
 use Closure;
+use Override;
 
 /**
  * HTTP response that streams its body to the client as it is generated,
@@ -102,6 +103,7 @@ class StreamResponse extends Response implements NonBufferedResponseInterface
      *
      * @return $this
      */
+    #[Override]
     public function send()
     {
         // Turn off output buffering completely, even if php.ini output_buffering is not off
@@ -154,6 +156,7 @@ class StreamResponse extends Response implements NonBufferedResponseInterface
      *
      * @return $this
      */
+    #[Override]
     public function sendBody()
     {
         return $this;

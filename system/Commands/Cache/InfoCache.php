@@ -18,6 +18,7 @@ use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Table;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
+use Override;
 
 /**
  * Shows file cache information in the current system.
@@ -25,6 +26,7 @@ use Config\Cache;
 #[Command(name: 'cache:info', description: 'Shows file cache information in the current system.', group: 'Cache')]
 class InfoCache extends AbstractCommand
 {
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $config = config(Cache::class);

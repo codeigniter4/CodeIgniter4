@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\Live\SQLite3;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Database;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -24,6 +25,7 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('DatabaseLive')]
 final class ConnectTest extends CIUnitTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

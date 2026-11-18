@@ -16,6 +16,7 @@ namespace CodeIgniter\Images\Handlers;
 use CodeIgniter\Images\Exceptions\ImageException;
 use Config\Images;
 use GdImage;
+use Override;
 
 /**
  * Image handler for GD package
@@ -42,6 +43,7 @@ class GDHandler extends BaseHandler
      * Handles the rotation of an image resource.
      * Doesn't save the image, but replaces the current resource.
      */
+    #[Override]
     protected function _rotate(int $angle): bool
     {
         $srcImg = $this->createImage();
@@ -63,6 +65,7 @@ class GDHandler extends BaseHandler
      *
      * @return $this
      */
+    #[Override]
     protected function _flatten(int $red = 255, int $green = 255, int $blue = 255)
     {
         $srcImg = $this->createImage();
@@ -91,6 +94,7 @@ class GDHandler extends BaseHandler
      *
      * @return $this
      */
+    #[Override]
     protected function _flip(string $direction)
     {
         $srcImg = $this->createImage();
@@ -109,6 +113,7 @@ class GDHandler extends BaseHandler
      *
      * @return string
      */
+    #[Override]
     public function getVersion()
     {
         if (! function_exists('gd_info')) {
@@ -125,6 +130,7 @@ class GDHandler extends BaseHandler
      *
      * @return $this
      */
+    #[Override]
     public function _resize(bool $maintainRatio = false)
     {
         return $this->process('resize');
@@ -135,6 +141,7 @@ class GDHandler extends BaseHandler
      *
      * @return $this
      */
+    #[Override]
     public function _crop()
     {
         return $this->process('crop');
@@ -145,6 +152,7 @@ class GDHandler extends BaseHandler
      *
      * @return $this
      */
+    #[Override]
     protected function process(string $action)
     {
         $origWidth  = $this->image()->origWidth;
@@ -196,6 +204,7 @@ class GDHandler extends BaseHandler
      *
      * @param non-empty-string|null $target
      */
+    #[Override]
     public function save(?string $target = null, int $quality = 90): bool
     {
         $original = $target;
@@ -309,6 +318,7 @@ class GDHandler extends BaseHandler
     /**
      * Make the image resource object if needed
      */
+    #[Override]
     protected function ensureResource()
     {
         $this->resource ??= $this->getImageResource(
@@ -383,6 +393,7 @@ class GDHandler extends BaseHandler
     /**
      * Add text overlay to an image.
      */
+    #[Override]
     protected function _text(string $text, array $options = [])
     {
         // Reverse the vertical offset
@@ -493,6 +504,7 @@ class GDHandler extends BaseHandler
      *
      * @return int
      */
+    #[Override]
     public function _getWidth()
     {
         return imagesx($this->resource);
@@ -503,6 +515,7 @@ class GDHandler extends BaseHandler
      *
      * @return int
      */
+    #[Override]
     public function _getHeight()
     {
         return imagesy($this->resource);

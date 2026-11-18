@@ -16,6 +16,7 @@ namespace CodeIgniter\Events;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockEvents;
 use Config\Modules;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
@@ -35,6 +36,7 @@ final class EventsTest extends CIUnitTestCase
      */
     private Events $manager;
 
+    #[Override]
     #[WithoutErrorHandler]
     protected function setUp(): void
     {
@@ -45,6 +47,7 @@ final class EventsTest extends CIUnitTestCase
         Events::removeAllListeners();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         Events::simulate(false);

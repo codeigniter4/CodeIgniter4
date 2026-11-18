@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\DataCaster\Cast;
 
+use Override;
+
 /**
  * (PHP) [array --> string] --> (DB driver) --> (DB column) string
  *       [      <-- string] <-- (DB driver) <-- (DB column) string
@@ -21,6 +23,7 @@ namespace CodeIgniter\DataCaster\Cast;
  */
 class CSVCast extends BaseCast
 {
+    #[Override]
     public static function get(
         mixed $value,
         array $params = [],
@@ -33,6 +36,7 @@ class CSVCast extends BaseCast
         return explode(',', $value);
     }
 
+    #[Override]
     public static function set(
         mixed $value,
         array $params = [],

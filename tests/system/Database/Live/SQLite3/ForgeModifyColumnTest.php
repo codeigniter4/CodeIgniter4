@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\Live\SQLite3;
 use CodeIgniter\Database\Forge;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Database;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -26,6 +27,7 @@ final class ForgeModifyColumnTest extends CIUnitTestCase
 {
     private Forge $forge;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

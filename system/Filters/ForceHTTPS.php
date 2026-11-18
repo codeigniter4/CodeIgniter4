@@ -17,6 +17,7 @@ use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\App;
+use Override;
 
 /**
  * Force HTTPS filter
@@ -34,6 +35,7 @@ class ForceHTTPS implements FilterInterface
      *
      * @return ResponseInterface|null
      */
+    #[Override]
     public function before(RequestInterface $request, $arguments = null)
     {
         $config = config(App::class);
@@ -58,6 +60,7 @@ class ForceHTTPS implements FilterInterface
      *
      * @param list<string>|null $arguments
      */
+    #[Override]
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
         return null;

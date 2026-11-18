@@ -15,6 +15,7 @@ namespace CodeIgniter\Test\Mock;
 
 use CodeIgniter\Cache\LockStoreInterface;
 use CodeIgniter\I18n\Time;
+use Override;
 
 class MockLockStore implements LockStoreInterface
 {
@@ -23,6 +24,7 @@ class MockLockStore implements LockStoreInterface
      */
     private array $locks = [];
 
+    #[Override]
     public function acquireLock(string $key, string $owner, int $ttl): bool
     {
         if ($this->getLockOwner($key) !== null) {
@@ -37,6 +39,7 @@ class MockLockStore implements LockStoreInterface
         return true;
     }
 
+    #[Override]
     public function releaseLock(string $key, string $owner): bool
     {
         if ($this->getLockOwner($key) !== $owner) {
@@ -48,6 +51,7 @@ class MockLockStore implements LockStoreInterface
         return true;
     }
 
+    #[Override]
     public function forceReleaseLock(string $key): bool
     {
         unset($this->locks[$key]);
@@ -55,6 +59,7 @@ class MockLockStore implements LockStoreInterface
         return true;
     }
 
+    #[Override]
     public function refreshLock(string $key, string $owner, int $ttl): bool
     {
         if ($this->getLockOwner($key) !== $owner) {
@@ -66,6 +71,7 @@ class MockLockStore implements LockStoreInterface
         return true;
     }
 
+    #[Override]
     public function getLockOwner(string $key): ?string
     {
         if (! isset($this->locks[$key])) {

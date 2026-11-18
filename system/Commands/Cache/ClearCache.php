@@ -18,6 +18,7 @@ use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Input\Argument;
 use Config\Cache;
+use Override;
 
 /**
  * Clears the current system caches.
@@ -25,6 +26,7 @@ use Config\Cache;
 #[Command(name: 'cache:clear', description: 'Clears the current system caches.', group: 'Cache')]
 class ClearCache extends AbstractCommand
 {
+    #[Override]
     protected function configure(): void
     {
         $this->addArgument(new Argument(
@@ -34,6 +36,7 @@ class ClearCache extends AbstractCommand
         ));
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $driver = $arguments['driver'];

@@ -16,6 +16,7 @@ namespace CodeIgniter\Helpers;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\CIUnitTestCase;
 use DateTimeZone;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -24,6 +25,7 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class DateHelperTest extends CIUnitTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

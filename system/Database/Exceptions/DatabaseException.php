@@ -15,6 +15,7 @@ namespace CodeIgniter\Database\Exceptions;
 
 use CodeIgniter\Exceptions\HasExitCodeInterface;
 use CodeIgniter\Exceptions\RuntimeException;
+use Override;
 use Throwable;
 
 class DatabaseException extends RuntimeException implements ExceptionInterface, HasExitCodeInterface
@@ -43,6 +44,7 @@ class DatabaseException extends RuntimeException implements ExceptionInterface, 
         return $this->databaseCode;
     }
 
+    #[Override]
     public function getExitCode(): int
     {
         return EXIT_DATABASE;

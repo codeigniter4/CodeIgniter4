@@ -17,6 +17,7 @@ use CodeIgniter\Config\Services;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -30,6 +31,7 @@ final class EnvironmentCommandTest extends CIUnitTestCase
     private string $envPath       = ROOTPATH . '.env';
     private string $backupEnvPath = ROOTPATH . '.env.backup';
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -41,6 +43,7 @@ final class EnvironmentCommandTest extends CIUnitTestCase
         Services::injectMock('superglobals', new Superglobals());
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

@@ -17,6 +17,7 @@ use CodeIgniter\HTTP\CURLRequest;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -40,6 +41,7 @@ final class PublisherInputTest extends CIUnitTestCase
      * tests call static methods before
      * the constructor would load it.
      */
+    #[Override]
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();

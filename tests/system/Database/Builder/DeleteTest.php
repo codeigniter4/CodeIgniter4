@@ -19,6 +19,7 @@ use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 use CodeIgniter\Test\Mock\MockQuery;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -29,6 +30,7 @@ final class DeleteTest extends CIUnitTestCase
 {
     protected $db;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -206,6 +208,7 @@ final class DeleteTest extends CIUnitTestCase
     public function testDeleteBatchPostgreDoesNotReplaceTablePlaceholderInsideWhereBind(): void
     {
         $db = new class (['DBDriver' => 'Postgre']) extends MockConnection {
+            #[Override]
             protected function _fieldData(string $table): array
             {
                 return [
@@ -278,6 +281,7 @@ final class DeleteTest extends CIUnitTestCase
     public function testDeleteBatchPostgreCastsPositionalAndMappedConstraints(): void
     {
         $db = new class (['DBDriver' => 'Postgre']) extends MockConnection {
+            #[Override]
             protected function _fieldData(string $table): array
             {
                 return [

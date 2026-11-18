@@ -16,6 +16,7 @@ namespace CodeIgniter\Commands\Generators;
 use CodeIgniter\CLI\AbstractGeneratorCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Attributes\GeneratorCommand;
+use Override;
 
 #[Command(name: 'make:config', description: 'Generates a new config file.', group: 'Generators')]
 #[GeneratorCommand(
@@ -26,6 +27,7 @@ use CodeIgniter\CLI\Attributes\GeneratorCommand;
 )]
 class ConfigGenerator extends AbstractGeneratorCommand
 {
+    #[Override]
     protected function getReplacements(string $class): array
     {
         $segments = explode('\\', $class);

@@ -21,6 +21,7 @@ use ImagickDrawException;
 use ImagickException;
 use ImagickPixel;
 use ImagickPixelException;
+use Override;
 use RuntimeException;
 
 /**
@@ -56,6 +57,7 @@ class ImageMagickHandler extends BaseHandler
      *
      * @throws ImageException
      */
+    #[Override]
     protected function ensureResource()
     {
         if (! $this->resource instanceof Imagick) {
@@ -86,6 +88,7 @@ class ImageMagickHandler extends BaseHandler
      *
      * @throws ImageException
      */
+    #[Override]
     protected function process(string $action, int $quality = 100)
     {
         $this->image();
@@ -138,6 +141,7 @@ class ImageMagickHandler extends BaseHandler
      *
      * @throws ImagickException
      */
+    #[Override]
     public function _resize(bool $maintainRatio = false)
     {
         if ($maintainRatio) {
@@ -159,6 +163,7 @@ class ImageMagickHandler extends BaseHandler
      *
      * @throws ImagickException
      */
+    #[Override]
     public function _crop()
     {
         $result = $this->process('crop');
@@ -190,6 +195,7 @@ class ImageMagickHandler extends BaseHandler
      *
      * @throws ImagickException
      */
+    #[Override]
     protected function _rotate(int $angle)
     {
         $this->ensureResource();
@@ -209,6 +215,7 @@ class ImageMagickHandler extends BaseHandler
      *
      * @throws ImagickException|ImagickPixelException
      */
+    #[Override]
     protected function _flatten(int $red = 255, int $green = 255, int $blue = 255)
     {
         $this->ensureResource();
@@ -243,6 +250,7 @@ class ImageMagickHandler extends BaseHandler
      *
      * @throws ImagickException
      */
+    #[Override]
     protected function _flip(string $direction)
     {
         $this->ensureResource();
@@ -261,6 +269,7 @@ class ImageMagickHandler extends BaseHandler
      *
      * @return string
      */
+    #[Override]
     public function getVersion()
     {
         $version = Imagick::getVersion();
@@ -333,6 +342,7 @@ class ImageMagickHandler extends BaseHandler
      *
      * @throws ImagickException
      */
+    #[Override]
     public function save(?string $target = null, int $quality = 90): bool
     {
         $original = $target;
@@ -387,6 +397,7 @@ class ImageMagickHandler extends BaseHandler
      *
      * @throws ImagickDrawException|ImagickException|ImagickPixelException
      */
+    #[Override]
     protected function _text(string $text, array $options = [])
     {
         $this->ensureResource();
@@ -505,6 +516,7 @@ class ImageMagickHandler extends BaseHandler
      *
      * @throws ImagickException
      */
+    #[Override]
     public function _getWidth()
     {
         $this->ensureResource();
@@ -519,6 +531,7 @@ class ImageMagickHandler extends BaseHandler
      *
      * @throws ImagickException
      */
+    #[Override]
     public function _getHeight()
     {
         $this->ensureResource();
@@ -536,6 +549,7 @@ class ImageMagickHandler extends BaseHandler
      *
      * @return $this
      */
+    #[Override]
     public function reorient(bool $silent = false)
     {
         $orientation = $this->getEXIF('Orientation', $silent);
@@ -557,6 +571,7 @@ class ImageMagickHandler extends BaseHandler
      *
      * @throws ImagickException
      */
+    #[Override]
     public function clearMetadata(): static
     {
         $this->ensureResource();

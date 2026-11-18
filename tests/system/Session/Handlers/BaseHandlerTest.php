@@ -17,6 +17,7 @@ use CodeIgniter\Config\Factories;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cookie as CookieConfig;
 use Config\Session as SessionConfig;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -59,6 +60,7 @@ final class BaseHandlerTest extends CIUnitTestCase
      */
     public static ?array $lastSetCookieArgs = null;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -68,6 +70,7 @@ final class BaseHandlerTest extends CIUnitTestCase
         Factories::reset('config');
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         // Reset before parent::tearDown() so a failure in the parent does not
@@ -90,31 +93,37 @@ final class BaseHandlerTest extends CIUnitTestCase
         $sessionConfig->cookieName = 'ci_session';
 
         return new class ($sessionConfig, '127.0.0.1') extends BaseHandler {
+            #[Override]
             public function open(string $path, string $name): bool
             {
                 return true;
             }
 
+            #[Override]
             public function close(): bool
             {
                 return true;
             }
 
+            #[Override]
             public function read(string $id): string
             {
                 return '';
             }
 
+            #[Override]
             public function write(string $id, string $data): bool
             {
                 return true;
             }
 
+            #[Override]
             public function destroy(string $id): bool
             {
                 return $this->destroyCookie();
             }
 
+            #[Override]
             public function gc(int $maxLifetime): int
             {
                 return 1;

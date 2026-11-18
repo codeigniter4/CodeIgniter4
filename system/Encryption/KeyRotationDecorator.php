@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Encryption;
 
 use CodeIgniter\Encryption\Exceptions\EncryptionException;
+use Override;
 use SensitiveParameter;
 
 /**
@@ -43,6 +44,7 @@ class KeyRotationDecorator implements EncrypterInterface
      *
      * Encryption always uses the inner handler's current key.
      */
+    #[Override]
     public function encrypt(#[SensitiveParameter] $data, #[SensitiveParameter] $params = null)
     {
         return $this->innerHandler->encrypt($data, $params);
@@ -56,6 +58,7 @@ class KeyRotationDecorator implements EncrypterInterface
      *
      * @throws EncryptionException
      */
+    #[Override]
     public function decrypt($data, #[SensitiveParameter] $params = null)
     {
         try {

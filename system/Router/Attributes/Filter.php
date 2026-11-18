@@ -16,6 +16,7 @@ namespace CodeIgniter\Router\Attributes;
 use Attribute;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Override;
 
 /**
  * Filter Attribute
@@ -47,6 +48,7 @@ class Filter implements RouteAttributeInterface
     ) {
     }
 
+    #[Override]
     public function before(RequestInterface $request): RequestInterface|ResponseInterface|null
     {
         // Filters are handled by the filter system via getFilters()
@@ -54,6 +56,7 @@ class Filter implements RouteAttributeInterface
         return null;
     }
 
+    #[Override]
     public function after(RequestInterface $request, ResponseInterface $response): ?ResponseInterface
     {
         return null;

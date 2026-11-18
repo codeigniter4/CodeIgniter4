@@ -19,6 +19,7 @@ use CodeIgniter\Cache\Exceptions\CacheException;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RequiresOperatingSystem;
@@ -32,6 +33,7 @@ final class FileHandlerTest extends AbstractHandlerTestCase
     private static string $directory = 'FileHandler';
     private Cache $config;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -51,6 +53,7 @@ final class FileHandlerTest extends AbstractHandlerTestCase
         $this->handler = CacheFactory::getHandler($this->config, 'file');
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();
@@ -509,6 +512,7 @@ final class FileHandlerTest extends AbstractHandlerTestCase
         $this->assertArrayHasKey('fileperms', $actual);
     }
 
+    #[Override]
     public function testGetMetaDataMiss(): void
     {
         $this->assertNull($this->handler->getMetaData(self::$dummy));

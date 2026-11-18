@@ -22,6 +22,7 @@ use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -39,6 +40,7 @@ final class CurrentUrlTest extends CIUnitTestCase
 {
     private App $config;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -56,6 +58,7 @@ final class CurrentUrlTest extends CIUnitTestCase
         service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

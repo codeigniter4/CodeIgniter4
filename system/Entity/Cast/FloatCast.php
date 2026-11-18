@@ -14,12 +14,14 @@ declare(strict_types=1);
 namespace CodeIgniter\Entity\Cast;
 
 use CodeIgniter\Entity\Exceptions\CastException;
+use Override;
 
 /**
  * @extends BaseCast<float, mixed>
  */
 class FloatCast extends BaseCast
 {
+    #[Override]
     public static function get($value, array $params = []): float
     {
         $precision = isset($params[0]) ? (int) $params[0] : null;

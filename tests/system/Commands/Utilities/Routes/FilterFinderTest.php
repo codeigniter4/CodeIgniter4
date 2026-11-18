@@ -29,6 +29,7 @@ use Config\Feature;
 use Config\Filters as FiltersConfig;
 use Config\Modules;
 use Config\Routing;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -43,6 +44,7 @@ final class FilterFinderTest extends CIUnitTestCase
     private Response $response;
     private Modules $moduleConfig;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

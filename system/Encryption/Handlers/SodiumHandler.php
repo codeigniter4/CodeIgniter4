@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Encryption\Handlers;
 
 use CodeIgniter\Encryption\Exceptions\EncryptionException;
+use Override;
 use SensitiveParameter;
 use SodiumException;
 
@@ -44,6 +45,7 @@ class SodiumHandler extends BaseHandler
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function encrypt(#[SensitiveParameter] $data, #[SensitiveParameter] $params = null)
     {
         $key       = $this->key;
@@ -80,6 +82,7 @@ class SodiumHandler extends BaseHandler
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function decrypt($data, #[SensitiveParameter] $params = null)
     {
         $key       = $this->key;

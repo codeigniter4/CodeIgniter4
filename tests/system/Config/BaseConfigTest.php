@@ -23,6 +23,7 @@ use Encryption;
 use EnvIndexConfig;
 use GrowingEnvConfig;
 use MergeRegistrarConfig;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
@@ -48,6 +49,7 @@ final class BaseConfigTest extends CIUnitTestCase
 {
     private string $fixturesFolder;
 
+    #[Override]
     #[WithoutErrorHandler]
     protected function setUp(): void
     {
@@ -83,6 +85,7 @@ final class BaseConfigTest extends CIUnitTestCase
         Services::injectMock('superglobals', new Superglobals());
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

@@ -18,6 +18,7 @@ use CodeIgniter\CLI\CLI;
 use CodeIgniter\Exceptions\BadMethodCallException;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -26,6 +27,7 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('CacheLive')]
 final class MemcachedHandlerTest extends AbstractHandlerTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -37,6 +39,7 @@ final class MemcachedHandlerTest extends AbstractHandlerTestCase
         $this->handler = CacheFactory::getHandler(new Cache(), 'memcached');
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         if (isset($this->handler)) {
@@ -179,6 +182,7 @@ final class MemcachedHandlerTest extends AbstractHandlerTestCase
         $this->assertTrue($this->handler->isSupported());
     }
 
+    #[Override]
     public function testGetMetaDataMiss(): void
     {
         $this->assertNull($this->handler->getMetaData(self::$dummy));

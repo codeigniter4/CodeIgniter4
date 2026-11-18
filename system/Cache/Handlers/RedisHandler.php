@@ -19,6 +19,7 @@ use CodeIgniter\Cache\LockStores\RedisLockStore;
 use CodeIgniter\Exceptions\CriticalError;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
+use Override;
 use Redis;
 use RedisException;
 
@@ -67,6 +68,7 @@ class RedisHandler extends BaseHandler implements LockStoreProviderInterface
         $this->config = array_merge($this->config, $config->redis);
     }
 
+    #[Override]
     public function initialize(): void
     {
         $config = $this->config;
@@ -102,6 +104,7 @@ class RedisHandler extends BaseHandler implements LockStoreProviderInterface
         }
     }
 
+    #[Override]
     public function get(string $key): mixed
     {
         $key  = static::validateKey($key, $this->prefix);
@@ -118,6 +121,7 @@ class RedisHandler extends BaseHandler implements LockStoreProviderInterface
         };
     }
 
+    #[Override]
     public function save(string $key, mixed $value, int $ttl = 60): bool
     {
         $key = static::validateKey($key, $this->prefix);
@@ -151,6 +155,7 @@ class RedisHandler extends BaseHandler implements LockStoreProviderInterface
         return true;
     }
 
+    #[Override]
     public function delete(string $key): bool
     {
         $key = static::validateKey($key, $this->prefix);
@@ -158,6 +163,7 @@ class RedisHandler extends BaseHandler implements LockStoreProviderInterface
         return $this->redis->del($key) === 1;
     }
 
+    #[Override]
     public function deleteMatching(string $pattern): int
     {
         /** @var list<string> $matchedKeys */
@@ -177,6 +183,7 @@ class RedisHandler extends BaseHandler implements LockStoreProviderInterface
         return (int) $this->redis->del($matchedKeys);
     }
 
+    #[Override]
     public function increment(string $key, int $offset = 1): int
     {
         $key = static::validateKey($key, $this->prefix);
@@ -184,21 +191,25 @@ class RedisHandler extends BaseHandler implements LockStoreProviderInterface
         return $this->redis->hIncrBy($key, '__ci_value', $offset);
     }
 
+    #[Override]
     public function decrement(string $key, int $offset = 1): int
     {
         return $this->increment($key, -$offset);
     }
 
+    #[Override]
     public function clean(): bool
     {
         return $this->redis->flushDB();
     }
 
+    #[Override]
     public function getCacheInfo(): array
     {
         return $this->redis->info();
     }
 
+    #[Override]
     public function getMetaData(string $key): ?array
     {
         $value = $this->get($key);
@@ -218,11 +229,13 @@ class RedisHandler extends BaseHandler implements LockStoreProviderInterface
         return null;
     }
 
+    #[Override]
     public function isSupported(): bool
     {
         return extension_loaded('redis');
     }
 
+    #[Override]
     public function lockStore(): LockStoreInterface
     {
         assert($this->redis instanceof Redis);
@@ -230,6 +243,7 @@ class RedisHandler extends BaseHandler implements LockStoreProviderInterface
         return $this->lockStore ??= new RedisLockStore($this->redis, $this->prefix);
     }
 
+    #[Override]
     public function ping(): bool
     {
         if (! isset($this->redis)) {
@@ -245,6 +259,7 @@ class RedisHandler extends BaseHandler implements LockStoreProviderInterface
         }
     }
 
+    #[Override]
     public function reconnect(): bool
     {
         if (isset($this->redis)) {

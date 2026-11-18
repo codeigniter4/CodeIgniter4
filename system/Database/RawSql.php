@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database;
 
+use Override;
 use Stringable;
 
 class RawSql implements Stringable
@@ -27,6 +28,7 @@ class RawSql implements Stringable
         $this->string = $sqlString;
     }
 
+    #[Override]
     public function __toString(): string
     {
         return $this->string;

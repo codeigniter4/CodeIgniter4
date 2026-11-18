@@ -22,6 +22,7 @@ use CodeIgniter\Database\SQLSRV\Connection as SQLSRVConnection;
 use CodeIgniter\Exceptions\BadMethodCallException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Database\Seeds\CITestSeeder;
 use Tests\Support\Enum\StatusEnum;
@@ -37,6 +38,7 @@ final class PreparedQueryTest extends CIUnitTestCase
     protected $seed                   = CITestSeeder::class;
     private ?BasePreparedQuery $query = null;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -44,6 +46,7 @@ final class PreparedQueryTest extends CIUnitTestCase
         $this->query = null;
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

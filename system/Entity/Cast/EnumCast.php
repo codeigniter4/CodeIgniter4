@@ -15,6 +15,7 @@ namespace CodeIgniter\Entity\Cast;
 
 use BackedEnum;
 use CodeIgniter\Entity\Exceptions\CastException;
+use Override;
 use ReflectionEnum;
 use UnitEnum;
 
@@ -23,6 +24,7 @@ use UnitEnum;
  */
 class EnumCast extends BaseCast
 {
+    #[Override]
     public static function get($value, array $params = []): BackedEnum|UnitEnum
     {
         $enumClass = $params[0] ?? null;
@@ -67,6 +69,7 @@ class EnumCast extends BaseCast
     /**
      * @param mixed $value
      */
+    #[Override]
     public static function set($value, array $params = []): int|string
     {
         $enumClass = $params[0] ?? null;

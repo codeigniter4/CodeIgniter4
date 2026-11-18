@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Test\Mock;
 
 use CodeIgniter\Security\Security;
+use Override;
 
 class MockSecurity extends Security
 {
@@ -22,6 +23,7 @@ class MockSecurity extends Security
         service('superglobals')->setCookie('csrf_cookie_name', $this->hash);
     }
 
+    #[Override]
     protected function randomize(string $hash): string
     {
         $keyBinary  = hex2bin('005513c290126d34d41bf41c5265e0f1');

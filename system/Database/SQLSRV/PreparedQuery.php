@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\SQLSRV;
 use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Exceptions\BadMethodCallException;
+use Override;
 
 /**
  * Prepared query for SQLSRV
@@ -41,6 +42,7 @@ class PreparedQuery extends BasePreparedQuery
      *
      * @throws DatabaseException
      */
+    #[Override]
     public function _prepare(string $sql, array $options = []): PreparedQuery
     {
         // Prepare parameters for the query
@@ -66,6 +68,7 @@ class PreparedQuery extends BasePreparedQuery
         return $this;
     }
 
+    #[Override]
     public function _execute(array $data): bool
     {
         if (! isset($this->statement)) {
@@ -96,11 +99,13 @@ class PreparedQuery extends BasePreparedQuery
     /**
      * @return resource|null
      */
+    #[Override]
     public function _getResult()
     {
         return $this->statement;
     }
 
+    #[Override]
     protected function _close(): bool
     {
         return sqlsrv_free_stmt($this->statement);

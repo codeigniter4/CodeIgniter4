@@ -15,6 +15,7 @@ namespace CodeIgniter\Filters;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Override;
 
 /**
  * Performance Metrics filter
@@ -26,6 +27,7 @@ class PerformanceMetrics implements FilterInterface
      *
      * @param list<string>|null $arguments
      */
+    #[Override]
     public function before(RequestInterface $request, $arguments = null)
     {
         return null;
@@ -36,6 +38,7 @@ class PerformanceMetrics implements FilterInterface
      *
      * @param list<string>|null $arguments
      */
+    #[Override]
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
         $body = $response->getBody();

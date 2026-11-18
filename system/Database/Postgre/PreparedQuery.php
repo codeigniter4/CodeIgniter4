@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\Postgre;
 use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Exceptions\BadMethodCallException;
 use Exception;
+use Override;
 use PgSql\Connection as PgSqlConnection;
 use PgSql\Result as PgSqlResult;
 
@@ -45,6 +46,7 @@ class PreparedQuery extends BasePreparedQuery
     /**
      * @throws Exception
      */
+    #[Override]
     public function _prepare(string $sql, array $options = []): PreparedQuery
     {
         $this->name = (string) random_int(1, 10_000_000_000_000_000);
@@ -67,6 +69,7 @@ class PreparedQuery extends BasePreparedQuery
         return $this;
     }
 
+    #[Override]
     public function _execute(array $data): bool
     {
         if (! isset($this->statement)) {
@@ -131,11 +134,13 @@ class PreparedQuery extends BasePreparedQuery
     /**
      * @return PgSqlResult|null
      */
+    #[Override]
     public function _getResult()
     {
         return $this->result;
     }
 
+    #[Override]
     protected function _close(): bool
     {
         return pg_query($this->db->connID, 'DEALLOCATE "' . $this->db->escapeIdentifiers($this->name) . '"') !== false;

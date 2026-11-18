@@ -16,6 +16,7 @@ namespace CodeIgniter\Test;
 use CodeIgniter\Events\Events;
 use Config\Feature;
 use Config\Services;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -26,6 +27,7 @@ final class FeatureTestAutoRoutingImprovedTest extends CIUnitTestCase
 {
     use FeatureTestTrait;
 
+    #[Override]
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
@@ -35,6 +37,7 @@ final class FeatureTestAutoRoutingImprovedTest extends CIUnitTestCase
         self::initializeRouter();
     }
 
+    #[Override]
     public static function tearDownAfterClass(): void
     {
         parent::tearDownAfterClass();

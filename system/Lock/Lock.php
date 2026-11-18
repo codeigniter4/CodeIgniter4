@@ -16,6 +16,7 @@ namespace CodeIgniter\Lock;
 use Closure;
 use CodeIgniter\Cache\LockStoreInterface;
 use CodeIgniter\Exceptions\InvalidArgumentException;
+use Override;
 
 final readonly class Lock implements LockInterface
 {
@@ -36,11 +37,13 @@ final readonly class Lock implements LockInterface
         }
     }
 
+    #[Override]
     public function acquire(): bool
     {
         return $this->store->acquireLock($this->key, $this->owner, $this->ttl);
     }
 
+    #[Override]
     public function block(int $seconds): bool
     {
         if ($seconds < 1) {
@@ -63,6 +66,7 @@ final readonly class Lock implements LockInterface
     /**
      * @param Closure(): mixed $callback
      */
+    #[Override]
     public function run(Closure $callback, int $waitSeconds = 0): mixed
     {
         $acquired = $waitSeconds > 0 ? $this->block($waitSeconds) : $this->acquire();
@@ -78,16 +82,19 @@ final readonly class Lock implements LockInterface
         }
     }
 
+    #[Override]
     public function release(): bool
     {
         return $this->store->releaseLock($this->key, $this->owner);
     }
 
+    #[Override]
     public function forceRelease(): bool
     {
         return $this->store->forceReleaseLock($this->key);
     }
 
+    #[Override]
     public function refresh(?int $ttl = null): bool
     {
         $ttl ??= $this->ttl;
@@ -99,11 +106,13 @@ final readonly class Lock implements LockInterface
         return $this->store->refreshLock($this->key, $this->owner, $ttl);
     }
 
+    #[Override]
     public function isAcquired(): bool
     {
         return $this->store->getLockOwner($this->key) === $this->owner;
     }
 
+    #[Override]
     public function owner(): string
     {
         return $this->owner;

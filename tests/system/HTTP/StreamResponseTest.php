@@ -16,6 +16,7 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\Test\CIUnitTestCase;
 use Generator;
 use IteratorAggregate;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -95,6 +96,7 @@ final class StreamResponseTest extends CIUnitTestCase
             /**
              * @return Generator<int, string>
              */
+            #[Override]
             public function getIterator(): Generator
             {
                 yield 'iterable chunk';

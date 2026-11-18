@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Test;
 
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Test\TestForReflectionHelper;
 
@@ -22,6 +23,7 @@ use Tests\Support\Test\TestForReflectionHelper;
 #[Group('Others')]
 final class ReflectionHelperTest extends CIUnitTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

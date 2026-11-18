@@ -20,6 +20,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Security\Exceptions\SecurityException;
 use CodeIgniter\Security\Security;
+use Override;
 
 /**
  * CSRF filter.
@@ -39,6 +40,7 @@ class CSRF implements FilterInterface
      *
      * @throws SecurityException
      */
+    #[Override]
     public function before(RequestInterface $request, $arguments = null)
     {
         if (! $request instanceof IncomingRequest) {
@@ -73,6 +75,7 @@ class CSRF implements FilterInterface
      *
      * @param list<string>|null $arguments
      */
+    #[Override]
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
         return null;

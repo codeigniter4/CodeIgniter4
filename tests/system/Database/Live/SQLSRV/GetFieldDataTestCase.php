@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\Live\SQLSRV;
 use CodeIgniter\Database\Live\AbstractGetFieldDataTestCase;
 use CodeIgniter\Database\SQLSRV\Connection;
 use Config\Database;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -25,6 +26,7 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('DatabaseLive')]
 final class GetFieldDataTestCase extends AbstractGetFieldDataTestCase
 {
+    #[Override]
     protected function createForge(): void
     {
         if ($this->db->DBDriver !== 'SQLSRV') {
@@ -34,6 +36,7 @@ final class GetFieldDataTestCase extends AbstractGetFieldDataTestCase
         $this->forge = Database::forge($this->db);
     }
 
+    #[Override]
     public function testGetFieldDataDefault(): void
     {
         $this->createTableForDefault();

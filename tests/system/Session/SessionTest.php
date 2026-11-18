@@ -24,6 +24,7 @@ use CodeIgniter\Test\TestLogger;
 use Config\Cookie as CookieConfig;
 use Config\Logger as LoggerConfig;
 use Config\Session as SessionConfig;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -37,6 +38,7 @@ use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 #[RunTestsInSeparateProcesses]
 final class SessionTest extends CIUnitTestCase
 {
+    #[Override]
     #[WithoutErrorHandler]
     protected function setUp(): void
     {

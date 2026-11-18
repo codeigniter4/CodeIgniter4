@@ -16,6 +16,7 @@ namespace CodeIgniter\Database;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Database\Seeds\AnotherSeeder;
 use Tests\Support\Database\Seeds\CITestSeeder;
@@ -38,6 +39,7 @@ final class DatabaseTestCaseTest extends CIUnitTestCase
         'Tests\Support\MigrationTestMigrations',
     ];
 
+    #[Override]
     protected function setUp(): void
     {
         $forge = Database::forge();
@@ -56,6 +58,7 @@ final class DatabaseTestCaseTest extends CIUnitTestCase
         );
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

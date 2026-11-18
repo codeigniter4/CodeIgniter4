@@ -31,6 +31,7 @@ use CodeIgniter\Validation\ValidationInterface;
 use Config\Database;
 use Config\Feature;
 use Generator;
+use Override;
 use stdClass;
 use Throwable;
 
@@ -192,6 +193,7 @@ class Model extends BaseModel
         return $this;
     }
 
+    #[Override]
     protected function doFind(bool $singleton, $id = null)
     {
         $builder = $this->builder();
@@ -246,6 +248,7 @@ class Model extends BaseModel
         return $rows;
     }
 
+    #[Override]
     protected function doFindColumn(string $columnName)
     {
         return $this->select($columnName)->asArray()->find();
@@ -256,6 +259,7 @@ class Model extends BaseModel
      *
      * Works with the current Query Builder instance.
      */
+    #[Override]
     protected function doFindAll(?int $limit = null, int $offset = 0)
     {
         $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true; // @phpstan-ignore nullCoalesce.property
@@ -296,6 +300,7 @@ class Model extends BaseModel
      * Will take any previous Query Builder calls into account
      * when determining the result set.
      */
+    #[Override]
     protected function doFirst()
     {
         $builder = $this->builder();
@@ -329,6 +334,7 @@ class Model extends BaseModel
         return $row;
     }
 
+    #[Override]
     protected function doInsert(array $row)
     {
         $escape       = $this->escape;
@@ -389,6 +395,7 @@ class Model extends BaseModel
         return $result;
     }
 
+    #[Override]
     protected function doInsertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false)
     {
         if (is_array($set) && ! $this->useAutoIncrement) {
@@ -407,6 +414,7 @@ class Model extends BaseModel
         return $this->builder()->testMode($testing)->insertBatch($set, $escape, $batchSize);
     }
 
+    #[Override]
     protected function doUpdate($id = null, $row = null): bool
     {
         $escape       = $this->escape;
@@ -432,11 +440,13 @@ class Model extends BaseModel
         return $builder->update();
     }
 
+    #[Override]
     protected function doUpdateBatch(?array $set = null, ?string $index = null, int $batchSize = 100, bool $returnSQL = false)
     {
         return $this->builder()->testMode($returnSQL)->updateBatch($set, $index, $batchSize);
     }
 
+    #[Override]
     protected function doDelete($id = null, bool $purge = false)
     {
         $set     = [];
@@ -467,6 +477,7 @@ class Model extends BaseModel
         return $builder->delete();
     }
 
+    #[Override]
     protected function doPurgeDeleted()
     {
         return $this->builder()
@@ -474,11 +485,13 @@ class Model extends BaseModel
             ->delete();
     }
 
+    #[Override]
     protected function doOnlyDeleted()
     {
         $this->builder()->where($this->table . '.' . $this->deletedField . ' IS NOT NULL');
     }
 
+    #[Override]
     protected function doReplace(?array $row = null, bool $returnSQL = false)
     {
         return $this->builder()->testMode($returnSQL)->replace($row);
@@ -491,6 +504,7 @@ class Model extends BaseModel
      *  `['source' => 'message']`.
      * This method works only with dbCalls.
      */
+    #[Override]
     protected function doErrors()
     {
         // $error is always ['code' => string|int, 'message' => string]
@@ -503,6 +517,7 @@ class Model extends BaseModel
         return [$this->db::class => $error['message']];
     }
 
+    #[Override]
     public function getIdValue($row)
     {
         if (is_object($row)) {
@@ -533,6 +548,7 @@ class Model extends BaseModel
         return null;
     }
 
+    #[Override]
     public function countAllResults(bool $reset = true, bool $test = false)
     {
         $this->prepareSoftDeleteQuery($reset);
@@ -759,6 +775,7 @@ class Model extends BaseModel
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function chunk(int $size, Closure $userFunc)
     {
         foreach ($this->iterateChunks($size) as $rows) {
@@ -773,6 +790,7 @@ class Model extends BaseModel
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function chunkById(int $size, Closure $userFunc)
     {
         foreach ($this->iterateChunksById($size) as $rows) {
@@ -787,6 +805,7 @@ class Model extends BaseModel
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function chunkRows(int $size, Closure $userFunc): void
     {
         foreach ($this->iterateChunks($size) as $rows) {
@@ -799,6 +818,7 @@ class Model extends BaseModel
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function chunkRowsById(int $size, Closure $userFunc): void
     {
         foreach ($this->iterateChunksById($size) as $rows) {
@@ -881,6 +901,7 @@ class Model extends BaseModel
         return $this;
     }
 
+    #[Override]
     protected function shouldUpdate($row): bool
     {
         if (parent::shouldUpdate($row) === false) {
@@ -896,6 +917,7 @@ class Model extends BaseModel
         return $this->where($this->primaryKey, $this->getIdValue($row))->countAllResults() === 1;
     }
 
+    #[Override]
     public function insert($row = null, bool $returnID = true)
     {
         if (isset($this->tempData['data'])) {
@@ -913,6 +935,7 @@ class Model extends BaseModel
         return parent::insert($row, $returnID);
     }
 
+    #[Override]
     protected function doProtectFieldsForInsert(array $row): array
     {
         if (! $this->protectFields) {
@@ -939,6 +962,7 @@ class Model extends BaseModel
         return $row;
     }
 
+    #[Override]
     protected function doProtectFieldsForUpdate(array $row): array
     {
         $row = $this->doProtectInsertOnlyFieldsForUpdate($row, [$this->primaryKey]);
@@ -995,6 +1019,7 @@ class Model extends BaseModel
         return $this->where($this->primaryKey, $id)->first() ?? false;
     }
 
+    #[Override]
     protected function doProtectFieldsForReplace(array $row): array
     {
         $primaryKey   = array_intersect_key($row, [$this->primaryKey => true]);
@@ -1011,6 +1036,7 @@ class Model extends BaseModel
         return array_replace(array_intersect_key($row, $protectedRow), $protectedRow);
     }
 
+    #[Override]
     public function update($id = null, $row = null): bool
     {
         if (isset($this->tempData['data'])) {
@@ -1033,6 +1059,7 @@ class Model extends BaseModel
      *
      * @return mixed
      */
+    #[Override]
     public function __get(string $name)
     {
         if (parent::__isset($name)) {
@@ -1045,6 +1072,7 @@ class Model extends BaseModel
     /**
      * Checks for the existence of properties across this model, builder, and db connection.
      */
+    #[Override]
     public function __isset(string $name): bool
     {
         if (parent::__isset($name)) {
@@ -1060,6 +1088,7 @@ class Model extends BaseModel
      *
      * @return mixed
      */
+    #[Override]
     public function __call(string $name, array $params)
     {
         $builder = $this->builder();

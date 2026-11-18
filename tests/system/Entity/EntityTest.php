@@ -26,6 +26,7 @@ use DateTime;
 use DateTimeInterface;
 use DateTimeZone;
 use JsonSerializable;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use ReflectionException;
@@ -2180,6 +2181,7 @@ final class EntityTest extends CIUnitTestCase
         };
 
         $obj1 = new class () implements JsonSerializable {
+            #[Override]
             public function jsonSerialize(): mixed
             {
                 return ['value' => 'original'];
@@ -2192,6 +2194,7 @@ final class EntityTest extends CIUnitTestCase
         $this->assertFalse($entity->hasChanged('data'));
 
         $obj2 = new class () implements JsonSerializable {
+            #[Override]
             public function jsonSerialize(): mixed
             {
                 return ['value' => 'modified'];
@@ -2216,6 +2219,7 @@ final class EntityTest extends CIUnitTestCase
             {
             }
 
+            #[Override]
             public function jsonSerialize(): mixed
             {
                 return ['json' => $this->value];
@@ -2817,6 +2821,7 @@ final class EntityTest extends CIUnitTestCase
                     {
                     }
 
+                    #[Override]
                     public function __toString(): string
                     {
                         return $this->email;

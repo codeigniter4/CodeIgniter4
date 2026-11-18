@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Exceptions;
 
+use Override;
+
 /**
  * Exception thrown if the value of the Config class is invalid or the type is
  * incorrect.
@@ -21,6 +23,7 @@ class ConfigException extends RuntimeException implements HasExitCodeInterface
 {
     use DebugTraceableTrait;
 
+    #[Override]
     public function getExitCode(): int
     {
         return EXIT_CONFIG;

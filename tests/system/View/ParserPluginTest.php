@@ -16,6 +16,7 @@ namespace CodeIgniter\View;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Validation;
 use Config\Services;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
@@ -30,6 +31,7 @@ final class ParserPluginTest extends CIUnitTestCase
     private Parser $parser;
     private Validation $validator;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

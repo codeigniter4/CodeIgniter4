@@ -15,6 +15,7 @@ namespace CodeIgniter\Session\Handlers\Database;
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Session\Handlers\DatabaseHandler;
+use Override;
 
 /**
  * Session handler for Postgre
@@ -26,6 +27,7 @@ class PostgreHandler extends DatabaseHandler
      *
      * @return void
      */
+    #[Override]
     protected function setSelect(BaseBuilder $builder)
     {
         $builder->select("encode(data, 'base64') AS data");
@@ -38,6 +40,7 @@ class PostgreHandler extends DatabaseHandler
      *
      * @return false|string
      */
+    #[Override]
     protected function decodeData($data)
     {
         return base64_decode(rtrim($data), true);
@@ -46,6 +49,7 @@ class PostgreHandler extends DatabaseHandler
     /**
      * Prepare data to insert/update
      */
+    #[Override]
     protected function prepareData(string $data): string
     {
         return '\x' . bin2hex($data);
@@ -57,6 +61,7 @@ class PostgreHandler extends DatabaseHandler
      * @param int $max_lifetime Sessions that have not updated
      *                          for the last max_lifetime seconds will be removed.
      */
+    #[Override]
     public function gc(int $max_lifetime): false|int
     {
         $separator = '\'';
@@ -68,6 +73,7 @@ class PostgreHandler extends DatabaseHandler
     /**
      * Lock the session.
      */
+    #[Override]
     protected function lockSession(string $sessionID): bool
     {
         $arg = 'hashtext(' . $this->db->escape($sessionID) . ')'
@@ -85,6 +91,7 @@ class PostgreHandler extends DatabaseHandler
     /**
      * Releases the lock, if any.
      */
+    #[Override]
     protected function releaseLock(): bool
     {
         if (! $this->lock) {

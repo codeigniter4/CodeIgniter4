@@ -23,6 +23,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Input\ValidatedInput;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use CodeIgniter\View\RendererInterface;
+use Override;
 
 /**
  * Validator
@@ -121,6 +122,7 @@ class Validation implements ValidationInterface
         $this->loadRuleSets();
     }
 
+    #[Override]
     public function run(?array $data = null, ?string $group = null, $dbGroup = null): bool
     {
         if ($data === null) {
@@ -225,6 +227,7 @@ class Validation implements ValidationInterface
             . '\z/';
     }
 
+    #[Override]
     public function check($value, $rules, array $errors = [], $dbGroup = null): bool
     {
         $this->reset();
@@ -241,6 +244,7 @@ class Validation implements ValidationInterface
         );
     }
 
+    #[Override]
     public function getValidated(): array
     {
         return $this->validated;
@@ -249,6 +253,7 @@ class Validation implements ValidationInterface
     /**
      * Returns the actual validated data as a typed input object.
      */
+    #[Override]
     public function getValidatedInput(): ValidatedInput
     {
         return service('inputdatafactory')->createValidated($this->validated);
@@ -500,6 +505,7 @@ class Validation implements ValidationInterface
      * Takes a Request object and grabs the input data to use from its
      * array values.
      */
+    #[Override]
     public function withRequest(RequestInterface $request): ValidationInterface
     {
         /** @var IncomingRequest $request */
@@ -524,6 +530,7 @@ class Validation implements ValidationInterface
         return $this;
     }
 
+    #[Override]
     public function setRule(string $field, ?string $label, $rules, array $errors = [])
     {
         if (! is_array($rules) && ! is_string($rules)) {
@@ -546,6 +553,7 @@ class Validation implements ValidationInterface
         return $this;
     }
 
+    #[Override]
     public function setRules(array $rules, array $errors = []): ValidationInterface
     {
         $this->customErrors = $errors;
@@ -578,6 +586,7 @@ class Validation implements ValidationInterface
         return $this;
     }
 
+    #[Override]
     public function getRules(): array
     {
         return $this->rules;
@@ -586,6 +595,7 @@ class Validation implements ValidationInterface
     /**
      * Checks to see if the rule for key $field has been set or not.
      */
+    #[Override]
     public function hasRule(string $field): bool
     {
         return array_key_exists($field, $this->rules);
@@ -600,6 +610,7 @@ class Validation implements ValidationInterface
      *
      * @throws ValidationException If group not found.
      */
+    #[Override]
     public function getRuleGroup(string $group): array
     {
         if (! isset($this->config->{$group})) {
@@ -622,6 +633,7 @@ class Validation implements ValidationInterface
      *
      * @throws ValidationException If group not found.
      */
+    #[Override]
     public function setRuleGroup(string $group)
     {
         $rules = $this->getRuleGroup($group);
@@ -638,6 +650,7 @@ class Validation implements ValidationInterface
      *
      * You can also use validation_list_errors() in Form helper.
      */
+    #[Override]
     public function listErrors(string $template = 'list'): string
     {
         if (! array_key_exists($template, $this->config->templates)) {
@@ -654,6 +667,7 @@ class Validation implements ValidationInterface
      *
      * You can also use validation_show_error() in Form helper.
      */
+    #[Override]
     public function showError(string $field, string $template = 'single'): string
     {
         if (! array_key_exists($field, $this->getErrors())) {
@@ -686,6 +700,7 @@ class Validation implements ValidationInterface
         }
     }
 
+    #[Override]
     public function loadRuleGroup(?string $group = null)
     {
         if ($group === null || $group === '') {
@@ -812,6 +827,7 @@ class Validation implements ValidationInterface
     /**
      * Checks to see if an error exists for the given field.
      */
+    #[Override]
     public function hasError(string $field): bool
     {
         return (bool) preg_grep(self::getRegex($field), array_keys($this->getErrors()));
@@ -821,6 +837,7 @@ class Validation implements ValidationInterface
      * Returns the error(s) for a specified $field (or empty string if not
      * set).
      */
+    #[Override]
     public function getError(?string $field = null): string
     {
         if ($field === null && count($this->rules) === 1) {
@@ -849,6 +866,7 @@ class Validation implements ValidationInterface
      *
      * @codeCoverageIgnore
      */
+    #[Override]
     public function getErrors(): array
     {
         return $this->errors;
@@ -857,6 +875,7 @@ class Validation implements ValidationInterface
     /**
      * Sets the error for a specific field. Used by custom validation methods.
      */
+    #[Override]
     public function setError(string $field, string $error): ValidationInterface
     {
         $this->errors[$field] = $error;
@@ -1063,6 +1082,7 @@ class Validation implements ValidationInterface
      * Resets the class to a blank slate. Should be called whenever
      * you need to process more than one array.
      */
+    #[Override]
     public function reset(): ValidationInterface
     {
         $this->data         = [];

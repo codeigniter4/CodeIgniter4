@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP;
 
 use JsonException;
+use Override;
 
 /**
  * HTTP response for Server-Sent Events (SSE) streaming.
@@ -117,6 +118,7 @@ class SSEResponse extends StreamResponse
      * SSE headers are fixed by the protocol, so they override
      * anything set on the response.
      */
+    #[Override]
     protected function prepareStreamHeaders(): void
     {
         $this->setContentType('text/event-stream', 'UTF-8');
@@ -136,6 +138,7 @@ class SSEResponse extends StreamResponse
      * CSP is not finalized for SSE responses, as Content Security
      * Policy does not apply to event streams.
      */
+    #[Override]
     protected function shouldFinalizeCsp(): bool
     {
         return false;

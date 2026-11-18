@@ -21,6 +21,7 @@ use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
 use Config\Services;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -30,6 +31,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 #[Group('Others')]
 final class CacheTest extends CIUnitTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -39,6 +41,7 @@ final class CacheTest extends CIUnitTestCase
         Time::setTestNow('2026-01-10 12:00:00');
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

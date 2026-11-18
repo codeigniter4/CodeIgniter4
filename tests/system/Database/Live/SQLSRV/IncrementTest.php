@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\Live\SQLSRV;
 use CodeIgniter\Database\SQLSRV\Builder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
@@ -30,6 +31,7 @@ final class IncrementTest extends CIUnitTestCase
     protected $refresh = true;
     protected $seed    = CITestSeeder::class;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

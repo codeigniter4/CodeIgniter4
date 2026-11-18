@@ -17,6 +17,7 @@ use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -34,6 +35,7 @@ final class DotEnvTest extends CIUnitTestCase
     private ?vfsStreamDirectory $root;
     private string $fixturesFolder;
 
+    #[Override]
     #[WithoutErrorHandler]
     protected function setUp(): void
     {
@@ -51,6 +53,7 @@ final class DotEnvTest extends CIUnitTestCase
         Services::injectMock('superglobals', new Superglobals());
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

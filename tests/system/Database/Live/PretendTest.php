@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\Live;
 use CodeIgniter\Database\Query;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -26,6 +27,7 @@ final class PretendTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
+    #[Override]
     protected function tearDown(): void
     {
         // We share `$this->db` in testing, so we need to restore the state.

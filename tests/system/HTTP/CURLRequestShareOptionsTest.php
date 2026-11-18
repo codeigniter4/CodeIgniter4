@@ -17,6 +17,7 @@ use CodeIgniter\Config\Factories;
 use CodeIgniter\Test\Mock\MockCURLRequest;
 use Config\App;
 use Config\CURLRequest as ConfigCURLRequest;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -32,6 +33,7 @@ final class CURLRequestShareOptionsTest extends CURLRequestTest
      * @param array<string, mixed> $options
      * @param array<int, int>|null $shareConnectionOptions
      */
+    #[Override]
     protected function getRequest(array $options = [], ?array $shareConnectionOptions = null): MockCURLRequest
     {
         $uri = new URI($options['baseURI'] ?? null);
@@ -48,6 +50,7 @@ final class CURLRequestShareOptionsTest extends CURLRequestTest
         return new MockCURLRequest(new App(), $uri, new Response(), $options);
     }
 
+    #[Override]
     public function testHeaderContentLengthNotSharedBetweenRequests(): void
     {
         $options = [
@@ -66,6 +69,7 @@ final class CURLRequestShareOptionsTest extends CURLRequestTest
         $this->assertSame('9', $request->header('Content-Length')->getValue());
     }
 
+    #[Override]
     public function testBodyIsResetOnSecondRequest(): void
     {
         $request = $this->getRequest([

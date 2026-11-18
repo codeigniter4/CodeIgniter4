@@ -14,12 +14,14 @@ declare(strict_types=1);
 namespace CodeIgniter\Entity\Cast;
 
 use CodeIgniter\Entity\Exceptions\CastException;
+use Override;
 
 /**
  * @extends BaseCast<int, string>
  */
 class TimestampCast extends BaseCast
 {
+    #[Override]
     public static function get($value, array $params = [])
     {
         $value = strtotime($value);

@@ -17,6 +17,7 @@ use CodeIgniter\Config\Factories;
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Toolbar;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -30,6 +31,7 @@ final class DirectoryHasherTest extends CIUnitTestCase
     private string $fixturePath;
     private string $fixturePathAlt;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -46,6 +48,7 @@ final class DirectoryHasherTest extends CIUnitTestCase
         $this->hasher = new DirectoryHasher();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         $this->removeFixtureDirectory($this->fixturePath);

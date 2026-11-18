@@ -16,6 +16,7 @@ namespace CodeIgniter\CLI;
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Commands\Legacy\SignalCommand;
 use Tests\Support\Commands\Legacy\SignalCommandNoPcntl;
@@ -32,6 +33,7 @@ final class SignalTest extends CIUnitTestCase
     private SignalCommand $command;
     private Logger $logger;
 
+    #[Override]
     protected function setUp(): void
     {
         if (is_windows()) {
@@ -53,6 +55,7 @@ final class SignalTest extends CIUnitTestCase
         $this->command = new SignalCommand($this->logger, service('commands'));
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         CLI::reset();

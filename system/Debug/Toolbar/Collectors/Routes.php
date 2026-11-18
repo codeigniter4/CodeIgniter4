@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Debug\Toolbar\Collectors;
 
 use CodeIgniter\Router\DefinedRouteCollector;
+use Override;
 use ReflectionException;
 use ReflectionFunction;
 use ReflectionMethod;
@@ -71,6 +72,7 @@ class Routes extends BaseCollector
      *
      * @throws ReflectionException
      */
+    #[Override]
     public function display(): array
     {
         $rawRoutes = service('routes', true);
@@ -150,6 +152,7 @@ class Routes extends BaseCollector
     /**
      * Returns a count of all the routes in the system.
      */
+    #[Override]
     public function getBadgeValue(): int
     {
         $rawRoutes = service('routes', true);
@@ -162,6 +165,7 @@ class Routes extends BaseCollector
      *
      * Icon from https://icons8.com - 1em package
      */
+    #[Override]
     public function icon(): string
     {
         return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFDSURBVEhL7ZRNSsNQFIUjVXSiOFEcuQIHDpzpxC0IGYeE/BEInbWlCHEDLsSiuANdhKDjgm6ggtSJ+l25ldrmmTwIgtgDh/t37r1J+16cX0dRFMtpmu5pWAkrvYjjOB7AETzStBFW+inxu3KUJMmhludQpoflS1zXban4LYqiO224h6VLTHr8Z+z8EpIHFF9gG78nDVmW7UgTHKjsCyY98QP+pcq+g8Ku2s8G8X3f3/I8b038WZTp+bO38zxfFd+I6YY6sNUvFlSDk9CRhiAI1jX1I9Cfw7GG1UB8LAuwbU0ZwQnbRDeEN5qqBxZMLtE1ti9LtbREnMIuOXnyIf5rGIb7Wq8HmlZgwYBH7ORTcKH5E4mpjeGt9fBZcHE2GCQ3Vt7oTNPNg+FXLHnSsHkw/FR+Gg2bB8Ptzrst/v6C/wrH+QB+duli6MYJdQAAAABJRU5ErkJggg==';

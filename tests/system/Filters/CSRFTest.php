@@ -23,6 +23,7 @@ use CodeIgniter\Security\Exceptions\SecurityException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockSecurity;
 use Config\Security as SecurityConfig;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -37,6 +38,7 @@ final class CSRFTest extends CIUnitTestCase
     private CLIRequest|IncomingRequest $request;
     private ?Response $response = null;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -46,6 +48,7 @@ final class CSRFTest extends CIUnitTestCase
         $this->config = new \Config\Filters();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

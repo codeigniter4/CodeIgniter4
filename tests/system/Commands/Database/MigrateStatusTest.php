@@ -18,6 +18,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\Database;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -32,6 +33,7 @@ final class MigrateStatusTest extends CIUnitTestCase
     private string $migrationNamespace     = 'Tests\\Support\\MigrationTestMigrations';
     private string $migrationNamespacePath = SUPPORTPATH . 'MigrationTestMigrations/';
 
+    #[Override]
     protected function setUp(): void
     {
         $this->resetServices();
@@ -47,6 +49,7 @@ final class MigrateStatusTest extends CIUnitTestCase
         CLI::init();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

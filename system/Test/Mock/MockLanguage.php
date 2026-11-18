@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Test\Mock;
 
 use CodeIgniter\Language\Language;
+use Override;
 
 /**
  * @phpstan-import-type LoadedStrings from Language
@@ -52,6 +53,7 @@ class MockLanguage extends Language
      *
      * @return LoadedStrings
      */
+    #[Override]
     protected function requireFile(string $path): array
     {
         return $this->data ?? [];

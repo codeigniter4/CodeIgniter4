@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Test;
 
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -32,6 +33,7 @@ final class BootstrapFCPATHTest extends CIUnitTestCase
     private string $dir1       = '/tmp/dir1';
     private string $file1      = '/tmp/dir1/testFile.php';
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -41,6 +43,7 @@ final class BootstrapFCPATHTest extends CIUnitTestCase
         $this->writeFiles();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

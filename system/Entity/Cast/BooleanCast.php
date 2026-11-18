@@ -13,11 +13,14 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Entity\Cast;
 
+use Override;
+
 /**
  * @extends BaseCast<bool, mixed>
  */
 class BooleanCast extends BaseCast
 {
+    #[Override]
     public static function get($value, array $params = []): bool
     {
         return (bool) $value;

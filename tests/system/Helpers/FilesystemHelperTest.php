@@ -16,6 +16,7 @@ namespace CodeIgniter\Helpers;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\visitor\vfsStreamStructureVisitor;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -29,6 +30,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
      */
     private array $structure;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

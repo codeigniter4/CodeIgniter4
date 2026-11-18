@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Cache;
 
 use Config\Cache;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -22,6 +23,7 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class FactoriesCacheFileHandlerTest extends AbstractFactoriesCacheHandlerTestCase
 {
+    #[Override]
     protected function createFactoriesCache(): void
     {
         $this->handler = CacheFactory::getHandler(new Cache(), 'file');

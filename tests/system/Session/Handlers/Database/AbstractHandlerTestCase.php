@@ -18,6 +18,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\ReflectionHelper;
 use Config\Database as DatabaseConfig;
+use Override;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
@@ -35,6 +36,7 @@ abstract class AbstractHandlerTestCase extends CIUnitTestCase
     protected string $sessionName     = 'ci_session';
     protected string $userIpAddress   = '127.0.0.1';
 
+    #[Override]
     protected function setUp(): void
     {
         if (! in_array(config(DatabaseConfig::class)->tests['DBDriver'], ['MySQLi', 'Postgre'], true)) {

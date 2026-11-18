@@ -16,6 +16,7 @@ namespace CodeIgniter\Commands\Server;
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Input\Option;
+use Override;
 
 /**
  * Launches the CodeIgniter PHP-Development Server.
@@ -30,6 +31,7 @@ class Serve extends AbstractCommand
      */
     private const RETRIES = 10;
 
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -38,6 +40,7 @@ class Serve extends AbstractCommand
             ->addOption(new Option(name: 'port', description: 'The port to serve on.', requiresValue: true, default: '8080'));
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $basePort = (int) $options['port'];

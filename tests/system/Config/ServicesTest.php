@@ -55,6 +55,7 @@ use Config\Security as SecurityConfig;
 use Config\Session as ConfigSession;
 use Config\WorkerMode;
 use InvalidArgumentException;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
@@ -73,6 +74,7 @@ final class ServicesTest extends CIUnitTestCase
      */
     private array $original;
 
+    #[Override]
     #[WithoutErrorHandler]
     protected function setUp(): void
     {
@@ -81,6 +83,7 @@ final class ServicesTest extends CIUnitTestCase
         $this->original = $_SERVER;
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         service('superglobals')->setServerArray($this->original);

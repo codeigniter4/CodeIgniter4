@@ -26,6 +26,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\Filters as FiltersConfig;
 use Config\Honeypot as HoneypotConfig;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -46,6 +47,7 @@ final class HoneypotTest extends CIUnitTestCase
 
     private Response $response;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

@@ -16,6 +16,7 @@ namespace CodeIgniter\Files;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -29,6 +30,7 @@ final class FileWithVfsTest extends CIUnitTestCase
     private string $start;
     private File $file;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -40,6 +42,7 @@ final class FileWithVfsTest extends CIUnitTestCase
         $this->file  = new File($this->start . 'able/apple.php');
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

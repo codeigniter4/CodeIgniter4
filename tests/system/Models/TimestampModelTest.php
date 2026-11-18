@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Models;
 
 use CodeIgniter\I18n\Time;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Entity\User;
 use Tests\Support\Models\UserTimestampModel;
@@ -30,6 +31,7 @@ final class TimestampModelTest extends LiveModelTestCase
     protected $refresh     = false;
     protected $seed        = '';
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

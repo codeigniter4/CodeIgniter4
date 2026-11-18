@@ -17,6 +17,7 @@ use CodeIgniter\Encryption\Encryption;
 use CodeIgniter\Encryption\Exceptions\EncryptionException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -27,6 +28,7 @@ final class OpenSSLHandlerTest extends CIUnitTestCase
 {
     private Encryption $encryption;
 
+    #[Override]
     protected function setUp(): void
     {
         if (! extension_loaded('openssl')) {

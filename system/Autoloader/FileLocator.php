@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Autoloader;
 
+use Override;
+
 /**
  * Allows loading non-class files in a namespaced manner.
  * Works with Helpers, Views, etc.
@@ -53,6 +55,7 @@ class FileLocator implements FileLocatorInterface
      *
      * @return false|non-empty-string The path to the file, or false if not found.
      */
+    #[Override]
     public function locateFile(string $file, ?string $folder = null, string $ext = 'php')
     {
         $file = $this->ensureExt($file, $ext);
@@ -124,6 +127,7 @@ class FileLocator implements FileLocatorInterface
     /**
      * Examines a file and returns the fully qualified class name.
      */
+    #[Override]
     public function getClassname(string $file): string
     {
         if (is_dir($file)) {
@@ -186,6 +190,7 @@ class FileLocator implements FileLocatorInterface
      *
      * @return list<non-empty-string>
      */
+    #[Override]
     public function search(string $path, string $ext = 'php', bool $prioritizeApp = true): array
     {
         $path = $this->ensureExt($path, $ext);
@@ -265,6 +270,7 @@ class FileLocator implements FileLocatorInterface
         return array_merge($namespaces, $system);
     }
 
+    #[Override]
     public function findQualifiedNameFromPath(string $path)
     {
         $resolvedPath = realpath($path);
@@ -318,6 +324,7 @@ class FileLocator implements FileLocatorInterface
      *
      * @return list<string> List of file paths
      */
+    #[Override]
     public function listFiles(string $path): array
     {
         if ($path === '') {
@@ -340,6 +347,7 @@ class FileLocator implements FileLocatorInterface
      *
      * @return list<non-empty-string> List of file paths
      */
+    #[Override]
     public function listNamespaceFiles(string $prefix, string $path): array
     {
         if ($path === '' || $prefix === '') {

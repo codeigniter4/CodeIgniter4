@@ -16,6 +16,7 @@ namespace CodeIgniter\Commands\Worker;
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Input\Option;
+use Override;
 
 /**
  * Removes the files created by the worker:install command.
@@ -37,6 +38,7 @@ class WorkerUninstall extends AbstractCommand
         'Caddyfile',
     ];
 
+    #[Override]
     protected function configure(): void
     {
         $this->addOption(new Option(
@@ -46,6 +48,7 @@ class WorkerUninstall extends AbstractCommand
         ));
     }
 
+    #[Override]
     protected function interact(array &$arguments, array &$options): void
     {
         if ($this->hasUnboundOption('force', $options)) {
@@ -61,6 +64,7 @@ class WorkerUninstall extends AbstractCommand
         }
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $existing = $this->existingFiles();

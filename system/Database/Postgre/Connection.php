@@ -19,6 +19,7 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Database\TableName;
 use ErrorException;
+use Override;
 use PgSql\Connection as PgSqlConnection;
 use PgSql\Result as PgSqlResult;
 use stdClass;
@@ -81,6 +82,7 @@ class Connection extends BaseConnection
     /**
      * Checks whether the native database error represents a unique constraint violation.
      */
+    #[Override]
     protected function isUniqueConstraintViolation(int|string $code, string $message): bool
     {
         return $code === '23505';
@@ -89,6 +91,7 @@ class Connection extends BaseConnection
     /**
      * Checks whether the native database error represents a foreign key constraint violation.
      */
+    #[Override]
     protected function isForeignKeyConstraintViolation(int|string $code, string $message): bool
     {
         return $code === '23503';
@@ -97,6 +100,7 @@ class Connection extends BaseConnection
     /**
      * Checks whether the native database error represents a NOT NULL constraint violation.
      */
+    #[Override]
     protected function isNotNullConstraintViolation(int|string $code, string $message): bool
     {
         return $code === '23502';
@@ -105,6 +109,7 @@ class Connection extends BaseConnection
     /**
      * Checks whether the native database error represents a CHECK constraint violation.
      */
+    #[Override]
     protected function isCheckConstraintViolation(int|string $code, string $message): bool
     {
         return $code === '23514';
@@ -113,6 +118,7 @@ class Connection extends BaseConnection
     /**
      * Checks whether the native database error represents a constraint violation.
      */
+    #[Override]
     protected function isConstraintViolation(int|string $code, string $message): bool
     {
         return is_string($code) && str_starts_with($code, '23');
@@ -121,6 +127,7 @@ class Connection extends BaseConnection
     /**
      * Checks whether the native database code represents a retryable transaction failure.
      */
+    #[Override]
     protected function isRetryableTransactionErrorCode(int|string $code): bool
     {
         return in_array($code, ['40001', '40P01'], true);
@@ -131,6 +138,7 @@ class Connection extends BaseConnection
      *
      * @return false|PgSqlConnection
      */
+    #[Override]
     public function connect(bool $persistent = false)
     {
         if ($this->DSN === null || $this->DSN === '') {
@@ -218,6 +226,7 @@ class Connection extends BaseConnection
         $this->DSN = $output;
     }
 
+    #[Override]
     protected function _close()
     {
         pg_close($this->connID);
@@ -226,6 +235,7 @@ class Connection extends BaseConnection
     /**
      * Ping the database connection.
      */
+    #[Override]
     protected function _ping(): bool
     {
         return pg_ping($this->connID);
@@ -234,6 +244,7 @@ class Connection extends BaseConnection
     /**
      * Select a specific database table to use.
      */
+    #[Override]
     public function setDatabase(string $databaseName): bool
     {
         return false;
@@ -242,6 +253,7 @@ class Connection extends BaseConnection
     /**
      * Returns a string containing the version of the database being used.
      */
+    #[Override]
     public function getVersion(): string
     {
         if (isset($this->dataCache['version'])) {
@@ -265,6 +277,7 @@ class Connection extends BaseConnection
      *
      * @return false|PgSqlResult
      */
+    #[Override]
     protected function execute(string $sql)
     {
         $this->lastFailedResult = null;
@@ -375,6 +388,7 @@ class Connection extends BaseConnection
     /**
      * Get the prefix of the function to access the DB.
      */
+    #[Override]
     protected function getDriverFunctionPrefix(): string
     {
         return 'pg_';
@@ -383,6 +397,7 @@ class Connection extends BaseConnection
     /**
      * Returns the total number of rows affected by this query.
      */
+    #[Override]
     public function affectedRows(): int
     {
         if ($this->resultID === false) {
@@ -392,6 +407,7 @@ class Connection extends BaseConnection
         return pg_affected_rows($this->resultID);
     }
 
+    #[Override]
     public function escape($str)
     {
         if (! $this->connID) {
@@ -424,6 +440,7 @@ class Connection extends BaseConnection
     /**
      * Platform-dependant string escape
      */
+    #[Override]
     protected function _escapeString(string $str): string
     {
         if (! $this->connID) {
@@ -433,6 +450,7 @@ class Connection extends BaseConnection
         return pg_escape_string($this->connID, $str);
     }
 
+    #[Override]
     protected function _listTables(bool $prefixLimit = false, ?string $tableName = null): string
     {
         $sql = 'SELECT "table_name" FROM "information_schema"."tables" WHERE "table_schema" = \'' . $this->schema . "'";
@@ -450,6 +468,7 @@ class Connection extends BaseConnection
         return $sql;
     }
 
+    #[Override]
     protected function _listColumns($table = ''): string
     {
         if ($table instanceof TableName) {
@@ -467,6 +486,7 @@ class Connection extends BaseConnection
     /**
      * @throws DatabaseException
      */
+    #[Override]
     protected function _fieldData(string $table): array
     {
         $sql = 'SELECT "column_name", "data_type", "character_maximum_length", "numeric_precision", "column_default",  "is_nullable"
@@ -498,6 +518,7 @@ class Connection extends BaseConnection
     /**
      * @throws DatabaseException
      */
+    #[Override]
     protected function _indexData(string $table): array
     {
         $sql = 'SELECT "indexname", "indexdef"
@@ -533,6 +554,7 @@ class Connection extends BaseConnection
     /**
      * @throws DatabaseException
      */
+    #[Override]
     protected function _foreignKeyData(string $table): array
     {
         $sql = 'SELECT c.constraint_name,
@@ -578,6 +600,7 @@ class Connection extends BaseConnection
      *
      * @return string
      */
+    #[Override]
     protected function _disableForeignKeyChecks()
     {
         return 'SET CONSTRAINTS ALL DEFERRED';
@@ -588,6 +611,7 @@ class Connection extends BaseConnection
      *
      * @return string
      */
+    #[Override]
     protected function _enableForeignKeyChecks()
     {
         return 'SET CONSTRAINTS ALL IMMEDIATE;';
@@ -600,6 +624,7 @@ class Connection extends BaseConnection
      *
      * @return array{code: int|string|null, message: string|null}
      */
+    #[Override]
     public function error(): array
     {
         if ($this->lastFailedResult instanceof PgSqlResult) {
@@ -621,6 +646,7 @@ class Connection extends BaseConnection
     /**
      * @return int|string
      */
+    #[Override]
     public function insertID()
     {
         $v = pg_version($this->connID);
@@ -758,16 +784,19 @@ class Connection extends BaseConnection
     /**
      * Begin Transaction
      */
+    #[Override]
     protected function _transBegin(): bool
     {
         return $this->executeTransactionCommand('BEGIN');
     }
 
+    #[Override]
     protected function _transCommit(): bool
     {
         return $this->executeTransactionCommand('COMMIT');
     }
 
+    #[Override]
     protected function _transRollback(): bool
     {
         return $this->executeTransactionCommand('ROLLBACK');

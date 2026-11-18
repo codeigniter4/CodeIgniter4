@@ -16,6 +16,7 @@ namespace CodeIgniter\Router;
 use Closure;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\ResponseInterface;
+use Override;
 
 /**
  * Router for Auto-Routing
@@ -55,6 +56,7 @@ final class AutoRouter implements AutoRouterInterface
     ) {
     }
 
+    #[Override]
     public function getRoute(string $uri, string $httpVerb): array
     {
         $segments = explode('/', $uri);

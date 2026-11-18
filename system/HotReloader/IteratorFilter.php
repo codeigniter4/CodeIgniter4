@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\HotReloader;
 
 use Config\Toolbar;
+use Override;
 use RecursiveFilterIterator;
 use RecursiveIterator;
 
@@ -39,6 +40,7 @@ final class IteratorFilter extends RecursiveFilterIterator implements RecursiveI
     /**
      * Apply filters to the files in the iterator.
      */
+    #[Override]
     public function accept(): bool
     {
         if (! $this->current()->isFile()) {

@@ -22,6 +22,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 use CodeIgniter\Test\Mock\MockResourcePresenter;
 use Config\App;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -45,6 +46,7 @@ final class ResourcePresenterTest extends CIUnitTestCase
 {
     private CodeIgniter $codeigniter;
 
+    #[Override]
     #[WithoutErrorHandler]
     protected function setUp(): void
     {
@@ -76,6 +78,7 @@ final class ResourcePresenterTest extends CIUnitTestCase
         $this->codeigniter = new MockCodeIgniter($config);
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

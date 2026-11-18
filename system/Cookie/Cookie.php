@@ -20,6 +20,7 @@ use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\I18n\Time;
 use Config\Cookie as CookieConfig;
 use DateTimeInterface;
+use Override;
 
 /**
  * A `Cookie` class represents an immutable HTTP cookie value object.
@@ -301,6 +302,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function getId(): string
     {
         return implode(';', [$this->getPrefixedName(), $this->getPath(), $this->getDomain()]);
@@ -309,6 +311,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function getPrefix(): string
     {
         return $this->prefix;
@@ -317,6 +320,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function getName(): string
     {
         return $this->name;
@@ -325,6 +329,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function getPrefixedName(): string
     {
         $name = $this->getPrefix();
@@ -344,6 +349,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function getValue(): string
     {
         return $this->value;
@@ -352,6 +358,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function getExpiresTimestamp(): int
     {
         return $this->expires;
@@ -360,6 +367,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function getExpiresString(): string
     {
         return gmdate(self::EXPIRES_FORMAT, $this->expires);
@@ -368,6 +376,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function isExpired(): bool
     {
         return $this->expires === 0 || $this->expires < Time::now()->getTimestamp();
@@ -376,6 +385,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function getMaxAge(): int
     {
         $maxAge = $this->expires - Time::now()->getTimestamp();
@@ -386,6 +396,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function getPath(): string
     {
         return $this->path;
@@ -394,6 +405,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function getDomain(): string
     {
         return $this->domain;
@@ -402,6 +414,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function isSecure(): bool
     {
         return $this->secure;
@@ -410,6 +423,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function isHTTPOnly(): bool
     {
         return $this->httponly;
@@ -418,6 +432,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function getSameSite(): string
     {
         return $this->samesite;
@@ -426,6 +441,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function isRaw(): bool
     {
         return $this->raw;
@@ -434,6 +450,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function getOptions(): array
     {
         // This is the order of options in `setcookie`. DO NOT CHANGE.
@@ -454,6 +471,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function withPrefix(string $prefix = '')
     {
         $this->validatePrefix($prefix, $this->secure, $this->path, $this->domain);
@@ -468,6 +486,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function withName(string $name)
     {
         $this->validateName($name, $this->raw);
@@ -482,6 +501,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function withValue(string $value)
     {
         $this->validateValue($value, $this->raw);
@@ -496,6 +516,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function withExpires($expires)
     {
         $cookie = clone $this;
@@ -508,6 +529,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function withExpired()
     {
         $cookie = clone $this;
@@ -520,6 +542,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function withPath(?string $path)
     {
         $path = in_array($path, [null, '', '0'], true) ? self::$defaults['path'] : $path;
@@ -536,6 +559,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function withDomain(?string $domain)
     {
         $domain ??= self::$defaults['domain'];
@@ -552,6 +576,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function withSecure(bool $secure = true)
     {
         $this->validatePrefix($this->prefix, $secure, $this->path, $this->domain);
@@ -567,6 +592,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function withHTTPOnly(bool $httponly = true)
     {
         $cookie = clone $this;
@@ -579,6 +605,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function withSameSite(string $samesite)
     {
         $this->validateSameSite($samesite, $this->secure);
@@ -593,6 +620,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function withRaw(bool $raw = true)
     {
         $this->validateName($this->name, $raw);
@@ -614,6 +642,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      *
      * @param string $offset
      */
+    #[Override]
     public function offsetExists($offset): bool
     {
         return $offset === 'expire' ? true : property_exists($this, $offset);
@@ -626,6 +655,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      *
      * @throws InvalidArgumentException
      */
+    #[Override]
     public function offsetGet($offset): bool|int|string
     {
         if (! $this->offsetExists($offset)) {
@@ -643,6 +673,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      *
      * @throws LogicException
      */
+    #[Override]
     public function offsetSet($offset, $value): void
     {
         throw new LogicException(sprintf('Cannot set values of properties of %s as it is immutable.', static::class));
@@ -655,6 +686,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      *
      * @throws LogicException
      */
+    #[Override]
     public function offsetUnset($offset): void
     {
         throw new LogicException(sprintf('Cannot unset values of properties of %s as it is immutable.', static::class));
@@ -667,6 +699,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function toHeaderString(): string
     {
         return $this->__toString();
@@ -675,6 +708,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function __toString(): string
     {
         $cookieHeader = [];
@@ -726,6 +760,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function toArray(): array
     {
         return [

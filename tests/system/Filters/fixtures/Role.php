@@ -16,9 +16,11 @@ namespace CodeIgniter\Filters\fixtures;
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Override;
 
 class Role implements FilterInterface
 {
+    #[Override]
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
         if (is_array($arguments)) {
@@ -32,6 +34,7 @@ class Role implements FilterInterface
         return $response;
     }
 
+    #[Override]
     public function before(RequestInterface $request, $arguments = null)
     {
         if (is_array($arguments)) {

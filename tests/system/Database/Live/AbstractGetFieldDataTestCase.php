@@ -17,6 +17,7 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Forge;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Database;
+use Override;
 use stdClass;
 
 abstract class AbstractGetFieldDataTestCase extends CIUnitTestCase
@@ -29,6 +30,7 @@ abstract class AbstractGetFieldDataTestCase extends CIUnitTestCase
     protected Forge $forge;
     protected string $table = 'test1';
 
+    #[Override]
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
@@ -36,6 +38,7 @@ abstract class AbstractGetFieldDataTestCase extends CIUnitTestCase
         helper('array');
     }
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -50,6 +53,7 @@ abstract class AbstractGetFieldDataTestCase extends CIUnitTestCase
      */
     abstract protected function createForge(): void;
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

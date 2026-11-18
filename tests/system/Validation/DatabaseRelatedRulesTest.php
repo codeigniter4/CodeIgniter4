@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Validation;
 
 use CodeIgniter\Validation\StrictRules\DatabaseRelatedRulesTest as StrictDatabaseRelatedRulesTest;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Validation\TestRules;
 
@@ -48,6 +49,7 @@ final class DatabaseRelatedRulesTest extends StrictDatabaseRelatedRulesTest
         ],
     ];
 
+    #[Override]
     protected function createRules(): object
     {
         return new Rules();

@@ -18,6 +18,7 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\Query;
 use CodeIgniter\Database\TableName;
+use Override;
 use stdClass;
 
 /**
@@ -76,6 +77,7 @@ class MockConnection extends BaseConnection
      *
      * @todo BC set $queryClass default as null in 4.1
      */
+    #[Override]
     public function query(string $sql, $binds = null, bool $setEscapeFlags = true, string $queryClass = '')
     {
         /** @var class-string<Query> $queryClass */
@@ -121,6 +123,7 @@ class MockConnection extends BaseConnection
      *
      * @return false|object|resource
      */
+    #[Override]
     public function connect(bool $persistent = false)
     {
         $return = $this->returnValues['connect'] ?? true;
@@ -138,6 +141,7 @@ class MockConnection extends BaseConnection
      * Keep or establish the connection if no queries have been sent for
      * a length of time exceeding the server's idle timeout.
      */
+    #[Override]
     public function reconnect(): bool
     {
         return true;
@@ -148,6 +152,7 @@ class MockConnection extends BaseConnection
      *
      * @return bool
      */
+    #[Override]
     public function setDatabase(string $databaseName)
     {
         $this->database = $databaseName;
@@ -158,6 +163,7 @@ class MockConnection extends BaseConnection
     /**
      * Returns a string containing the version of the database being used.
      */
+    #[Override]
     public function getVersion(): string
     {
         return CodeIgniter::CI_VERSION;
@@ -168,6 +174,7 @@ class MockConnection extends BaseConnection
      *
      * @return false|object|resource
      */
+    #[Override]
     protected function execute(string $sql)
     {
         return $this->returnValues['execute'];
@@ -176,6 +183,7 @@ class MockConnection extends BaseConnection
     /**
      * Returns the total number of rows affected by this query.
      */
+    #[Override]
     public function affectedRows(): int
     {
         return 1;
@@ -186,6 +194,7 @@ class MockConnection extends BaseConnection
      *
      * @return array{code: int, message: string}
      */
+    #[Override]
     public function error(): array
     {
         return [
@@ -194,6 +203,7 @@ class MockConnection extends BaseConnection
         ];
     }
 
+    #[Override]
     public function insertID(): int
     {
         return 0;
@@ -204,6 +214,7 @@ class MockConnection extends BaseConnection
      *
      * @param string|null $tableName If $tableName is provided will return only this table if exists.
      */
+    #[Override]
     protected function _listTables(bool $constrainByPrefix = false, ?string $tableName = null): string
     {
         return '';
@@ -214,6 +225,7 @@ class MockConnection extends BaseConnection
      *
      * @param string|TableName $table
      */
+    #[Override]
     protected function _listColumns($table = ''): string
     {
         return '';
@@ -222,6 +234,7 @@ class MockConnection extends BaseConnection
     /**
      * @return list<stdClass>
      */
+    #[Override]
     protected function _fieldData(string $table): array
     {
         return [];
@@ -230,6 +243,7 @@ class MockConnection extends BaseConnection
     /**
      * @return array<string, stdClass>
      */
+    #[Override]
     protected function _indexData(string $table): array
     {
         return [];
@@ -238,6 +252,7 @@ class MockConnection extends BaseConnection
     /**
      * @return array<string, stdClass>
      */
+    #[Override]
     protected function _foreignKeyData(string $table): array
     {
         return [];
@@ -248,6 +263,7 @@ class MockConnection extends BaseConnection
      *
      * @return void
      */
+    #[Override]
     protected function _close()
     {
     }
@@ -255,6 +271,7 @@ class MockConnection extends BaseConnection
     /**
      * Begin Transaction
      */
+    #[Override]
     protected function _transBegin(): bool
     {
         return true;
@@ -263,6 +280,7 @@ class MockConnection extends BaseConnection
     /**
      * Commit Transaction
      */
+    #[Override]
     protected function _transCommit(): bool
     {
         return true;
@@ -271,6 +289,7 @@ class MockConnection extends BaseConnection
     /**
      * Rollback Transaction
      */
+    #[Override]
     protected function _transRollback(): bool
     {
         return true;

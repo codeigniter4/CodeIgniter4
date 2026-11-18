@@ -15,6 +15,7 @@ namespace CodeIgniter\Commands\Utilities;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Publishers\TestPublisher;
 
@@ -26,6 +27,7 @@ final class PublishCommandTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

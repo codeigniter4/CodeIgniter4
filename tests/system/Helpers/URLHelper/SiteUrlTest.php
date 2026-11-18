@@ -21,6 +21,7 @@ use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -38,6 +39,7 @@ final class SiteUrlTest extends CIUnitTestCase
 {
     private App $config;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -48,6 +50,7 @@ final class SiteUrlTest extends CIUnitTestCase
         $this->config = new App();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

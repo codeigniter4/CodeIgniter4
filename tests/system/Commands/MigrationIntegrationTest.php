@@ -16,6 +16,7 @@ namespace CodeIgniter\Commands;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\Database;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -28,6 +29,7 @@ final class MigrationIntegrationTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->resetServices();
@@ -38,6 +40,7 @@ final class MigrationIntegrationTest extends CIUnitTestCase
         $this->dropTestTables();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         service('migrations')->clearHistory();

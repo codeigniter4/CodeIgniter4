@@ -18,6 +18,7 @@ use CodeIgniter\Images\Exceptions\ImageException;
 use CodeIgniter\Images\Image;
 use CodeIgniter\Images\ImageHandlerInterface;
 use Config\Images;
+use Override;
 
 /**
  * Base image handling implementation.
@@ -247,6 +248,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * @return $this
      */
+    #[Override]
     public function resize(int $width, int $height, bool $maintainRatio = false, string $masterDim = 'auto')
     {
         if ($this->image()->origWidth === $width && $this->image()->origHeight === $height) {
@@ -274,6 +276,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * @return $this
      */
+    #[Override]
     public function crop(?int $width = null, ?int $height = null, ?int $x = null, ?int $y = null, bool $maintainRatio = false, string $masterDim = 'auto')
     {
         $this->width  = $width;
@@ -302,6 +305,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * @return $this
      */
+    #[Override]
     public function convert(int $imageType)
     {
         $this->ensureResource();
@@ -316,6 +320,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * @return $this
      */
+    #[Override]
     public function rotate(float $angle)
     {
         $degs = [90.0, 180.0, 270.0];
@@ -342,6 +347,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * @return $this
      */
+    #[Override]
     public function flatten(int $red = 255, int $green = 255, int $blue = 255)
     {
         $this->width  = $this->image()->origWidth;
@@ -373,6 +379,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * @return $this
      */
+    #[Override]
     public function flip(string $dir = 'vertical')
     {
         $dir = strtolower($dir);
@@ -392,6 +399,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      */
     abstract protected function _flip(string $direction);
 
+    #[Override]
     public function text(string $text, array $options = [])
     {
         $options                = array_merge($this->textDefaults, $options);
@@ -463,6 +471,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * @return $this
      */
+    #[Override]
     public function reorient(bool $silent = false)
     {
         $orientation = $this->getEXIF('Orientation', $silent);
@@ -492,6 +501,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * @throws ImageException
      */
+    #[Override]
     public function getEXIF(?string $key = null, bool $silent = false)
     {
         if (! function_exists('exif_read_data')) {
@@ -532,6 +542,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * @return $this
      */
+    #[Override]
     public function fit(int $width, ?int $height = null, string $position = 'center')
     {
         $origWidth  = $this->image()->origWidth;
@@ -676,6 +687,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * @return bool
      */
+    #[Override]
     abstract public function save(?string $target = null, int $quality = 90);
 
     /**
@@ -770,6 +782,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * This method should be implemented to remove or reset metadata as needed.
      */
+    #[Override]
     public function clearMetadata(): static
     {
         return $this;

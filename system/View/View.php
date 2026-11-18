@@ -20,6 +20,7 @@ use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\View\Exceptions\ViewException;
 use Config\Toolbar;
 use Config\View as ViewConfig;
+use Override;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -161,6 +162,7 @@ class View implements RendererInterface
      *                                            if false, cleans the data after displaying,
      *                                            if null, uses the config setting.
      */
+    #[Override]
     public function render(string $view, ?array $options = null, ?bool $saveData = null): string
     {
         $this->renderVars['start'] = microtime(true);
@@ -318,6 +320,7 @@ class View implements RendererInterface
      *                                            if false, cleans the data after displaying,
      *                                            if null, uses the config setting.
      */
+    #[Override]
     public function renderString(string $view, ?array $options = null, ?bool $saveData = null): string
     {
         $start = microtime(true);
@@ -355,6 +358,7 @@ class View implements RendererInterface
      * @param 'attr'|'css'|'html'|'js'|'raw'|'url'|null $context The context to escape it for.
      *                                                           If 'raw', no escaping will happen.
      */
+    #[Override]
     public function setData(array $data = [], ?string $context = null): RendererInterface
     {
         if ($context !== null) {
@@ -374,6 +378,7 @@ class View implements RendererInterface
      * @param 'attr'|'css'|'html'|'js'|'raw'|'url'|null $context The context to escape it for.
      *                                                           If 'raw', no escaping will happen.
      */
+    #[Override]
     public function setVar(string $name, $value = null, ?string $context = null): RendererInterface
     {
         if ($context !== null) {
@@ -389,6 +394,7 @@ class View implements RendererInterface
     /**
      * Removes all of the view data from the system.
      */
+    #[Override]
     public function resetData(): RendererInterface
     {
         $this->data = [];

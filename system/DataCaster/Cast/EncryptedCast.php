@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\DataCaster\Cast;
 
 use CodeIgniter\DataCaster\Exceptions\CastException;
+use Override;
 use SensitiveParameter;
 
 /**
@@ -24,6 +25,7 @@ use SensitiveParameter;
  */
 class EncryptedCast extends BaseCast
 {
+    #[Override]
     public static function get(
         #[SensitiveParameter]
         mixed $value,
@@ -47,6 +49,7 @@ class EncryptedCast extends BaseCast
         return service('encrypter')->decrypt($decoded);
     }
 
+    #[Override]
     public static function set(
         #[SensitiveParameter]
         mixed $value,

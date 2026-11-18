@@ -15,6 +15,7 @@ namespace CodeIgniter\Filters;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Override;
 
 /**
  * Add Common Security Headers
@@ -51,6 +52,7 @@ class SecureHeaders implements FilterInterface
      *
      * @param list<string>|null $arguments
      */
+    #[Override]
     public function before(RequestInterface $request, $arguments = null)
     {
         return null;
@@ -61,6 +63,7 @@ class SecureHeaders implements FilterInterface
      *
      * @param list<string>|null $arguments
      */
+    #[Override]
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
         foreach ($this->headers as $header => $value) {

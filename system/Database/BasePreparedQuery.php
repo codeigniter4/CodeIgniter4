@@ -19,6 +19,7 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\BadMethodCallException;
 use ErrorException;
+use Override;
 use Throwable;
 
 /**
@@ -77,6 +78,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
         $this->db = $db;
     }
 
+    #[Override]
     public function prepare(string $sql, array $options = [], string $queryClass = Query::class)
     {
         // We only support positional placeholders (?), so convert
@@ -108,6 +110,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
     /**
      * @throws DatabaseException
      */
+    #[Override]
     public function execute(...$data)
     {
         foreach ($data as $key => $value) {
@@ -235,6 +238,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
      *
      * @throws BadMethodCallException
      */
+    #[Override]
     public function close(): bool
     {
         if (! isset($this->statement)) {
@@ -250,6 +254,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 
     abstract protected function _close(): bool;
 
+    #[Override]
     public function getQueryString(): string
     {
         if (! $this->query instanceof QueryInterface) {
@@ -267,11 +272,13 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
         return $this->errorString !== '';
     }
 
+    #[Override]
     public function getErrorCode(): int
     {
         return $this->errorCode;
     }
 
+    #[Override]
     public function getErrorMessage(): string
     {
         return $this->errorString;

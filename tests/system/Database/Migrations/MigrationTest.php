@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\Migrations;
 use CodeIgniter\Database\Migration;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -31,10 +32,12 @@ final class MigrationTest extends CIUnitTestCase
         $migration = new class () extends Migration {
             protected $DBGroup = 'tests';
 
+            #[Override]
             public function up(): void
             {
             }
 
+            #[Override]
             public function down(): void
             {
             }

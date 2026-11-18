@@ -17,6 +17,7 @@ use ArrayIterator;
 use CodeIgniter\Cookie\Exceptions\CookieException;
 use Countable;
 use IteratorAggregate;
+use Override;
 use Traversable;
 
 /**
@@ -177,6 +178,7 @@ class CookieStore implements Countable, IteratorAggregate
     /**
      * Gets the Cookie count in this collection.
      */
+    #[Override]
     public function count(): int
     {
         return count($this->cookies);
@@ -187,6 +189,7 @@ class CookieStore implements Countable, IteratorAggregate
      *
      * @return Traversable<string, Cookie>
      */
+    #[Override]
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->cookies);

@@ -17,6 +17,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\App;
 use Locale;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -37,6 +38,7 @@ final class LocalizationFinderTest extends CIUnitTestCase
      */
     private array $originalSupportedLocales;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -53,6 +55,7 @@ final class LocalizationFinderTest extends CIUnitTestCase
         $this->clearGeneratedFiles();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

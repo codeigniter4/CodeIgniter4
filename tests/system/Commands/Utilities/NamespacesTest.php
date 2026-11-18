@@ -16,6 +16,7 @@ namespace CodeIgniter\Commands\Utilities;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use CodeIgniter\Test\StreamFilterTrait;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -27,6 +28,7 @@ final class NamespacesTest extends CIUnitTestCase
     use StreamFilterTrait;
     use ReflectionHelper;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->resetServices();
@@ -34,6 +36,7 @@ final class NamespacesTest extends CIUnitTestCase
         parent::setUp();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         $this->resetServices();

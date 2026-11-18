@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP;
 
 use InvalidArgumentException;
+use Override;
 use Stringable;
 
 /**
@@ -205,6 +206,7 @@ class Header implements Stringable
      * Returns a representation of the entire header string, including
      * the header name and all values converted to the proper format.
      */
+    #[Override]
     public function __toString(): string
     {
         return $this->name . ': ' . $this->getValueLine();

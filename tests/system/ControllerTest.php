@@ -23,6 +23,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\App;
 use Config\Validation as ValidationConfig;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
 use Psr\Log\LoggerInterface;
@@ -52,6 +53,7 @@ final class ControllerTest extends CIUnitTestCase
 
     private LoggerInterface $logger;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

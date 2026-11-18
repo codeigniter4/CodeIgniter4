@@ -19,6 +19,7 @@ use CodeIgniter\Test\StreamFilterTrait;
 use Config\App;
 use Kint\Kint;
 use Kint\Renderer\CliRenderer;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -29,6 +30,7 @@ final class ConfigCheckTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
+    #[Override]
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
@@ -39,6 +41,7 @@ final class ConfigCheckTest extends CIUnitTestCase
         CliRenderer::$cli_colors = false;
     }
 
+    #[Override]
     public static function tearDownAfterClass(): void
     {
         parent::tearDownAfterClass();
@@ -49,6 +52,7 @@ final class ConfigCheckTest extends CIUnitTestCase
         CliRenderer::$cli_colors = true;
     }
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -57,6 +61,7 @@ final class ConfigCheckTest extends CIUnitTestCase
         CLI::reset();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

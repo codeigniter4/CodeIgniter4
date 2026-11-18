@@ -33,6 +33,7 @@ use Config\Modules;
 use Config\Services;
 use Config\Session;
 use Exception;
+use Override;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -230,6 +231,7 @@ abstract class CIUnitTestCase extends TestCase
     /**
      * Load the helpers.
      */
+    #[Override]
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
@@ -237,6 +239,7 @@ abstract class CIUnitTestCase extends TestCase
         helper(['url', 'test']);
     }
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -258,6 +261,7 @@ abstract class CIUnitTestCase extends TestCase
         $this->callTraitMethods('setUp');
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

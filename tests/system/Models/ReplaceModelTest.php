@@ -15,6 +15,7 @@ namespace CodeIgniter\Models;
 
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\I18n\Time;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Models\JobModel;
@@ -27,6 +28,7 @@ use Tests\Support\Models\WithoutAutoIncrementModel;
 #[Group('DatabaseLive')]
 final class ReplaceModelTest extends LiveModelTestCase
 {
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();
@@ -147,6 +149,7 @@ final class ReplaceModelTest extends LiveModelTestCase
     public function testReplacePreservesFieldOrder(bool $primaryKeyFirst): void
     {
         $model = new class ($this->db) extends UserModel {
+            #[Override]
             protected function doReplace(?array $row = null, bool $returnSQL = false): string
             {
                 return implode(',', array_keys((array) $row));
@@ -177,6 +180,7 @@ final class ReplaceModelTest extends LiveModelTestCase
     public function testReplaceUsesCustomFieldProtection(): void
     {
         $model = new class ($this->db) extends JobModel {
+            #[Override]
             protected function doProtectFields(array $row): array
             {
                 $row = parent::doProtectFields($row);
@@ -270,6 +274,7 @@ final class ReplaceModelTest extends LiveModelTestCase
     public function testReplaceRejectsEmptyDataFromCustomProtectionBeforeTimestamps(): void
     {
         $model = new class ($this->db) extends JobModel {
+            #[Override]
             protected function doProtectFieldsForReplace(array $row): array
             {
                 return $this->doProtectFields($row);

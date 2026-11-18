@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Encryption\Handlers;
 
 use CodeIgniter\Encryption\Exceptions\EncryptionException;
+use Override;
 use SensitiveParameter;
 
 /**
@@ -81,6 +82,7 @@ class OpenSSLHandler extends BaseHandler
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function encrypt(#[SensitiveParameter] $data, #[SensitiveParameter] $params = null)
     {
         // Allow key override
@@ -117,6 +119,7 @@ class OpenSSLHandler extends BaseHandler
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function decrypt($data, #[SensitiveParameter] $params = null)
     {
         // Allow key override

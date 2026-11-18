@@ -17,6 +17,7 @@ use CodeIgniter\Files\File;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\Mimes;
 use Exception;
+use Override;
 
 /**
  * Value object representing a single file uploaded through an
@@ -80,6 +81,7 @@ class UploadedFile extends File implements UploadedFileInterface
      * @param int|null    $error        The error constant of the upload (one of PHP's UPLOAD_ERR_XXX constants)
      * @param string|null $clientPath   The webkit relative path of the uploaded file.
      */
+    #[Override]
     public function __construct(string $path, string $originalName, ?string $mimeType = null, ?int $size = null, ?int $error = null, ?string $clientPath = null)
     {
         $this->path             = $path;
@@ -126,6 +128,7 @@ class UploadedFile extends File implements UploadedFileInterface
      *
      * @return static
      */
+    #[Override]
     public function move(string $targetPath, ?string $name = null, bool $overwrite = false)
     {
         $targetPath = rtrim($targetPath, '/') . '/';
@@ -206,6 +209,7 @@ class UploadedFile extends File implements UploadedFileInterface
      * the move() method will not work and certain properties, like
      * the tempName, will no longer be available.
      */
+    #[Override]
     public function hasMoved(): bool
     {
         return $this->hasMoved;
@@ -226,6 +230,7 @@ class UploadedFile extends File implements UploadedFileInterface
      *
      * @return int One of PHP's UPLOAD_ERR_XXX constants.
      */
+    #[Override]
     public function getError(): int
     {
         return $this->error ?? UPLOAD_ERR_OK;
@@ -259,6 +264,7 @@ class UploadedFile extends File implements UploadedFileInterface
      *
      * @return string The media type sent by the client or null if none was provided.
      */
+    #[Override]
     public function getClientMimeType(): string
     {
         return $this->originalMimeType;
@@ -271,6 +277,7 @@ class UploadedFile extends File implements UploadedFileInterface
      *
      * @return string The filename sent by the client or null if none was provided.
      */
+    #[Override]
     public function getName(): string
     {
         return $this->name;
@@ -288,6 +295,7 @@ class UploadedFile extends File implements UploadedFileInterface
      * (PHP 8.1+)
      * Returns the webkit relative path of the uploaded file on directory uploads.
      */
+    #[Override]
     public function getClientPath(): ?string
     {
         return $this->clientPath;
@@ -296,6 +304,7 @@ class UploadedFile extends File implements UploadedFileInterface
     /**
      * Gets the temporary filename where the file was uploaded to.
      */
+    #[Override]
     public function getTempName(): string
     {
         return $this->path;
@@ -312,6 +321,7 @@ class UploadedFile extends File implements UploadedFileInterface
      * but might be insecure if the mime type is not matched. Consider
      * using guessExtension for a more safe version.
      */
+    #[Override]
     public function getExtension(): string
     {
         $guessExtension = $this->guessExtension();
@@ -325,6 +335,7 @@ class UploadedFile extends File implements UploadedFileInterface
      * an empty string if it fails to determine an extension instead of
      * falling back to the unsecure clientExtension.
      */
+    #[Override]
     public function guessExtension(): string
     {
         return Mimes::guessExtensionFromType($this->getMimeType(), $this->getClientExtension()) ?? '';
@@ -335,6 +346,7 @@ class UploadedFile extends File implements UploadedFileInterface
      * was uploaded. This is NOT a trusted source.
      * For a trusted version, use guessExtension() instead.
      */
+    #[Override]
     public function getClientExtension(): string
     {
         return pathinfo($this->originalName, PATHINFO_EXTENSION);
@@ -344,6 +356,7 @@ class UploadedFile extends File implements UploadedFileInterface
      * Returns whether the file was uploaded successfully, based on whether
      * it was uploaded via HTTP and has no errors.
      */
+    #[Override]
     public function isValid(): bool
     {
         return is_uploaded_file($this->path) && $this->error === UPLOAD_ERR_OK;

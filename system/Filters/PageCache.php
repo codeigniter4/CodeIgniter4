@@ -22,6 +22,7 @@ use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Cache;
+use Override;
 
 /**
  * Page Cache filter
@@ -50,6 +51,7 @@ class PageCache implements FilterInterface
      *
      * @return ResponseInterface|null
      */
+    #[Override]
     public function before(RequestInterface $request, $arguments = null)
     {
         assert($request instanceof CLIRequest || $request instanceof IncomingRequest);
@@ -68,6 +70,7 @@ class PageCache implements FilterInterface
      *
      * @param list<string>|null $arguments
      */
+    #[Override]
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
         assert($request instanceof CLIRequest || $request instanceof IncomingRequest);

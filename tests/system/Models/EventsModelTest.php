@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Models;
 
 use CodeIgniter\Database\Exceptions\DataException;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Models\EventModel;
 
@@ -23,6 +24,7 @@ use Tests\Support\Models\EventModel;
 #[Group('DatabaseLive')]
 final class EventsModelTest extends LiveModelTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
