@@ -59,20 +59,6 @@ $size = $file->getSize(); // 256901
 
 A `RuntimeException` will be thrown if the file does not exist or an error occurs.
 
-### getSizeByUnit()
-
-!!! danger "Deprecated since version 4.6.0"
-
-Returns the size of the file, in bytes by default. You can pass in either `'kb'` or `'mb'` as the first parameter to get the results in kibibytes or mebibytes, respectively:
-
-```php
-$bytes     = $file->getSizeByUnit(); // 256901
-$kilobytes = $file->getSizeByUnit('kb'); // 250.880
-$megabytes = $file->getSizeByUnit('mb'); // 0.245
-```
-
-A `RuntimeException` will be thrown if the file does not exist or an error occurs.
-
 ### getSizeByBinaryUnit()
 
 !!! success "Available from version 4.6.0"

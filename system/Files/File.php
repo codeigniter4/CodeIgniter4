@@ -89,22 +89,6 @@ class File extends SplFileInfo
     }
 
     /**
-     * Retrieve the file size by unit.
-     *
-     * @deprecated 4.6.0 Use getSizeByBinaryUnit() or getSizeByMetricUnit() instead
-     *
-     * @return false|int|string
-     */
-    public function getSizeByUnit(string $unit = 'b')
-    {
-        return match (strtolower($unit)) {
-            'kb'    => $this->getSizeByBinaryUnit(FileSizeUnit::KB),
-            'mb'    => $this->getSizeByBinaryUnit(FileSizeUnit::MB),
-            default => $this->getSize(),
-        };
-    }
-
-    /**
      * Attempts to determine the file extension based on the trusted
      * getType() method. If the mime type is unknown, will return null.
      */
