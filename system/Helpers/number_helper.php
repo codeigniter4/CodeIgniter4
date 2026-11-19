@@ -151,7 +151,7 @@ if (! function_exists('format_number')) {
         } else {
             // In order to specify a precision, we'll have to modify
             // the pattern used by NumberFormatter.
-            $pattern = '#,##0' . ($precision > 0 ? '.' . str_repeat('#', $precision) : '');
+            $pattern = $precision === 0 ? '#,##0' : '#,##0.' . str_repeat('#', $precision);
 
             $formatter->setPattern($pattern);
             $output = $formatter->format($num);

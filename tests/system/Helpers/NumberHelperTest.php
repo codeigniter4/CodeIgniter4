@@ -15,6 +15,7 @@ namespace CodeIgniter\Helpers;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use PHPUnit\Framework\Attributes\Group;
+use ValueError;
 
 /**
  * @internal
@@ -61,6 +62,14 @@ final class NumberHelperTest extends CIUnitTestCase
     {
         $this->assertSame('123,456.8', format_number(123456.789, 1, 'en_US'));
         $this->assertSame('123,456.79', format_number(123456.789, 2, 'en_US'));
+    }
+
+    public function testFormatNumberWithNegativePrecisionThrowsValueError(): void
+    {
+        $this->expectException(ValueError::class);
+        $this->expectExceptionMessage('str_repeat(): Argument #2 ($times) must be greater than or equal to 0');
+
+        format_number(123456, -1, 'en_US');
     }
 
     public function testFormattingOptions(): void
