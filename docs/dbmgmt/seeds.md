@@ -85,7 +85,9 @@ You can grab a copy of the main seeder through the database config class:
 ```php
 <?php
 
-$seeder = \Config\Database::seeder();
+use Config\Database;
+
+$seeder = Database::seeder();
 $seeder->call('TestSeeder');
 ```
 
@@ -96,7 +98,9 @@ You can specify a different database group when obtaining a seeder instance by p
 ```php
 <?php
 
-$seeder = \Config\Database::seeder('group_name');
+use Config\Database;
+
+$seeder = Database::seeder('group_name');
 $seeder->call('TestSeeder');
 ```
 

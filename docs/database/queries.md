@@ -183,11 +183,11 @@ The secondary benefit of using binds is that the values are automatically escape
 ```php
 <?php
 
-$db->table('users')->where('status', \UserStatus::Active)->get();
+$db->table('users')->where('status', UserStatus::Active)->get();
 
 $db->query(
     'SELECT * FROM users WHERE status = ?',
-    [\UserStatus::Active],
+    [UserStatus::Active],
 );
 ```
 

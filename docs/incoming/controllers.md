@@ -121,7 +121,7 @@ namespace App\Controllers;
 
 class StoreController extends BaseController
 {
-    public function product(int $id)
+    public function product(int $id): string
     {
         $data = [
             'id'   => $id,
@@ -139,7 +139,7 @@ class StoreController extends BaseController
             ]);
         }
 
-        // ...
+        return view('store/success');
     }
 }
 ```
@@ -167,7 +167,7 @@ namespace App\Controllers;
 
 class UserController extends BaseController
 {
-    public function updateUser(int $userID)
+    public function updateUser(int $userID): string
     {
         if (! $this->validate([
             'email' => "required|is_unique[users.email,id,{$userID}]",
@@ -184,7 +184,7 @@ class UserController extends BaseController
         // Get the validated data.
         $validData = $this->validator->getValidated();
 
-        // ...
+        return view('users/success');
     }
 }
 ```
@@ -204,7 +204,7 @@ namespace App\Controllers;
 
 class UserController extends BaseController
 {
-    public function updateUser(int $userID)
+    public function updateUser(int $userID): string
     {
         if (! $this->validate('userRules')) {
             // The validation failed.
@@ -218,7 +218,7 @@ class UserController extends BaseController
         // Get the validated data.
         $validData = $this->validator->getValidated();
 
-        // ...
+        return view('users/success');
     }
 }
 ```
@@ -239,7 +239,7 @@ namespace App\Controllers;
 
 class Helloworld extends BaseController
 {
-    protected function utility()
+    protected function utility(): void
     {
         // some code
     }
@@ -304,7 +304,7 @@ namespace App\Controllers;
 
 class Helloworld extends BaseController
 {
-    public function index()
+    public function index(): string
     {
         return 'Hello World!';
     }
@@ -404,12 +404,12 @@ namespace App\Controllers;
 
 class Helloworld extends BaseController
 {
-    public function index()
+    public function index(): string
     {
         return 'Hello World!';
     }
 
-    public function comment()
+    public function comment(): string
     {
         return 'I am not flat!';
     }
@@ -443,7 +443,7 @@ namespace App\Controllers;
 
 class Products extends BaseController
 {
-    public function shoes($sandals, $id)
+    public function shoes(string $sandals, string $id): string
     {
         return $sandals . $id;
     }
@@ -521,7 +521,7 @@ namespace App\Controllers;
 
 class Products extends BaseController
 {
-    public function _remap()
+    public function _remap(): void
     {
         // Some code here...
     }
@@ -540,7 +540,7 @@ namespace App\Controllers;
 
 class Products extends BaseController
 {
-    public function _remap($method)
+    public function _remap(string $method): mixed
     {
         if ($method === 'some_method') {
             return $this->{$method}();
@@ -560,9 +560,11 @@ Example:
 
 namespace App\Controllers;
 
+use CodeIgniter\Exceptions\PageNotFoundException;
+
 class Products extends BaseController
 {
-    public function _remap($method, ...$params)
+    public function _remap(string $method, string ...$params): mixed
     {
         $method = 'process_' . $method;
 
@@ -570,7 +572,7 @@ class Products extends BaseController
             return $this->{$method}(...$params);
         }
 
-        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        throw PageNotFoundException::forPageNotFound();
     }
 }
 ```

@@ -17,6 +17,7 @@ use ArgumentCountError;
 use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\Cache\Exceptions\CacheException;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
 use Override;
@@ -32,6 +33,7 @@ final class FileHandlerTest extends AbstractHandlerTestCase
 {
     private static string $directory = 'FileHandler';
     private Cache $config;
+    private string $originalReservedCharacters;
 
     #[Override]
     protected function setUp(): void
@@ -41,6 +43,9 @@ final class FileHandlerTest extends AbstractHandlerTestCase
         if (! function_exists('octal_permissions')) {
             helper('filesystem');
         }
+
+        // Restored in tearDown() so a relaxed setting cannot leak into another test.
+        $this->originalReservedCharacters = config('Cache')->reservedCharacters;
 
         // Initialize path
         $this->config = new Cache();
@@ -56,6 +61,10 @@ final class FileHandlerTest extends AbstractHandlerTestCase
     #[Override]
     protected function tearDown(): void
     {
+        if (isset($this->originalReservedCharacters)) {
+            config('Cache')->reservedCharacters = $this->originalReservedCharacters;
+        }
+
         parent::tearDown();
 
         if (is_dir($this->config->file['storePath'])) {
@@ -550,5 +559,359 @@ final class FileHandlerTest extends AbstractHandlerTestCase
     public function testReconnect(): void
     {
         $this->assertTrue($this->handler->reconnect());
+    }
+
+    #[DataProvider('provideValidateKeyRejectsSeparatorsAndNullBytes')]
+    public function testValidateKeyRejectsSeparatorsAndNullBytes(string $key, string $prefix): void
+    {
+        // Multi-store setups often empty this setting to share keys between
+        // handlers, which must not weaken the file handler's own validation.
+        config('Cache')->reservedCharacters = '';
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Cache key cannot contain directory separators or null bytes.');
+
+        FileHandler::validateKey($key, $prefix);
+    }
+
+    /**
+     * @return iterable<string, array{string, string}>
+     */
+    public static function provideValidateKeyRejectsSeparatorsAndNullBytes(): iterable
+    {
+        yield 'parent traversal' => ['../evil', ''];
+
+        yield 'nested traversal' => ['sub/../../evil', ''];
+
+        yield 'backslash traversal' => ['..\\evil', ''];
+
+        yield 'forward slash separator' => ['sub/key', ''];
+
+        yield 'backslash separator' => ['sub\\key', ''];
+
+        yield 'forward slash only' => ['/', ''];
+
+        yield 'backslash only' => ['\\', ''];
+
+        yield 'null byte only' => ["\0", ''];
+
+        yield 'null byte inside key' => ["sub\0key", ''];
+
+        yield 'parent traversal in prefix' => ['key', '../'];
+
+        yield 'backslash traversal in prefix' => ['key', '..\\'];
+
+        yield 'null byte in prefix' => ['key', "a\0b"];
+
+        yield 'forward slash in prefix' => ['key', 'pre/'];
+
+        yield 'absolute path' => ['/etc/passwd', ''];
+
+        yield 'trailing slash in key' => ['key/', ''];
+
+        yield 'mixed separators' => ['a/b\\c', ''];
+
+        yield 'backslash and zero at start' => ['\\0key', ''];
+
+        yield 'backslash and zero at end' => ['key\\0', ''];
+
+        yield 'single slash prefix' => ['key', '/'];
+
+        yield 'backslash zero prefix' => ['key', '\\0'];
+
+        yield 'escaped traversal in prefix' => ['key', '..\\\\..\\\\'];
+    }
+
+    #[DataProvider('provideValidateKeyAcceptsHarmlessNames')]
+    public function testValidateKeyAcceptsHarmlessNames(string $key, string $prefix, string $expected): void
+    {
+        config('Cache')->reservedCharacters = '';
+
+        $this->assertSame($expected, FileHandler::validateKey($key, $prefix));
+    }
+
+    /**
+     * @return iterable<string, array{string, string, string}>
+     */
+    public static function provideValidateKeyAcceptsHarmlessNames(): iterable
+    {
+        yield 'plain key' => ['valid_key', '', 'valid_key'];
+
+        yield 'dots before extension' => ['foo..json', '', 'foo..json'];
+
+        yield 'dots inside name' => ['user..settings', '', 'user..settings'];
+
+        yield 'leading dots' => ['..item', '', '..item'];
+
+        yield 'trailing dots' => ['item..', '', 'item..'];
+
+        yield 'double leading dots' => ['..foo', '', '..foo'];
+
+        yield 'three dots' => ['...', '', '...'];
+
+        yield 'single dot' => ['.', '', '.'];
+
+        yield 'two dots' => ['..', '', '..'];
+
+        yield 'dots with trailing space' => ['.. ', '', '.. '];
+
+        yield 'spaces and dots' => [' . ', '', ' . '];
+
+        yield 'colon character' => ['test:stream', '', 'test:stream'];
+
+        yield 'drive letter' => ['C:file', '', 'C:file'];
+
+        yield 'dot prefix' => ['key', '.', '.key'];
+
+        yield 'two dots prefix' => ['item', '..', '..item'];
+
+        yield 'three dots prefix' => ['key', '...', '...key'];
+
+        yield 'two dots and a space prefix' => ['key', '.. ', '.. key'];
+
+        yield 'spaces around a dot prefix' => ['key', ' . ', ' . key'];
+
+        yield 'space only prefix' => ['key', ' ', ' key'];
+
+        yield 'spaces only prefix' => ['key', '   ', '   key'];
+
+        yield 'dot but not dot-only prefix' => ['key', '.app', '.appkey'];
+
+        yield 'colon in prefix' => ['key', 'app:', 'app:key'];
+
+        yield 'underscore in prefix' => ['key', 'app_', 'app_key'];
+
+        yield 'non-ASCII key' => ['zażółć_gęślą_jaźń', '', 'zażółć_gęślą_jaźń'];
+    }
+
+    public function testValidateKeyHashesLongKeyBeforeValidatingName(): void
+    {
+        config('Cache')->reservedCharacters = '';
+
+        // A key of nothing but dots used to be rejected before hashing.
+        $dots = str_repeat('.', 500);
+        $this->assertSame(md5($dots), FileHandler::validateKey($dots));
+
+        // The parent hashes the key before the file name is validated.
+        $key = str_repeat('a', 300) . '/evil';
+        $this->assertSame(md5($key), FileHandler::validateKey($key));
+
+        $longKey = str_repeat('a', 300);
+        $this->assertSame('pre_' . md5($longKey), FileHandler::validateKey($longKey, 'pre_'));
+    }
+
+    public function testValidateKeyKeepsMaxLengthBoundary(): void
+    {
+        $atLimit = str_repeat('a', 255);
+        $this->assertSame($atLimit, FileHandler::validateKey($atLimit));
+
+        // One byte over the limit is hashed, so the file name stays short.
+        $overLimit = str_repeat('a', 256);
+        $this->assertSame(md5($overLimit), FileHandler::validateKey($overLimit));
+
+        // The prefix is counted in the limit but is never hashed.
+        $prefixKey = str_repeat('a', 251);
+        $this->assertSame('pre_' . $prefixKey, FileHandler::validateKey($prefixKey, 'pre_'));
+
+        $prefixOver = str_repeat('a', 252);
+        $this->assertSame('pre_' . md5($prefixOver), FileHandler::validateKey($prefixOver, 'pre_'));
+    }
+
+    public function testValidateKeyRejectsTraversalInPrefixOfHashedKey(): void
+    {
+        config('Cache')->reservedCharacters = '';
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Cache key cannot contain directory separators or null bytes.');
+
+        // The prefix is not hashed, so a separator in it must still be rejected.
+        FileHandler::validateKey(str_repeat('a', 300), '../');
+    }
+
+    public function testValidateKeyHashesLongKeyWithDotPrefix(): void
+    {
+        config('Cache')->reservedCharacters = '';
+
+        $key = str_repeat('a', 300);
+
+        $this->assertSame('.' . md5($key), FileHandler::validateKey($key, '.'));
+    }
+
+    public function testValidateKeyRejectsEmptyKey(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Cache key cannot be empty.');
+
+        FileHandler::validateKey('');
+    }
+
+    public function testValidateKeyRejectsNonStringKey(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Cache key must be a string');
+
+        FileHandler::validateKey(42);
+    }
+
+    public function testValidateKeyRejectsReservedCharacters(): void
+    {
+        // Set the default explicitly: this test documents the default reserved
+        // characters, so it must not depend on the configured app value.
+        config('Cache')->reservedCharacters = '{}()/\@:';
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Cache key contains reserved characters {}()/\@:');
+
+        FileHandler::validateKey('sub/key');
+    }
+
+    #[DataProvider('provideValidateKeyRejectsEveryDefaultReservedCharacter')]
+    public function testValidateKeyRejectsEveryDefaultReservedCharacter(string $char): void
+    {
+        config('Cache')->reservedCharacters = '{}()/\@:';
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Cache key contains reserved characters {}()/\@:');
+
+        FileHandler::validateKey('a' . $char . 'b');
+    }
+
+    /**
+     * @return iterable<int, array{string}>
+     */
+    public static function provideValidateKeyRejectsEveryDefaultReservedCharacter(): iterable
+    {
+        return [
+            ['{'],
+            ['}'],
+            ['('],
+            [')'],
+            ['/'],
+            ['\\'],
+            ['@'],
+            [':'],
+        ];
+    }
+
+    public function testValidateKeyAcceptsValidKeyWithDefaultConfig(): void
+    {
+        $this->assertSame('valid_key', FileHandler::validateKey('valid_key'));
+    }
+
+    public function testValidateKeyAcceptsFalsyStringKey(): void
+    {
+        // "0" is falsy but a perfectly valid cache key.
+        $this->assertSame('0', FileHandler::validateKey('0'));
+    }
+
+    public function testValidateKeySuccessWithPrefix(): void
+    {
+        $this->assertSame('prefixvalid_key', FileHandler::validateKey('valid_key', 'prefix'));
+    }
+
+    public function testDottedKeySurvivesFullLifecycle(): void
+    {
+        $this->assertTrue($this->handler->save('..item', 'value'));
+        $this->assertSame('value', $this->handler->get('..item'));
+        $this->assertTrue($this->handler->delete('..item'));
+    }
+
+    public function testDottedDirectoryKeyIsNotWritten(): void
+    {
+        // No regression from before the pull request: the path resolves to a
+        // directory, so is_file() and fopen() keep the item from being stored.
+        $this->assertFalse($this->handler->save('..', 'value'));
+        $this->assertNull($this->handler->get('..'));
+        $this->assertFalse($this->handler->delete('..'));
+    }
+
+    public function testIncrementRejectsTraversalKey(): void
+    {
+        config('Cache')->reservedCharacters = '';
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Cache key cannot contain directory separators or null bytes.');
+
+        $this->handler->increment('../counter');
+    }
+
+    public function testPublicApiRejectsSeparatorWithDefaultConfig(): void
+    {
+        config('Cache')->reservedCharacters = '{}()/\@:';
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Cache key contains reserved characters {}()/\@:');
+
+        $this->handler->save('../evil', 'value');
+    }
+
+    public function testDotPrefixFromConfigIsHandledSafelyByPublicApi(): void
+    {
+        config('Cache')->reservedCharacters = '';
+
+        $config                    = new Cache();
+        $config->prefix            = '..';
+        $config->file['storePath'] = $this->config->file['storePath'];
+
+        $handler = CacheFactory::getHandler($config, 'file');
+
+        $this->assertTrue($handler->save('key', 'value'));
+        $this->assertSame('value', $handler->get('key'));
+        $this->assertTrue($handler->delete('key'));
+    }
+
+    /**
+     * A relaxed reserved character list must not turn the public API into a way
+     * to read or write files outside the cache directory.
+     */
+    public function testTraversalThroughPublicApiDoesNotLeaveCacheDirectory(): void
+    {
+        // The weakened configuration is the very scenario the separators check
+        // has to cover, so it must not be rejected by the reserved list instead.
+        config('Cache')->reservedCharacters = '';
+
+        $victim = dirname($this->config->file['storePath']) . DIRECTORY_SEPARATOR . 'victim_' . uniqid('', true);
+        $this->assertNotFalse(file_put_contents($victim, 'original'));
+
+        try {
+            foreach (['../' . basename($victim), '..\\' . basename($victim)] as $key) {
+                try {
+                    $this->handler->save($key, 'overwritten');
+                    $this->fail('save() accepted the traversal key "' . $key . '".');
+                } catch (InvalidArgumentException $e) {
+                    $this->assertSame('Cache key cannot contain directory separators or null bytes.', $e->getMessage());
+                }
+
+                try {
+                    $this->handler->delete($key);
+                    $this->fail('delete() accepted the traversal key "' . $key . '".');
+                } catch (InvalidArgumentException $e) {
+                    $this->assertSame('Cache key cannot contain directory separators or null bytes.', $e->getMessage());
+                }
+
+                try {
+                    $this->handler->getMetaData($key);
+                    $this->fail('getMetaData() accepted the traversal key "' . $key . '".');
+                } catch (InvalidArgumentException $e) {
+                    $this->assertSame('Cache key cannot contain directory separators or null bytes.', $e->getMessage());
+                }
+            }
+
+            $this->assertSame('original', file_get_contents($victim));
+        } finally {
+            @unlink($victim);
+        }
+    }
+
+    #[RequiresOperatingSystem('Linux|Darwin')]
+    public function testWeakenedReservedCharactersAllowsColonInFileName(): void
+    {
+        // Rejecting separators must not reject characters that are valid in
+        // file names, otherwise relaxing the reserved list would do nothing.
+        config('Cache')->reservedCharacters = '';
+
+        $this->assertTrue($this->handler->save('test:stream', 'value'));
+        $this->assertSame('value', $this->handler->get('test:stream'));
+        $this->assertTrue($this->handler->delete('test:stream'));
     }
 }

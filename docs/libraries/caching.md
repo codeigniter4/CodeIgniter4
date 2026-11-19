@@ -9,7 +9,9 @@ The following example shows a common usage pattern within your controllers.
 ```php
 <?php
 
-if (! $foo = cache('foo')) {
+$foo = cache('foo');
+
+if ($foo === null) {
     echo 'Saving to the cache!<br>';
     $foo = 'foobarbaz!';
 
@@ -52,9 +54,25 @@ The default number of seconds to save items when none is specified.
 
 WARNING: This is not used by framework handlers where 60 seconds is hard-coded, but may be useful to projects and modules. This will replace the hard-coded value in a future release.
 
+### $reservedCharacters
+
+A string of characters that are not allowed in cache keys or tags. Handlers throw an `InvalidArgumentException` when a key contains one of them. The default, `{}()/\@:`, is required for PSR-6 compliance.
+
+Relaxing `$reservedCharacters` relaxes key validation for every cache handler. The File handler still rejects `/`, `\` and null bytes in the resulting file name, so a cache key cannot point outside the cache directory. The characters left in `$reservedCharacters` still keep keys from being interpreted differently by a handler or by the file system.
+
+On Windows, keep `:` reserved: it separates an NTFS alternate data stream, so a key such as `file:stream` refers to a stream of a file in the cache directory rather than to a new cache item.
+
+Do not use unvalidated user input directly as a cache key. Build keys from identifiers with a controlled format, or hash the input:
+
+```php
+$key = 'search_' . hash('sha256', $userInput);
+```
+
 ### $file
 
 This is an array of settings specific to the **File** handler to determine how it should save the cache files.
+
+Cache files whose names start with a dot are not fully supported by the File handler: `getCacheInfo()` does not report them, `deleteMatching()` wildcard patterns do not match them, and `clean()` / `cache:clear` do not delete them. Avoid keys and prefixes that produce a leading dot.
 
 ### $memcached
 
@@ -338,7 +356,7 @@ var_dump($cache->getMetadata('my_cached_item'));
 
 - **Return type**: `string`
 
-This method is used by handler methods to check that keys are valid. It will throw an `InvalidArgumentException` for non-strings, invalid characters, and empty lengths.
+This method is used by handler methods to check that keys are valid. It will throw an `InvalidArgumentException` for non-strings, invalid characters, and empty lengths. The File handler additionally rejects `/`, `\` and null bytes in the resulting file name, even when `Config\Cache::$reservedCharacters` is relaxed.
 
 Example:
 
@@ -379,7 +397,10 @@ class Cache extends BaseConfig
 {
     // ...
 
-    public $memcached = [
+    /**
+     * @var array{host?: string, port?: int, weight?: int, raw?: bool}
+     */
+    public array $memcached = [
         'host'   => '127.0.0.1',
         'port'   => 11211,
         'weight' => 1,
@@ -415,7 +436,18 @@ class Cache extends BaseConfig
 {
     // ...
 
-    public $redis = [
+    /**
+     * @var array{
+     *     host?: string,
+     *     password?: string|null,
+     *     port?: int,
+     *     timeout?: int,
+     *     async?: bool,
+     *     persistent?: bool,
+     *     database?: int
+     * }
+     */
+    public array $redis = [
         'host'       => '127.0.0.1',
         'password'   => null,
         'port'       => 6379,

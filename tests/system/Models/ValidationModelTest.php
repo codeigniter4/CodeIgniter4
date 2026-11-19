@@ -335,7 +335,7 @@ final class ValidationModelTest extends LiveModelTestCase
 
         $this->createModel(ValidErrorsModel::class);
 
-        $id = $this->model->insert($data);
+        $id = $this->model->insert($data); // @phpstan-ignore codeigniter.modelFieldNotAllowed, codeigniter.modelFieldNotAllowed
         $this->assertFalse((bool) $id);
         $this->assertSame('Minimum Length Error', $this->model->errors()['name']);
     }

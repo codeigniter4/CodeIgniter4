@@ -19,6 +19,7 @@ An example to log all queries:
 
 namespace Config;
 
+use CodeIgniter\Database\Query;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\HotReloader\HotReloader;
@@ -27,7 +28,7 @@ use CodeIgniter\HotReloader\HotReloader;
 
 Events::on(
     'DBQuery',
-    static function (\CodeIgniter\Database\Query $query) {
+    static function (Query $query) {
         log_message('info', (string) $query);
     },
 );

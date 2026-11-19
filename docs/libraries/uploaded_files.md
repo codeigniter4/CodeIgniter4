@@ -87,12 +87,12 @@ class Upload extends BaseController
 {
     protected $helpers = ['form'];
 
-    public function index()
+    public function index(): string
     {
         return view('upload_form', ['errors' => []]);
     }
 
-    public function upload()
+    public function upload(): string
     {
         $validationRule = [
             'userfile' => [
@@ -356,7 +356,7 @@ You can check that a file was actually uploaded via HTTP with no errors by calli
 <?php
 
 if (! $file->isValid()) {
-    throw new \RuntimeException($file->getErrorString() . '(' . $file->getError() . ')');
+    throw new RuntimeException($file->getErrorString() . '(' . $file->getError() . ')');
 }
 ```
 

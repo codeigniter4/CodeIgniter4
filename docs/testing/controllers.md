@@ -41,7 +41,7 @@ class ForumControllerTest extends CIUnitTestCase
     use ControllerTestTrait;
     use DatabaseTestTrait;
 
-    public function testShowCategories()
+    public function testShowCategories(): void
     {
         $result = $this->withUri('http://example.com/categories')
             ->controller(ForumController::class)
@@ -61,7 +61,9 @@ Specifies the class name of the controller to test. The first parameter must be 
 ```php
 <?php
 
-$this->controller(\App\Controllers\ForumController::class);
+use App\Controllers\ForumController;
+
+$this->controller(ForumController::class);
 ```
 
 ### execute(string $method, ...$params)
@@ -71,8 +73,9 @@ Executes the specified method within the controller. The first parameter is the 
 ```php
 <?php
 
-$results = $this->controller(\App\Controllers\ForumController::class)
-    ->execute('showCategories');
+use App\Controllers\ForumController;
+
+$results = $this->controller(ForumController::class)->execute('showCategories');
 ```
 
 By specifying the second and subsequent parameters, you can pass them to the controller method.
@@ -86,11 +89,14 @@ Allows you to pass in a modified version of **app/Config/App.php** to test with 
 ```php
 <?php
 
-$config              = new \Config\App();
+use App\Controllers\ForumController;
+use Config\App;
+
+$config              = new App();
 $config->appTimezone = 'America/Chicago';
 
 $results = $this->withConfig($config)
-    ->controller(\App\Controllers\ForumController::class)
+    ->controller(ForumController::class)
     ->execute('showCategories');
 ```
 
@@ -103,17 +109,23 @@ Allows you to provide an **IncomingRequest** instance tailored to your testing n
 ```php
 <?php
 
-$request = new \CodeIgniter\HTTP\IncomingRequest(
-    new \Config\App(),
-    new \CodeIgniter\HTTP\URI('http://example.com'),
+use App\Controllers\ForumController;
+use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\UserAgent;
+use Config\App;
+
+$request = new IncomingRequest(
+    new App(),
+    new URI('http://example.com'),
     null,
-    new \CodeIgniter\HTTP\UserAgent(),
+    new UserAgent(),
 );
 
 $request->setLocale($locale);
 
 $results = $this->withRequest($request)
-    ->controller(\App\Controllers\ForumController::class)
+    ->controller(ForumController::class)
     ->execute('showCategories');
 ```
 
@@ -126,10 +138,13 @@ Allows you to provide a **Response** instance:
 ```php
 <?php
 
-$response = new \CodeIgniter\HTTP\Response(new \Config\App());
+use App\Controllers\ForumController;
+use CodeIgniter\HTTP\Response;
+
+$response = new Response();
 
 $results = $this->withResponse($response)
-    ->controller(\App\Controllers\ForumController::class)
+    ->controller(ForumController::class)
     ->execute('showCategories');
 ```
 
@@ -142,11 +157,14 @@ Allows you to provide a **Logger** instance:
 ```php
 <?php
 
-$logger = new \CodeIgniter\Log\Handlers\FileHandler();
+use App\Controllers\ForumController;
+use CodeIgniter\Log\Handlers\FileHandler;
+
+$logger = new FileHandler();
 
 $results = $this->withResponse($response)
     ->withLogger($logger)
-    ->controller(\App\Controllers\ForumController::class)
+    ->controller(ForumController::class)
     ->execute('showCategories');
 ```
 
@@ -159,8 +177,10 @@ Allows you to provide a new URI that simulates the URL the client was visiting w
 ```php
 <?php
 
+use App\Controllers\ForumController;
+
 $results = $this->withUri('http://example.com/forums/categories')
-    ->controller(\App\Controllers\ForumController::class)
+    ->controller(ForumController::class)
     ->execute('showCategories');
 ```
 
@@ -176,10 +196,12 @@ Allows you to provide a custom body for the request. This can be helpful when te
 ```php
 <?php
 
+use App\Controllers\ForumController;
+
 $body = json_encode(['foo' => 'bar']);
 
 $results = $this->withBody($body)
-    ->controller(\App\Controllers\ForumController::class)
+    ->controller(ForumController::class)
     ->execute('showCategories');
 ```
 
@@ -233,7 +255,7 @@ final class FooFilterTest extends CIUnitTestCase
 {
     use FilterTestTrait;
 
-    protected function testFilterFailsOnAdminRoute()
+    protected function testFilterFailsOnAdminRoute(): void
     {
         $this->filtersConfig->globals['before'] = ['admin-only-filter'];
 
@@ -250,7 +272,7 @@ The first helper method is `getFiltersForRoute()`, which will simulate the provi
 
 #### getFiltersForRoute($route, $position)
 
-- **Parameters**  
+- **Parameters**
     - **$route** `string` The URI to check
     - **$position** `string` The filter method to check, "before" or "after"
 
@@ -272,7 +294,7 @@ The properties described in Configuration are all set up to ensure maximum perfo
 
 #### getFilterCaller($filter, $position)
 
-- **Parameters**  
+- **Parameters**
     - **$filter** `FilterInterface|string` The filter instance, class, or alias
     - **$position** `string` The filter method to run, "before" or "after"
 
@@ -294,10 +316,10 @@ final class FooFilterTest extends CIUnitTestCase
 {
     use FilterTestTrait;
 
-    protected function testUnauthorizedAccessRedirects()
+    protected function testUnauthorizedAccessRedirects(): void
     {
         $caller = $this->getFilterCaller('permission', 'before');
-        $result = $caller('MayEditWidgets');
+        $result = $caller(['MayEditWidgets']);
 
         $this->assertInstanceOf('CodeIgniter\HTTP\RedirectResponse', $result);
     }

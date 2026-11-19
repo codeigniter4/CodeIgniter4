@@ -252,7 +252,7 @@ namespace App\Controllers;
 
 class Catalog extends BaseController
 {
-    public function productLookup($seg1 = false, $seg2 = false, $seg3 = false)
+    public function productLookup(false|string $seg1 = false, false|string $seg2 = false, false|string $seg3 = false): void
     {
         echo $seg1; // Will be 123 in all examples
         echo $seg2; // false in first, 456 in second and third example
@@ -270,7 +270,7 @@ namespace App\Controllers;
 
 class Catalog extends BaseController
 {
-    public function productLookup(...$params)
+    public function productLookup(string ...$params): void
     {
         echo $params[0] ?? null; // Will be 123 in all examples
         echo $params[1] ?? null; // null in first, 456 in second and third example
@@ -556,7 +556,9 @@ You can specify a filter classname for the filter value:
 ```php
 <?php
 
-$routes->get('admin', ' AdminController::index', ['filter' => \App\Filters\SomeFilter::class]);
+use App\Filters\SomeFilter;
+
+$routes->get('admin', ' AdminController::index', ['filter' => SomeFilter::class]);
 ```
 
 #### Multiple Filters
@@ -571,7 +573,9 @@ You can specify an array for the filter value:
 ```php
 <?php
 
-$routes->get('admin', ' AdminController::index', ['filter' => ['admin-auth', \App\Filters\SomeFilter::class]]);
+use App\Filters\SomeFilter;
+
+$routes->get('admin', ' AdminController::index', ['filter' => ['admin-auth', SomeFilter::class]]);
 ```
 
 ##### Filter Arguments
@@ -1058,6 +1062,9 @@ $routes->get('product/(:any)', 'Catalog::productLookup/$1');
 
 will match **product/123**, **product/123/456**, **product/123/456/789** and so on. And if the URI is **product/123/456**, `123/456` will be passed to the first parameter of the `Catalog::productLookup()` method.
 
+!!! note "Note"
+    When this option is enabled, consecutive digits in back-references (such as `$10`) are treated as a single reference rather than `$1` followed by `0`. The `$0` back-reference resolves to the entire matched path. If a back-reference does not have a matching captured group, it resolves to an empty string (`''`).
+
 ## Auto Routing (Improved)
 
 !!! success "Available from version 4.2.0"
@@ -1271,8 +1278,10 @@ CodeIgniter 4 provides a simple way to access the current route's controller and
 ```php
 <?php
 
+use CodeIgniter\Router\Router;
+
 // Get the router instance.
-/** @var \CodeIgniter\Router\Router $router */
+/** @var Router $router */
 $router = service('router');
 
 // Retrieve the fully qualified class name of the controller handling the current request.
@@ -1296,8 +1305,10 @@ This method returns a list of filters that are currently active for the route be
 ```php
 <?php
 
+use CodeIgniter\Router\Router;
+
 // Get the router instance.
-/** @var \CodeIgniter\Router\Router $router */
+/** @var Router $router */
 $router  = service('router');
 $filters = $router->getFilters();
 
@@ -1314,8 +1325,10 @@ When we're defining routes, they may have optional parameters: `filter`, `namesp
 ```php
 <?php
 
+use CodeIgniter\Router\Router;
+
 // Get the router instance.
-/** @var \CodeIgniter\Router\Router $router */
+/** @var Router $router */
 $router  = service('router');
 $options = $router->getMatchedRouteOptions();
 

@@ -88,6 +88,9 @@ use CodeIgniter\Config\BaseConfig;
 
 class Generators extends BaseConfig
 {
+    /**
+     * @var array<string, string>
+     */
     public array $views = [
         // ..
         'make:widget' => 'App\Commands\Generators\Views\widget.tpl.php',

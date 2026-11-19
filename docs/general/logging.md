@@ -42,7 +42,7 @@ use CodeIgniter\Config\BaseConfig;
 
 class Logger extends BaseConfig
 {
-    public $threshold = 5;
+    public int $threshold = 5;
 
     // ...
 }
@@ -62,7 +62,10 @@ use CodeIgniter\Config\BaseConfig;
 class Logger extends BaseConfig
 {
     // Log only debug and info type messages
-    public $threshold = [5, 8];
+    /**
+     * @var list<int>
+     */
+    public array $threshold = [5, 8];
 
     // ...
 }
@@ -87,7 +90,10 @@ use CodeIgniter\Config\BaseConfig;
 
 class Logger extends BaseConfig
 {
-    public $handlers = [
+    /**
+     * @var array<string, array<string, mixed>>
+     */
+    public array $handlers = [
         // File Handler
         'CodeIgniter\Log\Handlers\FileHandler' => [
             'handles' => ['critical', 'alert', 'emergency', 'debug', 'error', 'info', 'notice', 'warning'],
@@ -117,7 +123,10 @@ use CodeIgniter\Config\BaseConfig;
 
 class Logger extends BaseConfig
 {
-    public $handlers = [
+    /**
+     * @var array<class-string, array<string, bool|int|list<string>|string>>
+     */
+    public array $handlers = [
         // File Handler
         'CodeIgniter\Log\Handlers\FileHandler' => [
             'handles'            => ['critical', 'alert', 'emergency', 'debug', 'error', 'info', 'notice', 'warning'],
@@ -161,7 +170,7 @@ If you want to log an Exception or an Error, you can use the key 'exception', wi
 
 try {
     // Something throws error here
-} catch (\Exception $e) {
+} catch (Exception $e) {
     log_message('error', '[ERROR] {exception}', ['exception' => $e]);
 }
 ```
@@ -269,7 +278,7 @@ Per PSR-3, a `Throwable` instance must be passed under the `exception` key to be
 // The exception is not used as a placeholder, so it is normalized and passed to handlers.
 try {
     // Something throws an error here
-} catch (\Exception $e) {
+} catch (Exception $e) {
     log_message('error', 'Payment processing failed', ['exception' => $e]);
 }
 

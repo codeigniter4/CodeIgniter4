@@ -45,7 +45,9 @@ $this->load->view('posts/index', $data);
 ```php
 <?php
 
-$model = new \App\Models\UserModel();
+use App\Models\UserModel;
+
+$model = new UserModel();
 
 $data = [
     'users' => $model->paginate(10),

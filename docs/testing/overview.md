@@ -59,7 +59,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 
 class FooTest extends CIUnitTestCase
 {
-    public function testFooNotBar()
+    public function testFooNotBar(): void
     {
         // ...
     }
@@ -77,7 +77,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 
 class UserModelTest extends CIUnitTestCase
 {
-    public function testFooNotBar()
+    public function testFooNotBar(): void
     {
         // ...
     }
@@ -95,7 +95,7 @@ When testing database results, you must use the [DatabaseTestTrait](database.md)
 
 Most tests require some preparation in order to run correctly. PHPUnit's `TestCase` provides four methods to help with staging and cleanup:
 
-```
+```php
 public static function setUpBeforeClass(): void
 public static function tearDownAfterClass(): void
 
@@ -142,7 +142,7 @@ namespace App\Traits;
 
 trait AuthTrait
 {
-    protected function setUpAuthTrait()
+    protected function setUpAuthTrait(): void
     {
         $user = $this->createFakeUser();
         $this->logInUser($user);
@@ -373,7 +373,7 @@ use Config\Services;
 
 final class SomeTest extends CIUnitTestCase
 {
-    public function testSomething()
+    public function testSomething(): void
     {
         $curlrequest = $this->getMockBuilder(CURLRequest::class)
             ->onlyMethods(['request'])

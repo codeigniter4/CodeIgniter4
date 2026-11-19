@@ -15,7 +15,7 @@ use CodeIgniter\Controller;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(): void
     {
         if ($this->request->isAJAX()) {
             // ...
@@ -43,7 +43,7 @@ use CodeIgniter\HTTP\RequestInterface;
 
 class SomeClass
 {
-    protected $request;
+    protected RequestInterface $request;
 
     public function __construct(RequestInterface $request)
     {

@@ -442,6 +442,10 @@ final class PagerTest extends CIUnitTestCase
         );
         $this->assertStringContainsString(
             '?page=1',
+            $this->pager->makeLinks(1, 10, 1, 'default_full', 0, null),
+        );
+        $this->assertStringContainsString(
+            '?page=1',
             $this->pager->makeLinks(1, 10, 1, 'default_full', 0, 'default'),
         );
         $this->assertStringContainsString(

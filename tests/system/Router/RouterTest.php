@@ -951,26 +951,28 @@ final class RouterTest extends CIUnitTestCase
         string $url,
         string $expectedPath,
         string $alias,
+        int $status = 302,
     ): void {
         $collection = clone $this->collection;
         $collection->resetRoutes();
 
         $collection->get($route, 'Controller::method', ['as' => $alias]);
-        $collection->addRedirect($redirectFrom, $redirectTo);
+        $collection->addRedirect($redirectFrom, $redirectTo, $status);
 
         $this->expectException(RedirectException::class);
         $this->expectExceptionMessage($expectedPath);
+        $this->expectExceptionCode($status);
 
         $router = new Router($collection, $this->request);
         $router->handle($url);
     }
 
     /**
-     * @return iterable<int, array{string, string, string, string, string, string}>
+     * @return iterable<int, array{string, string, string, string, string, string, 6?: int}>
      */
     public static function provideRedirectRoute(): iterable
     {
-        // [$route, $redirectFrom, $redirectTo, $url, $expectedPath, $alias]
+        // [$route, $redirectFrom, $redirectTo, $url, $expectedPath, $alias, $status]
         return [
             ['posts', 'articles', 'posts', '/articles', 'posts', 'alias'],
             ['posts', 'articles', 'alias', '/articles', 'posts', 'alias'],
@@ -978,7 +980,31 @@ final class RouterTest extends CIUnitTestCase
             ['post/(:num)', 'article/(:num)', 'alias', '/article/1', 'post/1', 'alias'],
             ['post/(:num)/comment/(:any)', 'article/(:num)/(:any)', 'post/$1/comment/$2', '/article/1/2', 'post/1/comment/2', 'alias'],
             ['post/(:segment)/comment/(:any)', 'article/(:num)/(:any)', 'alias', '/article/1/2', 'post/1/comment/2', 'alias'],
+            ['posts', '{locale}/articles', 'posts', '/en/articles', 'posts', 'alias'],
+            ['{locale}/posts', '{locale}/articles', '{locale}/posts', '/en/articles', 'en/posts', 'alias'],
+            ['{locale}/posts', '{locale}/articles', '{locale}/posts', '/en/articles', 'en/posts', 'alias', 301],
+            ['{locale}/posts', '{locale}/articles', 'alias', '/en/articles', 'en/posts', 'alias'],
+            ['{locale}/post/(:num)', '{locale}/article/(:num)', '{locale}/post/$1', '/en/article/1', 'en/post/1', 'alias'],
+            ['{locale}/post/(:num)', '{locale}/article/(:num)', 'alias', '/en/article/1', 'en/post/1', 'alias'],
         ];
+    }
+
+    public function testRedirectRouteWithUnsupportedLocale(): void
+    {
+        $config                   = config(App::class);
+        $config->supportedLocales = ['en'];
+
+        $collection = clone $this->collection;
+        $collection->resetRoutes();
+        $collection->useSupportedLocalesOnly(true);
+
+        $collection->get('{locale}/posts', 'Controller::method');
+        $collection->addRedirect('{locale}/articles', '{locale}/posts');
+
+        $this->expectException(PageNotFoundException::class);
+
+        $router = new Router($collection, $this->request);
+        $router->handle('/fr/articles');
     }
 
     public function testRoutePlaceholderAnyWithMultipleSegmentsParamFalse(): void
@@ -1009,6 +1035,75 @@ final class RouterTest extends CIUnitTestCase
         $this->assertSame('\Catalog', $router->controllerName());
         $this->assertSame('productLookup', $router->methodName());
         $this->assertSame(['123/456'], $router->params());
+    }
+
+    /**
+     * @param list<string> $expectedParams
+     */
+    #[DataProvider('provideMultipleSegmentsParamTrueWithManyPlaceholders')]
+    public function testMultipleSegmentsParamTrueWithManyPlaceholders(
+        string $route,
+        string $handler,
+        string $uri,
+        array $expectedParams,
+    ): void {
+        $routingConfig                           = new Routing();
+        $routingConfig->multipleSegmentsOneParam = true;
+        Factories::injectMock('config', Routing::class, $routingConfig);
+
+        $this->createRouteCollection($routingConfig);
+        $this->collection->get($route, $handler);
+        $router = new Router($this->collection, $this->request);
+
+        $router->handle($uri);
+
+        $this->assertSame('\Catalog', $router->controllerName());
+        $this->assertSame('lookup', $router->methodName());
+        $this->assertSame($expectedParams, $router->params());
+    }
+
+    /**
+     * @return iterable<string, array{string, string, string, list<string>}>
+     */
+    public static function provideMultipleSegmentsParamTrueWithManyPlaceholders(): iterable
+    {
+        $nineSegments = implode('/', array_fill(0, 9, '(:segment)'));
+        $tenSegments  = implode('/', array_fill(0, 10, '(:segment)'));
+
+        yield 'nine placeholders (boundary)' => [
+            $nineSegments,
+            'Catalog::lookup/$1/$2/$3/$4/$5/$6/$7/$8/$9',
+            'a/b/c/d/e/f/g/h/i',
+            ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'],
+        ];
+
+        yield 'ten placeholders' => [
+            $tenSegments,
+            'Catalog::lookup/$1/$2/$3/$4/$5/$6/$7/$8/$9/$10',
+            'a/b/c/d/e/f/g/h/i/j',
+            ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
+        ];
+
+        yield 'out-of-range reference resolves to empty string' => [
+            $tenSegments,
+            'Catalog::lookup/$1/$2/$3/$4/$5/$6/$7/$8/$9/$10/$11',
+            'a/b/c/d/e/f/g/h/i/j',
+            ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', ''],
+        ];
+
+        yield 'single capture with out-of-range multi-digit reference' => [
+            'product/(:segment)',
+            'Catalog::lookup/$10',
+            'product/foo',
+            [''],
+        ];
+
+        yield 'reference $0 resolves to entire matched path' => [
+            $nineSegments,
+            'Catalog::lookup/$0/$1',
+            'a/b/c/d/e/f/g/h/i',
+            ['a/b/c/d/e/f/g/h/i', 'a'],
+        ];
     }
 
     public function testLogsRouteAttributeInstantiationFailureWithContext(): void

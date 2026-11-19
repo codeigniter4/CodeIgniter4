@@ -15,6 +15,9 @@ on:
       - composer.json
       - phpstan.dist.neon
       - phpstan-baseline.php
+      - 'docs/**'
+      - 'admin/lint-docs-samples.php'
+      - 'admin/docs-phpstan-baseline.php'
       - '.github/workflows/test-phpstan.yml'
 
   push:
@@ -29,6 +32,9 @@ on:
       - composer.json
       - phpstan.dist.neon
       - phpstan-baseline.php
+      - 'docs/**'
+      - 'admin/lint-docs-samples.php'
+      - 'admin/docs-phpstan-baseline.php'
       - '.github/workflows/test-phpstan.yml'
 
 concurrency:
@@ -61,19 +67,6 @@ jobs:
       - name: Validate composer.json
         run: composer validate --strict
 
-      - name: Get composer cache directory
-        id: composer-cache
-        run: echo "COMPOSER_CACHE_FILES_DIR=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-
-      - name: Cache dependencies
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: ${{ steps.composer-cache.outputs.COMPOSER_CACHE_FILES_DIR }}
-          key: composer-php-8.3-${{ hashFiles('**/composer.json') }}
-          restore-keys: |
-            composer-php-8.3-
-            composer-
-
       - name: Create PHPStan result cache directory
         run: mkdir -p build/phpstan
 
@@ -85,7 +78,14 @@ jobs:
           restore-keys: phpstan-
 
       - name: Install dependencies
-        run: composer update --ansi --no-interaction
+        uses: ./.github/actions/composer-update
+        with:
+          php-version: '8.3'
 
       - name: Run static analysis
         run: composer phpstan:check
+
+      - name: Check that the baseline of the user guide samples is up to date
+        run: |
+          composer phpstan:docs-baseline
+          git diff --exit-code admin/docs-phpstan-baseline.php

@@ -29,6 +29,8 @@ class MyCommand extends BaseCommand
     public function run(array $params)
     {
         // ...
+
+        return EXIT_SUCCESS;
     }
 }
 ```

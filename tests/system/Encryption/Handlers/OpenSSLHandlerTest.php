@@ -19,6 +19,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
 use Override;
 use PHPUnit\Framework\Attributes\Group;
+use Tests\Support\Encryption\WithoutEncryptionEnvTrait;
 
 /**
  * @internal
@@ -26,7 +27,25 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class OpenSSLHandlerTest extends CIUnitTestCase
 {
+    use WithoutEncryptionEnvTrait;
+
     private Encryption $encryption;
+
+    #[Override]
+    public static function setUpBeforeClass(): void
+    {
+        parent::setUpBeforeClass();
+
+        self::setUpBeforeClassWithoutEncryptionEnv();
+    }
+
+    #[Override]
+    public static function tearDownAfterClass(): void
+    {
+        parent::tearDownAfterClass();
+
+        self::tearDownAfterClassWithoutEncryptionEnv();
+    }
 
     #[Override]
     protected function setUp(): void

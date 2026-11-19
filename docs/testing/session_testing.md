@@ -61,7 +61,7 @@ class SessionTest extends CIUnitTestCase
 {
     protected Session $testSession;
 
-    #[\Override]
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

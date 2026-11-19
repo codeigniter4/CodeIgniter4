@@ -75,7 +75,7 @@ use CodeIgniter\Config\BaseConfig;
 
 class Security extends BaseConfig
 {
-    public $csrfProtection = 'session';
+    public string $csrfProtection = 'session';
 
     // ...
 }
@@ -150,7 +150,7 @@ use CodeIgniter\Config\BaseConfig;
 
 class Security extends BaseConfig
 {
-    public $tokenRandomize = true;
+    public bool $tokenRandomize = true;
 
     // ...
 }
@@ -171,7 +171,7 @@ use CodeIgniter\Config\BaseConfig;
 
 class Security extends BaseConfig
 {
-    public $regenerate = true;
+    public bool $regenerate = true;
 
     // ...
 }
@@ -234,7 +234,13 @@ use CodeIgniter\Config\BaseConfig;
 
 class Filters extends BaseConfig
 {
-    public $globals = [
+    /**
+     * @var array{
+     *     before?: array<string, array{except: list<string>|string}>|list<string>,
+     *     after?: array<string, array{except: list<string>|string}>|list<string>
+     * }
+     */
+    public array $globals = [
         'before' => [
             // 'honeypot',
             'csrf',
@@ -256,7 +262,13 @@ use CodeIgniter\Config\BaseConfig;
 
 class Filters extends BaseConfig
 {
-    public $globals = [
+    /**
+     * @var array{
+     *     before?: array<string, array{except: list<string>|string}>|list<string>,
+     *     after?: array<string, array{except: list<string>|string}>|list<string>
+     * }
+     */
+    public array $globals = [
         'before' => [
             'csrf' => ['except' => ['api/record/save']],
         ],
@@ -277,7 +289,13 @@ use CodeIgniter\Config\BaseConfig;
 
 class Filters extends BaseConfig
 {
-    public $globals = [
+    /**
+     * @var array{
+     *     before?: array<string, array{except: list<string>|string}>|list<string>,
+     *     after?: array<string, array{except: list<string>|string}>|list<string>
+     * }
+     */
+    public array $globals = [
         'before' => [
             'csrf' => ['except' => ['api/record/[0-9]+']],
         ],
@@ -298,7 +316,10 @@ use CodeIgniter\Config\BaseConfig;
 
 class Filters extends BaseConfig
 {
-    public $methods = [
+    /**
+     * @var array<string, list<string>>
+     */
+    public array $methods = [
         'GET'  => ['csrf'],
         'POST' => ['csrf'],
     ];

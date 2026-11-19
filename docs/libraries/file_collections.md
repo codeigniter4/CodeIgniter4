@@ -39,7 +39,7 @@ echo 'I have ' . count($files) . ' files!';
 
 foreach ($files as $file) {
     echo 'Moving ' . $file->getBasename() . ', ' . $file->getSizeByUnit('mb');
-    $file->move(WRITABLE . $file->getRandomName());
+    $file->move(WRITEPATH . $file->getRandomName());
 }
 ```
 

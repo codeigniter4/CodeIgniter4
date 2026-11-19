@@ -136,7 +136,10 @@ class Modules extends BaseModules
 {
     // ...
 
-    public $composerPackages = [
+    /**
+     * @var array{only?: list<string>, exclude?: list<string>}
+     */
+    public array $composerPackages = [
         'only' => [
             // List up all packages to auto-discover
             'codeigniter4/shield',
@@ -160,7 +163,10 @@ class Modules extends BaseModules
 {
     // ...
 
-    public $composerPackages = [
+    /**
+     * @var array{only?: list<string>, exclude?: list<string>}
+     */
+    public array $composerPackages = [
         'exclude' => [
             // List up packages to exclude.
             'pestphp/pest',
@@ -222,6 +228,8 @@ When working with modules, it can be a problem if the routes in the application 
     {
         /**
          * Registers the Shield filters.
+         *
+         * @return array<string, array<string, string>>
          */
         public static function Filters(): array
         {
@@ -245,7 +253,9 @@ In the module's **Config/Filters.php** file, you need to define the aliases of t
 ```php
 <?php
 
-$filters->aliases['menus'] = \App\Filters\MenusFilter::class;
+use App\Filters\MenusFilter;
+
+$filters->aliases['menus'] = MenusFilter::class;
 ```
 
 ### Controllers
@@ -276,7 +286,9 @@ No special change is needed when working with configuration files. These are sti
 ```php
 <?php
 
-$config = new \Acme\Blog\Config\Blog();
+use Acme\Blog\Config\Blog;
+
+$config = new Blog();
 ```
 
 Config files are automatically discovered when you use the always-available `config()` function and pass a short classname to it.
@@ -330,7 +342,9 @@ Libraries are always instantiated by their fully-qualified class name, so no spe
 ```php
 <?php
 
-$lib = new \Acme\Blog\Libraries\BlogLib();
+use Acme\Blog\Libraries\BlogLib;
+
+$lib = new BlogLib();
 ```
 
 ### Models
@@ -340,7 +354,9 @@ If you instantiate models with the `new` keyword by their fully-qualified class 
 ```php
 <?php
 
-$model = new \Acme\Blog\Models\PostModel();
+use Acme\Blog\Models\PostModel;
+
+$model = new PostModel();
 ```
 
 Model files are automatically discovered when you use the always-available `model()` function.

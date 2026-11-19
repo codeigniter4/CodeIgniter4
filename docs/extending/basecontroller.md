@@ -44,6 +44,7 @@ namespace App\Controllers;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\Session\Session;
 use Override;
 use Psr\Log\LoggerInterface;
 
@@ -52,7 +53,7 @@ abstract class BaseController extends Controller
     // ...
 
     /**
-     * @var \CodeIgniter\Session\Session;
+     * @var Session
      */
     protected $session;
 

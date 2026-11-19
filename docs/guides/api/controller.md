@@ -4,7 +4,7 @@ In this chapter, we build the API endpoints to expose your `books` table through
 
 ## What is RESTful?
 
-RESTful APIs use standard HTTP verbs (`GET`, `POST`, `PUT`, `DELETE`) to perform actions on resources identified by URIs. This approach makes APIs predictable and easy to use. There can be much debate on some of the finer points of what makes a REST API, but following these basics can get it close enough for many uses. By using auto-routing and the `Api\ResponseTrait`, CodeIgniter makes it simple to create RESTful endpoints.
+RESTful APIs use standard HTTP verbs (`GET`, `POST`, `PUT`, `DELETE`) to perform actions on resources identified by URIs. This approach makes APIs predictable and easy to use. There can be much debate on some of the finer points of what makes a REST API, but following these basics can get it close enough for many uses. By using auto-routing and the `API\ResponseTrait`, CodeIgniter makes it simple to create RESTful endpoints.
 
 ## Generate the controller
 
@@ -25,6 +25,7 @@ namespace App\Controllers\Api;
 
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
+use CodeIgniter\HTTP\ResponseInterface;
 
 class Books extends BaseController
 {
@@ -36,7 +37,7 @@ class Books extends BaseController
      *    and
      * GET /api/books/{id}
      */
-    public function getIndex(?int $id = null)
+    public function getIndex(?int $id = null): ResponseInterface
     {
     }
 
@@ -45,7 +46,7 @@ class Books extends BaseController
      *
      * PUT /api/books/{id}
      */
-    public function putIndex(int $id)
+    public function putIndex(int $id): ResponseInterface
     {
     }
 
@@ -54,7 +55,7 @@ class Books extends BaseController
      *
      * POST /api/books
      */
-    public function postIndex()
+    public function postIndex(): ResponseInterface
     {
     }
 
@@ -63,7 +64,7 @@ class Books extends BaseController
      *
      * DELETE /api/books/{id}
      */
-    public function deleteIndex(int $id)
+    public function deleteIndex(int $id): ResponseInterface
     {
     }
 }
@@ -108,9 +109,14 @@ class BookTransformer extends BaseTransformer
         ];
     }
 
+    /**
+     * @param array<string, mixed> $book
+     *
+     * @return array<string, mixed>|null
+     */
     protected function includeAuthor(array $book): ?array
     {
-        if (empty($book['author_id']) || empty($book['author_name'])) {
+        if (! isset($book['author_id'], $book['author_name'])) {
             return null;
         }
 
@@ -178,7 +184,7 @@ use CodeIgniter\Model;
 
 class BookModel extends Model
 {
-    public function withAuthorInfo()
+    public function withAuthorInfo(): static
     {
         return $this
             ->select('books.*, authors.name as author_name')
@@ -251,7 +257,7 @@ namespace App\Controllers\Api;
 
 use App\Controllers\BaseController;
 use App\Transformers\BookTransformer;
-use CodeIgniter\Api\ResponseTrait;
+use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class Books extends BaseController
@@ -307,7 +313,7 @@ class Books extends BaseController
 
         $model = model('BookModel');
 
-        if (! $model->find($id)) {
+        if ($model->find($id) === null) {
             return $this->failNotFound('Book not found');
         }
 
@@ -354,7 +360,7 @@ class Books extends BaseController
     {
         $model = model('BookModel');
 
-        if (! $model->find($id)) {
+        if ($model->find($id) === null) {
             return $this->failNotFound('Book not found');
         }
 

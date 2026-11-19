@@ -118,7 +118,7 @@ class Pager implements PagerInterface
     #[Override]
     public function makeLinks(int $page, ?int $perPage, int $total, string $template = 'default_full', int $segment = 0, ?string $group = 'default'): string
     {
-        $group = $group === '' ? 'default' : $group;
+        $group = ($group === null || $group === '') ? 'default' : $group;
 
         $this->store($group, $page, $perPage ?? $this->config->perPage, $total, $segment);
 

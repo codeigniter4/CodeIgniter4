@@ -18,6 +18,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Override;
 use PHPUnit\Framework\Attributes\Group;
+use RuntimeException;
 
 /**
  * @internal
@@ -47,5 +48,24 @@ final class PretendTest extends CIUnitTestCase
             ->get();
 
         $this->assertInstanceOf(Query::class, $result);
+    }
+
+    public function testPrepareResetsPretendWhenClosureThrowsException(): void
+    {
+        $this->db->pretend(false);
+
+        $exception = new RuntimeException('Error in prepare closure');
+
+        try {
+            $this->db->prepare(static function () use ($exception): never {
+                throw $exception;
+            });
+
+            $this->fail('prepare() must rethrow the exception thrown by the closure.');
+        } catch (RuntimeException $e) {
+            $this->assertSame($exception, $e, 'prepare() must rethrow the exception thrown by the closure.');
+        }
+
+        $this->assertFalse($this->db->pretend, 'prepare() must reset pretend mode when the closure throws.');
     }
 }

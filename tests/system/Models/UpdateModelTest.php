@@ -102,7 +102,7 @@ final class UpdateModelTest extends LiveModelTestCase
         ];
 
         $this->createModel(UserModel::class);
-        $this->model->insert($data);
+        $this->model->insert($data); // @phpstan-ignore codeigniter.modelFieldNotAllowed
 
         $result = $this->model->update([1, 2], ['name' => 'Foo Bar']);
         $this->assertTrue($result);
@@ -132,11 +132,11 @@ final class UpdateModelTest extends LiveModelTestCase
             'country' => 'US',
             'deleted' => 0,
         ];
-        $this->model->insert($data);
+        $this->model->insert($data); // @phpstan-ignore codeigniter.modelFieldNotAllowed
 
         $this->setPrivateProperty($this->model, 'allowedFields', ['name123']);
 
-        $result = $this->model->update(1, ['name123' => 'Foo Bar 1']);
+        $result = $this->model->update(1, ['name123' => 'Foo Bar 1']); // @phpstan-ignore codeigniter.modelFieldNotAllowed
 
         $this->assertFalse($result);
         $this->dontSeeInDatabase('user', ['id' => 1, 'name' => 'Foo Bar 1']);
@@ -329,7 +329,7 @@ final class UpdateModelTest extends LiveModelTestCase
             'deleted' => 0,
         ];
 
-        $id = $this->model->insert($data);
+        $id = $this->model->insert($data); // @phpstan-ignore codeigniter.modelFieldNotAllowed
 
         $this->expectException(DataException::class);
         $this->expectExceptionMessage('There is no data to update.');
@@ -367,7 +367,7 @@ final class UpdateModelTest extends LiveModelTestCase
             'deleted' => 0,
         ];
 
-        $id = $this->model->insert($data);
+        $id = $this->model->insert($data); // @phpstan-ignore codeigniter.modelFieldNotAllowed
 
         $this->expectException(DataException::class);
         $this->expectExceptionMessage('There is no data to update.');

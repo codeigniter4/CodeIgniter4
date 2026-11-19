@@ -57,7 +57,7 @@ namespace App\Controllers;
 
 class Helloworld extends BaseController
 {
-    public function index($name)
+    public function index(string $name): string
     {
         return 'Hello ' . esc($name) . '!';
     }

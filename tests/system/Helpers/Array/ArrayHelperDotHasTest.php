@@ -74,4 +74,43 @@ final class ArrayHelperDotHasTest extends CIUnitTestCase
         $this->assertTrue(ArrayHelper::dotHas('contacts.*.0.name', $this->array));
         $this->assertFalse(ArrayHelper::dotHas('contacts.*.1.name', $this->array));
     }
+
+    public function testDotHasWithZeroKeyAndNonArrayValues(): void
+    {
+        $this->assertFalse(ArrayHelper::dotHas('contacts.friends.0.nonexistent', $this->array));
+        $this->assertFalse(ArrayHelper::dotHas('0', []));
+        $this->assertTrue(ArrayHelper::dotHas('0', ['0' => 'value']));
+        $this->assertTrue(ArrayHelper::dotHas('0', ['0' => null]));
+        $this->assertFalse(ArrayHelper::dotHas('contacts.friends.0.name.sub', $this->array));
+        $this->assertFalse(ArrayHelper::dotHas('contacts.friends.1.age.sub', $this->array));
+        $this->assertFalse(ArrayHelper::dotHas('contacts.*.0.nonexistent', $this->array));
+        $this->assertFalse(ArrayHelper::dotHas('contacts.friends.*.age.sub', $this->array));
+        $this->assertFalse(ArrayHelper::dotHas('contacts.friends.1.age.*.sub', $this->array));
+        $this->assertFalse(ArrayHelper::dotHas('*.name', [['name' => 'Fred'], 'not-an-array']));
+    }
+
+    public function testDotHasWithZeroIndexAfterWildCard(): void
+    {
+        $array = [
+            'users' => [
+                ['contacts' => [['email' => 'alice@example.com']]],
+                ['contacts' => [['email' => 'bob@example.com']]],
+            ],
+        ];
+
+        $this->assertTrue(ArrayHelper::dotHas('users.*.contacts.0.email', $array));
+        $this->assertTrue(ArrayHelper::dotHas('users.*.contacts.*.email', $array));
+        $this->assertFalse(ArrayHelper::dotHas('users.*.contacts.0.nonexistent', $array));
+        $this->assertFalse(ArrayHelper::dotHas('users.*.contacts.1.email', $array));
+
+        $arrayWithMissingKey = [
+            'users' => [
+                ['contacts' => [['email' => 'alice@example.com']]],
+                ['contacts' => [['name' => 'Bob']]],
+            ],
+        ];
+
+        $this->assertFalse(ArrayHelper::dotHas('users.*.contacts.0.email', $arrayWithMissingKey));
+        $this->assertFalse(ArrayHelper::dotHas('users.*.contacts.*.email', $arrayWithMissingKey));
+    }
 }

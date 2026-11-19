@@ -82,7 +82,7 @@ final class InsertOnlyFieldsModelTest extends LiveModelTestCase
 
     public function testSaveUpdateDiscardsInsertOnlyFieldsByDefault(): void
     {
-        $result = $this->createModel(UserModel::class)->setInsertOnlyFields(['email'])->save([
+        $result = $this->createModel(UserModel::class)->setInsertOnlyFields(['email'])->save([ // @phpstan-ignore codeigniter.modelFieldNotAllowed
             'id'    => 1,
             'name'  => 'Insert Only Save',
             'email' => 'insert-only-save@example.com',
@@ -101,7 +101,7 @@ final class InsertOnlyFieldsModelTest extends LiveModelTestCase
         $this->expectException(DataException::class);
         $this->expectExceptionMessage('Fields cannot be updated for model "Tests\Support\Models\UserModel": email');
 
-        $this->createModel(UserModel::class)->setInsertOnlyFields(['email'])->throwOnDisallowedFields()->save([
+        $this->createModel(UserModel::class)->setInsertOnlyFields(['email'])->throwOnDisallowedFields()->save([ // @phpstan-ignore codeigniter.modelFieldNotAllowed
             'id'    => 1,
             'name'  => 'Insert Only Save',
             'email' => 'insert-only-save@example.com',

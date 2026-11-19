@@ -182,8 +182,13 @@ To clean up such listeners between requests, add the event name to `$resetEventL
 
 namespace Config;
 
-class WorkerMode extends \CodeIgniter\Config\WorkerMode
+class WorkerMode
 {
+    // ...
+
+    /**
+     * @var list<string>
+     */
     public array $resetEventListeners = ['my_event'];
 }
 ```

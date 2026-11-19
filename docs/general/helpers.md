@@ -164,7 +164,10 @@ For example, to extend the native **Array Helper** you'll create a file named **
 <?php
 
 // any_in_array() is not in the Array Helper, so it defines a new function
-function any_in_array($needle, $haystack)
+/**
+ * @param list<mixed> $haystack
+ */
+function any_in_array(mixed $needle, array $haystack): bool
 {
     $needle = is_array($needle) ? $needle : [$needle];
 
@@ -178,7 +181,10 @@ function any_in_array($needle, $haystack)
 }
 
 // random_element() is included in Array Helper, so it overrides the native function
-function random_element($array)
+/**
+ * @param list<mixed> $array
+ */
+function random_element(array $array): mixed
 {
     shuffle($array);
 

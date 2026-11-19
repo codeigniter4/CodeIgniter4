@@ -47,7 +47,7 @@ final class EventsModelTest extends LiveModelTestCase
             'deleted' => 0,
         ];
 
-        $this->model()->insert($data);
+        $this->model()->insert($data); // @phpstan-ignore codeigniter.modelFieldNotAllowed
         $this->assertTrue($this->model()->hasToken('beforeInsert'));
         $this->assertTrue($this->model()->hasToken('afterInsert'));
     }
@@ -61,9 +61,9 @@ final class EventsModelTest extends LiveModelTestCase
             'deleted' => 0,
         ];
 
-        $id = $this->model()->insert($data);
+        $id = $this->model()->insert($data); // @phpstan-ignore codeigniter.modelFieldNotAllowed
 
-        $this->model()->update($id, $data);
+        $this->model()->update($id, $data); // @phpstan-ignore codeigniter.modelFieldNotAllowed
         $this->assertTrue($this->model()->hasToken('beforeUpdate'));
         $this->assertTrue($this->model()->hasToken('afterUpdate'));
     }
@@ -176,7 +176,7 @@ final class EventsModelTest extends LiveModelTestCase
 
         $this->expectException(DataException::class);
         $this->expectExceptionMessage('"anotherBeforeInsertMethod" is not a valid Model Event callback.');
-        $this->model()->insert($data);
+        $this->model()->insert($data); // @phpstan-ignore codeigniter.modelFieldNotAllowed
     }
 
     public function testInsertBatchEvent(): void

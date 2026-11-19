@@ -131,18 +131,18 @@ use App\Models\NewsModel;
 
 class News extends BaseController
 {
-    public function index()
+    public function index(): void
     {
         $model = model(NewsModel::class);
 
-        $data['news_list'] = $model->getNews();
+        $data = ['news_list' => $model->getNews()];
     }
 
-    public function show(?string $slug = null)
+    public function show(?string $slug = null): void
     {
         $model = model(NewsModel::class);
 
-        $data['news'] = $model->getNews($slug);
+        $data = ['news' => $model->getNews($slug)];
     }
 }
 ```
@@ -168,7 +168,7 @@ use App\Models\NewsModel;
 
 class News extends BaseController
 {
-    public function index()
+    public function index(): string
     {
         $model = model(NewsModel::class);
 
@@ -238,11 +238,11 @@ class News extends BaseController
 {
     // ...
 
-    public function show(?string $slug = null)
+    public function show(?string $slug = null): string
     {
         $model = model(NewsModel::class);
 
-        $data['news'] = $model->getNews($slug);
+        $data = ['news' => $model->getNews($slug)];
 
         if ($data['news'] === null) {
             throw new PageNotFoundException('Cannot find the news item: ' . $slug);

@@ -15,7 +15,9 @@ A quick example will probably make things clearer, so imagine that you need to p
 ```php
 <?php
 
-$timer = new \CodeIgniter\Debug\Timer();
+use CodeIgniter\Debug\Timer;
+
+$timer = new Timer();
 ```
 
 And this works great, until you decide that you want to use a different timer class in its place. Maybe this one has some advanced reporting that the default timer does not provide. In order to do this, you now have to locate all of the places in your application where you have used the timer class. Since you might have left them in place to keep a performance log of your application constantly running, this might be a time-consuming and error-prone way to handle this. That's where services come in handy.
@@ -25,10 +27,12 @@ Instead of creating the instance ourselves, we let a central class create an ins
 ```php
 <?php
 
+use Config\Services;
+
 $timer = service('timer');
 
 // The code above is the same as the code below.
-$timer = \Config\Services::timer();
+$timer = Services::timer();
 ```
 
 When you need to change the implementation used, you can modify the services configuration file, and the change happens automatically throughout your application without you having to do anything. Now you just need to take advantage of any new functionality and you're good to go. Very simple and error-resistant.
@@ -77,7 +81,9 @@ If you want to get a new instance of the Timer class, you need to pass `false` t
 ```php
 <?php
 
-$timer = \Config\Services::timer(false);
+use Config\Services;
+
+$timer = Services::timer(false);
 ```
 
 ### Convenience Functions
@@ -91,10 +97,12 @@ The first is `service()`, which provides access to the requested service. The on
 ```php
 <?php
 
+use Config\Services;
+
 $logger = service('logger');
 
 // The code above is the same as the code below.
-$logger = \Config\Services::logger();
+$logger = Services::logger();
 ```
 
 !!! note "Note"
@@ -107,10 +115,12 @@ If the creation method requires additional parameters, they can be passed after 
 ```php
 <?php
 
+use Config\Services;
+
 $renderer = service('renderer', APPPATH . 'views/');
 
 // The code above is the same as the code below.
-$renderer = \Config\Services::renderer(APPPATH . 'views/');
+$renderer = Services::renderer(APPPATH . 'views/');
 ```
 
 #### single_service()
@@ -120,10 +130,12 @@ The second function, `single_service()`, works just like `service()` but returns
 ```php
 <?php
 
+use Config\Services;
+
 $logger = single_service('logger');
 
 // The code above is the same as the code below.
-$logger = \Config\Services::logger(false);
+$logger = Services::logger(false);
 ```
 
 ## Defining Services
@@ -152,15 +164,17 @@ Finally, add the `routes()` method to **app/Config/Services.php** to create a ne
 
 namespace Config;
 
+use App\Router\MyRouteCollection;
 use CodeIgniter\Config\BaseService;
+use CodeIgniter\Router\RouteCollection;
 
 class Services extends BaseService
 {
     // ...
 
-    public static function routes()
+    public static function routes(): RouteCollection
     {
-        return new \App\Router\MyRouteCollection(static::locator(), config('Modules'));
+        return new MyRouteCollection(static::locator(), config('Modules'));
     }
 }
 ```
@@ -177,14 +191,15 @@ A good example is the `renderer` service. By default, we want this class to be a
 namespace Config;
 
 use CodeIgniter\Config\BaseService;
+use CodeIgniter\View\View;
 
 class Services extends BaseService
 {
     // ...
 
-    public static function renderer($viewPath = APPPATH . 'views/')
+    public static function renderer(string $viewPath = APPPATH . 'views/'): View
     {
-        return new \CodeIgniter\View\View($viewPath);
+        return new View(config('View'), $viewPath);
     }
 }
 ```
@@ -194,7 +209,9 @@ This sets the default path in the constructor method, but allows for easily chan
 ```php
 <?php
 
-$renderer = \Config\Services::renderer('/shared/views/');
+use Config\Services;
+
+$renderer = Services::renderer('/shared/views/');
 ```
 
 ### Shared Classes
@@ -206,19 +223,21 @@ There are occasions where you need to require that only a single instance of a s
 
 namespace Config;
 
+use App\Router\MyRouteCollection;
 use CodeIgniter\Config\BaseService;
+use CodeIgniter\Router\RouteCollection;
 
 class Services extends BaseService
 {
     // ...
 
-    public static function routes($getShared = true)
+    public static function routes(bool $getShared = true): RouteCollection
     {
         if ($getShared) {
             return static::getSharedInstance('routes');
         }
 
-        return new \App\Router\MyRouteCollection(static::locator(), config('Modules'));
+        return new MyRouteCollection(static::locator(), config('Modules'));
     }
 }
 ```
@@ -240,13 +259,14 @@ Imagine that you've created a new directory, **Blog**, in your project root dire
 
 namespace Blog\Config;
 
+use Blog\Libraries\PostManager;
 use CodeIgniter\Config\BaseService;
 
 class Services extends BaseService
 {
-    public static function postManager()
+    public static function postManager(): PostManager
     {
-        // ...
+        return new PostManager();
     }
 }
 ```

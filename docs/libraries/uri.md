@@ -83,7 +83,10 @@ The scheme is frequently 'http' or 'https', but any scheme is supported, includi
 ```php
 <?php
 
-$uri = new \CodeIgniter\HTTP\URI('http://www.example.com/some/path');
+use CodeIgniter\HTTP\URI;
+
+$uri = new URI('http://www.example.com/some/path');
+
 echo $uri->getScheme(); // 'http'
 
 $uri = $uri->withScheme('https');
@@ -97,7 +100,9 @@ Many URIs contain several elements that are collectively known as the 'authority
 ```php
 <?php
 
-$uri = new \CodeIgniter\HTTP\URI('ftp://user:password@example.com:21/some/path');
+use CodeIgniter\HTTP\URI;
+
+$uri = new URI('ftp://user:password@example.com:21/some/path');
 
 echo $uri->getAuthority();  // user@example.com:21
 ```
@@ -151,7 +156,9 @@ The host portion of the URI is typically the domain name of the URL. This can be
 ```php
 <?php
 
-$uri = new \CodeIgniter\HTTP\URI('http://www.example.com/some/path');
+use CodeIgniter\HTTP\URI;
+
+$uri = new URI('http://www.example.com/some/path');
 
 echo $uri->getHost();   // www.example.com
 echo $uri->setHost('anotherexample.com')->getHost();    // anotherexample.com
@@ -164,7 +171,9 @@ The port is an integer between 0 and 65535. Each scheme has a default value asso
 ```php
 <?php
 
-$uri = new \CodeIgniter\HTTP\URI('ftp://user:password@example.com:21/some/path');
+use CodeIgniter\HTTP\URI;
+
+$uri = new URI('ftp://user:password@example.com:21/some/path');
 
 echo $uri->getPort();   // 21
 echo $uri->setPort(2201)->getPort(); // 2201
@@ -179,7 +188,9 @@ The path is all of the segments within the site itself. As expected, the `getPat
 ```php
 <?php
 
-$uri = new \CodeIgniter\HTTP\URI('http://www.example.com/some/path');
+use CodeIgniter\HTTP\URI;
+
+$uri = new URI('http://www.example.com/some/path');
 
 echo $uri->getPath();                            // '/some/path'
 echo $uri->setPath('/another/path')->getPath();  // '/another/path'
@@ -202,7 +213,9 @@ Query values can only be set as a string currently.
 ```php
 <?php
 
-$uri = new \CodeIgniter\HTTP\URI('http://www.example.com?foo=bar');
+use CodeIgniter\HTTP\URI;
+
+$uri = new URI('http://www.example.com?foo=bar');
 
 echo $uri->getQuery();  // 'foo=bar'
 $uri->setQuery('foo=bar&bar=baz');
@@ -256,7 +269,9 @@ You can return a new URI instance with its query variables replaced by using the
 ```php
 <?php
 
-$uri = new \CodeIgniter\HTTP\URI('https://example.com/users?q=bob&page=1');
+use CodeIgniter\HTTP\URI;
+
+$uri = new URI('https://example.com/users?q=bob&page=1');
 
 $page = $uri->withQuery('page=2');
 // https://example.com/users?page=2
@@ -273,7 +288,9 @@ You can return a new URI instance with one or more query variables added or repl
 ```php
 <?php
 
-$uri = new \CodeIgniter\HTTP\URI('https://example.com/users?q=bob&page=1');
+use CodeIgniter\HTTP\URI;
+
+$uri = new URI('https://example.com/users?q=bob&page=1');
 
 $nextPage = $uri->withQueryVar('page', 2);
 // https://example.com/users?q=bob&page=2
@@ -291,7 +308,9 @@ You can return a new URI instance with query variables removed or filtered by us
 ```php
 <?php
 
-$uri = new \CodeIgniter\HTTP\URI('https://example.com/users?q=bob&page=1&role=admin');
+use CodeIgniter\HTTP\URI;
+
+$uri = new URI('https://example.com/users?q=bob&page=1&role=admin');
 
 $withoutPage = $uri->withoutQueryVars('page');
 // https://example.com/users?q=bob&role=admin
@@ -307,7 +326,9 @@ You can filter the query values returned by passing an options array to the `get
 ```php
 <?php
 
-$uri = new \CodeIgniter\HTTP\URI('http://www.example.com?foo=bar&bar=baz&baz=foz');
+use CodeIgniter\HTTP\URI;
+
+$uri = new URI('http://www.example.com?foo=bar&bar=baz&baz=foz');
 
 // Returns 'foo=bar'
 echo $uri->getQuery(['only' => ['foo']]);
@@ -325,7 +346,9 @@ If you need to modify the URI's query values more permanently, you can use the `
 ```php
 <?php
 
-$uri = new \CodeIgniter\HTTP\URI('http://www.example.com?foo=bar&bar=baz&baz=foz');
+use CodeIgniter\HTTP\URI;
+
+$uri = new URI('http://www.example.com?foo=bar&bar=baz&baz=foz');
 
 // Leaves just the 'baz' variable
 $uri->stripQuery('foo', 'bar');
@@ -344,7 +367,9 @@ Fragments are the portion at the end of the URL, preceded by the pound sign (`#`
 ```php
 <?php
 
-$uri = new \CodeIgniter\HTTP\URI('http://www.example.com/some/path#first-heading');
+use CodeIgniter\HTTP\URI;
+
+$uri = new URI('http://www.example.com/some/path#first-heading');
 
 echo $uri->getFragment();   // 'first-heading'
 echo $uri->setFragment('second-heading')->getFragment();    // 'second-heading'

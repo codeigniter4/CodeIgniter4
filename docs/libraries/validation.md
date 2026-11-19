@@ -100,7 +100,7 @@ class Form extends BaseController
 {
     protected $helpers = ['form'];
 
-    public function index()
+    public function index(): string
     {
         if (! $this->request->is('post')) {
             return view('signup');
@@ -245,17 +245,24 @@ If you want to use traditional rules, you need to change the rule classes in **a
 
 namespace Config;
 
-// ...
+use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Validation\CreditCardRules;
+use CodeIgniter\Validation\FileRules;
+use CodeIgniter\Validation\FormatRules;
+use CodeIgniter\Validation\Rules;
 
 class Validation extends BaseConfig
 {
     // ...
 
+    /**
+     * @var list<string>
+     */
     public array $ruleSets = [
-        \CodeIgniter\Validation\CreditCardRules::class,
-        \CodeIgniter\Validation\FileRules::class,
-        \CodeIgniter\Validation\FormatRules::class,
-        \CodeIgniter\Validation\Rules::class,
+        CreditCardRules::class,
+        FileRules::class,
+        FormatRules::class,
+        Rules::class,
     ];
 
     // ...
@@ -625,12 +632,15 @@ To store your validation rules, simply create a new public property in the `Conf
 
 namespace Config;
 
-// ...
+use CodeIgniter\Config\BaseConfig;
 
 class Validation extends BaseConfig
 {
     // ...
 
+    /**
+     * @var array<string, array<string, mixed>|string>
+     */
     public array $signup = [
         'username'     => 'required|max_length[30]',
         'password'     => 'required|max_length[255]',
@@ -659,12 +669,15 @@ You can also store custom error messages in this configuration file by naming th
 
 namespace Config;
 
-// ...
+use CodeIgniter\Config\BaseConfig;
 
 class Validation extends BaseConfig
 {
     // ...
 
+    /**
+     * @var array<string, array<string, mixed>|string>
+     */
     public array $signup = [
         'username'     => 'required|max_length[30]',
         'password'     => 'required|max_length[255]',
@@ -672,6 +685,9 @@ class Validation extends BaseConfig
         'email'        => 'required|max_length[254]|valid_email',
     ];
 
+    /**
+     * @var array<string, array<string, string>>
+     */
     public array $signup_errors = [
         'username' => [
             'required' => 'You must choose a username.',
@@ -692,12 +708,15 @@ Or pass all settings in an array:
 
 namespace Config;
 
-// ...
+use CodeIgniter\Config\BaseConfig;
 
 class Validation extends BaseConfig
 {
     // ...
 
+    /**
+     * @var array<string, array<string, mixed>|string>
+     */
     public array $signup = [
         'username' => [
             'rules'  => 'required|max_length[30]',
@@ -968,7 +987,7 @@ When you call `$validation->listErrors()` or `$validation->showError()`, it load
 The first step is to create custom views. These can be placed anywhere that the `view()` method can locate them, which means the standard View directory or any namespaced View folder will work. For example, you could create a new view at **app/Views/\_errors_list.php**:
 
 ```php
-<?php if (! empty($errors)): ?>
+<?php if ($errors !== []): ?>
     <div class="alert alert-danger" role="alert">
         <ul>
         <?php foreach ($errors as $error): ?>
@@ -1003,12 +1022,15 @@ Once you have your views created, you need to let the Validation library know ab
 
 namespace Config;
 
-// ...
+use CodeIgniter\Config\BaseConfig;
 
 class Validation extends BaseConfig
 {
     // ...
 
+    /**
+     * @var array<string, string>
+     */
     public array $templates = [
         'list'    => 'CodeIgniter\Validation\Views\list',
         'single'  => 'CodeIgniter\Validation\Views\single',
@@ -1064,6 +1086,9 @@ class Validation extends BaseConfig
 {
     // ...
 
+    /**
+     * @var list<string>
+     */
     public array $ruleSets = [
         Rules::class,
         FormatRules::class,
@@ -1086,7 +1111,7 @@ Within the file itself, each method is a rule and must accept a value to validat
 
 class MyRules
 {
-    public function even($value): bool
+    public function even(mixed $value): bool
     {
         return (int) $value % 2 === 0;
     }
@@ -1100,9 +1125,12 @@ By default, the system will look within **system/Language/en/Validation.php** fo
 
 class MyRules
 {
-    public function even($value, ?string &$error = null): bool
+    /**
+     * @param-out string|null $error
+     */
+    public function even(mixed $value, ?string &$error = null): bool
     {
-        if ((int) $value % 2 !== 0) {
+        if (is_int($value) && $value % 2 !== 0) {
             $error = lang('myerrors.evenError');
             // You can also use {field}, {param}, and {value} placeholders:
             // $error = 'The value of {field} is not even.';
@@ -1147,7 +1175,10 @@ The `$data` array is especially handy for rules like `required_with` that need t
 
 class MyRules
 {
-    public function required_with($value, string $params, array $data): bool
+    /**
+     * @param array<string, mixed> $data
+     */
+    public function required_with(mixed $value, string $params, array $data): bool
     {
         $params = explode(',', $params);
 
@@ -1173,9 +1204,9 @@ class MyRules
 
         // Remove any keys with empty values since, that means they
         // weren't truly there, as far as this is concerned.
-        $requiredFields = array_filter($requiredFields, static fn ($item) => ! empty($data[$item]));
+        $requiredFields = array_filter($requiredFields, static fn ($item) => ($data[$item] ?? '') !== '');
 
-        return empty($requiredFields);
+        return $requiredFields === [];
     }
 }
 ```

@@ -13,15 +13,14 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Encryption;
 
-use CodeIgniter\Config\Services as CodeIgniterServices;
 use CodeIgniter\Encryption\Exceptions\EncryptionException;
 use CodeIgniter\Encryption\Handlers\OpenSSLHandler;
-use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
 use Config\Services;
 use Override;
 use PHPUnit\Framework\Attributes\Group;
+use Tests\Support\Encryption\WithoutEncryptionEnvTrait;
 
 /**
  * @internal
@@ -29,6 +28,8 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class EncryptionTest extends CIUnitTestCase
 {
+    use WithoutEncryptionEnvTrait;
+
     private Encryption $encryption;
 
     #[Override]
@@ -36,15 +37,7 @@ final class EncryptionTest extends CIUnitTestCase
     {
         parent::setUpBeforeClass();
 
-        CodeIgniterServices::injectMock('superglobals', new Superglobals());
-
-        if (is_file(ROOTPATH . '.env')) {
-            rename(ROOTPATH . '.env', ROOTPATH . '.env.bak');
-
-            putenv('encryption.key');
-            unset($_ENV['encryption.key']);
-            service('superglobals')->unsetServer('encryption.key');
-        }
+        self::setUpBeforeClassWithoutEncryptionEnv();
     }
 
     #[Override]
@@ -60,9 +53,7 @@ final class EncryptionTest extends CIUnitTestCase
     {
         parent::tearDownAfterClass();
 
-        if (is_file(ROOTPATH . '.env.bak')) {
-            rename(ROOTPATH . '.env.bak', ROOTPATH . '.env');
-        }
+        self::tearDownAfterClassWithoutEncryptionEnv();
     }
 
     /**

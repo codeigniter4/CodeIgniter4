@@ -9,7 +9,9 @@ You can mock the cache with the `mock()` method, using the `CacheFactory` as its
 ```php
 <?php
 
-$mock = mock(\CodeIgniter\Cache\CacheFactory::class);
+use CodeIgniter\Cache\CacheFactory;
+
+$mock = mock(CacheFactory::class);
 ```
 
 While this returns an instance of `CodeIgniter\Test\Mock\MockCache` that you can use directly, it also inserts the mock into the Service class, so any calls within your code to `service('cache')` or `Config\Services::cache()` will use the mocked class in its place.
@@ -23,7 +25,9 @@ You can instruct the mocked cache handler to never do any caching with the `bypa
 ```php
 <?php
 
-$mock = mock(\CodeIgniter\Cache\CacheFactory::class);
+use CodeIgniter\Cache\CacheFactory;
+
+$mock = mock(CacheFactory::class);
 // Never cache any items during this test.
 $mock->bypass();
 ```
@@ -35,7 +39,9 @@ The following new assertions are available on the mocked class for use during te
 ```php
 <?php
 
-$mock = mock(\CodeIgniter\Cache\CacheFactory::class);
+use CodeIgniter\Cache\CacheFactory;
+
+$mock = mock(CacheFactory::class);
 
 // Assert that a cached item named $key exists
 $mock->assertHas($key);

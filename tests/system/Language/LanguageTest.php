@@ -329,10 +329,10 @@ final class LanguageTest extends CIUnitTestCase
         $this->assertSame('I have a very bad feeling about this', $lang->getLine('More.cannotMove'));
 
         // key is in variant but not base; should pick variant
-        $this->assertSame('There is no try', $lang->getLine('More.wisdom'));
+        $this->assertSame('There is no try', $lang->getLine('More.wisdom')); // @phpstan-ignore codeigniter.languageLineNotFound
 
         // key isn't in either base or variant; should return bad key
-        $this->assertSame('More.shootMe', $lang->getLine('More.shootMe'));
+        $this->assertSame('More.shootMe', $lang->getLine('More.shootMe')); // @phpstan-ignore codeigniter.languageLineNotFound
     }
 
     /**
@@ -370,10 +370,10 @@ final class LanguageTest extends CIUnitTestCase
     public function testAllTheWayFallbacks(): void
     {
         $lang = service('language', 'ab-CD', false);
-        $this->assertSame('Allin.none', $lang->getLine('Allin.none'));
-        $this->assertSame('Pyramid of Giza', $lang->getLine('Allin.one'));
-        $this->assertSame('gluttony', $lang->getLine('Allin.two'));
-        $this->assertSame('Colossus of Rhodes', $lang->getLine('Allin.tre'));
+        $this->assertSame('Allin.none', $lang->getLine('Allin.none')); // @phpstan-ignore codeigniter.languageLineNotFound
+        $this->assertSame('Pyramid of Giza', $lang->getLine('Allin.one')); // @phpstan-ignore codeigniter.languageLineNotFound
+        $this->assertSame('gluttony', $lang->getLine('Allin.two')); // @phpstan-ignore codeigniter.languageLineNotFound
+        $this->assertSame('Colossus of Rhodes', $lang->getLine('Allin.tre')); // @phpstan-ignore codeigniter.languageLineNotFound
         $this->assertSame('four calling birds', $lang->getLine('Allin.for'));
         $this->assertSame('Temple of Artemis', $lang->getLine('Allin.fiv'));
         $this->assertSame('envy', $lang->getLine('Allin.six'));
@@ -407,6 +407,6 @@ final class LanguageTest extends CIUnitTestCase
         $lang->loadem('Foo', 'en');
 
         $this->assertSame('The fieldname field is very short.', $lang->getLine('Foo.bar.min_length1', ['field' => 'fieldname']));
-        $this->assertSame('The fieldname field is very short.', $lang->getLine('Foo.baz.min_length3.short', ['field' => 'fieldname']));
+        $this->assertSame('The fieldname field is very short.', $lang->getLine('Foo.baz.min_length3.short', ['field' => 'fieldname'])); // @phpstan-ignore codeigniter.languageLineNotFound
     }
 }

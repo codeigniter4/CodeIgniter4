@@ -126,12 +126,13 @@ namespace App\Controllers;
 
 use App\Transformers\UserTransformer;
 use CodeIgniter\API\ResponseTrait;
+use CodeIgniter\HTTP\ResponseInterface;
 
 class Users extends BaseController
 {
     use ResponseTrait;
 
-    public function show($id)
+    public function show(int|string $id): ResponseInterface
     {
         $user = model('UserModel')->find($id);
 
@@ -144,7 +145,7 @@ class Users extends BaseController
         return $this->respond($transformer->transform($user));
     }
 
-    public function index()
+    public function index(): ResponseInterface
     {
         $users = model('UserModel')->findAll();
 
@@ -321,6 +322,9 @@ class UserTransformer extends BaseTransformer
         ];
     }
 
+    /**
+     * @return list<array<string, mixed>>
+     */
     protected function includePosts(): array
     {
         // Use $this->resource to access the current resource being transformed
@@ -329,6 +333,9 @@ class UserTransformer extends BaseTransformer
         return (new PostTransformer())->transformMany($posts);
     }
 
+    /**
+     * @return list<array<string, mixed>>
+     */
     protected function includeComments(): array
     {
         $comments = model('CommentModel')->where('user_id', $this->resource['id'])->findAll();
@@ -400,6 +407,9 @@ class UserTransformer extends BaseTransformer
         return ['posts', 'comments'];
     }
 
+    /**
+     * @return list<array<string, mixed>>
+     */
     protected function includePosts(): array
     {
         $posts = model('PostModel')->where('user_id', $this->resource['id'])->findAll();
@@ -407,6 +417,9 @@ class UserTransformer extends BaseTransformer
         return (new PostTransformer())->transformMany($posts);
     }
 
+    /**
+     * @return list<array<string, mixed>>
+     */
     protected function includeComments(): array
     {
         $comments = model('CommentModel')->where('user_id', $this->resource['id'])->findAll();
@@ -414,6 +427,9 @@ class UserTransformer extends BaseTransformer
         return (new CommentTransformer())->transformMany($comments);
     }
 
+    /**
+     * @return list<array<string, mixed>>
+     */
     protected function includeOrders(): array
     {
         // This method exists but won't be callable from the API
@@ -481,12 +497,13 @@ namespace App\Controllers;
 
 use App\Transformers\UserTransformer;
 use CodeIgniter\API\ResponseTrait;
+use CodeIgniter\HTTP\ResponseInterface;
 
 class Users extends BaseController
 {
     use ResponseTrait;
 
-    public function index()
+    public function index(): ResponseInterface
     {
         $users = model('UserModel')->findAll();
 
@@ -552,7 +569,7 @@ Any object can be cast to an array and transformed:
 
 use App\Transformers\UserTransformer;
 
-$user        = new \stdClass();
+$user        = new stdClass();
 $user->id    = 1;
 $user->name  = 'John Doe';
 $user->email = 'john@example.com';
@@ -785,6 +802,9 @@ class UserTransformer extends BaseTransformer
         return ['posts'];
     }
 
+    /**
+     * @return list<array<string, mixed>>
+     */
     protected function includePosts(): array
     {
         $posts = model('PostModel')->where('user_id', $this->resource['id'])->findAll();
@@ -792,6 +812,9 @@ class UserTransformer extends BaseTransformer
         return (new PostTransformer())->transformMany($posts);
     }
 
+    /**
+     * @return list<array<string, mixed>>
+     */
     protected function includeOrders(): array
     {
         // This method exists but cannot be called via the API

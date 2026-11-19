@@ -68,12 +68,12 @@ namespace App\Controllers;
 
 class Upload extends BaseController
 {
-    public function index()
+    public function index(): string
     {
         return view('upload_form', ['error' => ' ']);
     }
 
-    public function do_upload()
+    public function do_upload(): string
     {
         $this->validateData([], [
             'userfile' => [
@@ -87,7 +87,9 @@ class Upload extends BaseController
 
         $file = $this->request->getFile('userfile');
 
-        if (! $path = $file->store()) {
+        $path = $file->store();
+
+        if ($path === '') {
             return view('upload_form', ['error' => 'upload failed']);
         }
         $data = ['upload_file_path' => $path];

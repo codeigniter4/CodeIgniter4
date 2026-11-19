@@ -15,15 +15,17 @@ You can access models within your classes by creating a new instance or using th
 ```php
 <?php
 
+use App\Models\UserModel;
+
 // Create a new class manually.
-$userModel = new \App\Models\UserModel();
+$userModel = new UserModel();
 
 // Create a shared instance of the model.
 $userModel = model('UserModel');
 // or
 $userModel = model('App\Models\UserModel');
 // or
-$userModel = model(\App\Models\UserModel::class);
+$userModel = model(UserModel::class);
 
 // Create a new class with the model() function.
 $userModel = model('UserModel', false);
@@ -84,6 +86,8 @@ class UserModel extends UserAuthModel
     /**
      * Called during initialization. Appends
      * our custom field to the module's model.
+     *
+     * @return void
      */
     protected function initialize()
     {
@@ -717,6 +721,8 @@ class SomeHandler extends BaseCast
          *   string(6) "param3"
          * }
          */
+
+        return $value;
     }
 }
 ```
@@ -964,18 +970,20 @@ namespace App\Entities;
 
 class Job
 {
-    protected $id;
-    protected $name;
-    protected $description;
+    protected int $id;
+    protected string $name;
+    protected string $description;
 
-    public function __get($key)
+    public function __get(string $key): mixed
     {
         if (property_exists($this, $key)) {
             return $this->{$key};
         }
+
+        return null;
     }
 
-    public function __set($key, $value)
+    public function __set(string $key, mixed $value): void
     {
         if (property_exists($this, $key)) {
             $this->{$key} = $value;
@@ -991,12 +999,13 @@ A very simple model to work with this might look like:
 
 namespace App\Models;
 
+use App\Entities\Job;
 use CodeIgniter\Model;
 
 class JobModel extends Model
 {
     protected $table         = 'jobs';
-    protected $returnType    = \App\Entities\Job::class;
+    protected $returnType    = Job::class;
     protected $allowedFields = [
         'name', 'description',
     ];
@@ -1057,7 +1066,7 @@ $user = $userModel->firstOrInsert(
 <?php
 
 // All lookup attributes can be passed as an object or Entity.
-$attrs        = new \stdClass();
+$attrs        = new stdClass();
 $attrs->email = 'john@example.com';
 
 $user = $userModel->firstOrInsert($attrs, ['name' => 'John Doe', 'country' => 'US']);
@@ -1083,7 +1092,7 @@ $result = $accountModel->withLockedRow($id, static function (object $account, $m
     $account->balance -= 100;
 
     if (! $model->save($account)) {
-        throw new \RuntimeException('Unable to save the account.');
+        throw new RuntimeException('Unable to save the account.');
     }
 
     return true;
@@ -1236,7 +1245,7 @@ The other way to set the validation rules for fields is by using functions:
 
 #### setValidationRule($field, $fieldRules)
 
-- **Parameters**  
+- **Parameters**
     - **$field** `string`
     - **$fieldRules** `array`
 
@@ -1255,7 +1264,7 @@ $model->setValidationRule($fieldName, $fieldRules);
 
 #### setValidationRules($validationRules)
 
-- **Parameters**  
+- **Parameters**
     - **$validationRules** `array`
 
 This function will set the validation rules.
@@ -1281,7 +1290,7 @@ The other way to set the validation messages for fields is by using functions:
 
 #### setValidationMessage($field, $fieldMessages)
 
-- **Parameters**  
+- **Parameters**
     - **$field** `string`
     - **$fieldMessages** `array`
 
@@ -1301,7 +1310,7 @@ $model->setValidationMessage($fieldName, $fieldValidationMessage);
 
 #### setValidationMessages($validationMessages)
 
-- **Parameters**  
+- **Parameters**
     - **$validationMessages** `array`
 
 This function will set the field messages.
@@ -1339,7 +1348,7 @@ if ($model->save($data) === false) {
 This returns an array with the field names and their associated errors that can be used to either show all of the errors at the top of the form, or to display them individually:
 
 ```php
-<?php if (! empty($errors)): ?>
+<?php if ($errors !== []): ?>
     <div class="alert alert-danger">
     <?php foreach ($errors as $field => $error): ?>
         <p><?= esc($error) ?></p>
@@ -1694,7 +1703,12 @@ class MyModel extends Model
 {
     // ...
 
-    protected function hashPassword(array $data)
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @return array<string, mixed>
+     */
+    protected function hashPassword(array $data): array
     {
         if (! isset($data['data']['password'])) {
             return $data;
@@ -1803,7 +1817,12 @@ class MyModel extends Model
 
     // ...
 
-    protected function checkCache(array $data)
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @return array<string, mixed>
+     */
+    protected function checkCache(array $data): array
     {
         // Check if the requested item is already in our cache
         if (isset($data['id']) && $item = $this->getCachedItem($data['id'])) {
@@ -1813,7 +1832,7 @@ class MyModel extends Model
             return $data;
         }
 
-        // ...
+        return $data;
     }
 }
 ```
@@ -1831,6 +1850,9 @@ use CodeIgniter\Database\ConnectionInterface;
 
 class UserModel
 {
+    /**
+     * @var ConnectionInterface
+     */
     protected $db;
 
     public function __construct(ConnectionInterface $db)

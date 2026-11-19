@@ -260,4 +260,4 @@ class BookModel extends Model
 
 This tells CodeIgniter which table to use and which fields can be mass-assigned.
 
-In the next section, we'll use your new models to power a RESTful API controller. You'll build the `/api/books` endpoint and see how CodeIgniter's `Api\ResponseTrait` makes CRUD operations easy.
+In the next section, we'll use your new models to power a RESTful API controller. You'll build the `/api/books` endpoint and see how CodeIgniter's `API\ResponseTrait` makes CRUD operations easy.

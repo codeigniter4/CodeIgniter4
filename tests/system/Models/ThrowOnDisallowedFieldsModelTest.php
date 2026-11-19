@@ -28,7 +28,7 @@ final class ThrowOnDisallowedFieldsModelTest extends LiveModelTestCase
 {
     public function testDefaultFieldProtectionStillDiscardsDisallowedFields(): void
     {
-        $this->createModel(UserModel::class)->insert([
+        $this->createModel(UserModel::class)->insert([ // @phpstan-ignore codeigniter.modelFieldNotAllowed
             'name'     => 'Disallowed Default',
             'email'    => 'disallowed-default@example.com',
             'country'  => 'US',
@@ -45,7 +45,7 @@ final class ThrowOnDisallowedFieldsModelTest extends LiveModelTestCase
         $this->expectException(DataException::class);
         $this->expectExceptionMessage('Fields are not allowed for model "Tests\Support\Models\UserModel": timezone');
 
-        $this->createModel(UserModel::class)->throwOnDisallowedFields()->insert([
+        $this->createModel(UserModel::class)->throwOnDisallowedFields()->insert([ // @phpstan-ignore codeigniter.modelFieldNotAllowed
             'name'     => 'Disallowed Insert',
             'email'    => 'disallowed-insert@example.com',
             'country'  => 'US',
@@ -94,7 +94,7 @@ final class ThrowOnDisallowedFieldsModelTest extends LiveModelTestCase
         $this->expectException(DataException::class);
         $this->expectExceptionMessage('Fields are not allowed for model "Tests\Support\Models\UserModel": timezone');
 
-        $this->createModel(UserModel::class)->throwOnDisallowedFields()->update(1, [
+        $this->createModel(UserModel::class)->throwOnDisallowedFields()->update(1, [ // @phpstan-ignore codeigniter.modelFieldNotAllowed
             'name'     => 'Disallowed Update',
             'timezone' => 'UTC',
         ]);
@@ -105,7 +105,7 @@ final class ThrowOnDisallowedFieldsModelTest extends LiveModelTestCase
         $this->expectException(DataException::class);
         $this->expectExceptionMessage('Fields are not allowed for model "Tests\Support\Models\UserModel": timezone');
 
-        $this->createModel(UserModel::class)->throwOnDisallowedFields()->save([
+        $this->createModel(UserModel::class)->throwOnDisallowedFields()->save([ // @phpstan-ignore codeigniter.modelFieldNotAllowed
             'name'     => 'Disallowed Save',
             'email'    => 'disallowed-save@example.com',
             'country'  => 'US',
@@ -115,7 +115,7 @@ final class ThrowOnDisallowedFieldsModelTest extends LiveModelTestCase
 
     public function testThrowOnDisallowedFieldsAllowsPrimaryKeyDuringUpdate(): void
     {
-        $result = $this->createModel(UserModel::class)->throwOnDisallowedFields()->update(1, [
+        $result = $this->createModel(UserModel::class)->throwOnDisallowedFields()->update(1, [ // @phpstan-ignore codeigniter.modelFieldNotAllowed
             'id'   => 1,
             'name' => 'Disallowed Primary Key',
         ]);
@@ -129,7 +129,7 @@ final class ThrowOnDisallowedFieldsModelTest extends LiveModelTestCase
 
     public function testThrowOnDisallowedFieldsAllowsPrimaryKeyDuringConditionalUpdate(): void
     {
-        $result = $this->createModel(UserModel::class)->throwOnDisallowedFields()
+        $result = $this->createModel(UserModel::class)->throwOnDisallowedFields() // @phpstan-ignore codeigniter.modelFieldNotAllowed
             ->where('id', 1)
             ->update(null, [
                 'id'   => 1,
@@ -183,7 +183,7 @@ final class ThrowOnDisallowedFieldsModelTest extends LiveModelTestCase
 
     public function testThrowOnDisallowedFieldsAllowsNonAutoIncrementPrimaryKeyDuringInsert(): void
     {
-        $result = $this->createModel(WithoutAutoIncrementModel::class)->throwOnDisallowedFields()->insert([
+        $result = $this->createModel(WithoutAutoIncrementModel::class)->throwOnDisallowedFields()->insert([ // @phpstan-ignore codeigniter.modelFieldNotAllowed
             'key'   => 'disallowed-key',
             'value' => 'disallowed value',
         ]);
@@ -197,7 +197,7 @@ final class ThrowOnDisallowedFieldsModelTest extends LiveModelTestCase
 
     public function testProtectFalseBypassesThrowOnDisallowedFields(): void
     {
-        $result = $this->createModel(UserModel::class)->throwOnDisallowedFields()->protect(false)->update(1, [
+        $result = $this->createModel(UserModel::class)->throwOnDisallowedFields()->protect(false)->update(1, [ // @phpstan-ignore codeigniter.modelFieldNotAllowed
             'name'       => 'Disallowed Disabled',
             'created_at' => '2026-01-01 12:00:00',
         ]);
@@ -209,7 +209,7 @@ final class ThrowOnDisallowedFieldsModelTest extends LiveModelTestCase
     {
         $model = $this->createModel(ValidModel::class)->throwOnDisallowedFields();
 
-        $this->assertFalse($model->insert([
+        $this->assertFalse($model->insert([ // @phpstan-ignore codeigniter.modelFieldNotAllowed
             'description' => 'Missing required name',
             'extra'       => 'discarded after validation',
         ]));

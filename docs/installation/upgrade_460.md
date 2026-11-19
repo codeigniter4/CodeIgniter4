@@ -182,6 +182,9 @@ class Registrar
         // Does something.
     }
 
+    /**
+     * @return array<string, array<string, string>>
+     */
     public static function Pager(): array
     {
         return [

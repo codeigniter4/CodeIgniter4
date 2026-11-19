@@ -153,7 +153,9 @@ Tasks are defined within Closures. Any output the task creates will be discarded
 ```php
 <?php
 
-$iterator = new \CodeIgniter\Debug\Iterator();
+use CodeIgniter\Debug\Iterator;
+
+$iterator = new Iterator();
 
 $iterator->add('double', static function ($word = 'little') {
     "Some basic {$word} string test.";

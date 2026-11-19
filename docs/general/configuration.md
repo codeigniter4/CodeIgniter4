@@ -25,8 +25,10 @@ By using the `new` keyword to create an instance:
 ```php
 <?php
 
+use Config\Pager;
+
 // Creating new configuration object by hand
-$config = new \Config\Pager();
+$config = new Pager();
 ```
 
 #### config()
@@ -36,12 +38,14 @@ By using the `config()` function:
 ```php
 <?php
 
+use Config\Pager;
+
 // Get shared instance with config function
 $config = config('Pager');
 
 // Access config class with namespace
 $config = config('Config\\Pager');
-$config = config(\Config\Pager::class);
+$config = config(Pager::class);
 
 // Creating a new object with config function
 $config = config('Pager', false);
@@ -85,8 +89,8 @@ use CodeIgniter\Config\BaseConfig;
 
 class CustomClass extends BaseConfig
 {
-    public $siteName  = 'My Great Site';
-    public $siteEmail = 'webmaster@example.com';
+    public string $siteName  = 'My Great Site';
+    public string $siteEmail = 'webmaster@example.com';
     // ...
 }
 ```
@@ -240,13 +244,15 @@ Config\SimpleConfig.address.city = "Berlin"
 Config\SimpleConfig.address.country = "Germany"
 ```
 
-If this was referring to a SimpleConfig configuration object, the above example would be treated as:
+If `Config\SimpleConfig` has that `$address` property set up as an array, it would contain:
 
 ```php
 <?php
 
-$address['city']    = 'Berlin';
-$address['country'] = 'Germany';
+$address = [
+    'city'    => 'Berlin',
+    'country' => 'Germany',
+];
 ```
 
 Any other elements of the `$address` property would be unchanged.
@@ -298,6 +304,9 @@ namespace CodeIgniter\Shield\Config;
 
 class Registrar
 {
+    /**
+     * @return array<string, array<string, string>>
+     */
     public static function Pager(): array
     {
         return [
@@ -324,6 +333,9 @@ use CodeIgniter\Config\BaseConfig;
 
 class Example extends BaseConfig
 {
+    /**
+     * @var array<string, array<string, string>|string>
+     */
     public array $arrayNested = [
         'key1' => 'val1',
         'key2' => ['val2' => 'subVal2', 'val3' => 'subVal3'],
@@ -336,6 +348,9 @@ namespace MyModule\Config;
 
 class Registrar
 {
+    /**
+     * @return array<string, mixed>
+     */
     public static function Example(): array
     {
         return ['arrayNested' => ['key2' => ['val4' => 'subVal4']]];
@@ -375,6 +390,9 @@ use CodeIgniter\Config\Merge;
 
 class Registrar
 {
+    /**
+     * @return array<string, mixed>
+     */
     public static function Example(): array
     {
         return [
@@ -409,6 +427,9 @@ use CodeIgniter\Config\Merge;
 
 class Registrar
 {
+    /**
+     * @return array<string, mixed>
+     */
     public static function Filters(): array
     {
         return [
@@ -419,7 +440,11 @@ class Registrar
         ];
     }
 
-    // Scalar replace also works at the property root:
+    /**
+     * Scalar replace also works at the property root.
+     *
+     * @return array<string, mixed>
+     */
     public static function Cache(): array
     {
         return ['handler' => Merge::replace('redis')];
@@ -452,6 +477,9 @@ use CodeIgniter\Config\Merge;
 
 class Registrar
 {
+    /**
+     * @return array<string, mixed>
+     */
     public static function Filters(): array
     {
         return [
@@ -490,7 +518,7 @@ A configuration file can also specify any number of registrars explicitly. This 
 
 namespace Config;
 
-// ...
+use CodeIgniter\Config\BaseConfig;
 
 class MyConfig extends BaseConfig
 {
@@ -534,6 +562,9 @@ namespace App\Models;
 
 class RegionalSales
 {
+    /**
+     * @return array<string, int>
+     */
     public static function MySalesConfig(): array
     {
         return [

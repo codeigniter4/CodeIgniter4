@@ -10,6 +10,12 @@ Please refer to the upgrade instructions corresponding to your installation meth
 
 ## Breaking Changes
 
+### File Cache Rejects Directory Separators
+
+For security reasons, `FileHandler::validateKey()` now rejects `/`, `\` and null bytes in the cache item file name, independently of the `Config\Cache::$reservedCharacters` setting. A cache key can no longer point outside the cache directory when that setting is relaxed.
+
+With the default configuration most applications are unaffected, because `/`, `\` and `:` are already reserved characters. Applications that emptied `$reservedCharacters` to share one key namespace between handlers and used directory separators in File cache keys now get an `InvalidArgumentException`. Build keys from identifiers with a controlled format, or hash the input, instead of relaxing `$reservedCharacters`. See [Caching](../libraries/caching.md).
+
 ## Breaking Enhancements
 
 ## Project Files

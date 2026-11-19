@@ -93,18 +93,22 @@ Sometimes the default return of a formatter is not enough. Faker providers allow
 namespace App\Models;
 
 use Faker\Generator;
+use Faker\Provider\Image;
 
 class UserModel
 {
     // ...
 
-    public function fake(Generator &$faker)
+    /**
+     * @return array<string, mixed>|object
+     */
+    public function fake(Generator &$faker): array|object
     {
         return [
             'first'  => $faker->firstName(),
             'email'  => $faker->email(),
             'phone'  => $faker->phoneNumber(),
-            'avatar' => \Faker\Provider\Image::imageUrl(800, 400),
+            'avatar' => Image::imageUrl(800, 400),
             'login'  => config('Auth')->allowRemembering ? date('Y-m-d') : null,
         ];
 
@@ -139,10 +143,13 @@ use Override;
 
 class UserFabricator extends UserModel
 {
+    /**
+     * @return array<string, mixed>|object
+     */
     #[Override]
-    public function fake(Generator &$faker)
+    public function fake(Generator &$faker): array|object
     {
-        // ...
+        return [];
     }
 }
 ```
@@ -181,9 +188,15 @@ use Faker\Generator;
 
 class UserModel
 {
+    /**
+     * @var string
+     */
     protected $table = 'users';
 
-    public function fake(Generator &$faker)
+    /**
+     * @return array<string, mixed>|object
+     */
+    public function fake(Generator &$faker): array|object
     {
         return [
             'first'    => $faker->firstName(),
@@ -400,9 +413,15 @@ use Faker\Generator;
 
 class UserModel
 {
+    /**
+     * @var string
+     */
     protected $table = 'users';
 
-    public function fake(Generator &$faker)
+    /**
+     * @return array<string, mixed>|object
+     */
+    public function fake(Generator &$faker): array|object
     {
         return [
             'first'    => $faker->firstName(),

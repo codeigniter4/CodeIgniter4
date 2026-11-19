@@ -38,7 +38,9 @@ echo $this->table->generate();
 ```php
 <?php
 
-$table = new \CodeIgniter\View\Table();
+use CodeIgniter\View\Table;
+
+$table = new Table();
 
 $table->setHeading('Name', 'Color', 'Size');
 

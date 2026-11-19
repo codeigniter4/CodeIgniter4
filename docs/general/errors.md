@@ -15,7 +15,7 @@ Exceptions are simply events that happen when the exception is "thrown". This ha
 ```php
 <?php
 
-throw new \Exception('Some message goes here');
+throw new Exception('Some message goes here');
 ```
 
 ### Catching Exceptions
@@ -27,7 +27,7 @@ If you are calling a method that might throw an exception, you can catch that ex
 
 try {
     $user = $userModel->find($id);
-} catch (\Exception $e) {
+} catch (Exception $e) {
     exit($e->getMessage());
 }
 ```
@@ -62,7 +62,7 @@ try {
 } catch (DataException $e) {
     // do something here...
 
-    throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
+    throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
 }
 ```
 
@@ -115,6 +115,9 @@ use CodeIgniter\Config\BaseConfig;
 class Exceptions extends BaseConfig
 {
     // ...
+    /**
+     * @var list<int>
+     */
     public array $ignoreCodes = [404];
     // ...
 }
@@ -170,7 +173,7 @@ class Logger extends BaseConfig
 {
     // ...
     // This must contain the log level (5 for LogLevel::WARNING) corresponding to $deprecationLogLevel.
-    public $threshold = (ENVIRONMENT === 'production') ? 4 : 9;
+    public int $threshold = (ENVIRONMENT === 'production') ? 4 : 9;
     // ...
 }
 ```
@@ -241,7 +244,9 @@ This exception should be used when the values from the configuration class are i
 ```php
 <?php
 
-throw new \CodeIgniter\Exceptions\ConfigException();
+use CodeIgniter\Exceptions\ConfigException;
+
+throw new ConfigException();
 ```
 
 This provides an exit code of 3.
@@ -253,7 +258,9 @@ This exception is thrown for database errors, such as when the database connecti
 ```php
 <?php
 
-throw new \CodeIgniter\Database\Exceptions\DatabaseException();
+use CodeIgniter\Database\Exceptions\DatabaseException;
+
+throw new DatabaseException();
 ```
 
 This provides an exit code of 8.
@@ -288,7 +295,9 @@ This exception is a special case allowing for overriding of all other response r
 ```php
 <?php
 
-throw new \CodeIgniter\HTTP\Exceptions\RedirectException($uri);
+use CodeIgniter\HTTP\Exceptions\RedirectException;
+
+throw new RedirectException($uri);
 ```
 
 `$uri` is a URI path relative to baseURL. You can also supply a redirect code to use instead of the default (`302`, "temporary redirect"):
@@ -296,7 +305,9 @@ throw new \CodeIgniter\HTTP\Exceptions\RedirectException($uri);
 ```php
 <?php
 
-throw new \CodeIgniter\HTTP\Exceptions\RedirectException($uri, 301);
+use CodeIgniter\HTTP\Exceptions\RedirectException;
+
+throw new RedirectException($uri, 301);
 ```
 
 Also, since v4.4.0, an object of a class that implements ResponseInterface can be used as the first argument. This solution is suitable for cases where you need to add additional headers or cookies in the response.
@@ -304,12 +315,14 @@ Also, since v4.4.0, an object of a class that implements ResponseInterface can b
 ```php
 <?php
 
+use CodeIgniter\HTTP\Exceptions\RedirectException;
+
 $response = service('response')
     ->redirect('https://example.com/path')
     ->setHeader('Some', 'header')
     ->setCookie('and', 'cookie');
 
-throw new \CodeIgniter\HTTP\Exceptions\RedirectException($response);
+throw new RedirectException($response);
 ```
 
 ## Specify HTTP Status Code in Your Exception
@@ -422,7 +435,9 @@ You can use any logic your application needs to determine whether it should hand
 
 namespace Config;
 
+use App\Libraries\MyExceptionHandler;
 use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Debug\ExceptionHandler;
 use CodeIgniter\Debug\ExceptionHandlerInterface;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use Throwable;
@@ -434,14 +449,14 @@ class Exceptions extends BaseConfig
     public function handler(int $statusCode, Throwable $exception): ExceptionHandlerInterface
     {
         if (in_array($statusCode, [400, 404, 500], true)) {
-            return new \App\Libraries\MyExceptionHandler($this);
+            return new MyExceptionHandler($this);
         }
 
         if ($exception instanceof PageNotFoundException) {
-            return new \App\Libraries\MyExceptionHandler($this);
+            return new MyExceptionHandler($this);
         }
 
-        return new \CodeIgniter\Debug\ExceptionHandler($this);
+        return new ExceptionHandler($this);
     }
 }
 ```

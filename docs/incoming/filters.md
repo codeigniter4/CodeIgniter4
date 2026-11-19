@@ -115,11 +115,15 @@ The `$aliases` array is used to associate a simple name with one or more fully-q
 namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Filters\CSRF;
 
 class Filters extends BaseConfig
 {
+    /**
+     * @var array<string, class-string|list<class-string>>
+     */
     public array $aliases = [
-        'csrf' => \CodeIgniter\Filters\CSRF::class,
+        'csrf' => CSRF::class,
     ];
 
     // ...
@@ -137,14 +141,19 @@ You can combine multiple filters into one alias, making complex sets of filters 
 
 namespace Config;
 
+use App\Filters\ApiAuth;
+use App\Filters\Negotiate;
 use CodeIgniter\Config\BaseConfig;
 
 class Filters extends BaseConfig
 {
+    /**
+     * @var array<string, class-string|list<class-string>>
+     */
     public array $aliases = [
         'api-prep' => [
-            \App\Filters\Negotiate::class,
-            \App\Filters\ApiAuth::class,
+            Negotiate::class,
+            ApiAuth::class,
         ],
     ];
 
@@ -177,6 +186,9 @@ use CodeIgniter\Config\BaseConfig;
 class Filters extends BaseConfig
 {
     // ...
+    /**
+     * @var array{before: list<string>, after: list<string>}
+     */
     public array $required = [
         'before' => [
             'forcehttps', // Force Global Secure Requests
@@ -212,6 +224,12 @@ class Filters extends BaseConfig
 {
     // ...
 
+    /**
+     * @var array{
+     *     before: array<string, array{except: list<string>|string}>|list<string>,
+     *     after: array<string, array{except: list<string>|string}>|list<string>
+     * }
+     */
     public array $globals = [
         'before' => [
             'csrf',
@@ -240,6 +258,12 @@ class Filters extends BaseConfig
 {
     // ...
 
+    /**
+     * @var array{
+     *     before: array<string, array{except: list<string>|string}>|list<string>,
+     *     after: array<string, array{except: list<string>|string}>|list<string>
+     * }
+     */
     public array $globals = [
         'before' => [
             'csrf' => ['except' => 'api/*'],
@@ -269,6 +293,12 @@ class Filters extends BaseConfig
 {
     // ...
 
+    /**
+     * @var array{
+     *     before: array<string, array{except: list<string>|string}>|list<string>,
+     *     after: array<string, array{except: list<string>|string}>|list<string>
+     * }
+     */
     public array $globals = [
         'before' => [
             'csrf' => ['except' => ['foo/*', 'bar/*']],
@@ -298,6 +328,9 @@ class Filters extends BaseConfig
 {
     // ...
 
+    /**
+     * @var array<string, list<string>>
+     */
     public array $methods = [
         'POST' => ['invalidchars', 'csrf'],
         'GET'  => ['csrf'],
@@ -330,6 +363,9 @@ class Filters extends BaseConfig
 {
     // ...
 
+    /**
+     * @var array<string, array<string, list<string>>>
+     */
     public array $filters = [
         'foo' => ['before' => ['admin/*'], 'after' => ['users/*']],
         'bar' => ['before' => ['api/*', 'admin/*']],
@@ -359,7 +395,10 @@ class Filters extends BaseConfig
 {
     // ...
 
-    public $filters = [
+    /**
+     * @var array<string, array<string, list<string>>>
+     */
+    public array $filters = [
         'group:admin,superadmin'  => ['before' => ['admin/*']],
         'permission:users.manage' => ['before' => ['admin/users/*']],
     ];
@@ -487,13 +526,17 @@ If you want to customize the headers, extend `CodeIgniter\Filters\SecureHeaders`
 
 namespace Config;
 
+use App\Filters\SecureHeaders;
 use CodeIgniter\Config\BaseConfig;
 
 class Filters extends BaseConfig
 {
+    /**
+     * @var array<string, class-string|list<class-string>>
+     */
     public array $aliases = [
         // ...
-        'secureheaders' => \App\Filters\SecureHeaders::class,
+        'secureheaders' => SecureHeaders::class,
     ];
 
     // ...
@@ -522,6 +565,10 @@ use CodeIgniter\Config\BaseConfig;
 class Filters extends BaseConfig
 {
     // ...
+
+    /**
+     * @var array{before: list<string>, after: list<string>}
+     */
     public array $required = [
         'before' => [
             'requestid',  // Request ID for each request

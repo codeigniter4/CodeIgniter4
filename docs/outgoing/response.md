@@ -288,7 +288,7 @@ Alternatively, you may pass an iterable of string chunks (such as a generator), 
 <?php
 
 // Any iterable of string chunks works, including generators.
-$chunks = static function (): \Generator {
+$chunks = static function (): Generator {
     yield json_encode(['event' => 'started']) . "\n";
 
     yield json_encode(['event' => 'finished']) . "\n";
@@ -672,7 +672,7 @@ Sets the `Last-Modified` header. The `$date` argument can be either a string or 
 <?php
 
 $response->setLastModified(date('D, d M Y H:i:s'));
-$response->setLastModified(\DateTime::createFromFormat('!U', $timestamp));
+$response->setLastModified(DateTime::createFromFormat('!U', $timestamp));
 ```
 
 #### send(): Response

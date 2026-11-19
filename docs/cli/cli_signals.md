@@ -75,7 +75,7 @@ class SampleCommand extends AbstractCommand
 {
     use SignalTrait;
 
-    #[\Override]
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         // Register basic termination signals
@@ -117,7 +117,7 @@ class SampleCommand extends AbstractCommand
 {
     use SignalTrait;
 
-    #[\Override]
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         // Register signals with custom handlers
@@ -181,7 +181,7 @@ class SampleCommand extends AbstractCommand
 {
     use SignalTrait;
 
-    #[\Override]
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         // Register signals without explicit mappings
@@ -237,9 +237,12 @@ Some operations should never be interrupted (database transactions, file operati
 ```php
 <?php
 
+namespace App\Commands;
+
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Output;
 use CodeIgniter\CLI\SignalTrait;
+use Exception;
 
 class SampleCommand extends AbstractCommand
 {
@@ -271,7 +274,7 @@ class SampleCommand extends AbstractCommand
                 $output->write('Transaction completed successfully', 'green');
 
                 return $orderId;
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 // Rollback on error
                 $this->db->transRollback();
 
@@ -304,7 +307,7 @@ class SampleCommand extends AbstractCommand
 {
     use SignalTrait;
 
-    #[\Override]
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         // Register pause/resume signals with custom handlers
@@ -663,7 +666,7 @@ class SampleCommand extends AbstractCommand
 {
     use SignalTrait;
 
-    #[\Override]
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         // Register signals first
@@ -672,6 +675,8 @@ class SampleCommand extends AbstractCommand
         // Map signals to specific methods at runtime
         $this->mapSignal(SIGUSR1, 'handleReload');
         $this->mapSignal(SIGUSR2, 'handleStatusDump');
+
+        return EXIT_SUCCESS;
     }
 
     // Custom signal handlers
@@ -712,10 +717,12 @@ class SampleCommand extends AbstractCommand
 {
     use SignalTrait;
 
-    #[\Override]
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         // ...
+
+        return EXIT_SUCCESS;
     }
 
     // Log signal information
@@ -760,10 +767,12 @@ class SampleCommand extends AbstractCommand
 {
     use SignalTrait;
 
-    #[\Override]
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         // ...
+
+        return EXIT_SUCCESS;
     }
 
     // Debug process state

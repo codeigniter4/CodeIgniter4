@@ -112,10 +112,12 @@ To load it with the Services class, call the `curlrequest()` method or the globa
 ```php
 <?php
 
+use Config\Services;
+
 $client = service('curlrequest'); // Since v4.5.0, this code is recommended due to performance improvements
 
 // The code above is the same as the code below.
-$client = \Config\Services::curlrequest();
+$client = Services::curlrequest();
 ```
 
 You can pass in an array of default options as the first parameter to modify how cURL will handle the request. The options are described later in this document:
@@ -138,12 +140,15 @@ When creating the class manually, you need to pass a few dependencies in. The fi
 ```php
 <?php
 
+use CodeIgniter\HTTP\CURLRequest;
+use CodeIgniter\HTTP\Response;
+use CodeIgniter\HTTP\URI;
 use Config\App;
 
-$client = new \CodeIgniter\HTTP\CURLRequest(
+$client = new CURLRequest(
     config(App::class),
-    new \CodeIgniter\HTTP\URI(),
-    new \CodeIgniter\HTTP\Response(config(App::class)),
+    new URI(),
+    new Response(),
     $options,
 );
 ```
@@ -518,7 +523,7 @@ The values should be an associative array of POST data to send. For safer usage,
 $client->request('POST', '/post', [
     'multipart' => [
         'foo'      => 'bar',
-        'userfile' => new \CURLFile('/path/to/file.txt'),
+        'userfile' => new CURLFile('/path/to/file.txt'),
     ],
 ]);
 ```

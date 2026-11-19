@@ -20,7 +20,14 @@ declare(strict_types=1);
  * rewritten in place. Otherwise, nothing is changed, and the script exits
  * with 1 when a sample needs fixing.
  *
- * Usage: php admin/lint-docs-samples.php [--fix] [--docs=<directory>]
+ * With --phpstan, the samples are analysed by PHPStan instead, using the
+ * configuration at the project root unless --phpstan-config is given, and
+ * each error is reported against its page and line. The samples that are
+ * excluded, and the errors that are ignored, are listed in admin/docs-phpstan-baseline.php.
+ * With --generate-baseline, the errors that remain after its hand-written
+ * ignores are written to that file instead of being reported.
+ *
+ * Usage: php admin/lint-docs-samples.php [--fix | --phpstan [--phpstan-config=<file>] | --generate-baseline] [--docs=<directory>]
  */
 
 /**
@@ -103,13 +110,234 @@ function find_samples(array $lines): array
 function remove_directory(string $directory): void
 {
     foreach (glob($directory . '/*') ?: [] as $file) {
-        unlink($file);
+        is_dir($file) ? remove_directory($file) : unlink($file);
     }
 
     rmdir($directory);
 }
 
-$options = getopt('', ['fix', 'docs::']);
+/**
+ * @param list<array{page: string, start: int}> $found
+ * @param array<int, string>                    $files
+ */
+function analyse_with_phpstan(string $root, string $work, array $found, array $files, ?string $config, bool $generate): int
+{
+    foreach (['phpstan.neon', 'phpstan.neon.dist', 'phpstan.dist.neon'] as $name) {
+        if ($config === null && is_file($root . '/' . $name)) {
+            $config = $root . '/' . $name;
+        }
+    }
+
+    $pageSamples  = [];
+    $fenceSamples = [];
+
+    foreach ($found as $id => $sample) {
+        $page = substr($sample['page'], strlen($root) + 1);
+
+        $pageSamples[$page][]                         = $files[$id];
+        $fenceSamples[$page . ':' . $sample['start']] = $files[$id];
+    }
+
+    $unmatched = [];
+
+    $expand = static function (array $entries) use ($pageSamples, $fenceSamples, &$unmatched): array {
+        $resolved = [];
+
+        foreach ($entries as $entry) {
+            $samples = isset($fenceSamples[$entry]) ? [$fenceSamples[$entry]] : ($pageSamples[$entry] ?? []);
+
+            if ($samples === []) {
+                $unmatched[] = $entry;
+            }
+
+            array_push($resolved, ...$samples);
+        }
+
+        return $resolved;
+    };
+
+    $baselineFile = __DIR__ . '/docs-phpstan-baseline.php';
+
+    /**
+     * @var array{
+     *   ignoreErrors: list<array{identifier: string, message?: string, paths?: list<string>}>,
+     *   baseline: array{
+     *     excludePaths: list<string>,
+     *     ignoreErrors: list<array{identifier: string, paths: list<string>}>
+     *   }
+     * } $exceptions
+     */
+    $exceptions   = require $baselineFile;
+    $excludePaths = $generate ? [] : $exceptions['baseline']['excludePaths'];
+    $ignoreErrors = $generate
+        ? $exceptions['ignoreErrors']
+        : [...$exceptions['ignoreErrors'], ...($exceptions['baseline']['ignoreErrors'])];
+
+    $validIgnoreErrors = [];
+
+    foreach ($ignoreErrors as $ignore) {
+        if (! isset($ignore['paths'])) {
+            $validIgnoreErrors[] = $ignore;
+
+            continue;
+        }
+
+        if (($ignore['paths'] = $expand($ignore['paths'])) !== []) {
+            $validIgnoreErrors[] = $ignore;
+        }
+    }
+
+    file_put_contents($work . '/phpstan.neon', sprintf(
+        "includes:\n    - %s\n\nparameters: %s\n",
+        $config,
+        json_encode([
+            'tmpDir'       => $root . '/build/phpstan-docs',
+            'excludePaths' => ['analyse' => $expand($excludePaths)],
+            'ignoreErrors' => $validIgnoreErrors,
+        ], JSON_UNESCAPED_SLASHES),
+    ));
+
+    exec(sprintf(
+        'cd %s && %s %s analyse --configuration=%s %s --memory-limit=1G %s 2>&1',
+        escapeshellarg($root),
+        escapeshellarg(PHP_BINARY),
+        escapeshellarg($root . '/vendor/bin/phpstan'),
+        escapeshellarg($work . '/phpstan.neon'),
+        $generate ? '--error-format=json --no-progress' : '--ansi --verbose',
+        escapeshellarg($work),
+    ), $output, $status);
+
+    if ($generate) {
+        return write_baseline($baselineFile, $output, $found, $files, $root);
+    }
+
+    $pages = [];
+
+    foreach ($found as $id => $sample) {
+        $page = substr($sample['page'], strlen($root) + 1);
+
+        $pages[$files[$id]]                            = $sample['page'];
+        $pages[substr($files[$id], strlen($work) + 1)] = $page;
+    }
+
+    echo strtr(implode("\n", $output), $pages), "\n";
+
+    foreach (array_unique($unmatched) as $entry) {
+        printf("* %s is listed in admin/docs-phpstan-baseline.php, but it matches no PHP sample.\n", $entry);
+    }
+
+    if ($unmatched !== []) {
+        echo "\nRun `php admin/lint-docs-samples.php --generate-baseline` to update the baseline.\n";
+    }
+
+    return $status !== 0 ? $status : ($unmatched === [] ? 0 : 1);
+}
+
+/**
+ * @param list<string>                          $output
+ * @param list<array{page: string, start: int}> $found
+ * @param array<int, string>                    $files
+ */
+function write_baseline(string $file, array $output, array $found, array $files, string $root): int
+{
+    $json   = array_values(array_filter($output, static fn (string $line): bool => str_starts_with($line, '{')));
+    $result = json_decode($json[0] ?? '', true);
+
+    if (! is_array($result) || ! isset($result['files'])) {
+        fwrite(STDERR, implode("\n", $output) . "\n");
+
+        return 2;
+    }
+
+    $fences = [];
+
+    foreach ($found as $id => $sample) {
+        $fences[$files[$id]] = substr($sample['page'], strlen($root) + 1) . ':' . $sample['start'];
+    }
+
+    $excluded = [];
+    $ignored  = [];
+
+    foreach ($result['files'] as $path => $report) {
+        $fence = $fences[preg_replace('/ \(in context of .*\)$/', '', $path)] ?? null;
+
+        foreach ($report['messages'] as $message) {
+            if ($fence === null) {
+                continue;
+            }
+
+            if (($message['ignorable'] ?? true) === false || ! isset($message['identifier'])) {
+                $excluded[$fence] = true;
+            } else {
+                $ignored[$message['identifier']][$fence] = true;
+            }
+        }
+    }
+
+    $excludePaths = array_keys($excluded);
+    $ignoreErrors = [];
+
+    sort($excludePaths, SORT_NATURAL);
+    ksort($ignored);
+
+    foreach ($ignored as $identifier => $paths) {
+        $paths = array_values(array_diff(array_keys($paths), $excludePaths));
+
+        sort($paths, SORT_NATURAL);
+
+        if ($paths !== []) {
+            $ignoreErrors[] = ['identifier' => $identifier, 'paths' => $paths];
+        }
+    }
+
+    $baseline = preg_replace('/^(\s*)\d+ => /m', '$1', var_export(
+        ['excludePaths' => $excludePaths, 'ignoreErrors' => $ignoreErrors],
+        true,
+    ));
+
+    $text   = (string) file_get_contents($file);
+    $marker = '    // Everything below is @autogenerated by --generate-baseline.';
+    $start  = strpos($text, $marker);
+
+    if ($start === false) {
+        fwrite(STDERR, sprintf("%s has no line \"%s\".\n", $file, trim($marker)));
+
+        return 2;
+    }
+
+    file_put_contents($file, substr($text, 0, $start) . $marker . "\n    'baseline' => " . $baseline . ",\n];\n");
+
+    exec(sprintf(
+        '%s %s fix %s --config=%s --using-cache=no --quiet 2>&1',
+        escapeshellarg(PHP_BINARY),
+        escapeshellarg($root . '/utils/vendor/bin/php-cs-fixer'),
+        escapeshellarg($file),
+        escapeshellarg($root . '/.php-cs-fixer.dist.php'),
+    ), $fixer, $status);
+
+    if ($status !== 0) {
+        fwrite(STDERR, implode("\n", $fixer) . "\n");
+
+        return 2;
+    }
+
+    foreach ($result['errors'] ?? [] as $error) {
+        if (! str_ends_with($error, 'cannot be ignored, use excludePaths instead.')) {
+            printf("\033[31m%s\033[0m\n", $error);
+        }
+    }
+
+    printf(
+        "\033[32mBaseline written to %s: %d samples excluded, %d errors ignored.\033[0m\n",
+        substr($file, strlen($root) + 1),
+        count($excluded),
+        array_sum(array_map('count', $ignored)),
+    );
+
+    return 0;
+}
+
+$options = getopt('', ['fix', 'phpstan', 'generate-baseline', 'phpstan-config:', 'docs::']);
 $fix     = isset($options['fix']);
 $root    = dirname(__DIR__);
 $docs    = rtrim(is_string($options['docs'] ?? null) ? $options['docs'] : $root . '/docs', '/');
@@ -125,12 +353,44 @@ foreach (docs_pages($docs) as $page) {
     }
 }
 
-$work = sys_get_temp_dir() . '/docs-samples-' . getmypid();
-mkdir($work);
+$phpstan = isset($options['phpstan']) || isset($options['generate-baseline']);
+$work    = $phpstan ? $root . '/build/docs-samples' : sys_get_temp_dir() . '/docs-samples-' . getmypid();
+
+if (is_dir($work)) {
+    remove_directory($work);
+}
+
+mkdir($work, 0777, true);
 
 foreach ($found as $id => $sample) {
-    $files[$id] = sprintf('%s/%05d.php', $work, $id);
-    file_put_contents($files[$id], $sample['code']);
+    if (! $phpstan) {
+        $files[$id] = sprintf('%s/%05d.php', $work, $id);
+        file_put_contents($files[$id], $sample['code']);
+
+        continue;
+    }
+
+    // Padding after the opening tag keeps the lines of the sample on the lines of its page.
+    $files[$id] = sprintf('%s/%s@%d.php', $work, substr($sample['page'], strlen($root) + 1), $sample['start']);
+    $padded     = preg_replace('/^<\?php\n/', '<?php' . str_repeat("\n", $sample['start'] + 1), $sample['code'], 1);
+
+    is_dir(dirname($files[$id])) || mkdir(dirname($files[$id]), 0777, true);
+    file_put_contents($files[$id], $padded);
+}
+
+if ($phpstan) {
+    $status = analyse_with_phpstan(
+        $root,
+        $work,
+        $found,
+        $files,
+        is_string($options['phpstan-config'] ?? null) ? $options['phpstan-config'] : null,
+        isset($options['generate-baseline']),
+    );
+
+    remove_directory($work);
+
+    exit($status);
 }
 
 $command = sprintf(
