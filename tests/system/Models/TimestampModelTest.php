@@ -148,7 +148,7 @@ final class TimestampModelTest extends LiveModelTestCase
         $user = $this->model->find($id);
 
         $user['country'] = 'CA';
-        $this->model->update($user['id'], $user);
+        $this->model->update($user['id'], $user); // @phpstan-ignore codeigniter.modelFieldNotAllowed, codeigniter.modelFieldNotAllowed, codeigniter.modelFieldNotAllowed, codeigniter.modelFieldNotAllowed
 
         $user = $this->model->find($id);
 
@@ -265,7 +265,7 @@ final class TimestampModelTest extends LiveModelTestCase
         $user = $this->model->find($id);
 
         $user['country'] = 'CA';
-        $this->model->update($user['id'], $user);
+        $this->model->update($user['id'], $user); // @phpstan-ignore codeigniter.modelFieldNotAllowed, codeigniter.modelFieldNotAllowed, codeigniter.modelFieldNotAllowed, codeigniter.modelFieldNotAllowed
 
         $user = $this->model->find($id);
 

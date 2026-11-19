@@ -47,7 +47,7 @@ class HoneypotException extends ConfigException implements HTTPExceptionInterfac
      */
     public static function forNoHiddenValue()
     {
-        return new static(lang('Honeypot.noHiddenValue'), 500);
+        return new static(lang('Honeypot.noHiddenValue'), 500); // @phpstan-ignore codeigniter.languageLineNotFound
     }
 
     /**

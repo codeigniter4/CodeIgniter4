@@ -58,7 +58,7 @@ final class SaveModelTest extends LiveModelTestCase
             'description' => 'Makes peoples things dissappear.',
         ];
 
-        $this->model->save($data);
+        $this->model->save($data); // @phpstan-ignore codeigniter.modelFieldNotAllowed
 
         $this->seeInDatabase('job', ['name' => 'Magician']);
     }
@@ -86,7 +86,7 @@ final class SaveModelTest extends LiveModelTestCase
             'name123'     => 'Apprentice',
             'description' => 'That thing you do.',
         ];
-        $result = $this->model->protect(false)->save($data);
+        $result = $this->model->protect(false)->save($data); // @phpstan-ignore codeigniter.modelFieldNotAllowed
 
         $this->assertFalse($result);
         $this->dontSeeInDatabase('job', ['name' => 'Apprentice']);
@@ -119,7 +119,7 @@ final class SaveModelTest extends LiveModelTestCase
             'name123'     => 'Apprentice',
             'description' => 'That thing you do.',
         ];
-        $result = $this->model->protect(false)->save($data);
+        $result = $this->model->protect(false)->save($data); // @phpstan-ignore codeigniter.modelFieldNotAllowed, codeigniter.modelFieldNotAllowed
 
         $this->assertFalse($result);
         $this->dontSeeInDatabase('job', ['name' => 'Apprentice']);
@@ -210,7 +210,7 @@ final class SaveModelTest extends LiveModelTestCase
             'description' => 'That thing you do.',
         ];
 
-        $this->model->protect(false)->save($data);
+        $this->model->protect(false)->save($data); // @phpstan-ignore codeigniter.modelFieldNotAllowed, codeigniter.modelFieldNotAllowed
         $lastInsertId = $this->model->getInsertID();
         $this->seeInDatabase('job', ['id' => $lastInsertId]);
     }
@@ -325,7 +325,7 @@ final class SaveModelTest extends LiveModelTestCase
         ];
 
         $this->createModel(WithoutAutoIncrementModel::class);
-        $this->model->save($insert);
+        $this->model->save($insert); // @phpstan-ignore codeigniter.modelFieldNotAllowed
 
         $this->assertSame($insert['key'], $this->model->getInsertID());
         $this->seeInDatabase('without_auto_increment', $insert);

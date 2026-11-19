@@ -220,7 +220,7 @@ final class FactoriesTest extends CIUnitTestCase
     {
         Factories::setOptions('models', ['path' => 'Widgets']);
 
-        $result = Factories::models('SomeWidget');
+        $result = Factories::models('SomeWidget'); // @phpstan-ignore codeigniter.modelArgumentType
         $this->assertInstanceOf(SomeWidget::class, $result);
     }
 
@@ -275,7 +275,7 @@ final class FactoriesTest extends CIUnitTestCase
             EOL;
         file_put_contents($file, $source);
 
-        $result = Factories::config('TestRegistrar');
+        $result = Factories::config('TestRegistrar'); // @phpstan-ignore codeigniter.configArgumentType
 
         // @phpstan-ignore argument.type (Config\TestRegistrar is created at runtime by this test)
         $this->assertInstanceOf('Config\TestRegistrar', $result);
@@ -296,13 +296,13 @@ final class FactoriesTest extends CIUnitTestCase
             EOL;
         file_put_contents($file, $source);
 
-        $result = Factories::config(TestRegistrar::class);
+        $result = Factories::config(TestRegistrar::class); // @phpstan-ignore codeigniter.configArgumentInstanceof
 
         $this->assertInstanceOf(TestRegistrar::class, $result);
 
         Factories::setOptions('config', ['preferApp' => false]);
 
-        $result = Factories::config(TestRegistrar::class);
+        $result = Factories::config(TestRegistrar::class); // @phpstan-ignore codeigniter.configArgumentInstanceof
 
         $this->assertInstanceOf(TestRegistrar::class, $result);
 
@@ -522,7 +522,7 @@ final class FactoriesTest extends CIUnitTestCase
 
     public function testGetNonexistentClass(): void
     {
-        $config = Factories::get('config', 'NonexistentClass');
+        $config = Factories::get('config', 'NonexistentClass'); // @phpstan-ignore codeigniter.configArgumentType
 
         $this->assertNull($config);
     }

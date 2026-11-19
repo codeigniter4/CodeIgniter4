@@ -291,7 +291,7 @@ final class DataConverterModelTest extends LiveModelTestCase
         $user = $this->model->find($id);
 
         $user['email'][] = 'private@example.org';
-        $this->model->update($user['id'], $user);
+        $this->model->update($user['id'], $user); // @phpstan-ignore codeigniter.modelFieldNotAllowed, codeigniter.modelFieldNotAllowed, codeigniter.modelFieldNotAllowed, codeigniter.modelFieldNotAllowed
 
         $user = $this->model->find($id);
 
@@ -358,7 +358,7 @@ final class DataConverterModelTest extends LiveModelTestCase
         $user = $this->model->find($id);
 
         $user['email'][] = 'private@example.org';
-        $this->model->save($user);
+        $this->model->save($user); // @phpstan-ignore codeigniter.modelFieldNotAllowed, codeigniter.modelFieldNotAllowed, codeigniter.modelFieldNotAllowed, codeigniter.modelFieldNotAllowed
 
         $user = $this->model->find($id);
 

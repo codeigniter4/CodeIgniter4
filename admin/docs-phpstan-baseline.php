@@ -92,6 +92,13 @@ return [
             ],
 
             [
+                'identifier' => 'codeigniter.languageLineNotFound',
+                'paths'      => [
+                    'docs/outgoing/localization.md:359',
+                ],
+            ],
+
+            [
                 'identifier' => 'deadCode.unreachable',
                 'paths'      => [
                     'docs/installation/upgrade_localization.md:61',
