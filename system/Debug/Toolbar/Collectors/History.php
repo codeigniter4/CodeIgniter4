@@ -86,7 +86,10 @@ class History extends BaseCollector
 
             // Oldest files will be deleted
             if ($limit >= 0 && $counter > $limit) {
-                unlink($filename);
+                if (is_file($filename)) {
+                    // No error or warning if file is already deleted
+                    @unlink($filename);
+                }
 
                 continue;
             }
