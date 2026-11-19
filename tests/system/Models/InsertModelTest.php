@@ -179,7 +179,7 @@ final class InsertModelTest extends LiveModelTestCase
         ];
         $this->createModel(JobModel::class);
 
-        $result = $this->model->protect(false)->insert($data, false);
+        $result = $this->model->protect(false)->insert($data, false); // @phpstan-ignore codeigniter.modelFieldNotAllowed
 
         $this->assertFalse($result);
 
@@ -278,7 +278,7 @@ final class InsertModelTest extends LiveModelTestCase
     {
         $this->expectException(DataException::class);
         $this->expectExceptionMessage('There is no data to insert.');
-        $this->createModel(UserModel::class)->insert(['thisKeyIsNotAllowed' => 'Bar']);
+        $this->createModel(UserModel::class)->insert(['thisKeyIsNotAllowed' => 'Bar']); // @phpstan-ignore codeigniter.modelFieldNotAllowed
     }
 
     public function testInsertEntityWithNoDataExceptionNoAllowedData(): void
@@ -320,7 +320,7 @@ final class InsertModelTest extends LiveModelTestCase
         ];
 
         $this->createModel(WithoutAutoIncrementModel::class);
-        $this->model->insert($insert);
+        $this->model->insert($insert); // @phpstan-ignore codeigniter.modelFieldNotAllowed
 
         $this->assertSame($insert['key'], $this->model->getInsertID());
         $this->seeInDatabase('without_auto_increment', $insert);
@@ -413,7 +413,7 @@ final class InsertModelTest extends LiveModelTestCase
             'value' => 'some value',
         ];
 
-        $this->createModel(WithoutAutoIncrementModel::class)->insert($insert);
+        $this->createModel(WithoutAutoIncrementModel::class)->insert($insert); // @phpstan-ignore codeigniter.modelFieldNotAllowed
     }
 
     /**
