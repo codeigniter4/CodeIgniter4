@@ -42,7 +42,7 @@ class SimpleXMLElementValue extends InstanceValue
         array $children,
         ?string $text_content
     ) {
-        parent::__construct($context, \get_class($element), \spl_object_hash($element), \spl_object_id($element));
+        parent::__construct($context, \get_class($element), @\spl_object_hash($element), \spl_object_id($element));
 
         $this->children = $children;
         $this->text_content = $text_content;
