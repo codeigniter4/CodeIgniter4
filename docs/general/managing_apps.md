@@ -89,7 +89,7 @@ class Paths
 {
     // ...
 
-    public $systemDirectory = __DIR__ . '/../../../vendor/codeigniter4/framework/system';
+    public string $systemDirectory = __DIR__ . '/../../../vendor/codeigniter4/framework/system';
 
     // ...
 }

@@ -42,7 +42,7 @@ use CodeIgniter\Config\BaseConfig;
 
 class Logger extends BaseConfig
 {
-    public $threshold = 5;
+    public int $threshold = 5;
 
     // ...
 }
@@ -62,7 +62,10 @@ use CodeIgniter\Config\BaseConfig;
 class Logger extends BaseConfig
 {
     // Log only debug and info type messages
-    public $threshold = [5, 8];
+    /**
+     * @var list<int>
+     */
+    public array $threshold = [5, 8];
 
     // ...
 }
@@ -87,7 +90,10 @@ use CodeIgniter\Config\BaseConfig;
 
 class Logger extends BaseConfig
 {
-    public $handlers = [
+    /**
+     * @var array<string, array<string, mixed>>
+     */
+    public array $handlers = [
         // File Handler
         'CodeIgniter\Log\Handlers\FileHandler' => [
             'handles' => ['critical', 'alert', 'emergency', 'debug', 'error', 'info', 'notice', 'warning'],

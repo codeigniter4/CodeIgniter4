@@ -457,20 +457,6 @@ delete_cookie('login_token');
 
 More often than not, you do not need to concern yourself with manually sending cookies. CodeIgniter will do this for you. However, if you really need to manually send cookies, you can use the `dispatch` method. Just like when sending other headers, you need to make sure the headers are not yet sent by checking the value of `headers_sent()`.
 
-```php
-<?php
-
-use CodeIgniter\Cookie\Cookie;
-use CodeIgniter\Cookie\CookieStore;
-
-$store = new CookieStore([
-    new Cookie('login_token'),
-    new Cookie('remember_token'),
-]);
-
-$store->dispatch(); // After dispatch, the collection is now empty.
-```
-
 ## Cookie Personalization
 
 Sane defaults are already in place inside the `Cookie` class to ensure the smooth creation of cookie objects. However, you may wish to define your own settings by changing the following settings in the `Config\Cookie` class in the **app/Config/Cookie.php** file.

@@ -87,12 +87,12 @@ class Upload extends BaseController
 {
     protected $helpers = ['form'];
 
-    public function index()
+    public function index(): string
     {
         return view('upload_form', ['errors' => []]);
     }
 
-    public function upload()
+    public function upload(): string
     {
         $validationRule = [
             'userfile' => [

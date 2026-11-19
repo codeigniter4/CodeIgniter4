@@ -22,6 +22,9 @@ class Database extends Config
 {
     // ...
 
+    /**
+     * @var array<string, mixed>
+     */
     public array $default = [
         'DSN'      => '',
         'hostname' => 'localhost',
@@ -112,6 +115,9 @@ class Database extends Config
 {
     // ...
 
+    /**
+     * @var array<string, mixed>
+     */
     public array $default = [
         // ...
         'failover' => [
@@ -172,6 +178,9 @@ class Database extends Config
 {
     // ...
 
+    /**
+     * @var array<string, mixed>
+     */
     public array $test = [
         'DSN'      => '',
         'hostname' => 'localhost',
@@ -234,9 +243,20 @@ use CodeIgniter\Database\Config;
 class Database extends Config
 {
     // ...
-    public $development = [/* ... */];
-    public $test        = [/* ... */];
-    public $production  = [/* ... */];
+    /**
+     * @var array<string, mixed>
+     */
+    public array $development = [/* ... */];
+
+    /**
+     * @var array<string, mixed>
+     */
+    public array $test = [/* ... */];
+
+    /**
+     * @var array<string, mixed>
+     */
+    public array $production = [/* ... */];
 
     public function __construct()
     {

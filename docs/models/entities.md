@@ -218,21 +218,21 @@ use CodeIgniter\I18n\Time;
 
 class User extends Entity
 {
-    public function setPassword(string $pass)
+    public function setPassword(string $pass): static
     {
         $this->attributes['password'] = password_hash($pass, PASSWORD_BCRYPT);
 
         return $this;
     }
 
-    public function setCreatedAt(string $dateString)
+    public function setCreatedAt(string $dateString): static
     {
         $this->attributes['created_at'] = new Time($dateString, 'UTC');
 
         return $this;
     }
 
-    public function getCreatedAt(string $format = 'Y-m-d H:i:s')
+    public function getCreatedAt(string $format = 'Y-m-d H:i:s'): string
     {
         // Convert to CodeIgniter\I18n\Time object
         $this->attributes['created_at'] = $this->mutateDate($this->attributes['created_at']);
@@ -688,6 +688,8 @@ class SomeHandler extends BaseCast
          *   string(6) "param3"
          * }
          */
+
+        return $value;
     }
 }
 ```

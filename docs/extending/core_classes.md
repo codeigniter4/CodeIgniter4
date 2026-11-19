@@ -88,7 +88,7 @@ use CodeIgniter\Config\BaseService;
 
 class Services extends BaseService
 {
-    public static function routes(bool $getShared = true)
+    public static function routes(bool $getShared = true): \CodeIgniter\Router\RouteCollection
     {
         if ($getShared) {
             return static::getSharedInstance('routes');

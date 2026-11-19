@@ -246,7 +246,7 @@ namespace App\Controllers;
 
 class Catalog extends BaseController
 {
-    public function productLookup($seg1 = false, $seg2 = false, $seg3 = false)
+    public function productLookup(false|string $seg1 = false, false|string $seg2 = false, false|string $seg3 = false): void
     {
         echo $seg1; // Will be 123 in all examples
         echo $seg2; // false in first, 456 in second and third example
@@ -264,7 +264,7 @@ namespace App\Controllers;
 
 class Catalog extends BaseController
 {
-    public function productLookup(...$params)
+    public function productLookup(string ...$params): void
     {
         echo $params[0] ?? null; // Will be 123 in all examples
         echo $params[1] ?? null; // null in first, 456 in second and third example

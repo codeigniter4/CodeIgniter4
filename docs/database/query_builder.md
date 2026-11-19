@@ -1281,9 +1281,9 @@ namespace App\Libraries;
 
 class MyClass
 {
-    public $title   = 'My Title';
-    public $content = 'My Content';
-    public $date    = 'My Date';
+    public string $title   = 'My Title';
+    public string $content = 'My Content';
+    public string $date    = 'My Date';
 }
 ```
 
@@ -1468,9 +1468,9 @@ namespace App\Libraries;
 
 class MyClass
 {
-    public $email   = 'ahmadinejad@example.com';
-    public $name    = 'Ahmadinejad';
-    public $country = 'Iran';
+    public string $email   = 'ahmadinejad@example.com';
+    public string $name    = 'Ahmadinejad';
+    public string $country = 'Iran';
 }
 ```
 
@@ -1794,9 +1794,9 @@ namespace App\Libraries;
 
 class MyClass
 {
-    public $title   = 'My Title';
-    public $content = 'My Content';
-    public $date    = 'My Date';
+    public string $title   = 'My Title';
+    public string $content = 'My Content';
+    public string $date    = 'My Date';
 }
 ```
 
@@ -1842,9 +1842,9 @@ namespace App\Libraries;
 
 class MyClass
 {
-    public $title   = 'My Title';
-    public $content = 'My Content';
-    public $date    = 'My Date';
+    public string $title   = 'My Title';
+    public string $content = 'My Content';
+    public string $date    = 'My Date';
 }
 ```
 

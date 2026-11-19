@@ -15,6 +15,9 @@ on:
       - composer.json
       - phpstan.dist.neon
       - phpstan-baseline.php
+      - 'docs/**'
+      - 'admin/lint-docs-samples.php'
+      - 'admin/docs-phpstan-baseline.php'
       - '.github/workflows/test-phpstan.yml'
 
   push:
@@ -29,6 +32,9 @@ on:
       - composer.json
       - phpstan.dist.neon
       - phpstan-baseline.php
+      - 'docs/**'
+      - 'admin/lint-docs-samples.php'
+      - 'admin/docs-phpstan-baseline.php'
       - '.github/workflows/test-phpstan.yml'
 
 concurrency:
@@ -89,3 +95,8 @@ jobs:
 
       - name: Run static analysis
         run: composer phpstan:check
+
+      - name: Check that the baseline of the user guide samples is up to date
+        run: |
+          composer phpstan:docs-baseline
+          git diff --exit-code admin/docs-phpstan-baseline.php

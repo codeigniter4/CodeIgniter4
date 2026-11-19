@@ -89,8 +89,8 @@ use CodeIgniter\Config\BaseConfig;
 
 class CustomClass extends BaseConfig
 {
-    public $siteName  = 'My Great Site';
-    public $siteEmail = 'webmaster@example.com';
+    public string $siteName  = 'My Great Site';
+    public string $siteEmail = 'webmaster@example.com';
     // ...
 }
 ```
@@ -244,13 +244,15 @@ Config\SimpleConfig.address.city = "Berlin"
 Config\SimpleConfig.address.country = "Germany"
 ```
 
-If this was referring to a SimpleConfig configuration object, the above example would be treated as:
+If `Config\SimpleConfig` has that `$address` property set up as an array, it would contain:
 
 ```php
 <?php
 
-$address['city']    = 'Berlin';
-$address['country'] = 'Germany';
+$address = [
+    'city'    => 'Berlin',
+    'country' => 'Germany',
+];
 ```
 
 Any other elements of the `$address` property would be unchanged.
@@ -302,6 +304,9 @@ namespace CodeIgniter\Shield\Config;
 
 class Registrar
 {
+    /**
+     * @return array<string, array<string, string>>
+     */
     public static function Pager(): array
     {
         return [
@@ -326,7 +331,7 @@ A configuration file can also specify any number of registrars explicitly. This 
 
 namespace Config;
 
-// ...
+use CodeIgniter\Config\BaseConfig;
 
 class MyConfig extends BaseConfig
 {
@@ -370,6 +375,9 @@ namespace App\Models;
 
 class RegionalSales
 {
+    /**
+     * @return array<string, int>
+     */
     public static function MySalesConfig(): array
     {
         return [

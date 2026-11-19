@@ -93,7 +93,7 @@ namespace App\Controllers;
 
 class HelloWorld extends BaseController
 {
-    public function getIndex()
+    public function getIndex(): string
     {
         return 'Hello World!';
     }
@@ -215,12 +215,12 @@ namespace App\Controllers;
 
 class HelloWorld extends BaseController
 {
-    public function getIndex()
+    public function getIndex(): string
     {
         return 'Hello World!';
     }
 
-    public function getComment()
+    public function getComment(): string
     {
         return 'I am not flat!';
     }
@@ -254,7 +254,7 @@ namespace App\Controllers;
 
 class Products extends BaseController
 {
-    public function getShoes($type, $id)
+    public function getShoes(string $type, string $id): string
     {
         return $type . $id;
     }
@@ -288,7 +288,7 @@ namespace App\Controllers;
 
 class Product extends BaseController
 {
-    public function getIndex($id = null, $action = '')
+    public function getIndex(?string $id = null, string $action = ''): void
     {
         // ...
     }
@@ -321,7 +321,7 @@ use App\Controllers\BaseController;
 
 class Home extends BaseController
 {
-    public function getIndex($id = null)
+    public function getIndex(?string $id = null): void
     {
         // ...
     }

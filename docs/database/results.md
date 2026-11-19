@@ -228,29 +228,31 @@ namespace App\Entities;
 
 class User
 {
-    public $id;
-    public $email;
-    public $username;
+    public int $id;
+    public string $email;
+    public string $username;
 
-    protected $lastLogin;
+    protected DateTime $lastLogin;
 
-    public function lastLogin($format)
+    public function lastLogin(string $format): string
     {
         return $this->lastLogin->format($format);
     }
 
-    public function __set($name, $value)
+    public function __set(string $name, mixed $value): void
     {
         if ($name === 'lastLogin') {
             $this->lastLogin = DateTime::createFromFormat('!U', $value);
         }
     }
 
-    public function __get($name)
+    public function __get(string $name): mixed
     {
         if (isset($this->{$name})) {
             return $this->{$name};
         }
+
+        return null;
     }
 }
 ```

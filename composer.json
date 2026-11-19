@@ -116,9 +116,15 @@
         ],
         "phpstan:baseline": [
             "phpstan analyse --ansi --generate-baseline=utils/phpstan-baseline/loader.neon",
-            "split-phpstan-baseline utils/phpstan-baseline/loader.neon"
+            "split-phpstan-baseline utils/phpstan-baseline/loader.neon",
+            "@phpstan:docs-baseline"
         ],
-        "phpstan:check": "vendor/bin/phpstan analyse --verbose --ansi --memory-limit=512M",
+        "phpstan:check": [
+            "vendor/bin/phpstan analyse --verbose --ansi --memory-limit=512M",
+            "@phpstan:docs"
+        ],
+        "phpstan:docs": "@php admin/lint-docs-samples.php --phpstan",
+        "phpstan:docs-baseline": "@php admin/lint-docs-samples.php --generate-baseline",
         "sa": "@analyze",
         "style": "@cs-fix",
         "test": "phpunit"
@@ -127,8 +133,10 @@
         "analyze": "Run static analysis",
         "cs": "Check the coding style",
         "cs-fix": "Fix the coding style",
-        "phpstan:baseline": "Run PHPStan then dump all errors to baseline",
-        "phpstan:check": "Run PHPStan with support for identifiers",
+        "phpstan:baseline": "Run PHPStan then dump all errors to baseline, including those of the user guide samples",
+        "phpstan:check": "Run PHPStan with support for identifiers, including on the user guide samples",
+        "phpstan:docs": "Run PHPStan on the PHP samples of the user guide",
+        "phpstan:docs-baseline": "Regenerate the baseline of the PHP samples of the user guide",
         "test": "Run unit tests"
     }
 }

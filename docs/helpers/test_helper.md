@@ -38,7 +38,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 
 final class MyTestClass extends CIUnitTestCase
 {
-    public function testUserAccess()
+    public function testUserAccess(): void
     {
         $user = fake('App\Models\UserModel');
 

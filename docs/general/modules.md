@@ -136,7 +136,10 @@ class Modules extends BaseModules
 {
     // ...
 
-    public $composerPackages = [
+    /**
+     * @var array{only?: list<string>, exclude?: list<string>}
+     */
+    public array $composerPackages = [
         'only' => [
             // List up all packages to auto-discover
             'codeigniter4/shield',
@@ -160,7 +163,10 @@ class Modules extends BaseModules
 {
     // ...
 
-    public $composerPackages = [
+    /**
+     * @var array{only?: list<string>, exclude?: list<string>}
+     */
+    public array $composerPackages = [
         'exclude' => [
             // List up packages to exclude.
             'pestphp/pest',
@@ -222,6 +228,8 @@ When working with modules, it can be a problem if the routes in the application 
     {
         /**
          * Registers the Shield filters.
+         *
+         * @return array<string, array<string, string>>
          */
         public static function Filters(): array
         {

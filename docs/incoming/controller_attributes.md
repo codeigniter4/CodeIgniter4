@@ -16,7 +16,7 @@ use CodeIgniter\Router\Attributes\Filter;
 #[Filter(by: 'auth')]
 class AdminController extends BaseController
 {
-    public function index()
+    public function index(): string
     {
         return view('welcome_message');
     }
@@ -38,7 +38,7 @@ use CodeIgniter\Router\Attributes\Filter;
 class AdminController extends BaseController
 {
     #[Filter(by: 'permission', having: ['users.manage'])]
-    public function users()
+    public function users(): void
     {
         // Will have 'group' filter with ['admin', 'superadmin']
         // and 'permission' filter with ['users.manage']
@@ -69,20 +69,20 @@ class HomeController extends BaseController
 {
     // Apply the filter by it's alias name
     #[Filter(by: 'csrf')]
-    public function index()
+    public function index(): void
     {
     }
 
     // Apply a filter with arguments
     #[Filter(by: 'throttle', having: ['60', '1'])]
-    public function api()
+    public function api(): void
     {
     }
 
     // Multiple filters can be applied by repeating the attribute
     #[Filter(by: 'auth')]
     #[Filter(by: 'csrf')]
-    public function admin()
+    public function admin(): void
     {
     }
 }
@@ -111,19 +111,19 @@ class HomeController extends BaseController
 {
     // Restrict access by hostname
     #[Restrict(hostname: 'localhost')]
-    public function index()
+    public function index(): void
     {
     }
 
     // Multiple allowed hosts
     #[Restrict(hostname: ['localhost', '127.0.0.1', 'dev.example.com'])]
-    public function devOnly()
+    public function devOnly(): void
     {
     }
 
     // Restrict to subdomain, e.g. admin.example.com
     #[Restrict(subdomain: 'admin')]
-    public function deleteItem($id)
+    public function deleteItem(int $id): void
     {
     }
 }
@@ -144,14 +144,14 @@ class HomeController extends BaseController
 {
     // Cache this method's response for 2 hours
     #[Cache(for: 2 * HOUR)]
-    public function index()
+    public function index(): string
     {
         return view('welcome_message');
     }
 
     // Custom cache key
     #[Cache(for: 10 * MINUTE, key: 'custom_cache_key')]
-    public function custom()
+    public function custom(): string
     {
         return 'This response is cached with a custom key for 10 minutes.';
     }
@@ -225,6 +225,7 @@ namespace App\Controllers;
 
 use App\Attributes\AddHeader;
 use CodeIgniter\Controller;
+use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Router\Attributes\Cache;
 
 class Api extends Controller
@@ -233,7 +234,7 @@ class Api extends Controller
      * Add a single custom header
      */
     #[AddHeader('X-API-Version', '2.0')]
-    public function userInfo()
+    public function userInfo(): ResponseInterface
     {
         return $this->response->setJSON([
             'name'  => 'John Doe',
@@ -248,7 +249,7 @@ class Api extends Controller
     #[AddHeader('X-API-Version', '2.0')]
     #[AddHeader('X-Rate-Limit', '100')]
     #[AddHeader('X-Content-Source', 'cache')]
-    public function statistics()
+    public function statistics(): ResponseInterface
     {
         return $this->response->setJSON([
             'users' => 1500,
@@ -263,7 +264,7 @@ class Api extends Controller
      */
     #[AddHeader('X-Powered-By', 'My Custom API')]
     #[Cache(for: 3600)]
-    public function dashboard()
+    public function dashboard(): ResponseInterface
     {
         return $this->response->setJSON([
             'status' => 'operational',

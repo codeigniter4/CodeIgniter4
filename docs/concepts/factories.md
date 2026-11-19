@@ -58,7 +58,7 @@ use CodeIgniter\Config\Factories;
 
 class SomeOtherClass
 {
-    public function someFunction()
+    public function someFunction(): void
     {
         $users = Factories::models('UserModel');
 
@@ -214,7 +214,10 @@ use CodeIgniter\Filters\FilterInterface;
 
 class Factory extends BaseFactory
 {
-    public $filters = [
+    /**
+     * @var array<string, string>
+     */
+    public array $filters = [
         'instanceOf' => FilterInterface::class,
     ];
 }
@@ -239,7 +242,10 @@ use CodeIgniter\Config\Factory as BaseFactory;
 
 class Factory extends BaseFactory
 {
-    public $library = [
+    /**
+     * @var array<string, string>
+     */
+    public array $library = [
         'path' => 'Libraries',
     ];
 }

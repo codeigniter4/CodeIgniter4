@@ -59,6 +59,9 @@ namespace App\Cells;
 
 class AlertMessage
 {
+    /**
+     * @param array<string, mixed> $params
+     */
     public function show(array $params): string
     {
         return "<div class=\"alert alert-{$params['type']}\">{$params['message']}</div>";
@@ -131,8 +134,8 @@ use CodeIgniter\View\Cells\Cell;
 
 class AlertMessageCell extends Cell
 {
-    public $type;
-    public $message;
+    public string $type;
+    public string $message;
 }
 ```
 
@@ -188,8 +191,8 @@ use CodeIgniter\View\Cells\Cell;
 
 class AlertMessageCell extends Cell
 {
-    public $type;
-    public $message;
+    public string $type;
+    public string $message;
 
     protected string $view = APPPATH . 'Views/cells/alerts.php';
 }
@@ -210,8 +213,8 @@ use CodeIgniter\View\Cells\Cell;
 
 class AlertMessageCell extends Cell
 {
-    public $type;
-    public $message;
+    public string $type;
+    public string $message;
 
     public function render(): string
     {
@@ -240,9 +243,9 @@ use CodeIgniter\View\Cells\Cell;
 
 class AlertMessageCell extends Cell
 {
-    protected $type;
-    protected $message;
-    private $computed;
+    protected string $type;
+    protected string $message;
+    private string $computed;
 
     public function mount(): void
     {
@@ -293,9 +296,12 @@ use CodeIgniter\View\Cells\Cell;
 
 class RecentPostsCell extends Cell
 {
-    protected $posts;
+    /**
+     * @var list<object>
+     */
+    protected array $posts;
 
-    public function linkPost($post): string
+    public function linkPost(object $post): string
     {
         return anchor('posts/' . $post->id, $post->title);
     }
@@ -324,7 +330,10 @@ use CodeIgniter\View\Cells\Cell;
 
 class RecentPostsCell extends Cell
 {
-    protected $posts;
+    /**
+     * @var list<object>
+     */
+    protected array $posts;
 
     public function mount(): void
     {
@@ -346,7 +355,10 @@ use CodeIgniter\View\Cells\Cell;
 
 class RecentPostsCell extends Cell
 {
-    protected $posts;
+    /**
+     * @var list<object>
+     */
+    protected array $posts;
 
     public function mount(?int $categoryId): void
     {

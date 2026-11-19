@@ -135,6 +135,17 @@ class Cors extends BaseConfig
 {
     // ...
 
+    /**
+     * @var array{
+     *      allowedOrigins: list<string>,
+     *      allowedOriginsPatterns: list<string>,
+     *      supportsCredentials: bool,
+     *      allowedHeaders: list<string>,
+     *      exposedHeaders: list<string>,
+     *      allowedMethods: list<string>,
+     *      maxAge: int,
+     *  }
+     */
     public array $api = [
         'allowedOrigins'         => ['https://app.example.com'],
         'allowedOriginsPatterns' => [],

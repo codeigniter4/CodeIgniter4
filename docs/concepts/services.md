@@ -166,12 +166,13 @@ namespace Config;
 
 use App\Router\MyRouteCollection;
 use CodeIgniter\Config\BaseService;
+use CodeIgniter\Router\RouteCollection;
 
 class Services extends BaseService
 {
     // ...
 
-    public static function routes()
+    public static function routes(): RouteCollection
     {
         return new MyRouteCollection(static::locator(), config('Modules'));
     }
@@ -196,9 +197,9 @@ class Services extends BaseService
 {
     // ...
 
-    public static function renderer($viewPath = APPPATH . 'views/')
+    public static function renderer(string $viewPath = APPPATH . 'views/'): View
     {
-        return new View($viewPath);
+        return new View(config('View'), $viewPath);
     }
 }
 ```
@@ -224,12 +225,13 @@ namespace Config;
 
 use App\Router\MyRouteCollection;
 use CodeIgniter\Config\BaseService;
+use CodeIgniter\Router\RouteCollection;
 
 class Services extends BaseService
 {
     // ...
 
-    public static function routes($getShared = true)
+    public static function routes(bool $getShared = true): RouteCollection
     {
         if ($getShared) {
             return static::getSharedInstance('routes');
@@ -257,13 +259,14 @@ Imagine that you've created a new directory, **Blog**, in your project root dire
 
 namespace Blog\Config;
 
+use Blog\Libraries\PostManager;
 use CodeIgniter\Config\BaseService;
 
 class Services extends BaseService
 {
-    public static function postManager()
+    public static function postManager(): PostManager
     {
-        // ...
+        return new PostManager();
     }
 }
 ```

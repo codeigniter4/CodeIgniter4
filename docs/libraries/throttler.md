@@ -47,7 +47,7 @@ class Throttle implements FilterInterface
      *
      * @param list<string>|null $arguments
      *
-     * @return ResponseInterface|void
+     * @return ResponseInterface|null
      */
     public function before(RequestInterface $request, $arguments = null)
     {
@@ -58,6 +58,8 @@ class Throttle implements FilterInterface
         if ($throttler->check(md5($request->getIPAddress()), 60, MINUTE) === false) {
             return service('response')->setStatusCode(429);
         }
+
+        return null;
     }
 
     /**
@@ -65,11 +67,11 @@ class Throttle implements FilterInterface
      *
      * @param list<string>|null $arguments
      *
-     * @return void
+     * @return ResponseInterface|null
      */
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
-        // ...
+        return null;
     }
 }
 ```
@@ -90,7 +92,10 @@ use CodeIgniter\Config\BaseConfig;
 
 class Filters extends BaseConfig
 {
-    public $aliases = [
+    /**
+     * @var array<string, class-string|list<class-string>>
+     */
+    public array $aliases = [
         // ...
         'throttle' => Throttle::class,
     ];
@@ -110,7 +115,10 @@ use CodeIgniter\Config\BaseConfig;
 
 class Filters extends BaseConfig
 {
-    public $methods = [
+    /**
+     * @var array<string, list<string>>
+     */
+    public array $methods = [
         'POST' => ['throttle'],
     ];
 
