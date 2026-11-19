@@ -169,6 +169,9 @@ The following files received significant changes (including deprecations or visu
 - **app/Config/Mimes.php**  
     - `Config\Mimes::$mimes` added a new key `md` for Markdown files.
 
+- **app/Config/Modules.php**  
+    - `Config\Modules::$aliases` no longer lists `filters`, since the auto-discovery of Filters was removed.
+
 - **app/Config/Routing.php**  
     - `Config\Routing::$placeholderSamples` was added to provide sample values for custom route placeholders so the `spark routes` command can resolve their filters.
 

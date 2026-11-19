@@ -19,7 +19,6 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Feature;
 use Config\Filters as FiltersConfig;
-use Config\Modules;
 
 class Filters
 {
@@ -43,15 +42,6 @@ class Filters
      * @var ResponseInterface
      */
     protected $response;
-
-    /**
-     * The Config\Modules instance
-     *
-     * @var Modules
-     *
-     * @deprecated 4.4.2 Only used by the deprecated auto-discovery of Filters.
-     */
-    protected $modules;
 
     /**
      * Whether we've done initial processing on the filter lists.
@@ -123,51 +113,12 @@ class Filters
 
     /**
      * @param FiltersConfig $config
-     * @param Modules|null  $modules Deprecated. Only used by the deprecated auto-discovery of Filters.
      */
-    public function __construct($config, RequestInterface $request, ResponseInterface $response, ?Modules $modules = null)
+    public function __construct($config, RequestInterface $request, ResponseInterface $response)
     {
         $this->config  = $config;
         $this->request = &$request;
         $this->setResponse($response);
-
-        $this->modules = $modules instanceof Modules ? $modules : new Modules();
-
-        if ($this->modules->shouldDiscover('filters')) {
-            $this->discoverFilters();
-        }
-    }
-
-    /**
-     * If discoverFilters is enabled in Config then system will try to
-     * auto-discover custom filters files in namespaces and allow access to
-     * the config object via the variable $filters as with the routes file.
-     *
-     * Sample:
-     * $filters->aliases['custom-auth'] = \Acme\Blob\Filters\BlobAuth::class;
-     *
-     * @deprecated 4.4.2 Use Registrar instead.
-     */
-    private function discoverFilters(): void
-    {
-        $locator = service('locator');
-
-        // for access by custom filters
-        $filters = $this->config;
-
-        $files = $locator->search('Config/Filters.php');
-
-        foreach ($files as $file) {
-            // The $file may not be a class file.
-            $className = $locator->getClassname($file);
-
-            // Don't include our main Filter config again...
-            if ($className === FiltersConfig::class || $className === BaseFiltersConfig::class) {
-                continue;
-            }
-
-            include $file;
-        }
     }
 
     /**

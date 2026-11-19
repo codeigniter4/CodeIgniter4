@@ -450,46 +450,6 @@ final class FiltersTest extends CIUnitTestCase
         $filters->run($uri);
     }
 
-    public function testCustomFiltersLoad(): void
-    {
-        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
-
-        $config = [
-            'aliases' => [],
-            'globals' => [
-                'before' => ['test-customfilter'],
-                'after'  => [],
-            ],
-        ];
-        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
-        $filters       = $this->createFilters($filtersConfig);
-
-        $uri     = 'admin/foo/bar';
-        $request = $filters->run($uri, 'before');
-
-        $this->assertSame('http://hellowworld.com', $request->getBody());
-
-        $this->resetServices();
-    }
-
-    /**
-     * @see https://github.com/codeigniter4/CodeIgniter4/issues/4720
-     */
-    public function testAllCustomFiltersAreDiscoveredInConstructor(): void
-    {
-        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
-
-        $config = [
-            'aliases' => [],
-            'globals' => [],
-        ];
-        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
-        $filters       = $this->createFilters($filtersConfig);
-
-        $configFilters = $this->getPrivateProperty($filters, 'config');
-        $this->assertContains('test-customfilter', array_keys($configFilters->aliases));
-    }
-
     public function testRunThrowsWithInvalidClassType(): void
     {
         service('superglobals')->setServer('REQUEST_METHOD', 'GET');

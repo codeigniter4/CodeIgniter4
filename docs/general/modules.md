@@ -96,7 +96,6 @@ class Autoload extends AutoloadConfig
 Many times, you will need to specify the full namespace to files you want to include, but CodeIgniter can be configured to make integrating modules into your applications simpler by automatically discovering many different file types, including:
 
 - [Events](../extending/events.md)
-- [Filters](../incoming/filters.md)
 - [Registrars](configuration.md#registrars)
 - [Route files](../incoming/routing.md)
 - [Services](../concepts/services.md)
@@ -211,51 +210,33 @@ When working with modules, it can be a problem if the routes in the application 
 
 ### Filters
 
-!!! danger "Deprecated since version 4.4.2"
-
-!!! note "Note"
-    This feature is deprecated. Use [Registrars](configuration.md#registrars) instead, like the following:
-
-    ```php
-    <?php
-
-    namespace CodeIgniter\Shield\Config;
-
-    use CodeIgniter\Shield\Filters\SessionAuth;
-    use CodeIgniter\Shield\Filters\TokenAuth;
-
-    class Registrar
-    {
-        /**
-         * Registers the Shield filters.
-         *
-         * @return array<string, array<string, string>>
-         */
-        public static function Filters(): array
-        {
-            return [
-                'aliases' => [
-                    'session' => SessionAuth::class,
-                    'tokens'  => TokenAuth::class,
-                ],
-            ];
-        }
-    }
-    ```
-
-By default, [filters](../incoming/filters.md) are automatically scanned for within modules. This can be turned off in the **Modules** config file, described above.
-
-!!! note "Note"
-    Since the files are being included into the current scope, the `$filters` instance is already defined for you. It will cause errors if you attempt to redefine that class.
-
-In the module's **Config/Filters.php** file, you need to define the aliases of the filters you use:
+Modules register their [filters](../incoming/filters.md) through a [Registrar](configuration.md#registrars), like the following:
 
 ```php
 <?php
 
-use App\Filters\MenusFilter;
+namespace CodeIgniter\Shield\Config;
 
-$filters->aliases['menus'] = MenusFilter::class;
+use CodeIgniter\Shield\Filters\SessionAuth;
+use CodeIgniter\Shield\Filters\TokenAuth;
+
+class Registrar
+{
+    /**
+     * Registers the Shield filters.
+     *
+     * @return array<string, array<string, string>>
+     */
+    public static function Filters(): array
+    {
+        return [
+            'aliases' => [
+                'session' => SessionAuth::class,
+                'tokens'  => TokenAuth::class,
+            ],
+        ];
+    }
+}
 ```
 
 ### Controllers
