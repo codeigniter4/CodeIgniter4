@@ -171,7 +171,13 @@ final class ArrayHelper
         $currentIndex = array_shift($indexes);
 
         if ($currentIndex === '*') {
-            foreach (self::entries($array) as $item) {
+            $entries = self::entries($array);
+
+            if ($entries === []) {
+                return false;
+            }
+
+            foreach ($entries as $item) {
                 if (! self::isNavigable($item) || ! self::hasByDotPath($item, $indexes)) {
                     return false;
                 }
