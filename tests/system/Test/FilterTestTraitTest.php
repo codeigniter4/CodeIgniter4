@@ -15,6 +15,7 @@ namespace CodeIgniter\Test;
 
 use Closure;
 use CodeIgniter\HTTP\RequestInterface;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Filters\Customfilter;
 
@@ -34,6 +35,7 @@ final class FilterTestTraitTest extends CIUnitTestCase
 {
     use FilterTestTrait;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

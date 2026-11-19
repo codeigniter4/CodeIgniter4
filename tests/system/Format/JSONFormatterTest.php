@@ -17,6 +17,7 @@ use CodeIgniter\Config\Services;
 use CodeIgniter\EnvironmentDetector;
 use CodeIgniter\Format\Exceptions\FormatException;
 use CodeIgniter\Test\CIUnitTestCase;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -28,12 +29,14 @@ final class JSONFormatterTest extends CIUnitTestCase
 {
     private JSONFormatter $jsonFormatter;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
         $this->jsonFormatter = new JSONFormatter();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

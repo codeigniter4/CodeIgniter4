@@ -27,6 +27,7 @@ use CodeIgniter\Router\Exceptions\RouterException;
 use Config\App;
 use Config\Feature;
 use Config\Routing;
+use Override;
 use ReflectionClass;
 use Throwable;
 
@@ -152,6 +153,7 @@ class Router implements RouterInterface
     /**
      * Stores a reference to the RouteCollection object.
      */
+    #[Override]
     public function __construct(RouteCollectionInterface $routes, ?Request $request = null)
     {
         $config = config(App::class);
@@ -203,6 +205,7 @@ class Router implements RouterInterface
      * @throws PageNotFoundException
      * @throws RedirectException
      */
+    #[Override]
     public function handle(?string $uri = null)
     {
         // If we cannot find a URI to match against, then set it to root (`/`).
@@ -272,6 +275,7 @@ class Router implements RouterInterface
      *
      * @return Closure|string Controller classname or Closure
      */
+    #[Override]
     public function controllerName()
     {
         return $this->translateURIDashes && ! $this->controller instanceof Closure
@@ -283,6 +287,7 @@ class Router implements RouterInterface
      * Returns the name of the method to run in the
      * chosen controller.
      */
+    #[Override]
     public function methodName(): string
     {
         return $this->translateURIDashes
@@ -321,6 +326,7 @@ class Router implements RouterInterface
      * during the parsing process as an array, ready to send to
      * instance->method(...$params).
      */
+    #[Override]
     public function params(): array
     {
         return $this->params;
@@ -370,6 +376,7 @@ class Router implements RouterInterface
      *
      * @param string $page
      */
+    #[Override]
     public function setIndexPage($page): self
     {
         $this->indexPage = $page;

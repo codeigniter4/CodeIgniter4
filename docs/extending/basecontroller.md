@@ -44,6 +44,7 @@ namespace App\Controllers;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Override;
 use Psr\Log\LoggerInterface;
 
 abstract class BaseController extends Controller
@@ -55,6 +56,7 @@ abstract class BaseController extends Controller
      */
     protected $session;
 
+    #[Override]
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
         // Do Not Edit This Line

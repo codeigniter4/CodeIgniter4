@@ -17,6 +17,7 @@ use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Exceptions\InvalidArgumentException;
+use Override;
 
 /**
  * Builder for SQLite3
@@ -60,6 +61,7 @@ class Builder extends BaseBuilder
     /**
      * Compile the SELECT lock clause.
      */
+    #[Override]
     protected function compileSelectLock(): string
     {
         if ($this->QBSelectLock === null) {
@@ -75,6 +77,7 @@ class Builder extends BaseBuilder
     /**
      * Compiles an execution-plan query for the current SELECT query.
      */
+    #[Override]
     protected function compileExplain(string $sql): string
     {
         return 'EXPLAIN QUERY PLAN ' . $sql;
@@ -85,6 +88,7 @@ class Builder extends BaseBuilder
      *
      * Generates a platform-specific replace string from the supplied data
      */
+    #[Override]
     protected function _replace(string $table, array $keys, array $values): string
     {
         return 'INSERT OR ' . parent::_replace($table, $keys, $values);
@@ -96,6 +100,7 @@ class Builder extends BaseBuilder
      * If the database does not support the TRUNCATE statement,
      * then this method maps to 'DELETE FROM table'
      */
+    #[Override]
     protected function _truncate(string $table): string
     {
         return 'DELETE FROM ' . $table;
@@ -104,6 +109,7 @@ class Builder extends BaseBuilder
     /**
      * Generates a platform-specific batch update string from the supplied data
      */
+    #[Override]
     protected function _updateBatch(string $table, array $keys, array $values): string
     {
         if (version_compare($this->db->getVersion(), '3.33.0') >= 0) {
@@ -159,6 +165,7 @@ class Builder extends BaseBuilder
      *
      * @throws DatabaseException
      */
+    #[Override]
     protected function _upsertBatch(string $table, array $keys, array $values): string
     {
         $sql = $this->QBOptions['sql'] ?? '';
@@ -242,6 +249,7 @@ class Builder extends BaseBuilder
     /**
      * Generates a platform-specific batch update string from the supplied data
      */
+    #[Override]
     protected function _deleteBatch(string $table, array $keys, array $values): string
     {
         $sql = $this->QBOptions['sql'] ?? '';

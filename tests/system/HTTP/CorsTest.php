@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -24,6 +25,7 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class CorsTest extends CIUnitTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         $this->resetServices();

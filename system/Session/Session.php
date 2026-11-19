@@ -17,6 +17,7 @@ use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\I18n\Time;
 use Config\Cookie as CookieConfig;
 use Config\Session as SessionConfig;
+use Override;
 use Psr\Log\LoggerAwareTrait;
 use SessionHandlerInterface;
 
@@ -234,6 +235,7 @@ class Session implements SessionInterface
         }
     }
 
+    #[Override]
     public function regenerate(bool $destroy = false)
     {
         $_SESSION['__ci_last_regenerate'] = Time::now()->getTimestamp();
@@ -262,6 +264,7 @@ class Session implements SessionInterface
         }
     }
 
+    #[Override]
     public function destroy()
     {
         if (service('environment')->isTesting()) {
@@ -285,6 +288,7 @@ class Session implements SessionInterface
         session_write_close();
     }
 
+    #[Override]
     public function set($data, $value = null)
     {
         $data = is_array($data) ? $data : [$data => $value];
@@ -298,6 +302,7 @@ class Session implements SessionInterface
         }
     }
 
+    #[Override]
     public function get(?string $key = null)
     {
         if (! isset($_SESSION) || $_SESSION === []) {
@@ -322,6 +327,7 @@ class Session implements SessionInterface
         return $userdata;
     }
 
+    #[Override]
     public function has(string $key): bool
     {
         return isset($_SESSION[$key]);
@@ -342,6 +348,7 @@ class Session implements SessionInterface
         }
     }
 
+    #[Override]
     public function remove($key)
     {
         $key = is_array($key) ? $key : [$key];
@@ -396,12 +403,14 @@ class Session implements SessionInterface
         return isset($_SESSION[$key]) || $key === 'session_id';
     }
 
+    #[Override]
     public function setFlashdata($data, $value = null)
     {
         $this->set($data, $value);
         $this->markAsFlashdata(is_array($data) ? array_keys($data) : $data);
     }
 
+    #[Override]
     public function getFlashdata(?string $key = null)
     {
         $_SESSION['__ci_vars'] ??= [];
@@ -425,11 +434,13 @@ class Session implements SessionInterface
         return $flashdata;
     }
 
+    #[Override]
     public function keepFlashdata($key)
     {
         $this->markAsFlashdata($key);
     }
 
+    #[Override]
     public function markAsFlashdata($key): bool
     {
         $keys = is_array($key) ? $key : [$key];
@@ -446,6 +457,7 @@ class Session implements SessionInterface
         return true;
     }
 
+    #[Override]
     public function unmarkFlashdata($key)
     {
         if (! isset($_SESSION['__ci_vars'])) {
@@ -467,6 +479,7 @@ class Session implements SessionInterface
         }
     }
 
+    #[Override]
     public function getFlashKeys(): array
     {
         if (! isset($_SESSION['__ci_vars'])) {
@@ -484,12 +497,14 @@ class Session implements SessionInterface
         return $keys;
     }
 
+    #[Override]
     public function setTempdata($data, $value = null, int $ttl = 300)
     {
         $this->set($data, $value);
         $this->markAsTempdata($data, $ttl);
     }
 
+    #[Override]
     public function getTempdata(?string $key = null)
     {
         $_SESSION['__ci_vars'] ??= [];
@@ -513,12 +528,14 @@ class Session implements SessionInterface
         return $tempdata;
     }
 
+    #[Override]
     public function removeTempdata(string $key)
     {
         $this->unmarkTempdata($key);
         unset($_SESSION[$key]);
     }
 
+    #[Override]
     public function markAsTempdata($key, int $ttl = 300): bool
     {
         $time = Time::now()->getTimestamp();
@@ -550,6 +567,7 @@ class Session implements SessionInterface
         return true;
     }
 
+    #[Override]
     public function unmarkTempdata($key)
     {
         if (! isset($_SESSION['__ci_vars'])) {
@@ -571,6 +589,7 @@ class Session implements SessionInterface
         }
     }
 
+    #[Override]
     public function getTempKeys(): array
     {
         if (! isset($_SESSION['__ci_vars'])) {

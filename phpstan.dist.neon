@@ -35,6 +35,7 @@ parameters:
             identifier: trait.unused
             path: system/CLI/GeneratorTrait.php
     checkMissingCallableSignature: true
+    checkMissingOverrideMethodAttribute: true
     treatPhpDocTypesAsCertain: false
     strictRules:
         allRules: false

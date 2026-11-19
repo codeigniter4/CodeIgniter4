@@ -25,6 +25,7 @@ use Config\Database;
 use Config\Migrations;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_another_migration;
 use Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_some_migration;
@@ -47,6 +48,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
     private vfsStreamDirectory $root;
     private Migrations $config;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->setUpMethods[] = 'setUpAddNamespace';
@@ -67,6 +69,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         );
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

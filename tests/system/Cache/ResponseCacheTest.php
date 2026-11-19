@@ -27,6 +27,7 @@ use CodeIgniter\Test\Mock\MockCache;
 use Config\App;
 use Config\Cache;
 use ErrorException;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -37,6 +38,7 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class ResponseCacheTest extends CIUnitTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

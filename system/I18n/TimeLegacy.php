@@ -15,6 +15,7 @@ namespace CodeIgniter\I18n;
 
 use DateTime;
 use Exception;
+use Override;
 
 /**
  * Legacy Time class.
@@ -56,6 +57,7 @@ class TimeLegacy extends DateTime
      *
      * @throws Exception
      */
+    #[Override]
     public function setTimestamp($timestamp): static
     {
         $time = date('Y-m-d H:i:s', $timestamp);

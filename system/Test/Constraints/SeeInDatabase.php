@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Test\Constraints;
 
 use CodeIgniter\Database\ConnectionInterface;
+use Override;
 use PHPUnit\Framework\Constraint\Constraint;
 
 class SeeInDatabase extends Constraint
@@ -54,6 +55,7 @@ class SeeInDatabase extends Constraint
      *
      * @param mixed $table
      */
+    #[Override]
     protected function matches($table): bool
     {
         return $this->db->table($table)->where($this->data)->countAllResults() > 0;
@@ -64,6 +66,7 @@ class SeeInDatabase extends Constraint
      *
      * @param mixed $table
      */
+    #[Override]
     protected function failureDescription($table): string
     {
         return sprintf(
@@ -115,6 +118,7 @@ class SeeInDatabase extends Constraint
      *
      * @param int $options
      */
+    #[Override]
     public function toString(bool $exportObjects = false, $options = 0): string
     {
         return json_encode($this->data, $options);

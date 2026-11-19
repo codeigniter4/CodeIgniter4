@@ -22,6 +22,7 @@ use CodeIgniter\Test\Mock\MockInputOutput;
 use CodeIgniter\Test\PhpStreamWrapper;
 use CodeIgniter\Test\StreamFilterTrait;
 use ErrorException;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RequiresOperatingSystem;
@@ -35,6 +36,7 @@ final class CLITest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -45,6 +47,7 @@ final class CLITest extends CIUnitTestCase
         CLI::init();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         CLI::reset();

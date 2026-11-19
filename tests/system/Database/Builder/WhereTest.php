@@ -22,6 +22,7 @@ use CodeIgniter\Test\Mock\MockConnection;
 use DateTime;
 use Error;
 use ErrorException;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
@@ -34,6 +35,7 @@ use Tests\Support\Enum\StatusEnum;
 #[Group('Others')]
 final class WhereTest extends CIUnitTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

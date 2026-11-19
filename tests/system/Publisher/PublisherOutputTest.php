@@ -16,6 +16,7 @@ namespace CodeIgniter\Publisher;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -44,6 +45,7 @@ final class PublisherOutputTest extends CIUnitTestCase
      * tests call static methods before
      * the constructor would load it.
      */
+    #[Override]
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
@@ -51,6 +53,7 @@ final class PublisherOutputTest extends CIUnitTestCase
         helper(['filesystem']);
     }
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

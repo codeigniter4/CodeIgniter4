@@ -17,6 +17,7 @@ use CodeIgniter\CLI\AbstractGeneratorCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Attributes\GeneratorCommand;
 use CodeIgniter\CLI\Input\Option;
+use Override;
 
 #[Command(name: 'make:command', description: 'Generates a new spark command.', group: 'Generators')]
 #[GeneratorCommand(
@@ -27,6 +28,7 @@ use CodeIgniter\CLI\Input\Option;
 )]
 class CommandGenerator extends AbstractGeneratorCommand
 {
+    #[Override]
     protected function configure(): void
     {
         parent::configure();
@@ -55,6 +57,7 @@ class CommandGenerator extends AbstractGeneratorCommand
             ));
     }
 
+    #[Override]
     protected function interact(array &$arguments, array &$options): void
     {
         $type = $this->getUnboundOption('type', $options);
@@ -69,6 +72,7 @@ class CommandGenerator extends AbstractGeneratorCommand
         );
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $type = $this->getValidatedOption('type');
@@ -82,6 +86,7 @@ class CommandGenerator extends AbstractGeneratorCommand
         return $this->generateClass();
     }
 
+    #[Override]
     protected function getReplacements(string $class): array
     {
         $group = $this->getValidatedOption('group');
@@ -93,6 +98,7 @@ class CommandGenerator extends AbstractGeneratorCommand
         return ['{command}' => $this->getValidatedOption('command'), '{group}' => $group];
     }
 
+    #[Override]
     protected function getTemplateData(string $class): array
     {
         return ['type' => $this->getValidatedOption('type')];

@@ -18,6 +18,7 @@ use CodeIgniter\CLI\Input\Argument;
 use CodeIgniter\CLI\Input\Option;
 use CodeIgniter\Exceptions\LogicException;
 use Config\Generators;
+use Override;
 use Throwable;
 
 /**
@@ -74,6 +75,7 @@ abstract class AbstractGeneratorCommand extends AbstractCommand implements Promp
         parent::__construct($commands);
     }
 
+    #[Override]
     protected function configure(): void
     {
         $this->addArgument(new Argument(
@@ -83,6 +85,7 @@ abstract class AbstractGeneratorCommand extends AbstractCommand implements Promp
         ));
     }
 
+    #[Override]
     protected function provideDefaultOptions(): void
     {
         $this->provideGeneratorOptions();
@@ -127,11 +130,13 @@ abstract class AbstractGeneratorCommand extends AbstractCommand implements Promp
         ));
     }
 
+    #[Override]
     protected function getArgumentPromptLabels(): array
     {
         return ['name' => lang($this->classNameLang)];
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         return $this->generateClass();

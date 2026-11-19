@@ -33,19 +33,23 @@ The orchestrator class is then:
 namespace Acme\Blog\Tests;
 
 use CodeIgniter\Test\Orchestrator\AbstractOrchestrator;
+use Override;
 
 final class BlogOrchestrator extends AbstractOrchestrator
 {
+    #[Override]
     protected function getPackageRoot(): string
     {
         return dirname(__DIR__);
     }
 
+    #[Override]
     protected function getFixtures(): array
     {
         return [__DIR__ . '/Fixtures'];
     }
 
+    #[Override]
     protected function getEnv(): array
     {
         return ['app.baseURL' => 'http://localhost/'];

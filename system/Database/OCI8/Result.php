@@ -15,6 +15,7 @@ namespace CodeIgniter\Database\OCI8;
 
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Entity\Entity;
+use Override;
 use stdClass;
 
 /**
@@ -24,16 +25,19 @@ use stdClass;
  */
 class Result extends BaseResult
 {
+    #[Override]
     public function getFieldCount(): int
     {
         return oci_num_fields($this->resultID);
     }
 
+    #[Override]
     public function getFieldNames(): array
     {
         return array_map(fn ($fieldIndex): false|string => oci_field_name($this->resultID, $fieldIndex), range(1, $this->getFieldCount()));
     }
 
+    #[Override]
     public function getFieldData(): array
     {
         return array_map(fn ($fieldIndex): stdClass => (object) [
@@ -43,6 +47,7 @@ class Result extends BaseResult
         ], range(1, $this->getFieldCount()));
     }
 
+    #[Override]
     public function freeResult()
     {
         if (is_resource($this->resultID)) {
@@ -54,6 +59,7 @@ class Result extends BaseResult
     /**
      * @return false
      */
+    #[Override]
     public function dataSeek(int $n = 0)
     {
         // We can't support data seek by oci
@@ -63,11 +69,13 @@ class Result extends BaseResult
     /**
      * @return array<string, mixed>|false
      */
+    #[Override]
     protected function fetchAssoc()
     {
         return oci_fetch_assoc($this->resultID);
     }
 
+    #[Override]
     protected function fetchObject(string $className = stdClass::class)
     {
         $row = oci_fetch_object($this->resultID);

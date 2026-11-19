@@ -16,6 +16,7 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
+use Override;
 
 /**
  * URI for the application site
@@ -226,6 +227,7 @@ class SiteURI extends URI
     /**
      * Formats the URI as a string.
      */
+    #[Override]
     public function __toString(): string
     {
         return static::createURIString(
@@ -242,6 +244,7 @@ class SiteURI extends URI
      *
      * @return $this
      */
+    #[Override]
     public function setPath(string $path)
     {
         $this->setRoutePath($path);
@@ -278,6 +281,7 @@ class SiteURI extends URI
     /**
      * Sets the path portion of the URI based on segments.
      */
+    #[Override]
     protected function refreshPath(): self
     {
         $allSegments = array_merge($this->baseSegments, $this->segments);
@@ -306,6 +310,7 @@ class SiteURI extends URI
      *  pass?: string,
      * } $parts
      */
+    #[Override]
     protected function applyParts(array $parts): void
     {
         if (isset($parts['host']) && $parts['host'] !== '') {

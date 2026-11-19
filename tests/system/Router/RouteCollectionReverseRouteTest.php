@@ -18,6 +18,7 @@ use CodeIgniter\Router\Exceptions\RouterException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
 use Config\Routing;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -27,6 +28,7 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class RouteCollectionReverseRouteTest extends CIUnitTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

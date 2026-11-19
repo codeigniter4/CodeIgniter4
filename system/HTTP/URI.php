@@ -16,6 +16,7 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
+use Override;
 use SensitiveParameter;
 use Stringable;
 
@@ -613,6 +614,7 @@ class URI implements Stringable
      * be relative to the project's configuration.
      * This aspect of __toString() is deprecated and should be avoided.
      */
+    #[Override]
     public function __toString(): string
     {
         $path   = $this->getPath();

@@ -17,6 +17,7 @@ use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Input\Option;
 use Config\Paths;
+use Override;
 
 /**
  * Rotates the encryption key, demoting the current key to `previousKeys`.
@@ -33,6 +34,7 @@ class RotateKey extends AbstractCommand
      */
     private const VALID_PREFIXES = ['hex2bin', 'base64'];
 
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -61,6 +63,7 @@ class RotateKey extends AbstractCommand
             ));
     }
 
+    #[Override]
     protected function interact(array &$arguments, array &$options): void
     {
         $prefix = $this->getUnboundOption('prefix', $options);
@@ -85,6 +88,7 @@ class RotateKey extends AbstractCommand
         }
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $prefix = $options['prefix'];

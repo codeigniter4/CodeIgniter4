@@ -20,6 +20,7 @@ use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use DateTime;
 use DateTimeZone;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
@@ -33,6 +34,7 @@ use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 #[Group('SeparateProcess')]
 final class DownloadResponseTest extends CIUnitTestCase
 {
+    #[Override]
     #[WithoutErrorHandler]
     protected function setUp(): void
     {
@@ -41,6 +43,7 @@ final class DownloadResponseTest extends CIUnitTestCase
         Services::injectMock('superglobals', new Superglobals());
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         if (service('superglobals')->server('HTTP_USER_AGENT') !== null) {

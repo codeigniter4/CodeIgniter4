@@ -15,6 +15,7 @@ namespace CodeIgniter\Commands\Utilities;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -25,12 +26,14 @@ final class FilterCheckTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->resetServices();
         parent::setUp();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         $this->resetServices();

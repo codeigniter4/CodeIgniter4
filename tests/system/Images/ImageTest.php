@@ -17,6 +17,7 @@ use CodeIgniter\Images\Exceptions\ImageException;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -29,6 +30,7 @@ final class ImageTest extends CIUnitTestCase
     private string $start;
     private Image $image;
 
+    #[Override]
     protected function setUp(): void
     {
         // create virtual file system

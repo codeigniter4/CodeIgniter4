@@ -16,6 +16,7 @@ namespace CodeIgniter\Database;
 use CodeIgniter\Database\Postgre\Connection as PostgreConnection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -117,6 +118,7 @@ final class ConfigTest extends CIUnitTestCase
         'port'     => 5432,
     ];
 
+    #[Override]
     protected function tearDown(): void
     {
         $this->setPrivateProperty(Config::class, 'instances', []);

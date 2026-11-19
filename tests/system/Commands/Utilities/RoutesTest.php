@@ -18,6 +18,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\Feature;
 use Config\Services;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -28,6 +29,7 @@ final class RoutesTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->resetServices();
@@ -38,6 +40,7 @@ final class RoutesTest extends CIUnitTestCase
             ->setServer('SERVER_NAME', 'example.com');
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         $this->resetServices();

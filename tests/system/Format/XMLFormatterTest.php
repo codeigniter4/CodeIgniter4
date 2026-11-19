@@ -16,6 +16,7 @@ namespace CodeIgniter\Format;
 use CodeIgniter\Format\Exceptions\FormatException;
 use CodeIgniter\Test\CIUnitTestCase;
 use DOMDocument;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
@@ -29,6 +30,7 @@ final class XMLFormatterTest extends CIUnitTestCase
 {
     private XMLFormatter $xmlFormatter;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -173,6 +175,7 @@ final class XMLFormatterTest extends CIUnitTestCase
     public function testStringableObjectValue(): void
     {
         $value = new class () implements Stringable {
+            #[Override]
             public function __toString(): string
             {
                 return 'bar';

@@ -18,6 +18,7 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Query;
 use CodeIgniter\Database\TableName;
 use ErrorException;
+use Override;
 use stdClass;
 
 /**
@@ -122,6 +123,7 @@ class Connection extends BaseConnection
     /**
      * Checks whether the native database error represents a unique constraint violation.
      */
+    #[Override]
     protected function isUniqueConstraintViolation(int|string $code, string $message): bool
     {
         // ORA-00001: unique constraint violated.
@@ -131,6 +133,7 @@ class Connection extends BaseConnection
     /**
      * Checks whether the native database error represents a foreign key constraint violation.
      */
+    #[Override]
     protected function isForeignKeyConstraintViolation(int|string $code, string $message): bool
     {
         // ORA-02291: parent key not found; ORA-02292: child record found.
@@ -140,6 +143,7 @@ class Connection extends BaseConnection
     /**
      * Checks whether the native database error represents a NOT NULL constraint violation.
      */
+    #[Override]
     protected function isNotNullConstraintViolation(int|string $code, string $message): bool
     {
         // ORA-01400: cannot insert NULL; ORA-01407: cannot update to NULL.
@@ -149,6 +153,7 @@ class Connection extends BaseConnection
     /**
      * Checks whether the native database error represents a CHECK constraint violation.
      */
+    #[Override]
     protected function isCheckConstraintViolation(int|string $code, string $message): bool
     {
         // ORA-02290: check constraint violated.
@@ -158,6 +163,7 @@ class Connection extends BaseConnection
     /**
      * Checks whether the native database code represents a retryable transaction failure.
      */
+    #[Override]
     protected function isRetryableTransactionErrorCode(int|string $code): bool
     {
         return in_array((int) $code, [60, 8177], true);
@@ -186,6 +192,7 @@ class Connection extends BaseConnection
      *
      * @return false|resource
      */
+    #[Override]
     public function connect(bool $persistent = false)
     {
         if (! $this->isValidDSN()) {
@@ -209,6 +216,7 @@ class Connection extends BaseConnection
         return $this->connID;
     }
 
+    #[Override]
     protected function _close()
     {
         if (is_resource($this->cursorId)) {
@@ -223,6 +231,7 @@ class Connection extends BaseConnection
     /**
      * Ping the database connection.
      */
+    #[Override]
     protected function _ping(): bool
     {
         try {
@@ -237,6 +246,7 @@ class Connection extends BaseConnection
     /**
      * Select a specific database table to use.
      */
+    #[Override]
     public function setDatabase(string $databaseName): bool
     {
         return false;
@@ -245,6 +255,7 @@ class Connection extends BaseConnection
     /**
      * Returns a string containing the version of the database being used.
      */
+    #[Override]
     public function getVersion(): string
     {
         if (isset($this->dataCache['version'])) {
@@ -271,6 +282,7 @@ class Connection extends BaseConnection
      *
      * @return false|resource
      */
+    #[Override]
     protected function execute(string $sql)
     {
         try {
@@ -346,11 +358,13 @@ class Connection extends BaseConnection
     /**
      * Returns the total number of rows affected by this query.
      */
+    #[Override]
     public function affectedRows(): int
     {
         return oci_num_rows($this->stmtId);
     }
 
+    #[Override]
     protected function _listTables(bool $prefixLimit = false, ?string $tableName = null): string
     {
         $sql = 'SELECT "TABLE_NAME" FROM "USER_TABLES"';
@@ -367,6 +381,7 @@ class Connection extends BaseConnection
         return $sql;
     }
 
+    #[Override]
     protected function _listColumns($table = ''): string
     {
         if ($table instanceof TableName) {
@@ -388,6 +403,7 @@ class Connection extends BaseConnection
     /**
      * @throws DatabaseException
      */
+    #[Override]
     protected function _fieldData(string $table): array
     {
         if (str_contains($table, '.')) {
@@ -441,6 +457,7 @@ class Connection extends BaseConnection
     /**
      * @throws DatabaseException
      */
+    #[Override]
     protected function _indexData(string $table): array
     {
         if (str_contains($table, '.')) {
@@ -486,6 +503,7 @@ class Connection extends BaseConnection
     /**
      * @throws DatabaseException
      */
+    #[Override]
     protected function _foreignKeyData(string $table): array
     {
         $sql = 'SELECT
@@ -534,6 +552,7 @@ class Connection extends BaseConnection
      *
      * @return string
      */
+    #[Override]
     protected function _disableForeignKeyChecks()
     {
         return <<<'SQL'
@@ -558,6 +577,7 @@ class Connection extends BaseConnection
      *
      * @return string
      */
+    #[Override]
     protected function _enableForeignKeyChecks()
     {
         return <<<'SQL'
@@ -648,6 +668,7 @@ class Connection extends BaseConnection
      *
      *  return ['code' => null, 'message' => null);
      */
+    #[Override]
     public function error(): array
     {
         // oci_error() is resource-specific: check each resource in priority order
@@ -671,6 +692,7 @@ class Connection extends BaseConnection
         return is_array($error) ? $error : ['code' => '', 'message' => ''];
     }
 
+    #[Override]
     public function insertID(): int
     {
         if ($this->lastInsertedTableName === null || $this->lastInsertedTableName === '') {
@@ -774,6 +796,7 @@ class Connection extends BaseConnection
         $this->DSN = '';
     }
 
+    #[Override]
     protected function _transBegin(): bool
     {
         $this->commitMode = OCI_NO_AUTO_COMMIT;
@@ -781,6 +804,7 @@ class Connection extends BaseConnection
         return true;
     }
 
+    #[Override]
     protected function _transCommit(): bool
     {
         $this->commitMode = OCI_COMMIT_ON_SUCCESS;
@@ -788,6 +812,7 @@ class Connection extends BaseConnection
         return oci_commit($this->connID);
     }
 
+    #[Override]
     protected function _transRollback(): bool
     {
         $this->commitMode = OCI_COMMIT_ON_SUCCESS;
@@ -799,6 +824,7 @@ class Connection extends BaseConnection
      * Restore OCI_COMMIT_ON_SUCCESS. close() does not, and
      * OCI_NO_AUTO_COMMIT would leave later writes uncommitted.
      */
+    #[Override]
     protected function abandonLostTransaction(): void
     {
         $this->commitMode = OCI_COMMIT_ON_SUCCESS;
@@ -809,6 +835,7 @@ class Connection extends BaseConnection
     /**
      * Returns the name of the current database being used.
      */
+    #[Override]
     public function getDatabase(): string
     {
         if (is_string($this->database) && $this->database !== '') {
@@ -821,6 +848,7 @@ class Connection extends BaseConnection
     /**
      * Get the prefix of the function to access the DB.
      */
+    #[Override]
     protected function getDriverFunctionPrefix(): string
     {
         return 'oci_';

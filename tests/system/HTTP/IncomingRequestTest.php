@@ -23,6 +23,7 @@ use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use JsonException;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -39,6 +40,7 @@ final class IncomingRequestTest extends CIUnitTestCase
 {
     private IncomingRequest $request;
 
+    #[Override]
     #[WithoutErrorHandler]
     protected function setUp(): void
     {

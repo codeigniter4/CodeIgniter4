@@ -32,6 +32,7 @@ use Config\Cookie;
 use Config\Logger as LoggerConfig;
 use Config\Security as SecurityConfig;
 use Config\Session as SessionConfig;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -52,6 +53,7 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
 
     private SecurityConfig $config;
 
+    #[Override]
     #[WithoutErrorHandler]
     protected function setUp(): void
     {

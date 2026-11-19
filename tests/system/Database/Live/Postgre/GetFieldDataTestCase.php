@@ -15,6 +15,7 @@ namespace CodeIgniter\Database\Live\Postgre;
 
 use CodeIgniter\Database\Live\AbstractGetFieldDataTestCase;
 use Config\Database;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -23,6 +24,7 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('DatabaseLive')]
 final class GetFieldDataTestCase extends AbstractGetFieldDataTestCase
 {
+    #[Override]
     protected function createForge(): void
     {
         if ($this->db->DBDriver !== 'Postgre') {
@@ -32,6 +34,7 @@ final class GetFieldDataTestCase extends AbstractGetFieldDataTestCase
         $this->forge = Database::forge($this->db);
     }
 
+    #[Override]
     public function testGetFieldDataDefault(): void
     {
         $this->createTableForDefault();

@@ -15,6 +15,7 @@ namespace CodeIgniter\Throttle;
 
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\I18n\Time;
+use Override;
 
 /**
  * Class Throttler
@@ -71,6 +72,7 @@ class Throttler implements ThrottlerInterface
      * Returns the number of seconds until the next available token will
      * be released for usage.
      */
+    #[Override]
     public function getTokenTime(): int
     {
         return $this->tokenTime;
@@ -91,6 +93,7 @@ class Throttler implements ThrottlerInterface
      * @param int    $seconds  The time it takes the "bucket" to completely refill
      * @param int    $cost     The number of tokens this action uses.
      */
+    #[Override]
     public function check(string $key, int $capacity, int $seconds, int $cost = 1): bool
     {
         $tokenName = $this->prefix . $key;

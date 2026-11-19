@@ -15,6 +15,7 @@ namespace CodeIgniter\Test\Mock;
 
 use CodeIgniter\Email\Email;
 use CodeIgniter\Events\Events;
+use Override;
 
 class MockEmail extends Email
 {
@@ -25,6 +26,7 @@ class MockEmail extends Email
      */
     public $returnValue = true;
 
+    #[Override]
     public function send($autoClear = true)
     {
         if ($this->returnValue) {

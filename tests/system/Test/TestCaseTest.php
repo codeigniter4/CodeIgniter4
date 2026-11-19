@@ -15,6 +15,7 @@ namespace CodeIgniter\Test;
 
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Events\Events;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Test\TestForReflectionHelper;
 
@@ -26,6 +27,7 @@ final class TestCaseTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

@@ -63,9 +63,11 @@ Example:
 namespace App;
 
 use CodeIgniter\Files\FileCollection;
+use Override;
 
 class ConfigCollection extends FileCollection
 {
+    #[Override]
     protected function define(): void
     {
         $this->add(APPPATH . 'Config', true)->retainPattern('*.php');

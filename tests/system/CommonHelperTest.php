@@ -19,6 +19,7 @@ use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
+use Override;
 use PHPUnit\Framework\Attributes\CoversFunction;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -39,6 +40,7 @@ final class CommonHelperTest extends CIUnitTestCase
         SYSTEMPATH . 'Helpers' . DIRECTORY_SEPARATOR . 'foobarbaz_helper.php',
     ];
 
+    #[Override]
     protected function setUp(): void
     {
         $this->resetServices();
@@ -46,6 +48,7 @@ final class CommonHelperTest extends CIUnitTestCase
         $this->cleanUpDummyHelpers();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

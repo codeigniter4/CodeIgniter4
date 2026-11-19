@@ -15,6 +15,7 @@ namespace CodeIgniter\Session\Handlers\Database;
 
 use CodeIgniter\Test\Mock\MockConnection;
 use CodeIgniter\Test\Mock\MockResult;
+use Override;
 
 /**
  * Mock connection that records the raw SQL passed to simpleQuery().
@@ -31,6 +32,7 @@ final class PostgreHandlerMockConnection extends MockConnection
      */
     public array $executed = [];
 
+    #[Override]
     public function simpleQuery(string $sql): MockResult
     {
         $this->executed[] = $sql;

@@ -13,11 +13,14 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Entity\Cast;
 
+use Override;
+
 /**
  * @extends BaseCast<int, mixed>
  */
 class IntegerCast extends BaseCast
 {
+    #[Override]
     public static function get($value, array $params = []): int
     {
         return (int) $value;

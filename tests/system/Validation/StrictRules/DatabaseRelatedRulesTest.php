@@ -19,6 +19,7 @@ use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Validation\Validation;
 use Config\Database;
 use LogicException;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Validation\TestRules;
 
@@ -59,6 +60,7 @@ class DatabaseRelatedRulesTest extends CIUnitTestCase
         ],
     ];
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

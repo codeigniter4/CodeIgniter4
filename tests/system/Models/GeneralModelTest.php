@@ -19,6 +19,7 @@ use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Models\JobModel;
@@ -38,6 +39,7 @@ final class GeneralModelTest extends CIUnitTestCase
      */
     private ?object $model = null;
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();
@@ -176,6 +178,7 @@ final class GeneralModelTest extends CIUnitTestCase
             /**
              * Marks the model as initialized.
              */
+            #[Override]
             protected function initialize(): void
             {
                 $this->initialized = true;

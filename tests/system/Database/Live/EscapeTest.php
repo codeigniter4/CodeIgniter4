@@ -18,6 +18,7 @@ use CodeIgniter\Database\RawSql;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Enum\RoleEnum;
 use Tests\Support\Enum\StatusEnum;
@@ -33,6 +34,7 @@ final class EscapeTest extends CIUnitTestCase
     protected $refresh = false;
     private string $char;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

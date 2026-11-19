@@ -16,6 +16,7 @@ namespace CodeIgniter\DataCaster\Cast;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\I18n\Time;
+use Override;
 
 /**
  * (PHP) [Time --> string] --> (DB driver) --> (DB column) datetime
@@ -25,6 +26,7 @@ use CodeIgniter\I18n\Time;
  */
 class DatetimeCast extends BaseCast
 {
+    #[Override]
     public static function get(
         mixed $value,
         array $params = [],
@@ -46,6 +48,7 @@ class DatetimeCast extends BaseCast
         return Time::createFromFormat($format, $value);
     }
 
+    #[Override]
     public static function set(
         mixed $value,
         array $params = [],

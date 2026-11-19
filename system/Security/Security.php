@@ -25,6 +25,7 @@ use CodeIgniter\Session\SessionInterface;
 use Config\Cookie as CookieConfig;
 use Config\Security as SecurityConfig;
 use JsonException;
+use Override;
 use SensitiveParameter;
 
 /**
@@ -109,6 +110,7 @@ class Security implements SecurityInterface
         }
     }
 
+    #[Override]
     public function verify(RequestInterface $request): static
     {
         $method = $request->getMethod();
@@ -164,6 +166,7 @@ class Security implements SecurityInterface
         log_message('info', 'CSRF token verified.');
     }
 
+    #[Override]
     public function getHash(): ?string
     {
         return $this->config->tokenRandomize && isset($this->hash)
@@ -171,21 +174,25 @@ class Security implements SecurityInterface
             : $this->hash;
     }
 
+    #[Override]
     public function getTokenName(): string
     {
         return $this->config->tokenName;
     }
 
+    #[Override]
     public function getHeaderName(): string
     {
         return $this->config->headerName;
     }
 
+    #[Override]
     public function getCookieName(): string
     {
         return $this->config->cookieName;
     }
 
+    #[Override]
     public function shouldRedirect(): bool
     {
         return $this->config->redirect;

@@ -16,6 +16,7 @@ namespace CodeIgniter\Models;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Model;
 use Config\Validation;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 use Tests\Support\Models\JobModel;
@@ -29,6 +30,7 @@ use Tests\Support\Models\ValidModel;
 #[Group('DatabaseLive')]
 final class ValidationModelTest extends LiveModelTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

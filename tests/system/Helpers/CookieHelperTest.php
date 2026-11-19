@@ -26,6 +26,7 @@ use Config\App;
 use Config\Cookie;
 use Config\Cookie as CookieConfig;
 use Config\Services;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -39,6 +40,7 @@ final class CookieHelperTest extends CIUnitTestCase
     private int $expire;
     private Response $response;
 
+    #[Override]
     protected function setUp(): void
     {
         service('superglobals')->setCookieArray([]);

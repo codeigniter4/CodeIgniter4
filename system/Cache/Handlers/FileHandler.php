@@ -20,6 +20,7 @@ use CodeIgniter\Cache\LockStores\FileLockStore;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
 use FilesystemIterator;
+use Override;
 use Throwable;
 use UnexpectedValueException;
 
@@ -79,10 +80,12 @@ class FileHandler extends BaseHandler implements LockStoreProviderInterface
         helper('filesystem');
     }
 
+    #[Override]
     public function initialize(): void
     {
     }
 
+    #[Override]
     public function get(string $key): mixed
     {
         $key  = static::validateKey($key, $this->prefix);
@@ -91,6 +94,7 @@ class FileHandler extends BaseHandler implements LockStoreProviderInterface
         return is_array($data) ? $data['data'] : null;
     }
 
+    #[Override]
     public function save(string $key, mixed $value, int $ttl = 60): bool
     {
         $key = static::validateKey($key, $this->prefix);
@@ -117,6 +121,7 @@ class FileHandler extends BaseHandler implements LockStoreProviderInterface
         return false;
     }
 
+    #[Override]
     public function delete(string $key): bool
     {
         $key = static::validateKey($key, $this->prefix);
@@ -124,6 +129,7 @@ class FileHandler extends BaseHandler implements LockStoreProviderInterface
         return is_file($this->path . $key) && unlink($this->path . $key);
     }
 
+    #[Override]
     public function deleteMatching(string $pattern): int
     {
         // The pattern is matched against file names only and never becomes part
@@ -152,6 +158,7 @@ class FileHandler extends BaseHandler implements LockStoreProviderInterface
         return $deleted;
     }
 
+    #[Override]
     public function increment(string $key, int $offset = 1): bool|int
     {
         $prefixedKey = static::validateKey($key, $this->prefix);
@@ -172,21 +179,25 @@ class FileHandler extends BaseHandler implements LockStoreProviderInterface
         return $this->save($key, $value, $ttl) ? $value : false;
     }
 
+    #[Override]
     public function decrement(string $key, int $offset = 1): bool|int
     {
         return $this->increment($key, -$offset);
     }
 
+    #[Override]
     public function clean(): bool
     {
         return delete_files($this->path, false, true);
     }
 
+    #[Override]
     public function getCacheInfo(): array
     {
         return get_dir_file_info($this->path);
     }
 
+    #[Override]
     public function getMetaData(string $key): ?array
     {
         $key = static::validateKey($key, $this->prefix);
@@ -202,11 +213,13 @@ class FileHandler extends BaseHandler implements LockStoreProviderInterface
         ];
     }
 
+    #[Override]
     public function isSupported(): bool
     {
         return is_writable($this->path);
     }
 
+    #[Override]
     public function lockStore(): LockStoreInterface
     {
         return $this->lockStore;

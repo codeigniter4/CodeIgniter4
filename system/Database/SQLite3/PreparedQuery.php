@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\SQLite3;
 use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Exceptions\BadMethodCallException;
 use Exception;
+use Override;
 use SQLite3;
 use SQLite3Result;
 use SQLite3Stmt;
@@ -34,6 +35,7 @@ class PreparedQuery extends BasePreparedQuery
      */
     protected $result;
 
+    #[Override]
     public function _prepare(string $sql, array $options = []): PreparedQuery
     {
         if (! ($this->statement = $this->db->connID->prepare($sql))) {
@@ -48,6 +50,7 @@ class PreparedQuery extends BasePreparedQuery
         return $this;
     }
 
+    #[Override]
     public function _execute(array $data): bool
     {
         if (! isset($this->statement)) {
@@ -100,11 +103,13 @@ class PreparedQuery extends BasePreparedQuery
     /**
      * @return false|SQLite3Result
      */
+    #[Override]
     public function _getResult()
     {
         return $this->result;
     }
 
+    #[Override]
     protected function _close(): bool
     {
         return $this->statement->close();

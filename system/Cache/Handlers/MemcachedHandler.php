@@ -24,6 +24,7 @@ use Config\Cache;
 use Exception;
 use Memcache;
 use Memcached;
+use Override;
 
 /**
  * Mamcached cache handler
@@ -61,6 +62,7 @@ class MemcachedHandler extends BaseHandler implements LockStoreProviderInterface
         $this->config = array_merge($this->config, $config->memcached);
     }
 
+    #[Override]
     public function initialize(): void
     {
         try {
@@ -107,6 +109,7 @@ class MemcachedHandler extends BaseHandler implements LockStoreProviderInterface
         }
     }
 
+    #[Override]
     public function get(string $key): mixed
     {
         $data = [];
@@ -132,6 +135,7 @@ class MemcachedHandler extends BaseHandler implements LockStoreProviderInterface
         return is_array($data) ? $data[0] : $data;
     }
 
+    #[Override]
     public function save(string $key, mixed $value, int $ttl = 60): bool
     {
         $key = static::validateKey($key, $this->prefix);
@@ -155,6 +159,7 @@ class MemcachedHandler extends BaseHandler implements LockStoreProviderInterface
         return false;
     }
 
+    #[Override]
     public function delete(string $key): bool
     {
         $key = static::validateKey($key, $this->prefix);
@@ -162,11 +167,13 @@ class MemcachedHandler extends BaseHandler implements LockStoreProviderInterface
         return $this->memcached->delete($key);
     }
 
+    #[Override]
     public function deleteMatching(string $pattern): never
     {
         throw new BadMethodCallException('The deleteMatching method is not implemented for Memcached. You must select File, Redis or Predis handlers to use it.');
     }
 
+    #[Override]
     public function increment(string $key, int $offset = 1): false|int
     {
         if (! $this->config['raw']) {
@@ -178,6 +185,7 @@ class MemcachedHandler extends BaseHandler implements LockStoreProviderInterface
         return $this->memcached->increment($key, $offset, $offset, 60);
     }
 
+    #[Override]
     public function decrement(string $key, int $offset = 1): false|int
     {
         if (! $this->config['raw']) {
@@ -193,16 +201,19 @@ class MemcachedHandler extends BaseHandler implements LockStoreProviderInterface
         return $this->memcached->decrement($key, $offset, 0, 60);
     }
 
+    #[Override]
     public function clean(): bool
     {
         return $this->memcached->flush();
     }
 
+    #[Override]
     public function getCacheInfo(): array|false
     {
         return $this->memcached->getStats();
     }
 
+    #[Override]
     public function getMetaData(string $key): ?array
     {
         $key    = static::validateKey($key, $this->prefix);
@@ -222,11 +233,13 @@ class MemcachedHandler extends BaseHandler implements LockStoreProviderInterface
         ];
     }
 
+    #[Override]
     public function isSupported(): bool
     {
         return extension_loaded('memcached') || extension_loaded('memcache');
     }
 
+    #[Override]
     public function lockStore(): LockStoreInterface
     {
         if (! $this->memcached instanceof Memcached) {
@@ -236,6 +249,7 @@ class MemcachedHandler extends BaseHandler implements LockStoreProviderInterface
         return $this->lockStore ??= new MemcachedLockStore($this->memcached, $this->prefix);
     }
 
+    #[Override]
     public function ping(): bool
     {
         $version = $this->memcached->getVersion();
@@ -259,6 +273,7 @@ class MemcachedHandler extends BaseHandler implements LockStoreProviderInterface
         return false;
     }
 
+    #[Override]
     public function reconnect(): bool
     {
         if ($this->memcached instanceof Memcached) {

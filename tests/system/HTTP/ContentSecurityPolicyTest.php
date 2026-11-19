@@ -19,6 +19,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\TestResponse;
 use Config\App;
 use Config\ContentSecurityPolicy as CSPConfig;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
@@ -38,6 +39,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
     private ?Response $response         = null;
     private ?ContentSecurityPolicy $csp = null;
 
+    #[Override]
     #[WithoutErrorHandler]
     protected function setUp(): void
     {

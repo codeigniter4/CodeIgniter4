@@ -21,6 +21,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Utilities\NativeHeadersStack;
 use Config\Toolbar as ToolbarConfig;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -35,6 +36,7 @@ final class ToolbarTest extends CIUnitTestCase
     private ?IncomingRequest $request    = null;
     private ?ResponseInterface $response = null;
 
+    #[Override]
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
@@ -43,6 +45,7 @@ final class ToolbarTest extends CIUnitTestCase
         require_once SUPPORTPATH . 'Mock/MockNativeHeaders.php';
     }
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -64,6 +67,7 @@ final class ToolbarTest extends CIUnitTestCase
         Services::injectMock('codeigniter', $app);
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         // Restore is_cli state

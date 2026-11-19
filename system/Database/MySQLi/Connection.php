@@ -19,6 +19,7 @@ use CodeIgniter\Exceptions\LogicException;
 use mysqli;
 use mysqli_result;
 use mysqli_sql_exception;
+use Override;
 use stdClass;
 use Throwable;
 
@@ -109,6 +110,7 @@ class Connection extends BaseConnection
     /**
      * Checks whether the native database error represents a unique constraint violation.
      */
+    #[Override]
     protected function isUniqueConstraintViolation(int|string $code, string $message): bool
     {
         // ER_DUP_ENTRY: duplicate key value.
@@ -118,6 +120,7 @@ class Connection extends BaseConnection
     /**
      * Checks whether the native database error represents a foreign key constraint violation.
      */
+    #[Override]
     protected function isForeignKeyConstraintViolation(int|string $code, string $message): bool
     {
         // ER_NO_REFERENCED_ROW, ER_ROW_IS_REFERENCED, ER_ROW_IS_REFERENCED_2, ER_NO_REFERENCED_ROW_2.
@@ -127,6 +130,7 @@ class Connection extends BaseConnection
     /**
      * Checks whether the native database error represents a NOT NULL constraint violation.
      */
+    #[Override]
     protected function isNotNullConstraintViolation(int|string $code, string $message): bool
     {
         // ER_BAD_NULL_ERROR, ER_BAD_NULL_ERROR_NOT_IGNORED: column cannot be null.
@@ -136,6 +140,7 @@ class Connection extends BaseConnection
     /**
      * Checks whether the native database error represents a CHECK constraint violation.
      */
+    #[Override]
     protected function isCheckConstraintViolation(int|string $code, string $message): bool
     {
         if ($code === 3819) {
@@ -149,6 +154,7 @@ class Connection extends BaseConnection
     /**
      * Checks whether the native database code represents a retryable transaction failure.
      */
+    #[Override]
     protected function isRetryableTransactionErrorCode(int|string $code): bool
     {
         // ER_LOCK_DEADLOCK: InnoDB rolls back the full transaction.
@@ -162,6 +168,7 @@ class Connection extends BaseConnection
      *
      * @throws DatabaseException
      */
+    #[Override]
     public function connect(bool $persistent = false)
     {
         // Do we have a socket path?
@@ -302,6 +309,7 @@ class Connection extends BaseConnection
         return false;
     }
 
+    #[Override]
     protected function _close()
     {
         $this->connID->close();
@@ -310,6 +318,7 @@ class Connection extends BaseConnection
     /**
      * Select a specific database table to use.
      */
+    #[Override]
     public function setDatabase(string $databaseName): bool
     {
         if ($databaseName === '') {
@@ -332,6 +341,7 @@ class Connection extends BaseConnection
     /**
      * Returns a string containing the version of the database being used.
      */
+    #[Override]
     public function getVersion(): string
     {
         if (isset($this->dataCache['version'])) {
@@ -350,6 +360,7 @@ class Connection extends BaseConnection
      *
      * @return false|mysqli_result
      */
+    #[Override]
     protected function execute(string $sql)
     {
         while ($this->connID->more_results()) {
@@ -414,6 +425,7 @@ class Connection extends BaseConnection
     /**
      * Returns the total number of rows affected by this query.
      */
+    #[Override]
     public function affectedRows(): int
     {
         return $this->connID->affected_rows ?? 0;
@@ -422,6 +434,7 @@ class Connection extends BaseConnection
     /**
      * Platform-dependant string escape
      */
+    #[Override]
     protected function _escapeString(string $str): string
     {
         if (! $this->connID) {
@@ -464,6 +477,7 @@ class Connection extends BaseConnection
     /**
      * Uses escapeLikeStringDirect().
      */
+    #[Override]
     protected function _listTables(bool $prefixLimit = false, ?string $tableName = null): string
     {
         $sql = 'SHOW TABLES FROM ' . $this->escapeIdentifier($this->database);
@@ -479,6 +493,7 @@ class Connection extends BaseConnection
         return $sql;
     }
 
+    #[Override]
     protected function _listColumns($table = ''): string
     {
         $tableName = $this->protectIdentifiers(
@@ -494,6 +509,7 @@ class Connection extends BaseConnection
     /**
      * @throws DatabaseException
      */
+    #[Override]
     protected function _fieldData(string $table): array
     {
         $table = $this->protectIdentifiers($table, true, null, false);
@@ -523,6 +539,7 @@ class Connection extends BaseConnection
      * @throws DatabaseException
      * @throws LogicException
      */
+    #[Override]
     protected function _indexData(string $table): array
     {
         $table = $this->protectIdentifiers($table, true, null, false);
@@ -566,6 +583,7 @@ class Connection extends BaseConnection
     /**
      * @throws DatabaseException
      */
+    #[Override]
     protected function _foreignKeyData(string $table): array
     {
         $sql = '
@@ -616,6 +634,7 @@ class Connection extends BaseConnection
      *
      * @return string
      */
+    #[Override]
     protected function _disableForeignKeyChecks()
     {
         return 'SET FOREIGN_KEY_CHECKS=0';
@@ -626,6 +645,7 @@ class Connection extends BaseConnection
      *
      * @return string
      */
+    #[Override]
     protected function _enableForeignKeyChecks()
     {
         return 'SET FOREIGN_KEY_CHECKS=1';
@@ -638,6 +658,7 @@ class Connection extends BaseConnection
      *
      * @return array{code: int|string|null, message: string|null}
      */
+    #[Override]
     public function error(): array
     {
         if ($this->mysqli instanceof mysqli && $this->mysqli->connect_errno !== 0) {
@@ -656,11 +677,13 @@ class Connection extends BaseConnection
     /**
      * Insert ID
      */
+    #[Override]
     public function insertID(): int
     {
         return $this->connID->insert_id;
     }
 
+    #[Override]
     protected function _transBegin(): bool
     {
         if (! $this->connID->begin_transaction()) {
@@ -672,6 +695,7 @@ class Connection extends BaseConnection
         return true;
     }
 
+    #[Override]
     protected function _transCommit(): bool
     {
         // mysqli::commit() returns true after 1213. End the transaction
@@ -685,6 +709,7 @@ class Connection extends BaseConnection
         return $this->connID->commit();
     }
 
+    #[Override]
     protected function _transRollback(): bool
     {
         if (! $this->connID->rollback()) {

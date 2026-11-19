@@ -21,10 +21,12 @@ namespace App\Controllers;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Override;
 use Psr\Log\LoggerInterface;
 
 class Product extends BaseController
 {
+    #[Override]
     public function initController(
         RequestInterface $request,
         ResponseInterface $response,

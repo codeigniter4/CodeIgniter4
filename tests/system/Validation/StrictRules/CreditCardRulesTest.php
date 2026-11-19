@@ -15,6 +15,7 @@ namespace CodeIgniter\Validation\StrictRules;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Validation;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Validation\TestRules;
@@ -50,6 +51,7 @@ class CreditCardRulesTest extends CIUnitTestCase
         ],
     ];
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

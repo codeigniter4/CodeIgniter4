@@ -15,6 +15,7 @@ namespace CodeIgniter\Helpers;
 
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -27,6 +28,7 @@ final class TextHelperTest extends CIUnitTestCase
     private string $longString   = 'Once upon a time, a framework had no tests. It sad. So some nice people began to write tests. The more time that went on, the happier it became. Everyone was happy.';
     private string $mbLongString = 'Давным-давно во фреймворке не было тестов. Это печально. И вот несколько хороших людей начали писать тесты. Чем больше времени проходило, тем счастливее становилось. Все были счастливы.';
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

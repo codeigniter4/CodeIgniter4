@@ -17,6 +17,7 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -29,6 +30,7 @@ final class FileMovingTest extends CIUnitTestCase
     private ?vfsStreamDirectory $root;
     private string $destination;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -49,6 +51,7 @@ final class FileMovingTest extends CIUnitTestCase
         move_uploaded_file('', '', true);
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

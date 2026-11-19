@@ -19,6 +19,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\Cache;
 use Config\Services;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -31,6 +32,7 @@ final class InfoCacheTest extends CIUnitTestCase
 
     private Cache $config;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -51,6 +53,7 @@ final class InfoCacheTest extends CIUnitTestCase
         Services::injectMock('cache', $handler);
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         $this->config->handler = 'file';

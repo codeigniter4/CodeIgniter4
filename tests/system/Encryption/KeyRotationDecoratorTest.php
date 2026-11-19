@@ -16,6 +16,7 @@ namespace CodeIgniter\Encryption;
 use CodeIgniter\Encryption\Exceptions\EncryptionException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 
@@ -27,6 +28,7 @@ final class KeyRotationDecoratorTest extends CIUnitTestCase
 {
     private Encryption $encryption;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->encryption = new Encryption();

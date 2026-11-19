@@ -26,6 +26,7 @@ use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\I18n\Time;
 use Exception;
+use Override;
 use ReflectionClass;
 use ReflectionNamedType;
 use ReflectionType;
@@ -568,6 +569,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @throws DatabaseException
      */
+    #[Override]
     public function initialize()
     {
         /* If an established connection is available, then there's
@@ -671,6 +673,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @return void
      */
+    #[Override]
     public function reconnect()
     {
         if ($this->ping() === false) {
@@ -736,6 +739,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @return false|TConnection
      */
+    #[Override]
     public function persistentConnect()
     {
         return $this->connect(true);
@@ -749,6 +753,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @return false|TConnection
      */
+    #[Override]
     public function getConnection(?string $alias = null)
     {
         // @todo work with read/write connections
@@ -758,6 +763,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Returns the name of the current database being used.
      */
+    #[Override]
     public function getDatabase(): string
     {
         return is_string($this->database) ? $this->database : '';
@@ -786,6 +792,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * The name of the platform in use (MySQLi, Postgre, SQLite3, OCI8, etc)
      */
+    #[Override]
     public function getPlatform(): string
     {
         return $this->DBDriver;
@@ -846,6 +853,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @todo BC set $queryClass default as null in 4.1
      */
+    #[Override]
     public function query(string $sql, $binds = null, bool $setEscapeFlags = true, string $queryClass = '')
     {
         $queryClass = $queryClass !== '' && $queryClass !== '0' ? $queryClass : $this->queryClass;
@@ -955,6 +963,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @return false|TResult
      */
+    #[Override]
     public function simpleQuery(string $sql)
     {
         if ($this->connID === false) {
@@ -1060,6 +1069,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Checks whether this connection is inside an active transaction.
      */
+    #[Override]
     public function inTransaction(): bool
     {
         return $this->transDepth > 0;
@@ -1072,6 +1082,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @param callable(): void $callback
      */
+    #[Override]
     public function afterCommit(callable $callback): static
     {
         if ($this->transDepth === 0) {
@@ -1092,6 +1103,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @param callable(): void $callback
      */
+    #[Override]
     public function afterRollback(callable $callback): static
     {
         if ($this->transDepth === 0) {
@@ -1115,6 +1127,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @return false|TReturn
      */
+    #[Override]
     public function transaction(
         callable $callback,
         int $attempts = 1,
@@ -1363,6 +1376,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @throws DatabaseException
      */
+    #[Override]
     public function table($tableName)
     {
         if (in_array($tableName, ['', '0', []], true)) {
@@ -1434,6 +1448,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @return Query
      */
+    #[Override]
     public function getLastQuery()
     {
         return $this->lastQuery;
@@ -1789,6 +1804,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @return ($str is array ? array<array-key, mixed> : float|int|string)
      */
+    #[Override]
     public function escape($str)
     {
         if (is_array($str)) {
@@ -1899,6 +1915,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @throws DatabaseException
      */
+    #[Override]
     public function callFunction(string $functionName, ...$params): bool
     {
         $driver = $this->getDriverFunctionPrefix();
@@ -2208,6 +2225,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @param string $sql
      */
+    #[Override]
     public function isWriteType($sql): bool
     {
         return (bool) preg_match('/^\s*(WITH\s.+(\s|[)]))?"?(SET|INSERT|UPDATE|DELETE|REPLACE|CREATE|DROP|TRUNCATE|LOAD|COPY|ALTER|RENAME|GRANT|REVOKE|LOCK|UNLOCK|REINDEX|MERGE)\s(?!.*\sRETURNING\s)/is', $sql);
@@ -2220,6 +2238,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @return array{code: int|string|null, message: string|null}
      */
+    #[Override]
     abstract public function error(): array;
 
     /**

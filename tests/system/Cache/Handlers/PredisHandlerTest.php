@@ -17,6 +17,7 @@ use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -27,6 +28,7 @@ final class PredisHandlerTest extends AbstractHandlerTestCase
 {
     private Cache $config;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -35,6 +37,7 @@ final class PredisHandlerTest extends AbstractHandlerTestCase
         $this->handler = CacheFactory::getHandler($this->config, 'predis');
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         if (isset($this->handler)) {

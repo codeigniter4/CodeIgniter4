@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP;
 
 use Config\App;
+use Override;
 
 /**
  * Representation of an incoming, server-side HTTP request.
@@ -49,6 +50,7 @@ class Request extends OutgoingRequest implements RequestInterface
      *
      * @codeCoverageIgnore
      */
+    #[Override]
     public function setMethod(string $method)
     {
         $this->method = $method;
@@ -63,6 +65,7 @@ class Request extends OutgoingRequest implements RequestInterface
      *
      * @return static
      */
+    #[Override]
     public function withMethod($method)
     {
         $request = clone $this;
@@ -77,6 +80,7 @@ class Request extends OutgoingRequest implements RequestInterface
      *
      * @return URI
      */
+    #[Override]
     public function getUri()
     {
         return $this->uri;

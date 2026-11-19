@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\Live;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -28,6 +29,7 @@ final class ReconnectDuringTransactionTest extends CIUnitTestCase
 
     protected $migrate = false;
 
+    #[Override]
     protected function setUp(): void
     {
         // Dedicated connection so a forced wait_timeout cannot drop the shared one.

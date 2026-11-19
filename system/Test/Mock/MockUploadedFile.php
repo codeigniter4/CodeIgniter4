@@ -14,12 +14,14 @@ declare(strict_types=1);
 namespace CodeIgniter\Test\Mock;
 
 use CodeIgniter\HTTP\Files\UploadedFile;
+use Override;
 
 /**
  * An uploaded file for feature tests, using a regular local file as its source.
  */
 class MockUploadedFile extends UploadedFile
 {
+    #[Override]
     public function __construct(
         string $path,
         string $originalName,
@@ -31,11 +33,13 @@ class MockUploadedFile extends UploadedFile
         parent::__construct($path, $originalName, $mimeType ?? '', $size, $error, $clientPath);
     }
 
+    #[Override]
     public function isValid(): bool
     {
         return is_file($this->path) && $this->error === UPLOAD_ERR_OK;
     }
 
+    #[Override]
     protected function moveFile(string $destination): bool
     {
         return rename($this->path, $destination);

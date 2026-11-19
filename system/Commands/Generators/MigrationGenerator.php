@@ -20,6 +20,7 @@ use CodeIgniter\CLI\Input\Option;
 use Config\Database;
 use Config\Migrations;
 use Config\Session as SessionConfig;
+use Override;
 
 #[Command(name: 'make:migration', description: 'Generates a new migration file.', group: 'Generators')]
 #[GeneratorCommand(
@@ -30,6 +31,7 @@ use Config\Session as SessionConfig;
 )]
 class MigrationGenerator extends AbstractGeneratorCommand
 {
+    #[Override]
     protected function configure(): void
     {
         parent::configure();
@@ -56,11 +58,13 @@ class MigrationGenerator extends AbstractGeneratorCommand
             ));
     }
 
+    #[Override]
     protected function provideGeneratorOptions(): void
     {
         $this->addNamespaceOption()->addSuffixOption();
     }
 
+    #[Override]
     protected function initialize(array &$arguments, array &$options): void
     {
         if (! $this->hasUnboundOption('session', $options)) {
@@ -72,6 +76,7 @@ class MigrationGenerator extends AbstractGeneratorCommand
         $arguments[0] = sprintf('_create_%s_table', is_string($table) ? $table : 'ci_sessions');
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         if ($this->getValidatedOption('session') === true) {
@@ -95,6 +100,7 @@ class MigrationGenerator extends AbstractGeneratorCommand
         return $this->generateClass();
     }
 
+    #[Override]
     protected function getTemplateData(string $class): array
     {
         if ($this->getValidatedOption('session') !== true) {
@@ -112,6 +118,7 @@ class MigrationGenerator extends AbstractGeneratorCommand
         ];
     }
 
+    #[Override]
     protected function basename(string $filename): string
     {
         return gmdate(config(Migrations::class)->timestampFormat) . basename($filename);

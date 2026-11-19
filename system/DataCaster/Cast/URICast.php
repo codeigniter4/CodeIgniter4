@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\DataCaster\Cast;
 
 use CodeIgniter\HTTP\URI;
+use Override;
 
 /**
  * (PHP) [URI --> string] --> (DB driver) --> (DB column) string
@@ -23,6 +24,7 @@ use CodeIgniter\HTTP\URI;
  */
 class URICast extends BaseCast
 {
+    #[Override]
     public static function get(
         mixed $value,
         array $params = [],
@@ -35,6 +37,7 @@ class URICast extends BaseCast
         return new URI($value);
     }
 
+    #[Override]
     public static function set(
         mixed $value,
         array $params = [],

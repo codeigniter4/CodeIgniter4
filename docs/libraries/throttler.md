@@ -38,6 +38,7 @@ namespace App\Filters;
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Override;
 
 class Throttle implements FilterInterface
 {
@@ -49,6 +50,7 @@ class Throttle implements FilterInterface
      *
      * @return ResponseInterface|void
      */
+    #[Override]
     public function before(RequestInterface $request, $arguments = null)
     {
         $throttler = service('throttler');
@@ -67,6 +69,7 @@ class Throttle implements FilterInterface
      *
      * @return void
      */
+    #[Override]
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
         // ...

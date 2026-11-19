@@ -17,6 +17,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockFileLogger;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use org\bovigo\vfs\vfsStream;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Log\Handlers\TestHandler;
 
@@ -28,6 +29,7 @@ final class FileHandlerTest extends CIUnitTestCase
 {
     private string $start;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

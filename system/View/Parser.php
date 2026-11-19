@@ -14,6 +14,7 @@ namespace CodeIgniter\View;
 use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\View\Exceptions\ViewException;
 use Config\View as ViewConfig;
+use Override;
 use ParseError;
 use PhpToken;
 use Psr\Log\LoggerInterface;
@@ -120,6 +121,7 @@ class Parser extends View
      *                                           it might be needed to pass additional info
      *                                           to other template engines.
      */
+    #[Override]
     public function render(string $view, ?array $options = null, ?bool $saveData = null): string
     {
         $start = microtime(true);
@@ -184,6 +186,7 @@ class Parser extends View
      *                                           it might be needed to pass additional info
      *                                           to other template engines.
      */
+    #[Override]
     public function renderString(string $template, ?array $options = null, ?bool $saveData = null): string
     {
         $start = microtime(true);
@@ -214,6 +217,7 @@ class Parser extends View
      * @param 'attr'|'css'|'html'|'js'|'raw'|'url'|null $context The context to escape it for.
      *                                                           If 'raw', no escaping will happen.
      */
+    #[Override]
     public function setData(array $data = [], ?string $context = null): RendererInterface
     {
         if ($context !== null && $context !== '') {

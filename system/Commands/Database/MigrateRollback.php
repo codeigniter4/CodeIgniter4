@@ -18,6 +18,7 @@ use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Input\Option;
 use CodeIgniter\CLI\SignalTrait;
 use CodeIgniter\Database\MigrationRunner;
+use Override;
 use Throwable;
 
 /**
@@ -32,6 +33,7 @@ class MigrateRollback extends AbstractCommand
 {
     use SignalTrait;
 
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -49,6 +51,7 @@ class MigrateRollback extends AbstractCommand
             ));
     }
 
+    #[Override]
     protected function interact(array &$arguments, array &$options): void
     {
         if (! service('environment')->isProduction()) {
@@ -64,6 +67,7 @@ class MigrateRollback extends AbstractCommand
         }
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         if (service('environment')->isProduction() && $options['force'] === false) {

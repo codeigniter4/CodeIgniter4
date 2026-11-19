@@ -15,6 +15,7 @@ namespace CodeIgniter\Files;
 
 use CodeIgniter\Files\Exceptions\FileException;
 use CodeIgniter\Test\CIUnitTestCase;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -38,6 +39,7 @@ final class FileCollectionTest extends CIUnitTestCase
      * tests call static methods before
      * the constructor would load it.
      */
+    #[Override]
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
@@ -124,6 +126,7 @@ final class FileCollectionTest extends CIUnitTestCase
     public function testConstructorCallsDefine(): void
     {
         $collection = new class () extends FileCollection {
+            #[Override]
             protected function define(): void
             {
                 $this->add(SUPPORTPATH . 'Files/baker/banana.php');

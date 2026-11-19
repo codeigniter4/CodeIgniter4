@@ -23,10 +23,12 @@ namespace App\Commands;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
+use Override;
 
 #[Command(name: 'app:greet', description: 'Prints a greeting.', group: 'App')]
 class AppGreet extends AbstractCommand
 {
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $this->getOutput()->write('Hello!', 'green');
@@ -60,6 +62,7 @@ namespace App\Commands;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
+use Override;
 
 #[Command(
     name: 'app:deploy',
@@ -69,6 +72,7 @@ use CodeIgniter\CLI\Attributes\Command;
 )]
 class AppDeploy extends AbstractCommand
 {
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         // Reachable as `php spark app:deploy`, `php spark app:ship`, or `php spark deploy`.
@@ -89,6 +93,7 @@ namespace App\Commands;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
+use Override;
 
 #[Command(
     name: 'app:reindex',
@@ -98,6 +103,7 @@ use CodeIgniter\CLI\Attributes\Command;
 )]
 class AppReindex extends AbstractCommand
 {
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         // Not shown by `php spark list`, but `php spark app:reindex` still runs it.
@@ -134,6 +140,7 @@ namespace App\Commands;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
+use Override;
 
 #[Command(
     name: 'app:status',
@@ -143,6 +150,7 @@ use CodeIgniter\CLI\Attributes\Command;
 )]
 class AppStatus extends AbstractCommand
 {
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $this->getOutput()->write(json_encode(['status' => 'ok'], JSON_THROW_ON_ERROR));
@@ -181,10 +189,12 @@ namespace App\Commands;
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Input\Argument;
+use Override;
 
 #[Command(name: 'app:greet', description: 'Greets people.', group: 'App')]
 class AppGreet extends AbstractCommand
 {
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -208,6 +218,7 @@ class AppGreet extends AbstractCommand
             ));
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         // ...
@@ -238,10 +249,12 @@ namespace App\Commands;
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Input\Option;
+use Override;
 
 #[Command(name: 'app:publish', description: 'Publishes assets.', group: 'App')]
 class AppPublish extends AbstractCommand
 {
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -282,6 +295,7 @@ class AppPublish extends AbstractCommand
             ));
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         // ...
@@ -346,10 +360,12 @@ namespace App\Commands;
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Input\Option;
+use Override;
 
 #[Command(name: 'logs:clear', description: 'Clears logs.', group: 'Housekeeping')]
 class ClearLogs extends AbstractCommand
 {
+    #[Override]
     protected function configure(): void
     {
         $this->addOption(new Option(
@@ -359,6 +375,7 @@ class ClearLogs extends AbstractCommand
         ));
     }
 
+    #[Override]
     protected function interact(array &$arguments, array &$options): void
     {
         // hasUnboundOption() resolves --force, -f, and --no-force in one call,
@@ -376,6 +393,7 @@ class ClearLogs extends AbstractCommand
         $options['force'] = null;
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         if ($this->getValidatedOption('force') === false) {
@@ -406,10 +424,12 @@ use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Input\Argument;
 use CodeIgniter\CLI\PromptsForMissingInputInterface;
+use Override;
 
 #[Command(name: 'app:greet', description: 'Greets people.', group: 'App')]
 class AppGreet extends AbstractCommand implements PromptsForMissingInputInterface
 {
+    #[Override]
     protected function configure(): void
     {
         $this->addArgument(new Argument(
@@ -419,11 +439,13 @@ class AppGreet extends AbstractCommand implements PromptsForMissingInputInterfac
         ));
     }
 
+    #[Override]
     protected function getArgumentPromptLabels(): array
     {
         return ['name' => 'Who should be greeted?'];
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $this->getOutput()->write(sprintf('Hello, %s!', $arguments['name']), 'green');
@@ -477,16 +499,19 @@ namespace App\Commands;
 
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
+use Override;
 
 #[Command(name: 'dev:only', description: 'A dev only command', group: 'Dev')]
 class DevOnly extends AbstractCommand
 {
+    #[Override]
     protected function isAvailable(): bool
     {
         // Only allow this command in the development environment
         return ENVIRONMENT === 'development';
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         // ...
@@ -526,10 +551,12 @@ use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Input\Argument;
 use CodeIgniter\CLI\Input\Option;
+use Override;
 
 #[Command(name: 'app:demo', description: 'Demonstrates accessors.', group: 'App')]
 class AppDemo extends AbstractCommand
 {
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -537,6 +564,7 @@ class AppDemo extends AbstractCommand
             ->addOption(new Option(name: 'loud', negatable: true, default: false));
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         // Directly from the parameters:
@@ -572,10 +600,12 @@ namespace App\Commands;
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Table;
+use Override;
 
 #[Command(name: 'app:report', description: 'Prints a report.', group: 'App')]
 class AppReport extends AbstractCommand
 {
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $output = $this->getOutput();
@@ -621,10 +651,12 @@ use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Table;
 use CodeIgniter\CLI\Verbosity;
+use Override;
 
 #[Command(name: 'app:sync', description: 'Synchronizes the records.', group: 'App')]
 class AppSync extends AbstractCommand
 {
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $output = $this->getOutput();
@@ -708,10 +740,12 @@ namespace App\Commands;
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Input\Argument;
+use Override;
 
 #[Command(name: 'app:greet', description: 'Greets people.', group: 'App')]
 class AppGreet extends AbstractCommand
 {
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -722,6 +756,7 @@ class AppGreet extends AbstractCommand
             ->addUsage('app:greet "Bob the Builder"');
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         // ...
@@ -797,6 +832,7 @@ namespace App\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use Override;
 use Throwable;
 
 class Publish extends BaseCommand
@@ -811,6 +847,7 @@ class Publish extends BaseCommand
         '--dry-run' => 'Print the plan without writing anything.',
     ];
 
+    #[Override]
     public function run(array $params)
     {
         try {
@@ -853,11 +890,13 @@ use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Input\Argument;
 use CodeIgniter\CLI\Input\Option;
+use Override;
 use Throwable;
 
 #[Command(name: 'app:publish', description: 'Publishes something.', group: 'App')]
 class Publish extends AbstractCommand
 {
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -866,6 +905,7 @@ class Publish extends AbstractCommand
             ->addOption(new Option(name: 'dry-run', description: 'Print the plan without writing anything.'));
     }
 
+    #[Override]
     protected function interact(array &$arguments, array &$options): void
     {
         if ($arguments === []) {
@@ -873,6 +913,7 @@ class Publish extends AbstractCommand
         }
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         try {

@@ -16,9 +16,11 @@ namespace CodeIgniter\Filters\fixtures;
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Override;
 
 class Multiple1 implements FilterInterface
 {
+    #[Override]
     public function before(RequestInterface $request, $arguments = null)
     {
         $request->setHeader('x-csp', 'http://exampleMultipleCSP.com');
@@ -26,6 +28,7 @@ class Multiple1 implements FilterInterface
         return $request;
     }
 
+    #[Override]
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
         return null;

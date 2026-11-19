@@ -19,6 +19,7 @@ use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\HTTP\ResponsableInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Override;
 use Throwable;
 
 /**
@@ -68,6 +69,7 @@ class RedirectException extends RuntimeException implements ExceptionInterface, 
         parent::__construct($message, $code, $previous);
     }
 
+    #[Override]
     public function getResponse(): ResponseInterface
     {
         if (! $this->response instanceof ResponseInterface) {

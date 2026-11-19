@@ -16,6 +16,7 @@ namespace CodeIgniter\Commands\Housekeeping;
 use CodeIgniter\CLI\AbstractCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Input\Option;
+use Override;
 
 /**
  * Clears all log files.
@@ -23,6 +24,7 @@ use CodeIgniter\CLI\Input\Option;
 #[Command(name: 'logs:clear', description: 'Clears all log files.', group: 'Housekeeping')]
 class ClearLogs extends AbstractCommand
 {
+    #[Override]
     protected function configure(): void
     {
         $this->addOption(new Option(
@@ -32,6 +34,7 @@ class ClearLogs extends AbstractCommand
         ));
     }
 
+    #[Override]
     protected function interact(array &$arguments, array &$options): void
     {
         if ($this->hasUnboundOption('force', $options)) {
@@ -45,6 +48,7 @@ class ClearLogs extends AbstractCommand
         $options['force'] = null; // simulate the presence of the --force option
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $output = $this->getOutput();

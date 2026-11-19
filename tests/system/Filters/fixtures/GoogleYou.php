@@ -16,9 +16,11 @@ namespace CodeIgniter\Filters\fixtures;
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Override;
 
 class GoogleYou implements FilterInterface
 {
+    #[Override]
     public function before(RequestInterface $request, $arguments = null)
     {
         $response = service('response');
@@ -27,6 +29,7 @@ class GoogleYou implements FilterInterface
         return $response;
     }
 
+    #[Override]
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
         return null;

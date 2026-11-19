@@ -16,6 +16,7 @@ namespace CodeIgniter\Cache\Handlers;
 use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cache;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -26,6 +27,7 @@ final class DummyHandlerTest extends CIUnitTestCase
 {
     private DummyHandler $handler;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->handler = CacheFactory::getHandler(new Cache(), 'dummy');

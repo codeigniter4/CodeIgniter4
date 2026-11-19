@@ -15,6 +15,7 @@ namespace CodeIgniter\AutoReview;
 
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use JsonException;
+use Override;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
@@ -41,6 +42,7 @@ final class ComposerJsonTest extends TestCase
      */
     private array $starterComposer;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

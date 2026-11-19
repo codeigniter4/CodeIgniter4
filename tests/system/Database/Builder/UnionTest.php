@@ -17,6 +17,7 @@ use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\SQLSRV\Connection as SQLSRVConnection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -25,6 +26,7 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class UnionTest extends CIUnitTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

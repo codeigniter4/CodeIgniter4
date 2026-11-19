@@ -19,6 +19,7 @@ use CodeIgniter\Images\Handlers\BaseHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Images;
 use Imagick;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 
@@ -42,6 +43,7 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
     private string $path;
     private BaseHandler $handler;
 
+    #[Override]
     protected function setUp(): void
     {
         if (! extension_loaded('imagick')) {

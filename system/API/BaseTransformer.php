@@ -15,6 +15,7 @@ namespace CodeIgniter\API;
 
 use CodeIgniter\HTTP\IncomingRequest;
 use InvalidArgumentException;
+use Override;
 
 /**
  * Base class for transforming resources into arrays.
@@ -160,12 +161,14 @@ abstract class BaseTransformer implements TransformerInterface
      *
      * @param mixed $resource The resource being transformed
      */
+    #[Override]
     abstract public function toArray(mixed $resource): array;
 
     /**
      * Transforms the given resource into an array using
      * the $this->toArray().
      */
+    #[Override]
     public function transform(array|object|null $resource = null): array
     {
         // Store the resource so include methods can access it
@@ -190,6 +193,7 @@ abstract class BaseTransformer implements TransformerInterface
      * If the request's 'fields' query variable is set, only those fields will be included
      * in the transformed output.
      */
+    #[Override]
     public function transformMany(array $resources): array
     {
         return array_map($this->transform(...), $resources);

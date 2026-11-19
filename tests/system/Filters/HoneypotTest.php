@@ -22,6 +22,7 @@ use CodeIgniter\HTTP\Response;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Honeypot;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
@@ -45,6 +46,7 @@ final class HoneypotTest extends CIUnitTestCase
 
     private ?Response $response = null;
 
+    #[Override]
     #[WithoutErrorHandler]
     protected function setUp(): void
     {

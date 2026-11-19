@@ -13,16 +13,20 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Entity\Cast;
 
+use Override;
+
 /**
  * @extends BaseCast<list<string>, string>
  */
 class CSVCast extends BaseCast
 {
+    #[Override]
     public static function get($value, array $params = []): array
     {
         return explode(',', $value);
     }
 
+    #[Override]
     public static function set($value, array $params = []): string
     {
         return implode(',', $value);

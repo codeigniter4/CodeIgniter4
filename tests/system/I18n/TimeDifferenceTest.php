@@ -15,6 +15,7 @@ namespace CodeIgniter\I18n;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Locale;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -25,6 +26,7 @@ final class TimeDifferenceTest extends CIUnitTestCase
 {
     private string $currentLocale;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -35,6 +37,7 @@ final class TimeDifferenceTest extends CIUnitTestCase
         Locale::setDefault('en-US');
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

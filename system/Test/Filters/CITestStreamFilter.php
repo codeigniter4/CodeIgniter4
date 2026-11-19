@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Test\Filters;
 
+use Override;
 use php_user_filter;
 
 /**
@@ -51,6 +52,7 @@ class CITestStreamFilter extends php_user_filter
      *
      * @param-out int $consumed
      */
+    #[Override]
     public function filter($in, $out, &$consumed, $closing): int
     {
         while ($bucket = stream_bucket_make_writeable($in)) {

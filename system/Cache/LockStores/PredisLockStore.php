@@ -15,6 +15,7 @@ namespace CodeIgniter\Cache\LockStores;
 
 use CodeIgniter\Cache\Handlers\PredisHandler;
 use CodeIgniter\Cache\LockStoreInterface;
+use Override;
 use Predis\Client;
 use Predis\Response\Status;
 
@@ -24,6 +25,7 @@ class PredisLockStore implements LockStoreInterface
     {
     }
 
+    #[Override]
     public function acquireLock(string $key, string $owner, int $ttl): bool
     {
         $key    = PredisHandler::validateKey($key);
@@ -32,6 +34,7 @@ class PredisLockStore implements LockStoreInterface
         return $result instanceof Status && $result->getPayload() === 'OK';
     }
 
+    #[Override]
     public function releaseLock(string $key, string $owner): bool
     {
         $key = PredisHandler::validateKey($key);
@@ -47,6 +50,7 @@ class PredisLockStore implements LockStoreInterface
         return $this->redis->eval($script, 1, $key, $owner) === 1;
     }
 
+    #[Override]
     public function forceReleaseLock(string $key): bool
     {
         $key     = PredisHandler::validateKey($key);
@@ -55,6 +59,7 @@ class PredisLockStore implements LockStoreInterface
         return is_int($deleted) && $deleted >= 0;
     }
 
+    #[Override]
     public function refreshLock(string $key, string $owner, int $ttl): bool
     {
         $key = PredisHandler::validateKey($key);
@@ -70,6 +75,7 @@ class PredisLockStore implements LockStoreInterface
         return $this->redis->eval($script, 1, $key, $owner, (string) $ttl) === 1;
     }
 
+    #[Override]
     public function getLockOwner(string $key): ?string
     {
         $key   = PredisHandler::validateKey($key);

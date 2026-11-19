@@ -20,6 +20,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStreamFile;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Throwable;
 
@@ -43,6 +44,7 @@ final class GDHandlerTest extends CIUnitTestCase
     private string $path;
     private BaseHandler $handler;
 
+    #[Override]
     protected function setUp(): void
     {
         if (! extension_loaded('gd')) {

@@ -20,6 +20,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockInputOutput;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\Generators;
+use Override;
 use PHPUnit\Framework\Attributes\After;
 use PHPUnit\Framework\Attributes\Before;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -495,6 +496,7 @@ final class AbstractGeneratorCommandTest extends CIUnitTestCase
         return new #[Command(name: 'make:classandview', description: 'Generates a class and a view.', group: 'Fixtures')]
         #[GeneratorCommand(component: 'Widget', template: 'config.tpl.php')]
         class (new Commands()) extends AbstractGeneratorCommand {
+            #[Override]
             protected function execute(array $arguments, array $options): int
             {
                 return $this->generateClass() | $this->generateView(Commands::class);

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\AutoReview;
 
 use FilesystemIterator;
+use Override;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -31,6 +32,7 @@ final class RunRandomTestsTest extends TestCase
     private string $project;
     private string $timeoutCommand;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -63,6 +65,7 @@ final class RunRandomTestsTest extends TestCase
         chmod($this->project . '/vendor/bin/phpunit', 0755);
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         if (isset($this->project)) {

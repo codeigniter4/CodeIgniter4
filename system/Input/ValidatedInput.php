@@ -17,6 +17,7 @@ use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\I18n\Time;
 use DateTimeZone;
 use Exception;
+use Override;
 use ReflectionEnum;
 use UnitEnum;
 
@@ -150,6 +151,7 @@ class ValidatedInput extends InputData
         return $enum;
     }
 
+    #[Override]
     protected function invalidValue(string $key, string $type, mixed $default): never
     {
         throw new InvalidArgumentException(

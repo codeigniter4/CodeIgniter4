@@ -19,6 +19,7 @@ use CodeIgniter\Images\Exceptions\ImageException;
 use CodeIgniter\Images\Handlers\BaseHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -38,6 +39,7 @@ final class BaseHandlerTest extends CIUnitTestCase
     private string $start;
     private string $path;
 
+    #[Override]
     protected function setUp(): void
     {
         if (! extension_loaded('gd')) {

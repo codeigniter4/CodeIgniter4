@@ -27,6 +27,7 @@ use Config\App;
 use Config\Feature;
 use Config\Modules;
 use Config\Routing;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Filters\Customfilter;
@@ -41,6 +42,7 @@ final class RouterTest extends CIUnitTestCase
     private RouteCollection $collection;
     private IncomingRequest $request;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

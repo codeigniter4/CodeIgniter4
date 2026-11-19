@@ -20,6 +20,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use Config\Exceptions as ExceptionsConfig;
 use ErrorException;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -32,6 +33,7 @@ final class ExceptionsTest extends CIUnitTestCase
 
     private Exceptions $exception;
 
+    #[Override]
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
@@ -39,6 +41,7 @@ final class ExceptionsTest extends CIUnitTestCase
         service('superglobals')->unsetServer('CODEIGNITER_SCREAM_DEPRECATIONS');
     }
 
+    #[Override]
     public static function tearDownAfterClass(): void
     {
         parent::tearDownAfterClass();
@@ -46,6 +49,7 @@ final class ExceptionsTest extends CIUnitTestCase
         service('superglobals')->setServer('CODEIGNITER_SCREAM_DEPRECATIONS', '1');
     }
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

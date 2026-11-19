@@ -19,11 +19,13 @@ namespace App\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use Override;
 
 class MyCommand extends BaseCommand
 {
     // ...
 
+    #[Override]
     public function run(array $params)
     {
         // ...

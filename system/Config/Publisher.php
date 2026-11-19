@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Config;
 
+use Override;
+
 /**
  * Publisher Configuration
  *
@@ -38,6 +40,7 @@ class Publisher extends BaseConfig
     /**
      * Disables Registrars to prevent modules from altering the restrictions.
      */
+    #[Override]
     final protected function registerProperties(): void
     {
     }

@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Debug\Toolbar\Collectors;
 
+use Override;
+
 /**
  * Timers collector
  */
@@ -48,6 +50,7 @@ class Timers extends BaseCollector
      *
      * @return list<array{name: string, component: string, start: float, duration: float}>
      */
+    #[Override]
     protected function formatTimelineData(): array
     {
         $data = [];

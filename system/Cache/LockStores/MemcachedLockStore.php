@@ -16,6 +16,7 @@ namespace CodeIgniter\Cache\LockStores;
 use CodeIgniter\Cache\Handlers\MemcachedHandler;
 use CodeIgniter\Cache\LockStoreInterface;
 use Memcached;
+use Override;
 
 class MemcachedLockStore implements LockStoreInterface
 {
@@ -27,6 +28,7 @@ class MemcachedLockStore implements LockStoreInterface
     ) {
     }
 
+    #[Override]
     public function acquireLock(string $key, string $owner, int $ttl): bool
     {
         $key = MemcachedHandler::validateKey($key, $this->prefix);
@@ -34,6 +36,7 @@ class MemcachedLockStore implements LockStoreInterface
         return $this->memcached->add($key, $owner, $ttl);
     }
 
+    #[Override]
     public function releaseLock(string $key, string $owner): bool
     {
         $key = MemcachedHandler::validateKey($key, $this->prefix);
@@ -53,6 +56,7 @@ class MemcachedLockStore implements LockStoreInterface
         return $this->memcached->delete($key);
     }
 
+    #[Override]
     public function forceReleaseLock(string $key): bool
     {
         $key = MemcachedHandler::validateKey($key, $this->prefix);
@@ -64,6 +68,7 @@ class MemcachedLockStore implements LockStoreInterface
         return $this->memcached->getResultCode() === Memcached::RES_NOTFOUND;
     }
 
+    #[Override]
     public function refreshLock(string $key, string $owner, int $ttl): bool
     {
         $key = MemcachedHandler::validateKey($key, $this->prefix);
@@ -77,6 +82,7 @@ class MemcachedLockStore implements LockStoreInterface
         return $this->memcached->cas($cas, $key, $owner, $ttl);
     }
 
+    #[Override]
     public function getLockOwner(string $key): ?string
     {
         $key   = MemcachedHandler::validateKey($key, $this->prefix);

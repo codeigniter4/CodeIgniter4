@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Exceptions\InvalidArgumentException;
+use Override;
 
 /**
  * An HTTP message
@@ -53,6 +54,7 @@ class Message implements MessageInterface
      *
      * @return string|null
      */
+    #[Override]
     public function getBody()
     {
         return $this->body;
@@ -61,6 +63,7 @@ class Message implements MessageInterface
     /**
      * Determines whether a header exists.
      */
+    #[Override]
     public function hasHeader(string $name): bool
     {
         $origName = $this->getHeaderName($name);
@@ -79,6 +82,7 @@ class Message implements MessageInterface
      * comma concatenation. For such headers, use getHeader() instead
      * and supply your own delimiter when concatenating.
      */
+    #[Override]
     public function getHeaderLine(string $name): string
     {
         if ($this->hasMultipleHeaders($name)) {
@@ -100,6 +104,7 @@ class Message implements MessageInterface
     /**
      * Returns the HTTP Protocol Version.
      */
+    #[Override]
     public function getProtocolVersion(): string
     {
         return $this->protocolVersion ?? '1.1';

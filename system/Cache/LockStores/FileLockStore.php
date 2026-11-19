@@ -16,6 +16,7 @@ namespace CodeIgniter\Cache\LockStores;
 use CodeIgniter\Cache\Handlers\FileHandler;
 use CodeIgniter\Cache\LockStoreInterface;
 use CodeIgniter\I18n\Time;
+use Override;
 use Throwable;
 
 class FileLockStore implements LockStoreInterface
@@ -27,6 +28,7 @@ class FileLockStore implements LockStoreInterface
     ) {
     }
 
+    #[Override]
     public function acquireLock(string $key, string $owner, int $ttl): bool
     {
         return $this->withLockFile($key, static function ($handle) use ($owner, $ttl): bool {
@@ -41,6 +43,7 @@ class FileLockStore implements LockStoreInterface
         });
     }
 
+    #[Override]
     public function releaseLock(string $key, string $owner): bool
     {
         return $this->withLockFile($key, static function ($handle) use ($owner): bool {
@@ -54,11 +57,13 @@ class FileLockStore implements LockStoreInterface
         });
     }
 
+    #[Override]
     public function forceReleaseLock(string $key): bool
     {
         return $this->withLockFile($key, static fn ($handle): bool => self::clearLockFile($handle));
     }
 
+    #[Override]
     public function refreshLock(string $key, string $owner, int $ttl): bool
     {
         return $this->withLockFile($key, static function ($handle) use ($owner, $ttl): bool {
@@ -73,6 +78,7 @@ class FileLockStore implements LockStoreInterface
         });
     }
 
+    #[Override]
     public function getLockOwner(string $key): ?string
     {
         $owner = null;

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Log\Handlers;
 
 use CodeIgniter\Log\Exceptions\LogException;
+use Override;
 
 /**
  * Log handler that writes to PHP's `error_log()`
@@ -71,6 +72,7 @@ class ErrorlogHandler extends BaseHandler
      * @param string               $message
      * @param array<string, mixed> $context
      */
+    #[Override]
     public function handle($level, $message, array $context = []): bool
     {
         if ($context !== []) {

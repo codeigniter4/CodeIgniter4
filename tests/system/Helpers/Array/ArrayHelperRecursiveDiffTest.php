@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Helpers\Array;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -27,6 +28,7 @@ final class ArrayHelperRecursiveDiffTest extends CIUnitTestCase
      */
     private array $compareWith;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->compareWith = [

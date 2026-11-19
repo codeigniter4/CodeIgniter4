@@ -23,6 +23,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\Cache;
 use Config\Services;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Cache\IsolatedCacheTrait;
 
@@ -37,6 +38,7 @@ final class ClearCacheTest extends CIUnitTestCase
 
     private Cache $config;
 
+    #[Override]
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
@@ -44,6 +46,7 @@ final class ClearCacheTest extends CIUnitTestCase
         self::setUpBeforeClassIsolatedCache();
     }
 
+    #[Override]
     public static function tearDownAfterClass(): void
     {
         self::tearDownAfterClassIsolatedCache();
@@ -51,6 +54,7 @@ final class ClearCacheTest extends CIUnitTestCase
         parent::tearDownAfterClass();
     }
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -74,6 +78,7 @@ final class ClearCacheTest extends CIUnitTestCase
         Services::injectMock('cache', $handler);
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         $this->config->handler = 'file';

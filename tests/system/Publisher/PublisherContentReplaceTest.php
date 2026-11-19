@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Publisher;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -25,6 +26,7 @@ final class PublisherContentReplaceTest extends CIUnitTestCase
     private string $file;
     private Publisher $publisher;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -35,6 +37,7 @@ final class PublisherContentReplaceTest extends CIUnitTestCase
         $this->publisher = new Publisher(__DIR__, __DIR__);
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

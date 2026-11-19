@@ -16,6 +16,7 @@ namespace CodeIgniter\Commands\Generators;
 use CodeIgniter\CLI\AbstractGeneratorCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Attributes\GeneratorCommand;
+use Override;
 
 #[Command(name: 'make:test', description: 'Generates a new test file.', group: 'Generators')]
 #[GeneratorCommand(
@@ -27,11 +28,13 @@ class TestGenerator extends AbstractGeneratorCommand
 {
     private const DEFAULT_NAMESPACE = 'Tests';
 
+    #[Override]
     protected function provideGeneratorOptions(): void
     {
         $this->addNamespaceOption(self::DEFAULT_NAMESPACE)->addForceOption();
     }
 
+    #[Override]
     protected function initialize(array &$arguments, array &$options): void
     {
         $autoloader = service('autoloader');
@@ -39,11 +42,13 @@ class TestGenerator extends AbstractGeneratorCommand
         $autoloader->addNamespace(self::DEFAULT_NAMESPACE, ROOTPATH . 'tests');
     }
 
+    #[Override]
     protected function shouldAppendSuffix(): bool
     {
         return true;
     }
 
+    #[Override]
     protected function getNamespace(): string
     {
         if ($this->hasUnboundOption('namespace')) {
@@ -69,6 +74,7 @@ class TestGenerator extends AbstractGeneratorCommand
         return self::DEFAULT_NAMESPACE;
     }
 
+    #[Override]
     protected function getBasePath(string $namespace): ?string
     {
         foreach (service('autoloader')->getNamespace($namespace) as $candidate) {

@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\MySQLi;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\RawSql;
+use Override;
 
 /**
  * Builder for MySQLi
@@ -51,6 +52,7 @@ class Builder extends BaseBuilder
      *
      * Note: This is only used (and overridden) by MySQL.
      */
+    #[Override]
     protected function _fromTables(): string
     {
         if ($this->QBJoin !== [] && count($this->QBFrom) > 1) {
@@ -63,6 +65,7 @@ class Builder extends BaseBuilder
     /**
      * Compile the SELECT lock clause.
      */
+    #[Override]
     protected function compileSelectLock(): string
     {
         if ($this->QBSelectLock === null) {
@@ -95,6 +98,7 @@ class Builder extends BaseBuilder
     /**
      * Generates a platform-specific batch update string from the supplied data
      */
+    #[Override]
     protected function _updateBatch(string $table, array $keys, array $values): string
     {
         $sql = $this->QBOptions['sql'] ?? '';

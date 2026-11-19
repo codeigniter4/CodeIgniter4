@@ -15,6 +15,7 @@ namespace CodeIgniter\Database\Postgre;
 
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Entity\Entity;
+use Override;
 use PgSql\Connection as PgSqlConnection;
 use PgSql\Result as PgSqlResult;
 use stdClass;
@@ -26,11 +27,13 @@ use stdClass;
  */
 class Result extends BaseResult
 {
+    #[Override]
     public function getFieldCount(): int
     {
         return pg_num_fields($this->resultID);
     }
 
+    #[Override]
     public function getFieldNames(): array
     {
         $fieldNames = [];
@@ -42,6 +45,7 @@ class Result extends BaseResult
         return $fieldNames;
     }
 
+    #[Override]
     public function getFieldData(): array
     {
         $retVal = [];
@@ -60,6 +64,7 @@ class Result extends BaseResult
         return $retVal;
     }
 
+    #[Override]
     public function freeResult()
     {
         if ($this->resultID !== false) {
@@ -68,6 +73,7 @@ class Result extends BaseResult
         }
     }
 
+    #[Override]
     public function dataSeek(int $n = 0)
     {
         return pg_result_seek($this->resultID, $n);
@@ -76,11 +82,13 @@ class Result extends BaseResult
     /**
      * @return array<string, mixed>|false
      */
+    #[Override]
     protected function fetchAssoc()
     {
         return pg_fetch_assoc($this->resultID);
     }
 
+    #[Override]
     protected function fetchObject(string $className = stdClass::class)
     {
         if (is_subclass_of($className, Entity::class)) {
@@ -92,6 +100,7 @@ class Result extends BaseResult
         return pg_fetch_object($this->resultID, null, $className);
     }
 
+    #[Override]
     public function getNumRows(): int
     {
         if (! is_int($this->numRows)) {

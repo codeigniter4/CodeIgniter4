@@ -18,6 +18,7 @@ use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Exceptions\ViewException;
 use Config\View as ViewConfig;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -30,6 +31,7 @@ final class ViewTest extends CIUnitTestCase
     private string $viewsDir;
     private ViewConfig $config;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

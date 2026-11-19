@@ -22,6 +22,7 @@ use Config\App;
 use ErrorException;
 use FilesystemIterator;
 use Locale;
+use Override;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
@@ -38,6 +39,7 @@ class LocalizationSync extends AbstractCommand
 {
     private string $languagePath;
 
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -55,6 +57,7 @@ class LocalizationSync extends AbstractCommand
             ));
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $locale = $options['locale'];

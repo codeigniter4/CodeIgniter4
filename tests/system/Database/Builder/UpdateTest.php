@@ -19,6 +19,7 @@ use CodeIgniter\Database\Postgre\Builder as PostgreBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 use CodeIgniter\Test\Mock\MockQuery;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -27,6 +28,7 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class UpdateTest extends CIUnitTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -472,6 +474,7 @@ final class UpdateTest extends CIUnitTestCase
     public function testUpdateBatchPostgreDoesNotCastEnumAndArrayColumns(): void
     {
         $db = new class (['DBDriver' => 'Postgre']) extends MockConnection {
+            #[Override]
             protected function _fieldData(string $table): array
             {
                 return [
@@ -506,6 +509,7 @@ final class UpdateTest extends CIUnitTestCase
     public function testUpdateBatchPostgreDoesNotCastSourceSharedByColumnsOfDifferentTypes(): void
     {
         $db = new class (['DBDriver' => 'Postgre']) extends MockConnection {
+            #[Override]
             protected function _fieldData(string $table): array
             {
                 return [

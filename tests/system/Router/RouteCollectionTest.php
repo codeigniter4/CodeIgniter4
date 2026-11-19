@@ -24,6 +24,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\Feature;
 use Config\Modules;
 use Config\Routing;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Controllers\Hello;
@@ -35,6 +36,7 @@ use Tests\Support\Router\RouteCollectionSubclass;
 #[Group('Others')]
 final class RouteCollectionTest extends CIUnitTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

@@ -18,6 +18,7 @@ use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Input\Argument;
 use CodeIgniter\CLI\Input\Option;
 use CodeIgniter\CLI\Output;
+use Override;
 
 /**
  * Displays the basic usage information for a given command.
@@ -25,6 +26,7 @@ use CodeIgniter\CLI\Output;
 #[Command(name: 'help', description: 'Displays basic usage information.', group: 'CodeIgniter')]
 class Help extends AbstractCommand
 {
+    #[Override]
     protected function configure(): void
     {
         $this->addArgument(new Argument(
@@ -34,6 +36,7 @@ class Help extends AbstractCommand
         ));
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $command = $arguments['command_name'];

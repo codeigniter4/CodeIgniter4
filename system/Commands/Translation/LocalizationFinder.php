@@ -22,6 +22,7 @@ use CodeIgniter\CLI\Verbosity;
 use CodeIgniter\Helpers\Array\ArrayHelper;
 use Config\App;
 use Locale;
+use Override;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
@@ -38,6 +39,7 @@ class LocalizationFinder extends AbstractCommand
 {
     private string $languagePath;
 
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -59,6 +61,7 @@ class LocalizationFinder extends AbstractCommand
             ));
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $locale = $options['locale'];

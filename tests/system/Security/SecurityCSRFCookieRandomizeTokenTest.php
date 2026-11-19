@@ -23,6 +23,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
 use CodeIgniter\Test\Mock\MockSecurity;
 use Config\Security as SecurityConfig;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -34,6 +35,7 @@ final class SecurityCSRFCookieRandomizeTokenTest extends CIUnitTestCase
     private const CSRF_PROTECTION_HASH  = '8b9218a55906f9dcc1dc263dce7f005a';
     private const CSRF_RANDOMIZED_TOKEN = '8bc70b67c91494e815c7d2219c1ae0ab005513c290126d34d41bf41c5265e0f1';
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -51,6 +53,7 @@ final class SecurityCSRFCookieRandomizeTokenTest extends CIUnitTestCase
         $this->resetServices();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

@@ -19,6 +19,7 @@ use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use CodeIgniter\Test\StreamFilterTrait;
+use Override;
 use PHPUnit\Framework\Attributes\After;
 use PHPUnit\Framework\Attributes\Before;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -42,6 +43,7 @@ final class BaseCommandTest extends CIUnitTestCase
         CLI::reset();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();
@@ -76,6 +78,7 @@ final class BaseCommandTest extends CIUnitTestCase
             protected $group = 'Fixtures';
             protected $name  = 'legacy:bridge';
 
+            #[Override]
             public function run(array $params)
             {
                 return $this->call('app:about', ['hello', 'foo' => 'provided', 'quux' => null]);

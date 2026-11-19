@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\AutoReview;
 
+use Override;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -27,6 +28,7 @@ final class CreateNewChangelogTest extends TestCase
 {
     private string $currentVersion;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

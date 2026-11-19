@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\SQLSRV;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\TableName;
+use Override;
 use stdClass;
 
 /**
@@ -92,6 +93,7 @@ class Connection extends BaseConnection
     /**
      * Checks whether the native database error represents a unique constraint violation.
      */
+    #[Override]
     protected function isUniqueConstraintViolation(int|string $code, string $message): bool
     {
         $vendorCode = $this->getVendorErrorCode($code);
@@ -120,6 +122,7 @@ class Connection extends BaseConnection
     /**
      * Checks whether the native database error represents a NOT NULL constraint violation.
      */
+    #[Override]
     protected function isNotNullConstraintViolation(int|string $code, string $message): bool
     {
         return $this->getVendorErrorCode($code) === 515
@@ -129,6 +132,7 @@ class Connection extends BaseConnection
     /**
      * Checks whether the native database error represents a constraint violation.
      */
+    #[Override]
     protected function isConstraintViolation(int|string $code, string $message): bool
     {
         return $this->getSQLState($code) === '23000'
@@ -138,6 +142,7 @@ class Connection extends BaseConnection
     /**
      * Checks whether the native database code represents a retryable transaction failure.
      */
+    #[Override]
     protected function isRetryableTransactionErrorCode(int|string $code): bool
     {
         $vendorCode = $this->getVendorErrorCode($code);
@@ -185,6 +190,7 @@ class Connection extends BaseConnection
      *
      * @throws DatabaseException
      */
+    #[Override]
     public function connect(bool $persistent = false)
     {
         $charset = in_array(strtolower($this->charset), ['utf-8', 'utf8'], true) ? 'UTF-8' : SQLSRV_ENC_CHAR;
@@ -248,6 +254,7 @@ class Connection extends BaseConnection
         return implode("\n", $errors);
     }
 
+    #[Override]
     protected function _close()
     {
         sqlsrv_close($this->connID);
@@ -256,6 +263,7 @@ class Connection extends BaseConnection
     /**
      * Platform-dependant string escape
      */
+    #[Override]
     protected function _escapeString(string $str): string
     {
         return str_replace("'", "''", remove_invisible_characters($str, false));
@@ -264,11 +272,13 @@ class Connection extends BaseConnection
     /**
      * Insert ID
      */
+    #[Override]
     public function insertID(): int
     {
         return (int) ($this->query('SELECT SCOPE_IDENTITY() AS insert_id')->getRow()->insert_id ?? 0);
     }
 
+    #[Override]
     protected function _listTables(bool $prefixLimit = false, ?string $tableName = null): string
     {
         $sql = 'SELECT [TABLE_NAME] AS "name"'
@@ -288,6 +298,7 @@ class Connection extends BaseConnection
         return $sql;
     }
 
+    #[Override]
     protected function _listColumns($table = ''): string
     {
         if ($table instanceof TableName) {
@@ -305,6 +316,7 @@ class Connection extends BaseConnection
     /**
      * @throws DatabaseException
      */
+    #[Override]
     protected function _indexData(string $table): array
     {
         $sql = 'EXEC sp_helpindex ' . $this->escape($this->schema . '.' . $table);
@@ -338,6 +350,7 @@ class Connection extends BaseConnection
     /**
      * @throws DatabaseException
      */
+    #[Override]
     protected function _foreignKeyData(string $table): array
     {
         $sql = 'SELECT
@@ -382,6 +395,7 @@ class Connection extends BaseConnection
      *
      * @return string
      */
+    #[Override]
     protected function _disableForeignKeyChecks()
     {
         return 'EXEC sp_MSforeachtable "ALTER TABLE ? NOCHECK CONSTRAINT ALL"';
@@ -392,6 +406,7 @@ class Connection extends BaseConnection
      *
      * @return string
      */
+    #[Override]
     protected function _enableForeignKeyChecks()
     {
         return 'EXEC sp_MSforeachtable "ALTER TABLE ? WITH CHECK CHECK CONSTRAINT ALL"';
@@ -400,6 +415,7 @@ class Connection extends BaseConnection
     /**
      * @throws DatabaseException
      */
+    #[Override]
     protected function _fieldData(string $table): array
     {
         $parts  = explode('.', $table);
@@ -474,16 +490,19 @@ class Connection extends BaseConnection
         return $default;
     }
 
+    #[Override]
     protected function _transBegin(): bool
     {
         return sqlsrv_begin_transaction($this->connID);
     }
 
+    #[Override]
     protected function _transCommit(): bool
     {
         return sqlsrv_commit($this->connID);
     }
 
+    #[Override]
     protected function _transRollback(): bool
     {
         return sqlsrv_rollback($this->connID);
@@ -496,6 +515,7 @@ class Connection extends BaseConnection
      *
      * @return array{code: int|string|null, message: string|null}
      */
+    #[Override]
     public function error(): array
     {
         $error = [
@@ -526,6 +546,7 @@ class Connection extends BaseConnection
     /**
      * Returns the total number of rows affected by this query.
      */
+    #[Override]
     public function affectedRows(): int
     {
         if ($this->resultID === false) {
@@ -540,6 +561,7 @@ class Connection extends BaseConnection
      *
      * @return bool
      */
+    #[Override]
     public function setDatabase(?string $databaseName = null)
     {
         if ($databaseName === null || $databaseName === '') {
@@ -565,6 +587,7 @@ class Connection extends BaseConnection
      *
      * @return false|resource
      */
+    #[Override]
     protected function execute(string $sql)
     {
         $stmt = ($this->scrollable === false || $this->isWriteType($sql))
@@ -599,6 +622,7 @@ class Connection extends BaseConnection
     /**
      * The name of the platform in use (MySQLi, mssql, etc)
      */
+    #[Override]
     public function getPlatform(): string
     {
         return $this->DBDriver;
@@ -607,6 +631,7 @@ class Connection extends BaseConnection
     /**
      * Returns a string containing the version of the database being used.
      */
+    #[Override]
     public function getVersion(): string
     {
         $info = [];
@@ -632,6 +657,7 @@ class Connection extends BaseConnection
      *
      * @param string $sql
      */
+    #[Override]
     public function isWriteType($sql): bool
     {
         if (preg_match('/^\s*"?(EXEC\s*sp_rename)\s/i', $sql)) {

@@ -15,6 +15,7 @@ namespace CodeIgniter\Autoloader;
 
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Cache\FactoriesCache\FileVarExportHandler;
+use Override;
 
 /**
  * FileLocator with Cache
@@ -87,6 +88,7 @@ final class FileLocatorCached implements FileLocatorInterface
         $this->cacheHandler->delete($this->cacheKey);
     }
 
+    #[Override]
     public function findQualifiedNameFromPath(string $path): false|string
     {
         if (isset($this->cache['findQualifiedNameFromPath'][$path])) {
@@ -101,6 +103,7 @@ final class FileLocatorCached implements FileLocatorInterface
         return $classname;
     }
 
+    #[Override]
     public function getClassname(string $file): string
     {
         if (isset($this->cache['getClassname'][$file])) {
@@ -118,6 +121,7 @@ final class FileLocatorCached implements FileLocatorInterface
     /**
      * @return list<non-empty-string>
      */
+    #[Override]
     public function search(string $path, string $ext = 'php', bool $prioritizeApp = true): array
     {
         if (isset($this->cache['search'][$path][$ext][$prioritizeApp])) {
@@ -132,6 +136,7 @@ final class FileLocatorCached implements FileLocatorInterface
         return $foundPaths;
     }
 
+    #[Override]
     public function listFiles(string $path): array
     {
         if (isset($this->cache['listFiles'][$path])) {
@@ -146,6 +151,7 @@ final class FileLocatorCached implements FileLocatorInterface
         return $files;
     }
 
+    #[Override]
     public function listNamespaceFiles(string $prefix, string $path): array
     {
         if (isset($this->cache['listNamespaceFiles'][$prefix][$path])) {
@@ -160,6 +166,7 @@ final class FileLocatorCached implements FileLocatorInterface
         return $files;
     }
 
+    #[Override]
     public function locateFile(string $file, ?string $folder = null, string $ext = 'php'): false|string
     {
         $folderKey = $folder ?? '';

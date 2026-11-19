@@ -207,12 +207,14 @@ To take advantage of the full features of controlled Cells, you should use `$thi
 namespace App\Cells;
 
 use CodeIgniter\View\Cells\Cell;
+use Override;
 
 class AlertMessageCell extends Cell
 {
     public $type;
     public $message;
 
+    #[Override]
     public function render(): string
     {
         return $this->view('my/custom/view', ['extra' => 'data']);

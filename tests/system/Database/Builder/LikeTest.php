@@ -18,6 +18,7 @@ use CodeIgniter\Database\RawSql;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -29,6 +30,7 @@ final class LikeTest extends CIUnitTestCase
 {
     protected $db;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

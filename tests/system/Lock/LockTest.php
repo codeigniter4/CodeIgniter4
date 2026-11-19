@@ -23,6 +23,7 @@ use CodeIgniter\I18n\Time;
 use CodeIgniter\Lock\Exceptions\LockException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cache;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -34,6 +35,7 @@ final class LockTest extends CIUnitTestCase
     private Cache $config;
     private LockManager $locks;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -50,6 +52,7 @@ final class LockTest extends CIUnitTestCase
         $this->locks = new LockManager(CacheFactory::getHandler($this->config, 'file'));
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();
@@ -205,6 +208,7 @@ final class LockTest extends CIUnitTestCase
     public function testUnsupportedLockStoreProviderThrows(): void
     {
         $cache = new class () extends DummyHandler implements LockStoreProviderInterface {
+            #[Override]
             public function lockStore(): LockStoreInterface
             {
                 throw CacheException::forUnsupportedLockStore();

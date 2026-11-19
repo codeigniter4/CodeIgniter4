@@ -556,10 +556,12 @@ namespace App\Models\Cast;
 
 use CodeIgniter\DataCaster\Cast\BaseCast;
 use InvalidArgumentException;
+use Override;
 
 // The class must inherit the CodeIgniter\DataCaster\Cast\BaseCast class
 class CastBase64 extends BaseCast
 {
+    #[Override]
     public static function get(
         mixed $value,
         array $params = [],
@@ -578,6 +580,7 @@ class CastBase64 extends BaseCast
         return $decoded;
     }
 
+    #[Override]
     public static function set(
         mixed $value,
         array $params = [],
@@ -601,9 +604,11 @@ namespace App\Models\Cast;
 
 use CodeIgniter\DataCaster\Cast\BaseCast;
 use InvalidArgumentException;
+use Override;
 
 class CastBase64 extends BaseCast
 {
+    #[Override]
     public static function get(
         mixed $value,
         array $params = [],
@@ -690,9 +695,11 @@ class MyModel extends Model
 namespace App\Models\Cast;
 
 use CodeIgniter\DataCaster\Cast\BaseCast;
+use Override;
 
 class SomeHandler extends BaseCast
 {
+    #[Override]
     public static function get(
         mixed $value,
         array $params = [],

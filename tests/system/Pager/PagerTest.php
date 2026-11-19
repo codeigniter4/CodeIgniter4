@@ -24,6 +24,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\Pager as PagerConfig;
 use Config\Services;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -37,6 +38,7 @@ final class PagerTest extends CIUnitTestCase
     private ?Pager $pager        = null;
     private ?PagerConfig $config = null;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

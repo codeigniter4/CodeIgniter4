@@ -15,6 +15,7 @@ namespace CodeIgniter\Database\SQLSRV;
 
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Entity\Entity;
+use Override;
 use stdClass;
 
 /**
@@ -24,11 +25,13 @@ use stdClass;
  */
 class Result extends BaseResult
 {
+    #[Override]
     public function getFieldCount(): int
     {
         return @sqlsrv_num_fields($this->resultID);
     }
 
+    #[Override]
     public function getFieldNames(): array
     {
         $fieldNames = [];
@@ -40,6 +43,7 @@ class Result extends BaseResult
         return $fieldNames;
     }
 
+    #[Override]
     public function getFieldData(): array
     {
         static $dataTypes = [
@@ -94,6 +98,7 @@ class Result extends BaseResult
         return $retVal;
     }
 
+    #[Override]
     public function freeResult()
     {
         if (is_resource($this->resultID)) {
@@ -102,6 +107,7 @@ class Result extends BaseResult
         }
     }
 
+    #[Override]
     public function dataSeek(int $n = 0)
     {
         if ($n > 0) {
@@ -115,11 +121,13 @@ class Result extends BaseResult
         return true;
     }
 
+    #[Override]
     protected function fetchAssoc()
     {
         return sqlsrv_fetch_array($this->resultID, SQLSRV_FETCH_ASSOC);
     }
 
+    #[Override]
     protected function fetchObject(string $className = stdClass::class)
     {
         if (is_subclass_of($className, Entity::class)) {
@@ -131,6 +139,7 @@ class Result extends BaseResult
         return sqlsrv_fetch_object($this->resultID, $className);
     }
 
+    #[Override]
     public function getNumRows(): int
     {
         if (! is_int($this->numRows)) {

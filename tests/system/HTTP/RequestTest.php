@@ -18,6 +18,7 @@ use CodeIgniter\Config\Services;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -31,6 +32,7 @@ final class RequestTest extends CIUnitTestCase
 {
     private Request $request;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

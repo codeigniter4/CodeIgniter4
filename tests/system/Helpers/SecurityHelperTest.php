@@ -16,6 +16,7 @@ namespace CodeIgniter\Helpers;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockSecurity;
 use Config\Security as SecurityConfig;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Config\Services;
@@ -26,6 +27,7 @@ use Tests\Support\Config\Services;
 #[Group('Others')]
 final class SecurityHelperTest extends CIUnitTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

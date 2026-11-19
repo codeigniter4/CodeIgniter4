@@ -20,6 +20,7 @@ use CodeIgniter\CLI\Input\Option;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Database\SQLite3\Connection as SQLite3Connection;
 use Config\Database;
+use Override;
 use Throwable;
 
 /**
@@ -33,6 +34,7 @@ class CreateDatabase extends AbstractCommand
      */
     private const VALID_EXTENSIONS = ['db', 'sqlite'];
 
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -49,6 +51,7 @@ class CreateDatabase extends AbstractCommand
             ));
     }
 
+    #[Override]
     protected function interact(array &$arguments, array &$options): void
     {
         if ($arguments === []) {
@@ -65,6 +68,7 @@ class CreateDatabase extends AbstractCommand
         }
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $name = $arguments['db_name'];

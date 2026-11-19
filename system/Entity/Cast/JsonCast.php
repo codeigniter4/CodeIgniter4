@@ -15,6 +15,7 @@ namespace CodeIgniter\Entity\Cast;
 
 use CodeIgniter\Entity\Exceptions\CastException;
 use JsonException;
+use Override;
 use stdClass;
 
 /**
@@ -22,6 +23,7 @@ use stdClass;
  */
 class JsonCast extends BaseCast
 {
+    #[Override]
     public static function get($value, array $params = [])
     {
         $associative = in_array('array', $params, true);
@@ -46,6 +48,7 @@ class JsonCast extends BaseCast
         return $tmp;
     }
 
+    #[Override]
     public static function set($value, array $params = []): string
     {
         if (function_exists('json_encode')) {

@@ -32,6 +32,7 @@ use Config\Filters as FiltersConfig;
 use Config\Modules;
 use Config\Routing;
 use Kint\Renderer\RichRenderer;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -51,6 +52,7 @@ final class CodeIgniterTest extends CIUnitTestCase
 {
     private CodeIgniter $codeigniter;
 
+    #[Override]
     #[WithoutErrorHandler]
     protected function setUp(): void
     {
@@ -68,6 +70,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $response->pretend();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();
@@ -1363,6 +1366,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $codeigniter = new class ($config) extends MockCodeIgniter {
             public int $gatherOutputCalls = 0;
 
+            #[Override]
             protected function gatherOutput($returned = null): void
             {
                 $this->gatherOutputCalls++;

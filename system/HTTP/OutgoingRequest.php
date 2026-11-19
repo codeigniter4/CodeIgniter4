@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use Override;
+
 /**
  * Representation of an outgoing, client-side request.
  */
@@ -71,6 +73,7 @@ class OutgoingRequest extends Message implements OutgoingRequestInterface
      *
      * @return string Returns the request method (always uppercase)
      */
+    #[Override]
     public function getMethod(): string
     {
         return $this->method;
@@ -97,6 +100,7 @@ class OutgoingRequest extends Message implements OutgoingRequestInterface
      *
      * @return static
      */
+    #[Override]
     public function withMethod($method)
     {
         $request         = clone $this;
@@ -110,6 +114,7 @@ class OutgoingRequest extends Message implements OutgoingRequestInterface
      *
      * @return URI
      */
+    #[Override]
     public function getUri()
     {
         return $this->uri;
@@ -123,6 +128,7 @@ class OutgoingRequest extends Message implements OutgoingRequestInterface
      *
      * @return static
      */
+    #[Override]
     public function withUri(URI $uri, $preserveHost = false)
     {
         $request      = clone $this;

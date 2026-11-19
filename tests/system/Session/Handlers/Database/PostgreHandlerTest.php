@@ -15,6 +15,7 @@ namespace CodeIgniter\Session\Handlers\Database;
 
 use Config\Database as DatabaseConfig;
 use Config\Session as SessionConfig;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -23,6 +24,7 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('DatabaseLive')]
 final class PostgreHandlerTest extends AbstractHandlerTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -32,6 +34,7 @@ final class PostgreHandlerTest extends AbstractHandlerTestCase
         }
     }
 
+    #[Override]
     protected function getInstance($options = []): PostgreHandler
     {
         $defaults = [

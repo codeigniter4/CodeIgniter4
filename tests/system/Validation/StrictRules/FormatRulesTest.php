@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Validation\StrictRules;
 
 use CodeIgniter\Validation\FormatRulesTest as TraditionalFormatRulesTest;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Validation\TestRules;
 
@@ -44,6 +45,7 @@ final class FormatRulesTest extends TraditionalFormatRulesTest
         ],
     ];
 
+    #[Override]
     public static function provideAlphaSpace(): iterable
     {
         yield from [
@@ -74,6 +76,7 @@ final class FormatRulesTest extends TraditionalFormatRulesTest
         ];
     }
 
+    #[Override]
     public static function provideInvalidIntegerType(): iterable
     {
         yield 'array with int' => [

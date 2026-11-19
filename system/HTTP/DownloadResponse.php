@@ -16,6 +16,7 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\Exceptions\DownloadException;
 use CodeIgniter\Files\File;
 use Config\Mimes;
+use Override;
 
 /**
  * HTTP response when a download is requested.
@@ -201,6 +202,7 @@ class DownloadResponse extends Response implements NonBufferedResponseInterface
      *
      * @throws DownloadException
      */
+    #[Override]
     public function setStatusCode(int $code, string $reason = '')
     {
         throw DownloadException::forCannotSetStatusCode($code, $reason);
@@ -212,6 +214,7 @@ class DownloadResponse extends Response implements NonBufferedResponseInterface
      *
      * @return $this
      */
+    #[Override]
     public function setContentType(string $mime, string $charset = 'UTF-8')
     {
         parent::setContentType($mime, $charset);
@@ -227,6 +230,7 @@ class DownloadResponse extends Response implements NonBufferedResponseInterface
      * Sets the appropriate headers to ensure this response
      * is not cached by the browsers.
      */
+    #[Override]
     public function noCache(): self
     {
         $this->removeHeader('Cache-Control');
@@ -242,6 +246,7 @@ class DownloadResponse extends Response implements NonBufferedResponseInterface
      *
      * @todo Do downloads need CSP or Cookies? Compare with ResponseTrait::send()
      */
+    #[Override]
     public function send()
     {
         // Turn off output buffering completely, even if php.ini output_buffering is not off
@@ -284,6 +289,7 @@ class DownloadResponse extends Response implements NonBufferedResponseInterface
      *
      * @throws DownloadException
      */
+    #[Override]
     public function sendBody()
     {
         if ($this->binary !== null) {

@@ -21,6 +21,7 @@ use CodeIgniter\CLI\Output;
 use CodeIgniter\Config\BaseConfig;
 use Config\Optimize;
 use Kint\Kint;
+use Override;
 
 /**
  * Check the Config values.
@@ -28,6 +29,7 @@ use Kint\Kint;
 #[Command(name: 'config:check', description: 'Check your config values.', group: 'CodeIgniter')]
 class ConfigCheck extends AbstractCommand
 {
+    #[Override]
     protected function configure(): void
     {
         $this->addArgument(new Argument(
@@ -37,6 +39,7 @@ class ConfigCheck extends AbstractCommand
         ));
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         /** @var class-string<BaseConfig> $class */

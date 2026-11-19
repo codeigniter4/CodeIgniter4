@@ -17,6 +17,7 @@ use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Entity\Entity;
 use mysqli;
 use mysqli_result;
+use Override;
 use stdClass;
 
 /**
@@ -26,11 +27,13 @@ use stdClass;
  */
 class Result extends BaseResult
 {
+    #[Override]
     public function getFieldCount(): int
     {
         return $this->resultID->field_count;
     }
 
+    #[Override]
     public function getFieldNames(): array
     {
         $fieldNames = [];
@@ -43,6 +46,7 @@ class Result extends BaseResult
         return $fieldNames;
     }
 
+    #[Override]
     public function getFieldData(): array
     {
         static $dataTypes = [
@@ -94,6 +98,7 @@ class Result extends BaseResult
         return $retVal;
     }
 
+    #[Override]
     public function freeResult()
     {
         if (is_object($this->resultID)) {
@@ -102,16 +107,19 @@ class Result extends BaseResult
         }
     }
 
+    #[Override]
     public function dataSeek(int $n = 0)
     {
         return $this->resultID->data_seek($n);
     }
 
+    #[Override]
     protected function fetchAssoc()
     {
         return $this->resultID->fetch_assoc();
     }
 
+    #[Override]
     protected function fetchObject(string $className = stdClass::class)
     {
         if (is_subclass_of($className, Entity::class)) {
@@ -123,6 +131,7 @@ class Result extends BaseResult
         return $this->resultID->fetch_object($className);
     }
 
+    #[Override]
     public function getNumRows(): int
     {
         if (! is_int($this->numRows)) {

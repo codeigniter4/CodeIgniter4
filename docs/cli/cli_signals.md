@@ -75,6 +75,7 @@ class SampleCommand extends AbstractCommand
 {
     use SignalTrait;
 
+    #[\Override]
     protected function execute(array $arguments, array $options): int
     {
         // Register basic termination signals
@@ -116,6 +117,7 @@ class SampleCommand extends AbstractCommand
 {
     use SignalTrait;
 
+    #[\Override]
     protected function execute(array $arguments, array $options): int
     {
         // Register signals with custom handlers
@@ -179,6 +181,7 @@ class SampleCommand extends AbstractCommand
 {
     use SignalTrait;
 
+    #[\Override]
     protected function execute(array $arguments, array $options): int
     {
         // Register signals without explicit mappings
@@ -301,6 +304,7 @@ class SampleCommand extends AbstractCommand
 {
     use SignalTrait;
 
+    #[\Override]
     protected function execute(array $arguments, array $options): int
     {
         // Register pause/resume signals with custom handlers
@@ -659,6 +663,7 @@ class SampleCommand extends AbstractCommand
 {
     use SignalTrait;
 
+    #[\Override]
     protected function execute(array $arguments, array $options): int
     {
         // Register signals first
@@ -707,6 +712,7 @@ class SampleCommand extends AbstractCommand
 {
     use SignalTrait;
 
+    #[\Override]
     protected function execute(array $arguments, array $options): int
     {
         // ...
@@ -754,6 +760,7 @@ class SampleCommand extends AbstractCommand
 {
     use SignalTrait;
 
+    #[\Override]
     protected function execute(array $arguments, array $options): int
     {
         // ...

@@ -24,6 +24,7 @@ use CodeIgniter\Test\Mock\MockResponse;
 use Config\App;
 use DateTime;
 use DateTimeZone;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -41,6 +42,7 @@ final class ResponseTest extends CIUnitTestCase
      */
     private array $server;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->resetServices();
@@ -50,6 +52,7 @@ final class ResponseTest extends CIUnitTestCase
         $this->server = service('superglobals')->getServerArray();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         Factories::reset('config');

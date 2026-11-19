@@ -18,6 +18,7 @@ use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Input\Argument;
 use CodeIgniter\Database\Seeder;
 use Config\Database;
+use Override;
 use Throwable;
 
 /**
@@ -30,6 +31,7 @@ use Throwable;
 )]
 class Seed extends AbstractCommand
 {
+    #[Override]
     protected function configure(): void
     {
         $this->addArgument(new Argument(
@@ -39,6 +41,7 @@ class Seed extends AbstractCommand
         ));
     }
 
+    #[Override]
     protected function interact(array &$arguments, array &$options): void
     {
         if ($arguments === []) {
@@ -46,6 +49,7 @@ class Seed extends AbstractCommand
         }
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $seedName = $arguments['seeder_name'];

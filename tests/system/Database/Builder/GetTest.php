@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\Builder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 use Config\Feature;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -26,6 +27,7 @@ final class GetTest extends CIUnitTestCase
 {
     protected $db;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

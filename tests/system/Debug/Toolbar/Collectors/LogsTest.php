@@ -17,6 +17,7 @@ use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Logger as LoggerConfig;
 use Config\Services;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Psr\Log\AbstractLogger;
 use Stringable;
@@ -29,6 +30,7 @@ final class LogsTest extends CIUnitTestCase
 {
     private Logger $logger;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -74,6 +76,7 @@ final class LogsTest extends CIUnitTestCase
     public function testEmptyWithThirdPartyLogger(): void
     {
         Services::injectMock('logger', new class () extends AbstractLogger {
+            #[Override]
             public function log($level, string|Stringable $message, array $context = []): void
             {
             }

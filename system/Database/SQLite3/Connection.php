@@ -18,6 +18,7 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\TableName;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use Exception;
+use Override;
 use SQLite3;
 use SQLite3Result;
 use stdClass;
@@ -69,6 +70,7 @@ class Connection extends BaseConnection
     /**
      * Checks whether the native database error represents a unique constraint violation.
      */
+    #[Override]
     protected function isUniqueConstraintViolation(int|string $code, string $message): bool
     {
         // SQLite3 reports unique violations in two formats depending on version:
@@ -81,6 +83,7 @@ class Connection extends BaseConnection
     /**
      * Checks whether the native database error represents a foreign key constraint violation.
      */
+    #[Override]
     protected function isForeignKeyConstraintViolation(int|string $code, string $message): bool
     {
         return str_contains($message, 'FOREIGN KEY constraint failed');
@@ -89,6 +92,7 @@ class Connection extends BaseConnection
     /**
      * Checks whether the native database error represents a NOT NULL constraint violation.
      */
+    #[Override]
     protected function isNotNullConstraintViolation(int|string $code, string $message): bool
     {
         return str_contains($message, 'NOT NULL constraint failed');
@@ -97,6 +101,7 @@ class Connection extends BaseConnection
     /**
      * Checks whether the native database error represents a CHECK constraint violation.
      */
+    #[Override]
     protected function isCheckConstraintViolation(int|string $code, string $message): bool
     {
         return str_contains($message, 'CHECK constraint failed');
@@ -105,6 +110,7 @@ class Connection extends BaseConnection
     /**
      * Checks whether the native database error represents a constraint violation.
      */
+    #[Override]
     protected function isConstraintViolation(int|string $code, string $message): bool
     {
         return $code === 19;
@@ -113,6 +119,7 @@ class Connection extends BaseConnection
     /**
      * Checks whether the native database code represents a retryable transaction failure.
      */
+    #[Override]
     protected function isRetryableTransactionErrorCode(int|string $code): bool
     {
         return $code === 5;
@@ -121,6 +128,7 @@ class Connection extends BaseConnection
     /**
      * @return void
      */
+    #[Override]
     public function initialize()
     {
         parent::initialize();
@@ -148,6 +156,7 @@ class Connection extends BaseConnection
      *
      * @throws DatabaseException
      */
+    #[Override]
     public function connect(bool $persistent = false)
     {
         if ($persistent && $this->DBDebug) {
@@ -171,6 +180,7 @@ class Connection extends BaseConnection
         }
     }
 
+    #[Override]
     protected function _close()
     {
         $this->connID->close();
@@ -179,6 +189,7 @@ class Connection extends BaseConnection
     /**
      * Select a specific database table to use.
      */
+    #[Override]
     public function setDatabase(string $databaseName): bool
     {
         return false;
@@ -187,6 +198,7 @@ class Connection extends BaseConnection
     /**
      * Returns a string containing the version of the database being used.
      */
+    #[Override]
     public function getVersion(): string
     {
         if (isset($this->dataCache['version'])) {
@@ -203,6 +215,7 @@ class Connection extends BaseConnection
      *
      * @return false|SQLite3Result
      */
+    #[Override]
     protected function execute(string $sql)
     {
         try {
@@ -233,6 +246,7 @@ class Connection extends BaseConnection
     /**
      * Returns the total number of rows affected by this query.
      */
+    #[Override]
     public function affectedRows(): int
     {
         return $this->connID->changes();
@@ -241,6 +255,7 @@ class Connection extends BaseConnection
     /**
      * Platform-dependant string escape
      */
+    #[Override]
     protected function _escapeString(string $str): string
     {
         if (! $this->connID instanceof SQLite3) {
@@ -250,6 +265,7 @@ class Connection extends BaseConnection
         return $this->connID->escapeString($str);
     }
 
+    #[Override]
     protected function _listTables(bool $prefixLimit = false, ?string $tableName = null): string
     {
         if ((string) $tableName !== '') {
@@ -265,6 +281,7 @@ class Connection extends BaseConnection
                     : '');
     }
 
+    #[Override]
     protected function _listColumns($table = ''): string
     {
         if ($table instanceof TableName) {
@@ -283,6 +300,7 @@ class Connection extends BaseConnection
      *
      * @throws DatabaseException
      */
+    #[Override]
     public function getFieldNames($tableName)
     {
         $table = ($tableName instanceof TableName) ? $tableName->getTableName() : $tableName;
@@ -325,6 +343,7 @@ class Connection extends BaseConnection
     /**
      * @throws DatabaseException
      */
+    #[Override]
     protected function _fieldData(string $table): array
     {
         $parts  = explode('.', $table);
@@ -364,6 +383,7 @@ class Connection extends BaseConnection
     /**
      * @throws DatabaseException
      */
+    #[Override]
     protected function _indexData(string $table): array
     {
         $sql = "SELECT 'PRIMARY' as indexname, l.name as fieldname, 'PRIMARY' as indextype
@@ -414,6 +434,7 @@ class Connection extends BaseConnection
         return $retVal;
     }
 
+    #[Override]
     protected function _foreignKeyData(string $table): array
     {
         if (! $this->supportsForeignKeys()) {
@@ -448,6 +469,7 @@ class Connection extends BaseConnection
      *
      * @return string
      */
+    #[Override]
     protected function _disableForeignKeyChecks()
     {
         return 'PRAGMA foreign_keys = OFF';
@@ -458,6 +480,7 @@ class Connection extends BaseConnection
      *
      * @return string
      */
+    #[Override]
     protected function _enableForeignKeyChecks()
     {
         return 'PRAGMA foreign_keys = ON';
@@ -470,6 +493,7 @@ class Connection extends BaseConnection
      *
      * @return array{code: int|string|null, message: string|null}
      */
+    #[Override]
     public function error(): array
     {
         return [
@@ -481,21 +505,25 @@ class Connection extends BaseConnection
     /**
      * Insert ID
      */
+    #[Override]
     public function insertID(): int
     {
         return $this->connID->lastInsertRowID();
     }
 
+    #[Override]
     protected function _transBegin(): bool
     {
         return $this->connID->exec('BEGIN TRANSACTION');
     }
 
+    #[Override]
     protected function _transCommit(): bool
     {
         return $this->connID->exec('END TRANSACTION');
     }
 
+    #[Override]
     protected function _transRollback(): bool
     {
         return $this->connID->exec('ROLLBACK');

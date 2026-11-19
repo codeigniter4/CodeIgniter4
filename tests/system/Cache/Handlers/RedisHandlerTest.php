@@ -17,6 +17,7 @@ use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -28,6 +29,7 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
 {
     private Cache $config;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -40,6 +42,7 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
         $this->handler = CacheFactory::getHandler($this->config, 'redis');
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         if (isset($this->handler)) {

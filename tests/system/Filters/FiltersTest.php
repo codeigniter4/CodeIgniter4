@@ -32,6 +32,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ConfigFromArrayTrait;
 use CodeIgniter\Test\Mock\MockAppConfig;
 use Config\Filters as FiltersConfig;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -56,6 +57,7 @@ final class FiltersTest extends CIUnitTestCase
 
     private Response $response;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

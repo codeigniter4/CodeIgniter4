@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
@@ -25,6 +26,7 @@ use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 #[Group('SeparateProcess')]
 final class CommonFunctionsSendTest extends CIUnitTestCase
 {
+    #[Override]
     #[WithoutErrorHandler]
     protected function setUp(): void
     {

@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\Live\MySQLi;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
@@ -29,6 +30,7 @@ final class RawSqlTest extends CIUnitTestCase
 
     protected $seed = CITestSeeder::class;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

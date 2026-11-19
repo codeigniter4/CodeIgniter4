@@ -15,6 +15,7 @@ namespace CodeIgniter\Validation\StrictRules;
 
 use CodeIgniter\Validation\RulesTest as TraditionalRulesTest;
 use CodeIgniter\Validation\Validation;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Validation\TestRules;
@@ -228,6 +229,7 @@ final class RulesTest extends TraditionalRulesTest
      * @param array<array-key, mixed> $data
      */
     #[DataProvider('provideMatches')]
+    #[Override]
     public function testMatches(array $data, bool $expected): void
     {
         $this->validation->setRules(['foo' => 'matches[bar]']);
@@ -237,6 +239,7 @@ final class RulesTest extends TraditionalRulesTest
     /**
      * @return iterable<array{array<array-key, mixed>, bool}>
      */
+    #[Override]
     public static function provideMatches(): iterable
     {
         yield from [
@@ -256,6 +259,7 @@ final class RulesTest extends TraditionalRulesTest
      * @param array<array-key, mixed> $data
      */
     #[DataProvider('provideDiffers')]
+    #[Override]
     public function testDiffers(array $data, bool $expected): void
     {
         $this->validation->setRules(['foo' => 'differs[bar]']);
@@ -265,6 +269,7 @@ final class RulesTest extends TraditionalRulesTest
     /**
      * @return iterable<array{array<array-key, mixed>, bool}>
      */
+    #[Override]
     public static function provideDiffers(): iterable
     {
         yield from [
@@ -280,6 +285,7 @@ final class RulesTest extends TraditionalRulesTest
         ];
     }
 
+    #[Override]
     public function testIfExistArray(): void
     {
         $rules = ['foo' => 'if_exist|alpha'];

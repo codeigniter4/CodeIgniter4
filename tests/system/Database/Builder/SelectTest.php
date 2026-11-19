@@ -24,6 +24,7 @@ use CodeIgniter\Database\SQLite3\Builder as SQLite3Builder;
 use CodeIgniter\Database\SQLSRV\Builder as SQLSRVBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -35,6 +36,7 @@ final class SelectTest extends CIUnitTestCase
 {
     protected $db;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

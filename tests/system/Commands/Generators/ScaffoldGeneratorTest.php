@@ -17,6 +17,7 @@ use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockInputOutput;
 use CodeIgniter\Test\StreamFilterTrait;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -29,6 +30,7 @@ final class ScaffoldGeneratorTest extends CIUnitTestCase
 
     private const TIMESTAMP = '\d{4}-\d{2}-\d{2}-\d{6}';
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -36,6 +38,7 @@ final class ScaffoldGeneratorTest extends CIUnitTestCase
         CLI::reset();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

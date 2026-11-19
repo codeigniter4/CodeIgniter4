@@ -16,6 +16,7 @@ namespace CodeIgniter\Models;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\UniqueConstraintViolationException;
 use CodeIgniter\Exceptions\InvalidArgumentException;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use ReflectionProperty;
 use stdClass;
@@ -27,6 +28,7 @@ use Tests\Support\Models\UserModel;
 #[Group('DatabaseLive')]
 final class FirstOrInsertModelTest extends LiveModelTestCase
 {
+    #[Override]
     protected function tearDown(): void
     {
         $this->enableDBDebug();
@@ -170,6 +172,7 @@ final class FirstOrInsertModelTest extends LiveModelTestCase
         // throws UniqueConstraintViolationException as if our own attempt
         // also tried to insert the same row.
         $model = new class ($this->db) extends UserModel {
+            #[Override]
             protected function doInsert(array $row): bool
             {
                 parent::doInsert($row);
@@ -197,6 +200,7 @@ final class FirstOrInsertModelTest extends LiveModelTestCase
         // inserts via a direct DB call, then our own attempt fails with a
         // unique violation which is stored in lastException (DBDebug=false).
         $model = new class ($this->db) extends UserModel {
+            #[Override]
             protected function doInsert(array $row): bool
             {
                 // Direct insert – bypasses the model so it won't interfere
@@ -231,6 +235,7 @@ final class FirstOrInsertModelTest extends LiveModelTestCase
         // a plain DatabaseException (not UniqueConstraintViolationException)
         // into lastException and returning false.
         $model = new class ($this->db) extends UserModel {
+            #[Override]
             protected function doInsert(array $row): bool
             {
                 $prop = new ReflectionProperty($this->db, 'lastException');

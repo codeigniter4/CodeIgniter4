@@ -16,6 +16,7 @@ namespace CodeIgniter\Session\Handlers;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\Session as SessionConfig;
+use Override;
 
 /**
  * Session handler using file system for storage.
@@ -90,6 +91,7 @@ class FileHandler extends BaseHandler
      *
      * @throws SessionException
      */
+    #[Override]
     public function open($path, $name): bool
     {
         if (! is_dir($path) && ! mkdir($path, 0700, true)) {
@@ -113,6 +115,7 @@ class FileHandler extends BaseHandler
      *
      * @param string $id The session ID.
      */
+    #[Override]
     public function read($id): false|string
     {
         // This might seem weird, but PHP 5.6 introduced session_reset(),
@@ -169,6 +172,7 @@ class FileHandler extends BaseHandler
      * @param string $id   The session ID.
      * @param string $data The encoded session data.
      */
+    #[Override]
     public function write($id, $data): bool
     {
         // If the two IDs don't match, we have a session_regenerate_id() call
@@ -216,6 +220,7 @@ class FileHandler extends BaseHandler
     /**
      * Closes the current session.
      */
+    #[Override]
     public function close(): bool
     {
         if (is_resource($this->fileHandle)) {
@@ -234,6 +239,7 @@ class FileHandler extends BaseHandler
      *
      * @param string $id The session ID being destroyed.
      */
+    #[Override]
     public function destroy($id): bool
     {
         if ($this->close()) {
@@ -259,6 +265,7 @@ class FileHandler extends BaseHandler
      * @param int $max_lifetime Sessions that have not updated
      *                          for the last max_lifetime seconds will be removed.
      */
+    #[Override]
     public function gc(int $max_lifetime): false|int
     {
         if (! is_dir($this->savePath) || ($directory = opendir($this->savePath)) === false) {

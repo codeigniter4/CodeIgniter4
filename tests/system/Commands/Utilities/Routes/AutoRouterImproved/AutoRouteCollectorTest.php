@@ -16,6 +16,7 @@ namespace CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Filters;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -24,6 +25,7 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class AutoRouteCollectorTest extends CIUnitTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

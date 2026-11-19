@@ -15,6 +15,7 @@ namespace CodeIgniter\Publisher;
 
 use CodeIgniter\Publisher\Exceptions\PublisherException;
 use CodeIgniter\Test\CIUnitTestCase;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Publishers\TestPublisher;
 
@@ -39,6 +40,7 @@ final class PublisherSupportTest extends CIUnitTestCase
      * tests call static methods before
      * the constructor would load it.
      */
+    #[Override]
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();

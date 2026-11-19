@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Debug\Toolbar\Collectors;
 
+use Override;
+
 /**
  * Loags collector
  */
@@ -54,6 +56,7 @@ class Logs extends BaseCollector
      *
      * @return array{logs: list<array{level: string, msg: string}>}
      */
+    #[Override]
     public function display(): array
     {
         return [
@@ -64,6 +67,7 @@ class Logs extends BaseCollector
     /**
      * Does this collector actually have any data to display?
      */
+    #[Override]
     public function isEmpty(): bool
     {
         $this->collectLogs();
@@ -76,6 +80,7 @@ class Logs extends BaseCollector
      *
      * Icon from https://icons8.com - 1em package
      */
+    #[Override]
     public function icon(): string
     {
         return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACYSURBVEhLYxgFJIHU1FSjtLS0i0D8AYj7gEKMEBkqAaAFF4D4ERCvAFrwH4gDoFIMKSkpFkB+OTEYqgUTACXfA/GqjIwMQyD9H2hRHlQKJFcBEiMGQ7VgAqCBvUgK32dmZspCpagGGNPT0/1BLqeF4bQHQJePpiIwhmrBBEADR1MRfgB0+WgqAmOoFkwANHA0FY0CUgEDAwCQ0PUpNB3kqwAAAABJRU5ErkJggg==';

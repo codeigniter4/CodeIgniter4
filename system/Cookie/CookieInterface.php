@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cookie;
 
+use Override;
+
 /**
  * Interface for a value object representation of an HTTP cookie.
  *
@@ -166,6 +168,7 @@ interface CookieInterface
      *
      * @return string
      */
+    #[Override]
     public function __toString();
 
     /**

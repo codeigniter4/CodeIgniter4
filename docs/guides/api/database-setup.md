@@ -23,9 +23,11 @@ Edit the generated **app/Database/Migrations/&lt;timestamp>\_CreateAuthorsTable.
 namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
+use Override;
 
 class CreateAuthorsTable extends Migration
 {
+    #[Override]
     public function up()
     {
         $this->forge->addField([
@@ -54,6 +56,7 @@ class CreateAuthorsTable extends Migration
         $this->forge->createTable('authors');
     }
 
+    #[Override]
     public function down()
     {
         $this->forge->dropTable('authors');
@@ -71,9 +74,11 @@ Now, edit the generated **app/Database/Migrations/&lt;timestamp>\_CreateBooksTab
 namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
+use Override;
 
 class CreateBooksTable extends Migration
 {
+    #[Override]
     public function up()
     {
         $this->forge->addField([
@@ -111,6 +116,7 @@ class CreateBooksTable extends Migration
         $this->forge->createTable('books');
     }
 
+    #[Override]
     public function down()
     {
         $this->forge->dropTable('books');
@@ -146,9 +152,11 @@ Edit the file at **app/Database/Seeds/BookSeeder.php**:
 namespace App\Database\Seeds;
 
 use CodeIgniter\Database\Seeder;
+use Override;
 
 class BookSeeder extends Seeder
 {
+    #[Override]
     public function run()
     {
         // Define author data and insert

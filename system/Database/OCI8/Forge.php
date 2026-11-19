@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\OCI8;
 
 use CodeIgniter\Database\Forge as BaseForge;
+use Override;
 
 /**
  * Forge for OCI8
@@ -71,6 +72,7 @@ class Forge extends BaseForge
      */
     protected $fkAllowActions = ['CASCADE', 'SET NULL', 'NO ACTION'];
 
+    #[Override]
     protected function _alterTable(string $alterType, string $table, $processedFields)
     {
         $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
@@ -149,6 +151,7 @@ class Forge extends BaseForge
      *
      * @return void
      */
+    #[Override]
     protected function _attributeAutoIncrement(array &$attributes, array &$field)
     {
         if (($attributes['AUTO_INCREMENT'] ?? false) === true
@@ -162,6 +165,7 @@ class Forge extends BaseForge
     /**
      * Process column
      */
+    #[Override]
     protected function _processColumn(array $processedField): string
     {
         $constraint = '';
@@ -189,6 +193,7 @@ class Forge extends BaseForge
      *
      * @return void
      */
+    #[Override]
     protected function _attributeType(array &$attributes)
     {
         // Reset field lengths for data types that don't support it
@@ -257,6 +262,7 @@ class Forge extends BaseForge
      *
      * @return bool|string
      */
+    #[Override]
     protected function _dropTable(string $table, bool $ifExists, bool $cascade)
     {
         $sql = parent::_dropTable($table, $ifExists, $cascade);
@@ -273,6 +279,7 @@ class Forge extends BaseForge
     /**
      * Constructs sql to check if key is a constraint.
      */
+    #[Override]
     protected function _dropKeyAsConstraint(string $table, string $constraintName): string
     {
         return sprintf(

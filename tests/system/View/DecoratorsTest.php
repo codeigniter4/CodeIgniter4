@@ -17,6 +17,7 @@ use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Exceptions\ViewException;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\View\BadDecorator;
 use Tests\Support\View\WorldDecorator;
@@ -31,6 +32,7 @@ final class DecoratorsTest extends CIUnitTestCase
     private string $viewsDir;
     private ?\Config\View $config = null;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

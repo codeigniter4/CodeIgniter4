@@ -24,6 +24,7 @@ use CodeIgniter\Test\Mock\MockUploadedFile;
 use Config\App;
 use Config\Feature;
 use Config\Routing;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -37,6 +38,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
 {
     use FeatureTestTrait;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -44,6 +46,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $this->skipEvents();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

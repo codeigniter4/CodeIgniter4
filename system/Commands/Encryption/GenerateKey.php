@@ -19,6 +19,7 @@ use CodeIgniter\CLI\Input\Option;
 use CodeIgniter\Config\DotEnv;
 use CodeIgniter\Encryption\Encryption;
 use Config\Paths;
+use Override;
 
 /**
  * Generates a new encryption key and writes it in an `.env` file.
@@ -31,6 +32,7 @@ class GenerateKey extends AbstractCommand
      */
     private const VALID_PREFIXES = ['hex2bin', 'base64'];
 
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -57,6 +59,7 @@ class GenerateKey extends AbstractCommand
             ));
     }
 
+    #[Override]
     protected function interact(array &$arguments, array &$options): void
     {
         $prefix = $this->getUnboundOption('prefix', $options);
@@ -85,6 +88,7 @@ class GenerateKey extends AbstractCommand
         }
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $prefix = $options['prefix'];

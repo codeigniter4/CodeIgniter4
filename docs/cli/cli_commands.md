@@ -38,6 +38,7 @@ namespace App\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use Override;
 
 class AppInfo extends BaseCommand
 {
@@ -45,6 +46,7 @@ class AppInfo extends BaseCommand
     protected $name        = 'app:info';
     protected $description = 'Displays basic application information.';
 
+    #[Override]
     public function run(array $params)
     {
         // ...
@@ -85,11 +87,13 @@ namespace App\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use Override;
 
 class AppInfo extends BaseCommand
 {
     // ...
 
+    #[Override]
     public function run(array $params)
     {
         CLI::write('PHP Version: ' . CLI::color(PHP_VERSION, 'yellow'));

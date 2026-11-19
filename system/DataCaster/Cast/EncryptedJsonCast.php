@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\DataCaster\Cast;
 
+use Override;
 use SensitiveParameter;
 use stdClass;
 
@@ -27,6 +28,7 @@ class EncryptedJsonCast extends BaseCast
     /**
      * @return array<array-key, mixed>|stdClass|null
      */
+    #[Override]
     public static function get(
         #[SensitiveParameter]
         mixed $value,
@@ -42,6 +44,7 @@ class EncryptedJsonCast extends BaseCast
         return JsonCast::get($json, $params, $helper);
     }
 
+    #[Override]
     public static function set(
         #[SensitiveParameter]
         mixed $value,

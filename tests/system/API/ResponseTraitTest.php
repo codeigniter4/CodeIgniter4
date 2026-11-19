@@ -34,6 +34,7 @@ use Config\App;
 use Config\Cookie;
 use Config\Services;
 use Exception;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 use Tests\Support\API\InvalidTransformer;
@@ -49,6 +50,7 @@ final class ResponseTraitTest extends CIUnitTestCase
     private ?MockResponse $response        = null;
     private ?FormatterInterface $formatter = null;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -57,6 +59,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->formatter = new JSONFormatter();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         Services::superglobals()->setGetArray([]);

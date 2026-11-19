@@ -21,6 +21,7 @@ use Config\App;
 use Config\DocTypes;
 use Config\Filters;
 use Config\Services;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -36,6 +37,7 @@ use Stringable;
 #[Group('SeparateProcess')]
 final class FormHelperTest extends CIUnitTestCase
 {
+    #[Override]
     #[WithoutErrorHandler]
     protected function setUp(): void
     {

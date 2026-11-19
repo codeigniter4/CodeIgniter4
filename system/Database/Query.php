@@ -18,6 +18,7 @@ use CodeIgniter\Database\OCI8\Connection as OCI8Connection;
 use CodeIgniter\Database\Postgre\Connection as PostgreConnection;
 use CodeIgniter\Database\SQLite3\Connection as SQLite3Connection;
 use CodeIgniter\Database\SQLSRV\Connection as SQLSRVConnection;
+use Override;
 use Stringable;
 
 /**
@@ -105,6 +106,7 @@ class Query implements QueryInterface, Stringable
         $this->db = $db;
     }
 
+    #[Override]
     public function setQuery(string $sql, mixed $binds = null, bool $setEscape = true): self
     {
         $this->originalQueryString = $sql;
@@ -153,6 +155,7 @@ class Query implements QueryInterface, Stringable
         return $this;
     }
 
+    #[Override]
     public function getQuery(): string
     {
         if (! isset($this->finalQueryString) || $this->finalQueryString === '') {
@@ -162,6 +165,7 @@ class Query implements QueryInterface, Stringable
         return $this->finalQueryString;
     }
 
+    #[Override]
     public function setDuration(float $start, ?float $end = null): self
     {
         $this->startTime = $start;
@@ -187,11 +191,13 @@ class Query implements QueryInterface, Stringable
         return number_format($this->startTime, $decimals);
     }
 
+    #[Override]
     public function getDuration(int $decimals = 6): string
     {
         return number_format(($this->endTime - $this->startTime), $decimals);
     }
 
+    #[Override]
     public function setError(int $code, string $error): self
     {
         $this->errorCode   = $code;
@@ -200,26 +206,31 @@ class Query implements QueryInterface, Stringable
         return $this;
     }
 
+    #[Override]
     public function hasError(): bool
     {
         return $this->errorString !== '';
     }
 
+    #[Override]
     public function getErrorCode(): int
     {
         return $this->errorCode;
     }
 
+    #[Override]
     public function getErrorMessage(): string
     {
         return $this->errorString;
     }
 
+    #[Override]
     public function isWriteType(): bool
     {
         return $this->db->isWriteType($this->originalQueryString);
     }
 
+    #[Override]
     public function swapPrefix(string $orig, string $swap): self
     {
         $sql = $this->swappedQueryString ?? $this->originalQueryString;
@@ -234,6 +245,7 @@ class Query implements QueryInterface, Stringable
         return $this;
     }
 
+    #[Override]
     public function getOriginalQuery(): string
     {
         return $this->originalQueryString;
@@ -635,6 +647,7 @@ class Query implements QueryInterface, Stringable
     /**
      * Return text representation of the query
      */
+    #[Override]
     public function __toString(): string
     {
         return $this->getQuery();

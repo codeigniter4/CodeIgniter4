@@ -17,6 +17,7 @@ use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\Database;
+use Override;
 use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\Attributes\Group;
 use ReflectionClass;
@@ -34,6 +35,7 @@ use Tests\Support\Widgets\SomeWidget;
 #[Group('Others')]
 final class FactoriesTest extends CIUnitTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

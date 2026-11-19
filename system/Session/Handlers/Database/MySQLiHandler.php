@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Session\Handlers\Database;
 
 use CodeIgniter\Session\Handlers\DatabaseHandler;
+use Override;
 
 /**
  * Session handler for MySQLi
@@ -23,6 +24,7 @@ class MySQLiHandler extends DatabaseHandler
     /**
      * Lock the session.
      */
+    #[Override]
     protected function lockSession(string $sessionID): bool
     {
         $arg = md5($sessionID . ($this->matchIP ? '_' . $this->ipAddress : ''));
@@ -38,6 +40,7 @@ class MySQLiHandler extends DatabaseHandler
     /**
      * Releases the lock, if any.
      */
+    #[Override]
     protected function releaseLock(): bool
     {
         if (! $this->lock) {

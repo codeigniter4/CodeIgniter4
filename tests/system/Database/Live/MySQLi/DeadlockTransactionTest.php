@@ -19,6 +19,7 @@ use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
 use mysqli;
 use mysqli_driver;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Throwable;
 
@@ -40,6 +41,7 @@ final class DeadlockTransactionTest extends CIUnitTestCase
     private ?mysqli $held           = null;
     private ?string $probeTable     = null;
 
+    #[Override]
     protected function setUp(): void
     {
         $config = config('Database');
@@ -53,6 +55,7 @@ final class DeadlockTransactionTest extends CIUnitTestCase
         parent::setUp();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         $this->releaseDeadlock();

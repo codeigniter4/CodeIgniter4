@@ -22,6 +22,7 @@ use DateTimeImmutable;
 use DateTimeZone;
 use IntlDateFormatter;
 use Locale;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -33,6 +34,7 @@ final class TimeTest extends CIUnitTestCase
 {
     private string $currentLocale;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -46,6 +48,7 @@ final class TimeTest extends CIUnitTestCase
         Locale::setDefault('en_US');
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

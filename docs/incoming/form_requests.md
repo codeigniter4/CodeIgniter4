@@ -18,9 +18,11 @@ This creates **app/Requests/StorePostRequest.php**. Fill in the `rules()` method
 namespace App\Requests;
 
 use CodeIgniter\HTTP\FormRequest;
+use Override;
 
 class StorePostRequest extends FormRequest
 {
+    #[Override]
     public function rules(): array
     {
         return [
@@ -221,9 +223,11 @@ Override `messages()` to return field-specific error messages. The format is ide
 namespace App\Requests;
 
 use CodeIgniter\HTTP\FormRequest;
+use Override;
 
 class StorePostRequest extends FormRequest
 {
+    #[Override]
     public function rules(): array
     {
         return [
@@ -232,6 +236,7 @@ class StorePostRequest extends FormRequest
         ];
     }
 
+    #[Override]
     public function messages(): array
     {
         return [
@@ -255,9 +260,11 @@ Override `isAuthorized()` to control whether the current user is allowed to make
 namespace App\Requests;
 
 use CodeIgniter\HTTP\FormRequest;
+use Override;
 
 class StorePostRequest extends FormRequest
 {
+    #[Override]
     public function rules(): array
     {
         return [
@@ -266,6 +273,7 @@ class StorePostRequest extends FormRequest
         ];
     }
 
+    #[Override]
     public function isAuthorized(): bool
     {
         // Only authenticated users may submit posts.
@@ -285,9 +293,11 @@ Override `prepareForValidation(array $data): array` to normalize or derive input
 namespace App\Requests;
 
 use CodeIgniter\HTTP\FormRequest;
+use Override;
 
 class StorePostRequest extends FormRequest
 {
+    #[Override]
     public function rules(): array
     {
         return [
@@ -296,6 +306,7 @@ class StorePostRequest extends FormRequest
         ];
     }
 
+    #[Override]
     protected function prepareForValidation(array $data): array
     {
         // Derive the slug from the title so it is available for the
@@ -327,15 +338,18 @@ Override `validationData()` when you need a different data source - for example,
 namespace App\Requests;
 
 use CodeIgniter\HTTP\FormRequest;
+use Override;
 
 class SearchRequest extends FormRequest
 {
+    #[Override]
     public function rules(): array
     {
         return ['q' => 'required|min_length[2]'];
     }
 
     // Merge query-string parameters and POST body for this endpoint.
+    #[Override]
     protected function validationData(): array
     {
         return array_merge(
@@ -355,9 +369,11 @@ namespace App\Requests;
 
 use CodeIgniter\HTTP\FormRequest;
 use CodeIgniter\HTTP\ResponseInterface;
+use Override;
 
 class StorePostRequest extends FormRequest
 {
+    #[Override]
     public function rules(): array
     {
         return [
@@ -367,12 +383,14 @@ class StorePostRequest extends FormRequest
     }
 
     // Always respond with JSON, regardless of the request type.
+    #[Override]
     protected function failedValidation(array $errors, array $preparedData): ResponseInterface
     {
         return service('response')->setStatusCode(422)->setJSON(['errors' => $errors]);
     }
 
     // Always respond with 403, regardless of the request type.
+    #[Override]
     protected function failedAuthorization(): ResponseInterface
     {
         return service('response')->setStatusCode(403);
@@ -396,9 +414,11 @@ namespace App\Requests;
 
 use CodeIgniter\HTTP\FormRequest;
 use CodeIgniter\HTTP\ResponseInterface;
+use Override;
 
 class StorePostRequest extends FormRequest
 {
+    #[Override]
     public function rules(): array
     {
         return [
@@ -407,6 +427,7 @@ class StorePostRequest extends FormRequest
         ];
     }
 
+    #[Override]
     protected function prepareForValidation(array $data): array
     {
         $data['slug'] = url_title($data['title'] ?? '', '-', true);
@@ -415,6 +436,7 @@ class StorePostRequest extends FormRequest
     }
 
     // Override while still flashing the prepared values on redirect.
+    #[Override]
     protected function failedValidation(array $errors, array $preparedData): ResponseInterface
     {
         if (

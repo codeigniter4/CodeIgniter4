@@ -14,12 +14,14 @@ namespace Tests\Feature;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\FeatureTestTrait;
+use Override;
 
 class FooTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
     use FeatureTestTrait;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -27,6 +29,7 @@ class FooTest extends CIUnitTestCase
         $this->myClassMethod();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

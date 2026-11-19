@@ -21,6 +21,7 @@ use CodeIgniter\Entity\Entity;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
 use Config\Services;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 use stdClass;
@@ -35,6 +36,7 @@ final class EncryptedCastTest extends CIUnitTestCase
     private const CURRENT_KEY = 'current-encrypted-cast-key';
     private const OLD_KEY     = 'old-encrypted-cast-key';
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

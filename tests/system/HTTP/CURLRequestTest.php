@@ -23,6 +23,7 @@ use Config\App;
 use Config\CURLRequest as ConfigCURLRequest;
 use CURLFile;
 use CurlShareHandle;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -37,6 +38,7 @@ class CURLRequestTest extends CIUnitTestCase
 {
     protected MockCURLRequest $request;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->resetServices();

@@ -17,6 +17,7 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\Feature;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -30,6 +31,7 @@ final class NegotiateTest extends CIUnitTestCase
     private IncomingRequest $request;
     private Negotiate $negotiate;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->resetServices();

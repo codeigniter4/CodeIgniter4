@@ -17,6 +17,7 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\MySQLi\Connection as MySQLiConnection;
 use CodeIgniter\Database\OCI8\Connection as OCI8Connection;
 use CodeIgniter\Test\CIUnitTestCase;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -28,6 +29,7 @@ final class ReconnectLostTransactionTest extends CIUnitTestCase
     public function testReconnectClearsTransactionStateWhenInitializeFails(): void
     {
         $db = new class (['DBDriver' => 'MySQLi']) extends MySQLiConnection {
+            #[Override]
             public function initialize(): never
             {
                 throw new DatabaseException('database unavailable');
@@ -58,6 +60,7 @@ final class ReconnectLostTransactionTest extends CIUnitTestCase
         }
 
         $db = new class (['DBDriver' => 'OCI8']) extends OCI8Connection {
+            #[Override]
             public function initialize(): void
             {
             }

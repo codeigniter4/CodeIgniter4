@@ -16,6 +16,7 @@ namespace CodeIgniter\Test\Mock;
 use CodeIgniter\HTTP\CURLRequest;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\URI;
+use Override;
 
 /**
  * Simply allows us to not actually call cURL during the
@@ -88,6 +89,7 @@ class MockCURLRequest extends CURLRequest
     /**
      * @param array<int, mixed> $curlOptions
      */
+    #[Override]
     protected function sendRequest(array $curlOptions = []): string
     {
         $this->response = clone $this->responseOrig;
@@ -103,6 +105,7 @@ class MockCURLRequest extends CURLRequest
         return $this->outputs !== [] ? array_shift($this->outputs) : $this->output;
     }
 
+    #[Override]
     protected function sleep(float $seconds): void
     {
         $this->sleeps[] = $seconds;

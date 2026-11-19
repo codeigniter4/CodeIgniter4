@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP;
 
 use Config\UserAgents;
+use Override;
 use Stringable;
 
 /**
@@ -377,6 +378,7 @@ class UserAgent implements Stringable
     /**
      * Outputs the original Agent String when cast as a string.
      */
+    #[Override]
     public function __toString(): string
     {
         return $this->getAgentString();

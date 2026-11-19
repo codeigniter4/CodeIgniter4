@@ -16,6 +16,7 @@ namespace CodeIgniter\CLI;
 use Closure;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RequiresOperatingSystem;
 use Tests\Support\Commands\Legacy\SignalCommandNoPcntl;
@@ -38,6 +39,7 @@ final class SignalWindowsTest extends CIUnitTestCase
 
     private SignalCommandWindows $command;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->resetServices();
@@ -46,6 +48,7 @@ final class SignalWindowsTest extends CIUnitTestCase
         $this->command = new SignalCommandWindows(service('logger'), service('commands'));
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         CLI::reset();

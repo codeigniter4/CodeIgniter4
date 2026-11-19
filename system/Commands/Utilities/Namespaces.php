@@ -18,6 +18,7 @@ use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Input\Option;
 use CodeIgniter\CLI\Table;
 use Config\Autoload;
+use Override;
 
 /**
  * Lists namespaces set in Config\Autoload with their full server path.
@@ -29,6 +30,7 @@ use Config\Autoload;
 )]
 class Namespaces extends AbstractCommand
 {
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -51,6 +53,7 @@ class Namespaces extends AbstractCommand
             ));
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $namespaces = $options['config-only'] !== false

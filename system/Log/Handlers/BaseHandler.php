@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Log\Handlers;
 
 use JsonException;
+use Override;
 
 /**
  * Base class for logging
@@ -52,6 +53,7 @@ abstract class BaseHandler implements HandlerInterface
      * Checks whether the Handler will handle logging items of this
      * log Level.
      */
+    #[Override]
     public function canHandle(string $level): bool
     {
         return in_array($level, $this->handles, true);
@@ -60,6 +62,7 @@ abstract class BaseHandler implements HandlerInterface
     /**
      * Stores the date format to use while logging messages.
      */
+    #[Override]
     public function setDateFormat(string $format): HandlerInterface
     {
         $this->dateFormat = $format;

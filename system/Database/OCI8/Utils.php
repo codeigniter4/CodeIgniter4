@@ -15,6 +15,7 @@ namespace CodeIgniter\Database\OCI8;
 
 use CodeIgniter\Database\BaseUtils;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use Override;
 
 /**
  * Utils for OCI8
@@ -31,6 +32,7 @@ class Utils extends BaseUtils
     /**
      * @return never
      */
+    #[Override]
     public function _backup(?array $prefs = null)
     {
         throw new DatabaseException('Unsupported feature of the database platform you are using.');

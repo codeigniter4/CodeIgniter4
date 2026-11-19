@@ -16,6 +16,7 @@ namespace CodeIgniter\Commands\Generators;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -31,6 +32,7 @@ final class EntityGeneratorTest extends CIUnitTestCase
         return preg_replace('/\e\[[^m]+m/', '', $this->getStreamFilterBuffer()) ?? '';
     }
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -38,6 +40,7 @@ final class EntityGeneratorTest extends CIUnitTestCase
         CLI::reset();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

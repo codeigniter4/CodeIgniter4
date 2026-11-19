@@ -16,6 +16,7 @@ namespace CodeIgniter\Router;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Router\Exceptions\MethodNotFoundException;
 use Config\Routing;
+use Override;
 use ReflectionClass;
 use ReflectionException;
 
@@ -250,6 +251,7 @@ final class AutoRouterImproved implements AutoRouterInterface
         return false;
     }
 
+    #[Override]
     public function getRoute(string $uri, string $httpVerb): array
     {
         $this->uri = $uri;

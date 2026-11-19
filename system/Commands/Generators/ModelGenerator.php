@@ -17,6 +17,7 @@ use CodeIgniter\CLI\AbstractGeneratorCommand;
 use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Attributes\GeneratorCommand;
 use CodeIgniter\CLI\Input\Option;
+use Override;
 
 #[Command(name: 'make:model', description: 'Generates a new model file.', group: 'Generators')]
 #[GeneratorCommand(
@@ -29,6 +30,7 @@ class ModelGenerator extends AbstractGeneratorCommand
 {
     private const RETURN_TYPES = ['array', 'object', 'entity'];
 
+    #[Override]
     protected function configure(): void
     {
         parent::configure();
@@ -58,6 +60,7 @@ class ModelGenerator extends AbstractGeneratorCommand
             ));
     }
 
+    #[Override]
     protected function interact(array &$arguments, array &$options): void
     {
         $return = $this->getUnboundOption('return', $options);
@@ -72,6 +75,7 @@ class ModelGenerator extends AbstractGeneratorCommand
         );
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $return = $this->getValidatedOption('return');
@@ -102,6 +106,7 @@ class ModelGenerator extends AbstractGeneratorCommand
         );
     }
 
+    #[Override]
     protected function getReplacements(string $class): array
     {
         $table   = $this->getValidatedOption('table');
@@ -118,6 +123,7 @@ class ModelGenerator extends AbstractGeneratorCommand
         ];
     }
 
+    #[Override]
     protected function getTemplateData(string $class): array
     {
         return ['dbGroup' => $this->getValidatedOption('dbgroup')];

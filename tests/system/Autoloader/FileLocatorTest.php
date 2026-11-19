@@ -17,6 +17,7 @@ use CodeIgniter\HTTP\Header;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Autoload;
 use Config\Modules;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -32,6 +33,7 @@ class FileLocatorTest extends CIUnitTestCase
      */
     protected FileLocatorInterface $locator;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

@@ -18,6 +18,7 @@ use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -31,6 +32,7 @@ final class MessageTest extends CIUnitTestCase
 {
     private Message $message;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

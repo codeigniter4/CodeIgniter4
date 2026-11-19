@@ -15,6 +15,7 @@ namespace CodeIgniter\Log\Handlers;
 
 use DateTime;
 use Exception;
+use Override;
 
 /**
  * Log error messages to file system
@@ -78,6 +79,7 @@ class FileHandler extends BaseHandler
      *
      * @throws Exception
      */
+    #[Override]
     public function handle($level, $message, array $context = []): bool
     {
         $filepath = $this->path . 'log-' . date('Y-m-d') . '.' . $this->fileExtension;

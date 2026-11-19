@@ -22,6 +22,7 @@ use CodeIgniter\Database\RawSql;
 use CodeIgniter\Database\ResultInterface;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use Config\Feature;
+use Override;
 use TypeError;
 
 /**
@@ -77,6 +78,7 @@ class Builder extends BaseBuilder
      * Groups tables in FROM clauses if needed, so there is no confusion
      * about operator precedence.
      */
+    #[Override]
     protected function _fromTables(): string
     {
         $from = [];
@@ -124,11 +126,13 @@ class Builder extends BaseBuilder
      * If the database does not support the truncate() command,
      * then this method maps to 'DELETE FROM table'
      */
+    #[Override]
     protected function _truncate(string $table): string
     {
         return 'TRUNCATE TABLE ' . $this->getFullName($table);
     }
 
+    #[Override]
     protected function compileJoinTable(RawSql|string $table, bool $escape): string
     {
         if ($table instanceof RawSql) {
@@ -147,6 +151,7 @@ class Builder extends BaseBuilder
      *
      * @todo implement check for this instead static $insertKeyPermission
      */
+    #[Override]
     protected function _insert(string $table, array $keys, array $unescapedKeys): string
     {
         $fullTableName = $this->getFullName($table);
@@ -162,6 +167,7 @@ class Builder extends BaseBuilder
      *
      * Generates a platform-specific insert string from the supplied data.
      */
+    #[Override]
     protected function _insertBatch(string $table, array $keys, array $values): string
     {
         $sql = $this->QBOptions['sql'] ?? '';
@@ -186,6 +192,7 @@ class Builder extends BaseBuilder
     /**
      * Generates a platform-specific update string from the supplied data
      */
+    #[Override]
     protected function _update(string $table, array $values): string
     {
         $valstr = [];
@@ -211,6 +218,7 @@ class Builder extends BaseBuilder
      * @param array<string, int>|list<string> $columns A list of columns or array of column => value pairs to increment.
      * @param int                             $value   The value to increment by if $columns is a list of column names.
      */
+    #[Override]
     public function incrementMany(array $columns, int $value = 1): bool
     {
         if ($columns === []) {
@@ -257,6 +265,7 @@ class Builder extends BaseBuilder
      * @param array<string, int>|list<string> $columns A list of columns or array of column => value pairs to decrement.
      * @param int                             $value   The value to decrement by if $columns is a list of column names.
      */
+    #[Override]
     public function decrementMany(array $columns, int $value = 1): bool
     {
         if ($columns === []) {
@@ -345,6 +354,7 @@ class Builder extends BaseBuilder
     /**
      * Local implementation of limit
      */
+    #[Override]
     protected function _limit(string $sql, bool $offsetIgnore = false): string
     {
         // SQL Server cannot handle `LIMIT 0`.
@@ -376,6 +386,7 @@ class Builder extends BaseBuilder
      *
      * @throws DatabaseException
      */
+    #[Override]
     public function replace(?array $set = null)
     {
         if ($set !== null) {
@@ -412,6 +423,7 @@ class Builder extends BaseBuilder
      * Generates a platform-specific replace string from the supplied data
      * on match delete and insert
      */
+    #[Override]
     protected function _replace(string $table, array $keys, array $values): string
     {
         // check whether the existing keys are part of the primary key.
@@ -478,6 +490,7 @@ class Builder extends BaseBuilder
      *
      * @return $this
      */
+    #[Override]
     protected function maxMinAvgSum(string $select = '', string $alias = '', string $type = 'MAX')
     {
         // int functions can be handled by parent
@@ -515,6 +528,7 @@ class Builder extends BaseBuilder
      *
      * @return int|string when $test = true
      */
+    #[Override]
     public function countAll(bool $reset = true)
     {
         $table = $this->QBFrom[0];
@@ -542,6 +556,7 @@ class Builder extends BaseBuilder
     /**
      * Delete statement
      */
+    #[Override]
     protected function _delete(string $table): string
     {
         return 'DELETE' . ($this->QBLimit === false || $this->QBLimit === 0 ? '' : ' TOP (' . $this->QBLimit . ') ') . ' FROM ' . $this->getFullName($table) . $this->compileWhereHaving('QBWhere');
@@ -556,6 +571,7 @@ class Builder extends BaseBuilder
      *
      * @throws DatabaseException
      */
+    #[Override]
     public function delete($where = '', ?int $limit = null, bool $resetData = true)
     {
         $table = $this->db->protectIdentifiers($this->QBFrom[0], true, null, false);
@@ -603,6 +619,7 @@ class Builder extends BaseBuilder
      *
      * @param false|string $selectOverride
      */
+    #[Override]
     protected function compileSelect($selectOverride = false): string
     {
         // Write the "select" portion of the query
@@ -666,6 +683,7 @@ class Builder extends BaseBuilder
     /**
      * Compile the SELECT lock clause.
      */
+    #[Override]
     protected function compileSelectLock(): string
     {
         if ($this->QBSelectLock === null) {
@@ -708,6 +726,7 @@ class Builder extends BaseBuilder
     /**
      * Ensures the current driver supports explaining Query Builder selects.
      */
+    #[Override]
     protected function assertExplainSupported(): never
     {
         throw new DatabaseException('SQLSRV does not support explain().');
@@ -719,6 +738,7 @@ class Builder extends BaseBuilder
      *
      * @return false|ResultInterface|string
      */
+    #[Override]
     public function get(?int $limit = null, int $offset = 0, bool $reset = true)
     {
         $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true; // @phpstan-ignore nullCoalesce.property
@@ -747,6 +767,7 @@ class Builder extends BaseBuilder
      *
      * @throws DatabaseException
      */
+    #[Override]
     protected function _upsertBatch(string $table, array $keys, array $values): string
     {
         $sql = $this->QBOptions['sql'] ?? '';
@@ -891,6 +912,7 @@ class Builder extends BaseBuilder
     /**
      * Gets column names from a select query
      */
+    #[Override]
     protected function fieldsFromQuery(string $sql): array
     {
         return $this->db->query('SELECT TOP 1 * FROM (' . $sql . ') _u_')->getFieldNames();

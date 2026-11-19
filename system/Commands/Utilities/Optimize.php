@@ -20,6 +20,7 @@ use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Output;
 use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Publisher\Publisher;
+use Override;
 
 /**
  * Optimize for production.
@@ -27,6 +28,7 @@ use CodeIgniter\Publisher\Publisher;
 #[Command(name: 'optimize', description: 'Optimize for production.', group: 'CodeIgniter')]
 final class Optimize extends AbstractCommand
 {
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $output = $this->getOutput();

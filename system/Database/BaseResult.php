@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Database;
 
 use CodeIgniter\Entity\Entity;
+use Override;
 use stdClass;
 
 /**
@@ -78,6 +79,7 @@ abstract class BaseResult implements ResultInterface
         $this->resultID = $resultID;
     }
 
+    #[Override]
     public function getResult(string $type = 'object'): array
     {
         if ($type === 'array') {
@@ -91,6 +93,7 @@ abstract class BaseResult implements ResultInterface
         return $this->getCustomResultObject($type);
     }
 
+    #[Override]
     public function getCustomResultObject(string $className)
     {
         if (isset($this->customResultObject[$className])) {
@@ -137,6 +140,7 @@ abstract class BaseResult implements ResultInterface
         return $this->customResultObject[$className];
     }
 
+    #[Override]
     public function getResultArray(): array
     {
         if ($this->resultArray !== []) {
@@ -169,6 +173,7 @@ abstract class BaseResult implements ResultInterface
         return $this->resultArray;
     }
 
+    #[Override]
     public function getResultObject(): array
     {
         if ($this->resultObject !== []) {
@@ -205,6 +210,7 @@ abstract class BaseResult implements ResultInterface
         return $this->resultObject;
     }
 
+    #[Override]
     public function getRow($n = 0, string $type = 'object')
     {
         // $n is a column name.
@@ -233,6 +239,7 @@ abstract class BaseResult implements ResultInterface
         return $this->getCustomRowObject($n, $type);
     }
 
+    #[Override]
     public function getCustomRowObject(int $n, string $className)
     {
         if (! isset($this->customResultObject[$className])) {
@@ -250,6 +257,7 @@ abstract class BaseResult implements ResultInterface
         return $this->customResultObject[$className][$this->currentRow] ?? null;
     }
 
+    #[Override]
     public function getRowArray(int $n = 0)
     {
         $result = $this->getResultArray();
@@ -264,6 +272,7 @@ abstract class BaseResult implements ResultInterface
         return $result[$this->currentRow] ?? null;
     }
 
+    #[Override]
     public function getRowObject(int $n = 0)
     {
         $result = $this->getResultObject();
@@ -278,6 +287,7 @@ abstract class BaseResult implements ResultInterface
         return $result[$this->currentRow] ?? null;
     }
 
+    #[Override]
     public function setRow($key, $value = null)
     {
         // We cache the row data for subsequent uses
@@ -298,6 +308,7 @@ abstract class BaseResult implements ResultInterface
         }
     }
 
+    #[Override]
     public function getFirstRow(string $type = 'object')
     {
         $result = $this->getResult($type);
@@ -305,6 +316,7 @@ abstract class BaseResult implements ResultInterface
         return ($result === []) ? null : $result[0];
     }
 
+    #[Override]
     public function getLastRow(string $type = 'object')
     {
         $result = $this->getResult($type);
@@ -312,6 +324,7 @@ abstract class BaseResult implements ResultInterface
         return ($result === []) ? null : $result[count($result) - 1];
     }
 
+    #[Override]
     public function getNextRow(string $type = 'object')
     {
         $result = $this->getResult($type);
@@ -322,6 +335,7 @@ abstract class BaseResult implements ResultInterface
         return isset($result[$this->currentRow + 1]) ? $result[++$this->currentRow] : null;
     }
 
+    #[Override]
     public function getPreviousRow(string $type = 'object')
     {
         $result = $this->getResult($type);
@@ -336,6 +350,7 @@ abstract class BaseResult implements ResultInterface
         return $result[$this->currentRow] ?? null;
     }
 
+    #[Override]
     public function getUnbufferedRow(string $type = 'object')
     {
         if ($type === 'array') {
@@ -354,6 +369,7 @@ abstract class BaseResult implements ResultInterface
      * back on counting resultArray or resultObject, finally fetching resultArray
      * if nothing was previously fetched
      */
+    #[Override]
     public function getNumRows(): int
     {
         if (is_int($this->numRows)) {

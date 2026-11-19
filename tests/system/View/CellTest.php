@@ -17,6 +17,7 @@ use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCache;
 use CodeIgniter\View\Exceptions\ViewException;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -27,6 +28,7 @@ final class CellTest extends CIUnitTestCase
 {
     private Cell $cell;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

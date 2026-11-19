@@ -17,6 +17,7 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Config;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use RuntimeException;
 
@@ -28,6 +29,7 @@ final class WorkerModeTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

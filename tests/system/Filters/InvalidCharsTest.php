@@ -22,6 +22,7 @@ use CodeIgniter\Security\Exceptions\SecurityException;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\Attributes\Group;
@@ -35,6 +36,7 @@ final class InvalidCharsTest extends CIUnitTestCase
     private InvalidChars $invalidChars;
     private IncomingRequest $request;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -45,6 +47,7 @@ final class InvalidCharsTest extends CIUnitTestCase
         $this->invalidChars = new InvalidChars();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

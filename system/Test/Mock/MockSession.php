@@ -16,6 +16,7 @@ namespace CodeIgniter\Test\Mock;
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Session\Session;
+use Override;
 
 /**
  * Class MockSession
@@ -40,6 +41,7 @@ class MockSession extends Session
      *
      * @return void
      */
+    #[Override]
     protected function setSaveHandler()
     {
         // session_set_save_handler($this->driver, true);
@@ -51,6 +53,7 @@ class MockSession extends Session
      *
      * @return void
      */
+    #[Override]
     protected function startSession()
     {
         // session_start();
@@ -63,6 +66,7 @@ class MockSession extends Session
      *
      * @return void
      */
+    #[Override]
     protected function setCookie()
     {
         $expiration   = $this->config->expiration === 0 ? 0 : Time::now()->getTimestamp() + $this->config->expiration;
@@ -76,6 +80,7 @@ class MockSession extends Session
      *
      * @return void
      */
+    #[Override]
     public function regenerate(bool $destroy = false)
     {
         $this->didRegenerate              = true;

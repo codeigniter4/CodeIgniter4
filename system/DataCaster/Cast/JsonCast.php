@@ -15,6 +15,7 @@ namespace CodeIgniter\DataCaster\Cast;
 
 use CodeIgniter\DataCaster\Exceptions\CastException;
 use JsonException;
+use Override;
 use stdClass;
 
 /**
@@ -25,6 +26,7 @@ use stdClass;
  */
 class JsonCast extends BaseCast
 {
+    #[Override]
     public static function get(
         mixed $value,
         array $params = [],
@@ -47,6 +49,7 @@ class JsonCast extends BaseCast
         return $output;
     }
 
+    #[Override]
     public static function set(
         mixed $value,
         array $params = [],

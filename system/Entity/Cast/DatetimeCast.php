@@ -15,12 +15,14 @@ namespace CodeIgniter\Entity\Cast;
 
 use CodeIgniter\I18n\Time;
 use DateTimeInterface;
+use Override;
 
 /**
  * @extends BaseCast<Time, DateTimeInterface|float|int|string>
  */
 class DatetimeCast extends BaseCast
 {
+    #[Override]
     public static function get($value, array $params = [])
     {
         if ($value instanceof Time) {

@@ -19,6 +19,7 @@ use mysqli;
 use mysqli_result;
 use mysqli_sql_exception;
 use mysqli_stmt;
+use Override;
 
 /**
  * Prepared query for MySQLi
@@ -27,6 +28,7 @@ use mysqli_stmt;
  */
 class PreparedQuery extends BasePreparedQuery
 {
+    #[Override]
     public function _prepare(string $sql, array $options = []): PreparedQuery
     {
         // Mysqli driver doesn't like statements
@@ -45,6 +47,7 @@ class PreparedQuery extends BasePreparedQuery
         return $this;
     }
 
+    #[Override]
     public function _execute(array $data): bool
     {
         if (! isset($this->statement)) {
@@ -106,11 +109,13 @@ class PreparedQuery extends BasePreparedQuery
     /**
      * @return false|mysqli_result
      */
+    #[Override]
     public function _getResult()
     {
         return $this->statement->get_result();
     }
 
+    #[Override]
     protected function _close(): bool
     {
         return $this->statement->close();

@@ -18,6 +18,7 @@ use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 use ErrorException;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Mock\MockPreparedQuery;
@@ -670,6 +671,7 @@ final class BaseConnectionTest extends CIUnitTestCase
         $db = new class ($this->options) extends MockConnection {
             public int $commitAttempts = 0;
 
+            #[Override]
             protected function _transCommit(): bool
             {
                 $this->commitAttempts++;
@@ -705,6 +707,7 @@ final class BaseConnectionTest extends CIUnitTestCase
         $db = new class ($this->options) extends MockConnection {
             public int $rollbackAttempts = 0;
 
+            #[Override]
             protected function _transRollback(): bool
             {
                 $this->rollbackAttempts++;
@@ -738,6 +741,7 @@ final class BaseConnectionTest extends CIUnitTestCase
         $callbackRan = false;
 
         $db = new class ($this->options) extends MockConnection {
+            #[Override]
             protected function _transBegin(): bool
             {
                 return false;
@@ -767,6 +771,7 @@ final class BaseConnectionTest extends CIUnitTestCase
         $db = new class ($this->options) extends MockConnection {
             public int $queries = 0;
 
+            #[Override]
             public function query(string $sql, $binds = null, bool $setEscapeFlags = true, string $queryClass = ''): bool
             {
                 $this->queries++;
@@ -783,6 +788,7 @@ final class BaseConnectionTest extends CIUnitTestCase
                 return true;
             }
 
+            #[Override]
             protected function isRetryableTransactionErrorCode(int|string $code): bool
             {
                 return $code === 1213;
@@ -809,11 +815,13 @@ final class BaseConnectionTest extends CIUnitTestCase
         $db = new class ($this->options) extends MockConnection {
             public int $queries = 0;
 
+            #[Override]
             public function query(string $sql, $binds = null, bool $setEscapeFlags = true, string $queryClass = '')
             {
                 return BaseConnection::query($sql, $binds, $setEscapeFlags, $queryClass);
             }
 
+            #[Override]
             protected function execute(string $sql): object
             {
                 $this->queries++;
@@ -825,6 +833,7 @@ final class BaseConnectionTest extends CIUnitTestCase
                 return (object) [];
             }
 
+            #[Override]
             protected function isRetryableTransactionErrorCode(int|string $code): bool
             {
                 return $code === 1213;
@@ -852,6 +861,7 @@ final class BaseConnectionTest extends CIUnitTestCase
         $db = new class ($this->options) extends MockConnection {
             public int $queries = 0;
 
+            #[Override]
             public function query(string $sql, $binds = null, bool $setEscapeFlags = true, string $queryClass = ''): bool
             {
                 $this->queries++;
@@ -878,6 +888,7 @@ final class BaseConnectionTest extends CIUnitTestCase
     public function testTransactionRetriesSuppressedRetryablePreparedQueryFailure(): void
     {
         $db = new class (array_merge($this->options, ['DBDebug' => false])) extends MockConnection {
+            #[Override]
             protected function isRetryableTransactionErrorCode(int|string $code): bool
             {
                 return $code === 1213;
@@ -904,11 +915,13 @@ final class BaseConnectionTest extends CIUnitTestCase
     public function testTransactionDoesNotRetryCallbackExceptionWhenRollbackFails(): void
     {
         $db = new class ($this->options) extends MockConnection {
+            #[Override]
             protected function _transRollback(): bool
             {
                 return false;
             }
 
+            #[Override]
             protected function isRetryableTransactionErrorCode(int|string $code): bool
             {
                 return $code === 1213;
@@ -937,6 +950,7 @@ final class BaseConnectionTest extends CIUnitTestCase
         $db = new class ($this->options) extends MockConnection {
             public int $queries = 0;
 
+            #[Override]
             public function query(string $sql, $binds = null, bool $setEscapeFlags = true, string $queryClass = ''): bool
             {
                 $this->queries++;
@@ -945,11 +959,13 @@ final class BaseConnectionTest extends CIUnitTestCase
                 return false;
             }
 
+            #[Override]
             protected function _transRollback(): bool
             {
                 return false;
             }
 
+            #[Override]
             protected function isRetryableTransactionErrorCode(int|string $code): bool
             {
                 return $code === 1213;
@@ -988,6 +1004,7 @@ final class BaseConnectionTest extends CIUnitTestCase
     public function testCallFunctionDoesNotDoublePrefixAlreadyPrefixedName(): void
     {
         $db = new class ($this->options) extends MockConnection {
+            #[Override]
             protected function getDriverFunctionPrefix(): string
             {
                 return 'str_';
@@ -1000,6 +1017,7 @@ final class BaseConnectionTest extends CIUnitTestCase
     public function testCallFunctionPrefixesUnprefixedName(): void
     {
         $db = new class ($this->options) extends MockConnection {
+            #[Override]
             protected function getDriverFunctionPrefix(): string
             {
                 return 'str_';

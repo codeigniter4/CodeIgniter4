@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\DataCaster\Cast;
 
+use Override;
+
 /**
  * (PHP) [int --> int       ] --> (DB driver) --> (DB column) int
  *       [    <-- int|string] <-- (DB driver) <-- (DB column) int
@@ -21,6 +23,7 @@ namespace CodeIgniter\DataCaster\Cast;
  */
 class IntegerCast extends BaseCast
 {
+    #[Override]
     public static function get(
         mixed $value,
         array $params = [],

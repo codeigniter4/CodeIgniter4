@@ -19,6 +19,7 @@ use CodeIgniter\CLI\Input\Argument;
 use CodeIgniter\CLI\Input\Option;
 use CodeIgniter\CLI\Output;
 use CodeIgniter\Publisher\Publisher;
+use Override;
 
 /**
  * Discovers all Publisher classes from the "Publishers/" directory
@@ -32,6 +33,7 @@ use CodeIgniter\Publisher\Publisher;
 )]
 class Publish extends AbstractCommand
 {
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -48,6 +50,7 @@ class Publish extends AbstractCommand
             ));
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         $directory = $arguments['directory'];

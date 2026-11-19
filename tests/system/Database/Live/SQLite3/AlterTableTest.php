@@ -20,6 +20,7 @@ use CodeIgniter\Database\SQLite3\Table;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 
@@ -42,6 +43,7 @@ final class AlterTableTest extends CIUnitTestCase
     private Table $table;
     private Forge $forge;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

@@ -17,6 +17,7 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Security\Exceptions\SecurityException;
+use Override;
 
 /**
  * InvalidChars filter.
@@ -47,6 +48,7 @@ class InvalidChars implements FilterInterface
      *
      * @param list<string>|null $arguments
      */
+    #[Override]
     public function before(RequestInterface $request, $arguments = null)
     {
         if (! $request instanceof IncomingRequest) {
@@ -74,6 +76,7 @@ class InvalidChars implements FilterInterface
      *
      * @param list<string>|null $arguments
      */
+    #[Override]
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
         return null;

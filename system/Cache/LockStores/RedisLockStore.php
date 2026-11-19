@@ -15,6 +15,7 @@ namespace CodeIgniter\Cache\LockStores;
 
 use CodeIgniter\Cache\Handlers\RedisHandler;
 use CodeIgniter\Cache\LockStoreInterface;
+use Override;
 use Redis;
 
 class RedisLockStore implements LockStoreInterface
@@ -25,6 +26,7 @@ class RedisLockStore implements LockStoreInterface
     ) {
     }
 
+    #[Override]
     public function acquireLock(string $key, string $owner, int $ttl): bool
     {
         $key = RedisHandler::validateKey($key, $this->prefix);
@@ -32,6 +34,7 @@ class RedisLockStore implements LockStoreInterface
         return (bool) $this->redis->set($key, $owner, ['nx', 'ex' => $ttl]);
     }
 
+    #[Override]
     public function releaseLock(string $key, string $owner): bool
     {
         $key = RedisHandler::validateKey($key, $this->prefix);
@@ -47,6 +50,7 @@ class RedisLockStore implements LockStoreInterface
         return (int) $this->redis->eval($script, [$key, $owner], 1) === 1;
     }
 
+    #[Override]
     public function forceReleaseLock(string $key): bool
     {
         $key     = RedisHandler::validateKey($key, $this->prefix);
@@ -55,6 +59,7 @@ class RedisLockStore implements LockStoreInterface
         return is_int($deleted) && $deleted >= 0;
     }
 
+    #[Override]
     public function refreshLock(string $key, string $owner, int $ttl): bool
     {
         $key = RedisHandler::validateKey($key, $this->prefix);
@@ -70,6 +75,7 @@ class RedisLockStore implements LockStoreInterface
         return (int) $this->redis->eval($script, [$key, $owner, $ttl], 1) === 1;
     }
 
+    #[Override]
     public function getLockOwner(string $key): ?string
     {
         $key   = RedisHandler::validateKey($key, $this->prefix);

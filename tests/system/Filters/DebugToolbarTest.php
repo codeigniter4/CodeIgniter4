@@ -22,6 +22,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Filters as FilterConfig;
+use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -39,6 +40,7 @@ final class DebugToolbarTest extends CIUnitTestCase
 
     private Response $response;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

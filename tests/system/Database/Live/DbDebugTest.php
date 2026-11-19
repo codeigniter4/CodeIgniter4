@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\Live;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -47,6 +48,7 @@ final class DbDebugTest extends CIUnitTestCase
         $this->assertFalse($result);
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         $this->enableDBDebug();

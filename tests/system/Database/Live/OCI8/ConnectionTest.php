@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\Live\OCI8;
 use CodeIgniter\Database\OCI8\Connection;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Database as DbConfig;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -30,6 +31,7 @@ final class ConnectionTest extends CIUnitTestCase
      */
     private array $settings = [];
 
+    #[Override]
     protected function setUp(): void
     {
         $dbConfig       = config(DbConfig::class);

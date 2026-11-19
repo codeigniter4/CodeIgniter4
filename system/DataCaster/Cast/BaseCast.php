@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\DataCaster\Cast;
 
 use CodeIgniter\Exceptions\InvalidArgumentException;
+use Override;
 
 /**
  * @template TPhpNativeValue
@@ -23,6 +24,7 @@ use CodeIgniter\Exceptions\InvalidArgumentException;
  */
 abstract class BaseCast implements CastInterface
 {
+    #[Override]
     public static function get(
         mixed $value,
         array $params = [],
@@ -31,6 +33,7 @@ abstract class BaseCast implements CastInterface
         return $value;
     }
 
+    #[Override]
     public static function set(
         mixed $value,
         array $params = [],

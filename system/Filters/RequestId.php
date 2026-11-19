@@ -15,6 +15,7 @@ namespace CodeIgniter\Filters;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Override;
 
 class RequestId implements FilterInterface
 {
@@ -24,6 +25,7 @@ class RequestId implements FilterInterface
      *
      * {@inheritDoc}
      */
+    #[Override]
     public function before(RequestInterface $request, $arguments = null): ?ResponseInterface
     {
         $requestId = trim($request->getHeaderLine('X-Request-ID'));
@@ -42,6 +44,7 @@ class RequestId implements FilterInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null): ?ResponseInterface
     {
         if (context()->has('request_id')) {

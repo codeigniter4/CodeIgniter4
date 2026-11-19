@@ -22,6 +22,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use Config\App;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -41,6 +42,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
 {
     use ControllerTestTrait;
 
+    #[Override]
     #[WithoutErrorHandler]
     protected function setUp(): void
     {

@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\Live\OCI8;
 use CodeIgniter\Database\Live\AbstractGetFieldDataTestCase;
 use Config\Database;
 use LogicException;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 
@@ -25,6 +26,7 @@ use stdClass;
 #[Group('DatabaseLive')]
 final class GetFieldDataTestCase extends AbstractGetFieldDataTestCase
 {
+    #[Override]
     protected function createForge(): void
     {
         if ($this->db->DBDriver !== 'OCI8') {
@@ -51,6 +53,7 @@ final class GetFieldDataTestCase extends AbstractGetFieldDataTestCase
         return $fields[$name];
     }
 
+    #[Override]
     public function testGetFieldDataDefault(): void
     {
         $this->createTableForDefault();

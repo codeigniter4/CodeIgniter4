@@ -15,6 +15,7 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use Override;
 
 /**
  * Representation of an outgoing, server-side response.
@@ -171,6 +172,7 @@ class Response extends Message implements ResponseInterface
      *
      * @return int Status code.
      */
+    #[Override]
     public function getStatusCode(): int
     {
         if ($this->statusCode === 0) {
@@ -194,6 +196,7 @@ class Response extends Message implements ResponseInterface
      *
      * @return string Reason phrase; must return an empty string if none present.
      */
+    #[Override]
     public function getReasonPhrase()
     {
         if ($this->reason === '') {

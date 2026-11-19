@@ -17,6 +17,7 @@ use Attribute;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\I18n\Time;
+use Override;
 
 /**
  * Cache Attribute
@@ -52,6 +53,7 @@ class Cache implements RouteAttributeInterface
     ) {
     }
 
+    #[Override]
     public function before(RequestInterface $request): RequestInterface|ResponseInterface|null
     {
         // Only cache GET requests
@@ -84,6 +86,7 @@ class Cache implements RouteAttributeInterface
         return null; // Continue to controller
     }
 
+    #[Override]
     public function after(RequestInterface $request, ResponseInterface $response): ?ResponseInterface
     {
         // Don't re-cache if response was already served from cache

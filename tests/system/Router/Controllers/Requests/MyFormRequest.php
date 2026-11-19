@@ -14,9 +14,11 @@ declare(strict_types=1);
 namespace CodeIgniter\Router\Controllers\Requests;
 
 use CodeIgniter\HTTP\FormRequest;
+use Override;
 
 class MyFormRequest extends FormRequest
 {
+    #[Override]
     public function rules(): array
     {
         return [];

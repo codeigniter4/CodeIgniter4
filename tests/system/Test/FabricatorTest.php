@@ -15,6 +15,7 @@ namespace CodeIgniter\Test;
 
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Model;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 use Tests\Support\Models\EntityModel;
@@ -41,6 +42,7 @@ final class FabricatorTest extends CIUnitTestCase
         'deleted_at' => 'date',
     ];
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

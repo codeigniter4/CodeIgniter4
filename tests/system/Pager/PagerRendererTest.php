@@ -15,6 +15,7 @@ namespace CodeIgniter\Pager;
 
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Test\CIUnitTestCase;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -27,6 +28,7 @@ final class PagerRendererTest extends CIUnitTestCase
     private string $expect;
     private URI $uri;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

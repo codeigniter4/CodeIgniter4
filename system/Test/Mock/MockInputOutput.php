@@ -18,6 +18,7 @@ use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use CodeIgniter\Test\PhpStreamWrapper;
+use Override;
 
 final class MockInputOutput extends InputOutput
 {
@@ -131,6 +132,7 @@ final class MockInputOutput extends InputOutput
         $this->priorFilterState = null;
     }
 
+    #[Override]
     public function input(?string $prefix = null): string
     {
         if ($this->inputs === []) {
@@ -163,11 +165,13 @@ final class MockInputOutput extends InputOutput
     /**
      * Whether the scripted answers have run out, so that a scripted empty answer before the last stays an empty line.
      */
+    #[Override]
     public function isAtEnd(): bool
     {
         return $this->inputs === [];
     }
 
+    #[Override]
     public function fwrite($handle, string $string): void
     {
         $this->addStreamFilters();

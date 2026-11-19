@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\Live\OCI8;
 use CodeIgniter\Database\OCI8\Connection as OCI8Connection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -28,6 +29,7 @@ final class CallStoredProcedureTest extends CIUnitTestCase
 
     protected $refresh = true;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

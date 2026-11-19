@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\DataCaster\Cast;
 
+use Override;
+
 /**
  * (PHP) [bool --> bool      ] --> (DB driver) --> (DB column) bool|int(0/1)
  *       [     <-- string|int] <-- (DB driver) <-- (DB column) bool|int(0/1)
@@ -21,6 +23,7 @@ namespace CodeIgniter\DataCaster\Cast;
  */
 class BooleanCast extends BaseCast
 {
+    #[Override]
     public static function get(
         mixed $value,
         array $params = [],

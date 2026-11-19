@@ -12,9 +12,11 @@ Database seeders are simple classes that must have a `run()` method, and extend 
 namespace App\Database\Seeds;
 
 use CodeIgniter\Database\Seeder;
+use Override;
 
 class SimpleSeeder extends Seeder
 {
+    #[Override]
     public function run()
     {
         $data = [
@@ -41,9 +43,11 @@ Seeders can call other seeders with the `call()` method. This allows you to easi
 namespace App\Database\Seeds;
 
 use CodeIgniter\Database\Seeder;
+use Override;
 
 class TestSeeder extends Seeder
 {
+    #[Override]
     public function run()
     {
         $this->call('UserSeeder');
@@ -61,9 +65,11 @@ You can also use a fully-qualified class name in the `call()` method, allowing y
 namespace App\Database\Seeds;
 
 use CodeIgniter\Database\Seeder;
+use Override;
 
 class SimpleSeeder extends Seeder
 {
+    #[Override]
     public function run()
     {
         $this->call('UserSeeder');
@@ -104,11 +110,13 @@ If a seeder needs to always use a specific database group regardless of the pare
 namespace App\Database\Seeds;
 
 use CodeIgniter\Database\Seeder;
+use Override;
 
 class UserSeeder extends Seeder
 {
     protected $DBGroup = 'group_name';
 
+    #[Override]
     public function run()
     {
         // ...

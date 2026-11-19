@@ -12,14 +12,17 @@ Often you will need sample data for your application to run its tests. The `Fabr
 namespace App\Models;
 
 use CodeIgniter\Test\Interfaces\FabricatorModel;
+use Override;
 
 class MyModel implements FabricatorModel
 {
+    #[Override]
     public function find($id = null)
     {
         // TODO: Implement find() method.
     }
 
+    #[Override]
     public function insert($row = null, bool $returnID = true)
     {
         // TODO: Implement insert() method.
@@ -132,9 +135,11 @@ namespace Tests\Support\Models;
 
 use App\Models\UserModel;
 use Faker\Generator;
+use Override;
 
 class UserFabricator extends UserModel
 {
+    #[Override]
     public function fake(Generator &$faker)
     {
         // ...

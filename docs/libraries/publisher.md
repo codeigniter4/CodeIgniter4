@@ -163,6 +163,7 @@ namespace App\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\Publisher\Publisher;
+use Override;
 use Throwable;
 
 class DailyPhoto extends BaseCommand
@@ -171,6 +172,7 @@ class DailyPhoto extends BaseCommand
     protected $name        = 'publish:daily';
     protected $description = 'Publishes the latest daily photo to the homepage.';
 
+    #[Override]
     public function run(array $params)
     {
         $publisher = new Publisher('/path/to/photos/', FCPATH . 'assets/images');
@@ -202,6 +204,7 @@ You want to integrate the frontend library "Bootstrap" into your project, but th
 namespace App\Publishers;
 
 use CodeIgniter\Publisher\Publisher;
+use Override;
 
 class BootstrapPublisher extends Publisher
 {
@@ -227,6 +230,7 @@ class BootstrapPublisher extends Publisher
      * Use the "publish" method to indicate that this
      * class is ready to be discovered and automated.
      */
+    #[Override]
     public function publish(): bool
     {
         return $this
@@ -291,6 +295,7 @@ namespace Math\Auth\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\Publisher\Publisher;
+use Override;
 use Throwable;
 
 class AuthPublish extends BaseCommand
@@ -299,6 +304,7 @@ class AuthPublish extends BaseCommand
     protected $name        = 'auth:publish';
     protected $description = 'Publish Auth components into the current application.';
 
+    #[Override]
     public function run(array $params)
     {
         // Use the Autoloader to figure out the module path

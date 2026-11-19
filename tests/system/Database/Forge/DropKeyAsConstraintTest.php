@@ -21,6 +21,7 @@ use CodeIgniter\Database\SQLSRV\Connection as SQLSRVConnection;
 use CodeIgniter\Database\SQLSRV\Forge as SQLSRVForge;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -31,6 +32,7 @@ final class DropKeyAsConstraintTest extends CIUnitTestCase
 {
     protected $db;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

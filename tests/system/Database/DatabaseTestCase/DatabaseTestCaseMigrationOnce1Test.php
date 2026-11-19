@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\DatabaseTestCase;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -35,6 +36,7 @@ final class DatabaseTestCaseMigrationOnce1Test extends CIUnitTestCase
         'Tests\Support\MigrationTestMigrations',
     ];
 
+    #[Override]
     protected function setUp(): void
     {
         $forge = Database::forge();
@@ -53,6 +55,7 @@ final class DatabaseTestCaseMigrationOnce1Test extends CIUnitTestCase
         );
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

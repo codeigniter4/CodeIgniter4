@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP\Exceptions;
 
 use CodeIgniter\Exceptions\FrameworkException;
+use Override;
 
 /**
  * Things that can go wrong with HTTP
@@ -202,6 +203,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
      *
      * @return static
      */
+    #[Override]
     public static function forInvalidFile(?string $path = null)
     {
         return new static(lang('HTTP.invalidFile'));

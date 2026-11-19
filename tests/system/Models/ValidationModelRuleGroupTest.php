@@ -15,6 +15,7 @@ namespace CodeIgniter\Models;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Model;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 use Tests\Support\Config\Validation;
@@ -29,6 +30,7 @@ use Tests\Support\Models\ValidModelRuleGroup;
 #[Group('DatabaseLive')]
 final class ValidationModelRuleGroupTest extends LiveModelTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -36,6 +38,7 @@ final class ValidationModelRuleGroupTest extends LiveModelTestCase
         $this->createModel(ValidModelRuleGroup::class);
     }
 
+    #[Override]
     protected function createModel(string $modelName, ?BaseConnection $db = null): Model
     {
         $config     = new Validation();

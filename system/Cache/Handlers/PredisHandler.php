@@ -20,6 +20,7 @@ use CodeIgniter\Exceptions\CriticalError;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
 use Exception;
+use Override;
 use Predis\Client;
 use Predis\Collection\Iterator\Keyspace;
 use Predis\Response\Status;
@@ -71,6 +72,7 @@ class PredisHandler extends BaseHandler implements LockStoreProviderInterface
         $this->config = array_merge($this->config, $config->redis);
     }
 
+    #[Override]
     public function initialize(): void
     {
         try {
@@ -82,6 +84,7 @@ class PredisHandler extends BaseHandler implements LockStoreProviderInterface
         }
     }
 
+    #[Override]
     public function get(string $key): mixed
     {
         $key = static::validateKey($key);
@@ -102,6 +105,7 @@ class PredisHandler extends BaseHandler implements LockStoreProviderInterface
         };
     }
 
+    #[Override]
     public function save(string $key, mixed $value, int $ttl = 60): bool
     {
         $key = static::validateKey($key);
@@ -135,6 +139,7 @@ class PredisHandler extends BaseHandler implements LockStoreProviderInterface
         return true;
     }
 
+    #[Override]
     public function delete(string $key): bool
     {
         $key = static::validateKey($key);
@@ -142,6 +147,7 @@ class PredisHandler extends BaseHandler implements LockStoreProviderInterface
         return $this->redis->del($key) === 1;
     }
 
+    #[Override]
     public function deleteMatching(string $pattern): int
     {
         $matchedKeys = [];
@@ -157,6 +163,7 @@ class PredisHandler extends BaseHandler implements LockStoreProviderInterface
         return $this->redis->del($matchedKeys);
     }
 
+    #[Override]
     public function increment(string $key, int $offset = 1): int
     {
         $key = static::validateKey($key);
@@ -164,6 +171,7 @@ class PredisHandler extends BaseHandler implements LockStoreProviderInterface
         return $this->redis->hincrby($key, '__ci_value', $offset);
     }
 
+    #[Override]
     public function decrement(string $key, int $offset = 1): int
     {
         $key = static::validateKey($key);
@@ -171,16 +179,19 @@ class PredisHandler extends BaseHandler implements LockStoreProviderInterface
         return $this->redis->hincrby($key, '__ci_value', -$offset);
     }
 
+    #[Override]
     public function clean(): bool
     {
         return $this->redis->flushdb()->getPayload() === 'OK';
     }
 
+    #[Override]
     public function getCacheInfo(): array
     {
         return $this->redis->info();
     }
 
+    #[Override]
     public function getMetaData(string $key): ?array
     {
         $key = static::validateKey($key);
@@ -201,17 +212,20 @@ class PredisHandler extends BaseHandler implements LockStoreProviderInterface
         return null;
     }
 
+    #[Override]
     public function isSupported(): bool
     {
         return class_exists(Client::class);
     }
 
+    #[Override]
     public function lockStore(): LockStoreInterface
     {
         // Predis applies the configured prefix at the client level.
         return $this->lockStore ??= new PredisLockStore($this->redis);
     }
 
+    #[Override]
     public function ping(): bool
     {
         try {
@@ -227,6 +241,7 @@ class PredisHandler extends BaseHandler implements LockStoreProviderInterface
         }
     }
 
+    #[Override]
     public function reconnect(): bool
     {
         try {

@@ -18,6 +18,7 @@ use CodeIgniter\Files\Exceptions\FileException;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use Countable;
 use IteratorAggregate;
+use Override;
 use Traversable;
 
 /**
@@ -385,6 +386,7 @@ class FileCollection implements Countable, IteratorAggregate
      * Returns the current number of files in the collection.
      * Fulfills Countable.
      */
+    #[Override]
     public function count(): int
     {
         return count($this->files);
@@ -397,6 +399,7 @@ class FileCollection implements Countable, IteratorAggregate
      *
      * @throws FileNotFoundException
      */
+    #[Override]
     public function getIterator(): Traversable
     {
         foreach ($this->get() as $file) {

@@ -17,6 +17,7 @@ use CodeIgniter\I18n\Time;
 use CodeIgniter\Session\Exceptions\SessionException;
 use CodeIgniter\Session\PersistsConnection;
 use Config\Session as SessionConfig;
+use Override;
 use Redis;
 use RedisException;
 
@@ -172,6 +173,7 @@ class RedisHandler extends BaseHandler
      *
      * @throws RedisException
      */
+    #[Override]
     public function open($path, $name): bool
     {
         if ($this->savePath === [] || $this->savePath === '') {
@@ -225,6 +227,7 @@ class RedisHandler extends BaseHandler
      *
      * @throws RedisException
      */
+    #[Override]
     public function read($id): false|string
     {
         if (isset($this->redis) && $this->lockSession($id)) {
@@ -254,6 +257,7 @@ class RedisHandler extends BaseHandler
      *
      * @throws RedisException
      */
+    #[Override]
     public function write($id, $data): bool
     {
         if (! isset($this->redis)) {
@@ -292,6 +296,7 @@ class RedisHandler extends BaseHandler
     /**
      * Closes the current session.
      */
+    #[Override]
     public function close(): bool
     {
         if (isset($this->redis)) {
@@ -318,6 +323,7 @@ class RedisHandler extends BaseHandler
      *
      * @throws RedisException
      */
+    #[Override]
     public function destroy($id): bool
     {
         if (isset($this->redis, $this->lockKey)) {
@@ -339,6 +345,7 @@ class RedisHandler extends BaseHandler
      * @param int $max_lifetime Sessions that have not updated
      *                          for the last max_lifetime seconds will be removed.
      */
+    #[Override]
     public function gc(int $max_lifetime): int
     {
         return 1;
@@ -351,6 +358,7 @@ class RedisHandler extends BaseHandler
      *
      * @throws RedisException
      */
+    #[Override]
     protected function lockSession(string $sessionID): bool
     {
         $lockKey = $this->keyPrefix . $sessionID . ':lock';
@@ -403,6 +411,7 @@ class RedisHandler extends BaseHandler
      *
      * @throws RedisException
      */
+    #[Override]
     protected function releaseLock(): bool
     {
         if (isset($this->redis, $this->lockKey) && $this->lock) {

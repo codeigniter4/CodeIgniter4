@@ -628,15 +628,18 @@ First, you need to create a handler class for your type. Let's say the class wil
 namespace App\Entities\Cast;
 
 use CodeIgniter\Entity\Cast\BaseCast;
+use Override;
 
 // The class must inherit the CodeIgniter\Entity\Cast\BaseCast class
 class CastBase64 extends BaseCast
 {
+    #[Override]
     public static function get($value, array $params = [])
     {
         return base64_decode($value, true);
     }
 
+    #[Override]
     public static function set($value, array $params = [])
     {
         return base64_encode($value);
@@ -680,9 +683,11 @@ If you don't need to change values when getting or setting a value, just don't i
 namespace App\Entities\Cast;
 
 use CodeIgniter\Entity\Cast\BaseCast;
+use Override;
 
 class CastBase64 extends BaseCast
 {
+    #[Override]
     public static function get($value, array $params = [])
     {
         return base64_decode($value, true);
@@ -721,9 +726,11 @@ class MyEntity extends Entity
 namespace App\Entities\Cast;
 
 use CodeIgniter\Entity\Cast\BaseCast;
+use Override;
 
 class SomeHandler extends BaseCast
 {
+    #[Override]
     public static function get($value, array $params = [])
     {
         var_dump($params);

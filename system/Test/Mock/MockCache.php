@@ -19,6 +19,7 @@ use CodeIgniter\Cache\Handlers\BaseHandler;
 use CodeIgniter\Cache\LockStoreInterface;
 use CodeIgniter\Cache\LockStoreProviderInterface;
 use CodeIgniter\I18n\Time;
+use Override;
 use PHPUnit\Framework\Assert;
 
 class MockCache extends BaseHandler implements CacheInterface, LockStoreProviderInterface
@@ -49,6 +50,7 @@ class MockCache extends BaseHandler implements CacheInterface, LockStoreProvider
     /**
      * Takes care of any handler-specific setup that must be done.
      */
+    #[Override]
     public function initialize(): void
     {
     }
@@ -60,6 +62,7 @@ class MockCache extends BaseHandler implements CacheInterface, LockStoreProvider
      *
      * @return bool|null
      */
+    #[Override]
     public function get(string $key): mixed
     {
         $key = static::validateKey($key, $this->prefix);
@@ -72,6 +75,7 @@ class MockCache extends BaseHandler implements CacheInterface, LockStoreProvider
      *
      * @return bool|null
      */
+    #[Override]
     public function remember(string $key, callable|int $ttl, Closure $callback): mixed
     {
         $value = $this->get($key);
@@ -101,6 +105,7 @@ class MockCache extends BaseHandler implements CacheInterface, LockStoreProvider
      * @param mixed  $value the data to save
      * @param int    $ttl   Time To Live, in seconds (default 60)
      */
+    #[Override]
     public function save(string $key, $value, int $ttl = 60): bool
     {
         if ($this->bypass) {
@@ -118,6 +123,7 @@ class MockCache extends BaseHandler implements CacheInterface, LockStoreProvider
     /**
      * Deletes a specific item from the cache store.
      */
+    #[Override]
     public function delete(string $key): bool
     {
         $key = static::validateKey($key, $this->prefix);
@@ -134,6 +140,7 @@ class MockCache extends BaseHandler implements CacheInterface, LockStoreProvider
     /**
      * Deletes items from the cache store matching a given pattern.
      */
+    #[Override]
     public function deleteMatching(string $pattern): int
     {
         $count = 0;
@@ -151,6 +158,7 @@ class MockCache extends BaseHandler implements CacheInterface, LockStoreProvider
     /**
      * Performs atomic incrementation of a raw stored value.
      */
+    #[Override]
     public function increment(string $key, int $offset = 1): bool
     {
         $key  = static::validateKey($key, $this->prefix);
@@ -168,6 +176,7 @@ class MockCache extends BaseHandler implements CacheInterface, LockStoreProvider
     /**
      * Performs atomic decrementation of a raw stored value.
      */
+    #[Override]
     public function decrement(string $key, int $offset = 1): bool
     {
         $key = static::validateKey($key, $this->prefix);
@@ -186,6 +195,7 @@ class MockCache extends BaseHandler implements CacheInterface, LockStoreProvider
     /**
      * Will delete all items in the entire cache.
      */
+    #[Override]
     public function clean(): true
     {
         $this->cache       = [];
@@ -203,6 +213,7 @@ class MockCache extends BaseHandler implements CacheInterface, LockStoreProvider
      *
      * @return list<string> Keys currently present in the store
      */
+    #[Override]
     public function getCacheInfo(): array
     {
         return array_keys($this->cache);
@@ -215,6 +226,7 @@ class MockCache extends BaseHandler implements CacheInterface, LockStoreProvider
      *                                      otherwise, array with the 'expire' key for
      *                                      absolute epoch expiry (or null).
      */
+    #[Override]
     public function getMetaData(string $key): ?array
     {
         // Misses return null
@@ -233,11 +245,13 @@ class MockCache extends BaseHandler implements CacheInterface, LockStoreProvider
     /**
      * Determine if the driver is supported on this system.
      */
+    #[Override]
     public function isSupported(): bool
     {
         return true;
     }
 
+    #[Override]
     public function lockStore(): LockStoreInterface
     {
         return $this->lockStore ??= new MockLockStore();

@@ -17,6 +17,7 @@ use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Database\Query;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
@@ -31,6 +32,7 @@ final class LastInsertIDTest extends CIUnitTestCase
     protected $refresh = true;
     protected $seed    = CITestSeeder::class;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

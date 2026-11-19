@@ -15,6 +15,7 @@ namespace CodeIgniter\Database;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Database;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Database\Seeds\SeederWithDBGroup;
 use Tests\Support\Database\Seeds\SeederWithoutDBGroup;
@@ -25,6 +26,7 @@ use Tests\Support\Database\Seeds\SeederWithoutDBGroup;
 #[Group('DatabaseLive')]
 final class DatabaseSeederTest extends CIUnitTestCase
 {
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

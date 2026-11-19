@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Typography;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -24,6 +25,7 @@ final class TypographyTest extends CIUnitTestCase
 {
     private Typography $typography;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

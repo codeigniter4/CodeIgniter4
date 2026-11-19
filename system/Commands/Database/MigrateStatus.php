@@ -18,6 +18,7 @@ use CodeIgniter\CLI\Attributes\Command;
 use CodeIgniter\CLI\Input\Option;
 use CodeIgniter\CLI\Table;
 use CodeIgniter\Database\MigrationRunner;
+use Override;
 
 /**
  * Displays a list of all migrations and whether they've been run or not.
@@ -43,6 +44,7 @@ class MigrateStatus extends AbstractCommand
         'Psr\Log',
     ];
 
+    #[Override]
     protected function configure(): void
     {
         $this->addOption(new Option(
@@ -54,6 +56,7 @@ class MigrateStatus extends AbstractCommand
         ));
     }
 
+    #[Override]
     protected function execute(array $arguments, array $options): int
     {
         /** @var MigrationRunner $runner */

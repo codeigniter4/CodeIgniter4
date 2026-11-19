@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\CLI;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use Override;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -41,6 +42,7 @@ final class TerminalTest extends CIUnitTestCase
      */
     private array $savedHints = [];
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -56,6 +58,7 @@ final class TerminalTest extends CIUnitTestCase
         }
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         $superglobals = service('superglobals');

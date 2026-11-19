@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\MySQLi;
 
 use CodeIgniter\Database\Forge as BaseForge;
+use Override;
 
 /**
  * Forge for MySQLi
@@ -98,6 +99,7 @@ class Forge extends BaseForge
      *
      * @param array<string, mixed> $attributes Associative array of table attributes
      */
+    #[Override]
     protected function _createTableAttributes(array $attributes): string
     {
         $sql = '';
@@ -125,6 +127,7 @@ class Forge extends BaseForge
         return $sql;
     }
 
+    #[Override]
     protected function _alterTable(string $alterType, string $table, $processedFields)
     {
         if ($alterType === 'DROP') {
@@ -153,6 +156,7 @@ class Forge extends BaseForge
     /**
      * Process column
      */
+    #[Override]
     protected function _processColumn(array $processedField): string
     {
         $extraClause = isset($processedField['after']) ? ' AFTER ' . $this->db->escapeIdentifiers($processedField['after']) : '';
@@ -173,6 +177,7 @@ class Forge extends BaseForge
                 . $extraClause;
     }
 
+    #[Override]
     protected function _processIndexes(string $table, bool $asQuery = false): array
     {
         $sqls  = [''];
@@ -222,6 +227,7 @@ class Forge extends BaseForge
     /**
      * Drop Key
      */
+    #[Override]
     public function dropKey(string $table, string $keyName, bool $prefixKeyName = true): bool
     {
         $sql = sprintf(
@@ -236,6 +242,7 @@ class Forge extends BaseForge
     /**
      * Drop Primary Key
      */
+    #[Override]
     public function dropPrimaryKey(string $table, string $keyName = ''): bool
     {
         $sql = sprintf(
