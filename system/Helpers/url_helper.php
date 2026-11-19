@@ -548,6 +548,17 @@ if (! function_exists('parse_subdomain')) {
     {
         $host ??= service('request')->getUri()->getHost();
 
+        // Handle IPv6 enclosed in brackets, with or without port: e.g. [::1] or [::1]:8080
+        if (str_starts_with($host, '[')) {
+            return '';
+        }
+
+        // If host has a port (e.g. host:8080 or 192.168.1.1:8080), strip the port.
+        // IPv6 addresses without brackets have multiple colons and are handled by FILTER_VALIDATE_IP.
+        if (substr_count($host, ':') === 1) {
+            $host = explode(':', $host, 2)[0];
+        }
+
         // Handle localhost and IP addresses - they don't have subdomains
         if ($host === 'localhost' || filter_var($host, FILTER_VALIDATE_IP)) {
             return '';
