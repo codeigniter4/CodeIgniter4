@@ -701,13 +701,16 @@ final class SessionTest extends CIUnitTestCase
     {
         service('superglobals')->setCookie('ci_session', 'invalid-session-id!');
 
-        $this->assertSame('invalid-session-id!', service('request')->getCookie('ci_session'));
+        $request = service('request');
+        Services::injectMock('request', $request);
+
+        $this->assertSame('invalid-session-id!', $request->getCookie('ci_session'));
 
         $session = $this->getInstance();
         $session->start();
 
         $this->assertNull(service('superglobals')->cookie('ci_session'));
-        $this->assertNull(service('request')->getCookie('ci_session'));
+        $this->assertNull($request->getCookie('ci_session'));
     }
 
     public function testStartScopesInvalidSessionCookieRemovalToSessionCookie(): void
@@ -717,6 +720,8 @@ final class SessionTest extends CIUnitTestCase
         $superglobals->setCookie('other_cookie', 'initial-value');
 
         $request = service('request');
+        Services::injectMock('request', $request);
+
         $this->assertSame('initial-value', $request->getCookie('other_cookie'));
 
         $superglobals->setCookie('other_cookie', 'updated-value');
