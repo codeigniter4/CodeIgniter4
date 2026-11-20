@@ -93,7 +93,7 @@
             "CodeIgniter\\ComposerScripts::postUpdate"
         ],
         "post-autoload-dump": [
-            "@composer update --ansi --working-dir=utils"
+            "CodeIgniter\\ComposerScripts::postUtils"
         ],
         "analyze": [
             "Composer\\Config::disableProcessTimeout",

@@ -171,4 +171,13 @@ final class ComposerScripts
             @copy($originDir . $kintInit, $targetDir . $kintInit);
         }
     }
+
+    private static function postUtils(): void
+    {
+        if (PHP_VERSION_ID >= 80600) {
+            passthru('composer update --ansi --working-dir=utils --ignore-platform-req=php');
+        } else {
+            passthru('composer update --ansi --working-dir=utils');
+        }
+    }
 }
