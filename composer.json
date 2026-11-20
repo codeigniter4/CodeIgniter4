@@ -20,7 +20,7 @@
         "boundwize/structarmed": "^0.21",
         "codeigniter/phpstan-codeigniter": "^2.4",
         "fakerphp/faker": "^1.24",
-        "kint-php/kint": "^6.1",
+        "kint-php/kint": "^6.1.1",
         "mikey179/vfsstream": "^1.6.12",
         "nexusphp/tachycardia": "^2.0",
         "phpstan/extension-installer": "^1.4",

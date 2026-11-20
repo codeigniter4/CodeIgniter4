@@ -46,6 +46,7 @@ if (\version_compare(PHP_VERSION, '7.4') < 0) {
 \define('KINT_PHP84', \version_compare(PHP_VERSION, '8.4') >= 0);
 \define('KINT_PHP8412', \version_compare(PHP_VERSION, '8.4.12') >= 0);
 \define('KINT_PHP85', \version_compare(PHP_VERSION, '8.5') >= 0);
+\define('KINT_PHP86', \version_compare(PHP_VERSION, '8.6') >= 0);
 
 // Dynamic default settings
 if (\strlen((string) \ini_get('xdebug.file_link_format')) > 0) {
