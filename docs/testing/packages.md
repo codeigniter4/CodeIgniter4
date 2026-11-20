@@ -63,12 +63,12 @@ The following methods can be overridden:
 
 - `getFixtures()` returns a list of directories that are mirrored onto the root of the skeleton, in order, after the framework files. A later directory overwrites an earlier one. Use them to add controllers, routes, configuration or a `Registrar`, for example **Fixtures/app/Config/Routes.php**. A fixture **app/Config/Paths.php** must keep the default `$systemDirectory`, which `build()` then points at the framework.
 - `getEnv()` returns settings for the skeleton's **.env** file. Values are quoted, so they may contain spaces, `#` and quotes, but a value with a line break is refused. Names may only contain letters, digits, `.`, `_`, `-` and `\`, which covers forms such as `app.baseURL` and `Config\App.baseURL`. `CI_ENVIRONMENT` defaults to `development`, because `spark` does not run in the `testing` environment.
-- `getFrameworkPath()` returns the framework that the skeleton is copied from, which is the one that provides the orchestrator. Expose it from your subclass if your tests need the framework's location.
+- `getFrameworkPath()` returns the framework that the skeleton is copied from, which is the one that provides the orchestrator.
 - `afterBuild()` runs when the skeleton is complete, for example to create a database.
-- `getPath()` returns the skeleton's location, **build/orchestrator** in the package root by default. A token is appended to it so that parallel processes do not share a skeleton. The token is read from `ORCHESTRATOR_TEST_TOKEN`, or else from `TEST_TOKEN`, which parallel runners such as ParaTest set for each process. It may only contain letters, digits, hyphens and underscores: an invalid `ORCHESTRATOR_TEST_TOKEN` throws an exception, and an invalid `TEST_TOKEN` is ignored. Set `ORCHESTRATOR_TEST_TOKEN` to an empty string to opt out of `TEST_TOKEN`.
+- `getSkeletonPath()` returns the skeleton's location, **build/orchestrator** in the package root by default. `getPath()` appends `-console` to it after `bootConsole()`, and then a token so that parallel processes do not share a skeleton. The token is read from `ORCHESTRATOR_TEST_TOKEN`, or else from `TEST_TOKEN`, which parallel runners such as ParaTest set for each process. It may only contain letters, digits, hyphens and underscores: an invalid `ORCHESTRATOR_TEST_TOKEN` throws an exception, and an invalid `TEST_TOKEN` is ignored. Set `ORCHESTRATOR_TEST_TOKEN` to an empty string to opt out of `TEST_TOKEN`.
 
 !!! note "Note"
-    The skeleton is generated, so add its location to your **.gitignore**, which is **build/** unless `getPath()` is overridden.
+    The skeleton is generated, so add its location to your **.gitignore**, which is **build/** unless `getSkeletonPath()` is overridden.
 
 !!! note "Note"
     The skeleton is copied from the framework installed with your package, so only that version is tested. To build it from another version, keep a copy of that framework in a separate directory and return its path from `getFrameworkPath()`.
@@ -93,6 +93,47 @@ Point `bootstrap` at this file in your **phpunit.dist.xml**. Since it replaces C
 
 !!! important "Important"
     The path constants and the framework's static state last for the whole process, so one process hosts one skeleton.
+
+`getPathConstants()` returns the constants that `boot()` defines, keyed by name: `HOMEPATH`, `CONFIGPATH` and `PUBLICPATH` for the skeleton, and `TESTPATH` and, when **tests/_support** exists, `SUPPORTPATH` for the package. Call it after `build()`. Use it with `getFrameworkPath()` to load another bootstrap file against the skeleton:
+
+```php
+$orchestrator->build();
+
+foreach ($orchestrator->getPathConstants() as $name => $value) {
+    defined($name) || define($name, $value);
+}
+
+require $orchestrator->getFrameworkPath() . '/system/Test/bootstrap.php';
+```
+
+## Booting Outside PHPUnit
+
+Code that runs outside PHPUnit, such as a package script or a static analysis bootstrap file, can call `bootConsole()` to use the framework's functions and services, like `env()`, `helper()` and `service()`. It loads the framework's **system/util_bootstrap.php** against a skeleton of its own, in **build/orchestrator-console** by default, so that it does not share a skeleton with a running test suite:
+
+```php
+<?php
+
+// bin/blog
+
+use Acme\Blog\Tests\BlogOrchestrator;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+(new BlogOrchestrator())->bootConsole();
+```
+
+Unlike `boot()`, it builds the skeleton only when it is missing or a previous build did not finish. A reused skeleton skips `getEnv()` and `afterBuild()`, so work in those hooks must tolerate being skipped. Pass `rebuild: true` to rebuild it after changing your fixtures or updating the framework, since `build()` called before `bootConsole()` rebuilds the PHPUnit skeleton instead, and called after it, changes files that are already loaded:
+
+```php
+(new BlogOrchestrator())->bootConsole(rebuild: true);
+```
+
+The environment is read from `CI_ENVIRONMENT`, `development` by default, a `CLIRequest` is created, and the routes are loaded, as with **spark**. Routes are loaded last, so an error in a route file is thrown from `bootConsole()`. The test helpers of **system/Test/bootstrap.php**, like the mocked `is_cli()`, are not loaded.
+
+!!! note "Note"
+    Processes that boot at the same time share **build/orchestrator-console**, so a build in one removes the skeleton in use by the other. Give each tool its own `ORCHESTRATOR_TEST_TOKEN`, as described under `getSkeletonPath()`.
+
+After `bootConsole()`, the instance keeps addressing the console skeleton, and `boot()` on it throws an exception.
 
 ## Testing Through spark
 

@@ -31,9 +31,9 @@ final class OrchestratorStub extends AbstractOrchestrator
     ) {
     }
 
-    public function getPath(): string
+    protected function getSkeletonPath(): string
     {
-        return $this->skeleton !== '' ? $this->skeleton : parent::getPath();
+        return $this->skeleton !== '' ? $this->skeleton : parent::getSkeletonPath();
     }
 
     protected function getPackageRoot(): string
