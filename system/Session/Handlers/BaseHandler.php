@@ -114,6 +114,8 @@ abstract class BaseHandler implements SessionHandlerInterface
      */
     protected $ipAddress;
 
+    private string $createdSid = '';
+
     public function __construct(SessionConfig $config, string $ipAddress)
     {
         // Store Session configurations
@@ -130,6 +132,22 @@ abstract class BaseHandler implements SessionHandlerInterface
         $this->cookieSameSite = $cookie->samesite;
 
         $this->ipAddress = $ipAddress;
+    }
+
+    /**
+     * Generates a session ID of 32 hexadecimal characters, as enforced by `Session::configure()`.
+     */
+    public function create_sid(): string
+    {
+        return $this->createdSid = bin2hex(random_bytes(16));
+    }
+
+    /**
+     * Reports the ID of the last `create_sid()` call as unused and accepts every other ID.
+     */
+    public function validateId(string $id): bool
+    {
+        return $id !== $this->createdSid;
     }
 
     /**
