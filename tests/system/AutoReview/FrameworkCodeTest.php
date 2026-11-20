@@ -59,7 +59,7 @@ final class FrameworkCodeTest extends TestCase
         $deprecationsWithoutVersion = [];
 
         foreach ($this->getSourceFiles() as $file) {
-            $lines = file($file, FILE_IGNORE_NEW_LINES);
+            $lines = @file($file, FILE_IGNORE_NEW_LINES);
 
             if ($lines === false) {
                 continue;
@@ -156,6 +156,7 @@ final class FrameworkCodeTest extends TestCase
                 FilesystemIterator::SKIP_DOTS,
             ),
             RecursiveIteratorIterator::CHILD_FIRST,
+            RecursiveIteratorIterator::CATCH_GET_CHILD,
         );
 
         $testClasses = array_map(
@@ -211,12 +212,17 @@ final class FrameworkCodeTest extends TestCase
                     FilesystemIterator::SKIP_DOTS,
                 ),
                 RecursiveIteratorIterator::CHILD_FIRST,
+                RecursiveIteratorIterator::CATCH_GET_CHILD,
             );
 
             /** @var SplFileInfo $file */
             foreach ($iterator as $file) {
                 if ($file->isFile() && str_ends_with($file->getPathname(), '.php')) {
-                    $phpFiles[] = $file->getRealPath();
+                    $realPath = $file->getRealPath();
+
+                    if ($realPath !== false) {
+                        $phpFiles[] = $realPath;
+                    }
                 }
             }
         }
