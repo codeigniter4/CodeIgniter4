@@ -131,6 +131,34 @@ final class BaseHandlerTest extends CIUnitTestCase
         };
     }
 
+    public function testCreateSidReturnsUniqueThirtyTwoHexCharacters(): void
+    {
+        $handler = $this->createHandler();
+
+        $first  = $handler->create_sid();
+        $second = $handler->create_sid();
+
+        $this->assertMatchesRegularExpression('/\A[0-9a-f]{32}\z/', $first);
+        $this->assertMatchesRegularExpression('/\A[0-9a-f]{32}\z/', $second);
+        $this->assertNotSame($first, $second);
+    }
+
+    public function testValidateIdReportsOnlyTheCreatedSidAsUnused(): void
+    {
+        $handler = $this->createHandler();
+
+        $created = $handler->create_sid();
+
+        $this->assertFalse($handler->validateId($created));
+        $this->assertTrue($handler->validateId(str_repeat('ab', 16)));
+        $this->assertTrue($handler->validateId('invalid-session-id!'));
+
+        $newer = $handler->create_sid();
+
+        $this->assertFalse($handler->validateId($newer));
+        $this->assertTrue($handler->validateId($created));
+    }
+
     public function testConstructorInitializesCookieSameSiteFromConfig(): void
     {
         $cookieConfig           = new CookieConfig();
