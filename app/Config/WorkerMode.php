@@ -24,8 +24,13 @@ class WorkerMode
      * - `commands`: CLI commands registry
      * - `codeigniter`: Main application instance
      * - `superglobals`: Superglobals wrapper
-     * - `routes`: Router configuration
      * - `cache`: Cache instance
+     *
+     * The `routes` service is intentionally not persistent. `RouteCollection`
+     * reads the request host and drops the routes limited with the `hostname`
+     * or `subdomain` options while the route file is loaded. Persisting it
+     * would make those decisions once, from the first request the worker
+     * served, so route definitions are loaded again for each request.
      *
      * @var list<string>
      */
@@ -36,7 +41,6 @@ class WorkerMode
         'commands',
         'codeigniter',
         'superglobals',
-        'routes',
         'cache',
     ];
 
