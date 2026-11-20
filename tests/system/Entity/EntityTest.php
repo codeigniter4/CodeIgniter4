@@ -1856,7 +1856,7 @@ final class EntityTest extends CIUnitTestCase
             ];
             protected $castHandlers = [
                 'base64'   => CastBase64::class,
-                'someType' => NotExtendsBaseCast::class,
+                'someType' => NotExtendsBaseCast::class, // @phpstan-ignore codeigniter.castHandlerInvalid
                 'type'     => CastPassParameters::class,
             ];
         };
