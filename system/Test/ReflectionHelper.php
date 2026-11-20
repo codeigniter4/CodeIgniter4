@@ -38,9 +38,9 @@ trait ReflectionHelper
     public static function getPrivateMethodInvoker($obj, $method)
     {
         $refMethod = new ReflectionMethod($obj, $method);
-        $obj       = (gettype($obj) === 'object') ? $obj : null;
+        $object    = gettype($obj) === 'object' && ! $refMethod->isStatic() ? $obj : null;
 
-        return static fn (...$args): mixed => $refMethod->invokeArgs($obj, $args);
+        return static fn (...$args): mixed => $refMethod->invokeArgs($object, $args);
     }
 
     /**
