@@ -21,7 +21,6 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Exceptions as ExceptionsConfig;
 use ErrorException;
-use Psr\Log\LogLevel;
 use Throwable;
 
 /**
@@ -141,8 +140,8 @@ class Exceptions
     public function errorHandler(int $severity, string $message, ?string $file = null, ?int $line = null)
     {
         if ($this->isDeprecationError($severity)) {
-            if ($this->isSessionSidDeprecationError($message, $file, $line)) {
-                return true;
+            if ($this->isSessionSidDeprecationError($message) || $this->isSplObjectHashDeprecationError($message, $file)) {
+                return $this->handleDeprecationError($message, $file, $line);
             }
 
             if (! $this->config->logDeprecations || (bool) env('CODEIGNITER_SCREAM_DEPRECATIONS')) {
@@ -188,25 +187,28 @@ class Exceptions
     }
 
     /**
-     * Handles session.sid_length and session.sid_bits_per_character deprecations in PHP 8.4.
+     * Detects the `session.sid_length` and `session.sid_bits_per_character` deprecations in PHP 8.4.
      */
-    private function isSessionSidDeprecationError(string $message, ?string $file = null, ?int $line = null): bool
+    private function isSessionSidDeprecationError(string $message): bool
     {
-        if (PHP_VERSION_ID >= 80400 && str_contains($message, 'session.sid_')) {
-            log_message(
-                LogLevel::WARNING,
-                '[DEPRECATED] {message} in {errFile} on line {errLine}.',
-                [
-                    'message' => $message,
-                    'errFile' => clean_path($file ?? ''),
-                    'errLine' => $line ?? 0,
-                ],
-            );
+        return PHP_VERSION_ID >= 80400 && str_contains($message, 'session.sid_');
+    }
 
-            return true;
+    /**
+     * Detects the `spl_object_hash()` deprecation in PHP 8.6 raised by `mikey179/vfsstream` and `kint-php/kint`.
+     */
+    private function isSplObjectHashDeprecationError(string $message, ?string $file = null): bool
+    {
+        if (! str_contains($message, 'spl_object_hash()')) {
+            return false;
         }
 
-        return false;
+        $file = str_replace('\\', '/', $file ?? '');
+
+        return str_contains($file, '/mikey179/vfsstream/')
+            // @todo 4.8.0 Remove these checks once Kint v7 is released
+            || str_contains($file, '/kint-php/kint/')
+            || str_contains($file, '/system/ThirdParty/Kint/');
     }
 
     /**
