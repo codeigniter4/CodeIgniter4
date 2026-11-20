@@ -15,6 +15,7 @@ namespace CodeIgniter\Helpers;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use PHPUnit\Framework\Attributes\Group;
+use ValueError;
 
 /**
  * @internal
@@ -53,12 +54,22 @@ final class NumberHelperTest extends CIUnitTestCase
     public function testFormatNumber(): void
     {
         $this->assertSame('123,456', format_number(123456, 0, 'en_US'));
+        $this->assertSame('123.456', format_number(123456, 0, 'de_DE'));
+        $this->assertSame('123.456', format_number(123456, 0, 'id_ID'));
     }
 
     public function testFormatNumberWithPrecision(): void
     {
         $this->assertSame('123,456.8', format_number(123456.789, 1, 'en_US'));
         $this->assertSame('123,456.79', format_number(123456.789, 2, 'en_US'));
+    }
+
+    public function testFormatNumberWithNegativePrecisionThrowsValueError(): void
+    {
+        $this->expectException(ValueError::class);
+        $this->expectExceptionMessage('str_repeat(): Argument #2 ($times) must be greater than or equal to 0');
+
+        format_number(123456, -1, 'en_US');
     }
 
     public function testFormattingOptions(): void
@@ -83,6 +94,7 @@ final class NumberHelperTest extends CIUnitTestCase
     public function testKbFormat(): void
     {
         $this->assertSame('4.5 KB', number_to_size(4567, 1, 'en_US'));
+        $this->assertSame('1 KB', number_to_size(1024, 0, 'de_DE'));
     }
 
     public function testKbFormatMedium(): void
@@ -122,6 +134,7 @@ final class NumberHelperTest extends CIUnitTestCase
     public function testThousandsInt(): void
     {
         $this->assertSame('123 thousand', number_to_amount(123000, 0, 'en_US'));
+        $this->assertSame('123 thousand', number_to_amount(123000, 0, 'de_DE'));
     }
 
     public function testMillions(): void
