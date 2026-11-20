@@ -16,6 +16,7 @@ namespace CodeIgniter\Database;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use Config\Database as DbConfig;
+use Throwable;
 
 class Config extends BaseConfig
 {
@@ -181,7 +182,21 @@ class Config extends BaseConfig
                 log_message('error', "Uncommitted transaction detected in database group '{$group}'. Transactions must be completed before request ends.");
 
                 while ($connection->transDepth > 0) {
-                    $connection->transRollback();
+                    $transDepth = $connection->transDepth;
+
+                    try {
+                        $rolledBack = $connection->transRollback();
+                    } catch (Throwable $e) {
+                        log_message('error', "Database: Failed to roll back an uncommitted transaction in database group '{$group}'. Transaction cleanup aborted: " . $e->getMessage());
+
+                        break;
+                    }
+
+                    if (! $rolledBack || $connection->transDepth >= $transDepth) {
+                        log_message('error', "Database: Failed to roll back an uncommitted transaction in database group '{$group}'. Transaction cleanup aborted.");
+
+                        break;
+                    }
                 }
             }
 
