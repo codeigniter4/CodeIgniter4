@@ -73,6 +73,8 @@ final class ArrayHelperDotHasTest extends CIUnitTestCase
         $this->assertTrue(ArrayHelper::dotHas('contacts.*.1.age', $this->array));
         $this->assertTrue(ArrayHelper::dotHas('contacts.*.0.name', $this->array));
         $this->assertFalse(ArrayHelper::dotHas('contacts.*.1.name', $this->array));
+        $this->assertFalse(ArrayHelper::dotHas('*.name', []));
+        $this->assertFalse(ArrayHelper::dotHas('contacts.friends.*.name', ['contacts' => ['friends' => []]]));
     }
 
     public function testDotHasWithZeroKeyAndNonArrayValues(): void
