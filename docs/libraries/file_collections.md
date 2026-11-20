@@ -34,11 +34,13 @@ When your collection is complete, you can use `get()` to retrieve the final list
 ```php
 <?php
 
+use CodeIgniter\Files\FileSizeUnit;
+
 echo 'My files: ' . implode(PHP_EOL, $files->get());
 echo 'I have ' . count($files) . ' files!';
 
 foreach ($files as $file) {
-    echo 'Moving ' . $file->getBasename() . ', ' . $file->getSizeByUnit('mb');
+    echo 'Moving ' . $file->getBasename() . ', ' . $file->getSizeByBinaryUnit(FileSizeUnit::MB);
     $file->move(WRITEPATH . $file->getRandomName());
 }
 ```
