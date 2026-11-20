@@ -175,6 +175,10 @@ class BaseConfig
 
         $this->registerProperties();
 
+        if (str_contains(static::class, "\0")) {
+            return; // PHP 8.6 getenv() throws for names with null bytes, as in anonymous class names
+        }
+
         $values      = get_object_vars($this);
         $properties  = array_keys($values);
         $prefix      = static::class;
