@@ -57,8 +57,7 @@ trait FilterTestTrait
 
     /**
      * The Filters configuration to use.
-     * Extracted for access to aliases
-     * during Filters::discoverFilters().
+     * Extracted for access to aliases.
      *
      * @var FiltersConfig|null
      */

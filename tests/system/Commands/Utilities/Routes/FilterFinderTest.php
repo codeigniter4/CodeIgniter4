@@ -108,7 +108,7 @@ final class FilterFinderTest extends CIUnitTestCase
         ];
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
 
-        return new Filters($filtersConfig, $this->request, $this->response, $this->moduleConfig);
+        return new Filters($filtersConfig, $this->request, $this->response);
     }
 
     public function testFindGlobalsFilters(): void

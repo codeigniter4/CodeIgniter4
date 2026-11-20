@@ -345,15 +345,17 @@ final class CodeIgniterTest extends CIUnitTestCase
         $router = service('router', $routes, service('incomingrequest'));
         Services::injectMock('router', $router);
 
-        /** @var FiltersConfig $filterConfig */
-        $filterConfig          = config('Filters');
-        $filterConfig->filters = [
+        $filters = config('Filters');
+
+        $filters->aliases['test-customfilter'] = Customfilter::class;
+
+        $filters->filters = [
             // Set filter with argument.
             'test-customfilter:arg1' => [
                 'before' => ['pages/*'],
             ],
         ];
-        service('filters', $filterConfig);
+        service('filters', $filters);
 
         ob_start();
         $this->codeigniter->run();

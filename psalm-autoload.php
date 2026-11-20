@@ -14,7 +14,6 @@ $excludeDirs = [
     'tests/_support/View/Views',
 ];
 $excludeFiles = [
-    'tests/_support/Config/Filters.php',
     'tests/_support/Config/Routes.php',
 ];
 

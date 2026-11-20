@@ -28,6 +28,7 @@ use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use Tests\Support\Filters\RedirectFilter;
 
 /**
  * @internal
@@ -99,7 +100,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
                 'GET',
                 'admin',
                 static fn (): string => 'Admin Area',
-                ['filter' => 'test-redirectfilter'],
+                ['filter' => RedirectFilter::class],
             ],
         ]);
         $response = $this->get('admin');
