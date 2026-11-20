@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="6.16.1@f1f5de594dc76faf8784e02d3dc4716c91c6f6ac">
+<files psalm-version="7.12.0@67cfa8476f9f2d666a5d3b54817738d1536afa77">
   <file src="system/Database/OCI8/Connection.php">
     <UndefinedConstant>
       <code><![CDATA[OCI_COMMIT_ON_SUCCESS]]></code>
@@ -33,28 +33,12 @@
       <code><![CDATA[$timestamp]]></code>
     </LoopInvalidation>
   </file>
-  <file src="system/HTTP/Files/FileCollection.php">
-    <EmptyArrayAccess>
-      <code><![CDATA[$output[$name]]]></code>
-    </EmptyArrayAccess>
-  </file>
   <file src="system/Helpers/text_helper.php">
     <LoopInvalidation>
       <code><![CDATA[$count]]></code>
       <code><![CDATA[$count]]></code>
       <code><![CDATA[$count]]></code>
     </LoopInvalidation>
-  </file>
-  <file src="system/I18n/TimeTrait.php">
-    <MissingImmutableAnnotation>
-      <code><![CDATA[public function setTimezone($timezone): static]]></code>
-    </MissingImmutableAnnotation>
-  </file>
-  <file src="system/Language/Language.php">
-    <NoValue>
-      <code><![CDATA[$message]]></code>
-      <code><![CDATA[$message]]></code>
-    </NoValue>
   </file>
   <file src="tests/_support/Config/Filters.php">
     <UndefinedGlobalVariable>
@@ -95,9 +79,6 @@
     </UndefinedConstant>
   </file>
   <file src="tests/system/Entity/EntityTest.php">
-    <EmptyArrayAccess>
-      <code><![CDATA[$current[$key]]]></code>
-    </EmptyArrayAccess>
     <InaccessibleProperty>
       <code><![CDATA[$entity->attributes]]></code>
       <code><![CDATA[$entity->casts]]></code>

@@ -318,8 +318,8 @@ interface ResponseInterface extends MessageInterface
      * @param string                             $domain   Cookie domain (e.g.: '.yourdomain.com')
      * @param string                             $path     Cookie path (default: '/')
      * @param string                             $prefix   Cookie name prefix
-     * @param bool                               $secure   Whether to only transfer cookies via SSL
-     * @param bool                               $httponly Whether only make the cookie accessible via HTTP (no javascript)
+     * @param bool|null                          $secure   Whether to only transfer cookies via SSL
+     * @param bool|null                          $httponly Whether only make the cookie accessible via HTTP (no javascript)
      * @param string|null                        $samesite
      *
      * @return $this

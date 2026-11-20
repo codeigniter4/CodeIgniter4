@@ -74,7 +74,7 @@ class Modules extends BaseModules
      */
     public $aliases = [
         'events',
-        'filters',
+        'filters', // @deprecated 4.4.2 Use Registrar instead.
         'registrars',
         'routes',
         'services',

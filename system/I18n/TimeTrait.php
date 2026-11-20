@@ -237,8 +237,6 @@ trait TimeTrait
      * Provides a replacement for DateTime's own createFromFormat function, that provides
      * more flexible timeZone handling
      *
-     * @psalm-external-mutation-free
-     *
      * @param string                   $format
      * @param string                   $datetime
      * @param DateTimeZone|string|null $timezone
@@ -1203,6 +1201,7 @@ trait TimeTrait
             return $time->setTimezone(new DateTimeZone('UTC'));
         }
 
+        /** @psalm-suppress NoValue Callers can still pass a value that the docblock does not allow. */
         return $time;
     }
 

@@ -663,6 +663,7 @@ Now you need to register it:
 
 namespace App\Entities;
 
+use App\Entities\Cast\CastBase64;
 use CodeIgniter\Entity\Entity;
 
 class MyEntity extends Entity
@@ -674,7 +675,7 @@ class MyEntity extends Entity
 
     // Bind the type to the handler
     protected $castHandlers = [
-        'base64' => Cast\CastBase64::class,
+        'base64' => CastBase64::class,
     ];
 }
 
@@ -713,6 +714,7 @@ In some cases, one type is not enough. In this situation, you can use additional
 
 namespace App\Entities;
 
+use App\Entities\Cast\SomeHandler;
 use CodeIgniter\Entity\Entity;
 
 class MyEntity extends Entity
@@ -724,7 +726,7 @@ class MyEntity extends Entity
 
     // Bind the type to the handler
     protected $castHandlers = [
-        'class' => 'SomeHandler',
+        'class' => SomeHandler::class,
     ];
 }
 ```

@@ -209,7 +209,7 @@ final class EncryptedCastTest extends CIUnitTestCase
     {
         $entity = new class () extends Entity {
             protected $casts = [
-                'secret' => 'encrypted',
+                'secret' => 'encrypted', // @phpstan-ignore codeigniter.castHandlerNotRegistered
             ];
         };
 
@@ -227,7 +227,7 @@ final class EncryptedCastTest extends CIUnitTestCase
     {
         $entity = new class () extends Entity {
             protected $casts = [
-                'settings' => 'encrypted-json-array',
+                'settings' => 'encrypted-json-array', // @phpstan-ignore codeigniter.castHandlerNotRegistered
             ];
         };
 

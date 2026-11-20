@@ -48,6 +48,8 @@ class Filters
      * The Config\Modules instance
      *
      * @var Modules
+     *
+     * @deprecated 4.4.2 Only used by the deprecated auto-discovery of Filters.
      */
     protected $modules;
 
@@ -121,6 +123,7 @@ class Filters
 
     /**
      * @param FiltersConfig $config
+     * @param Modules|null  $modules Deprecated. Only used by the deprecated auto-discovery of Filters.
      */
     public function __construct($config, RequestInterface $request, ResponseInterface $response, ?Modules $modules = null)
     {
