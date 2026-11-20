@@ -40,6 +40,7 @@ use Tests\Support\Config\MergeRegistrar;
 use Tests\Support\Config\MergeRegistrarA;
 use Tests\Support\Config\MergeRegistrarB;
 use Tests\Support\Config\TestRegistrar;
+use ValueError;
 
 /**
  * @internal
@@ -135,6 +136,27 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('', $config->echo);
         $this->assertTrue($config->foxtrot);
         $this->assertSame(18, $config->golf);
+    }
+
+    public function testAnonymousSubclassSkipsEnvironmentOverrides(): void
+    {
+        $dotenv = new DotEnv($this->fixturesFolder, '.env');
+        $dotenv->load();
+
+        $named = new SimpleConfig();
+        $alpha = null;
+
+        $exception = null;
+
+        try {
+            $alpha = (new class () extends SimpleConfig {})->alpha;
+        } catch (ValueError $exception) {
+            // ...
+        }
+
+        $this->assertNull($exception, 'BaseConfig should skip environment overrides for anonymous subclasses.');
+        $this->assertSame('pow', $named->alpha);
+        $this->assertSame('one', $alpha);
     }
 
     public function testUseDefaultValueTypeIntAndFloatValues(): void
