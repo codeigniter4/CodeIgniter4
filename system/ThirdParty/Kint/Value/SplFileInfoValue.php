@@ -41,7 +41,7 @@ class SplFileInfoValue extends InstanceValue
 
     public function __construct(ContextInterface $context, SplFileInfo $info)
     {
-        parent::__construct($context, \get_class($info), \spl_object_hash($info), \spl_object_id($info));
+        parent::__construct($context, \get_class($info), @\spl_object_hash($info), \spl_object_id($info));
 
         $this->path = $info->getPathname();
 
