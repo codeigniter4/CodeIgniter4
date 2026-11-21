@@ -18,6 +18,41 @@ With the default configuration most applications are unaffected, because `/`, `\
 
 ## Breaking Enhancements
 
+## Behavior Changes
+
+### Worker Mode Routes Are Reloaded Per Request
+
+`Config\WorkerMode::$persistentServices` no longer contains `routes`.
+
+`RouteCollection` reads the request host while it loads the route definitions, and drops the routes limited with the `hostname` or `subdomain` options that do not match the current request. While the routes service was persistent, those decisions were made once, from the first request the worker served, and were kept for the lifetime of the process. A route limited to a hostname then became reachable from any `Host` after that first request, and a route that lost the first decision stayed unreachable until the worker restarted. The routes service is not persistent anymore, so the route definitions are loaded for each request and the host is evaluated on every request, as in traditional PHP.
+
+A new installation gets the updated default. Existing installations have their own copy of **app/Config/WorkerMode.php** in the project space, so it is not changed on upgrade. If your application uses the `hostname` or `subdomain` route options in Worker Mode, remove `routes` from `$persistentServices`:
+
+```php
+<?php
+
+namespace Config;
+
+class WorkerMode
+{
+    // ...
+    /**
+     * @var list<string>
+     */
+    public array $persistentServices = [
+        'autoloader',
+        'locator',
+        'exceptions',
+        'commands',
+        'codeigniter',
+        'superglobals',
+        'cache',
+    ];
+}
+```
+
+See [Persistent Services](worker_mode.md#persistent-services) for details.
+
 ## Project Files
 
 Some files in the **project space** (root, app, public, writable) received updates. Due to these files being outside of the **system** scope they will not be changed without your intervention.
@@ -31,7 +66,8 @@ The following files received significant changes (including deprecations or visu
 
 #### Config
 
-- @TODO
+- **app/Config/WorkerMode.php**
+    - `Config\WorkerMode::$persistentServices` no longer contains `routes`. See [Worker Mode Routes Are Reloaded Per Request](#worker-mode-routes-are-reloaded-per-request).
 
 ### All Changes
 
