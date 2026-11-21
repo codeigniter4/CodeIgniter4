@@ -258,6 +258,7 @@ if (! function_exists('get_dir_file_info')) {
      * @param string $sourceDir    Path to source
      * @param bool   $topLevelOnly Look only at the top level directory specified?
      * @param bool   $recursion    Internal variable to determine recursion status - do not use in calls
+     * @param bool   $hidden       Whether to include hidden files (files beginning with a period)
      *
      * @return array<string, array{
      *  name: string,
@@ -267,7 +268,7 @@ if (! function_exists('get_dir_file_info')) {
      *  relative_path: string,
      * }>
      */
-    function get_dir_file_info(string $sourceDir, bool $topLevelOnly = true, bool $recursion = false): array
+    function get_dir_file_info(string $sourceDir, bool $topLevelOnly = true, bool $recursion = false, bool $hidden = false): array
     {
         static $fileData = [];
         $relativePath    = $sourceDir;
@@ -283,9 +284,17 @@ if (! function_exists('get_dir_file_info')) {
 
             // Used to be foreach (scandir($sourceDir, 1) as $file), but scandir() is simply not as fast
             while (false !== ($file = readdir($fp))) {
-                if (is_dir($sourceDir . $file) && $file[0] !== '.' && $topLevelOnly === false) {
-                    get_dir_file_info($sourceDir . $file . DIRECTORY_SEPARATOR, $topLevelOnly, true);
-                } elseif ($file[0] !== '.') {
+                if ($file === '.' || $file === '..') {
+                    continue;
+                }
+
+                if (! $hidden && $file[0] === '.') {
+                    continue;
+                }
+
+                if (is_dir($sourceDir . $file) && $topLevelOnly === false) {
+                    get_dir_file_info($sourceDir . $file . DIRECTORY_SEPARATOR, $topLevelOnly, true, $hidden);
+                } else {
                     $info = get_file_info($sourceDir . $file);
                     if ($info !== null) {
                         $fileData[$file]                  = $info;

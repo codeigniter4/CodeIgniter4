@@ -497,6 +497,69 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertArrayNotHasKey('subdir', $result);
     }
 
+    public function testGetDirFileInfoSkipsHiddenFilesByDefault(): void
+    {
+        $dir = WRITEPATH . 'test_get_dir_file_info_hidden_' . bin2hex(random_bytes(4));
+
+        $this->assertTrue(mkdir($dir, 0777, true));
+        $this->assertNotFalse(file_put_contents($dir . '/file.txt', 'visible'));
+        $this->assertNotFalse(file_put_contents($dir . '/.hidden', 'hidden'));
+
+        try {
+            $result = get_dir_file_info($dir, true);
+
+            $this->assertArrayHasKey('file.txt', $result);
+            $this->assertArrayNotHasKey('.hidden', $result);
+        } finally {
+            unlink($dir . '/file.txt');
+            unlink($dir . '/.hidden');
+            rmdir($dir);
+        }
+    }
+
+    public function testGetDirFileInfoIncludesHiddenFiles(): void
+    {
+        $dir = WRITEPATH . 'test_get_dir_file_info_hidden_' . bin2hex(random_bytes(4));
+
+        $this->assertTrue(mkdir($dir, 0777, true));
+        $this->assertNotFalse(file_put_contents($dir . '/file.txt', 'visible'));
+        $this->assertNotFalse(file_put_contents($dir . '/.hidden', 'hidden'));
+
+        try {
+            $result = get_dir_file_info($dir, true, false, true);
+
+            $this->assertArrayHasKey('file.txt', $result);
+            $this->assertArrayHasKey('.hidden', $result);
+            $this->assertSame('.hidden', $result['.hidden']['name']);
+            $this->assertArrayNotHasKey('.', $result);
+            $this->assertArrayNotHasKey('..', $result);
+        } finally {
+            unlink($dir . '/file.txt');
+            unlink($dir . '/.hidden');
+            rmdir($dir);
+        }
+    }
+
+    public function testGetDirFileInfoIncludesHiddenDirectoryRecursively(): void
+    {
+        $dir = WRITEPATH . 'test_get_dir_file_info_hidden_' . bin2hex(random_bytes(4));
+
+        $this->assertTrue(mkdir($dir . '/.sub', 0777, true));
+        $this->assertNotFalse(file_put_contents($dir . '/.sub/inner.txt', 'inner'));
+
+        try {
+            $withHidden = get_dir_file_info($dir, false, false, true);
+            $this->assertArrayHasKey('inner.txt', $withHidden);
+
+            $withoutHidden = get_dir_file_info($dir, false);
+            $this->assertArrayNotHasKey('inner.txt', $withoutHidden);
+        } finally {
+            unlink($dir . '/.sub/inner.txt');
+            rmdir($dir . '/.sub');
+            rmdir($dir);
+        }
+    }
+
     public function testGetFileInfo(): void
     {
         $file = SUPPORTPATH . 'Files/baker/banana.php';

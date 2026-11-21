@@ -216,11 +216,15 @@ Example:
 $controllers = get_filenames(APPPATH . 'Controllers/');
 ```
 
-#### get_dir_file_info($sourceDir[, $topLevelOnly = true])
+#### get_dir_file_info($sourceDir[, $topLevelOnly = true[, $recursion = false[, $hidden = false]]])
 
 - **Parameters**  
     - **$sourceDir** `string` Directory path
     - **$topLevelOnly** `bool` Whether to look only at the specified directory (excluding sub-directories)
+    - **$recursion** `bool` Whether to recurse into sub-directories. For internal use; do not pass it from application code.
+    - **$hidden** `bool` Whether to include hidden files (files beginning with a period)
+
+    > **Note:** `$recursion` is an internal parameter and should not be passed by callers. When you need hidden files, use the named argument, e.g. `get_dir_file_info($sourceDir, hidden: true)`.
 
 - **Returns**: An array containing info on the supplied directory's contents
 
