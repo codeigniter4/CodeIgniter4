@@ -437,14 +437,10 @@ if (! function_exists('ellipsize')) {
             return $str;
         }
 
-        $beg      = mb_substr($str, 0, (int) floor($maxLength * $position));
-        $position = ($position > 1) ? 1 : $position;
-
-        if ($position === 1) {
-            $end = mb_substr($str, 0, -($maxLength - mb_strlen($beg)));
-        } else {
-            $end = mb_substr($str, -($maxLength - mb_strlen($beg)));
-        }
+        $position  = max(0.0, min(1.0, (float) $position));
+        $beg       = mb_substr($str, 0, (int) floor($maxLength * $position));
+        $remaining = $maxLength - mb_strlen($beg);
+        $end       = $remaining > 0 ? mb_substr($str, -$remaining) : '';
 
         return $beg . $ellipsis . $end;
     }
