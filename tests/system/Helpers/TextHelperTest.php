@@ -358,6 +358,26 @@ final class TextHelperTest extends CIUnitTestCase
         }
     }
 
+    #[DataProvider('provideEllipsizePositionEdgeCases')]
+    public function testEllipsizePositionEdgeCases(float|int $position, string $expected): void
+    {
+        $this->assertSame($expected, ellipsize('this is my string', 10, $position));
+    }
+
+    /**
+     * @return iterable<string, array{float|int, string}>
+     */
+    public static function provideEllipsizePositionEdgeCases(): iterable
+    {
+        yield 'float one' => [1.0, 'this is my&hellip;'];
+
+        yield 'greater than one (int)' => [2, 'this is my&hellip;'];
+
+        yield 'greater than one (float)' => [1.5, 'this is my&hellip;'];
+
+        yield 'negative float' => [-0.5, '&hellip; my string'];
+    }
+
     /**
      * A character limit below 2 used to make word_wrap() loop forever.
      */
