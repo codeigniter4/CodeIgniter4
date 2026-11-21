@@ -41,7 +41,7 @@ use UnitEnum;
 
 class ClassStaticsPlugin extends AbstractPlugin implements PluginCompleteInterface
 {
-    /** @psalm-var array<class-string, array<1|0, array<AbstractValue>>> */
+    /** @psalm-var array<class-string, array<0|1, array<AbstractValue>>> */
     private array $cache = [];
 
     public function getTypes(): array
@@ -137,7 +137,7 @@ class ClassStaticsPlugin extends AbstractPlugin implements PluginCompleteInterfa
         }
 
         if (KINT_PHP81 === false) {
-            $pr->setAccessible(true);
+            $pr->setAccessible(true); // @codeCoverageIgnore
         }
 
         /**

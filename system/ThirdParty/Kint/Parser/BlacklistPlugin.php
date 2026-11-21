@@ -88,7 +88,7 @@ class BlacklistPlugin extends AbstractPlugin implements PluginBeginInterface
      */
     protected function blacklistValue(&$var, ContextInterface $c): InstanceValue
     {
-        $object = new InstanceValue($c, \get_class($var), \spl_object_hash($var), \spl_object_id($var));
+        $object = new InstanceValue($c, \get_class($var), @\spl_object_hash($var), \spl_object_id($var));
         $object->flags |= AbstractValue::FLAG_BLACKLIST;
 
         return $object;

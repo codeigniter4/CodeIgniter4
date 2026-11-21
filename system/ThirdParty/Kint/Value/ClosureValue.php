@@ -44,7 +44,7 @@ class ClosureValue extends InstanceValue
 
     public function __construct(ContextInterface $context, Closure $cl)
     {
-        parent::__construct($context, \get_class($cl), \spl_object_hash($cl), \spl_object_id($cl));
+        parent::__construct($context, \get_class($cl), @\spl_object_hash($cl), \spl_object_id($cl));
 
         /**
          * @psalm-suppress UnnecessaryVarAnnotation

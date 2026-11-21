@@ -50,8 +50,8 @@ use Kint\Value\UninitializedValue;
  * @psalm-type KintCallInfo = array{
  *   params: ?list<CallParameter>,
  *   modifiers: array,
- *   callee: ?callable,
- *   caller: ?callable,
+ *   callee: ?TraceFrame,
+ *   caller: ?TraceFrame,
  *   trace: TraceFrame[],
  * }
  *
@@ -126,7 +126,7 @@ class Kint implements FacadeInterface
     ];
 
     /**
-     * @psalm-var array<RendererInterface|class-string<ConstructableRendererInterface>>
+     * @psalm-var array<class-string<ConstructableRendererInterface>|RendererInterface>
      *
      * Array of modes to renderer class names
      */
@@ -138,7 +138,7 @@ class Kint implements FacadeInterface
     ];
 
     /**
-     * @psalm-var array<PluginInterface|class-string<ConstructablePluginInterface>>
+     * @psalm-var array<class-string<ConstructablePluginInterface>|PluginInterface>
      */
     public static array $plugins = [
         \Kint\Parser\ArrayLimitPlugin::class,
@@ -433,15 +433,9 @@ class Kint implements FacadeInterface
         }
 
         foreach ($miniTrace as $index => $frame) {
-            if ((0 === $index && $callee === $frame) || isset($frame['file'], $frame['line'])) {
-                unset($frame['object'], $frame['args']);
-                $miniTrace[$index] = $frame;
-            } else {
-                unset($miniTrace[$index]);
-            }
+            unset($frame['object'], $frame['args']);
+            $miniTrace[$index] = $frame;
         }
-
-        $miniTrace = \array_values($miniTrace);
 
         $call = static::getSingleCall($callee ?: [], $args);
 
