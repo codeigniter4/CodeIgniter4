@@ -16,8 +16,11 @@ namespace CodeIgniter\Database;
 use CodeIgniter\Database\Postgre\Connection as PostgreConnection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
+use CodeIgniter\Test\TestLogger;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
+use RuntimeException;
 
 /**
  * @internal
@@ -119,9 +122,19 @@ final class ConfigTest extends CIUnitTestCase
         'port'     => 5432,
     ];
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->setPrivateProperty(TestLogger::class, 'op_logs', []);
+    }
+
     protected function tearDown(): void
     {
+        parent::tearDown();
+
         $this->setPrivateProperty(Config::class, 'instances', []);
+        $this->setPrivateProperty(TestLogger::class, 'op_logs', []);
     }
 
     public function testConnectionGroup(): void
@@ -256,5 +269,95 @@ final class ConfigTest extends CIUnitTestCase
                 'host=localhost port=5432 dbname=database_name;something=stupid',
             ],
         ];
+    }
+
+    public function testCleanupForWorkerModeRollsBackUncommittedTransactions(): void
+    {
+        $depth      = 3;
+        $connection = $this->createConnectionMock($depth);
+        $connection->expects($this->exactly($depth))
+            ->method('transRollback')
+            ->willReturnCallback(static function () use (&$depth): bool {
+                $depth--;
+
+                return true;
+            });
+
+        $this->setPrivateProperty(Config::class, 'instances', ['tests' => $connection]);
+
+        Config::cleanupForWorkerMode();
+
+        $this->assertSame(0, $depth);
+        $this->assertFalse(TestLogger::didLog('error', 'Transaction cleanup aborted.', false));
+    }
+
+    public function testCleanupForWorkerModeStopsWhenRollbackFails(): void
+    {
+        $depth      = 2;
+        $connection = $this->createConnectionMock($depth);
+        $connection->expects($this->once())
+            ->method('transRollback')
+            ->willReturn(false);
+        $connection->expects($this->once())
+            ->method('resetTransStatus');
+
+        $this->setPrivateProperty(Config::class, 'instances', ['tests' => $connection]);
+
+        Config::cleanupForWorkerMode();
+
+        $this->assertSame(2, $depth);
+        $this->assertLogged('error', "Database: Failed to roll back an uncommitted transaction in database group 'tests'. Transaction cleanup aborted.");
+    }
+
+    public function testCleanupForWorkerModeStopsWhenRollbackMakesNoProgress(): void
+    {
+        $depth      = 2;
+        $connection = $this->createConnectionMock($depth);
+        $connection->expects($this->once())
+            ->method('transRollback')
+            ->willReturn(true);
+        $connection->expects($this->once())
+            ->method('resetTransStatus');
+
+        $this->setPrivateProperty(Config::class, 'instances', ['tests' => $connection]);
+
+        Config::cleanupForWorkerMode();
+
+        $this->assertSame(2, $depth);
+        $this->assertLogged('error', "Database: Failed to roll back an uncommitted transaction in database group 'tests'. Transaction cleanup aborted.");
+    }
+
+    public function testCleanupForWorkerModeStopsWhenRollbackThrows(): void
+    {
+        $depth      = 2;
+        $connection = $this->createConnectionMock($depth);
+        $connection->expects($this->once())
+            ->method('transRollback')
+            ->willThrowException(new RuntimeException('MySQL server has gone away'));
+        $connection->expects($this->once())
+            ->method('resetTransStatus');
+
+        $this->setPrivateProperty(Config::class, 'instances', ['tests' => $connection]);
+
+        Config::cleanupForWorkerMode();
+
+        $this->assertSame(2, $depth);
+        $this->assertLogged('error', "Database: Failed to roll back an uncommitted transaction in database group 'tests'. Transaction cleanup aborted: MySQL server has gone away");
+    }
+
+    /**
+     * @param int $depth Current transaction depth reported by the connection.
+     *
+     * @return BaseConnection&MockObject
+     */
+    private function createConnectionMock(int &$depth): BaseConnection
+    {
+        $connection = $this->createMock(BaseConnection::class);
+        $connection->method('__get')->willReturnCallback(static function (string $key) use (&$depth): ?int {
+            return $key === 'transDepth' ? $depth : null;
+        });
+        $connection->method('resetTransStatus')->willReturnSelf();
+
+        return $connection;
     }
 }
