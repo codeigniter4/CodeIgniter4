@@ -178,6 +178,8 @@ class Config extends BaseConfig
     public static function cleanupForWorkerMode(): void
     {
         foreach (static::$instances as $group => $connection) {
+            $rollbackFailed = false;
+
             if ($connection->transDepth > 0) {
                 log_message('error', "Uncommitted transaction detected in database group '{$group}'. Transactions must be completed before request ends.");
 
@@ -188,16 +190,25 @@ class Config extends BaseConfig
                         $rolledBack = $connection->transRollback();
                     } catch (Throwable $e) {
                         log_message('error', "Database: Failed to roll back an uncommitted transaction in database group '{$group}'. Transaction cleanup aborted: " . $e->getMessage());
+                        $rollbackFailed = true;
 
                         break;
                     }
 
                     if (! $rolledBack || $connection->transDepth >= $transDepth) {
                         log_message('error', "Database: Failed to roll back an uncommitted transaction in database group '{$group}'. Transaction cleanup aborted.");
+                        $rollbackFailed = true;
 
                         break;
                     }
                 }
+            }
+
+            if ($rollbackFailed) {
+                // A live connection would carry the open transaction into the
+                // next request. reconnectForWorkerMode() clears the remaining
+                // transaction depth before it establishes a new connection.
+                $connection->close();
             }
 
             $connection->resetTransStatus();

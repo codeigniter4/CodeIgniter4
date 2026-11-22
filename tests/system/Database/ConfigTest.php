@@ -275,6 +275,8 @@ final class ConfigTest extends CIUnitTestCase
     {
         $depth      = 3;
         $connection = $this->createConnectionMock($depth);
+        $connection->expects($this->never())
+            ->method('close');
         $connection->expects($this->exactly($depth))
             ->method('transRollback')
             ->willReturnCallback(static function () use (&$depth): bool {
@@ -299,6 +301,8 @@ final class ConfigTest extends CIUnitTestCase
             ->method('transRollback')
             ->willReturn(false);
         $connection->expects($this->once())
+            ->method('close');
+        $connection->expects($this->once())
             ->method('resetTransStatus');
 
         $this->setPrivateProperty(Config::class, 'instances', ['tests' => $connection]);
@@ -317,6 +321,8 @@ final class ConfigTest extends CIUnitTestCase
             ->method('transRollback')
             ->willReturn(true);
         $connection->expects($this->once())
+            ->method('close');
+        $connection->expects($this->once())
             ->method('resetTransStatus');
 
         $this->setPrivateProperty(Config::class, 'instances', ['tests' => $connection]);
@@ -334,6 +340,8 @@ final class ConfigTest extends CIUnitTestCase
         $connection->expects($this->once())
             ->method('transRollback')
             ->willThrowException(new RuntimeException('MySQL server has gone away'));
+        $connection->expects($this->once())
+            ->method('close');
         $connection->expects($this->once())
             ->method('resetTransStatus');
 
