@@ -37,8 +37,8 @@ In Worker Mode, the lifecycle changes dramatically:
     - Establishes database and cache connections
 2.  For each incoming request:
     - Reuses existing connections and cached resources
-    - Reloads the route definitions, so the routes limited with the `hostname` or `subdomain` options are matched against the current request
     - Resets only request-specific state (superglobals, request/response objects)
+    - Reloads the route definitions, so the routes limited with the `hostname` or `subdomain` options are matched against the current request
     - Processes request and sends response
     - Cleans up request-specific data
 3.  Worker continues running, ready for the next request
@@ -156,7 +156,7 @@ The `$persistentServices` array controls which services survive between requests
 | `cache` | Cache service. Maintains connections to cache backends (Redis, Memcached). |
 
 !!! note "Note"
-    The `routes` service is **not** persistent by default. `RouteCollection` reads the request host while it loads the route definitions, and drops the routes limited with the `hostname` or `subdomain` options that do not match the current request. A persistent route collection would keep the decision made for the first request the worker served, so the routes restricted to a hostname would be reachable from any host, or not reachable at all, until the worker restarted. The route definitions are therefore loaded again for each request. The cost is small compared with the bootstrap work Worker Mode already removes, and it keeps the route behavior identical to traditional PHP.
+    The `routes` service is **not** persistent by default. `RouteCollection` reads the request host while it loads the route definitions, and drops the routes limited with the `hostname` or `subdomain` options that do not match the current request. A persistent route collection would keep the decision made for the first request the worker served, so the routes restricted to a hostname would be reachable from any host, or not reachable at all, until the worker restarted. The route definitions are therefore loaded again for each request, as in traditional PHP.
 
 !!! warning "Warning"
     Adding services to `$persistentServices` without understanding their state management can cause data leakage between requests. Only persist services that are truly stateless or manage their own request isolation.
