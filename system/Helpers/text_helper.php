@@ -437,7 +437,7 @@ if (! function_exists('ellipsize')) {
             return $str;
         }
 
-        $position  = max(0.0, min(1.0, (float) $position));
+        $position  = max(0.0, min(1.0, $position * 1.0));
         $beg       = mb_substr($str, 0, (int) floor($maxLength * $position));
         $remaining = $maxLength - mb_strlen($beg);
         $end       = $remaining > 0 ? mb_substr($str, -$remaining) : '';

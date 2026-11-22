@@ -17,6 +17,7 @@ use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use TypeError;
 
 /**
  * @internal
@@ -376,6 +377,13 @@ final class TextHelperTest extends CIUnitTestCase
         yield 'greater than one (float)' => [1.5, 'this is my&hellip;'];
 
         yield 'negative float' => [-0.5, '&hellip; my string'];
+    }
+
+    public function testEllipsizeInvalidPositionThrowsTypeError(): void
+    {
+        $this->expectException(TypeError::class);
+
+        $this->assertSame('', ellipsize('this is my string', 10, 'invalid')); // @phpstan-ignore argument.type
     }
 
     /**
