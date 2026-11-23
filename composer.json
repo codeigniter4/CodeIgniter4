@@ -17,7 +17,7 @@
         "psr/log": "^3.0"
     },
     "require-dev": {
-        "boundwize/structarmed": "^0.21",
+        "boundwize/structarmed": "^0.22",
         "codeigniter/phpstan-codeigniter": "^2.4",
         "fakerphp/faker": "^1.24",
         "kint-php/kint": "^6.1.1",
