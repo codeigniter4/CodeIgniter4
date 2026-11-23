@@ -317,6 +317,14 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertSame('foo', $security->sanitizeFilename($filename));
     }
 
+    public function testSanitizeFilenameRemovesLeadingSlashes(): void
+    {
+        $security = $this->createMockSecurity();
+
+        $this->assertSame('etc/passwd', $security->sanitizeFilename('..//..//etc/passwd', true));
+        $this->assertSame('etc/passwd', $security->sanitizeFilename('/etc/passwd', true));
+    }
+
     public function testSanitizeFilenameBackslashTraversal(): void
     {
         $security  = $this->createMockSecurity();
