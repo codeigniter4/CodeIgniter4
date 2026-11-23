@@ -379,6 +379,20 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_input($data, '', $extra));
     }
 
+    public function testFormInputEscapesAttributes(): void
+    {
+        $data = [
+            'name'        => 'username',
+            'value'       => 'johndoe',
+            'class'       => 'form-control" onfocus="alert(1)" data-x="',
+            'placeholder' => 'Enter "name"',
+        ];
+        $expected = <<<EOH
+            <input type="text" name="username" value="johndoe" class="form-control&quot; onfocus=&quot;alert(1)&quot; data-x=&quot;" placeholder="Enter &quot;name&quot;">\n
+            EOH;
+        $this->assertSame($expected, form_input($data));
+    }
+
     public function testFormPassword(): void
     {
         $expected = <<<EOH
@@ -666,6 +680,24 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_dropdown('foo', $options));
     }
 
+    public function testFormDropdownEscapesOptgroupLabel(): void
+    {
+        $options = [
+            'Group "A"' => [
+                '1' => 'One',
+            ],
+        ];
+        $expected = <<<'EOH'
+            <select name="shirts">
+            <optgroup label="Group &quot;A&quot;">
+            <option value="1">One</option>
+            </optgroup>
+            </select>
+
+            EOH;
+        $this->assertSame($expected, form_dropdown('shirts', $options));
+    }
+
     public function testFormMultiselect(): void
     {
         $expected = <<<EOH
@@ -859,6 +891,17 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_label('bar', 'foo', $attributes));
     }
 
+    public function testFormLabelEscapesAttributesAndId(): void
+    {
+        $attributes = [
+            'class' => 'label" onmouseover="alert(1)" data-x="',
+        ];
+        $expected = <<<'EOH'
+            <label for="foo&quot;bar" class="label&quot; onmouseover=&quot;alert(1)&quot; data-x=&quot;">bar</label>
+            EOH;
+        $this->assertSame($expected, form_label('bar', 'foo"bar', $attributes));
+    }
+
     public function testFormReset(): void
     {
         $expected = <<<EOH
@@ -911,6 +954,23 @@ final class FormHelperTest extends CIUnitTestCase
 
             EOH;
         $this->assertSame($expected, form_datalist('foo', 'bar', $options));
+    }
+
+    public function testFormDatalistEscapesOptionsAndName(): void
+    {
+        $options = [
+            'foo"1',
+            "bar'1",
+        ];
+        $expected = <<<'EOH'
+            <input type="text" name="foo&quot;bar" value="baz" list="foo&quot;bar_list">
+
+            <datalist id='foo&quot;bar_list'><option value='foo&quot;1'>
+            <option value='bar&#039;1'>
+            </datalist>
+
+            EOH;
+        $this->assertSame($expected, form_datalist('foo"bar', 'baz', $options));
     }
 
     public function testSetValue(): void
