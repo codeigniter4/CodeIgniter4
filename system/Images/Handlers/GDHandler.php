@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Images\Handlers;
 
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Images\Exceptions\ImageException;
 use Config\Images;
 use GdImage;
 use Override;
-use RuntimeException;
 
 /**
  * Image handler for GD package
