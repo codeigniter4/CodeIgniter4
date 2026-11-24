@@ -1100,7 +1100,7 @@ class CURLRequest extends OutgoingRequest
 
         $version = sprintf('%.1F', (float) $config['version']);
 
-        if ($version === '3.0' && ! defined('CURL_HTTP_VERSION_3')) {
+        if (! defined('CURL_HTTP_VERSION_3')) {
             define('CURL_HTTP_VERSION_3', 30);
         }
 
@@ -1108,7 +1108,7 @@ class CURLRequest extends OutgoingRequest
             '1.0'   => CURL_HTTP_VERSION_1_0,
             '1.1'   => CURL_HTTP_VERSION_1_1,
             '2.0'   => CURL_HTTP_VERSION_2_0,
-            '3.0'   => CURL_HTTP_VERSION_3,
+            '3.0'   => constant('CURL_HTTP_VERSION_3'),
             default => null,
         };
 
