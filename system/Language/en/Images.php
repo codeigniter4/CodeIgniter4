@@ -15,6 +15,7 @@ declare(strict_types=1);
 return [
     'sourceImageRequired'    => 'You must specify a source image in your preferences.',
     'gdRequired'             => 'The GD image library is required to use this feature.',
+    'missingExtension'       => 'The framework needs the following extension(s) installed and loaded: "{0}".',
     'gdRequiredForProps'     => 'Your server must support the GD image library in order to determine the image properties.',
     'gifNotSupported'        => 'GIF images are often not supported due to licensing restrictions. You may have to use JPG or PNG images instead.',
     'jpgNotSupported'        => 'JPG images are not supported.',
