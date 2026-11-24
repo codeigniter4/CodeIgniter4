@@ -131,7 +131,7 @@ if (! function_exists('array_flatten_with_dots')) {
      * @param iterable<array-key, mixed> $array The multi-dimensional array
      * @param string                     $id    Something to initially prepend to the flattened keys
      *
-     * @return array<string, mixed> The flattened array
+     * @return array<array-key, mixed> The flattened array
      */
     function array_flatten_with_dots(iterable $array, string $id = ''): array
     {
@@ -141,7 +141,7 @@ if (! function_exists('array_flatten_with_dots')) {
             $newKey = $id . $key;
 
             if (is_array($value) && $value !== []) {
-                $flattened = array_merge($flattened, array_flatten_with_dots($value, $newKey . '.'));
+                $flattened = array_replace($flattened, array_flatten_with_dots($value, $newKey . '.'));
             } else {
                 $flattened[$newKey] = $value;
             }

@@ -188,7 +188,7 @@ In the same way, the method can also handle an array of objects. In the example 
 
 - **Returns**: The flattened array
 
-This function flattens a multidimensional array to a single key-value array by using dots as separators for the keys.
+This function flattens a multidimensional array to a single key-value array by using dots as separators for the keys. Numeric keys at the outer level are preserved without renumbering.
 
 ```php
 $arrayToFlatten = [
