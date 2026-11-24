@@ -172,7 +172,7 @@ final class ComposerScripts
         }
     }
 
-    private static function postUtils(): void
+    public static function postUtils(): void
     {
         if (PHP_VERSION_ID >= 80600) {
             passthru('composer update --ansi --working-dir=utils --ignore-platform-req=php');
