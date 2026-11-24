@@ -28,6 +28,16 @@ class ImageException extends FrameworkException
     }
 
     /**
+     * Thrown when a required PHP extension is not loaded.
+     *
+     * @return static
+     */
+    public static function forMissingExtension(string $extension)
+    {
+        return new static(lang('Images.missingExtension', [$extension]));
+    }
+    
+    /**
      * Thrown when the file specific is not following the role.
      *
      * @return static
