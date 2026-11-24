@@ -462,6 +462,16 @@ class CreditCardRulesTest extends CIUnitTestCase
                 self::generateCardNumber(65, 19),
                 true,
             ],
+            'discover21' => [
+                'discover',
+                self::generateCardNumber(646, 16),
+                true,
+            ],
+            'discover22' => [
+                'discover',
+                self::generateCardNumber(646, 19),
+                true,
+            ],
             'interpayment1' => [
                 'interpayment',
                 self::generateCardNumber(4, 16),

@@ -38,7 +38,7 @@ class DomNodeValue extends InstanceValue
      */
     public function __construct(ContextInterface $context, object $node)
     {
-        parent::__construct($context, \get_class($node), \spl_object_hash($node), \spl_object_id($node));
+        parent::__construct($context, \get_class($node), @\spl_object_hash($node), \spl_object_id($node));
     }
 
     public function getDisplaySize(): ?string

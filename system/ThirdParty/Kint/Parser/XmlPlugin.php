@@ -48,7 +48,7 @@ class XmlPlugin extends AbstractPlugin implements PluginCompleteInterface
      * however it's memory usage is very high and it takes longer to parse and
      * render. Plus it's a pain to work with. So SimpleXML is the default.
      *
-     * @psalm-var 'SimpleXML'|'DOMDocument'|'XMLDocument'
+     * @psalm-var 'DOMDocument'|'SimpleXML'|'XMLDocument'
      */
     public static string $parse_method = 'SimpleXML';
 

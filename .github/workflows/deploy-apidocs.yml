@@ -47,12 +47,33 @@ jobs:
         uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
         with:
           php-version: '8.3'
-          tools: phive
           coverage: none
 
-      - name: Download latest phpDocumentor
+      - name: Download phpDocumentor
         working-directory: source
-        run: phive --no-progress install --trust-gpg-keys 6DA3ACC4991FFAE5 phpDocumentor
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          curl_retry() {
+            curl --fail --silent --show-error --location --retry 5 --retry-all-errors --retry-delay 5 "$@"
+          }
+
+          asset=$(curl_retry \
+            --header "Authorization: Bearer ${GITHUB_TOKEN}" \
+            https://api.github.com/repos/phpDocumentor/phpDocumentor/releases/latest \
+            | jq --compact-output '.assets[] | select(.name == "phpDocumentor.phar")')
+
+          url=$(jq --raw-output '.browser_download_url' <<< "${asset}")
+          sha256=$(jq --raw-output '.digest | sub("^sha256:"; "")' <<< "${asset}")
+
+          if [ -z "${url}" ] || ! [[ "${sha256}" =~ ^[0-9a-f]{64}$ ]]; then
+            echo "Could not resolve the phpDocumentor phar and its SHA-256 digest."
+            exit 1
+          fi
+
+          mkdir --parents tools
+          curl_retry --output tools/phpDocumentor "${url}"
+          echo "${sha256}  tools/phpDocumentor" | sha256sum --check --strict
 
       - name: Prepare API repo
         working-directory: api

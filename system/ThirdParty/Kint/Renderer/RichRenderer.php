@@ -437,7 +437,10 @@ class RichRenderer extends AbstractRenderer
                     continue;
                 }
 
-                $output .= '<li>'.$this->ideLink($step['file'], $step['line']); // closing tag not required
+                $output .= '<li>'; // closing tag not required
+                if (isset($step['file'])) {
+                    $output .= $this->ideLink($step['file'], $step['line']);
+                }
                 if (isset($step['function']) &&
                     !\in_array($step['function'], ['include', 'include_once', 'require', 'require_once'], true)
                 ) {

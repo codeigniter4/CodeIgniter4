@@ -274,7 +274,7 @@ class DomPlugin extends AbstractPlugin implements PluginBeginInterface
         }
 
         if (isset(self::$blacklist[$prop])) {
-            $b = new InstanceValue($c, \get_class($value), \spl_object_hash($value), \spl_object_id($value));
+            $b = new InstanceValue($c, \get_class($value), @\spl_object_hash($value), \spl_object_id($value));
             $b->flags |= AbstractValue::FLAG_GENERATED | AbstractValue::FLAG_BLACKLIST;
 
             return $b;
@@ -311,7 +311,7 @@ class DomPlugin extends AbstractPlugin implements PluginBeginInterface
         if ($var instanceof NodeList || $var instanceof DOMNodeList) {
             $v = new DomNodeListValue($c, $var);
         } else {
-            $v = new InstanceValue($c, \get_class($var), \spl_object_hash($var), \spl_object_id($var));
+            $v = new InstanceValue($c, \get_class($var), @\spl_object_hash($var), \spl_object_id($var));
         }
 
         $parser = $this->getParser();
@@ -461,10 +461,6 @@ class DomPlugin extends AbstractPlugin implements PluginBeginInterface
                 self::$property_cache[$classname] = [];
 
                 foreach ($r->getProperties() as $prop) {
-                    if ($prop->isStatic()) {
-                        continue;
-                    }
-
                     $declaring = $prop->getDeclaringClass()->getName();
                     $name = $prop->name;
 
@@ -490,6 +486,7 @@ class DomPlugin extends AbstractPlugin implements PluginBeginInterface
 
             $known_properties = self::$property_cache[$classname];
         } else {
+            // @codeCoverageIgnoreStart
             $known_properties = self::DOMNODE_PROPS;
             if ($var instanceof DOMElement) {
                 $known_properties += self::DOMELEMENT_PROPS;
@@ -497,9 +494,10 @@ class DomPlugin extends AbstractPlugin implements PluginBeginInterface
 
             foreach (self::DOM_VERSIONS as $key => $val) {
                 if (false === $val) {
-                    unset($known_properties[$key]); // @codeCoverageIgnore
+                    unset($known_properties[$key]);
                 }
             }
+            // @codeCoverageIgnoreEnd
         }
 
         /** @psalm-var non-empty-array $known_properties */

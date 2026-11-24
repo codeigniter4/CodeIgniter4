@@ -1034,15 +1034,22 @@ final class MiscUrlTest extends CIUnitTestCase
     public static function provideParseSubdomain(): iterable
     {
         return [
-            'standard subdomain'          => ['api.example.com', 'api', false],
-            'multi-level subdomain'       => ['admin.api.example.com', 'admin.api', false],
-            'no subdomain (domain only)'  => ['example.com', '', false],
-            'localhost'                   => ['localhost', '', false],
-            'ipv4'                        => ['127.0.0.1', '', false],
-            'ipv6'                        => ['::1', '', false],
-            'two-part tld no subdomain'   => ['example.co.uk', '', false],
-            'two-part tld with subdomain' => ['api.example.co.uk', 'api', false],
-            'null uses request host'      => [null, 'sub', true],
+            'standard subdomain'                    => ['api.example.com', 'api', false],
+            'multi-level subdomain'                 => ['admin.api.example.com', 'admin.api', false],
+            'no subdomain (domain only)'            => ['example.com', '', false],
+            'localhost'                             => ['localhost', '', false],
+            'ipv4'                                  => ['127.0.0.1', '', false],
+            'ipv6'                                  => ['::1', '', false],
+            'two-part tld no subdomain'             => ['example.co.uk', '', false],
+            'two-part tld with subdomain'           => ['api.example.co.uk', 'api', false],
+            'standard subdomain with port'          => ['api.example.com:8080', 'api', false],
+            'no subdomain with port'                => ['example.com:8080', '', false],
+            'localhost with port'                   => ['localhost:8080', '', false],
+            'ipv4 with port'                        => ['192.168.1.1:8080', '', false],
+            'ipv6 with port'                        => ['[::1]:8080', '', false],
+            'two-part tld no subdomain with port'   => ['example.co.uk:8080', '', false],
+            'two-part tld with subdomain with port' => ['api.example.co.uk:8080', 'api', false],
+            'null uses request host'                => [null, 'sub', true],
         ];
     }
 }

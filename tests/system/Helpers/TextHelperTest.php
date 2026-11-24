@@ -18,6 +18,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use TypeError;
 
 /**
  * @internal
@@ -353,6 +354,33 @@ final class TextHelperTest extends CIUnitTestCase
                 $this->assertSame($expect, ellipsize($str, 10, $pos));
             }
         }
+    }
+
+    #[DataProvider('provideEllipsizePositionEdgeCases')]
+    public function testEllipsizePositionEdgeCases(float|int $position, string $expected): void
+    {
+        $this->assertSame($expected, ellipsize('this is my string', 10, $position));
+    }
+
+    /**
+     * @return iterable<string, array{float|int, string}>
+     */
+    public static function provideEllipsizePositionEdgeCases(): iterable
+    {
+        yield 'float one' => [1.0, 'this is my&hellip;'];
+
+        yield 'greater than one (int)' => [2, 'this is my&hellip;'];
+
+        yield 'greater than one (float)' => [1.5, 'this is my&hellip;'];
+
+        yield 'negative float' => [-0.5, '&hellip; my string'];
+    }
+
+    public function testEllipsizeInvalidPositionThrowsTypeError(): void
+    {
+        $this->expectException(TypeError::class);
+
+        $this->assertSame('', ellipsize('this is my string', 10, 'invalid')); // @phpstan-ignore argument.type
     }
 
     /**

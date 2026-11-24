@@ -34,12 +34,15 @@ use Kint\Value\AbstractValue;
 use Kint\Value\ArrayValue;
 use Kint\Value\ClosedResourceValue;
 use Kint\Value\Context\ArrayContext;
+use Kint\Value\Context\BaseContext;
 use Kint\Value\Context\ClassDeclaredContext;
 use Kint\Value\Context\ClassOwnedContext;
 use Kint\Value\Context\ContextInterface;
 use Kint\Value\Context\PropertyContext;
 use Kint\Value\FixedWidthValue;
 use Kint\Value\InstanceValue;
+use Kint\Value\LazyInstanceValue;
+use Kint\Value\ProxyInstanceValue;
 use Kint\Value\Representation\ContainerRepresentation;
 use Kint\Value\Representation\StringRepresentation;
 use Kint\Value\ResourceValue;
@@ -77,6 +80,7 @@ class Parser
     public const TRIGGER_SUCCESS = 1 << 1;
     public const TRIGGER_RECURSION = 1 << 2;
     public const TRIGGER_DEPTH_LIMIT = 1 << 3;
+    public const TRIGGER_LAZY = 1 << 4;
     public const TRIGGER_COMPLETE = self::TRIGGER_SUCCESS | self::TRIGGER_RECURSION | self::TRIGGER_DEPTH_LIMIT;
 
     /** @psalm-var ?class-string */
@@ -368,7 +372,7 @@ class Parser
 
     private function parseObject(object &$var, ContextInterface $c): AbstractValue
     {
-        $hash = \spl_object_hash($var);
+        $hash = @\spl_object_hash($var);
         $classname = \get_class($var);
 
         if (isset($this->object_hashes[$hash])) {
@@ -383,18 +387,36 @@ class Parser
 
             $cdepth = $c->getDepth();
             $ap = $c->getAccessPath();
+            $robj = new ReflectionObject($var);
+
+            if (KINT_PHP84 && $robj->isUninitializedLazyObject($var)) {
+                // Since getProperties on ReflectionObject also gets dynamic
+                // properties we have to use a ReflectionClass so as not to
+                // accidentally initialize lazy objects
+                $robj = new ReflectionClass($var);
+                $object = new LazyInstanceValue($c, $classname, $hash, \spl_object_id($var));
+            } elseif (KINT_PHP84 && ($innerVar = $robj->initializeLazyObject($var)) !== $var) {
+                $innerContext = new BaseContext('instance');
+                $innerContext->access_path = $ap;
+                $innerContext->depth = $cdepth + 1;
+                $inner = $this->parse($innerVar, $innerContext);
+                $innerContext->access_path = null;
+
+                return new ProxyInstanceValue($c, $inner, $classname, $hash, \spl_object_id($var));
+            } else {
+                $object = new InstanceValue($c, $classname, $hash, \spl_object_id($var));
+            }
 
             if ($this->depth_limit && $cdepth >= $this->depth_limit) {
-                $object = new InstanceValue($c, $classname, $hash, \spl_object_id($var));
                 $object->flags |= AbstractValue::FLAG_DEPTH_LIMIT;
 
                 return $this->applyPluginsComplete($var, $object, self::TRIGGER_DEPTH_LIMIT);
             }
 
             if (KINT_PHP81) {
-                $props = $this->getPropsOrdered(new ReflectionObject($var));
+                $props = $this->getPropsOrdered($robj);
             } else {
-                $props = $this->getPropsOrderedOld(new ReflectionObject($var)); // @codeCoverageIgnore
+                $props = $this->getPropsOrderedOld($robj); // @codeCoverageIgnore
             }
 
             $values = (array) $var;
@@ -402,7 +424,7 @@ class Parser
 
             foreach ($props as $rprop) {
                 if (KINT_PHP81 === false) {
-                    $rprop->setAccessible(true);
+                    $rprop->setAccessible(true); // @codeCoverageIgnore
                 }
 
                 $name = $rprop->getName();
@@ -503,7 +525,6 @@ class Parser
                 }
             }
 
-            $object = new InstanceValue($c, $classname, $hash, \spl_object_id($var));
             if ($props) {
                 $object->setChildren($properties);
             }
@@ -512,7 +533,11 @@ class Parser
                 $object->addRepresentation(new ContainerRepresentation('Properties', $properties));
             }
 
-            return $this->applyPluginsComplete($var, $object, self::TRIGGER_SUCCESS);
+            return $this->applyPluginsComplete(
+                $var,
+                $object,
+                $object instanceof LazyInstanceValue ? self::TRIGGER_LAZY : self::TRIGGER_SUCCESS,
+            );
         } finally {
             unset($this->object_hashes[$hash]);
         }
