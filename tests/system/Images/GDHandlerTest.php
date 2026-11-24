@@ -553,7 +553,6 @@ final class GDHandlerTest extends CIUnitTestCase
         // resize() calls ensureResource() -> getImageResource(), which should throw
         $this->handler->resize(10, 10);
     }
-
     
     public function testForMissingExtensionReturnsExpectedMessage(): void
     {
