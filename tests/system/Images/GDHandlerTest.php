@@ -553,4 +553,15 @@ final class GDHandlerTest extends CIUnitTestCase
         // resize() calls ensureResource() -> getImageResource(), which should throw
         $this->handler->resize(10, 10);
     }
+
+    
+    public function testForMissingExtensionReturnsExpectedMessage(): void
+    {
+        $exception = ImageException::forMissingExtension('GD');
+
+        $this->assertSame(
+            'The framework needs the following extension(s) installed and loaded: "GD".',
+            $exception->getMessage(),
+        );
+    }
 }
