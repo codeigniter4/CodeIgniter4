@@ -8,4 +8,3 @@ includes:
     - missingType.callable.neon
     - property.defaultValue.neon
     - property.phpDocType.neon
-    - staticMethod.notFound.neon
