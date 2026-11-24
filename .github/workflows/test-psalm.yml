@@ -12,7 +12,11 @@ on:
       - 'tests/**'
       - 'spark'
       - 'composer.json'
-      - 'psalm*'
+      - 'utils/composer.json'
+      - 'psalm.xml'
+      - 'psalm-baseline.xml'
+      - 'psalm-autoload.php'
+      - '.github/actions/composer-update/**'
       - '.github/workflows/test-psalm.yml'
   push:
     branches:
@@ -25,7 +29,11 @@ on:
       - 'tests/**'
       - 'spark'
       - 'composer.json'
-      - 'psalm*'
+      - 'utils/composer.json'
+      - 'psalm.xml'
+      - 'psalm-baseline.xml'
+      - 'psalm-autoload.php'
+      - '.github/actions/composer-update/**'
       - '.github/workflows/test-psalm.yml'
 
 permissions:
