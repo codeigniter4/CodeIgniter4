@@ -21,6 +21,7 @@ use CodeIgniter\Test\ReflectionHelper;
 use Config\Exceptions as ExceptionsConfig;
 use ErrorException;
 use Override;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -76,6 +77,50 @@ final class ExceptionsTest extends CIUnitTestCase
             restore_error_handler();
             restore_exception_handler();
         }
+    }
+
+    #[DataProvider('provideVendorSplObjectHashDeprecationDoesNotThrow')]
+    public function testVendorSplObjectHashDeprecationDoesNotThrow(string $file): void
+    {
+        $config = new ExceptionsConfig();
+
+        $config->logDeprecations     = false;
+        $config->deprecationLogLevel = 'error';
+
+        $this->exception = new Exceptions($config);
+
+        $message = 'Function spl_object_hash() is deprecated since 8.6, consider using spl_object_id() instead';
+
+        $this->assertTrue($this->exception->errorHandler(E_DEPRECATED, $message, $file, 374));
+        $this->assertLogContains('error', '[DEPRECATED] ' . $message);
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function provideVendorSplObjectHashDeprecationDoesNotThrow(): iterable
+    {
+        yield 'vfsStream' => [VENDORPATH . 'mikey179/vfsstream/src/main/php/org/bovigo/vfs/vfsStreamFile.php'];
+
+        yield 'Kint via Composer' => [VENDORPATH . 'kint-php/kint/src/Parser/Parser.php'];
+
+        yield 'Kint via bundle' => [SYSTEMPATH . 'ThirdParty/Kint/Parser/Parser.php'];
+    }
+
+    public function testSplObjectHashDeprecationOutsideVendorStillThrows(): void
+    {
+        $config = new ExceptionsConfig();
+
+        $config->logDeprecations = false;
+
+        $this->exception = new Exceptions($config);
+
+        $message = 'Function spl_object_hash() is deprecated since 8.6, consider using spl_object_id() instead';
+
+        $this->expectException(ErrorException::class);
+        $this->expectExceptionMessage($message);
+
+        $this->exception->errorHandler(E_DEPRECATED, $message, APPPATH . 'Foo.php', 1);
     }
 
     public function testSuppressedDeprecationsAreLogged(): void
