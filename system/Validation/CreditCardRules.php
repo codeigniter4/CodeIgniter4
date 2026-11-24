@@ -66,7 +66,7 @@ class CreditCardRules
         'Discover Card' => [
             'name'       => 'discover',
             'length'     => '16,19',
-            'prefixes'   => '6011,622,644,645,656,647,648,649,65',
+            'prefixes'   => '6011,622,644,645,646,647,648,649,65',
             'checkdigit' => true,
         ],
         'InterPayment' => [
