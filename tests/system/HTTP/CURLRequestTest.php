@@ -1265,7 +1265,7 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
         }
 
         $this->assertArrayHasKey(CURLOPT_HTTP_VERSION, $options);
-        $this->assertSame(CURL_HTTP_VERSION_3, $options[CURLOPT_HTTP_VERSION]);
+        $this->assertSame(constant('CURL_HTTP_VERSION_3'), $options[CURLOPT_HTTP_VERSION]);
     }
 
     public function testForceResolveIPv4(): void
