@@ -36,7 +36,7 @@ class ImageException extends FrameworkException
     {
         return new static(lang('Images.missingExtension', [$extension]));
     }
-    
+
     /**
      * Thrown when the file specific is not following the role.
      *
