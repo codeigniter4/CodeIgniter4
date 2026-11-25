@@ -161,6 +161,7 @@ class Config extends BaseConfig
     {
         foreach (static::$instances as $connection) {
             $connection->reconnect();
+            $connection->resetTransStatus();
         }
     }
 

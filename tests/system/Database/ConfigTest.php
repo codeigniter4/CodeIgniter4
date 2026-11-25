@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Database;
 
 use CodeIgniter\Database\Postgre\Connection as PostgreConnection;
+use CodeIgniter\Database\SQLite3\Connection as SQLite3Connection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use CodeIgniter\Test\TestLogger;
@@ -351,6 +352,46 @@ final class ConfigTest extends CIUnitTestCase
 
         $this->assertSame(2, $depth);
         $this->assertLogged('error', "Database: Failed to roll back an uncommitted transaction in database group 'tests'. Transaction cleanup aborted: MySQL server has gone away");
+    }
+
+    public function testReconnectForWorkerModeAllowsNewTransactionAfterFailedRollback(): void
+    {
+        $connection = new class (['DSN' => '', 'database' => ':memory:', 'DBDriver' => 'SQLite3', 'DBDebug' => true]) extends SQLite3Connection {
+            public bool $failRollback = true;
+
+            protected function _transRollback(): bool
+            {
+                if ($this->failRollback) {
+                    return false;
+                }
+
+                return parent::_transRollback();
+            }
+        };
+
+        $connection->initialize();
+        $this->assertTrue($connection->transStart());
+        $this->assertSame(1, $connection->transDepth);
+
+        $this->setPrivateProperty(Config::class, 'instances', ['tests' => $connection]);
+
+        Config::cleanupForWorkerMode();
+
+        $this->assertSame(1, $connection->transDepth);
+        $this->assertFalse($this->getPrivateProperty($connection, 'connID'));
+        $this->assertLogged('error', "Database: Failed to roll back an uncommitted transaction in database group 'tests'. Transaction cleanup aborted.");
+
+        $connection->failRollback = false;
+
+        Config::reconnectForWorkerMode();
+
+        $this->assertSame(0, $connection->transDepth);
+        $this->assertTrue($connection->transStatus());
+        $this->assertTrue($connection->transStart());
+        $this->assertSame(1, $connection->transDepth);
+        $this->assertTrue($connection->transComplete());
+        $this->assertSame(0, $connection->transDepth);
+        $this->assertTrue($connection->transStatus());
     }
 
     /**
