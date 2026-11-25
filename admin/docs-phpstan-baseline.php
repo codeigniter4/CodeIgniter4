@@ -93,14 +93,6 @@ return [
             ],
 
             [
-                'identifier' => 'codeigniter.castHandlerNotRegistered',
-                'paths'      => [
-                    'docs/models/entities.md:581',
-                    'docs/models/model.md:500',
-                ],
-            ],
-
-            [
                 'identifier' => 'codeigniter.languageLineNotFound',
                 'paths'      => [
                     'docs/outgoing/localization.md:359',
