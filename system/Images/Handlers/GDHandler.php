@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Images\Handlers;
 
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Images\Exceptions\ImageException;
 use Config\Images;
 use GdImage;
@@ -35,7 +36,10 @@ class GDHandler extends BaseHandler
         parent::__construct($config);
 
         if (! extension_loaded('gd')) {
-            throw ImageException::forMissingExtension('GD'); // @codeCoverageIgnore
+            throw new RuntimeException(sprintf(
+                'The "%s" handler requires the "gd" PHP extension.',
+                static::class,
+            ));
         }
     }
 
