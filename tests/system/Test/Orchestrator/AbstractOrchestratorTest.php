@@ -17,10 +17,14 @@ use Closure;
 use CodeIgniter\Config\DotEnv;
 use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Test\CIUnitTestCase;
+use ErrorException;
+use FilesystemIterator;
 use Override;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\MockObject\MockObject;
+use SplFileInfo;
 use Tests\Support\Orchestrator\OrchestratorStub;
 
 /**
@@ -74,6 +78,32 @@ final class AbstractOrchestratorTest extends CIUnitTestCase
         ] as $entry) {
             $this->assertFileExists(self::$orchestrator->getPath() . '/' . $entry);
         }
+    }
+
+    public function testBuildCopiesOnlyTheShippedWritableSkeleton(): void
+    {
+        $stray = WRITEPATH . 'orchestrator-stray-' . bin2hex(random_bytes(4));
+
+        mkdir($stray);
+        file_put_contents($stray . '/runtime.log', 'runtime state');
+        file_put_contents($stray . '.txt', 'runtime state');
+
+        try {
+            self::$orchestrator->build();
+        } finally {
+            unlink($stray . '/runtime.log');
+            rmdir($stray);
+            unlink($stray . '.txt');
+        }
+
+        $writable = self::$orchestrator->getPath() . '/writable';
+
+        foreach (['.htaccess', 'index.html', 'cache/index.html', 'debugbar/index.html', 'logs/index.html', 'session/index.html', 'uploads/index.html'] as $entry) {
+            $this->assertFileExists($writable . '/' . $entry);
+        }
+
+        $this->assertFileDoesNotExist($writable . '/' . basename($stray));
+        $this->assertFileDoesNotExist($writable . '/' . basename($stray) . '.txt');
     }
 
     public function testBuildPointsPathsAtTheFramework(): void
@@ -135,9 +165,11 @@ final class AbstractOrchestratorTest extends CIUnitTestCase
             var_export($root, true),
         ));
 
-        exec(sprintf('%s %s 2>&1', escapeshellarg(PHP_BINARY), escapeshellarg($root . '/boot.php')), $output, $exitCode);
+        [$exitCode, $output] = $this->runInFreshProcess($root . '/boot.php');
+        $this->assertSame(0, $exitCode, $output);
 
-        $this->assertSame(0, $exitCode, implode("\n", $output));
+        $result = json_decode($output, true);
+        $this->assertIsArray($result, $output);
 
         $skeleton = realpath((new OrchestratorStub($root))->getPath()) . DIRECTORY_SEPARATOR;
 
@@ -151,7 +183,316 @@ final class AbstractOrchestratorTest extends CIUnitTestCase
             'SUPPORTPATH' => $root . '/tests/_support' . DIRECTORY_SEPARATOR,
             'env'         => 'a b #c "d" \\e',
             'fixture'     => true,
-        ], json_decode(implode("\n", $output), true));
+        ], $result);
+    }
+
+    public function testBootConsoleBootsItsOwnSkeletonThroughUtilBootstrap(): void
+    {
+        $root = self::$buildPath . '/console-root';
+
+        $this->createPackageRoot($root);
+        mkdir($root . '/tests/_support', 0755, true);
+        file_put_contents($root . '/console.php', sprintf(
+            <<<'PHP'
+                <?php
+
+                require %s;
+                require %s;
+
+                define('VENDORPATH', '/predefined/vendor/');
+
+                $orchestrator = new Tests\Support\Orchestrator\OrchestratorStub(%s);
+                $orchestrator->bootConsole(rebuild: ($argv[1] ?? '') === 'rebuild');
+
+                echo json_encode([
+                    'path'        => $orchestrator->getPath(),
+                    'HOMEPATH'    => HOMEPATH,
+                    'APPPATH'     => APPPATH,
+                    'SYSTEMPATH'  => SYSTEMPATH,
+                    'TESTPATH'    => TESTPATH,
+                    'SUPPORTPATH' => SUPPORTPATH,
+                    'VENDORPATH'  => VENDORPATH,
+                    'env'         => env('orchestrator.quoted'),
+                    'request'     => service('request') instanceof CodeIgniter\HTTP\CLIRequest,
+                    'builds'      => $orchestrator->afterBuildCalls,
+                ]);
+
+                PHP,
+            var_export(ROOTPATH . 'vendor/autoload.php', true),
+            var_export(SUPPORTPATH . 'Orchestrator/OrchestratorStub.php', true),
+            var_export($root, true),
+        ));
+
+        [$exitCode, $output] = $this->runInFreshProcess($root . '/console.php');
+        $this->assertSame(0, $exitCode, $output);
+
+        $result = json_decode($output, true);
+        $this->assertIsArray($result, $output);
+        $this->assertArrayHasKey('path', $result);
+        $this->assertIsString($result['path']);
+
+        $skeleton = realpath($result['path']) . DIRECTORY_SEPARATOR;
+        $this->assertStringContainsString('/build/orchestrator.console', $result['path']);
+
+        $this->assertNotSame((new OrchestratorStub($root))->getPath(), $result['path']);
+        $this->assertSame([
+            'path'        => $result['path'],
+            'HOMEPATH'    => $skeleton,
+            'APPPATH'     => $skeleton . 'app' . DIRECTORY_SEPARATOR,
+            'SYSTEMPATH'  => SYSTEMPATH,
+            'TESTPATH'    => $root . '/tests' . DIRECTORY_SEPARATOR,
+            'SUPPORTPATH' => $root . '/tests/_support' . DIRECTORY_SEPARATOR,
+            'VENDORPATH'  => '/predefined/vendor/',
+            'env'         => 'a b #c "d" \\e',
+            'request'     => true,
+            'builds'      => 1,
+        ], $result);
+
+        file_put_contents($result['path'] . '/stale', '');
+
+        $this->assertSame([0, 0], $this->countBuilds($this->runInFreshProcess($root . '/console.php')));
+        $this->assertFileExists($result['path'] . '/stale');
+
+        unlink($result['path'] . '/.orchestrator-built');
+
+        $this->assertSame([0, 1], $this->countBuilds($this->runInFreshProcess($root . '/console.php')));
+        $this->assertFileDoesNotExist($result['path'] . '/stale');
+
+        file_put_contents($result['path'] . '/stale', '');
+
+        $this->assertSame([0, 1], $this->countBuilds($this->runInFreshProcess($root . '/console.php', 'rebuild')));
+        $this->assertFileDoesNotExist($result['path'] . '/stale');
+        $this->assertDirectoryDoesNotExist((new OrchestratorStub($root))->getPath());
+    }
+
+    public function testBootConsoleLeavesAFailedBuildUnmarked(): void
+    {
+        $orchestrator = $this->createOrchestratorWithAFailingBuild(self::$buildPath . '/console-failure-root');
+
+        try {
+            $orchestrator->bootConsole();
+            $this->fail('bootConsole() should have rethrown the build failure.');
+        } catch (RuntimeException $e) {
+            $this->assertSame('The hook failed.', $e->getMessage());
+        }
+
+        $this->assertStringContainsString('/build/orchestrator.console', $orchestrator->getPath());
+        $this->assertDirectoryExists($orchestrator->getPath());
+        $this->assertFileDoesNotExist($orchestrator->getPath() . '/.orchestrator-built');
+    }
+
+    public function testBootConsoleDoesNotReuseASymlinkedSkeleton(): void
+    {
+        $root    = self::$buildPath . '/console-symlink-root';
+        $outside = self::$buildPath . '/console-symlink-outside';
+
+        $orchestrator = $this->createOrchestratorWithAFailingBuild($root);
+
+        mkdir($outside);
+        file_put_contents($outside . '/.orchestrator-built', '');
+        mkdir($root . '/build');
+
+        if (! @symlink($outside, $orchestrator->getPath() . '.console')) {
+            $this->markTestSkipped('Symlinks are unavailable.');
+        }
+
+        try {
+            $orchestrator->bootConsole();
+            $this->fail('bootConsole() should have rebuilt the symlinked skeleton.');
+        } catch (RuntimeException $e) {
+            $this->assertSame('The hook failed.', $e->getMessage());
+        }
+
+        $this->assertFalse(is_link($orchestrator->getPath()));
+        $this->assertFileExists($outside . '/.orchestrator-built');
+    }
+
+    public function testBootRefusesAnOrchestratorInConsoleMode(): void
+    {
+        $orchestrator = $this->createOrchestratorWithAFailingBuild(self::$buildPath . '/console-boot-root');
+
+        try {
+            $orchestrator->bootConsole();
+        } catch (RuntimeException $e) {
+            $this->assertSame('The hook failed.', $e->getMessage());
+        }
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Cannot call boot() after bootConsole().');
+
+        $orchestrator->boot();
+    }
+
+    public function testPathSuffixesAnOverriddenSkeletonPath(): void
+    {
+        $root = self::$buildPath . '/console-override-root';
+
+        $this->createPackageRoot($root);
+
+        $orchestrator = $this->getMockBuilder(AbstractOrchestrator::class)
+            ->onlyMethods(['getSkeletonPath', 'getPackageRoot', 'afterBuild'])
+            ->getMock();
+        $orchestrator->method('getSkeletonPath')->willReturn($root . '/skeleton/');
+        $orchestrator->method('getPackageRoot')->willReturn($root);
+        $orchestrator->method('afterBuild')->willThrowException(new RuntimeException('The hook failed.'));
+
+        $this->withTokens(['ORCHESTRATOR_TEST_TOKEN' => '7'], function () use ($orchestrator, $root): void {
+            $this->assertSame($root . '/skeleton-7', $orchestrator->getPath());
+
+            try {
+                $orchestrator->bootConsole();
+                $this->fail('bootConsole() should have rethrown the build failure.');
+            } catch (RuntimeException $e) {
+                $this->assertSame('The hook failed.', $e->getMessage());
+            }
+
+            $this->assertSame($root . '/skeleton.console-7', $orchestrator->getPath());
+        });
+    }
+
+    public function testConsolePathNeverCollidesWithAPhpUnitPath(): void
+    {
+        $orchestrator = $this->createOrchestratorWithAFailingBuild(self::$buildPath . '/console-collision-root');
+        $phpUnitPaths = [];
+        $consolePaths = [];
+
+        foreach (['console-7', 'console', ''] as $token) {
+            $this->withTokens(['ORCHESTRATOR_TEST_TOKEN' => $token], static function () use ($orchestrator, &$phpUnitPaths): void {
+                $phpUnitPaths[] = $orchestrator->getPath();
+            });
+        }
+
+        try {
+            $orchestrator->bootConsole();
+        } catch (RuntimeException) {
+        }
+
+        foreach (['7', ''] as $token) {
+            $this->withTokens(['ORCHESTRATOR_TEST_TOKEN' => $token], static function () use ($orchestrator, &$consolePaths): void {
+                $consolePaths[] = $orchestrator->getPath();
+            });
+        }
+
+        $this->assertSame([], array_intersect($phpUnitPaths, $consolePaths));
+    }
+
+    public function testBootConsoleUsesTheEnvironmentOfTheSkeleton(): void
+    {
+        $root = self::$buildPath . '/console-environment-root';
+
+        $this->createPackageRoot($root);
+        mkdir($root . '/tests/_support', 0755, true);
+        file_put_contents($root . '/console.php', sprintf(
+            <<<'PHP'
+                <?php
+
+                require %s;
+                require %s;
+
+                putenv('CI_ENVIRONMENT');
+                unset($_ENV['CI_ENVIRONMENT'], $_SERVER['CI_ENVIRONMENT']);
+
+                if (($argv[1] ?? '') !== '') {
+                    $_SERVER['CI_ENVIRONMENT'] = $argv[1];
+                }
+
+                $orchestrator = new Tests\Support\Orchestrator\OrchestratorStub(%s, '', ['CI_ENVIRONMENT' => 'production']);
+                $orchestrator->bootConsole();
+
+                echo ENVIRONMENT;
+
+                PHP,
+            var_export(ROOTPATH . 'vendor/autoload.php', true),
+            var_export(SUPPORTPATH . 'Orchestrator/OrchestratorStub.php', true),
+            var_export($root, true),
+        ));
+
+        $this->assertSame([0, 'production'], $this->runInFreshProcess($root . '/console.php'));
+        $this->assertSame([0, 'testing'], $this->runInFreshProcess($root . '/console.php', 'testing'));
+    }
+
+    public function testBuildInvalidatesTheMarkerBeforeRemovingTheSkeleton(): void
+    {
+        if (PHP_OS_FAMILY === 'Windows' || (function_exists('posix_geteuid') && posix_geteuid() === 0)) {
+            $this->markTestSkipped('Requires a directory that the current user cannot empty.');
+        }
+
+        $root = self::$buildPath . '/marker-root';
+
+        $this->createPackageRoot($root);
+
+        $orchestrator = new OrchestratorStub($root);
+        $orchestrator->build();
+
+        $path   = $orchestrator->getPath();
+        $locked = [];
+
+        for ($i = 0; $i < 20; $i++) {
+            $directory = sprintf('%s/locked-%d', $path, $i);
+
+            mkdir($directory);
+            file_put_contents($directory . '/file', '');
+            chmod($directory, 0555);
+            $locked[] = $directory;
+        }
+
+        $listing = array_map(
+            static fn (SplFileInfo $entry): string => $entry->getFilename(),
+            iterator_to_array(new FilesystemIterator($path, FilesystemIterator::SKIP_DOTS), false),
+        );
+
+        if (! $this->hasLockedEntryBeforeTheMarker($listing)) {
+            $this->markTestSkipped('The file system lists the marker before every locked directory.');
+        }
+
+        try {
+            $orchestrator->build();
+            $this->fail('build() should have failed to remove the locked directories.');
+        } catch (ErrorException|RuntimeException) {
+            $this->assertFileDoesNotExist($path . '/.orchestrator-built');
+        } finally {
+            foreach ($locked as $directory) {
+                chmod($directory, 0755);
+            }
+        }
+    }
+
+    /**
+     * @param list<string> $listing
+     */
+    private function hasLockedEntryBeforeTheMarker(array $listing): bool
+    {
+        foreach ($listing as $name) {
+            if ($name === '.orchestrator-built') {
+                return false;
+            }
+
+            if (str_starts_with($name, 'locked-')) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function testGetPathConstantsDescribeTheBuiltSkeleton(): void
+    {
+        $skeleton = realpath(self::$orchestrator->getPath()) . DIRECTORY_SEPARATOR;
+
+        $this->assertSame([
+            'HOMEPATH'   => $skeleton,
+            'CONFIGPATH' => $skeleton . 'app/Config' . DIRECTORY_SEPARATOR,
+            'PUBLICPATH' => $skeleton . 'public' . DIRECTORY_SEPARATOR,
+            'TESTPATH'   => self::$buildPath . '/tests' . DIRECTORY_SEPARATOR,
+        ], self::$orchestrator->getPathConstants());
+    }
+
+    public function testGetPathConstantsRefuseAMissingSkeleton(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Cannot read the path constants before the orchestrated application is built.');
+
+        (new OrchestratorStub(self::$buildPath . '/unbuilt'))->getPathConstants();
     }
 
     public function testBuildWritesTheEnvFile(): void
@@ -359,6 +700,7 @@ final class AbstractOrchestratorTest extends CIUnitTestCase
 
         mkdir($outside);
         file_put_contents($outside . '/keep.txt', 'keep');
+        file_put_contents($outside . '/.orchestrator-built', '');
         mkdir($root . '/build', 0755, true);
 
         if (! @symlink($outside, $orchestrator->getPath())) {
@@ -374,6 +716,7 @@ final class AbstractOrchestratorTest extends CIUnitTestCase
         $orchestrator->build();
 
         $this->assertFileExists($outside . '/keep.txt');
+        $this->assertFileExists($outside . '/.orchestrator-built');
         $this->assertFalse(is_link($orchestrator->getPath()));
         $this->assertFileExists($orchestrator->getPath() . '/spark');
     }
@@ -655,6 +998,46 @@ final class AbstractOrchestratorTest extends CIUnitTestCase
         $this->assertSame(3, $result->exitCode);
         $this->assertStringEndsWith(str_repeat('o', 300_000), $result->stdout);
         $this->assertStringEndsWith(str_repeat('e', 300_000), $result->stderr);
+    }
+
+    private function createOrchestratorWithAFailingBuild(string $root): AbstractOrchestrator&MockObject
+    {
+        $this->createPackageRoot($root);
+
+        $orchestrator = $this->getMockBuilder(AbstractOrchestrator::class)
+            ->onlyMethods(['getPackageRoot', 'afterBuild'])
+            ->getMock();
+        $orchestrator->method('getPackageRoot')->willReturn($root);
+        $orchestrator->method('afterBuild')->willThrowException(new RuntimeException('The hook failed.'));
+
+        return $orchestrator;
+    }
+
+    /**
+     * @return array{int, string}
+     */
+    private function runInFreshProcess(string $script, string ...$arguments): array
+    {
+        exec(sprintf(
+            '%s 2>&1',
+            implode(' ', array_map(escapeshellarg(...), [PHP_BINARY, $script, ...$arguments])),
+        ), $output, $exitCode);
+
+        return [$exitCode, implode("\n", $output)];
+    }
+
+    /**
+     * @param array{int, string} $run
+     *
+     * @return array{int, mixed}
+     */
+    private function countBuilds(array $run): array
+    {
+        [$exitCode, $output] = $run;
+
+        $result = json_decode($output, true);
+
+        return [$exitCode, is_array($result) ? $result['builds'] : $output];
     }
 
     private function createPackageRoot(string $root): void
