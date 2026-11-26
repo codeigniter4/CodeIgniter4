@@ -73,7 +73,11 @@ abstract class AbstractOrchestrator
         require_once $framework . '/system/Helpers/filesystem_helper.php';
 
         $this->ensureUnlinkedAncestors();
-        $this->removePath($path . '/' . self::BUILT_MARKER);
+
+        if (! is_link($path)) {
+            $this->removePath($path . '/' . self::BUILT_MARKER);
+        }
+
         $this->removePath($path);
 
         foreach (['app', 'public'] as $directory) {
@@ -121,7 +125,7 @@ abstract class AbstractOrchestrator
     {
         $this->console = true;
 
-        if ($rebuild || ! is_file($this->getPath() . '/' . self::BUILT_MARKER)) {
+        if ($rebuild || is_link($this->getPath()) || ! is_file($this->getPath() . '/' . self::BUILT_MARKER)) {
             $this->build();
         }
 

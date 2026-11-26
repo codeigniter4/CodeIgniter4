@@ -281,6 +281,32 @@ final class AbstractOrchestratorTest extends CIUnitTestCase
         $this->assertFileDoesNotExist($orchestrator->getPath() . '/.orchestrator-built');
     }
 
+    public function testBootConsoleDoesNotReuseASymlinkedSkeleton(): void
+    {
+        $root    = self::$buildPath . '/console-symlink-root';
+        $outside = self::$buildPath . '/console-symlink-outside';
+
+        $orchestrator = $this->createOrchestratorWithAFailingBuild($root);
+
+        mkdir($outside);
+        file_put_contents($outside . '/.orchestrator-built', '');
+        mkdir($root . '/build');
+
+        if (! @symlink($outside, $orchestrator->getPath() . '.console')) {
+            $this->markTestSkipped('Symlinks are unavailable.');
+        }
+
+        try {
+            $orchestrator->bootConsole();
+            $this->fail('bootConsole() should have rebuilt the symlinked skeleton.');
+        } catch (RuntimeException $e) {
+            $this->assertSame('The hook failed.', $e->getMessage());
+        }
+
+        $this->assertFalse(is_link($orchestrator->getPath()));
+        $this->assertFileExists($outside . '/.orchestrator-built');
+    }
+
     public function testBootRefusesAnOrchestratorInConsoleMode(): void
     {
         $orchestrator = $this->createOrchestratorWithAFailingBuild(self::$buildPath . '/console-boot-root');
@@ -674,6 +700,7 @@ final class AbstractOrchestratorTest extends CIUnitTestCase
 
         mkdir($outside);
         file_put_contents($outside . '/keep.txt', 'keep');
+        file_put_contents($outside . '/.orchestrator-built', '');
         mkdir($root . '/build', 0755, true);
 
         if (! @symlink($outside, $orchestrator->getPath())) {
@@ -689,6 +716,7 @@ final class AbstractOrchestratorTest extends CIUnitTestCase
         $orchestrator->build();
 
         $this->assertFileExists($outside . '/keep.txt');
+        $this->assertFileExists($outside . '/.orchestrator-built');
         $this->assertFalse(is_link($orchestrator->getPath()));
         $this->assertFileExists($orchestrator->getPath() . '/spark');
     }
