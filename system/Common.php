@@ -21,6 +21,8 @@ use CodeIgniter\Cookie\CookieStore;
 use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
+use CodeIgniter\Debug\Backtrace;
+use CodeIgniter\Debug\Inspection\Frames;
 use CodeIgniter\Debug\Timer;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Exceptions\RuntimeException;
@@ -39,6 +41,7 @@ use CodeIgniter\Test\TestLogger;
 use Config\App;
 use Config\Database;
 use Config\DocTypes;
+use Config\Exceptions as ExceptionsConfig;
 use Config\Logger;
 use Config\Services;
 use Config\View;
@@ -955,7 +958,7 @@ if (! function_exists('remove_invisible_characters')) {
 
 if (! function_exists('render_backtrace')) {
     /**
-     * Renders a backtrace in a nice string format.
+     * Renders a raw PHP trace from the supplied starting location, when available.
      *
      * @param list<array{
      *  file?: string,
@@ -965,42 +968,16 @@ if (! function_exists('render_backtrace')) {
      *  function: string,
      *  args?: list<mixed>
      * }> $backtrace
+     * @param list<string>|null $sensitiveKeys
      */
-    function render_backtrace(array $backtrace): string
+    function render_backtrace(array $backtrace, ?string $file = null, ?int $line = null, ?array $sensitiveKeys = null): string
     {
-        $backtraces = [];
+        $sensitiveKeys ??= config(ExceptionsConfig::class)->sensitiveDataInTrace;
 
-        foreach ($backtrace as $index => $trace) {
-            $frame = $trace + ['file' => '[internal function]', 'line' => 0, 'class' => '', 'type' => '', 'args' => []];
-
-            if ($frame['file'] !== '[internal function]') {
-                $frame['file'] = sprintf('%s(%s)', $frame['file'], $frame['line']);
-            }
-
-            unset($frame['line']);
-            $idx = $index;
-            $idx = str_pad((string) ++$idx, 2, ' ', STR_PAD_LEFT);
-
-            $args = implode(', ', array_map(static fn ($value): string => match (true) {
-                is_object($value)   => sprintf('Object(%s)', $value::class),
-                is_array($value)    => $value !== [] ? '[...]' : '[]',
-                $value === null     => 'null',
-                is_resource($value) => sprintf('resource (%s)', get_resource_type($value)),
-                default             => var_export($value, true),
-            }, $frame['args']));
-
-            $backtraces[] = sprintf(
-                '%s %s: %s%s%s(%s)',
-                $idx,
-                clean_path($frame['file']),
-                $frame['class'],
-                $frame['type'],
-                $frame['function'],
-                $args,
-            );
-        }
-
-        return implode("\n", $backtraces);
+        return implode("\n", Backtrace::lines(
+            Frames::fromTrace($backtrace, $file, $line),
+            sensitiveKeys: $sensitiveKeys,
+        ));
     }
 }
 

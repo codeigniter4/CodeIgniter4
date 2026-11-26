@@ -154,6 +154,52 @@ final class ExceptionsTest extends CIUnitTestCase
         $this->assertSame([403, EXIT_CONFIG], $determineCodes(HoneypotException::isBot()));
     }
 
+    public function testShutdownLogsPreviousTraceWhenDisplayBacktracesAreDisabled(): void
+    {
+        $homePath  = var_export(HOMEPATH, true);
+        $bootstrap = var_export(SYSTEMPATH . 'util_bootstrap.php', true);
+
+        $code = <<<PHP
+            chdir({$homePath});
+            define('ENVIRONMENT', 'testing');
+            define('SHOW_DEBUG_BACKTRACE', false);
+            require {$bootstrap};
+
+            use CodeIgniter\\Debug\\Exceptions;
+            use CodeIgniter\\Test\\TestLogger;
+
+            function shutdownPreviousFrame(string \$context): RuntimeException
+            {
+                return new RuntimeException('Prior exception.');
+            }
+
+            function causeFatalRedeclaration(): void
+            {
+                function declaredDuringShutdownTest(): void {}
+            }
+
+            \$previous = shutdownPreviousFrame('previous-argument-marker');
+            (new ReflectionProperty(Exceptions::class, 'exceptionCaughtByExceptionHandler'))->setValue(service('exceptions'), \$previous);
+
+            register_shutdown_function(static function (): void {
+                echo TestLogger::didLog('critical', 'shutdownPreviousFrame()', false) ? 'PREVIOUS TRACE LOGGED' : 'PREVIOUS TRACE MISSING';
+                echo TestLogger::didLog('critical', 'previous-argument-marker', false) ? 'ARGUMENT LOGGED' : '';
+            });
+
+            causeFatalRedeclaration();
+            causeFatalRedeclaration();
+            PHP;
+
+        $command = sprintf('%s -d zend.exception_ignore_args=0 -r %s 2>&1', escapeshellarg(PHP_BINARY), escapeshellarg($code));
+        exec($command, $lines, $status);
+        $output = implode(PHP_EOL, $lines);
+
+        $this->assertSame(255, $status, $output);
+        $this->assertStringContainsString('PREVIOUS TRACE LOGGED', $output);
+        $this->assertStringNotContainsString('ARGUMENT LOGGED', $output);
+        $this->assertStringNotContainsString('shutdownPreviousFrame()', $output);
+    }
+
     public function testResetForWorkerModeClearsPreviousRequestState(): void
     {
         $this->setPrivateProperty($this->exception, 'exceptionCaughtByExceptionHandler', new RuntimeException('Previous request'));

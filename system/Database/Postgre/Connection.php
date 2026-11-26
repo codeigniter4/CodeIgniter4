@@ -291,7 +291,7 @@ class Connection extends BaseConnection
                 'message' => $e->getMessage(),
                 'exFile'  => clean_path($e->getFile()),
                 'exLine'  => $e->getLine(),
-                'trace'   => render_backtrace($trace),
+                'trace'   => render_backtrace($trace, $e->getFile(), $e->getLine()),
             ]);
 
             $exception = new DatabaseException($e->getMessage(), 0, $e);
@@ -332,15 +332,17 @@ class Connection extends BaseConnection
             $message  = (string) pg_result_error($failedResult);
             $trace    = debug_backtrace();
             $first    = array_shift($trace);
+            $file     = $first['file'] ?? null;
+            $line     = $first['line'] ?? null;
 
             $this->lastFailedResult = $failedResult;
 
             // Log only the first line; pg_result_error() appends "LINE N: ..." context.
             log_message('error', "{message}\nin {exFile} on line {exLine}.\n{trace}", [
                 'message' => explode("\n", $message)[0],
-                'exFile'  => clean_path($first['file']),
-                'exLine'  => $first['line'],
-                'trace'   => render_backtrace($trace),
+                'exFile'  => $file === null ? '[internal function]' : clean_path($file),
+                'exLine'  => $line ?? 0,
+                'trace'   => render_backtrace($trace, $file, $line),
             ]);
 
             $exception = $this->createDatabaseException($message, $sqlstate);
@@ -366,12 +368,14 @@ class Connection extends BaseConnection
         $message = pg_last_error($this->connID);
         $trace   = debug_backtrace();
         $first   = array_shift($trace);
+        $file    = $first['file'] ?? null;
+        $line    = $first['line'] ?? null;
 
         log_message('error', "{message}\nin {exFile} on line {exLine}.\n{trace}", [
             'message' => $message,
-            'exFile'  => clean_path($first['file']),
-            'exLine'  => $first['line'],
-            'trace'   => render_backtrace($trace),
+            'exFile'  => $file === null ? '[internal function]' : clean_path($file),
+            'exLine'  => $line ?? 0,
+            'trace'   => render_backtrace($trace, $file, $line),
         ]);
 
         $exception = new DatabaseException($message);

@@ -126,6 +126,16 @@ Config classes that override `getEnvValue()` or `initEnvValue()` keep the previo
 
 `RouteCollection` no longer applies `esc(strip_tags())` to namespace, controller, and method values, including custom controllers passed to `resource()` and `presenter()`. Applications relying on HTML tags being stripped or special characters being HTML-encoded must preprocess these values before passing them to the router. Values originating from untrusted sources should be restricted to an explicit allowlist of permitted handlers.
 
+### Detailed Exception Responses
+
+Detailed API error responses keep the `trace` field. It is empty when `SHOW_DEBUG_BACKTRACE` is disabled. When enabled, each frame contains call and source metadata. Remove any dependency on the former `args` field in API clients.
+
+After a fatal shutdown error, the log retains the previous exception's trace with argument values omitted. The rendered error includes that trace only when `SHOW_DEBUG_BACKTRACE` is enabled.
+
+The detailed HTML error page masks known credential headers in requests and responses. Add custom sensitive header names to `Config\Exceptions::$sensitiveDataInTrace`. Query, form, and cookie values require an entry in `Config\Exceptions::$diagnosticValues`. See [Error Reporting](../general/errors.md#error-reporting).
+
+CLI error output and logs now show bounded array previews. Formatted traces display instance calls as `Class()->method()`. Diagnostic fields and trace arguments use `[redacted]` for masked values. Update any snapshots or scripts that expect the previous call syntax, asterisks for masked values, or `[...]` for every nonempty trace argument array.
+
 ## Breaking Enhancements
 
 ### Log Handler Interface
@@ -157,11 +167,17 @@ The following files received significant changes (including deprecations or visu
 
 #### Config
 
+- **app/Config/Exceptions.php**  
+    - Added `$diagnosticValues` to choose which query, form, and cookie values the detailed HTML error page shows.
+
 - **app/Config/Filters.php**  
     - Added a new filter named `requestid` that adds a unique request ID to each request in the application's context.
 
 - **app/Config/Generators.php**  
     - `Config\Generators::$views` added entries for `make:request`, `make:test`, and `make:transformer`, and dropped the stale `session:migration` entry.
+
+- **app/Config/Kint.php**  
+    - Added `$fileLinkFormat` to configure editor links in the Debug Toolbar and detailed error page. It defaults to `null`, so existing Xdebug link settings continue to apply.
 
 - **app/Config/Logger.php**  
     - `Config\Logger::$handlers` added a new key `stopChainOnFailure` to the `FileHandler` and `ErrorlogHandler` settings.
@@ -183,17 +199,14 @@ The following files received significant changes (including deprecations or visu
 - **app/Views/errors/cli/error_exception.php**  
     - Shows the backtrace also when the command runs with `-v`.
 
-- **app/Views/errors/html/debug.css**  
-    - Added styles for the **Copy Details** button.
+- **app/Views/errors/html/error_exception.php**
+    - Refreshed the detailed HTML exception page with selectable stack frames and request, response, server, file, and memory diagnostics. Merge this view together with **exception.css** and **error_report.php** to adopt the new layout.
 
-- **app/Views/errors/html/debug.js**  
-    - Added clipboard handling for the **Copy Details** button.
-
-- **app/Views/errors/html/error_exception.php**  
-    - Added a **Copy Details** button to detailed HTML exception pages.
+- **app/Views/errors/html/exception.css**
+    - Added styles for the detailed HTML exception page.
 
 - **app/Views/errors/html/error_report.php**  
-    - Added a Markdown error report partial used by the **Copy Details** button.
+    - Added a Markdown error report partial used by **Copy Details**. It includes an excerpt from the first frame if its source is available and lists stack frame names when backtraces are enabled.
 
 ### All Changes
 

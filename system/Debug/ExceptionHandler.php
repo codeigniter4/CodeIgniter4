@@ -13,10 +13,11 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Debug;
 
-use Closure;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Boot;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\Debug\Inspection\Frames;
+use CodeIgniter\Debug\Inspection\Inspector;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
@@ -84,14 +85,8 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
             if (! str_contains($request->getHeaderLine('accept'), 'text/html')) {
                 // If display_errors is enabled, shows the error details.
                 $data = $this->isDisplayErrorsEnabled()
-                    ? $this->collectVars($exception, $statusCode)
+                    ? $this->collectExceptionDetails($exception, $statusCode) + ['trace' => $this->apiTrace($exception)]
                     : '';
-
-                // Sanitize data to remove non-JSON-serializable values (resources, closures)
-                // before formatting for API responses (JSON, XML, etc.)
-                if ($data !== '') {
-                    $data = $this->sanitizeData($data);
-                }
 
                 $this->respond($data, $statusCode)->send();
 
@@ -125,7 +120,10 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
 
         // Displays the HTML or CLI error code.
         if ($request instanceof IncomingRequest) {
-            $this->render($exception, $statusCode, $viewFile);
+            $this->renderWithViewData($exception, $statusCode, $viewFile, [
+                'request'  => $this->request,
+                'response' => $this->response,
+            ]);
         } else {
             CLI::redirectToStderr(fn () => $this->render($exception, $statusCode, $viewFile));
         }
@@ -192,51 +190,22 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
     }
 
     /**
-     * Sanitizes data to remove non-JSON-serializable values like resources and closures.
-     * This is necessary for API responses that need to be JSON/XML encoded.
+     * Return only scalar frame metadata suitable for serialization.
      *
-     * @param array<int, bool> $seen Used internally to prevent infinite recursion
+     * @return list<array{file?: string, line?: int, class?: string, type?: string, function: string}>
      */
-    private function sanitizeData(mixed $data, array &$seen = []): mixed
+    private function apiTrace(Throwable $exception): array
     {
-        $type = gettype($data);
-
-        switch ($type) {
-            case 'resource':
-            case 'resource (closed)':
-                return '[Resource #' . (int) $data . ']';
-
-            case 'array':
-                $result = [];
-
-                foreach ($data as $key => $value) {
-                    $result[$key] = $this->sanitizeData($value, $seen);
-                }
-
-                return $result;
-
-            case 'object':
-                $oid = spl_object_id($data);
-                if (isset($seen[$oid])) {
-                    return '[' . $data::class . ' Object *RECURSION*]';
-                }
-                $seen[$oid] = true;
-
-                if ($data instanceof Closure) {
-                    return '[Closure]';
-                }
-
-                $result = [];
-
-                foreach ((array) $data as $key => $value) {
-                    $cleanKey          = preg_replace('/^\x00.*\x00/', '', (string) $key);
-                    $result[$cleanKey] = $this->sanitizeData($value, $seen);
-                }
-
-                return $result;
-
-            default:
-                return $data;
+        if (! defined('SHOW_DEBUG_BACKTRACE') || ! SHOW_DEBUG_BACKTRACE) {
+            return [];
         }
+
+        $trace = [];
+
+        foreach (Frames::fromException((new Inspector($exception))->rootCause()) as $frame) {
+            $trace[] = $frame->metadata();
+        }
+
+        return $trace;
     }
 }

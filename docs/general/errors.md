@@ -82,7 +82,7 @@ You can change your environment by setting the `CI_ENVIRONMENT` variable. See [S
     Disabling error reporting DOES NOT stop logs from being written if there are errors.
 
 !!! warning "Warning"
-    Note that your settings from the **.env** file are added to `$_SERVER` and `$_ENV`. As a side effect, this means that if the detailed error report is displayed, **your secure credentials are publicly exposed**.
+    Keep `display_errors` disabled on public deployments. Detailed error reports can expose credentials through exception messages, source excerpts, and diagnostic values.
 
 ### Logging Exceptions
 
@@ -343,6 +343,29 @@ If there is no view file corresponding to the HTTP status code, **production.php
 
 !!! note "Note"
     If `display_errors` is on in the PHP ini settings, **error_exception.php** is selected and a detailed error report is displayed.
+
+The detailed HTML view shows the exception, its causes, and the source location. When `SHOW_DEBUG_BACKTRACE` is enabled, select a stack frame to inspect its location and available source. **Copy Details** generates a Markdown report with source locations and a short excerpt from the first frame if its source is available. The report lists stack frames when backtraces are enabled. It omits trace arguments, request headers, query strings, and session data. Review the exception messages, request path, and source excerpt before sharing the report.
+
+The error page shows paths relative to the project when possible. Set `Config\Kint::$fileLinkFormat` to an editor URL template such as `vscode://file%f:%l`, or override it in `.env` with `kint.fileLinkFormat = 'vscode://file%f:%l'`. Kint substitutes the absolute filename for `%f` and the line number for `%l`. The error page and Debug Toolbar share this setting. When it is `null`, Kint uses `xdebug.file_link_format` if configured. The error page uses `file://` when there is no editor format or line number.
+
+Common editor templates:
+
+- VS Code: `vscode://file%f:%l`
+- Cursor: `cursor://file%f:%l`
+- PhpStorm: `phpstorm://open?file=%f&line=%l`
+- IntelliJ IDEA: `idea://open?file=%f&line=%l`
+- Sublime Text: `subl://open?url=file://%f&line=%l`
+- TextMate: `txmt://open?url=file://%f&line=%l`
+
+The **Diagnostics** section shows request and response metadata, common server fields, framework versions, defined constant names, included files, and memory usage. Both header lists show values by default and mask credential headers such as `Authorization`, `API-Key`, `Cookie`, and `Set-Cookie`. Add application-specific header names to `Config\Exceptions::$sensitiveDataInTrace` to mask those values as well. Header names are matched case-insensitively.
+
+Query, form, and cookie values stay masked by default. Add specific field names under `query`, `form`, or `cookies` in `Config\Exceptions::$diagnosticValues` to show their values. Common credential fields, configured session and CSRF cookies, and fields matched by `Config\Exceptions::$sensitiveDataInTrace` stay masked.
+
+When the CLI shows a backtrace, a short source excerpt appears below the exception message and location. A `>` marks the exception's throw site when the source is available.
+
+When PHP captures arguments in exception traces, select a stack frame and expand **Arguments** to inspect the values passed to the named function. The HTML and CLI views and backtrace logs show array keys and values up to size and depth limits and mark circular references. Object arguments show their class name. The copied report omits argument values.
+
+The HTML and CLI views and backtrace logs mask sensitive arguments by parameter name, position, or value when the value contains a URL with embedded credentials or a `password=` pair. Add application-specific parameter names or positions to `Config\Exceptions::$sensitiveDataInTrace`. Detailed API error responses include frame metadata when `SHOW_DEBUG_BACKTRACE` is enabled and always omit trace arguments.
 
 You should customize all of the error views in the **app/Views/errors/html** folder for your site.
 

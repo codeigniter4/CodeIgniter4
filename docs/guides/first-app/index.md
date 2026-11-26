@@ -87,8 +87,8 @@ In addition to this, CodeIgniter has some helpful error pages when you hit excep
 
 There are a couple of things to note here:
 
-1.  Hovering over the red header at the top reveals a **search** link that will open up DuckDuckGo.com in a new tab and search for the exception.
-2.  Clicking the **arguments** link on any line in the Backtrace will expand a list of the arguments that were passed into that function call.
+1.  Select a frame in the **Stack trace** to inspect its source code.
+2.  Expand **Arguments** below the source when PHP captured arguments for the selected frame.
 
 Everything else should be clear when you see it.
 
