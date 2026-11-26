@@ -321,7 +321,7 @@ class Connection extends BaseConnection
                 'message' => $e->getMessage(),
                 'exFile'  => clean_path($e->getFile()),
                 'exLine'  => $e->getLine(),
-                'trace'   => render_backtrace($trace),
+                'trace'   => render_backtrace($trace, $e->getFile(), $e->getLine()),
             ]);
 
             $error     = $this->error();

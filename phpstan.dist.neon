@@ -9,6 +9,8 @@ parameters:
     level: 6
     bootstrapFiles:
         - phpstan-bootstrap.php
+    dynamicConstantNames:
+        - SHOW_DEBUG_BACKTRACE
     paths:
         - admin/starter/tests
         - app

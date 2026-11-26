@@ -1,127 +1,151 @@
 <?php
 
-use CodeIgniter\CodeIgniter;
+declare(strict_types=1);
+
+use CodeIgniter\Debug\Backtrace;
+use CodeIgniter\Debug\Inspection\CodeSnippet;
+use CodeIgniter\Debug\Inspection\Frame;
+use CodeIgniter\Debug\Inspection\Frames;
 use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\HTTP\URI;
 
-$reportMessage = str_replace(["\r\n", "\r"], "\n", $message);
-$reportTitle   = trim($reportMessage);
-$reportTitle   = $reportTitle === '' ? $title : explode("\n", $reportTitle, 2)[0];
-$messageLines  = str_contains($reportMessage, "\n");
+/**
+ * @var string                $message Exception message before newline normalization.
+ * @var string                $title   The exception class shown in the report heading.
+ * @var string                $file    The exception's source path before stripping the project root.
+ * @var int|null              $line
+ * @var int                   $code
+ * @var string                $reasonPhrase
+ * @var array<string, string> $serverContext
+ * @var string                $memoryUsage
+ * @var IncomingRequest       $request
+ * @var string                $requestPath
+ * @var string                $requestUrl
+ * @var string                $userAgent
+ * @var list<Throwable>       $exceptionChain
+ * @var Throwable             $rootCause
+ * @var bool                  $showBacktrace
+ */
+$normalizedMessage = trim(str_replace(["\r\n", "\r"], "\n", $message));
+$markdownTitle     = $normalizedMessage === '' ? $title : sprintf('[%s] %s', $title, $normalizedMessage);
 
-$reportResponse = service('response', null, false);
-$reportResponse->setStatusCode($code);
+$markdown = sprintf(
+    <<<'EOT'
+        # %s
 
-$report = [
-    '# ' . $reportTitle,
-    '',
-    '## Exception',
-    '',
-    '- Type: ' . $type,
-    '- Status Code: ' . $code,
-    '- Status: ' . $reportResponse->getReasonPhrase(),
-    $messageLines ? '- Message:' : '- Message: ' . $reportMessage,
-];
+        ## Exception
 
-if ($messageLines) {
-    $report[] = '';
-    $report[] = '```text';
-    $report[] = $reportMessage;
-    $report[] = '```';
+        - Source: %s
+        - Status: HTTP %d %s
+
+        ## Environment
+
+        - PHP: %s
+        - CodeIgniter: %s
+        - Environment: %s
+        - SAPI: %s
+        - Time: %s
+        - Memory Usage: %s
+
+        EOT,
+    $markdownTitle,
+    Backtrace::location($file, $line),
+    $code,
+    $reasonPhrase,
+    $serverContext['PHP'],
+    $serverContext['CodeIgniter'],
+    $serverContext['Environment'],
+    $serverContext['SAPI'],
+    $serverContext['Time'],
+    $memoryUsage,
+);
+
+$markdown .= sprintf(
+    <<<'EOT'
+
+        ## Request
+
+        - Method: %s
+        - Path: %s
+        - URL: %s
+        - User Agent: %s
+
+        EOT,
+    $request->getMethod(),
+    $requestPath,
+    $requestUrl,
+    $userAgent,
+);
+
+$causes = array_slice($exceptionChain, 1);
+
+if ($causes !== []) {
+    $markdown .= sprintf(
+        <<<'EOT'
+
+            ## Previous Exceptions
+
+            - %s
+
+            EOT,
+        implode("\n- ", array_map(
+            static fn (Throwable $e): string => sprintf(
+                "[%s] %s\n  %s",
+                $e::class,
+                $e->getMessage(),
+                Backtrace::location($e->getFile(), $e->getLine()),
+            ),
+            $causes,
+        )),
+    );
 }
 
-$report[] = '';
-$report[] = '## Environment';
-$report[] = '';
-$report[] = '- PHP: ' . PHP_VERSION;
-$report[] = '- CodeIgniter: ' . CodeIgniter::CI_VERSION;
-$report[] = '- Environment: ' . ENVIRONMENT;
-$report[] = '- SAPI: ' . PHP_SAPI;
-$report[] = '- Time: ' . date('Y-m-d H:i:s e');
-$report[] = '- Memory Usage: ' . number_format(memory_get_usage(true) / 1024 / 1024, 2) . ' MB';
+$sourceLocation = Frame::sourceLocation($rootCause->getFile(), $rootCause->getLine());
+$excerptLine    = $sourceLocation['line'] ?? null;
+$excerpt        = CodeSnippet::get($sourceLocation['file'], $excerptLine, highlight: false);
 
-$reportRequest = service('request');
+if ($excerpt !== []) {
+    $excerptLines = [];
+    $lineWidth    = strlen((string) array_key_last($excerpt));
 
-if ($reportRequest instanceof IncomingRequest) {
-    $reportPath = '/' . ltrim($reportRequest->getPath(), '/');
-    $reportUri  = $reportRequest->getUri();
-    $reportUrl  = $reportPath;
-
-    if ($reportUri->getHost() !== '') {
-        $reportUrl = URI::createURIString(
-            $reportUri->getScheme(),
-            $reportUri->getHost() . ($reportUri->getPort() === null ? '' : ':' . $reportUri->getPort()),
-            $reportPath,
+    foreach ($excerpt as $number => $text) {
+        $excerptLines[] = sprintf(
+            '%s %*d | %s',
+            $number === $excerptLine ? '>' : ' ',
+            $lineWidth,
+            $number,
+            mb_scrub($text, 'UTF-8'),
         );
     }
 
-    $report[] = '';
-    $report[] = '## Request';
-    $report[] = '';
-    $report[] = '- Method: ' . $reportRequest->getMethod();
-    $report[] = '- Path: ' . $reportPath;
-    $report[] = '- URL: ' . $reportUrl;
-    $report[] = '- User Agent: ' . $reportRequest->getUserAgent()->getAgentString();
+    $markdown .= sprintf(
+        <<<'EOT'
+
+            ## Source Excerpt
+
+            %s
+
+            ```php
+            %s
+            ```
+
+            EOT,
+        Backtrace::location($sourceLocation['file'], $excerptLine),
+        implode("\n", $excerptLines),
+    );
 }
 
-$report[] = '';
-$report[] = '## Source';
-$report[] = '';
-$report[] = '`' . clean_path($file) . ':' . $line . '`';
+if ($showBacktrace) {
+    $markdown .= sprintf(
+        <<<'EOT'
 
-if (is_file($file) && is_readable($file)) {
-    $sourceLines = file($file, FILE_IGNORE_NEW_LINES);
+            ## Stack Trace
 
-    if ($sourceLines !== false) {
-        $startLine = max($line - 5, 1);
-        $endLine   = min($line + 5, count($sourceLines));
-
-        $report[] = '';
-        $report[] = '```php';
-
-        for ($sourceLine = $startLine; $sourceLine <= $endLine; $sourceLine++) {
-            $report[] = sprintf(
-                '%s%4d %s',
-                $sourceLine === $line ? '>' : ' ',
-                $sourceLine,
-                $sourceLines[$sourceLine - 1],
-            );
-        }
-
-        $report[] = '```';
-    }
+            ```text
+            %s
+            ```
+            EOT,
+        implode("\n", Backtrace::lines(Frames::fromException($rootCause), includeArguments: false)),
+    );
 }
 
-$previousException = $exception->getPrevious();
-
-if ($previousException instanceof Throwable) {
-    $report[] = '';
-    $report[] = '## Previous Exceptions';
-
-    while ($previousException instanceof Throwable) {
-        $report[] = '* ' . $previousException::class . ' - ' . $previousException->getMessage();
-        $report[] = '  ' . clean_path($previousException->getFile()) . ':' . $previousException->getLine();
-
-        $previousException = $previousException->getPrevious();
-    }
-}
-
-if ($trace !== []) {
-    $report[] = '';
-    $report[] = '## Stack Trace';
-    $report[] = '';
-    $report[] = '```text';
-
-    foreach (array_slice($trace, 0, 50) as $reportIndex => $reportRow) {
-        $reportLocation = isset($reportRow['file'], $reportRow['line'])
-            ? clean_path($reportRow['file']) . ':' . $reportRow['line']
-            : '{PHP internal code}';
-        $reportCall = ($reportRow['class'] ?? '') . ($reportRow['type'] ?? '') . ($reportRow['function'] ?? '');
-
-        $report[] = $reportIndex . '  ' . $reportLocation . ($reportCall === '' ? '' : '  ' . $reportCall . '()');
-    }
-
-    $report[] = '```';
-}
-
-echo esc(implode("\n", $report)) . "\n";
+printf("%s\n", esc(trim($markdown)));

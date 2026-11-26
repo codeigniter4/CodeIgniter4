@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace CodeIgniter\Debug;
 
 use CodeIgniter\API\ResponseTrait;
+use CodeIgniter\Debug\Inspection\Frames;
+use CodeIgniter\Debug\Inspection\Inspector;
 use CodeIgniter\Exceptions\HasExitCodeInterface;
 use CodeIgniter\Exceptions\HTTPExceptionInterface;
 use CodeIgniter\HTTP\CLIRequest;
@@ -93,21 +95,26 @@ class Exceptions
                 'routeInfo' => sprintf('[Method: %s, Route: %s]', $this->request->getMethod(), $uri),
                 'exFile'    => clean_path($exception->getFile()), // {file} refers to THIS file
                 'exLine'    => $exception->getLine(), // {line} refers to THIS line
-                'trace'     => render_backtrace($exception->getTrace()),
+                'trace'     => render_backtrace(
+                    $exception->getTrace(),
+                    $exception->getFile(),
+                    $exception->getLine(),
+                    $this->config->sensitiveDataInTrace,
+                ),
             ]);
 
-            // Get the first exception.
-            $firstException = $exception;
-
-            while (($prevException = $firstException->getPrevious()) instanceof Throwable) {
-                $firstException = $prevException;
-
+            foreach (array_slice((new Inspector($exception))->chain(), 1) as $prevException) {
                 log_message('critical', "[Caused by] {exClass}: {message}\nin {exFile} on line {exLine}.\n{trace}", [
                     'exClass' => $prevException::class,
                     'message' => $prevException->getMessage(),
                     'exFile'  => clean_path($prevException->getFile()), // {file} refers to THIS file
                     'exLine'  => $prevException->getLine(), // {line} refers to THIS line
-                    'trace'   => render_backtrace($prevException->getTrace()),
+                    'trace'   => render_backtrace(
+                        $prevException->getTrace(),
+                        $prevException->getFile(),
+                        $prevException->getLine(),
+                        $this->config->sensitiveDataInTrace,
+                    ),
                 ]);
             }
         }
@@ -174,16 +181,27 @@ class Exceptions
 
         ['type' => $type, 'message' => $message, 'file' => $file, 'line' => $line] = $error;
 
-        if ($this->exceptionCaughtByExceptionHandler instanceof Throwable) {
-            $message .= "\n【Previous Exception】\n"
-                . $this->exceptionCaughtByExceptionHandler::class . "\n"
-                . $this->exceptionCaughtByExceptionHandler->getMessage() . "\n"
-                . $this->exceptionCaughtByExceptionHandler->getTraceAsString();
+        if (! in_array($type, [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE], true)) {
+            return;
         }
 
-        if (in_array($type, [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE], true)) {
-            $this->exceptionHandler(new ErrorException($message, 0, $type, $file, $line));
+        if ($this->exceptionCaughtByExceptionHandler instanceof Throwable) {
+            $previous = $this->exceptionCaughtByExceptionHandler;
+            $details  = sprintf("【Previous Exception】\n%s\n%s", $previous::class, $previous->getMessage());
+            $message .= "\n" . $details;
+
+            if (defined('SHOW_DEBUG_BACKTRACE') && SHOW_DEBUG_BACKTRACE) {
+                $message .= "\n" . implode("\n", Backtrace::lines(Frames::fromException($previous), includeArguments: false));
+            } elseif ($this->config->log && ! in_array(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR, $this->config->ignoreCodes, true)) {
+                // Keep the previous trace in the log when the rendered error hides backtraces.
+                log_message('critical', "{details}\n{trace}", [
+                    'details' => $details,
+                    'trace'   => implode("\n", Backtrace::lines(Frames::fromException($previous), includeArguments: false)),
+                ]);
+            }
         }
+
+        $this->exceptionHandler(new ErrorException($message, 0, $type, $file, $line));
     }
 
     /**
@@ -251,7 +269,7 @@ class Exceptions
                 'message' => $message,
                 'errFile' => clean_path($file ?? ''),
                 'errLine' => $line ?? 0,
-                'trace'   => render_backtrace($trace),
+                'trace'   => render_backtrace($trace, $file, $line, $this->config->sensitiveDataInTrace),
             ],
         );
 

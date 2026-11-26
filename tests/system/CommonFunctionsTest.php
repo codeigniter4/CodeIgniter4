@@ -35,6 +35,7 @@ use CodeIgniter\Test\TestLogger;
 use Config\App;
 use Config\Cookie;
 use Config\DocTypes;
+use Config\Exceptions as ExceptionsConfig;
 use Config\Logger;
 use Config\Modules;
 use Config\Routing;
@@ -872,11 +873,35 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     public function testRenderBacktrace(): void
     {
-        $trace   = (new RuntimeException('Test exception'))->getTrace();
-        $renders = explode("\n", render_backtrace($trace));
+        $trace = [
+            ['file' => ROOTPATH . 'caller.php', 'line' => 20, 'class' => 'Connection', 'type' => '->', 'function' => 'query'],
+            ['file' => ROOTPATH . 'entry.php', 'line' => 30, 'function' => 'caller', 'args' => [42]],
+        ];
 
-        foreach ($renders as $render) {
-            $this->assertMatchesRegularExpression('/^\s*\d* .+(?:\(\d+\))?: \S+(?:(?:\->|::)\S+)?\(.*\)$/', $render);
+        $this->assertSame([
+            ' 1 Connection()->query() [internal function]',
+            ' 2 caller(42) in caller.php (line 20)',
+            ' 3 {main}() in entry.php (line 30)',
+        ], explode("\n", render_backtrace($trace)));
+        $this->assertStringStartsWith(
+            " 1 Connection()->query() in connection.php (line 10)\n",
+            render_backtrace($trace, ROOTPATH . 'connection.php', 10),
+        );
+    }
+
+    public function testRenderBacktraceRedactsArgumentsUsingTheSharedExceptionConfig(): void
+    {
+        $config = config(ExceptionsConfig::class);
+        $saved  = $config->sensitiveDataInTrace;
+
+        $config->sensitiveDataInTrace = ['needle'];
+
+        try {
+            $trace = [['function' => 'str_contains', 'args' => ['visible', 'redacted']]];
+
+            $this->assertStringContainsString("str_contains('visible', [redacted])", render_backtrace($trace));
+        } finally {
+            $config->sensitiveDataInTrace = $saved;
         }
     }
 

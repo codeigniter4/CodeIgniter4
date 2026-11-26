@@ -23,6 +23,7 @@ use Config\Autoload;
 use Config\Kint as KintConfig;
 use Config\Modules;
 use Kint\Kint;
+use Kint\Renderer\AbstractRenderer;
 use Kint\Renderer\CliRenderer;
 use Kint\Renderer\RichRenderer;
 
@@ -491,6 +492,13 @@ class Autoloader
         Kint::$depth_limit         = $config->maxDepth;
         Kint::$display_called_from = $config->displayCalledFrom;
         Kint::$expanded            = $config->expanded;
+
+        // @phpstan-ignore function.alreadyNarrowedType
+        $fileLinkFormat = property_exists($config, 'fileLinkFormat') ? $config->fileLinkFormat : null;
+
+        if (is_string($fileLinkFormat)) {
+            AbstractRenderer::$file_link_format = $fileLinkFormat;
+        }
 
         if (isset($config->plugins) && is_array($config->plugins)) {
             Kint::$plugins = $config->plugins;

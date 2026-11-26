@@ -13,7 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Debug;
 
+use CodeIgniter\Debug\Inspection\Frame;
+use CodeIgniter\Debug\Inspection\Inspector;
 use Config\Exceptions as ExceptionsConfig;
+use ReflectionReference;
 use Throwable;
 
 /**
@@ -62,27 +65,29 @@ abstract class BaseExceptionHandler
      */
     protected function collectVars(Throwable $exception, int $statusCode): array
     {
-        // Get the first exception.
-        $firstException = $exception;
-
-        while (($prevException = $firstException->getPrevious()) instanceof Throwable) {
-            $firstException = $prevException;
-        }
-
-        $trace = $firstException->getTrace();
+        $trace = (new Inspector($exception))->rootCause()->getTrace();
 
         if ($this->config->sensitiveDataInTrace !== []) {
             $trace = $this->maskSensitiveData($trace, $this->config->sensitiveDataInTrace);
         }
+
+        return $this->collectExceptionDetails($exception, $statusCode) + ['trace' => $trace];
+    }
+
+    /**
+     * @return array{title: string, type: string, code: int, message: string, file: string, line: int}
+     */
+    protected function collectExceptionDetails(Throwable $exception, int $statusCode): array
+    {
+        $location = Frame::sourceLocation($exception->getFile(), $exception->getLine());
 
         return [
             'title'   => $exception::class,
             'type'    => $exception::class,
             'code'    => $statusCode,
             'message' => $exception->getMessage(),
-            'file'    => $exception->getFile(),
-            'line'    => $exception->getLine(),
-            'trace'   => $trace,
+            'file'    => $location['file'],
+            'line'    => $location['line'] ?? $exception->getLine(),
         ];
     }
 
@@ -97,43 +102,116 @@ abstract class BaseExceptionHandler
     protected function maskSensitiveData(array $trace, array $keysToMask, string $path = ''): array
     {
         foreach ($trace as $i => $line) {
-            $trace[$i]['args'] = $this->maskData($line['args'], $keysToMask, $path);
+            if (isset($line['args'])) {
+                $trace[$i]['args'] = $this->maskData($line['args'], $keysToMask, $path);
+            }
         }
 
         return $trace;
     }
 
     /**
+     * Apply configured trace redaction rules to an array shown by an error view.
+     *
+     * @param array<array-key, mixed> $data
+     * @param list<string>            $additionalKeys
+     *
+     * @return array<array-key, mixed>
+     */
+    protected function redactDiagnosticData(array $data, array $additionalKeys = [], bool $caseInsensitive = false): array
+    {
+        $keys = [...$this->config->sensitiveDataInTrace, ...$additionalKeys];
+
+        if ($caseInsensitive) {
+            $keys = array_map(strtolower(...), $keys);
+
+            foreach ($data as $name => $value) {
+                $data[$name] = in_array(strtolower((string) $name), $keys, true) ? Backtrace::REDACTED_TEXT : $value;
+            }
+
+            return $data;
+        }
+
+        return $this->maskData($data, $keys);
+    }
+
+    /**
+     * @param array<array-key, mixed> $data
+     * @param list<string>            $sensitiveKeys
+     *
+     * @return array<array-key, mixed>
+     */
+    protected function diagnosticFields(array $data, string $section, array $sensitiveKeys = []): array
+    {
+        $allowed = $this->config->diagnosticValues[$section] ?? [];
+
+        foreach (array_keys($data) as $name) {
+            if (! in_array((string) $name, $allowed, true)) {
+                $data[$name] = Backtrace::REDACTED_TEXT;
+            }
+        }
+
+        return $this->redactDiagnosticData($data, $sensitiveKeys);
+    }
+
+    /**
+     * @return array<array-key, string>
+     */
+    protected function previewDiagnosticArguments(Frame $frame): array
+    {
+        return Backtrace::argumentPreview($frame, $this->config->sensitiveDataInTrace);
+    }
+
+    /**
      * @param array<array-key, mixed>|object $args
      * @param list<string>                   $keysToMask
+     * @param array<int|string, true>        $ancestors
      *
      * @return array<array-key, mixed>|object
      */
-    private function maskData(mixed $args, array $keysToMask, string $path = ''): mixed
+    private function maskData(mixed $args, array $keysToMask, string $path = '', array $ancestors = []): mixed
     {
+        if (is_object($args)) {
+            $id = spl_object_id($args);
+
+            if (isset($ancestors[$id])) {
+                return $args;
+            }
+
+            $ancestors[$id] = true;
+        }
+
         foreach ($keysToMask as $key) {
             $explode = explode('/', $key);
             $index   = end($explode);
 
             if (str_starts_with(strrev($path . '/' . $index), strrev($key))) {
                 if (is_array($args) && array_key_exists($index, $args)) {
-                    $args[$index] = '******************';
+                    $args[$index] = Backtrace::REDACTED_TEXT;
                 } elseif (
                     is_object($args) && property_exists($args, $index)
                     && isset($args->{$index}) && is_scalar($args->{$index})
                 ) {
-                    $args->{$index} = '******************';
+                    $args->{$index} = Backtrace::REDACTED_TEXT;
                 }
             }
         }
 
         if (is_array($args)) {
             foreach ($args as $pathKey => $subarray) {
-                $args[$pathKey] = $this->maskData($subarray, $keysToMask, $path . '/' . $pathKey);
+                $reference = ReflectionReference::fromArrayElement($args, $pathKey)?->getId();
+
+                if ($reference !== null && isset($ancestors[$reference])) {
+                    continue;
+                }
+
+                $branch = $reference === null ? $ancestors : $ancestors + [$reference => true];
+
+                $args[$pathKey] = $this->maskData($subarray, $keysToMask, $path . '/' . $pathKey, $branch);
             }
         } elseif (is_object($args)) {
             foreach ($args as $pathKey => $subarray) {
-                $args->{$pathKey} = $this->maskData($subarray, $keysToMask, $path . '/' . $pathKey);
+                $args->{$pathKey} = $this->maskData($subarray, $keysToMask, $path . '/' . $pathKey, $ancestors);
             }
         }
 
@@ -143,8 +221,6 @@ abstract class BaseExceptionHandler
     /**
      * Describes memory usage in real-world units. Intended for use
      * with memory_get_usage, etc.
-     *
-     * @used-by app/Views/errors/html/error_exception.php
      */
     protected static function describeMemory(int $bytes): string
     {
@@ -155,8 +231,6 @@ abstract class BaseExceptionHandler
 
     /**
      * Creates a syntax-highlighted version of a PHP file.
-     *
-     * @used-by app/Views/errors/html/error_exception.php
      *
      * @return bool|string
      */
@@ -239,6 +313,16 @@ abstract class BaseExceptionHandler
      */
     protected function render(Throwable $exception, int $statusCode, $viewFile = null): void
     {
+        $this->renderWithViewData($exception, $statusCode, $viewFile, []);
+    }
+
+    /**
+     * Render an error view with additional variables supplied by the handler.
+     *
+     * @param array<string, mixed> $viewData
+     */
+    protected function renderWithViewData(Throwable $exception, int $statusCode, ?string $viewFile, array $viewData): void
+    {
         if ($viewFile === null) {
             echo 'The error view file was not specified. Cannot display error view.';
 
@@ -251,8 +335,8 @@ abstract class BaseExceptionHandler
             exit(1);
         }
 
-        echo (function () use ($exception, $statusCode, $viewFile): string {
-            $vars = $this->collectVars($exception, $statusCode);
+        echo (function () use ($exception, $statusCode, $viewFile, $viewData): string {
+            $vars = $this->collectVars($exception, $statusCode) + ['config' => $this->config] + $viewData;
             extract($vars, EXTR_SKIP);
 
             // CLI error views output to STDERR/STDOUT, so ob_start() does not work.

@@ -66,9 +66,13 @@ final class ExecuteLogMessageFormatTest extends CIUnitTestCase
         }
 
         $this->assertMatchesRegularExpression('/^in \S+ on line \d+\.$/', array_shift($messageFromLogs));
+        $this->assertNotEmpty($messageFromLogs);
 
-        foreach ($messageFromLogs as $line) {
-            $this->assertMatchesRegularExpression('/^\s*\d* .+(?:\(\d+\))?: \S+(?:(?:\->|::)\S+)?\(.*\)$/', $line);
+        foreach ($messageFromLogs as $index => $line) {
+            $this->assertMatchesRegularExpression(
+                sprintf('/^%2d \S+\(.*\) (?:in .+ \(line \d+\)|\[internal function\])$/', $index + 1),
+                $line,
+            );
         }
     }
 }

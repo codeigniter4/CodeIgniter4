@@ -33,6 +33,22 @@ class Kint
     public bool $displayCalledFrom = true;
     public bool $expanded          = false;
 
+    /**
+     * Editor URL template using %f for the absolute filename and %l for the line.
+     * Leave null to use the Xdebug setting.
+     *
+     * Common templates:
+     *  - VS Code: 'vscode://file%f:%l'
+     *  - Cursor: 'cursor://file%f:%l'
+     *  - PhpStorm: 'phpstorm://open?file=%f&line=%l'
+     *  - IntelliJ IDEA: 'idea://open?file=%f&line=%l'
+     *  - Sublime Text: 'subl://open?url=file://%f&line=%l'
+     *  - TextMate: 'txmt://open?url=file://%f&line=%l'
+     *
+     * @var non-empty-string|null
+     */
+    public ?string $fileLinkFormat = null;
+
     /*
     |--------------------------------------------------------------------------
     | RichRenderer Settings

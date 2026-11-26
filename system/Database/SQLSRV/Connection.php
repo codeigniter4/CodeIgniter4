@@ -597,13 +597,15 @@ class Connection extends BaseConnection
         if ($stmt === false) {
             $trace   = debug_backtrace();
             $first   = array_shift($trace);
+            $file    = $first['file'] ?? null;
+            $line    = $first['line'] ?? null;
             $message = $this->getAllErrorMessages();
 
             log_message('error', "{message}\nin {exFile} on line {exLine}.\n{trace}", [
                 'message' => $message,
-                'exFile'  => clean_path($first['file']),
-                'exLine'  => $first['line'],
-                'trace'   => render_backtrace($trace),
+                'exFile'  => $file === null ? '[internal function]' : clean_path($file),
+                'exLine'  => $line ?? 0,
+                'trace'   => render_backtrace($trace, $file, $line),
             ]);
 
             $error     = $this->error();

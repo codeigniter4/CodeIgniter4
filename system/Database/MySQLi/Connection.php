@@ -389,7 +389,7 @@ class Connection extends BaseConnection
                 'message' => $e->getMessage(),
                 'exFile'  => clean_path($e->getFile()),
                 'exLine'  => $e->getLine(),
-                'trace'   => render_backtrace($e->getTrace()),
+                'trace'   => render_backtrace($e->getTrace(), $e->getFile(), $e->getLine()),
             ]);
 
             if ($e->getCode() === 1213 && $this->transDepth > 0) {

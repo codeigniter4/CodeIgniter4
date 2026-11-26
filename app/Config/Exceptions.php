@@ -59,6 +59,19 @@ class Exceptions extends BaseConfig
     public array $sensitiveDataInTrace = [];
 
     /**
+     * Query, form, and cookie names whose values may be shown in the detailed HTML error page.
+     *
+     * Built-in and configured redaction rules still apply to allowed values.
+     *
+     * @var array{
+     *   query?: list<string>,
+     *   form?: list<string>,
+     *   cookies?: list<string>
+     * }
+     */
+    public array $diagnosticValues = [];
+
+    /**
      * --------------------------------------------------------------------------
      * WHETHER TO THROW AN EXCEPTION ON DEPRECATED ERRORS
      * --------------------------------------------------------------------------
