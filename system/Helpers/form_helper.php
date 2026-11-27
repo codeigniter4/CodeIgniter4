@@ -58,7 +58,7 @@ if (! function_exists('form_open')) {
             $attributes .= ' accept-charset="' . strtolower($config->charset) . '"';
         }
 
-        $form = '<form action="' . $action . '"' . $attributes . ">\n";
+        $form = '<form action="' . esc($action) . '"' . $attributes . ">\n";
 
         // Add CSRF field if enabled, but leave it out for GET requests and requests to external websites
         $before = service('filters')->getFilters()['before'];
