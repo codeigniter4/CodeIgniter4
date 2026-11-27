@@ -33,11 +33,12 @@ In Worker Mode, the lifecycle changes dramatically:
 
 1.  Worker process starts and performs one-time initialization:
     - Loads and parses all required files (cached in OPcache)
-    - Bootstraps framework: autoloader, configuration, services, routes
+    - Bootstraps framework: autoloader, configuration, services
     - Establishes database and cache connections
 2.  For each incoming request:
     - Reuses existing connections and cached resources
     - Resets only request-specific state (superglobals, request/response objects)
+    - Reloads the route definitions, so the routes limited with the `hostname` or `subdomain` options are matched against the current request
     - Processes request and sends response
     - Cleans up request-specific data
 3.  Worker continues running, ready for the next request
@@ -118,7 +119,7 @@ Worker Mode typically provides **2-3x performance improvements** for database-dr
 |----|----|
 | **Simple endpoints** | Applications returning minimal JSON responses show modest improvements (10-30%), as there's little bootstrap overhead to eliminate. |
 | **Database queries** | Endpoints performing database queries typically see **2-3x** improvements from connection reuse and reduced initialization overhead. |
-| **Complex bootstrap** | Applications with many services, routes, or configuration see the largest gains, as this overhead is eliminated entirely. |
+| **Complex bootstrap** | Applications with many services or configuration see the largest gains, as this overhead is eliminated entirely. |
 
 ### Worker Count Considerations
 
@@ -136,7 +137,7 @@ All worker mode configuration is managed through the **app/Config/WorkerMode.php
 
 | Option | Type | Description |
 |----|----|----|
-| **$persistentServices** | array | Services that persist across requests and are not reset. Services not in this list are destroyed after each request to prevent state leakage. Default: `['autoloader', 'locator', 'exceptions', 'commands', 'codeigniter', 'superglobals', 'routes', 'cache']` |
+| **$persistentServices** | array | Services that persist across requests and are not reset. Services not in this list are destroyed after each request to prevent state leakage. Default: `['autoloader', 'locator', 'exceptions', 'commands', 'codeigniter', 'superglobals', 'cache']` |
 | **$resetEventListeners** | array | Event names whose listeners are removed between requests. Use this when you register event listeners inside other event callbacks rather than at the top level of **Config/Events.php**, which would cause them to accumulate across requests. Default: `[]` |
 | **$forceGarbageCollection** | bool | Whether to force garbage collection after each request. `true` (default, recommended): Prevents memory leaks. `false`: Relies on PHP's automatic garbage collection. |
 
@@ -152,8 +153,10 @@ The `$persistentServices` array controls which services survive between requests
 | `commands` | CLI commands registry. Only used during worker startup. |
 | `codeigniter` | Main application instance. Orchestrates the request/response cycle. |
 | `superglobals` | Superglobals wrapper. Properly isolated per request internally. |
-| `routes` | Router configuration. Route definitions don't change between requests. |
 | `cache` | Cache service. Maintains connections to cache backends (Redis, Memcached). |
+
+!!! note "Note"
+    The `routes` service is **not** persistent by default. `RouteCollection` reads the request host while it loads the route definitions, and drops the routes limited with the `hostname` or `subdomain` options that do not match the current request. A persistent route collection would keep the decision made for the first request the worker served, so the routes restricted to a hostname would be reachable from any host, or not reachable at all, until the worker restarted. The route definitions are therefore loaded again for each request, as in traditional PHP.
 
 !!! warning "Warning"
     Adding services to `$persistentServices` without understanding their state management can cause data leakage between requests. Only persist services that are truly stateless or manage their own request isolation.

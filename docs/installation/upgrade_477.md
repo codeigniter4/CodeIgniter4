@@ -31,7 +31,8 @@ The following files received significant changes (including deprecations or visu
 
 #### Config
 
-- @TODO
+- **app/Config/WorkerMode.php**
+    - The default `$persistentServices` no longer contains `routes`. Existing installations keep their own copy of this file. If you use the `hostname` or `subdomain` route options in Worker Mode, remove `routes` from `$persistentServices` so routes are reloaded for each request. See [Persistent Services](worker_mode.md#persistent-services).
 
 ### All Changes
 

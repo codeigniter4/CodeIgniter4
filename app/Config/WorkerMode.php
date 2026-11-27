@@ -24,7 +24,6 @@ class WorkerMode
      * - `commands`: CLI commands registry
      * - `codeigniter`: Main application instance
      * - `superglobals`: Superglobals wrapper
-     * - `routes`: Router configuration
      * - `cache`: Cache instance
      *
      * @var list<string>
@@ -36,7 +35,6 @@ class WorkerMode
         'commands',
         'codeigniter',
         'superglobals',
-        'routes',
         'cache',
     ];
 
