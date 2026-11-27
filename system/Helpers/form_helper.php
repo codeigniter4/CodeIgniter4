@@ -323,7 +323,7 @@ if (! function_exists('form_dropdown')) {
                     continue;
                 }
 
-                $form .= '<optgroup label="' . $key . "\">\n";
+                $form .= '<optgroup label="' . esc($key) . "\">\n";
 
                 foreach ($val as $optgroupKey => $optgroupVal) {
                     // Keys should always be strings for strict comparison
@@ -460,11 +460,11 @@ if (! function_exists('form_label')) {
         $label = '<label';
 
         if ($id !== '') {
-            $label .= ' for="' . $id . '"';
+            $label .= ' for="' . esc($id) . '"';
         }
 
         foreach ($attributes as $key => $val) {
-            $label .= ' ' . $key . '="' . $val . '"';
+            $label .= ' ' . $key . '="' . esc($val) . '"';
         }
 
         return $label . '>' . $labelText . '</label>';
@@ -492,10 +492,10 @@ if (! function_exists('form_datalist')) {
 
         $out = form_input($data) . "\n";
 
-        $out .= "<datalist id='" . $name . "_list'>";
+        $out .= "<datalist id='" . esc($name . '_list') . "'>";
 
         foreach ($options as $option) {
-            $out .= "<option value='{$option}'>\n";
+            $out .= "<option value='" . esc($option) . "'>\n";
         }
 
         return $out . ("</datalist>\n");
@@ -786,12 +786,11 @@ if (! function_exists('parse_form_attributes')) {
 
         foreach ($default as $key => $val) {
             if (! is_bool($val)) {
-                if ($key === 'value') {
-                    $val = esc($val);
-                } elseif ($key === 'name' && $default['name'] === '') {
+                if ($key === 'name' && $default['name'] === '') {
                     continue;
                 }
-                $att .= $key . '="' . $val . '"' . ($key === array_key_last($default) ? '' : ' ');
+
+                $att .= $key . '="' . esc($val) . '"' . ($key === array_key_last($default) ? '' : ' ');
             } else {
                 $att .= $key . ' ';
             }
