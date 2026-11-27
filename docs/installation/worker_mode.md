@@ -274,5 +274,5 @@ Database connections are automatically managed:
 - Connections persist across requests for performance
 - Connections are validated at the start of each request
 - Failed connections are automatically re-established
-- Uncommitted transactions are automatically rolled back with a warning logged
-- A connection whose rollback fails is closed, so the open transaction cannot reach the next request
+- Uncommitted transactions are rolled back at the end of each request, and an error is logged
+- If rollback fails, the connection is closed and reconnection is attempted before the next request
