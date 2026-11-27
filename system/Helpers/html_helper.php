@@ -110,9 +110,9 @@ if (! function_exists('img')) {
         // Check for a relative URI
         if (preg_match('#^([a-z]+:)?//#i', $src['src']) !== 1 && ! str_starts_with($src['src'], 'data:')) {
             if ($indexPage) {
-                $img .= ' src="' . site_url($src['src']) . '"';
+                $img .= ' src="' . esc(site_url($src['src'])) . '"';
             } else {
-                $img .= ' src="' . slash_item('baseURL') . $src['src'] . '"';
+                $img .= ' src="' . esc(slash_item('baseURL') . $src['src']) . '"';
             }
 
             unset($src['src']);
@@ -120,7 +120,7 @@ if (! function_exists('img')) {
 
         // Append any other values
         foreach ($src as $key => $value) {
-            $img .= ' ' . $key . '="' . $value . '"';
+            $img .= ' ' . $key . '="' . esc($value) . '"';
         }
 
         // Prevent passing completed values to stringify_attributes
@@ -204,13 +204,13 @@ if (! function_exists('script_tag')) {
         foreach ($src as $k => $v) {
             if ($k === 'src' && preg_match('#^([a-z]+:)?//#i', $v) !== 1) {
                 if ($indexPage) {
-                    $script .= 'src="' . site_url($v) . '" ';
+                    $script .= 'src="' . esc(site_url($v)) . '" ';
                 } else {
-                    $script .= 'src="' . slash_item('baseURL') . $v . '" ';
+                    $script .= 'src="' . esc(slash_item('baseURL') . $v) . '" ';
                 }
             } else {
                 // for attributes without values, like async or defer, use NULL.
-                $script .= $k . (null === $v ? ' ' : '="' . $v . '" ');
+                $script .= $k . (null === $v ? ' ' : '="' . esc($v) . '" ');
             }
         }
 

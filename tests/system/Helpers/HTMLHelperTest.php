@@ -256,6 +256,20 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->enableHtml5();
     }
 
+    public function testImgEscapesAttributesAndSrc(): void
+    {
+        $payload = 'x" onmouseover="alert(1)" data-x="';
+
+        $expectedArray = '<img src="https://example.com/a.png" alt="x&quot; onmouseover=&quot;alert(1)&quot; data-x=&quot;">';
+        $this->assertSame($expectedArray, img(['src' => 'https://example.com/a.png', 'alt' => $payload]));
+
+        $expectedRelative = '<img src="http://example.com/a.pngx&quot; onmouseover=&quot;alert(1)&quot; data-x=&quot;" alt="">';
+        $this->assertSame($expectedRelative, img('a.png' . $payload));
+
+        $expectedIndexPage = '<img src="http://example.com/index.php/a.pngx%22%20onmouseover=%22alert%281%29%22%20data-x=%22" alt="">';
+        $this->assertSame($expectedIndexPage, img('a.png' . $payload, true));
+    }
+
     public function testImgData(): void
     {
         $expected = 'data:image/gif;base64,' . $this->imgData;
@@ -357,6 +371,20 @@ final class HTMLHelperTest extends CIUnitTestCase
     {
         $expected = '<script src="http://example.com/"></script>';
         $this->assertSame($expected, script_tag());
+    }
+
+    public function testScriptTagEscapesAttributesAndSrc(): void
+    {
+        $payload = 'x" onmouseover="alert(1)" data-x="';
+
+        $expectedArray = '<script src="https://example.com/a.js" data-x="x&quot; onmouseover=&quot;alert(1)&quot; data-x=&quot;" async></script>';
+        $this->assertSame($expectedArray, script_tag(['src' => 'https://example.com/a.js', 'data-x' => $payload, 'async' => null]));
+
+        $expectedRelative = '<script src="http://example.com/a.jsx&quot; onmouseover=&quot;alert(1)&quot; data-x=&quot;"></script>';
+        $this->assertSame($expectedRelative, script_tag('a.js' . $payload));
+
+        $expectedIndexPage = '<script src="http://example.com/index.php/a.jsx%22%20onmouseover=%22alert%281%29%22%20data-x=%22"></script>';
+        $this->assertSame($expectedIndexPage, script_tag('a.js' . $payload, true));
     }
 
     public function testLinkTag(): void
