@@ -66,12 +66,25 @@ final class SecurityHelperTest extends CIUnitTestCase
         $eightBackslashes = str_repeat($backslash, 8);
 
         return [
-            'empty filename'               => ['', false, ''],
-            'escaped NUL in filename'      => ['a' . $backslash . '0b', false, 'a0b'],
-            'escaped NUL in relative path' => ['a' . $backslash . '0b', true, 'a0b'],
-            'literal NUL in filename'      => ['a' . chr(0) . 'b', false, 'ab'],
-            'literal NUL in relative path' => ['a' . chr(0) . 'b', true, 'ab'],
-            'strip forward path'           => [
+            'empty filename'                         => ['', false, ''],
+            'empty relative path'                    => ['', true, ''],
+            'absolute path in relative mode'         => ['/etc/passwd', true, 'etc/passwd'],
+            'multiple leading slashes'               => ['////etc/passwd', true, 'etc/passwd'],
+            'double-slash traversal'                 => ['..//..//etc/passwd', true, 'etc/passwd'],
+            'triple-slash traversal'                 => ['..///..///etc/passwd', true, 'etc/passwd'],
+            'leading slash exposed by filters'       => ['</etc/passwd', true, 'etc/passwd'],
+            'leading slash exposed by backslash'     => [$backslash . '/etc/passwd', true, 'etc/passwd'],
+            'only forward slashes'                   => ['////', true, ''],
+            'only traversal and slashes'             => ['..//..///', true, ''],
+            'preserve internal slashes'              => ['approved//folder/file.txt', true, 'approved//folder/file.txt'],
+            'preserve trailing slash'                => ['approved/folder/', true, 'approved/folder/'],
+            'absolute path in default mode'          => ['/etc/passwd', false, 'etcpasswd'],
+            'double-slash traversal in default mode' => ['..//..//etc/passwd', false, 'etcpasswd'],
+            'escaped NUL in filename'                => ['a' . $backslash . '0b', false, 'a0b'],
+            'escaped NUL in relative path'           => ['a' . $backslash . '0b', true, 'a0b'],
+            'literal NUL in filename'                => ['a' . chr(0) . 'b', false, 'ab'],
+            'literal NUL in relative path'           => ['a' . chr(0) . 'b', true, 'ab'],
+            'strip forward path'                     => [
                 'approved/folder/file.txt',
                 false,
                 'approvedfolderfile.txt',

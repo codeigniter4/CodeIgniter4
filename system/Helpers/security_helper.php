@@ -24,7 +24,8 @@ if (! function_exists('sanitize_filename')) {
      * If it is acceptable for the user input to include relative paths,
      * e.g. file/in/some/approved/folder.txt, you can set the second optional
      * parameter, $relativePath to TRUE.
-     * Only forward slashes are preserved, backslashes are always removed.
+     * Only forward slashes within the relative path are preserved.
+     * Leading forward slashes and all backslashes are removed.
      *
      * @param string $filename     Input file name
      * @param bool   $relativePath Whether to preserve paths
@@ -79,7 +80,7 @@ if (! function_exists('sanitize_filename')) {
             $filename = str_replace($bad, '', $filename);
         } while ($old !== $filename);
 
-        return $filename;
+        return $relativePath ? ltrim($filename, '/') : $filename;
     }
 }
 

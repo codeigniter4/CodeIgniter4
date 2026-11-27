@@ -28,7 +28,7 @@ The following functions are available:
 
 Provides protection against directory traversal.
 
-Backslashes are always removed. If `$relativePath` is `true`, forward slashes are preserved to allow relative paths such as `path/to/file.txt`, while parent-directory sequences (`../`) are removed.
+Backslashes are always removed. If `$relativePath` is `true`, forward slashes are preserved to allow relative paths such as `path/to/file.txt`, while parent-directory sequences (`../`) and leading forward slashes are removed.
 
 !!! note "Note"
     When passing relative paths to this helper, use forward slashes (`/`) as directory separators, including on Windows.
