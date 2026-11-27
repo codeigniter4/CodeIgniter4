@@ -173,6 +173,24 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_open('foo/bar', $attributes));
     }
 
+    public function testFormOpenEscapesAction(): void
+    {
+        $this->setRequest();
+
+        $payload  = 'https://example.com/" onclick="alert(1)" data-x="';
+        $expected = <<<'EOH'
+            <form action="https://example.com/&quot; onclick=&quot;alert(1)&quot; data-x=&quot;" method="post" accept-charset="utf-8">
+
+            EOH;
+        $this->assertSame($expected, form_open($payload));
+
+        $expectedQuery = <<<'EOH'
+            <form action="https://example.com/search?a=1&amp;b=2" method="post" accept-charset="utf-8">
+
+            EOH;
+        $this->assertSame($expectedQuery, form_open('https://example.com/search?a=1&b=2'));
+    }
+
     public function testFormOpenWithoutMethodWithCsrf(): void
     {
         $this->setRequest();
