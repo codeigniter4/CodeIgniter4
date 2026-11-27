@@ -409,7 +409,7 @@ final class ArrayHelperTest extends CIUnitTestCase
 
     /**
      * @param array<array-key, mixed> $input
-     * @param array<string, mixed>    $expected
+     * @param array<array-key, mixed> $expected
      */
     #[DataProvider('provideArrayFlattening')]
     public function testArrayFlattening(array $input, array $expected): void
@@ -418,7 +418,7 @@ final class ArrayHelperTest extends CIUnitTestCase
     }
 
     /**
-     * @return iterable<string, array{array<array-key, mixed>, array<string, mixed>}>
+     * @return iterable<string, array{array<array-key, mixed>, array<array-key, mixed>}>
      */
     public static function provideArrayFlattening(): iterable
     {
@@ -436,6 +436,39 @@ final class ArrayHelperTest extends CIUnitTestCase
                 'user.first_name' => 'john',
                 'user.last_name'  => 'smith',
                 'user.age'        => '26 years',
+            ],
+        ];
+
+        yield 'numeric-key-before-nested-array' => [
+            [
+                5        => 'first',
+                'nested' => ['name' => 'john'],
+                0        => 'last',
+            ],
+            [
+                5             => 'first',
+                'nested.name' => 'john',
+                0             => 'last',
+            ],
+        ];
+
+        yield 'list-with-nested-array' => [
+            ['first', ['name' => 'john'], 'last'],
+            [0 => 'first', '1.name' => 'john', 2 => 'last'],
+        ];
+
+        yield 'numeric-key-with-empty-array' => [
+            [
+                -2       => [],
+                'nested' => ['name' => null],
+                7        => false,
+                'other'  => ['active' => true],
+            ],
+            [
+                -2             => [],
+                'nested.name'  => null,
+                7              => false,
+                'other.active' => true,
             ],
         ];
 
