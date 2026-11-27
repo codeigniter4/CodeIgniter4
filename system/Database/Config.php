@@ -16,6 +16,7 @@ namespace CodeIgniter\Database;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use Config\Database as DbConfig;
+use Throwable;
 
 class Config extends BaseConfig
 {
@@ -160,6 +161,7 @@ class Config extends BaseConfig
     {
         foreach (static::$instances as $connection) {
             $connection->reconnect();
+            $connection->resetTransStatus();
         }
     }
 
@@ -177,12 +179,37 @@ class Config extends BaseConfig
     public static function cleanupForWorkerMode(): void
     {
         foreach (static::$instances as $group => $connection) {
+            $rollbackFailed = false;
+
             if ($connection->transDepth > 0) {
                 log_message('error', "Uncommitted transaction detected in database group '{$group}'. Transactions must be completed before request ends.");
 
                 while ($connection->transDepth > 0) {
-                    $connection->transRollback();
+                    $transDepth = $connection->transDepth;
+
+                    try {
+                        $rolledBack = $connection->transRollback();
+                    } catch (Throwable $e) {
+                        log_message('error', "Database: Failed to roll back an uncommitted transaction in database group '{$group}'. Transaction cleanup aborted: " . $e->getMessage());
+                        $rollbackFailed = true;
+
+                        break;
+                    }
+
+                    if (! $rolledBack || $connection->transDepth >= $transDepth) {
+                        log_message('error', "Database: Failed to roll back an uncommitted transaction in database group '{$group}'. Transaction cleanup aborted.");
+                        $rollbackFailed = true;
+
+                        break;
+                    }
                 }
+            }
+
+            if ($rollbackFailed) {
+                // A live connection would carry the open transaction into the
+                // next request. reconnectForWorkerMode() clears the remaining
+                // transaction depth before it establishes a new connection.
+                $connection->close();
             }
 
             $connection->resetTransStatus();
