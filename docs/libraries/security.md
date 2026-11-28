@@ -253,7 +253,7 @@ class Filters extends BaseConfig
 }
 ```
 
-It is also possible to enable the CSRF filter only for specific methods:
+It is also possible to enable the CSRF filter only for specific methods. Include every method that needs CSRF protection, including methods reached through [method spoofing](../incoming/methodspoofing.md):
 
 ```php
 <?php
@@ -268,13 +268,18 @@ class Filters extends BaseConfig
      * @var array<string, list<string>>
      */
     public array $methods = [
-        'GET'  => ['csrf'],
-        'POST' => ['csrf'],
+        'GET'    => ['csrf'],
+        'POST'   => ['csrf'],
+        'PUT'    => ['csrf'],
+        'PATCH'  => ['csrf'],
+        'DELETE' => ['csrf'],
     ];
 
     // ...
 }
 ```
+
+The `GET` entry lets `form_open()` add a CSRF field to forms displayed on GET pages. The built-in CSRF filter verifies only POST, PUT, PATCH, and DELETE requests.
 
 !!! warning "Warning"
     If you use `$methods` filters, you should [disable Auto Routing (Legacy)](../incoming/routing.md#use-defined-routes-only) because [Auto Routing (Legacy)](../incoming/routing.md#auto-routing-legacy) permits any HTTP method to access a controller. Accessing the controller with a method you don't expect could bypass the filter.
