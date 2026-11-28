@@ -67,6 +67,7 @@ jobs:
     with:
       job-name: Sanity Tests
       php-version: ${{ matrix.php-version }}
+      extra-composer-options: ${{ matrix.composer-option }}
       job-id: sanity-tests
       group-name: Others
       enable-artifact-upload: ${{ matrix.php-version == needs.coverage-php-version.outputs.version }}
@@ -107,6 +108,7 @@ jobs:
     with:
       job-name: ''
       php-version: ${{ matrix.php-version }}
+      extra-composer-options: ${{ matrix.composer-option }}
       job-id: database-live-tests
       db-platform: ${{ matrix.db-platform }}
       mysql-version: ${{ matrix.mysql-version }}
@@ -136,6 +138,7 @@ jobs:
     with:
       job-name: ''
       php-version: ${{ matrix.php-version }}
+      extra-composer-options: ${{ matrix.composer-option }}
       job-id: separate-process-tests
       group-name: SeparateProcess
       enable-artifact-upload: ${{ matrix.php-version == needs.coverage-php-version.outputs.version }}
@@ -163,6 +166,7 @@ jobs:
     with:
       job-name: Cache Live Tests
       php-version: ${{ matrix.php-version }}
+      extra-composer-options: ${{ matrix.composer-option }}
       job-id: cache-live-tests
       group-name: CacheLive
       enable-artifact-upload: ${{ matrix.php-version == needs.coverage-php-version.outputs.version }}
