@@ -59,11 +59,15 @@ jobs:
           - '8.3'
           - '8.4'
           - '8.5'
+        include:
+          - php-version: '8.6'
+            composer-option: '--ignore-platform-req=php'
 
     uses: ./.github/workflows/reusable-phpunit-test.yml # @TODO Extract to codeigniter4/.github repo
     with:
       job-name: Sanity Tests
       php-version: ${{ matrix.php-version }}
+      extra-composer-options: ${{ matrix.composer-option }}
       job-id: sanity-tests
       group-name: Others
       enable-artifact-upload: ${{ matrix.php-version == needs.coverage-php-version.outputs.version }}
@@ -84,6 +88,7 @@ jobs:
           - '8.3'
           - '8.4'
           - '8.5'
+          - '8.6'
         db-platform:
           - MySQLi
           - OCI8
@@ -96,11 +101,14 @@ jobs:
           - php-version: '8.3'
             db-platform: MySQLi
             mysql-version: '5.7'
+          - php-version: '8.6'
+            composer-option: '--ignore-platform-req=php'
 
     uses: ./.github/workflows/reusable-phpunit-test.yml # @TODO Extract to codeigniter4/.github repo
     with:
       job-name: ''
       php-version: ${{ matrix.php-version }}
+      extra-composer-options: ${{ matrix.composer-option }}
       job-id: database-live-tests
       db-platform: ${{ matrix.db-platform }}
       mysql-version: ${{ matrix.mysql-version }}
@@ -122,11 +130,15 @@ jobs:
           - '8.3'
           - '8.4'
           - '8.5'
+        include:
+        - php-version: '8.6'
+          composer-option: '--ignore-platform-req=php'
 
     uses: ./.github/workflows/reusable-phpunit-test.yml # @TODO Extract to codeigniter4/.github repo
     with:
       job-name: ''
       php-version: ${{ matrix.php-version }}
+      extra-composer-options: ${{ matrix.composer-option }}
       job-id: separate-process-tests
       group-name: SeparateProcess
       enable-artifact-upload: ${{ matrix.php-version == needs.coverage-php-version.outputs.version }}
@@ -146,11 +158,15 @@ jobs:
           - '8.3'
           - '8.4'
           - '8.5'
+        include:
+          - php-version: '8.6'
+            composer-option: '--ignore-platform-req=php'
 
     uses: ./.github/workflows/reusable-phpunit-test.yml # @TODO Extract to codeigniter4/.github repo
     with:
       job-name: Cache Live Tests
       php-version: ${{ matrix.php-version }}
+      extra-composer-options: ${{ matrix.composer-option }}
       job-id: cache-live-tests
       group-name: CacheLive
       enable-artifact-upload: ${{ matrix.php-version == needs.coverage-php-version.outputs.version }}
