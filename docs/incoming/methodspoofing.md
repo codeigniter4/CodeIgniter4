@@ -10,7 +10,7 @@ To spoof the method, a hidden input is added to the form with the name of `_meth
 </form>
 ```
 
-This form is converted into a PUT request and is a true PUT request as far as the routing and the IncomingRequest class are concerned.
+This form is converted into a PUT request and is a true PUT request as far as routing, the IncomingRequest class, and [method-specific filters](filters.md#methods) are concerned. For example, a POST form with `_method=PUT` runs filters configured for `PUT`, not filters configured for `POST`. If you configure CSRF or other security filters by method, include every method you need to protect.
 
 The form that you are using must be a POST request. GET requests cannot be spoofed.
 

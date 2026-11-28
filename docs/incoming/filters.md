@@ -312,6 +312,8 @@ class Filters extends BaseConfig
 
 You can apply filters to all requests of a certain HTTP method, like `POST`, `GET`, `PUT`, etc. Its value would be an array of filters to run:
 
+When a POST request uses [method spoofing](methodspoofing.md), `$methods` uses the spoofed method. For example, a POST form with `_method=PUT` runs the filters configured for `PUT`, not those configured for `POST`.
+
 ```php
 <?php
 
@@ -327,8 +329,11 @@ class Filters extends BaseConfig
      * @var array<string, list<string>>
      */
     public array $methods = [
-        'POST' => ['invalidchars', 'csrf'],
-        'GET'  => ['csrf'],
+        'GET'    => ['csrf'],
+        'POST'   => ['invalidchars', 'csrf'],
+        'PUT'    => ['invalidchars', 'csrf'],
+        'PATCH'  => ['invalidchars', 'csrf'],
+        'DELETE' => ['invalidchars', 'csrf'],
     ];
 
     // ...
